@@ -105,7 +105,3 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		<br class="clr">
-	</div>
-	
