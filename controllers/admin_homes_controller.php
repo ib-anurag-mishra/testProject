@@ -6,7 +6,8 @@
  */
 Class AdminHomesController extends AppController
 {
-    var $uses = array('Admin','Admintype','Physicalproduct','Featuredartist');
+    var $name = 'AdminHomes';
+    var $uses = array('Admin','AdminHome','Physicalproduct','Featuredartist');
     var $helpers = array('Session','Html','Ajax','Javascript','Form');
     var $layout = 'admin';
     var $components = array('Session');
@@ -17,12 +18,15 @@ Class AdminHomesController extends AppController
     
     function beforeFilter()
     {
-      if($this->Session->read('username') == "")
-      {
-         $this->redirect('/admins/index');
-      }
-       $this->set('username',  $this->Session->read('username'));//setting the username to display on the header 
-    }
+       $this->Auth->userModel = 'Admin';
+       if($this->Session->read('Auth.Admin.type_id') == 1)
+       {
+          $this->Auth->allow('*');
+          $this->set('username',  $this->Session->read('Auth.Admin.username'));
+       }else{
+         $this->redirect('/admins/login');
+       }
+    }   
     
     /*
     Function Name : index
@@ -63,68 +67,31 @@ Class AdminHomesController extends AppController
                 $this->set('formHeader','Edit User');
                 $getUserDataObj = new Admin();
                 $getData = $getUserDataObj->getuserdata($adminUserId);
-                $this->set('getData', $getData);
+                $this->set('getData', $getData);               
                 //editting a value
                 if(isset($this->data))
                 {
-                 $updateObj = new Admin();
-                 $getData['Admin'] = $this->data['AdminHome'];
-                 $getData['Admintype']['id'] = $this->data['AdminHome']['type_id'];
-                 $this->set('getData', $getData);
-                 $errorMsg = '';
-                 if(trim($this->data['AdminHome']['first_name']) == "")
-                 {
-                   $errorMsg .= 'First name cannot be left blank<br/>';
-                 }
-                 if(trim($this->data['AdminHome']['last_name']) == "")
-                 {
-                   $errorMsg .= 'Last name cannot be left blank<br/>';
-                 }
-                 if(trim($this->data['AdminHome']['email']) == "")
-                 {
-                   $errorMsg .= 'Email cannot be left blank<br/>';
-                 }else{
-                  if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $this->data['AdminHome']['email']))
-                  {
-                    $errorMsg .= 'Invalid Email Address<br/>';
-                  }
-                 }
-                 if(trim($this->data['AdminHome']['username']) == "")
-                 {
-                   $errorMsg .= 'Username cannot be left blank<br/>';
-                 }else
-                 {
-                  $userExists = $updateObj->checkusername($this->data['AdminHome']['username'],$getData['Admin']['id']);
-                  if($userExists == 0)
-                  {
-                     $errorMsg .= 'Username Already exists<br/>';
-                  }
-                 }
-                 if(trim($this->data['AdminHome']['type_id']) == "")
-                 {
-                   $errorMsg .= 'Select a User Type<br/>';
-                 }
-                 if(empty($errorMsg))
-                 {
-                   $this->Admin->id = $this->data['AdminHome']['id'];
-                   if(trim($this->data['AdminHome']['password']) != "")
-                   {
-                     $this->data['AdminHome']['password'] = md5($this->data['AdminHome']['password']);
-                   }else{
-                     // do not update the password
-                    $this->data['AdminHome'] = $updateObj->arrayremovekey( $this->data['AdminHome'],'password');
-                   }
-                   if($updateObj->update($this->data['AdminHome']))
-                   {
-                     $this->Session->setFlash('Data has been save Sucessfully');
-                     $this->redirect('/admin_homes/manageuser');
-                   }
-                 }else{
-                   echo  $this->Session->setFlash($errorMsg);
-                    //$this->redirect('/admin_homes/manageuser');
-                   // echo $errorMsg;
-                    
-                 }
+                    $updateObj = new AdminHome();
+                    $getData['Admin'] = $this->data['AdminHome'];
+                    $getData['Admintype']['id'] = $this->data['AdminHome']['type_id'];
+                    $this->set('getData', $getData);
+                
+                    $this->AdminHome->id = $this->data['AdminHome']['id'];                   
+                    if(trim($this->data['AdminHome']['password']) != "")
+                    {
+                    $this->data['AdminHome']['password'] = $this->Auth->password($this->data['AdminHome']['password']);
+                    }
+                    else
+                    {
+                       // do not update the password
+                       $this->data['AdminHome']= $updateObj->arrayremovekey( $this->data['AdminHome'],'password');
+                    }
+                    $this->AdminHome->set($this->data['AdminHome']);  
+                    if($this->AdminHome->save())
+                    {
+                      $this->Session->setFlash('Data has been save Sucessfully');
+                      $this->redirect('/admin_homes/manageuser');
+                    }                
                 }
                  //editting a value
             }
@@ -133,62 +100,31 @@ Class AdminHomesController extends AppController
                 $this->set('getData',$arr);
                 $this->set('formAction','userform');
                 $this->set('formHeader','Create User');
+                
                 //insertion Operation
                 if(isset($this->data))
-                {
-                 $insertObj = new Admin();
-                 $getData['Admin'] = $this->data['AdminHome'];
-                 $getData['Admintype']['id'] = $this->data['AdminHome']['type_id'];
-                 $this->set('getData', $getData);
-                 $errorMsg = '';   
-                 if(trim($this->data['AdminHome']['first_name']) == "")
-                 {
-                   $errorMsg .= 'First name cannot be left blank<br/>';
-                 }
-                 if(trim($this->data['AdminHome']['last_name']) == "")
-                 {
-                   $errorMsg .= 'Last name cannot be left blank<br/>';
-                 }
-                 if(trim($this->data['AdminHome']['email']) == "")
-                 {
-                   $errorMsg .= 'Email cannot be left blank<br/>';
-                 }else{
-                  if (!eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $this->data['AdminHome']['email']))
-                  {
-                    $errorMsg .= 'Invalid Email Address<br/>';
-                  }
-                 }
-                 if(trim($this->data['AdminHome']['username']) == "")
-                 {
-                   $errorMsg .= 'Username cannot be left blank<br/>';
-                 }else
-                 {
-                  $userExists = $insertObj->checkusername($this->data['AdminHome']['username']);
-                  if($userExists == 0)
-                  {
-                     $errorMsg .= 'Username Already exists<br/>';
-                  }
-                 }
-                 if(trim($this->data['AdminHome']['password']) == "")
-                 {
-                   $errorMsg .= 'Password cannot be left blank<br/>';
-                 }
-                 if(trim($this->data['AdminHome']['type_id']) == "")
-                 {
-                   $errorMsg .= 'Select a User Type<br/>';
-                 }
-                 //end of validation for posted data
-                 if(empty($errorMsg))
-                 {
-                  $this->data['AdminHome']['password'] = md5($this->data['AdminHome']['password']);
-                  if($insertObj->insert($this->data))
-                  {
-                    $this->Session->setFlash('Data has been saved Sucessfully');
-                    $this->redirect('/admin_homes/manageuser');
-                  }
-                 }else{
-                    $this->Session->setFlash($errorMsg);
-                 }
+                {                 
+                    $insertObj = new AdminHome();
+                    $getData['Admin'] = $this->data['AdminHome'];
+                    $getData['Admintype']['id'] = $this->data['AdminHome']['type_id'];
+                    $this->set('getData', $getData);
+                
+                 
+                    if(!empty($this->data['AdminHome']['password']))
+                    {
+                      $this->data['AdminHome']['password'] = $this->Auth->password($this->data['AdminHome']['password']);
+                    }                  
+                    $this->AdminHome->set($this->data['AdminHome']);                  
+                    if($this->AdminHome->save())
+                    {                    
+                      $this->Session->setFlash('Data has been saved Sucessfully');
+                      $this->redirect('/admin_homes/manageuser');
+                    }
+                    else
+                    {
+                      $this->data['AdminHome']['password'] = '';
+                      $this->Session->setFlash('There was a problem saving this information');
+                    }             
                 }
                 //insertion operation
             }
