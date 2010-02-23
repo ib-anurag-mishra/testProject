@@ -15,12 +15,15 @@ Class ArtistsController extends AppController
   
     function beforeFilter()
     {
-      if($this->Session->read('username') == "")
-      {
-         $this->redirect('/admins/index');
-      }
-       $this->set('username',  $this->Session->read('username'));//setting the username to display on the header 
-    }
+       $this->Auth->userModel = 'Admins';
+       if($this->Session->read('Auth.Admin.type_id') == 1)
+       {
+          $this->Auth->allow('*');
+          $this->set('username',  $this->Session->read('Auth.Admin.username'));
+       }else{
+         $this->redirect('/admins/login');
+       }
+    }   
   
    /*
     Function Name : managefeaturedartist
