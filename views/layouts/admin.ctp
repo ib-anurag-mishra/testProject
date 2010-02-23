@@ -44,7 +44,12 @@
             </ul>
            </li>
           <li><a href="#">Finance</a></li>
-          <li><a href="#">Library Management</a></li>
+         <li><a href="#">Library Management</a>
+             <ul>
+              <li><?php echo $html->link('Add Library', array('controller' => 'Libraries','action'=>'libraryform'));?></li>
+              <li><?php echo $html->link('Manage Library', array('controller' => 'Libraries','action'=>'managelibrary'));?></li>              
+            </ul>
+          </li>
           <li><a href="#">Reports</a></li>
         </ul>
       </div><!-- content -->
