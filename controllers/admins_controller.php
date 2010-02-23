@@ -8,10 +8,17 @@ Class AdminsController extends AppController
 {
    var $name = 'Admins';
    var $helpers = array('Html','Ajax','Javascript','Form');
-	
    var $layout = 'login';
-  // var $components = array('Auth');
+   var $components = array('Session','Auth');
    
+   function before_filter()
+   {
+      $this->Auth->userModel = 'Admin';
+      $this->Auth->fields = array(
+          'username' => 'username', 
+          'password' =>'password');
+   }
+ 
    /*
     Function Name : index
     Desc : Sets the layout for the default admin login page
@@ -28,17 +35,7 @@ Class AdminsController extends AppController
     
     public function login()
     {
-      $username = $this->data['Admin']['username'];
-      $password = $this->data['Admin']['password'];
-      $loginObj = new Admin();
-      if($loginObj->login($username,$password))
-      {
-         $this->Session->write("username",$username);
-         $this->redirect('/admin_homes/index');
-      }else{
-        $this->redirect('/admins/index');
-      }
-      die();
+      //used by Auth Component
     }
     
     /*
@@ -48,8 +45,7 @@ Class AdminsController extends AppController
     
     public function logout()
     {
-        $this ->Session->destroy();
-        $this->redirect('/admins/index');
+     $this->redirect($this->Auth->logout()); 
     }
 }
 ?>
