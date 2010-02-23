@@ -15,7 +15,6 @@
         echo $javascript->link('jquery');
         echo $javascript->link('freegal');
         echo $javascript->link('curvycorners');
-        echo $javascript->link('freegal_002');
 
 		echo $scripts_for_layout;
 	?>

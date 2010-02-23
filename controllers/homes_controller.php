@@ -19,24 +19,31 @@ class HomesController extends AppController
     
     function index()
     {
-        //This process to fetch random songs for suggestion list
-        $homeObj = new Home();
-        $randomSongs = $homeObj->getSongs();
-        $this->set('songs',$randomSongs);
-        //This process to fetch distinct artists for artist list
-        $distinctArtistObj = new Physicalproduct();
-        $distinctArtists = $distinctArtistObj->getallartist();       
-        $this->set('distinctArtists',$distinctArtists);
-        //This process is to fetch all the featured artist images for featured artist slideshow
-        $featuredArtistObj = new Featuredartist();
-        $featuredArtists = $featuredArtistObj->getallartists();       
-        $this->set('featuredArtists',$featuredArtists);        
-        $this->layout = 'home';
-        //This process is to fetch all the selected artist images for artist slideshow
-        $artistObj = new Artist();
-        $artists = $artistObj->getallartists();        
-        $this->set('artists',$artists);        
-        $this->layout = 'home';
+	
+		$this->set('songs',$this->Home->getSongs());
+		$this->set('distinctArtists', $this->Physicalproduct->getallartist());
+		$this->set('featuredArtists', $this->Featuredartist->getallartists());
+		$this->set('artists', $this->Artist->getallartists());
+		$this->layout = 'home';
+		
+        //		   //This process to fetch random songs for suggestion list
+        //         $homeObj = new Home();
+        //         $randomSongs = $homeObj->getSongs();
+        //         $this->set('songs',$randomSongs);
+        //         //This process to fetch distinct artists for artist list
+        //         $distinctArtistObj = new Physicalproduct();
+        //         $distinctArtists = $distinctArtistObj->getallartist();       
+        //         $this->set('distinctArtists',$distinctArtists);
+        //         //This process is to fetch all the featured artist images for featured artist slideshow
+        // 		   $featuredArtistObj = new Featuredartist();
+        //         $featuredArtists = $featuredArtistObj->getallartists();       
+        //         $this->set('featuredArtists',$featuredArtists);        
+        //         $this->layout = 'home';
+        //         //This process is to fetch all the selected artist images for artist slideshow
+        //         $artistObj = new Artist();
+        //         $artists = $artistObj->getallartists();        
+        //         $this->set('artists',$artists);        
+        //         $this->layout = 'home';
     }
 }
 ?>
