@@ -2,7 +2,7 @@
         
 
         echo $this->Form->create('AdminHome', array( 'controller' => 'AdminHome','action' => $formAction));
-        //echo $this->element('sql_dump');
+        echo $this->element('sql_dump');
         if(empty($getData))
         {
                $getData['Admin']['first_name'] = "";
@@ -25,9 +25,9 @@
         <?php echo $this->Form->label('Username');?><br/>
         <?php echo $this->Form->input('username', array( 'label' => false ,'value' => $getData['Admin']['username'])); ?>
         <?php echo $this->Form->label('Password');?><br/>
-        <?php echo $this->Form->password( 'password', array( 'label' => false,'value' => '') ); ?><br/>
+        <?php echo $this->Form->input( 'password', array( 'type' => 'password','label' => false,'value' => '') ); ?><br/>
         <?php echo $this->Form->label('Admin Type');?><br/>
-        <?php echo $this->Form->input('type_id',array('type' => 'select','label' => false,'options' => $options, 'selected' => $getData['Admintype']['id']));?>  
+        <?php echo $this->Form->input('type_id',array('type' => 'select','label' => false,'options' => $options, 'selected' => $getData['Admintype']['id'])) ;?>        
         <p class="submit"><input type="submit" value="Save" /></p>
         <?php echo $this->Form->end(); ?>
          <fieldset>
@@ -37,3 +37,4 @@
          </fieldset>
          </fieldset>
          
+        

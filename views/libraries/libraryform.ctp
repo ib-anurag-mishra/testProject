@@ -1,5 +1,7 @@
 <?php
 echo $this->Form->create('Library', array( 'controller' => 'Library','action' => $formAction));
+echo $this->element('sql_dump');
+//echo $getData['Library']['download_limit'];
 if(empty($getData))
     {
         $getData['Library']['id'] = "";
@@ -21,9 +23,9 @@ if(empty($getData))
 <?php echo $this->Form->label('Username');?><br/>
 <?php echo $this->Form->input('username',array( 'label' => false ,'value' => $getData['Library']['username']));?>
 <?php echo $this->Form->label('Password');?><br/>
-<?php echo $this->Form->password('password', array( 'label' => false,'value' => '')); ?><br/>
+<?php echo $this->Form->input('password', array( 'label' => false,'value' => '')); ?><br/>
 <?php echo $this->Form->label('Library Name');?><br/>
-<?php echo $this->Form->input('library_name',array( 'label' => false ,'value' => $getData['Library']['library_name']));?>
+<?php echo $this->Form->input('library_name',array( 'type' => 'password','label' => false ,'value' => $getData['Library']['library_name']));?>
 <?php echo $this->Form->label('Referral Url');?><br/>
 <?php echo $this->Form->input('referrer_url',array( 'label' => false ,'value' => $getData['Library']['referrer_url']));?>
 <?php echo $this->Form->label('Download Limit Per Week');?><br/>
