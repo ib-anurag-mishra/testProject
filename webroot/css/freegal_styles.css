@@ -14,7 +14,7 @@ img {
 
 body  {
 	font: 100% Verdana, Arial, Helvetica, sans-serif;
-	background-color: #606060;
+	background: #606060;
 	margin: 0px;
 	padding: 0px;
 	text-align: center;
@@ -294,7 +294,7 @@ body  {
 }
 
 #nav li.hover li a, #nav li:hover li a {
-	background:url(../images/nav_back80.png) top left repeat;
+	background:url(../img/nav_back80.png) top left repeat;
 	color:#fff; 
 	text-align:center;
 	text-decoration:none;
@@ -309,7 +309,7 @@ body  {
 }
 
 #nav li.hover li.hover a, #nav li:hover li:hover a {
-	background:url(../images/nav_back_grey.png) top left repeat;
+	background:url(../img/nav_back_grey.png) top left repeat;
 /*	text-decoration: underline;*/
 }
 
@@ -331,6 +331,6 @@ body  {
 }
 
 #search input {
-	background:transparent url(../images/search.png) top right no-repeat;
+	background:transparent url(../img/search.png) top right no-repeat;
 	line-height:14px;
 }
