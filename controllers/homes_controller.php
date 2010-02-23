@@ -11,6 +11,12 @@ class HomesController extends AppController
     var $components = array('RequestHandler');
     var $uses = array('Home','Physicalproduct','Featuredartist','Artist');
     
+    function beforeFilter()
+    {
+       $this->Auth->allow('*');
+       $this->Auth->userModel = 'Admin';
+    }
+    
     function index()
     {
         //This process to fetch random songs for suggestion list
