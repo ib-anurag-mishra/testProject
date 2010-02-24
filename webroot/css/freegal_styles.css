@@ -334,3 +334,234 @@ body  {
 	background:transparent url(../img/search.png) top right no-repeat;
 	line-height:14px;
 }
+
+/* Genre Page */
+#genre {
+	float:left;
+	font-size:13px;
+	width:200px;
+	height: 20px;
+	background-color:#ccc;
+	text-align: center;
+	margin: 10px 0 0 10px;
+	line-height:20px;
+}
+
+#genreArtist {
+	clear:both;
+	float:left;
+	width: 180px;
+	height: 20px;
+	background-color: #ccc;
+	text-align: center;
+	margin: 10px 0 0 10px;
+	line-height: 20px;
+	font-size:13px;
+}
+
+#genreAlbum {
+	float:left;
+	width: 300px;
+	height: 20px;
+	background-color: #ccc;
+	text-align: center;
+	margin: 10px 0 0 3px;
+	line-height: 20px;
+	font-size:13px;
+}
+
+#genreTrack {
+	float:left;
+	width: 300px;
+	height: 20px;
+	background-color: #ccc;
+	text-align: center;
+	margin: 10px 0 0 3px;
+	line-height: 20px;
+	font-size:13px;
+}
+
+#genreDownload {
+	float:left;
+	width: 109px;
+	height: 20px;
+	background-color: #ccc;
+	padding-left:41px;
+	margin: 10px 0 0 3px;
+	line-height: 20px;
+	font-size:13px;
+}
+
+#genreResults {
+	margin-left:10px;
+	margin-bottom:10px;
+	font-size:13px;
+}
+
+#genreResults a {
+	text-decoration: none;
+	color: #666;
+}
+
+#genreResults a:hover {
+	text-decoration: underline;
+	color:#000;
+}
+#genreResults td {
+	border: 1px solid #fff;
+}
+
+#genreResults img {
+	float:right;
+	margin-right:10px;
+}
+
+#pagination {
+	float:left;
+	font-size:13px;
+	margin: 0 0 10px 10px;
+}
+
+#genreAdvSearch {
+	float:right;
+	font-size:13px;
+	margin:0 10px 10px 0;
+}
+
+#genreAdvSearch a {
+	text-decoration: none;
+	color:#666;
+}
+
+#genreAdvSearch a:hover {
+	text-decoration: underline;
+}
+
+#altrow {
+	background-color: #F3F3F3;
+}
+
+#genreAll {
+	font-size: 13px;
+	line-height: 20px;
+}
+
+#genretl {
+	float:left;
+}
+
+#genreAlltl {
+	width:460px;
+	height: 20px;
+	background-color:#ccc;
+	margin: 10px 0 0 10px;
+}
+
+#genreAllSongtl {
+	width:460px;
+	margin: 0 0 0 10px;
+}
+
+#genretr {
+	float:right;
+}
+
+#genreAlltr {
+	width:460px;
+	height: 20px;
+	background-color:#ccc;
+	margin: 10px 10px 0 0;
+}
+
+#genreAllSongtr {
+	width:460px;
+}
+
+#genrebl {
+	float:left;
+}
+
+#genreAllbl {
+	width:460px;
+	height: 20px;
+	background-color:#ccc;
+	margin: 10px 0 0 10px;
+}
+
+#genreAllSongbl {
+	width:460px;
+	margin: 0 0 0 10px;
+}
+
+#genrebr {
+	float:right;
+}
+
+#genreAllbr {
+	width:460px;
+	height: 20px;
+	background-color:#ccc;
+	margin: 10px 10px 0 0;
+}
+
+#genreAllSongbr {
+	width:460px;
+}
+
+.genreTitle {
+	margin-left:10px;
+}
+
+.genreSeeAll {
+	float:right;
+	margin-right: 40px;
+}
+
+.genreSeeAll a {
+	text-decoration: none;
+	color:#666;
+}
+
+.genreSeeAll a:hover {
+	text-decoration: underline;
+	color:#000;
+}
+
+#genreViewAll {
+	margin: 10px 0 0 10px;
+	font-size:13px;
+}
+
+.smAlbumArtwork {
+	display:block;
+	float:left;
+	margin:10px 7px 0 10px;
+	width:60px;
+	height:60px;
+}
+
+.songData {
+	float:left;
+	width:249px;
+	margin:10px 0 0 5px;
+}
+
+.songSample img {
+	float:left;
+	margin-top:12px;
+}
+
+.songDownload {
+	float:right;
+	margin:10px 10px 0 0;
+}
+
+.songData a, .songDownload a {
+	text-decoration: none;
+	color:#666;
+}
+
+.songData a:hover, .songDownload a:hover {
+	text-decoration: underline;
+	color:#666;
+}
