@@ -426,6 +426,7 @@ body  {
 	float:right;
 	font-size:13px;
 	margin:0 10px 10px 0;
+	width:420px;
 }
 
 #genreAdvSearch a {
@@ -562,6 +563,34 @@ body  {
 }
 
 .songData a:hover, .songDownload a:hover {
+	text-decoration: underline;
+	color:#666;
+}
+
+/** Paging **/
+div.paging {
+	background:#fff;
+	color: #ccc;
+	margin-left:10px;
+	clear:both;
+	float:left;
+	font-size:13px;
+	width:500px;
+	
+}
+div.paging span.disabled {
+	color: #ddd;
+	display: inline;
+}
+div.paging span.current {
+	color: #000;
+}
+div.paging span a, div.paging a {
+	text-decoration: none;
+	color:#666;
+}
+
+div.paging span a:hover, div.paging a:hover {
 	text-decoration: underline;
 	color:#666;
 }

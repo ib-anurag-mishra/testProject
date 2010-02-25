@@ -20,6 +20,7 @@
 	?>
 </head>
 <body>
+	<?php $session->flash(); ?>
 	<div id="container">
 		<?php echo $this->element('header'); ?>
 		<div id="content">
