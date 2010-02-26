@@ -1,0 +1,123 @@
+@charset "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.clr {
+	clear:both;
+}
+img {
+	border: 0px;
+}
+
+body  {
+	font: 100% Verdana, Arial, Helvetica, sans-serif;
+	background: #fff url(../img/background.png) repeat-x;
+	margin: 0px;
+	padding: 0px;
+	text-align: center;
+	color: #666666;
+}
+
+#container { 
+	width: 965px;
+	margin: 0 auto;
+	text-align: left;
+}
+
+#header {
+	width: 965px;
+	height: 132px;
+}
+
+#header_title {
+	float:left;
+	font: 24px bold;
+	margin: 35px 0 0 10px;
+}
+
+#header_image {
+	float:right;
+	margin: 30px 10px 0 0;
+}
+
+#navigation {
+	height: 34px;
+	background: #0099FF;
+}
+
+.logout {
+	float:right;
+	margin: 7px 10px 0 0;
+	color: #FFF;
+}
+
+a.logout {
+	text-decoration:none;
+}
+
+
+#content {
+	min-height: 500px;
+	background: #FFF;
+}
+
+#login {
+	width: 300px;
+	height: 200px;
+	background: #F3F3F3;
+	border-top: 2px solid #CCC;
+	border-bottom: 2px solid #CCC;
+	margin:100px auto 0px;
+	display:block;
+}
+
+#login label {
+	display:block;
+	width: 100px;
+	float: left;
+	margin-top:10px;
+	margin-left:20px;
+}
+
+#login input {
+	width: 150px;
+	float:right;
+	margin-top:10px;
+	margin-right:20px;
+}
+
+.loginbox {
+	margin-top:50px;
+}
+#footer {
+	font-size:10px;
+	float:left;
+	margin:10px 0 0 10px;
+}
+
+.message {
+	margin-left:10px;
+}
+
+/* Form */
+#content form fieldset {margin: 0 10px 0 10px; padding:10px 20px; _padding-top:0; border:1px solid #e0e0e0;}
+#content form fieldset legend {padding:0 10px; _margin-bottom:10px;}
+#content form fieldset input, #content fieldset select {margin-top:3px; margin-bottom:10px;}
+#content form fieldset textarea {width:95%;}
+#content form fieldset label input {margin-bottom:0;}
+#content form p.submit input {padding:0 10px; margin-bottom:0;}
+
+/* Tables */
+#content table {width:98%;}
+#content table#list, #content table.info {border:1px solid #e0e0e0; border-collapse:collapse;}
+#content table#list th {border-bottom:1px solid #e0e0e0;}
+#content table#list th, #content table.info th {background-color:#f5f5f5; }
+#content table#list th, #content table#list td {padding:5px 10px; text-align:center;}
+#content table#list th.left, #content table#list td.left {float:none; text-align:left;}
+#content table#list tr.even td {background-color:#ecf5fb;}
+#content table.info th, #content table.info td {border:1px solid #ccc;}
+#content table.info th, #content table.info td {padding:5px 10px; text-align:left;}
+#content table.info th.center, #content table.info td.center {text-align:center;}
