@@ -37,6 +37,10 @@ body  {
 	font: 24px bold;
 	margin: 35px 0 0 10px;
 }
+#header_title a {
+	text-decoration:none;
+	color:#666666;
+}
 
 #header_image {
 	float:right;
