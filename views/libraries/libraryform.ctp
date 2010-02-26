@@ -1,7 +1,7 @@
 <?php
 $this->pageTitle = 'Libraries';
 echo $this->Form->create('Library', array( 'controller' => 'Library','action' => $formAction));
-echo $this->element('sql_dump');
+//echo $this->element('sql_dump');
 //echo $getData['Library']['download_limit'];
 if(empty($getData))
     {
@@ -32,10 +32,11 @@ if(empty($getData))
 <?php echo $this->Form->label('Download Limit Per Week');?><br/>
 <?php echo $this->Form->input('download_limit',array('type' => 'select','options' => array('5' => '5','10' => '10','15' =>'15','20' => '20'),'label' => false,'selected' => $getData['Library']['download_limit']));?><br/>
 <p class="submit"><input type="submit" value="Save" /></p>
+
+<?php if ($session->check('Message.flash')) { ?>
+	<fieldset>
+	   <?php echo $session->flash();?> 
+	</fieldset>
+<?php } ?>
+</fieldset>
 <?php echo $this->Form->end(); ?>
-<fieldset> 
-<?php 
- echo $session->flash();
-?>
-   </fieldset> 
-</form>

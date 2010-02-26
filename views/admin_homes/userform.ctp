@@ -28,12 +28,10 @@
 	<?php echo $this->Form->label('Admin Type');?><br/>
 	<?php echo $this->Form->input('type_id',array('type' => 'select','label' => false,'options' => $options, 'selected' => $getData['Admintype']['id'])) ;?>        
 	<p class="submit"><input type="submit" value="Save" /></p>
-	<?php echo $this->Form->end(); ?>
 	<?php if ($session->check('Message.flash')) { ?>
 		<fieldset>
 		   <?php echo $session->flash();?> 
 		</fieldset>
 	<?php } ?>
-</fieldset>     
-         
-        
+</fieldset>
+<?php echo $this->Form->end(); ?>

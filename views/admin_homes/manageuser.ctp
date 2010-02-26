@@ -27,6 +27,7 @@
 		?>
 	</table>
 </fieldset>
+<br />
 <?php if ($session->check('Message.flash')) { ?>
 	<fieldset>
 	   <?php echo $session->flash();?> 

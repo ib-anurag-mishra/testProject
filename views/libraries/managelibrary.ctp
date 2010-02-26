@@ -28,9 +28,9 @@
           ?>
         </table>
 </fieldset>
- <fieldset> 
-<?php 
- echo $session->flash();
-?>
-   </fieldset> 
+<?php if ($session->check('Message.flash')) { ?>
+	<fieldset>
+	   <?php echo $session->flash();?> 
+	</fieldset>
+<?php } ?>
 </form>
