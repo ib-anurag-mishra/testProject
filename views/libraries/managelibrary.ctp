@@ -1,3 +1,4 @@
+<?php $this->pageTitle = 'Libraries';?>
 <form>
 <fieldset>
 <legend>User Listing</legend>

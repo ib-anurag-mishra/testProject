@@ -1,12 +1,11 @@
 <?php
-echo $session->flash();
-echo $session->flash('auth');
-echo $form->create('Admin', array( 'action' => 'login')); ?>
-        <fieldset>
-          <legend>Login Area</legend>
-         <?php echo $form->label('Username');?><br/>
-          <?php echo $form->input( 'username', array( 'label' => false ) ); ?>
-          <?php echo $form->label('Password');?><br/>
-          <?php echo $form->password( 'password', array( 'label' => false ) ); ?>
-        <p class="submit"><input type="submit" value="Login" /></p>
-      <?php echo $form->end(); ?>
+	$this->pageTitle = 'Login';
+	echo $session->flash();
+	echo $session->flash('auth');
+	echo $form->create('Admin', array( 'action' => 'login', 'id' => 'login'));
+		echo '<p class="loginbox"></p>';
+		echo $form->input('username', array('label' => 'Username'));
+		echo '<br class="clr">';
+		echo $form->input('password', array('label' => 'Password'));
+	echo $form->end('Login');
+?>

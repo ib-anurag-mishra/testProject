@@ -89,7 +89,7 @@ body>#witti {height:auto;}
 */
 #content {padding:10px 19px 0 212px;}
 #content h1, #content h2, #content p, #content .center, #content blockquote, #content ul, #content ol, #content table, 
-  #content form, #content fieldset, #content .error, #content .succes, #content .question, #content .halfes {margin-bottom:16px;}
+#content form, #content fieldset, #content .error, #content .succes, #content .question, #content .halfes {margin-bottom:16px;}
 #content blockquote {padding:16px; margin-left:20px; border-left:4px solid #e5e5e5;}
 #content .important {padding:16px; padding-bottom:0; border:1px dashed #399ece; background-color:#f3f9fc;}
 #content .print {position:absolute; top:99px; right:19px; width:20px; height:20px; background:url('../img/print.gif') top left no-repeat;}

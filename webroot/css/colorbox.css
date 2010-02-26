@@ -18,7 +18,8 @@
     The following rules are ordered and tabbed in a way that represents the
     order/nesting of the generated HTML, so that the structure easier to understand.
 */
-#cboxOverlay{background:url(../img/overlay.png) 0 0 repeat;}
+//#cboxOverlay{background:url(../img/overlay.png) 0 0 repeat;}
+#cboxOverlay{background: #EEE;}
 #colorbox{}
     #cboxTopLeft{width:21px; height:21px; background:url(../img/controls.png) -100px 0 no-repeat;}
     #cboxTopRight{width:21px; height:21px; background:url(../img/controls.png) -129px 0 no-repeat;}

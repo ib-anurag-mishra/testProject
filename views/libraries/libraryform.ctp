@@ -1,4 +1,5 @@
 <?php
+$this->pageTitle = 'Libraries';
 echo $this->Form->create('Library', array( 'controller' => 'Library','action' => $formAction));
 echo $this->element('sql_dump');
 //echo $getData['Library']['download_limit'];

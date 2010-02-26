@@ -8,7 +8,7 @@ Class AdminsController extends AppController
 {
    var $name = 'Admins';
    var $helpers = array('Html','Ajax','Javascript','Form');
-   var $layout = 'login';
+   var $layout = 'admin';
    var $components = array('Session','Auth');
    
    function before_filter()

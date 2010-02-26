@@ -29,11 +29,11 @@
 				<td width="180" valign="top">
 					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artist', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
 				</td>
-				<td width="300" valign="top">
+				<td width="200" valign="top">
 					<p><?php //echo $genre[Metadata][Album]; ?></p>
 				</td>
-				<td width="300" valign="top">
-					<p><?php echo $genre['Metadata']['Title']; ?><a href='#'><img src='/img/button.png'></a></p>
+				<td width="400" valign="top">
+					<p><a href="#" class="info"><?php echo $genre['Metadata']['Title']; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><a href='#'><img src='/img/button.png'></a></p>
 				</td>
 				<td width="150" align="center">
 					<p>Download Now</p>

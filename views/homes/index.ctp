@@ -28,7 +28,13 @@
 			<?php foreach($songs as $randomSongs): ?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text'><a href='#'><?php echo $randomSongs['Home']['Title'] ?></a><br />
+						<?php
+						if (strlen($randomSongs['Home']['Title']) >= 28) {
+							echo "<p class='suggest_text'><a href='#'>" . substr($randomSongs['Home']['Title'],0,28) . "...</a><br />\n";
+						} else {
+							echo "<p class='suggest_text'><a href='#'>" . $randomSongs['Home']['Title'] . "</a><br />\n";
+						}
+						?>
 							by <a href='artist.php?artist=<?php echo $randomSongs['Home']['Artist'] ?>'><?php echo $randomSongs['Home']['Artist']?></a>
 							<a href='#'><img src='img/button.png'></a>
 						</p>

@@ -1,3 +1,4 @@
+<?php $this->pageTitle = 'Admin'; ?>
 <form>
 <fieldset>
 <legend>Welcome Admin</legend>

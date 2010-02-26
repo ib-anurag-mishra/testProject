@@ -1,70 +1,52 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-<meta http-equiv="content-language" content="en" />
-<title>Freegal Music</title>
-<?php
-    echo $html->css('default');
-    echo $html->css('colorbox');    
-    echo $javascript->link('jquery-1');
-    echo $javascript->link('jquery');        
-    echo $javascript->link('admin_functions');
-    echo $javascript->link('jquery-1.3.2.min');
-    echo $javascript->link('jquery.colorbox'); 
-?>               
+	<?php echo $this->Html->charset(); ?>
+	<title>
+		<?php __('Freegal Music : The New Music Library :'); ?>
+		<?php echo $title_for_layout; ?>
+	</title>
+   	<?php
+		echo $this->Html->meta('icon');
 
+		echo $this->Html->css('freegal_admin_styles');
+		echo $this->Html->css('superfish');
+		echo $this->Html->css('colorbox');
+		
+        echo $javascript->link('jquery-1');
+        echo $javascript->link('jquery');       
+	    echo $javascript->link('admin_functions');
+	    echo $javascript->link('jquery.colorbox');
+		echo $javascript->link('jquery.hoverIntent.min.js');
+		echo $javascript->link('superfish.js');
+		echo $javascript->link('supersubs');
+
+		echo $scripts_for_layout;
+	?>
 </head>
 <body>
-  <div id="witti">
-  
-    <div id="header">
-      <a href="#" class="logo"><span>Admin Area</span></a>
-      <p class="userinfo"><strong></strong> <?php echo "<b>welcome : ".$username ."</b>"; ?>|<?php echo $html->link('Logout', array('controller'=>'Admins','action'=>'logout'));?></p>
-      <div class="cleaner"></div>
-    </div><!-- header -->
-    
-    <div id="main">
-      <div id="menu">
-        <ul>
-          <li><a href="#" class="active">NAVIGATION MENU</a></li>
-          <li><a href="#">User</a>
-            <ul>
-              <li><?php echo $html->link('Add User', array('controller' => 'admin_homes','action'=>'userform'));?></li>
-              <li><?php echo $html->link('Manage User', array('controller' => 'admin_homes','action'=>'manageuser'));?></li>
-            </ul>
-          </li>
-          <li><a href="#">Artist Management</a>
-           <ul>
-              <li><?php echo $html->link('Add Featured Artist', array('controller' => 'Artists','action'=>'artistform'));?></li>
-              <li><?php echo $html->link('Manage Featured Artist', array('controller' => 'Artists','action'=>'managefeaturedartist'));?></li>
-               <li><?php echo $html->link('Create Artist', array('controller' => 'Artists','action'=>'createartist'));?></li>  
-              <li><?php echo $html->link('Artist SlideShow', array('controller' => 'Artists','action'=>'manageartist'));?></li>  
-              
-            </ul>
-           </li>
-          <li><a href="#">Finance</a></li>
-         <li><a href="#">Library Management</a>
-             <ul>
-              <li><?php echo $html->link('Add Library', array('controller' => 'Libraries','action'=>'libraryform'));?></li>
-              <li><?php echo $html->link('Manage Library', array('controller' => 'Libraries','action'=>'managelibrary'));?></li>              
-            </ul>
-          </li>
-          <li><a href="#">Reports</a></li>
-        </ul>
-      </div><!-- content -->
-      <div id="content">
-          <!-- Main contents start here -->
-          <?php echo $content_for_layout; ?>
-          <!-- Main contents end here -->
-      </div><!-- content -->
-      <div class="cleaner"></div>
-    </div><!-- main -->
-    
-    <div id="footer">
-      &copy Copyright Freegal Music
-    </div><!-- footer -->
-  
-  </div><!-- witti -->
+	<?php $session->flash(); ?>
+	<div id="container">
+		<div id="header">
+			<div id="header_title">
+				Library Ideas / Freegal Music Admin
+			</div>
+			<div id="header_image">
+				<?php echo $html->image('freegal_logo.png', array('alt' => 'Freegal Music')); ?>
+			</div>
+		</div>
+		<div id="navigation">
+			<?php if ($this->pageTitle != 'Login') {
+				echo $this->element('admin_navigation');
+				echo $html->link('Logout', array('controller'=>'Admins','action'=>'logout'), array('class' => 'logout'));
+			} ?>
+		</div>
+		<div id="content"><br>
+			<?php echo $content_for_layout; ?>
+		</div>
+		<div id="footer">
+			&copy; 2010 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
+		</div>
+	</div>
 </body>
 </html>
