@@ -10,18 +10,38 @@ class Physicalproduct extends AppModel
 {
   var $name = 'Physicalproduct';
   var $useTable = 'PhysicalProduct';
+  var $primaryKey = 'ProdId';
+  var $actsAs = array('Containable');
   var $uses = array('Physicalproduct','Featuredartist','Artist');
-  
+  var $hasMany = array(
+		'Metadata' => array(
+			'className' => 'Metadata',
+			'foreignKey' => 'ProdId'
+		)
+  );
+
    /*
    Function Name : getallartist
    Desc : gets the list of all the artists
   */
   public function getallartist()
   {
-    $allArtists = $this->find('all', array(	
-	'fields' => 'DISTINCT ArtistText', 
-	'order' => 'ArtistText')
-    );   
+	$this->recursive = -1;
+	$allArtists = $this->find('all', array(
+		'fields' => array(
+			'ArtistText'
+		), 
+		'group' => array(
+			'ArtistText',
+		),
+		'order' => array(
+			'ArtistText ASC'
+		)
+	));
+    // $allArtists = $this->find('all', array(	
+    // 	'fields' => 'DISTINCT ArtistText', 
+    // 	'order' => 'ArtistText')
+    //     );
     return $allArtists;
   }
   
