@@ -7,21 +7,22 @@
 		<?php echo $title_for_layout; ?>
 	</title>
    	<?php
-		echo $this->Html->meta('icon');
-
-		echo $this->Html->css('freegal_admin_styles');
-		echo $this->Html->css('superfish');
-		echo $this->Html->css('colorbox');
-		
-        echo $javascript->link('jquery-1');
-        echo $javascript->link('jquery');       
-	    echo $javascript->link('admin_functions');
-	    echo $javascript->link('jquery.colorbox');
-		echo $javascript->link('jquery.hoverIntent.min.js');
-		echo $javascript->link('superfish.js');
-		echo $javascript->link('supersubs');
-
-		echo $scripts_for_layout;
+                echo $this->Html->meta('icon');
+                
+                echo $this->Html->css('freegal_admin_styles');
+                echo $this->Html->css('superfish');
+                echo $this->Html->css('colorbox');
+                
+                echo $javascript->link('jquery-1');       
+                echo $javascript->link('admin_functions');
+                echo $javascript->link(array('https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
+                                 'http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js'));
+                echo $javascript->link('jquery.colorbox');
+                echo $javascript->link('jquery.hoverIntent.min.js');
+                echo $javascript->link('superfish.js');
+                echo $javascript->link('supersubs');
+                
+                echo $scripts_for_layout;
 	?>
 </head>
 <body>
@@ -38,7 +39,7 @@
 		<div id="navigation">
 			<?php if ($this->pageTitle != 'Login') {
 				echo $this->element('admin_navigation');
-				echo $html->link('Logout', array('controller'=>'Admins','action'=>'logout'), array('class' => 'logout'));
+				echo $html->link('Logout', array('controller'=>'users','action'=>'logout'), array('class' => 'logout'));
 			} ?>
 		</div>
 		<div id="content"><br>

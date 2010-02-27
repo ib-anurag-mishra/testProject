@@ -114,7 +114,7 @@ class Library extends AppModel
     
     public function insert($data)
     {
-      if($this->save($data['Library']))
+      if($this->save($data))
       {
         return true;
       }else{

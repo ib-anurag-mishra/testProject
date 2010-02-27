@@ -6,7 +6,7 @@
  */
 class Metadata extends AppModel {
 	var $name = 'Metadata';
-	var $useTable = 'Metadata';
+	var $useTable = 'METADATA';
 	var $primaryKey = 'ProdId';
 	
 	var $hasOne = array(

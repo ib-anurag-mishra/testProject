@@ -151,3 +151,16 @@ body>#witti {height:auto;}
 */
 #footer {position:absolute; bottom:0; left:0; width:auto; height:23px; margin:0 0 0 10px;}
 
+.modal {
+   width: 350px;
+   padding: 60px;
+   margin: 50px 50px;
+  }
+
+  .success {
+    border: 1px solid #004000;
+  }
+
+  .problem {
+    border: 1px solid #800000;
+  }
