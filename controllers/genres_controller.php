@@ -18,7 +18,7 @@ Class GenresController extends AppController {
 			$this->Session->setFlash(__('Invalid Genre.', true));
 			$this->redirect(array('controller' => '/', 'action' => 'index'));
 		}
-		//$this->Genre->recursive = 0;
+		$this->Genre->recursive = 1;
 		$this->paginate = array('conditions' => array('Genre.genre' => $Genre));
 		$data = $this->paginate('Genre');
 		$this->set('genres', $data);
