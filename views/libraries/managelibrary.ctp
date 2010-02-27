@@ -1,4 +1,4 @@
-<?php $this->pageTitle = 'Libraries';?>
+<?php $this->pageTitle = 'Admin'; ?>
 <form>
 <fieldset>
 <legend>User Listing</legend>
@@ -28,9 +28,7 @@
           ?>
         </table>
 </fieldset>
-<?php if ($session->check('Message.flash')) { ?>
-	<fieldset>
-	   <?php echo $session->flash();?> 
-	</fieldset>
-<?php } ?>
+<?php 
+ echo $session->flash();
+?>
 </form>

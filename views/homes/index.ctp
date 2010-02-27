@@ -28,13 +28,7 @@
 			<?php foreach($songs as $randomSongs): ?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<?php
-						if (strlen($randomSongs['Home']['Title']) >= 28) {
-							echo "<p class='suggest_text'><a href='#'>" . substr($randomSongs['Home']['Title'],0,28) . "...</a><br />\n";
-						} else {
-							echo "<p class='suggest_text'><a href='#'>" . $randomSongs['Home']['Title'] . "</a><br />\n";
-						}
-						?>
+						<p class='suggest_text'><a href='#'><?php echo $randomSongs['Home']['Title'] ?></a><br />
 							by <a href='artist.php?artist=<?php echo $randomSongs['Home']['Artist'] ?>'><?php echo $randomSongs['Home']['Artist']?></a>
 							<a href='#'><img src='img/button.png'></a>
 						</p>
@@ -60,10 +54,15 @@
 	<?php endforeach; ?>
 	</div>
 	<div id="newly_added">
-		<a href="artist?artist=avril_lavigne"><img src="img/avrillavigne.png" border="0"></a>
+		<?php foreach($newArtists as $newArtist): ?>
+			<a href="artist?artist=<?php echo $newArtist['Newartist']['artist_name']?> ">
+				<img src="<?php echo $newArtist['Newartist']['artist_image']?>" border="0">
+			</a>
+		<?php endforeach; ?>
+		<!--<a href="artist?artist=avril_lavigne"><img src="img/avrillavigne.png" border="0"></a>
 		<a href="artist?artist=carrie_underwood"><img src="img/carrieunderwood.png" border="0"></a>
 		<a href="artist?artist=john_legend"><img src="img/johnlegend.png" border="0"></a>
-		<a href="artist?artist=usher"><img src="img/usher.png" border="0"></a>
+		<a href="artist?artist=usher"><img src="img/usher.png" border="0"></a> -->
 	</div>
 	<div id="artist_search">
 		Artist Search&nbsp;&nbsp;

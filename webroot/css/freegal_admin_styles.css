@@ -125,3 +125,17 @@ a.logout {
 #content table.info th, #content table.info td {border:1px solid #ccc;}
 #content table.info th, #content table.info td {padding:5px 10px; text-align:left;}
 #content table.info th.center, #content table.info td.center {text-align:center;}
+.modal {
+   width: 350px;
+   padding: 60px;
+   margin: 50px 50px;
+   color:blue;
+  }
+
+  .success {
+    border: 1px solid #004000;
+  }
+
+  .problem {
+    border: 1px solid #800000;
+  }

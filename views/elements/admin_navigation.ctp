@@ -3,10 +3,10 @@
 			<a href="#" <?php if ($this->pageTitle == "Users") echo "class=\"current\""; ?>>Users</a>
 			<ul>
 				<li>
-					<?php echo $html->link('Add User', array('controller' => 'admin_homes','action'=>'userform'));?>
+					<?php echo $html->link('Add User', array('controller' => 'users','action'=>'userform'));?>
 				</li>
 				<li>
-					<?php echo $html->link('Manage User', array('controller' => 'admin_homes','action'=>'manageuser'));?>
+					<?php echo $html->link('Manage User', array('controller' => 'users','action'=>'manageuser'));?>
 				</li>
 			</ul>
 		</li>
@@ -41,8 +41,8 @@
 				<li>
 					<a href="#">Newly Added Artist</a>
 					<ul>
-						<li><a href="#">Add Artist</a></li>
-						<li><a href="#">Manage Newly Added Artist</a></li>
+						<li><?php echo $html->link('Add Artist', array('controller' => 'Artists','action'=>'addnewartist'));?></li>
+						<li><?php echo $html->link('Manage Newly Added Artist', array('controller' => 'Artists','action'=>'managenewartist'));?></li>						
 					</ul>
 				</li>
 			</ul>

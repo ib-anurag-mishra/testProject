@@ -14,5 +14,4 @@ class Genre extends AppModel {
 			'foreignKey' => 'ProdID'
 		)
 	);
-	
 }
