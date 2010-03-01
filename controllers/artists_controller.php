@@ -10,7 +10,14 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist' );
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
-	var $components = array( 'Session', 'Auth', 'Acl' );/*
+	var $components = array( 'Session', 'Auth', 'Acl' );
+	
+	function beforeFilter() {
+	    parent::beforeFilter(); 
+	    $this->Auth->allowedActions = array('view');
+	}
+	
+	/*
     Function Name : managefeaturedartist
     Desc : action for listing all the featured artists
    */
@@ -437,6 +444,10 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( '/artists/managenewartist' );
 		}
+	}
+	
+	public function view($id = null) {
+		$this->layout = 'home';
 	}
 }
 ?>
