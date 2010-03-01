@@ -13,7 +13,7 @@ class AppController extends Controller
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
 		$this -> set ( 'genresMenu' ,  $this -> Genre -> find ('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
 		$this -> set ( 'featuredArtistMenu' ,  $this -> Featuredartist -> find ('all'));
-		//$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find ('all'));
+		$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find ('all'));
 	}
 	
 	
