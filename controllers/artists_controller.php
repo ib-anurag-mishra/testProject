@@ -448,11 +448,12 @@ Class ArtistsController extends AppController
 	
 	public function view($id = null) {
 		$this->layout = 'home';
-        $this->set("artistName",$id);
+        $this->set('artistName',$id);
 	}
 	
-	public function search() {
-		$search = $_POST['search'];
+	public function search($search = null) {
+		$this->layout = 'home';
+		//$search = $_POST['search'];
 		$this->Physicalproduct->recursive = -1;
 		$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
 	}

@@ -3,7 +3,7 @@
 	<?php echo $genre; ?>
 </div>
 <div id="genreArtist">
-	Artist
+	<?php $this->Paginator->sort('Artist'); ?>
 </div>
 <div id="genreAlbum">
 	Album
