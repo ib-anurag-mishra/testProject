@@ -448,6 +448,8 @@ Class ArtistsController extends AppController
 	
 	public function view($id = null) {
 		$this->layout = 'home';
+		$this->data->Artist->name = $id;
+		return $this->data->Artist;
 	}
 }
 ?>
