@@ -1,4 +1,4 @@
-<?php echo $javascript->link('freegal_002'); ?>
+<?php echo $javascript->link('freegal_002');?>
 <!--<div id="artist_slideshow">
 	<div id="slideshow">
 		<a href="artist?artist=foo_fighters"><img src="img/foofighters.png" border="0"></a>
@@ -66,37 +66,37 @@
 	</div>
 	<div id="artist_search">
 		Artist Search&nbsp;&nbsp;
-		<a href="artist_search?letter=num">#</a>&nbsp;
-		<a href="artist_search?letter=a">A</a>&nbsp;
-		<a href="artist_search?letter=b">B</a>&nbsp;
-		<a href="artist_search?letter=c">C</a>&nbsp;
-		<a href="artist_search?letter=d">D</a>&nbsp;
+		<a href="#" onclick="searchArtist('')">#</a>&nbsp;
+		<a href="#" onclick="searchArtist('a')">A</a>&nbsp;
+		<a href="#" onclick="searchArtist('b')">B</a>&nbsp;
+		<a href="#" onclick="searchArtist('c')">C</a>&nbsp;
+		<a href="#" onclick="searchArtist('d')">D</a>&nbsp;
 
-		<a href="artist_search?letter=e">E</a>&nbsp;
-		<a href="artist_search?letter=f">F</a>&nbsp;
-		<a href="artist_search?letter=g">G</a>&nbsp;
-		<a href="artist_search?letter=h">H</a>&nbsp;
-		<a href="artist_search?letter=i">I</a>&nbsp;
-		<a href="artist_search?letter=j">J</a>&nbsp;
+		<a href="#" onclick="searchArtist('e')">E</a>&nbsp;
+		<a href="#" onclick="searchArtist('f')">F</a>&nbsp;
+		<a href="#" onclick="searchArtist('g')">G</a>&nbsp;
+		<a href="#" onclick="searchArtist('h')">H</a>&nbsp;
+		<a href="#" onclick="searchArtist('i')">I</a>&nbsp;
+		<a href="#" onclick="searchArtist('j')">J</a>&nbsp;
 
-		<a href="artist_search?letter=k">K</a>&nbsp;
-		<a href="artist_search?letter=l">L</a>&nbsp;
-		<a href="artist_search?letter=m">M</a>&nbsp;
-		<a href="artist_search?letter=n">N</a>&nbsp;
-		<a href="artist_search?letter=o">O</a>&nbsp;
-		<a href="artist_search?letter=p">P</a>&nbsp;
+		<a href="#" onclick="searchArtist('k')">K</a>&nbsp;
+		<a href="#" onclick="searchArtist('l')">L</a>&nbsp;
+		<a href="#" onclick="searchArtist('m')">M</a>&nbsp;
+		<a href="#" onclick="searchArtist('n')">N</a>&nbsp;
+		<a href="#" onclick="searchArtist('o')">O</a>&nbsp;
+		<a href="#" onclick="searchArtist('p')">P</a>&nbsp;
 
-		<a href="artist_search?letter=q">Q</a>&nbsp;
-		<a href="artist_search?letter=r">R</a>&nbsp;
-		<a href="artist_search?letter=s">S</a>&nbsp;
-		<a href="artist_search?letter=t">T</a>&nbsp;
-		<a href="artist_search?letter=u">U</a>&nbsp;
-		<a href="artist_search?letter=v">V</a>&nbsp;
+		<a href="#" onclick="searchArtist('q')">Q</a>&nbsp;
+		<a href="#" onclick="searchArtist('r')">R</a>&nbsp;
+		<a href="#" onclick="searchArtist('s')">S</a>&nbsp;
+		<a href="#" onclick="searchArtist('t')">T</a>&nbsp;
+		<a href="#" onclick="searchArtist('u')">U</a>&nbsp;
+		<a href="#" onclick="searchArtist('v')">V</a>&nbsp;
 
-		<a href="artist_search?letter=w">W</a>&nbsp;
-		<a href="artist_search?letter=x">X</a>&nbsp;
-		<a href="artist_search?letter=y">Y</a>&nbsp;
-		<a href="artist_search?letter=z">Z</a>
+		<a href="#" onclick="searchArtist('w')">W</a>&nbsp;
+		<a href="#" onclick="searchArtist('x')">X</a>&nbsp;
+		<a href="#" onclick="searchArtist('y')">Y</a>&nbsp;
+		<a href="#" onclick="searchArtist('z')">Z</a>
 		<div id="artist_searchBox">
 			<div class="scrollarea">
 				<table cellspacing="0" cellpadding="0">

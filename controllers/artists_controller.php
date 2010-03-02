@@ -10,11 +10,11 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist' );
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
-	var $components = array( 'Session', 'Auth', 'Acl' );
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view');
+	    $this->Auth->allowedActions = array('view','search');
 	}
 	
 	/*
@@ -448,6 +448,13 @@ Class ArtistsController extends AppController
 	
 	public function view($id = null) {
 		$this->layout = 'home';
+                $this->set("artistName",$id);
+	}
+	
+	public function search() {
+	$search = $_POST['search'];
+	$this->Physicalproduct->recursive = -1;
+	$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
 	}
 }
 ?>

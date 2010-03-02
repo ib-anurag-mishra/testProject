@@ -1,6 +1,6 @@
 <script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
 <div id="genre">
-	<?php echo $genres[0]['Genre']['Genre']; ?>
+	<?php echo $genre; ?>
 </div>
 <div id="genreArtist">
 	Artist
@@ -18,19 +18,23 @@
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0">
 	<?php
+	if($genres != 0)
+	{
 		$i = 1;
 		foreach($genres as $genre):
 			$class = null;
 			if ($i++ % 2 == 0) {
 				$class = ' id="altrow"';
 			}
+			
+			
 	?>
 			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';"<?php echo $class; ?>>
 				<td width="180" valign="top">
 					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artist', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
 				</td>
 				<td width="200" valign="top">
-					<p><?php //echo $genre[Metadata][Album]; ?></p>
+					<p><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></p>
 				</td>
 				<td width="400" valign="top">
 					<p><a href="#" class="info"><?php echo $genre['Metadata']['Title']; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><a href='#'><img src='/img/button.png'></a></p>
@@ -39,7 +43,15 @@
 					<p>Download Now</p>
 				</td>
 			</tr>
-	<?php endforeach; ?>
+	<?php
+		endforeach;
+	}else{
+		echo '<td width="180" valign="top">
+					<p>No records found</p>
+				</td>';
+	}
+	
+	?>
 </table>
 </div>
 <div class="paging">
