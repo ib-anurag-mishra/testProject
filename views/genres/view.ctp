@@ -27,13 +27,22 @@
 	?>
 			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';"<?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artist', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
+					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
 				</td>
 				<td width="200" valign="top">
-					<p><?php //echo $genre[Metadata][Album]; ?></p>
+					<?php if (strlen($genre['PhysicalProduct']['Title']) >= 24) { ?>
+						<p><a href="#" class="info"><?php echo substr($genre['PhysicalProduct']['Title'], 0, 24) . '...'; ?><span><?php echo $genre['PhysicalProduct']['Title']; ?></span></a></p>
+					<?php } else { ?>
+						<p><a href="#" class="info"><?php echo $genre['PhysicalProduct']['Title']; ?><span><?php echo $genre['PhysicalProduct']['Title']; ?></span></a></p>
+					<?php } ?>
 				</td>
 				<td width="400" valign="top">
-					<p><a href="#" class="info"><?php echo $genre['Metadata']['Title']; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><a href='#'><img src='/img/button.png'></a></p>
+					<p><a href="#" class="info">
+					<?php if (strlen($genre['Metadata']['Title']) >= 46) { ?>
+						<?php echo substr($genre['Metadata']['Title'], 0, 46) . '...'; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><?php echo $html->image('button.png', array("alt" => "Play Sample")); ?></p>
+					<?php } else { ?>
+						<?php echo $genre['Metadata']['Title']; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><?php echo $html->image('button.png', array("alt" => "Play Sample")); ?></p>
+					<?php } ?>
 				</td>
 				<td width="150" align="center">
 					<p>Download Now</p>

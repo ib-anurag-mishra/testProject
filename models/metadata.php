@@ -20,6 +20,14 @@ class Metadata extends AppModel {
 		'Genre' => array(
 			'className' => 'Genre',
 			'foreignKey' => 'ProdId'
+		),
+		'Availability' => array(
+			'className' => 'Availability',
+			'foreignKey' => 'ProdId',
+			'conditions' => array(
+				'Availability.AvailabilityType' => 'PERMANENT',
+				'Availability.AvailabilityStatus' => 'I'
+			)
 		)
 	);
 	

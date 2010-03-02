@@ -1,24 +1,19 @@
 <?php echo $javascript->link('freegal_002'); ?>
-<!--<div id="artist_slideshow">
-	<div id="slideshow">
-		<a href="artist?artist=foo_fighters"><img src="img/foofighters.png" border="0"></a>
-		<a href="artist?artist=michael_jackson"><img src="img/michaeljackson.png" border="0"></a>
-		<a href="artist?artist=kings_of_leon"><img src="img/kingsofleon.png" border="0"></a>
-		<a href="artist?artist=pink"><img src="img/pink.png" border="0"></a>
-	</div>
-</div> -->
 <div id="artist_slideshow">
 	<div id="slideshow">
-	<?php foreach($artists as $artist): ?>
 	<?php
-			// echo $html->link(
-			// 	$html->image($artist['Artist']['artist_image'], array("alt" => $artist['Artist']['artist_name'])),
-			// 	"artist/" . $artist['Artist']['artist_name'],
-			// 	array('escape' => false)
-			// );
-	?>
-			<a href="artist?artist=<?php echo $artist['Artist']['artist_name']?>"><img src="<?php echo $artist['Artist']['artist_image']?>" border="0"></a>
-	<?php endforeach; ?>					
+		foreach($artists as $artist):
+			echo $html->image(substr($artist['Artist']['artist_image'], 4), array(
+				"alt" => $artist['Artist']['artist_name'],
+				'url' => array(
+					'controller' => 'artists',
+					'action' => 'view',
+					$artist['Artist']['artist_name']
+					)
+				)
+			);
+		endforeach; 
+	?>					
 	</div>
 </div>
 <div id="suggestions">
@@ -28,9 +23,35 @@
 			<?php foreach($songs as $randomSongs): ?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text'><a href='#'><?php echo $randomSongs['Home']['Title'] ?></a><br />
-							by <a href='artist.php?artist=<?php echo $randomSongs['Home']['Artist'] ?>'><?php echo $randomSongs['Home']['Artist']?></a>
-							<a href='#'><img src='img/button.png'></a>
+						<p class='suggest_text'>
+							<?php
+								if (strlen($randomSongs['Home']['Title']) >= 28 ) {
+									echo $html->link(substr($randomSongs['Home']['Title'], 0, 28) . "...", array(
+										'controller' => 'artists', 
+										'action' => 'view', 
+										$randomSongs['Home']['Title']
+										)
+									);
+								} else {
+									echo $html->link($randomSongs['Home']['Title'], array(
+										'controller' => 'artists', 
+										'action' => 'view', 
+										$randomSongs['Home']['Title']
+										)
+									);
+								}
+							?>
+							<br />
+							by&nbsp;
+							<?php
+								echo $html->link($randomSongs['Home']['Artist'], array(
+									'controller' => 'artists',
+									'action' => 'view',
+									$randomSongs['Home']['Artist']
+									)
+								);
+							?>
+							<?php echo $html->image('button.png', array("alt" => "Play Sample")); ?>
 						</p>
 					</td>
 				</tr>
@@ -39,30 +60,35 @@
 	</div>
 </div>
 <div id="artist_container">
-	<!--<div id="featured_artist">
-		<a href="artist?artist=alicia_keys"><img src="img/aliciakeys.png" border="0"></a>
-		<a href="artist?artist=kat_deluna"><img src="img/katdeluna.png" border="0"></a>
-		<a href="artist?artist=jordan_sparks"><img src="img/jordansparks.png" border="0"></a>
-		<a href="artist?artist=t_pain"><img src="img/t_pain.png" border="0"></a>
-	</div>
-	  -->
 	<div id="featured_artist">
-	<?php foreach($featuredArtists as $featuredArtist): ?>
-		<a href="artist?artist=<?php echo $featuredArtist['Featuredartist']['artist_name']?> ">
-			<img src="<?php echo $featuredArtist['Featuredartist']['artist_image']?>" border="0">
-		</a>
-	<?php endforeach; ?>
+		<?php 
+		foreach($featuredArtists as $featuredArtist):
+			echo $html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array(
+				"alt" => "Featured Arstist",
+				'url' => array(
+					'controller' => 'artist',
+					'action' => 'view',
+					$featuredArtist['Featuredartist']['artist_name']
+					)
+				)
+			);
+		endforeach;
+		?>
 	</div>
 	<div id="newly_added">
-		<?php foreach($newArtists as $newArtist): ?>
-			<a href="artist?artist=<?php echo $newArtist['Newartist']['artist_name']?> ">
-				<img src="<?php echo $newArtist['Newartist']['artist_image']?>" border="0">
-			</a>
-		<?php endforeach; ?>
-		<!--<a href="artist?artist=avril_lavigne"><img src="img/avrillavigne.png" border="0"></a>
-		<a href="artist?artist=carrie_underwood"><img src="img/carrieunderwood.png" border="0"></a>
-		<a href="artist?artist=john_legend"><img src="img/johnlegend.png" border="0"></a>
-		<a href="artist?artist=usher"><img src="img/usher.png" border="0"></a> -->
+		<?php 
+		foreach($newArtists as $newArtist):
+			echo $html->image(substr($newArtist['Newartist']['artist_image'], 4), array(
+				"alt" => "Newly Added Artist", 
+				'url' => array(
+					'controller' => 'artists',
+					'action' => 'view',
+					$newArtist['Newartist']['artist_name']
+					)
+				)
+			);
+		endforeach;
+		?>
 	</div>
 	<div id="artist_search">
 		Artist Search&nbsp;&nbsp;
@@ -104,9 +130,13 @@
 				        <tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 							<td class='artist_line'>
 								<p>
-									<a href='artist.php?artist=<?php echo $allArtists['Physicalproduct']['ArtistText'] ?>'>
-										<?php echo $allArtists['Physicalproduct']['ArtistText'] ?>
-									</a>
+									<?php
+										echo $html->link($allArtists['Physicalproduct']['ArtistText'], array(
+											'controller' => 'artists',
+											'action' => 'view',
+											$allArtists['Physicalproduct']['ArtistText'])
+										);
+									?>
 								</p>
 							</td>
 						</tr>
