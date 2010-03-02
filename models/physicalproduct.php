@@ -131,5 +131,23 @@ class Physicalproduct extends AppModel
     }
     return $resultArr;
   }
+  
+  public function searchArtist($search)
+  {
+      $allArtists = $this->find('all', array(
+	      'fields' => array(
+		      'ArtistText'
+	      ), 
+	      'group' => array(
+		      'ArtistText',
+	      ),
+	      'order' => array(
+		      'ArtistText ASC',			
+	      ),
+	      'conditions' => array('ArtistText LIKE' => $search.'%')
+      ));
+      return $allArtists;
+  }
+    
 }
 ?>

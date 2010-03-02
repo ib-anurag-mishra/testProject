@@ -42,3 +42,20 @@ addEvent(window, 'load', initCorners);
 	curvyCorners(settings, "#slideshow");
 	// curvyCorners(search_settings, "#search");
   }
+  
+  function searchArtist(searchID)
+  {
+    var data = "search="+ searchID;
+    $.ajax({
+    type: "post",  // Request method: post, get
+    url: "/freegal/artists/search/", // URL to request
+    data: data,  // post data
+    success: function(response) {
+    document.getElementById("artist_searchBox").innerHTML = response;
+    },
+    error:function (XMLHttpRequest, textStatus, errorThrown) {
+    alert(textStatus);
+    }
+    });
+    return false; 
+  }

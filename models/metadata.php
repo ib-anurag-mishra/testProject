@@ -13,21 +13,14 @@ class Metadata extends AppModel {
 		'Physicalproduct' => array(
 			'className' => 'Physicalproduct',
 			'foreignKey' => 'ProdId'
-		)
-	);
-	
-	var $hasMany = array(
+		),
 		'Genre' => array(
 			'className' => 'Genre',
 			'foreignKey' => 'ProdId'
 		),
 		'Availability' => array(
 			'className' => 'Availability',
-			'foreignKey' => 'ProdId',
-			'conditions' => array(
-				'Availability.AvailabilityType' => 'PERMANENT',
-				'Availability.AvailabilityStatus' => 'I'
-			)
+			'foreignKey' => 'ProdId'
 		)
 	);
 	
@@ -37,5 +30,12 @@ class Metadata extends AppModel {
 			'foreignKey' => 'ProdId'
 		)
 	);
+	
+	/*var $hasMany = array(
+		'Availability' => array(
+			'className' => 'Availability',
+			'foreignKey' => 'ProdId'
+		)
+	);*/
 	
 }
