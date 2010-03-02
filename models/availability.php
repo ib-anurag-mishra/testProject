@@ -7,10 +7,11 @@
 class Availability extends AppModel {
 	var $name = 'Availability';
 	var $useTable = 'Availability';
-        
-        var $hasOne = array(
-		'Metadata' => array(
-			'className' => 'Metadata',
+	var $primaryKey = 'ProdId';
+	
+	var $hasMany = array(
+		'Product' => array(
+			'className' => 'Product',
 			'foreignKey' => 'ProdId'
 		)
 	);
