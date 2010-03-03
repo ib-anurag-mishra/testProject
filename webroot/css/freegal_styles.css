@@ -64,7 +64,7 @@ body  {
 	}
 	
 #content {
-	height: 600px;
+/*	height: 600px;*/
 }
 	#navigation {
 		float:left;
@@ -213,6 +213,7 @@ body  {
 		}
 	
 #footer {
+	clear:both;
 	width:955px;
 	color:#fff;
 	height: 16px;
@@ -611,15 +612,20 @@ body  {
 }
 
 #album {
+	clear:both;
 	font-size:13px;
+	padding-bottom: 25px;
 }
 
 	.lgAlbumArtwork {
 		float:left;
 		margin: 0 0 10px 12px;
+		background: #ccc; /* to be removed */
+		width:250px; /* to be removed */
+		height:250px; /* to be removed */
 	}
 
-	#albumBox {
+	.albumBox {
 		float:left;
 		width:400px;
 		height: 20px;
@@ -629,7 +635,7 @@ body  {
 		line-height:20px;
 	}
 
-	#songBox {
+	.songBox {
 		float:left;
 		width:600px;
 		height: 20px;

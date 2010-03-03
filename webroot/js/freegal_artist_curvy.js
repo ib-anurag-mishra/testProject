@@ -16,6 +16,6 @@ addEvent(window, 'load', initCorners);
 	}
 
     curvyCorners(artist, "#artistBox");
-	// curvyCorners(title, "#albumBox");
-	// 	curvyCorners(title, "#songBox");
+	curvyCorners(title, ".albumBox");
+	curvyCorners(title, ".songBox");
   }
