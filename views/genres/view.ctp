@@ -34,12 +34,12 @@
 					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
 				</td>
 				<td width="200" valign="top">
-					<!-- <?php if (strlen($genre['PhysicalProduct']['Title']) >= 24) { ?>
-											<p><a href="#" class="info"><?php echo substr($genre['PhysicalProduct']['Title'], 0, 24) . '...'; ?><span><?php echo $genre['PhysicalProduct']['Title']; ?></span></a></p>
-										<?php } else { ?>
-											<p><a href="#" class="info"><?php echo $genre['PhysicalProduct']['Title']; ?><span><?php echo $genre['PhysicalProduct']['Title']; ?></span></a></p>
-										<?php } ?>
-										<p><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></p> -->
+					<?php if (strlen($genre['Physicalproduct']['Title']) >= 24) { ?>
+								<p><a href="#" class="info"><?php echo substr($genre['Physicalproduct']['Title'], 0, 24) . '...'; ?><span><?php echo $genre['Physicalproduct']['Title']; ?></span></a></p>
+					<?php } else { ?>
+								<p><a href="#" class="info"><?php echo $genre['Physicalproduct']['Title']; ?><span><?php echo $genre['Physicalproduct']['Title']; ?></span></a></p>
+					<?php } ?>
+					<p><?php // echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></p>
 				</td>
 				<td width="400" valign="top">
 					<p><a href="#" class="info">
