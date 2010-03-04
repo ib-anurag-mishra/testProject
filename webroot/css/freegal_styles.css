@@ -600,86 +600,86 @@ body  {
 	height: 20px;
 	background-color:#ccc;
 	text-align: center;
-	margin: 10px 0 0 10px;
+	margin: 10px 0 10px 10px;
 	line-height:20px;
-}
-
-#artistInfo {
-	float:left;
-    width:935px;
-	margin:5px 0 10px 12px;
-    text-align: left;
-	font-size:13px;
-}
-
-#artistInfo a {
-	text-decoration: none;
-	color: #666;
-}
-
-#artistInfo a:hover {
-	text-decoration: underline;
-	color: #666;
 }
 
 #album {
 	clear:both;
 	font-size:13px;
 	padding-bottom: 25px;
+	padding-top: 10px;
 }
 
 	.lgAlbumArtwork {
 		float:left;
-		margin: 0 0 10px 12px;
+		margin: 0 0 10px 10px;
 		background: #ccc; /* to be removed */
 		width:250px; /* to be removed */
 		height:250px; /* to be removed */
 	}
-
-	.albumBox {
+	
+	.albumData {
 		float:left;
-		width:400px;
-		height: 20px;
-		background-color:#ccc;
-		text-align: center;
-		margin: 0 0 5px 10px;
-		line-height:20px;
 	}
 
-	.songBox {
-		float:left;
-		width:600px;
-		height: 20px;
-		background-color:#ccc;
-		text-align: center;
-		margin: 0 0 0 10px;
-		line-height:20px;
-	}
+		.albumBox {
+			width:400px;
+			height: 20px;
+			background-color:#ccc;
+			text-align: center;
+			margin: 0 0 5px 10px;
+			line-height:20px;
+		}
 
-	#songResults {
-		float:left;
-		text-align: left;
-		margin-left:10px;
-	}
+		.songBox {
+			width:600px;
+			height: 20px;
+			background-color:#ccc;
+			text-align: center;
+			margin: 0 0 0 10px;
+			line-height:20px;
+		}
 
-	#songResults img {
-		margin-top:2px;
-	}
+		#songResults {
+			text-align: left;
+			margin-left:10px;
+		}
 
-	.songHeader {
-		float:left;
-		width:400px;
-	}
+		#songResults img {
+			margin-top:2px;
+		}
 
-	.timeHeader {
-		float:left;
-		width:50px;
-	}
+		.songHeader {
+			float:left;
+			width:400px;
+		}
 
-	.downloadHeader {
-		float:left;
-		width:150px;
-	}
+		.timeHeader {
+			float:left;
+			width:50px;
+		}
+
+		.downloadHeader {
+			float:left;
+			width:150px;
+		}
+		
+		.artistInfo {
+			margin:5px 0 10px 12px;
+		    text-align: left;
+			font-size:13px;
+		}
+
+		.artistInfo a {
+			text-decoration: none;
+			color: #666;
+		}
+
+		.artistInfo a:hover {
+			text-decoration: underline;
+			color: #666;
+		}
 
 /** Paging **/
 div.paging {
