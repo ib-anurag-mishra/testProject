@@ -480,8 +480,10 @@ Class ArtistsController extends AppController
                if($albumData[0]['Metadata']['ArtistURL'] != "" )
                 {
                    $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
+				   $this->set('artistCopy', $albumData[0]['Metadata']['Copyright']);
                 }else{
                    $this->set('artistUrl', "N/A");
+				   $this->set('artistCopy', "N/A");
                 }
                 $this->set('albumSongs',$albumSongs);
 	}

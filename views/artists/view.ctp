@@ -8,8 +8,18 @@ Place holder.  When the queries are done we can put in foreach statements.
 </div>
 <br class="clr">
 <div id="artistInfo">
-	Website: <?php echo $artistUrl;?> <br />
-	&copy;
+	<?php
+		if ($artistUrl != 'N/A') {
+	?>
+			Website: <?php echo $html->link('http://' . $artistUrl, 'http://' . $artistUrl, array('target' => 'blank')); ?> <br />
+	<?php
+		}
+		if ($artistCopy != 'N/A' || $artistCopy == 'Unknown') {
+	?>
+			<?php // echo $artistCopy; ?>
+	<?php
+		}
+	?>
 </div>
 <br class="clr">
 	<?php
