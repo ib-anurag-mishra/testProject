@@ -24,12 +24,12 @@
 		foreach($genres as $genre):
 			$class = null;
 			if ($i++ % 2 == 0) {
-				$class = ' id="altrow"';
+				$class = ' class="altrow"';
 			}
 			
 			
 	?>
-			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';"<?php echo $class; ?>>
+			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php echo $class; ?>>
 				<td width="180" valign="top">
 					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
 				</td>

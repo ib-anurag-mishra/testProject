@@ -40,29 +40,34 @@ Place holder.  When the queries are done we can put in foreach statements.
 		</div>
 		<div id="songResults">
 			<?php
+			$i = 1;
 			foreach($albumSongs[$album['Physicalproduct']['ReferenceID']] as $albumSong):
+				$class = null;
+				if ($i++ % 2 == 0) {
+					$class = ' class="altrow"';
+				}
 			?>
 			<table cellspacing="0" cellpadding="0" border="0">
-				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';"<?php //echo $class; ?>>
+				<tr <?php echo $class; ?>>
 					<td width="20" valign="top" align="center">
-						<a href="#"><?php echo $html->image('button.png'); ?></a>
+						<p><a href="#"><?php echo $html->image('button.png'); ?></a></p>
 					</td>
 					<td width="380" valign="top" align="left">
-						<?php echo $albumSong['Metadata']['Title'];?>
+						<p><?php echo $albumSong['Metadata']['Title'];?></p>
 					</td>
 					<td width="50" valign="top" align="center">
-						5:10
+						<p>5:10</p>
 					</td>
 					<td width="150" valign="top" align="center">
 					<?php
 					if($albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d'))
 					{
 					?>
-						Download Now
+						<p>Download Now</p>
 					<?php
 					}else{
 						?>
-							Comming Soon( <?php echo $albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)
+							<p>Coming Soon( <?php echo $albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</p>
 						<?php
 						}
 						?>	
