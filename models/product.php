@@ -7,25 +7,31 @@
 class Product extends AppModel {
 	var $name = 'Product';
 	var $useTable = 'PRODUCT';
-	var $primaryKey = 'ProdId';
+	var $primaryKey = 'ProdID';
 	
-	var $hasMany = array(
-		'Metadata' => array(
-			'className' => 'Metadata',
-			'foreignKey' => 'ProdId'
-		),
+       /* var $hasMany = array(
 		'Availability' => array(
 			'className' => 'Availability',
-			'foreignKey' => 'ProdId',
-			'conditions' => array(
-				'Availability.AvailabilityType' => 'PERMANENT',
-				'Availability.AvailabilityStatus' => 'I'
-			)
-		),
-		'ProductOffer' => array(
+			'foreignKey' => 'ProdID'
+		)
+       	);*/
+	var $hasOne = array(
+		'Metadata' => array(
+			'className' => 'Metadata',
+			'foreignKey' => 'ProdID'
+		),'ProductOffer' => array(
 			'className' => 'ProductOffer',
-			'foreignKey' => 'ProdId'
-		)	
-	);
-	
+			'foreignKey' => 'ProdID'
+		),
+		'Physicalproduct' => array(
+			'className' => 'Physicalproduct',
+			'foreignKey' => 'ProdID'
+		),'Genre' => array(
+			'className' => 'Genre',
+			'foreignKey' => 'ProdID'
+		),'Availability' => array(
+			'className' => 'Availability',
+			'foreignKey' => 'ProdID'
+		)
+       	);
 }

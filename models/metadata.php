@@ -1,7 +1,7 @@
 <?php
  /*
  File Name : metadata.php
- File Description : Metadata page.
+ File Description : Metadata Model
  Author : maycreate
  */
 class Metadata extends AppModel {
@@ -9,33 +9,11 @@ class Metadata extends AppModel {
 	var $useTable = 'METADATA';
 	var $primaryKey = 'ProdId';
 	
-	var $hasOne = array(
-		'Physicalproduct' => array(
-			'className' => 'Physicalproduct',
-			'foreignKey' => 'ProdId'
-		),
-		'Genre' => array(
-			'className' => 'Genre',
-			'foreignKey' => 'ProdId'
-		),
-		'Availability' => array(
-			'className' => 'Availability',
-			'foreignKey' => 'ProdId'
-		)
-	);
-	
-	var $belongsTo = array(
+	 var $belonsTo = array(
 		'Product' => array(
 			'className' => 'Product',
-			'foreignKey' => 'ProdId'
+			'foreignKey' => 'ProdID'
 		)
-	);
-	
-	/*var $hasMany = array(
-		'Availability' => array(
-			'className' => 'Availability',
-			'foreignKey' => 'ProdId'
-		)
-	);*/
+  );
 	
 }

@@ -3,7 +3,7 @@
 	<?php echo $genre; ?>
 </div>
 <div id="genreArtist">
-	<?php $this->Paginator->sort('Artist'); ?>
+	Artist
 </div>
 <div id="genreAlbum">
 	Album
@@ -31,26 +31,27 @@
 	?>
 			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';"<?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
+					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artist', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
 				</td>
 				<td width="200" valign="top">
-					<?php if (strlen($genre['Physicalproduct']['Title']) >= 24) { ?>
-								<p><a href="#" class="info"><?php echo substr($genre['Physicalproduct']['Title'], 0, 24) . '...'; ?><span><?php echo $genre['Physicalproduct']['Title']; ?></span></a></p>
-					<?php } else { ?>
-								<p><a href="#" class="info"><?php echo $genre['Physicalproduct']['Title']; ?><span><?php echo $genre['Physicalproduct']['Title']; ?></span></a></p>
-					<?php } ?>
-					<p><?php // echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></p>
+					<p><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></p>
 				</td>
 				<td width="400" valign="top">
-					<p><a href="#" class="info">
-					<?php if (strlen($genre['Metadata']['Title']) >= 46) { ?>
-						<?php echo substr($genre['Metadata']['Title'], 0, 46) . '...'; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><?php echo $html->image('button.png', array("alt" => "Play Sample")); ?></p>
-					<?php } else { ?>
-						<?php echo $genre['Metadata']['Title']; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><?php echo $html->image('button.png', array("alt" => "Play Sample")); ?></p>
-					<?php } ?>
+					<p><a href="#" class="info"><?php echo $genre['Metadata']['Title']; ?><span><?php echo $genre['Metadata']['Title']; ?></span></a><a href='#'><img src='/img/button.png'></a></p>
 				</td>
 				<td width="150" align="center">
-					<p>Download Now</p>
+					<?php
+					if($genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d'))
+					{
+						?>
+						<p>Download Now</p>
+						<?php
+					}else{
+						?>
+						<p>Comming Soon( <?php echo $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</p>
+						<?php
+					}
+					?>
 				</td>
 			</tr>
 	<?php

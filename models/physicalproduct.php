@@ -10,16 +10,27 @@ class Physicalproduct extends AppModel
 {
   var $name = 'Physicalproduct';
   var $useTable = 'PhysicalProduct';
-  var $primaryKey = 'ProdId';
+  var $primaryKey = 'ProdID';
   var $actsAs = array('Containable');
-  var $uses = array('Physicalproduct','Featuredartist','Artist');
-  var $hasMany = array(
-		'Metadata' => array(
-			'className' => 'Metadata',
-			'foreignKey' => 'ProdId'
+  var $uses = array('Physicalproduct','Featuredartist','Artist','Productoffer');
+  var $belongsTo = array(
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'ProdID'
 		)
   );
-
+ var $hasOne = array(
+		'Metadata' => array(
+			'className' => 'Metadata',
+			'foreignKey' => 'ProdID'
+		),'Availability' => array(
+			'className' => 'Availability',
+			'foreignKey' => 'ProdID'
+		),'ProductOffer' => array(
+			'className' => 'ProductOffer',
+			'foreignKey' => 'ProdID'
+		)
+  );
    /*
    Function Name : getallartist
    Desc : gets the list of all the artists

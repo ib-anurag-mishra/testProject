@@ -7,9 +7,9 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist' );
+	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist');
 	var $layout = 'admin';
-	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
+	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
 	
 	function beforeFilter() {
@@ -448,7 +448,42 @@ Class ArtistsController extends AppController
 	
 	public function view($id = null) {
 		$this->layout = 'home';
-        $this->set('artistName',$id);
+                $this->set('artistName',$id);
+                $this -> paginate =  array('conditions' =>
+					  array('and' =>
+						array(
+							array( 'Physicalproduct.ArtistText' => $id ),
+                                                        array( "Physicalproduct.ProdID = Physicalproduct.ReferenceID")
+						      )
+						)/*,
+                                                 'group' => 'Physicalproduct.ReferenceID'*/
+					  );
+                $this->Physicalproduct->recursive = 2;
+                $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
+                $albumSongs = array();
+                foreach($albumData as $album)
+                {
+                    $albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+                                                  'conditions' =>
+                                                            array('and' =>
+                                                                  array(
+                                                                          array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),
+                                                                          array( "Physicalproduct.ProdID <> Physicalproduct.ReferenceID"),
+                                                                          array('Availability.AvailabilityType' => "PERMANENT"),
+                                                                          array('Availability.AvailabilityStatus' => "I"),
+                                                                          array('ProductOffer.PRODUCT_OFFER_ID >' => 0)
+                                                                        )
+                                                                  ),'order' => 'Physicalproduct.ReferenceID'
+                                                            ));
+                }
+                $this->set('albumData', $albumData);
+               if($albumData[0]['Metadata']['ArtistURL'] != "" )
+                {
+                   $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
+                }else{
+                   $this->set('artistUrl', "N/A");
+                }
+                $this->set('albumSongs',$albumSongs);
 	}
 	
 	public function search($search = null) {

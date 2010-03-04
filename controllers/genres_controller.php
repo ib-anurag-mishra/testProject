@@ -6,7 +6,7 @@
  */
 Class GenresController extends AppController
 {
-	var $uses = array('Metadata');
+	var $uses = array('Metadata','Product');
 	function view( $Genre = null )
 	{
 		$this -> layout = 'home';		
@@ -14,35 +14,59 @@ Class GenresController extends AppController
 		{
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
-		}//$this->Genre->recursive = 0;
+		}
 		
-		
-/*$joinArray = array('joins' => array(
-		    array(
-			'table' => 'PRODUCT_OFFER',
-			'alias' => 'PRODUCT_OFFER',
-			'type' => 'LEFT',
-			'foreignKey' => false,
-			'conditions'=> array('Physicalproduct.ProdID = PRODUCT_OFFER.ProdID')
-		    ),
-		    array(
-			'table' => 'SALES_TERRITORY',
-			'alias' => 'SALES_TERRITORY',
-			'type' => 'LEFT',
-			'foreignKey' => false,
-			'conditions'=> array('PRODUCT_OFFER.PRODUCT_OFFER_ID = SALES_TERRITORY.PRODUCT_OFFER_ID')
-		    )
-		));*/
 		if($Genre != "all")
 		{
 		 // $this -> paginate = array('conditions' => array( 'Genre.Genre' => $Genre ) );
-		  $this->paginate = array('conditions' => array('and' =>array(array('Genre.Genre' => $Genre),array('Availability.AvailabilityType' => "PERMANENT"),array('Availability.AvailabilityStatus' => "I"),array('Physicalproduct.ReferenceID <>' => 'Physicalproduct.ProdID'),array('Physicalproduct.TrackBundleCount' => 0))));
+		  $this->paginate = array('conditions' =>
+					  array('and' =>
+						array(
+							array('Genre.Genre' => $Genre),
+							array('Availability.AvailabilityType' => "PERMANENT"),
+							array('Availability.AvailabilityStatus' => "I"),
+							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
+							array('Physicalproduct.TrackBundleCount' => 0),
+							array('ProductOffer.PRODUCT_OFFER_ID >' => 1)
+						      )
+						)
+					  );
 		}else{
-		    $this->paginate = array('conditions' => array('and' =>array(array('Availability.AvailabilityType' => "PERMANENT"),array('Availability.AvailabilityStatus' => "I"),array('Physicalproduct.ReferenceID <>' => 'Physicalproduct.ProdID'),array('Physicalproduct.TrackBundleCount' => 0))));
+		  $this->paginate = array('conditions' =>
+					  array('and' =>
+						array(
+							array('Availability.AvailabilityType' => "PERMANENT"),
+							array('Availability.AvailabilityStatus' => "I"),
+							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
+							array('Physicalproduct.TrackBundleCount' => 0),
+							array('ProductOffer.PRODUCT_OFFER_ID >' => 0)
+						      )
+						)
+					  );
 		}
-		$this->Genre->recursive = 1;
+		
 		$this->set('genre',$Genre);
-		$data = $this->paginate('Metadata');
+		//$this->Product->contain();
+		$this->Product->recursive = 2;
+		$data = $this->paginate('Product');
+		/*$data = $this->paginate('Product',array('joins' => array(
+							    array(
+								'table' => 'PRODUCT_OFFER',
+								'alias' => 'Productoffer',
+								'type' => 'left',
+								'foreignKey' => false,
+								'conditions'=> array('Productoffer.ProdID = Product.ProdID')
+							    ),
+							    array(
+								'table' => 'SALES_TERRITORY',
+								'alias' => 'Salesterritory',
+								'type' => 'left',
+								'foreignKey' => false,
+								'conditions'=> array(
+								    'Salesterritory.PRODUCT_OFFER_ID = Productoffer.PRODUCT_OFFER_ID'
+								)
+							    )
+							)));*/
 		if(count($data) > 0)
 		{
 		  $album = array();

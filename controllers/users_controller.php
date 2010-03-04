@@ -148,8 +148,7 @@ Class UsersController extends AppController
     public function delete()
     {
       $deleteAdminUserId = $this->params['named']['id'];
-      $deleteObj  = new User();
-      if($deleteObj->del($deleteAdminUserId))
+      if($this->User->delete($deleteAdminUserId))
       {
         $this->Session->setFlash('Data deleted Sucessfully!', 'modal', array('class' => 'modal success'));
         $this->redirect('/users/manageuser');
