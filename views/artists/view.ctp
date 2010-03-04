@@ -22,14 +22,15 @@ Place holder.  When the queries are done we can put in foreach statements.
 		<div class="artistInfo">
 			<?php
 				if ($album['Metadata']['ArtistURL'] != '') {
-			?>
-					<?php echo $html->link('http://' . $album['Metadata']['ArtistURL'], 'http://' . $album['Metadata']['ArtistURL'], array('target' => 'blank')); ?> <br />
-			<?php
+					echo $html->link('http://' . $album['Metadata']['ArtistURL'], 'http://' . $album['Metadata']['ArtistURL'], array('target' => 'blank'));
+					echo '<br />';
+				}
+				if ($album['Metadata']['Label'] != '') {
+					echo 'Label: ' . $album['Metadata']['Label'];
+					echo '<br />';
 				}
 				if ($album['Metadata']['Copyright'] != '' && $album['Metadata']['Copyright'] != 'Unknown') {
-			?>
-					<?php echo $album['Metadata']['Copyright']; ?>
-			<?php
+					echo $album['Metadata']['Copyright'];
 				}
 			?>
 		</div>

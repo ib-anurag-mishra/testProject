@@ -667,6 +667,7 @@ body  {
 		
 		.artistInfo {
 			margin:5px 0 10px 12px;
+			width:685px;
 		    text-align: left;
 			font-size:13px;
 		}
