@@ -5,7 +5,7 @@
 				        <tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 							<td class='artist_line'>
 								<p>
-									<a href='artist.php?artist=<?php echo $allArtists['Physicalproduct']['ArtistText'] ?>'>
+									<a href='artists/view/<?php echo $allArtists['Physicalproduct']['ArtistText'] ?>'>
 										<?php echo $allArtists['Physicalproduct']['ArtistText'] ?>
 									</a>
 								</p>
