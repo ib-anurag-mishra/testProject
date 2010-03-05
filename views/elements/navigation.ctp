@@ -66,9 +66,12 @@
 			</ul>
 		</li>
 		<li id="search">
-			<form name="search_form" method="post" action="homes/search" class="search_form">				
-				<?php echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>	
-			</form>
+			<!--<form name="search_form" method="post" action="homes/search" class="search_form">-->
+			<?php echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form'));	
+			      echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>
+				<input type="submit" class="searchButton" value=""></input>
+			<!-- </form>-->
+			<?php echo $this->Form->end(); ?>
 			<a href="#">Advanced Search</a>
 		</li>	
 	</ul>
