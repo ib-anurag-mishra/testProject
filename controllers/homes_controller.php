@@ -23,9 +23,9 @@ class HomesController extends AppController
     }
     
     function autoComplete()
-    {        
+    {       
         $albumResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array( "OR" => array ('Physicalproduct.Title LIKE'=>$this->data['autoComplete'].'%'						
+	   'conditions'=>array( "OR" => array ('Physicalproduct.Title LIKE'=>$this->data['Home']['autoComplete'].'%'						
 	   )),
            'fields' => array(
 			  'Title'
@@ -35,7 +35,7 @@ class HomesController extends AppController
 		  )));        
 	$this->set('albumResults', $albumResults);       
         $artistResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array( "OR" => array ('Physicalproduct.ArtistText LIKE'=>$this->data['autoComplete'].'%'
+	   'conditions'=>array( "OR" => array ('Physicalproduct.ArtistText LIKE'=>$this->data['Home']['autoComplete'].'%'
 	   )),
            'fields' => array(
 			  'ArtistText'
@@ -46,7 +46,7 @@ class HomesController extends AppController
                   'limit' => '6'));        
 	$this->set('artistResults', $artistResults);
         $songResults = $this->Home->find('all', array(
-	   'conditions'=>array( "OR" => array ('Title LIKE'=>$this->data['autoComplete'].'%'
+	   'conditions'=>array( "OR" => array ('Title LIKE'=>$this->data['Home']['autoComplete'].'%'
 	   )),
            'fields' => array(
 			  'Title'
@@ -59,11 +59,38 @@ class HomesController extends AppController
         $this->layout = 'ajax';
     }
     
-    function search()
+    function artistSearch()
     {
 	$search = $_POST['search'];
 	$this->Physicalproduct->recursive = -1;
 	$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
+    }
+    
+    function search()
+    {        
+        $searchKey = $this->data['Home']['autoComplete'];       
+        $this -> paginate = array('conditions' =>
+                                array('and' =>
+                                        array(                                                      
+                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
+                                                array('Availability.AvailabilityType' => "PERMANENT"),
+                                                array('Availability.AvailabilityStatus' => "I"),
+                                                array('ProductOffer.PRODUCT_OFFER_ID >' => 0),
+                                                array('ProductOffer.PURCHASE' => 'T')
+                                            )
+                                        ,
+                                    'or' =>
+                                            array(
+                                                    array('Physicalproduct.ArtistText LIKE' => $searchKey.'%'),
+                                                    array('Physicalproduct.Title LIKE' => $searchKey.'%'),
+                                                    array('Metadata.Title LIKE' => $searchKey.'%')
+                                                )
+                                    )
+                                );
+        $this->Physicalproduct->recursive = 2;
+        $searchResults = $this->paginate('Physicalproduct');        
+        $this->set('searchResults', $searchResults);
+        $this->layout = 'home';
     }
 }
 ?>

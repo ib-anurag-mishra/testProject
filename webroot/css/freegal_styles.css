@@ -335,10 +335,18 @@ body  {
 	background:#fff;
 }
 
-#search input {
-	background:transparent url(../img/search.png) top right no-repeat;
+#search input {	
 	line-height:14px;
 }
+
+.searchButton {
+	background:transparent url(../img/search.png) center center no-repeat;
+	line-height:14px;
+	border:none;
+	height:13px;
+	width:12px;
+	cursor:pointer;	
+} 
 
 /* Genre Page */
 #genre {
