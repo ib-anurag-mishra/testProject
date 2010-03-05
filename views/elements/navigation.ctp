@@ -66,10 +66,10 @@
 			</ul>
 		</li>
 		<li id="search">
-			<?php echo $form->create('Search', array('class' => 'search_form', 'url' => array('controller' => 'artists', 'action' => 'search'))); ?>
-			<?php echo $form->input('search', array('label' => false, 'size' => '24', 'value' => 'Search', 'onclick' => 'if(this.value=="Search") {this.value="";}')); ?>
-			<?php echo $form->end(); ?>
+			<form name="search_form" method="post" action="homes/search" class="search_form">				
+				<?php echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>	
+			</form>
 			<a href="#">Advanced Search</a>
-		</li>
+		</li>	
 	</ul>
 </div>

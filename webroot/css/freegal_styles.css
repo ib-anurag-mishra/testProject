@@ -326,6 +326,7 @@ body  {
 #search {
 	color:#fff;
 	background:#3F3F3F;
+	position: relative;
 }
 
 .search_form {
@@ -811,4 +812,42 @@ div.code-coverage-results span.result-ok {
 }
 div.code-coverage-results span.result-good {
 	color: #0a0;
+}
+#nav li > .search_form > div.auto_complete {
+     position: absolute;
+     width: 169px;
+     background-color: white;
+     border: 1px solid #000;
+     margin: 0px;
+     padding: 0px;
+     float: left;
+}
+#nav li > .search_form > div.auto_complete > ul {
+	position:absolute;
+	width:169px;
+	left:-1px;
+	top:0px;
+	list-style:none;
+	padding:1px 0 0;
+	margin:0;
+	text-transform:none;
+	display:block;
+}
+
+#nav li > .search_form > div.auto_complete > ul > li {
+	background:url(../img/nav_back80.png) top left repeat;
+	float:none;
+	display:block;
+	text-align:left;
+	padding:5px 14px;
+	width:141px;
+	cursor:pointer;
+	color:#fff;
+}
+
+#nav li > .search_form > div.auto_complete > ul > li.hover, #nav li > .search_form > div.auto_complete > ul > li:hover {
+	background: url(../img/nav_back_grey.png) top left repeat;
+	color:#fff; 
+	text-align:left;
+	cursor:pointer;
 }

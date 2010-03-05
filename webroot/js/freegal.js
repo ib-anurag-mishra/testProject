@@ -1,5 +1,5 @@
-$(document).ready(function() {
-	$('#slideshow').cycle({
+jQuery(document).ready(function() {
+	jQuery('#slideshow').cycle({
 		fx: 'fade',
 		sync: 0,
 		speed: 'slow',
@@ -7,8 +7,8 @@ $(document).ready(function() {
 		timeout: 12000
 	});
 });
-$(document).ready(function() {
-	$('#featured_artist').cycle({
+jQuery(document).ready(function() {
+	jQuery('#featured_artist').cycle({
 		fx: 'fade',
 		sync: 0,
 		speed: 'slow',
@@ -16,8 +16,8 @@ $(document).ready(function() {
 		timeout: 12000
 	});
 });
-$(document).ready(function() {
-	$('#newly_added').cycle({
+jQuery(document).ready(function() {
+	jQuery('#newly_added').cycle({
 		fx: 'fade',
 		sync: 0,
 		speed: 'slow',
@@ -25,3 +25,4 @@ $(document).ready(function() {
 		timeout: 12000
 	});
 });
+

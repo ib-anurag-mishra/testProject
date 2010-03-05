@@ -46,9 +46,9 @@ addEvent(window, 'load', initCorners);
   function searchArtist(searchID)
   {
     var data = "search="+ searchID;
-    $.ajax({
+    jQuery.ajax({
     type: "post",  // Request method: post, get
-    url: "/freegal/artists/search/", // URL to request
+    url: "/freegal/homes/search/", // URL to request
     data: data,  // post data
     success: function(response) {
     document.getElementById("artist_searchBox").innerHTML = response;

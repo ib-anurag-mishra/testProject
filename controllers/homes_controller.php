@@ -21,5 +21,49 @@ class HomesController extends AppController
         $this->set('artists', $this->Artist->getallartists());
         $this->layout = 'home';
     }
+    
+    function autoComplete()
+    {        
+        $albumResults = $this->Physicalproduct->find('all', array(
+	   'conditions'=>array( "OR" => array ('Physicalproduct.Title LIKE'=>$this->data['autoComplete'].'%'						
+	   )),
+           'fields' => array(
+			  'Title'
+		  ), 
+		  'group' => array(
+			  'Title',
+		  )));        
+	$this->set('albumResults', $albumResults);       
+        $artistResults = $this->Physicalproduct->find('all', array(
+	   'conditions'=>array( "OR" => array ('Physicalproduct.ArtistText LIKE'=>$this->data['autoComplete'].'%'
+	   )),
+           'fields' => array(
+			  'ArtistText'
+		  ), 
+		  'group' => array(
+			  'ArtistText',
+		  ),
+                  'limit' => '6'));        
+	$this->set('artistResults', $artistResults);
+        $songResults = $this->Home->find('all', array(
+	   'conditions'=>array( "OR" => array ('Title LIKE'=>$this->data['autoComplete'].'%'
+	   )),
+           'fields' => array(
+			  'Title'
+		  ), 
+		  'group' => array(
+			  'Title',
+		  ),
+                  'limit' => '6'));        
+	$this->set('songResults', $songResults);        
+        $this->layout = 'ajax';
+    }
+    
+    function search()
+    {
+	$search = $_POST['search'];
+	$this->Physicalproduct->recursive = -1;
+	$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
+    }
 }
 ?>

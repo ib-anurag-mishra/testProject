@@ -14,12 +14,12 @@ Class LibrariesController extends AppController
     Function Name : managelibraries
     Desc : action for listing all the libraries
    */
-	public function managelibrary()
+	public function admin_managelibrary()
 	{
 		$this -> set( 'libraries', $this -> Library -> getalllibraries() );
 	}
 	
-	public function libraryform()
+	public function admin_libraryform()
 	{
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
 		{
@@ -27,7 +27,7 @@ Class LibrariesController extends AppController
 			
 			if( trim( $libraryId ) != '' && is_numeric( $libraryId ) )
 			{
-				$this -> set( 'formAction', 'libraryform/id:' . $libraryId );
+				$this -> set( 'formAction', 'admin_libraryform/id:' . $libraryId );
 				$this -> set( 'formHeader', 'Edit Library' );
 				$getLibraryDataObj = new Library();
 				$getData = $getLibraryDataObj -> getlibrarydata( $libraryId );
@@ -53,7 +53,7 @@ Class LibrariesController extends AppController
 					if( $this -> Library -> save() )
 					{
 						$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-						$this -> redirect( '/libraries/managelibrary' );
+						$this -> redirect( 'managelibrary' );
 					}//}
 					else {
 						$this -> Session -> setFlash( 'Data could not be updated.', 'modal', array( 'class' => 'modal problem' ) );
@@ -65,7 +65,7 @@ Class LibrariesController extends AppController
 		{
 			$arr = array();
 			$this -> set( 'getData', $arr );
-			$this -> set( 'formAction', 'libraryform' );
+			$this -> set( 'formAction', 'admin_libraryform' );
 			$this -> set( 'formHeader', 'Create Library' );//insertion Operation
 			if( isset( $this -> data ) )
 			{
@@ -79,7 +79,7 @@ Class LibrariesController extends AppController
 					if( $this -> Library -> save( $this -> data ) )
 					{
 						$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-						$this -> redirect( '/libraries/managelibrary' );
+						$this -> redirect( 'managelibrary' );
 					}
 					else
 					{
@@ -92,20 +92,18 @@ Class LibrariesController extends AppController
     Function Name : delete
     Desc : For deleting a library
    */
-	public function delete()
+	public function admin_delete()
 	{
-		$deleteLibraryId = $this -> params[ 'named' ][ 'id' ];
-		$deleteObj = new Library();
-		
-		if( $deleteObj -> del( $deleteLibraryId ) )
+		$deleteLibraryId = $this -> params[ 'named' ][ 'id' ];		
+		if($this->Library->delete( $deleteLibraryId ) )
 		{
 			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-			$this -> redirect( '/libraries/managelibrary' );
+			$this -> redirect( 'managelibrary' );
 		}
 		else
 		{
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( '/libraries/managelibrary' );
+			$this -> redirect( 'managelibrary' );
 		}
 	}
 }

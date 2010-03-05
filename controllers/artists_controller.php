@@ -7,9 +7,9 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist');
+	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist' );
 	var $layout = 'admin';
-	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form');
+	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
 	
 	function beforeFilter() {
@@ -21,7 +21,7 @@ Class ArtistsController extends AppController
     Function Name : managefeaturedartist
     Desc : action for listing all the featured artists
    */
-	public function managefeaturedartist()
+	public function admin_managefeaturedartist()
 	{
 		$artistObj = new Featuredartist();
 		$artists = $artistObj -> getallartists();
@@ -30,7 +30,7 @@ Class ArtistsController extends AppController
     Function Name : artistform
     Desc : action for displaying the add/edit featured artist form
    */
-	public function artistform()
+	public function admin_artistform()
 	{
 		if( !empty( $this -> params[ 'named' ] ) )//gets the values from the url in form  of array
 		{
@@ -38,7 +38,7 @@ Class ArtistsController extends AppController
 			
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) )
 			{
-				$this -> set( 'formAction', 'updatefeaturedartist/id:' . $artistId );
+				$this -> set( 'formAction', 'admin_updatefeaturedartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit Featured Artist' );
 				$getArtistrDataObj = new Featuredartist();
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
@@ -49,7 +49,7 @@ Class ArtistsController extends AppController
 		}
 		else
 		{
-			$this -> set( 'formAction', 'insertfeaturedartist' );
+			$this -> set( 'formAction', 'admin_insertfeaturedartist' );
 			$this -> set( 'formHeader', 'Add Featured Artist' );
 			$getFeaturedDataObj = new Featuredartist();
 			$featuredtData = $getFeaturedDataObj -> getallartists();
@@ -64,7 +64,7 @@ Class ArtistsController extends AppController
     Function Name : insertfeaturedartist
     Desc : inserts a featured artist
    */
-	public function insertfeaturedartist()
+	public function admin_insertfeaturedartist()
 	{
 		$errorMsg = '';
 		$newPath = '../webroot/img/featuredimg/';
@@ -95,19 +95,19 @@ Class ArtistsController extends AppController
 			if( $insertObj -> insert( $insertArr ) )
 			{
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-				$this -> redirect( '/artists/managefeaturedartist' );
+				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
 		else
 		{
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( '/artists/artistform' );
+			$this -> redirect( 'artistform' );
 		}
 	}/*
     Function Name : updatefeaturedartist
     Desc : Updates a featured artist
    */
-	public function updatefeaturedartist()
+	public function admin_updatefeaturedartist()
 	{
 		$errorMsg = '';
 		$this -> Featuredartist -> id = $this -> data[ 'Artist' ][ 'id' ];
@@ -139,19 +139,19 @@ Class ArtistsController extends AppController
 			if( $updateObj -> insert( $updateArr ) )
 			{
 				$this -> Session -> setFlash( 'Data has been updated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-				$this -> redirect( '/artists/managefeaturedartist' );
+				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
 		else
 		{
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( '/artists/managefeaturedartist' );
+			$this -> redirect( 'managefeaturedartist' );
 		}
 	}/*
     Function Name : delete
     Desc : For deleting a featured artist
    */
-	public function delete()
+	public function admin_delete()
 	{
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Featuredartist();
@@ -159,18 +159,18 @@ Class ArtistsController extends AppController
 		if( $deleteObj -> del( $deleteArtistUserId ) )
 		{
 			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-			$this -> redirect( '/artists/managefeaturedartist' );
+			$this -> redirect( 'managefeaturedartist' );
 		}
 		else
 		{
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( '/artists/managefeaturedartist' );
+			$this -> redirect( 'managefeaturedartist' );
 		}
 	}/*
     Function Name : createartist
     Desc : assigns artists with images
    */
-	public function createartist()
+	public function admin_createartist()
 	{
 		$errorMsg = '';
 		
@@ -180,7 +180,7 @@ Class ArtistsController extends AppController
 			
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) )
 			{
-				$this -> set( 'formAction', 'createartist/id:' . $artistId );
+				$this -> set( 'formAction', 'admin_createartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit Artist' );
 				$getArtistrDataObj = new Artist();
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
@@ -217,7 +217,7 @@ Class ArtistsController extends AppController
 						if( $updateObj -> insert( $updateArr ) )
 						{
 							$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-							$this -> redirect( '/artists/manageartist' );
+							$this -> redirect( 'manageartist' );
 						}
 					}
 					else
@@ -229,7 +229,7 @@ Class ArtistsController extends AppController
 		}
 		else
 		{
-			$this -> set( 'formAction', 'createartist' );
+			$this -> set( 'formAction', 'admin_createartist' );
 			$this -> set( 'formHeader', 'Add  Artist' );
 			$condition = 'add';
 			$artistName = '';
@@ -264,7 +264,7 @@ Class ArtistsController extends AppController
 					if( $insertObj -> insert( $insertArr ) )
 					{
 						$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-						$this -> redirect( '/artists/managenewartist' );
+						$this -> redirect( 'manageartist' );
 					}
 				}
 				else
@@ -281,7 +281,7 @@ Class ArtistsController extends AppController
     Function Name : managenewartist
     Desc : manages new artists with images
    */
-	public function manageartist()
+	public function admin_manageartist()
 	{
 		$artistObj = new Artist();
 		$artists = $artistObj -> getallartists();
@@ -290,7 +290,7 @@ Class ArtistsController extends AppController
     Function Name : deletenewartists
     Desc : For deleting a new artist
    */
-	public function deleteartists()
+	public function admin_deleteartists()
 	{
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Artist();
@@ -298,18 +298,18 @@ Class ArtistsController extends AppController
 		if( $deleteObj -> del( $deleteArtistUserId ) )
 		{
 			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-			$this -> redirect( '/artists/manageartist' );
+			$this -> redirect( 'manageartist' );
 		}
 		else
 		{
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( '/artists/manageartist' );
+			$this -> redirect( 'manageartist' );
 		}
 	}/*
     Function Name : createartist
     Desc : assigns artists with images
    */
-	public function addnewartist()
+	public function admin_addnewartist()
 	{
 		$errorMsg = '';
 		
@@ -319,7 +319,7 @@ Class ArtistsController extends AppController
 			
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) )
 			{
-				$this -> set( 'formAction', 'addnewartist/id:' . $artistId );
+				$this -> set( 'formAction', 'admin_addnewartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit New Artsit' );
 				$getArtistrDataObj = new Newartist();
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
@@ -356,7 +356,7 @@ Class ArtistsController extends AppController
 						if( $updateObj -> insert( $updateArr ) )
 						{
 							$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-							$this -> redirect( '/artists/managenewartist' );
+							$this -> redirect( 'managenewartist' );
 						}
 					}
 					else
@@ -368,7 +368,7 @@ Class ArtistsController extends AppController
 		}
 		else
 		{
-			$this -> set( 'formAction', 'addnewartist' );
+			$this -> set( 'formAction', 'admin_addnewartist' );
 			$this -> set( 'formHeader', 'Add New Artist' );
 			$condition = 'add';
 			$artistName = '';
@@ -403,7 +403,7 @@ Class ArtistsController extends AppController
 					if( $insertObj -> insert( $insertArr ) )
 					{
 						$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-						$this -> redirect( '/artists/managenewartist' );
+						$this -> redirect( 'managenewartist' );
 					}
 				}
 				else
@@ -420,7 +420,7 @@ Class ArtistsController extends AppController
     Function Name : managenewartist
     Desc : manages artists with images
    */
-	public function managenewartist()
+	public function admin_managenewartist()
 	{
 		$artistObj = new Newartist();
 		$artists = $artistObj -> getallnewartists();
@@ -429,7 +429,7 @@ Class ArtistsController extends AppController
     Function Name : deletenewartists
     Desc : For deleting a featured artist
    */
-	public function deletenewartists()
+	public function admin_deletenewartists()
 	{
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Newartist();
@@ -437,12 +437,12 @@ Class ArtistsController extends AppController
 		if( $deleteObj -> del( $deleteArtistUserId ) )
 		{
 			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-			$this -> redirect( '/artists/managenewartist' );
+			$this -> redirect( 'managenewartist' );
 		}
 		else
 		{
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( '/artists/managenewartist' );
+			$this -> redirect( 'managenewartist' );
 		}
 	}
 	
@@ -471,19 +471,21 @@ Class ArtistsController extends AppController
                                                                           array( "Physicalproduct.ProdID <> Physicalproduct.ReferenceID"),
                                                                           array('Availability.AvailabilityType' => "PERMANENT"),
                                                                           array('Availability.AvailabilityStatus' => "I"),
-                                                                          array('ProductOffer.PRODUCT_OFFER_ID >' => 0)
+                                                                          array('ProductOffer.PRODUCT_OFFER_ID >' => 0),
+                                                                          array('ProductOffer.PURCHASE' => 'T')
                                                                         )
                                                                   ),'order' => 'Physicalproduct.ReferenceID'
                                                             ));
                 }
                 $this->set('albumData', $albumData);
+               if($albumData[0]['Metadata']['ArtistURL'] != "" )
+                {
+                   $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
+                }else{
+                   $this->set('artistUrl', "N/A");
+                }
                 $this->set('albumSongs',$albumSongs);
 	}
 	
-	public function search($search = null) {
-		$this->layout = 'home';
-		//$search = $_POST['search'];
-		$this->Physicalproduct->recursive = -1;
-		$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
-	}
 }
+?>

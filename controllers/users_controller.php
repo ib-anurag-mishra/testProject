@@ -15,15 +15,15 @@ Class UsersController extends AppController
    function before_filter()
    {
      $this->Auth->userModel = 'User';
-     $this->Auth->loginAction = array('controller' => 'users', 'action' => 'login');
-     $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'index');
-     $this->Auth->logoutRedirect = '/users/login';
-     $this->Auth->allow('login','logout');
+     $this->Auth->loginAction = array('controller' => 'users', 'action' => 'admin_login');
+     $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'admin_index');
+     $this->Auth->logoutRedirect = '/users/admin_login';
+     $this->Auth->allow('admin_login','admin_logout');
      $this->set('username', $this->Session->read('Auth.User.username'));
    }
  
  
-   public function index()
+   public function admin_index()
     {
          //$this->layout = 'login';
         //takes to the default admin home page
@@ -35,12 +35,12 @@ Class UsersController extends AppController
     Desc : Validates admin login credentials
    */
     
-    public function login()
+    public function admin_login()
     {
        $this->layout = 'admin';
        if ($this->Session->read('Auth.User'))
        {
-        $this->redirect('/users/index');
+        $this->redirect('/users/admin_index');
         $this->Auth->autoRedirect = false;
        }
     }
@@ -50,7 +50,7 @@ Class UsersController extends AppController
     Desc : Logs admin out of the system
    */
     
-    public function logout()
+    public function admin_logout()
     {
      $this->redirect($this->Auth->logout()); 
     }
@@ -60,7 +60,7 @@ Class UsersController extends AppController
     Desc : action for listing all the admin users
    */
     
-   public function manageuser()
+   public function admin_manageuser()
     {  
         $this->set('admins', $this->User->getallusers());
     }
@@ -70,14 +70,14 @@ Class UsersController extends AppController
     Desc : action for displaying the add/edit user form
    */
     
-    public function userform()
+    public function admin_userform()
     {
         if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
         {
             $adminUserId = $this->params['named']['id'];
             if(trim($adminUserId) != "" && is_numeric($adminUserId))
             {
-                $this->set('formAction','userform/id:'.$adminUserId);
+                $this->set('formAction','admin_userform/id:'.$adminUserId);
                 $this->set('formHeader','Edit User');     
                $this->set('getData', $this->User->getuserdata($adminUserId));
                 //editting a value
@@ -98,7 +98,7 @@ Class UsersController extends AppController
                     if($this->User->save())
                     {
                       $this->Session->setFlash('Data has been saved Sucessfully!', 'modal', array('class' => 'modal success'));
-                      $this->redirect('/users/manageuser');
+                      $this->redirect('manageuser');
                     }                
                 }
                  //editting a value
@@ -106,7 +106,7 @@ Class UsersController extends AppController
         }else{
                 $arr = array();
                 $this->set('getData',$arr);
-                $this->set('formAction','userform');
+                $this->set('formAction','admin_userform');
                 $this->set('formHeader','Create User');
                 
                 //insertion Operation
@@ -126,7 +126,7 @@ Class UsersController extends AppController
                     if($this->User->save())
                     {                    
                       $this->Session->setFlash('Data has been saved Sucessfully!', 'modal', array('class' => 'modal success'));
-                      $this->redirect('/users/manageuser');
+                      $this->redirect('manageuser');
                     }
                     else
                     {
@@ -145,16 +145,16 @@ Class UsersController extends AppController
     Function Name : delete
     Desc : For deleting a user
    */
-    public function delete()
+    public function admin_delete()
     {
-      $deleteAdminUserId = $this->params['named']['id'];
+      $deleteAdminUserId = $this->params['named']['id'];      
       if($this->User->delete($deleteAdminUserId))
       {
         $this->Session->setFlash('Data deleted Sucessfully!', 'modal', array('class' => 'modal success'));
-        $this->redirect('/users/manageuser');
+        $this->redirect('manageuser');
       }else{
         $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
-        $this->redirect('/users/manageuser');
+        $this->redirect('manageuser');
       }
 
     }
