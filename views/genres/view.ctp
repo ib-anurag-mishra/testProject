@@ -31,7 +31,7 @@
 	?>
 			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', $genre['Metadata']['Artist'])); ?></p>
+					<p><?php echo $html->link($genre['Physicalproduct']['ArtistText'], array('controller' => 'artists', 'action' => 'view', $genre['Physicalproduct']['ArtistText'])); ?></p>
 				</td>
 				<td width="200" valign="top">
 					<p><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></p>
