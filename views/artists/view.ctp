@@ -16,6 +16,7 @@ Place holder.  When the queries are done we can put in foreach statements.
 <div id="album">
 	<div class="lgAlbumArtwork">
 		<?
+			// Temporary solution to get album artwork
 			$albumArtworkFile = str_pad($album['Product']['ProdID'], 20, "0", STR_PAD_LEFT);
 			$arr = str_split($albumArtworkFile, 3);
 			$albumArtworkPath = implode('/', $arr) . '/';
