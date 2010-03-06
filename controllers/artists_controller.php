@@ -448,11 +448,11 @@ Class ArtistsController extends AppController
 	
 	public function view($id = null) {
 		$this->layout = 'home';
-                $this->set('artistName',$id);
+                $this->set('artistName',base64_decode($id));
                 $this -> paginate =  array('conditions' =>
 					  array('and' =>
 						array(
-							array( 'Physicalproduct.ArtistText' => $id ),
+							array( 'Physicalproduct.ArtistText' => base64_decode($id)),
                                                         array( "Physicalproduct.ProdID = Physicalproduct.ReferenceID")
 						      )
 						)/*,

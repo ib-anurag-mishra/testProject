@@ -8,7 +8,7 @@
 				'url' => array(
 					'controller' => 'artists',
 					'action' => 'view',
-					$artist['Artist']['artist_name']
+					base64_encode($artist['Artist']['artist_name'])
 					)
 				)
 			);
@@ -47,7 +47,7 @@
 								echo $html->link($randomSongs['Home']['Artist'], array(
 									'controller' => 'artists',
 									'action' => 'view',
-									$randomSongs['Home']['Artist']
+									base64_encode($randomSongs['Home']['Artist'])
 									)
 								);
 							?>
@@ -68,7 +68,7 @@
 				'url' => array(
 					'controller' => 'artist',
 					'action' => 'view',
-					$featuredArtist['Featuredartist']['artist_name']
+					base64_encode($featuredArtist['Featuredartist']['artist_name'])
 					)
 				)
 			);
@@ -83,7 +83,7 @@
 				'url' => array(
 					'controller' => 'artists',
 					'action' => 'view',
-					$newArtist['Newartist']['artist_name']
+					base64_encode($newArtist['Newartist']['artist_name'])
 					)
 				)
 			);
@@ -134,7 +134,7 @@
 										echo $html->link($allArtists['Physicalproduct']['ArtistText'], array(
 											'controller' => 'artists',
 											'action' => 'view',
-											$allArtists['Physicalproduct']['ArtistText'])
+											base64_encode($allArtists['Physicalproduct']['ArtistText']))
 										);
 									?>
 								</p>

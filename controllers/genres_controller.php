@@ -7,22 +7,23 @@
 Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product');
+	
 	function view( $Genre = null )
 	{
 		$this -> layout = 'home';		
-		if( !$Genre )
+		if( !base64_decode($Genre) )
 		{
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
 		
-		if($Genre != "all")
+		if(base64_decode($Genre) != "all")
 		{
 		 // $this -> paginate = array('conditions' => array( 'Genre.Genre' => $Genre ) );
 		  $this->paginate = array('conditions' =>
 					  array('and' =>
 						array(
-							array('Genre.Genre' => $Genre),
+							array('Genre.Genre' => base64_decode($Genre)),
 							array('Availability.AvailabilityType' => "PERMANENT"),
 							array('Availability.AvailabilityStatus' => "I"),
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
@@ -45,7 +46,7 @@ Class GenresController extends AppController
 					  );
 		}
 		
-		$this->set('genre',$Genre);
+		$this->set('genre',base64_decode($Genre));
 		//$this->Product->contain();
 		$this->Product->recursive = 2;
 		$data = $this->paginate('Product');

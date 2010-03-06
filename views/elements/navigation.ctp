@@ -23,7 +23,7 @@
 				<?php
 				foreach($genresMenu as $genreM)
 				{
-					$searchFor = "view/".$genreM['Genre']['Genre'];
+					$searchFor = "view/" . base64_encode($genreM['Genre']['Genre']);
 					?>
 					<li class="parent item"><?php echo $html->link($genreM['Genre']['Genre'], array('controller' => 'genres','action'=>$searchFor));?></li>
 					<?php
@@ -40,7 +40,7 @@
 						<?php echo $html->link($featuredArtistM['Featuredartist']['artist_name'], array(
 							'controller' => 'artists', 
 							'action'=> 'view', 
-							$featuredArtistM['Featuredartist']['artist_name']));
+							base64_encode($featuredArtistM['Featuredartist']['artist_name'])));
 						?>
 					</li>
 				<?php
@@ -57,7 +57,7 @@
 						<?php echo $html->link($newArtistM['Newartist']['artist_name'], array(
 							'controller' => 'artists',
 							'action' => 'view',
-							$newArtistM['Newartist']['artist_name'])); 
+							base64_encode($newArtistM['Newartist']['artist_name']))); 
 						?>
 					</li>
 				<?php
