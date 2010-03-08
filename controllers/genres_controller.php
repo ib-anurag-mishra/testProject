@@ -8,6 +8,11 @@ Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product');
 	
+	function index() {
+		$this->layout = 'home';
+		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
+	}
+	
 	function view( $Genre = null )
 	{
 		$this -> layout = 'home';		

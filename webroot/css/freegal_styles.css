@@ -566,10 +566,21 @@ body  {
 	font-size:13px;
 }
 
+#genreViewAll a {
+	text-decoration: none;
+	color:#666;
+}
+
+#genreViewAll a:hover {
+	text-decoration: none;
+	color:#666;
+}
+
 .smAlbumArtwork {
 	display:block;
 	float:left;
 	margin:10px 7px 0 10px;
+	background:#ccc;
 	width:60px;
 	height:60px;
 }

@@ -19,7 +19,7 @@
 		<li class="parent item2"><a href="#"><span>Genre</span></a>
 			<ul>
 
-				<li class="parent item8"><?php echo $html->link('See All', array('controller' => 'genres','action'=>'view/all'));?></li>
+				<li class="parent item8"><?php echo $html->link('See All', array('controller' => 'genres','action'=>'index'));?></li>
 				<?php
 				foreach($genresMenu as $genreM)
 				{
