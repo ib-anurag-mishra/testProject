@@ -29,6 +29,15 @@ class Physicalproduct extends AppModel
 		),'ProductOffer' => array(
 			'className' => 'ProductOffer',
 			'foreignKey' => 'ProdID'
+		),'Graphic' => array(
+			'className' => 'Graphic',
+			'foreignKey' => 'ProdID'
+		)
+  );
+ 
+  var $hasMany = array('Audio' => array(
+			'className' => 'Audio',
+			'foreignKey' => 'TrkID'
 		)
   );
    /*

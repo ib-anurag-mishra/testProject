@@ -17,11 +17,11 @@ Place holder.  When the queries are done we can put in foreach statements.
 	<div class="lgAlbumArtwork">
 		<?
 			// Temporary solution to get album artwork
-			$albumArtworkFile = str_pad($album['Product']['ProdID'], 20, "0", STR_PAD_LEFT);
+			/*$albumArtworkFile = str_pad($album['Product']['ProdID'], 20, "0", STR_PAD_LEFT);
 			$arr = str_split($albumArtworkFile, 3);
 			$albumArtworkPath = implode('/', $arr) . '/';
-			$albumArtworkFile = $albumArtworkFile . '-250x250_72dpi_RGB_100Q.jpg';
-			$albumArtwork = shell_exec('perl files/tokengen ' . $albumArtworkPath . $albumArtworkFile);
+			$albumArtworkFile = $albumArtworkFile . '-250x250_72dpi_RGB_100Q.jpg';*/						
+			$albumArtwork = shell_exec('perl files/tokengen ' . $album['Graphic']['Files']['CdnPath']."/".$album['Graphic']['Files']['SourceURL']);
 		?>
 		<img src="http://music.freegalmusic.com<?php echo $albumArtwork; ?>" width="250" height="250" border="0">
 	</div>
