@@ -701,6 +701,28 @@ body  {
 			text-decoration: underline;
 			color: #666;
 		}
+		
+/** FAQs **/
+.questions h2 {
+	margin: 0 0 0 10px;
+}
+.question_list {
+margin: 10px 10px 0 10px;
+padding: 0px;
+width: 875px;
+}
+.question {
+padding: 5px 10px;
+cursor: pointer;
+position: relative;
+background-color:#FFCCCC;
+margin:1px;
+}
+.answer {
+padding: 5px 10px 15px;
+background-color:#F4F4F8;
+}
+
 
 /** Paging **/
 div.paging {
