@@ -562,7 +562,7 @@ body  {
 }
 
 #genreViewAll {
-	margin: 10px 0 0 10px;
+	margin: 10px 10px 0 10px;
 	font-size:13px;
 }
 
@@ -572,7 +572,7 @@ body  {
 }
 
 #genreViewAll a:hover {
-	text-decoration: none;
+	text-decoration: underline;
 	color:#666;
 }
 

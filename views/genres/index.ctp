@@ -239,7 +239,8 @@
 	<p>View All Genres</p>
 	<?php
 		foreach($genresAll as $genre) {
-			echo $html->link(ucwords($genre['Genre']['Genre']) . ' | ', array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
+			echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
+			echo ' | ';
 		}
 	?>
 </div>
