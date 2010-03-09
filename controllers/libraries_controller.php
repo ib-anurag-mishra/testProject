@@ -10,7 +10,11 @@ Class LibrariesController extends AppController
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
 	var $components = array( 'Session', 'Auth', 'Acl' );
-	var $uses = array( 'Library', 'User' );/*
+	var $uses = array( 'Library', 'User' );
+        
+    
+        
+    /*
     Function Name : managelibraries
     Desc : action for listing all the libraries
    */
@@ -21,10 +25,11 @@ Class LibrariesController extends AppController
 	
 	public function admin_libraryform()
 	{
-		if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
+		
+                if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
 		{
 			$libraryId = $this -> params[ 'named' ][ 'id' ];
-			
+			$condition = 'edit';
 			if( trim( $libraryId ) != '' && is_numeric( $libraryId ) )
 			{
 				$this -> set( 'formAction', 'admin_libraryform/id:' . $libraryId );
@@ -39,14 +44,14 @@ Class LibrariesController extends AppController
 					$this -> set( 'getData', $getData );
 					$this -> Library -> id = $this -> data[ 'Library' ][ 'id' ];
 					
-					if( trim( $this -> data[ 'Library' ][ 'password' ] ) != '' )
+					/*if( trim( $this -> data[ 'Library' ][ 'password' ] ) != '' )
 					{
 						$this -> data[ 'Library' ][ 'password' ] = md5( $this -> data[ 'Library' ][ 'password' ] );
 					}
 					else
 					{// do not update the password
 						$this -> data[ 'Library' ] = $updateObj -> arrayremovekey( $this -> data[ 'Library' ], 'password' );
-					}
+					}*/
 					
 					$this -> Library -> set( $this -> data[ 'Library' ] );
 					
@@ -64,17 +69,15 @@ Class LibrariesController extends AppController
 		else
 		{
 			$arr = array();
+                        $condition = 'add';
+                        $libraryId = '';
 			$this -> set( 'getData', $arr );
 			$this -> set( 'formAction', 'admin_libraryform' );
 			$this -> set( 'formHeader', 'Create Library' );//insertion Operation
 			if( isset( $this -> data ) )
 			{
-				$this -> data[ 'User' ][ 'type_id' ] = 4;
-				$admin = $this -> User -> save( $this -> data );
 				
-				if( !empty( $admin ) )
-				{
-					$this -> data[ 'Library' ][ 'admin_id' ] = $this -> User -> id;
+				
 					
 					if( $this -> Library -> save( $this -> data ) )
 					{
@@ -85,9 +88,11 @@ Class LibrariesController extends AppController
 					{
 						$this -> Session -> setFlash( 'Data could not be saved.', 'modal', array( 'class' => 'modal problem' ) );
 					}
-				}
-			}//insertion operation
+			}
+			//insertion operation
 		}
+                $allAdmins = $this->User->getalllibraryadmins($condition,$libraryId);
+                $this -> set( 'allAdmins', $allAdmins );
 	}/*
     Function Name : delete
     Desc : For deleting a library

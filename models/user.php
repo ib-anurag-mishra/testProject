@@ -18,6 +18,7 @@ class User extends AppModel
   )
   );
   
+  
   var $validate = array(
   'first_name' => array('rule' => array( 'minLength' , 1 ),
   'message' => 'Please provide Firstname.',                        
@@ -112,5 +113,45 @@ class User extends AppModel
    return false;
    }
   }
+  
+   /*
+    Function Name : getalllibraryadmins
+    Desc : gets all the library admins from the db
+    */
+   
+  public function getalllibraryadmins($condition,$id)
+  {   
+    $this->recursive = -1;
+    $librarytObj = new Library();
+    $existingLibraries = $librarytObj->find('all', array(
+                              'field' => 'admin_id'));    
+    $finalArr = array();
+    foreach($existingLibraries as $existingLibrary)
+    {
+      array_push($finalArr,$existingLibrary['Library']['admin_id']);
+    }    
+    $allAdmins = $this->find('all', array(
+              'conditions' => array(
+                      'type_id' => '4',
+                      'NOT' => array('id' => $finalArr)
+                      )              
+    ));    
+    $finalArray = Array();
+    if($condition == 'edit')
+    {
+      $libraryDetails = $librarytObj->getlibrarydata($id);      
+      $adminDetails = $this->getuserdata($libraryDetails['Library']['admin_id']);
+      $finalArray[$adminDetails['User']['id']] = $adminDetails['User']['email'];      
+    }
+    if($allAdmins != '')
+    {
+      foreach($allAdmins as $allAdmin)
+      {
+        $finalArray[$allAdmin['User']['id']] =  $allAdmin['User']['email'];
+      }
+    }   
+    return $finalArray;
+  }
+    
 }
 ?>

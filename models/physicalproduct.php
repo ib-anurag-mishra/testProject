@@ -57,12 +57,8 @@ class Physicalproduct extends AppModel
 		'order' => array(
 			'ArtistText ASC'
 		)
-	));
-    // $allArtists = $this->find('all', array(	
-    // 	'fields' => 'DISTINCT ArtistText', 
-    // 	'order' => 'ArtistText')
-    //     );
-    return $allArtists;
+	));    
+      return $allArtists;
   }
   
   /*

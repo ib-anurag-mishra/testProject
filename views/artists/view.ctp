@@ -12,6 +12,7 @@ Place holder.  When the queries are done we can put in foreach statements.
 
 	<?php
 	foreach($albumData as $album):
+	
 		?>
 <div id="album">
 	<div class="lgAlbumArtwork">
@@ -20,8 +21,8 @@ Place holder.  When the queries are done we can put in foreach statements.
 			/*$albumArtworkFile = str_pad($album['Product']['ProdID'], 20, "0", STR_PAD_LEFT);
 			$arr = str_split($albumArtworkFile, 3);
 			$albumArtworkPath = implode('/', $arr) . '/';
-			$albumArtworkFile = $albumArtworkFile . '-250x250_72dpi_RGB_100Q.jpg';*/						
-			$albumArtwork = shell_exec('perl files/tokengen ' . $album['Graphic']['Files']['CdnPath']."/".$album['Graphic']['Files']['SourceURL']);
+			$albumArtworkFile = $albumArtworkFile . '-250x250_72dpi_RGB_100Q.jpg';*/			
+			$albumArtwork = shell_exec('perl files/tokengen ' . $album['Graphic']['Files']['CdnPath']."/".$album['Graphic']['Files']['SourceURL']);			
 		?>
 		<img src="http://music.freegalmusic.com<?php echo $albumArtwork; ?>" width="250" height="250" border="0">
 	</div>
@@ -52,7 +53,7 @@ Place holder.  When the queries are done we can put in foreach statements.
 		<div id="songResults">
 			<?php
 			$i = 1;
-			foreach($albumSongs[$album['Physicalproduct']['ReferenceID']] as $albumSong):
+			foreach($albumSongs[$album['Physicalproduct']['ReferenceID']] as $albumSong):			
 				$class = null;
 				if ($i++ % 2 == 0) {
 					$class = ' class="altrow"';
@@ -67,14 +68,14 @@ Place holder.  When the queries are done we can put in foreach statements.
 						<p><?php echo $albumSong['Metadata']['Title'];?></p>
 					</td>
 					<td width="50" valign="top" align="center">
-						<p><?php echo $albumSong['Audio']['1']['Duration']?></p>
+						<p>5:10</p>
 					</td>
 					<td width="150" valign="top" align="center">
 					<?php
 					if($albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d'))
 					{
 					?>
-						<p>Download Now</p>
+						<p><a href='/freegal/artists/download/<?php echo $albumSong['Audio']['1']['FileID']; ?>'>Download Now</a></p>
 					<?php
 					}else{
 						?>
