@@ -55,7 +55,7 @@
 						<p><?php echo $albumSong['Metadata']['Title'];?></p>
 					</td>
 					<td width="50" valign="top" align="center">
-						<p>5:10</p>
+						<p><?php echo $albumSong['Audio']['1']['Duration']?></p>
 					</td>
 					<td width="150" valign="top" align="center">
 					<?php
