@@ -4,13 +4,38 @@
  File Description : Genre controller page
  Author : maycreate
  */
+ini_set('memory_limit', '1024M');
 Class GenresController extends AppController
 {
-	var $uses = array('Metadata','Product');
+	var $uses = array('Metadata','Product','Category','Files');
 	
 	function index() {
 		$this->layout = 'home';
 		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
+		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));		
+		$i = 0;
+		$j = 0;
+		foreach ($categories as $category)
+		{
+			$genreName = $category['Category']['Genre'];			
+			$this->Genre->recursive = '2';
+			$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
+			$finalArr = Array();
+			foreach($genreDetails as $genre)
+			{				
+				$fileID = $this->Files->find('all',array('conditions' => array('FileID' => $genre['Physicalproduct']['Graphic']['FileID'])));				
+				$albumArtwork = shell_exec('perl files/tokengen ' . $fileID[0]['Files']['CdnPath']."/".$fileID[0]['Files']['SourceURL']);				
+				$finalArr[$i]['Album'] = $genre['Physicalproduct']['Title'];
+				$finalArr[$i]['Song'] = $genre['Metadata']['Title'];
+				$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
+				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
+				$i++;				
+			}			
+			$finalArray[$j] = $finalArr;
+			$finalArray[$j]['Genre'] = $genreName;
+			$j++;
+		}		
+		$this->set('categories',$finalArray);		
 	}
 	
 	function view( $Genre = null )
@@ -86,6 +111,48 @@ Class GenresController extends AppController
 		}else{
 		  $this->set('genres', 0);
 		}
+	}
+	
+	function admin_managegenre()
+	{
+			
+		if($this->data)
+		{
+			$this->Category->deleteAll(array('1 = 1'), false);
+			$selectedGenres = Array();
+			$i = 0;		
+			foreach ($this->data['Genre']['Genre'] as $k => $v)
+			{	  
+			  if($i < '8')
+			  {			
+				if($v != '0')
+				{
+				      $selectedGenres['Genre'] = $v;			      
+				      $this->Category->save($selectedGenres);
+				      $this->Category->id = false ;
+				      $i++;
+				}			
+			  }
+			}
+		}
+		
+				
+		$this->Genre->recursive = -1;
+		$allGenres = $this->Genre->find('all', array(	
+			'fields' => 'DISTINCT Genre', 
+			'order' => 'Genre')
+		    );
+		
+		$this->set('allGenres', $allGenres);
+		$this->Category->recursive = -1;
+		$selectedGenres = $this->Category->find('all',array(	
+			'fields' => 'Genre'));
+		foreach ($selectedGenres as $selectedGenre)
+		{
+			$selArray[] = $selectedGenre['Category']['Genre'];
+		}		
+		$this->set('selectedGenres', $selArray);
+		$this->layout = 'admin';
 	}
 }
 

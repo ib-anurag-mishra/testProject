@@ -1,29 +1,62 @@
 <?php echo $javascript->link('freegal_genreall_curvy'); ?>
 <div id="genreAll">
-	<div id="genretl">
-		<div id="genreAlltl">
-			<span class="genreTitle">Alternative</span>
-			<span class="genreSeeAll"><a href="genre/alternative">See All</a></span>
-		</div>
-		<div id="genreAllSongtl">
+	<?php
+	$i = 0;
+	foreach($categories as $category)
+	{
+		if($i%2 == '0')
+		{?>
+		
+		<div id="genretl">
+			<div id="genreAlltl">
+				<span class="genreTitle"><?php echo $category['Genre']; ?></span>
+				<span class="genreSeeAll"><a href="genre/<?php echo $category['Genre']; ?>">See All</a></span>
+			</div>
+			<div id="genreAllSongtl">
+		<?php }
+		else
+		{?>
+			<div id="genretr">
+			<div id="genreAlltr">
+				<span class="genreTitle"><?php echo $category['Genre']; ?></span>
+				<span class="genreSeeAll"><a href="genre/<?php echo $category['Genre']; ?>">See All</a></span>
+			</div>
+			<div id="genreAllSongtr">
+		<?php }
+		
+		$j = 0;
+		foreach($category as $catG)
+		{
+			if($j < 3)
+			{?>
 			<div class="smAlbumArtwork">
-				<a href="/img/album_artwork/eros.jpg" rel="image" onclick="javascript: show_uploaded_images('/img/album_artwork/eros.jpg')">
-					<img src="/img/album_artwork/eros.jpg" width="60" height="60" border="0">
+				<a href="http://music.freegalmusic.com<?php echo $catG['AlbumArtwork']; ?>" rel="image" onclick="javascript: show_uploaded_images('http://music.freegalmusic.com<?php echo $catG['AlbumArtwork']; ?>')">
+					<img src="http://music.freegalmusic.com<?php echo $catG['AlbumArtwork']; ?>" width="60" height="60" border="0">
 				</a>
 			</div>
 			<div class="songSample">
 				<a href='#'><img src='/img/button.png'></a>
 			</div>
 			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
+				<?php echo $catG['Song']; ?><br />
+				<a href="artist/<?php echo $catG['Artist']; ?>"><?php echo $catG['Artist']; ?></a><br />
+				<?php echo $catG['Album']; ?><br />
 			</div>
 			<div class="songDownload">
 				<a href="#">Download Now</a>
 			</div>
 			<br class="clr">
-			<div class="smAlbumArtwork">
+				<?php
+			}
+			$j++;
+		}?>
+		</div>
+		</div>
+		<?php $i++;
+	}?>
+	
+			
+	<!--		<div class="smAlbumArtwork">
 				<a href="/img/album_artwork/celinedion.jpg" rel="image" onclick="javascript: show_uploaded_images('/img/album_artwork/celinedion.jpg')">
 					<img src="/img/album_artwork/celinedion.jpg" width="60" height="60" border="0">
 				</a>
@@ -232,7 +265,7 @@
 				<a href="#">Download Now</a>
 			</div>
 		</div>
-	</div>
+	</div>-->
 </div>
 <br class="clr">
 <div id="genreViewAll">
