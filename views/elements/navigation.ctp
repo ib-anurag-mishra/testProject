@@ -12,6 +12,7 @@
  * Navigation file for front-end site
  **/
 ?>
+
 <div class="navigation">
 	
 	<ul class="menu" id="nav">
@@ -23,9 +24,9 @@
 				<?php
 				foreach($genresMenu as $genreM)
 				{
-					$searchFor = "view/" . base64_encode($genreM['Genre']['Genre']);
+					$searchFor = "view/" . base64_encode($genreM['Category']['Genre']);
 					?>
-					<li class="parent item"><?php echo $html->link($genreM['Genre']['Genre'], array('controller' => 'genres','action'=>$searchFor));?></li>
+					<li class="parent item"><?php echo $html->link($genreM['Category']['Genre'], array('controller' => 'genres','action'=>$searchFor));?></li>
 					<?php
 				}
 				?>
@@ -68,8 +69,8 @@
 		<li id="search">
 			<!--<form name="search_form" method="post" action="homes/search" class="search_form">-->
 			<?php echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form'));	
-			      echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>
-				<input type="submit" class="searchButton" value=""></input>
+			      echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>			      
+			      <input type="submit" class="searchButton" value=""></input>
 			<!-- </form>-->
 			<?php echo $this->Form->end(); ?>
 			<a href="#">Advanced Search</a>

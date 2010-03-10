@@ -18,6 +18,13 @@ class Genre extends AppModel {
 		'Physicalproduct' => array(
 			'className' => 'Physicalproduct',
 			'foreignKey' => 'ProdID'
-		)
+		)		
 	);
+	
+	/*var $hasOne = array(		
+		'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'ProdID'
+		)
+	);*/
 }

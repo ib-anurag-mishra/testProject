@@ -3,7 +3,7 @@ class AppController extends Controller
 {
 	var $components = array( 'Session', 'DebugKit.Toolbar' );
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form' );
-	var $uses = array('Genre','Featuredartist','Newartist');
+	var $uses = array('Genre','Featuredartist','Newartist','Category');
 	
 	function beforeFilter()
 	{
@@ -11,7 +11,7 @@ class AppController extends Controller
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
 		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
-		$this -> set ( 'genresMenu' ,  $this -> Genre -> find ('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
+		$this -> set ( 'genresMenu' ,  $this -> Category -> find ('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));	
 		$this -> set ( 'featuredArtistMenu' ,  $this -> Featuredartist -> find ('all'));
 		$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find ('all'));
 	}

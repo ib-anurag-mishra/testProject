@@ -45,6 +45,12 @@
 						<li><?php echo $html->link('Manage Newly Added Artist', array('controller' => 'Artists','action'=>'managenewartist'));?></li>						
 					</ul>
 				</li>
+				<li>
+					<a href="#">Manage Genres</a>
+					<ul>
+						<li><?php echo $html->link('Manage Favotrite Genres', array('controller' => 'Genres','action'=>'managegenre'));?></li>						
+					</ul>
+				</li>
 			</ul>
 		</li>
 		<li>
