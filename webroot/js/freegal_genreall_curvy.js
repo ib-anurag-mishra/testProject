@@ -9,8 +9,12 @@ addEvent(window, 'load', initCorners);
 	    antiAlias: true
     }
 
-	curvyCorners(genre, "#genreAlltl");
-	curvyCorners(genre, "#genreAlltr");
-	curvyCorners(genre, "#genreAllbl");
-	curvyCorners(genre, "#genreAllbr");
+	curvyCorners(genre, ".genreAlltl");
+	curvyCorners(genre, ".genreAlltr");
+	//curvyCorners(genre, "#genreAllbl");
+	//curvyCorners(genre, "#genreAllbr");
   }
+
+function show_uploaded_images() {
+	jQuery("a[rel='image']").colorbox($);
+}

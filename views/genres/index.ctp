@@ -1,4 +1,6 @@
-<?php echo $javascript->link('freegal_genreall_curvy'); ?>
+<?php echo $html->css('colorbox', false); ?>
+<?php echo $javascript->link('jquery.colorbox', false); ?>
+<?php echo $javascript->link('freegal_genreall_curvy', false); ?>
 <div id="genreAll">
 	<?php
 	$i = 0;
@@ -7,19 +9,23 @@
 		if($i%2 == '0')
 		{?>
 		
-		<div id="genretl">
-			<div id="genreAlltl">
+		<div class="genretl">
+			<div class="genreAlltl">
 				<span class="genreTitle"><?php echo $category['Genre']; ?></span>
-				<span class="genreSeeAll"><a href="genre/<?php echo $category['Genre']; ?>">See All</a></span>
+				<span class="genreSeeAll">
+					<?php echo $html->link('See All', array('controller' => 'genres', 'action' => 'view', base64_encode($category['Genre']))); ?>
+				</span>
 			</div>
 			<div id="genreAllSongtl">
 		<?php }
 		else
 		{?>
-			<div id="genretr">
-			<div id="genreAlltr">
+			<div class="genretr">
+			<div class="genreAlltr">
 				<span class="genreTitle"><?php echo $category['Genre']; ?></span>
-				<span class="genreSeeAll"><a href="genre/<?php echo $category['Genre']; ?>">See All</a></span>
+				<span class="genreSeeAll">
+					<?php echo $html->link('See All', array('controller' => 'genres', 'action' => 'view', base64_encode($category['Genre']))); ?>
+				</span>
 			</div>
 			<div id="genreAllSongtr">
 		<?php }
@@ -30,16 +36,27 @@
 			if($j < 3)
 			{?>
 			<div class="smAlbumArtwork">
-				<a href="http://music.freegalmusic.com<?php echo $catG['AlbumArtwork']; ?>" rel="image" onclick="javascript: show_uploaded_images('http://music.freegalmusic.com<?php echo $catG['AlbumArtwork']; ?>')">
-					<img src="http://music.freegalmusic.com<?php echo $catG['AlbumArtwork']; ?>" width="60" height="60" border="0">
-				</a>
+				<?php echo $html->link(
+						$html->image('http://music.freegalmusic.com' . $catG['AlbumArtwork'], array(
+							"alt" => "Album Artwork", 
+							"width" => "60", 
+							"height" => "60"
+						)),
+						'http://music.freegalmusic.com' . $catG['AlbumArtwork'], array(
+							'escape' => false, 
+							"rel" => "image", 
+							"onclick" => "show_uploaded_images('http://music.freegalmusic.com" . $catG['AlbumArtwork'] . "');"
+						)
+					  );
+				?>
+				
 			</div>
 			<div class="songSample">
 				<a href='#'><img src='/img/button.png'></a>
 			</div>
 			<div class="songData">
 				<?php echo $catG['Song']; ?><br />
-				<a href="artist/<?php echo $catG['Artist']; ?>"><?php echo $catG['Artist']; ?></a><br />
+				<?php echo $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))); ?><br />
 				<?php echo $catG['Album']; ?><br />
 			</div>
 			<div class="songDownload">
@@ -54,218 +71,6 @@
 		</div>
 		<?php $i++;
 	}?>
-	
-			
-	<!--		<div class="smAlbumArtwork">
-				<a href="/img/album_artwork/celinedion.jpg" rel="image" onclick="javascript: show_uploaded_images('/img/album_artwork/celinedion.jpg')">
-					<img src="/img/album_artwork/celinedion.jpg" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/album_artwork/chaconne.jpg" rel="image" onclick="javascript: show_uploaded_images('/img/album_artwork/chaconne.jpg')">
-					<img src="/img/album_artwork/chaconne.jpg" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-		</div>
-	</div>
-	<div id="genretr">
-		<div id="genreAlltr">
-			<span class="genreTitle">Country</span>
-			<span class="genreSeeAll"><a href="genre/country">See All</a></span>
-		</div>
-		<div id="genreAllSongtr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-		</div>
-	</div>
-		<br class="clr">
-	<div id="genrebl">
-		<div id="genreAllbl">
-			<span class="genreTitle">Pop</span>
-			<span class="genreSeeAll"><a href="genre/pop">See All</a></span>
-		</div>
-		<div id="genreAllSongbl">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-		</div>
-	</div>
-	<div id="genrebr">
-		<div id="genreAllbr">
-			<span class="genreTitle">Rap</span>
-			<span class="genreSeeAll"><a href="genre/rap">See All</a></span>
-		</div>
-		<div id="genreAllSongbr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-			<br class="clr">
-			<div class="smAlbumArtwork">
-				<a href="/img/box.png" rel="image" onclick="javascript: show_uploaded_images('/img/box.png')">
-					<img src="/img/box.png" width="60" height="60" border="0">
-				</a>
-			</div>
-			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
-			</div>
-			<div class="songData">
-				Song Title<br />
-				<a href="artist/artist">Artist</a><br />
-				Album<br />
-			</div>
-			<div class="songDownload">
-				<a href="#">Download Now</a>
-			</div>
-		</div>
-	</div>-->
 </div>
 <br class="clr">
 <div id="genreViewAll">
