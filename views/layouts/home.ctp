@@ -8,17 +8,16 @@
 	</title>
    	<?php
 		echo $this->Html->meta('icon');
-		echo $this->Html->css('freegal_styles');		
+		echo $this->Html->css('freegal_styles');
+		echo $this->Html->css('jquery.autocomplete');
 		echo $javascript->link('jquery-1');
 		echo $javascript->link('jquery');
 	?>        
-		<script type="text/javascript"> jQuery.noConflict();</script>	
+		
 	<?php		
 		echo $javascript->link('curvycorners');
-		echo $javascript->link('prototype');	
-		echo $javascript->link('scriptaculous');	 
-		echo $javascript->link('effects');
-		echo $javascript->link('controls');
+		echo $javascript->link('jquery.autocomplete');
+		echo $javascript->link('autocomplete');
 		echo $javascript->link('freegal');
 		echo $scripts_for_layout;
 	?>

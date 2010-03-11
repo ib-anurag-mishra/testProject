@@ -892,3 +892,7 @@ div.code-coverage-results span.result-good {
 	text-align:left;
 	cursor:pointer;
 }
+
+.input{
+	float:left;
+}

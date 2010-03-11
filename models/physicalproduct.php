@@ -13,12 +13,12 @@ class Physicalproduct extends AppModel
   var $primaryKey = 'ProdID';
   var $actsAs = array('Containable');
   var $uses = array('Physicalproduct','Featuredartist','Artist','Productoffer');
-  var $belongsTo = array(
+  /*var $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'ProdID'
 		)
-  );
+  );*/
  var $hasOne = array(
 		'Metadata' => array(
 			'className' => 'Metadata',
@@ -32,7 +32,11 @@ class Physicalproduct extends AppModel
 		),'Graphic' => array(
 			'className' => 'Graphic',
 			'foreignKey' => 'ProdID'
+		),'Genre' => array(
+			'className' => 'Genre',
+			'foreignKey' => 'ProdID'
 		)
+
   );
  
   var $hasMany = array('Audio' => array(

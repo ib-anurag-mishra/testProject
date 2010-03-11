@@ -1,11 +1,23 @@
-<ul>
- <?php foreach($albumResults as $albumResult): ?>
-     <li><?php echo $albumResult['Physicalproduct']['Title']; ?></li>
- <?php endforeach; ?>
- <?php foreach($artistResults as $artistResult): ?>
-     <li><?php echo $artistResult['Physicalproduct']['ArtistText']; ?></li>
- <?php endforeach; ?>
- <?php foreach($songResults as $songResult): ?>
-     <li><?php echo $songResult['Home']['Title']; ?></li>
- <?php endforeach; ?>
-</ul> 
+ <?php
+ $finalResults = Array();
+ foreach($albumResults as $albumResult):
+     $finalResults[$albumResult['Physicalproduct']['Title']] = $albumResult['Physicalproduct']['Title'];
+ endforeach;
+ foreach($artistResults as $artistResult):
+     $finalResults[$artistResult['Physicalproduct']['ArtistText']] = $artistResult['Physicalproduct']['ArtistText'];
+ endforeach;
+ foreach($songResults as $songResult):
+     $finalResults[$songResult['Home']['Title']] = $songResult['Home']['Title'];
+ endforeach;
+ if($finalResults != '')
+ {
+   foreach($finalResults as $key => $value):
+       echo "$key|$value\n";
+       endforeach;
+ }
+ else
+ {
+   echo "No results found";
+ }
+ ?>
+ 

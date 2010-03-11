@@ -60,9 +60,10 @@
 					<td width="150" valign="top" align="center">
 					<?php
 					if($albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d'))
-					{
-					?>
-						<p><a href='/freegal/artists/download/<?php echo $albumSong['Audio']['1']['FileID']; ?>'>Download Now</a></p>
+					{					
+						$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);
+						?>
+						<p><a href='http://music.freegalmusic.com<?php echo $songUrl; ?>'>Download Now</a></p>
 					<?php
 					}else{
 						?>

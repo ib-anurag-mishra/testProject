@@ -9,7 +9,7 @@ class Availability extends AppModel {
 	var $useTable = 'Availability';
 	var $primaryKey = 'ProdId';
 	
-	var $hasMany = array(
+	var $belongsTo = array(
 		'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'ProdId'

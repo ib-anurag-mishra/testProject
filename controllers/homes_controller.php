@@ -23,20 +23,22 @@ class HomesController extends AppController
     }
     
     function autoComplete()
-    {       
+    {      
+        $this->Physicalproduct->recursive = -1;
         $albumResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array( "OR" => array ('Physicalproduct.Title LIKE'=>$this->data['Home']['autoComplete'].'%'						
-	   )),
+	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%'						
+	   ),
            'fields' => array(
 			  'Title'
 		  ), 
 		  'group' => array(
 			  'Title',
-		  )));        
-	$this->set('albumResults', $albumResults);       
+		  ),
+                  'limit' => '6'));            
+	$this->set('albumResults', $albumResults);        
         $artistResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array( "OR" => array ('Physicalproduct.ArtistText LIKE'=>$this->data['Home']['autoComplete'].'%'
-	   )),
+	   'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%'
+	   ),
            'fields' => array(
 			  'ArtistText'
 		  ), 
@@ -46,8 +48,8 @@ class HomesController extends AppController
                   'limit' => '6'));        
 	$this->set('artistResults', $artistResults);
         $songResults = $this->Home->find('all', array(
-	   'conditions'=>array( "OR" => array ('Title LIKE'=>$this->data['Home']['autoComplete'].'%'
-	   )),
+	   'conditions'=>array('Title LIKE'=>$_GET['q'].'%'
+	   ),
            'fields' => array(
 			  'Title'
 		  ), 
@@ -68,7 +70,8 @@ class HomesController extends AppController
     
     function search()
     {        
-        $searchKey = $this->data['Home']['autoComplete'];       
+        $searchKey = $this->data['Home']['search'];
+        $this->Physicalproduct->Behaviors->attach('Containable');
         $this -> paginate = array('conditions' =>
                                 array('and' =>
                                         array(                                                      
@@ -76,6 +79,7 @@ class HomesController extends AppController
                                                 array('Availability.AvailabilityType' => "PERMANENT"),
                                                 array('Availability.AvailabilityStatus' => "I"),
                                                 array('ProductOffer.PRODUCT_OFFER_ID >' => 0),
+                                                array('Physicalproduct.TrackBundleCount' => 0),
                                                 array('ProductOffer.PURCHASE' => 'T')
                                             )
                                         ,
@@ -85,10 +89,47 @@ class HomesController extends AppController
                                                     array('Physicalproduct.Title LIKE' => $searchKey.'%'),
                                                     array('Metadata.Title LIKE' => $searchKey.'%')
                                                 )
+                                    ),
+                                    'contain' => array(                                   
+                                    'Availability' => array(
+                                            'fields' => array(
+                                                    'Availability.AvailabilityType',
+                                                    'Availability.AvailabilityStatus'
+                                                    )
+                                            ),
+                                    'ProductOffer' => array(
+                                            'fields' => array(
+                                                    'ProductOffer.PRODUCT_OFFER_ID',
+                                                    'ProductOffer.PURCHASE'
+                                                    ),
+                                            'SalesTerritory' => array(
+                                            'fields' => array(
+                                                    'SalesTerritory.SALES_START_DATE'                                                    
+                                                    )
+                                            )
+                                            ),
+                                    'Metadata' => array(
+                                            'fields' => array(
+                                                    'Metadata.Title',
+                                                    'Metadata.Artist'
+                                                    )
+                                            ),
+                                    'Audio' => array(
+                                            'fields' => array(
+                                                    'Audio.FileID',                                                    
+                                                    ),
+                                            'Files' => array(
+                                            'fields' => array(
+                                                    'Files.CdnPath' ,
+                                                    'Files.SaveAsName'
+                                                    )
+                                            )
+                                            )                                    
                                     )
+
                                 );
-        $this->Physicalproduct->recursive = 2;
-        $searchResults = $this->paginate('Physicalproduct');        
+        $this->Physicalproduct->recursive = 2;        
+        $searchResults = $this->paginate('Physicalproduct');       
         $this->set('searchResults', $searchResults);
         $this->layout = 'home';
     }

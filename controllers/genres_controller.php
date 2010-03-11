@@ -7,11 +7,12 @@
 ini_set('memory_limit', '1024M');
 Class GenresController extends AppController
 {
-	var $uses = array('Metadata','Product','Category','Files');
+	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
 	
 	function index() {
 		$this->layout = 'home';
-		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
+		$this->Genre->recursive = -1;
+		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));		
 		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));		
 		$i = 0;
 		$j = 0;
@@ -19,7 +20,7 @@ Class GenresController extends AppController
 		{
 			$genreName = $category['Category']['Genre'];			
 			$this->Genre->recursive = '2';
-			$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
+			$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));			
 			$finalArr = Array();
 			foreach($genreDetails as $genre)
 			{				
@@ -46,10 +47,7 @@ Class GenresController extends AppController
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
-		
-		if(base64_decode($Genre) != "all")
-		{
-		 // $this -> paginate = array('conditions' => array( 'Genre.Genre' => $Genre ) );
+		  $this->Physicalproduct->Behaviors->attach('Containable');	
 		  $this->paginate = array('conditions' =>
 					  array('and' =>
 						array(
@@ -58,28 +56,56 @@ Class GenresController extends AppController
 							array('Availability.AvailabilityStatus' => "I"),
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 							array('Physicalproduct.TrackBundleCount' => 0),
-							array('ProductOffer.PRODUCT_OFFER_ID >' => 1)
+							array('ProductOffer.PRODUCT_OFFER_ID >' => 1),
+							array('ProductOffer.PURCHASE' => 'T')
 						      )
+						),
+					  'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'								
+								)
+							),
+						'Availability' => array(
+							'fields' => array(
+								'Availability.AvailabilityType',
+								'Availability.AvailabilityStatus'
+								)
+							),
+						'ProductOffer' => array(
+							'fields' => array(
+								'ProductOffer.PRODUCT_OFFER_ID',
+								'ProductOffer.PURCHASE'
+								),
+							'SalesTerritory' => array(
+							'fields' => array(
+								'SalesTerritory.SALES_START_DATE'                                                    
+								)
+							)
+							),
+						'Metadata' => array(
+							'fields' => array(
+								'Metadata.Title',
+								'Metadata.Artist'
+								)
+							),
+						'Audio' => array(
+							'fields' => array(
+								'Audio.FileID',                                                    
+								),
+							'Files' => array(
+							'fields' => array(
+								'Files.CdnPath' ,
+								'Files.SaveAsName'
+								)
+							)
+							)                                    
 						)
-					  );
-		}else{
-		  $this->paginate = array('conditions' =>
-					  array('and' =>
-						array(
-							array('Availability.AvailabilityType' => "PERMANENT"),
-							array('Availability.AvailabilityStatus' => "I"),
-							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-							array('Physicalproduct.TrackBundleCount' => 0),
-							array('ProductOffer.PRODUCT_OFFER_ID >' => 0)
-						      )
-						)
-					  );
-		}
+					  );		
 		
-		$this->set('genre',base64_decode($Genre));
-		//$this->Product->contain();
-		$this->Product->recursive = 2;
-		$data = $this->paginate('Product');
+		$this->set('genre',base64_decode($Genre));		
+		$this->Physicalproduct->recursive = 2;
+		$data = $this->paginate('Physicalproduct');		
 		/*$data = $this->paginate('Product',array('joins' => array(
 							    array(
 								'table' => 'PRODUCT_OFFER',

@@ -18,6 +18,9 @@ class Genre extends AppModel {
 		'Physicalproduct' => array(
 			'className' => 'Physicalproduct',
 			'foreignKey' => 'ProdID'
+		),'Product' => array(
+			'className' => 'Product',
+			'foreignKey' => 'ProdID'
 		)		
 	);
 	
