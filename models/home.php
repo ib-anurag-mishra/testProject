@@ -7,7 +7,7 @@ class Home extends AppModel
   //Function to get random songs
   public function getSongs()
   {
-     $randomSongs = $this->find('all', array('order' => 'rand()',
+     $randomSongs = $this->find('all', array(//'order' => 'rand()',
 	                                              'limit' => 8));
      return $randomSongs;
   }
