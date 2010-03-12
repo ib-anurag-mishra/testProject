@@ -1,4 +1,7 @@
 <script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
+<div id="genre">
+	Search Results
+</div>
 <div id="genreArtist">
 	Artist
 </div>
