@@ -16,10 +16,20 @@
 		echo $javascript->link('curvycorners');		
 		echo $javascript->link('freegal');
 		echo $javascript->link('jquery.bgiframe');
-		echo $javascript->link('jquery.autocomplete');
-		echo $javascript->link('autocomplete');		
+		echo $javascript->link('jquery.autocomplete');			
 		echo $scripts_for_layout;
 	?>
+	<script type="text/javascript">
+	$().ready(function(){	
+		$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
+		{
+		minChars: 1,
+		cacheLength: 10,
+		
+		 autoFill: true
+		 });
+		});
+	</script>
 </head>
 <body>
 	<?php $session->flash(); ?>
