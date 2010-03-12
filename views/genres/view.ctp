@@ -43,8 +43,9 @@
 					<?php
 					if($genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d'))
 					{
+						$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
 						?>
-						<p>Download Now</p>
+						<p><a href='http://music.freegalmusic.com<?php echo $songUrl; ?>'>Download Now</a></p>
 						<?php
 					}else{
 						?>

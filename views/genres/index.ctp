@@ -60,7 +60,18 @@
 				<?php echo $catG['Album']; ?><br />
 			</div>
 			<div class="songDownload">
-				<a href="#">Download Now</a>
+				<?php
+					if($catG['SaleStartDate'] <= date('Y-m-d'))
+					{						
+						?>
+						<p><a href='http://music.freegalmusic.com<?php echo $catG['SongUrl']; ?>'>Download Now</a></p>
+						<?php
+					}else{
+						?>
+						<p>Comming Soon( <?php echo $catG['SaleStartDate']; ?>)</p>
+						<?php
+					}
+					?>
 			</div>
 			<br class="clr">
 				<?php

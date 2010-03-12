@@ -10,15 +10,14 @@
 		echo $this->Html->meta('icon');
 		echo $this->Html->css('freegal_styles');
 		echo $this->Html->css('jquery.autocomplete');
+		//echo $javascript->link('jquery-1.2.6');
 		echo $javascript->link('jquery-1');
 		echo $javascript->link('jquery');
-	?>        
-		
-	<?php		
-		echo $javascript->link('curvycorners');
-		echo $javascript->link('jquery.autocomplete');
-		echo $javascript->link('autocomplete');
+		echo $javascript->link('curvycorners');		
 		echo $javascript->link('freegal');
+		echo $javascript->link('jquery.bgiframe');
+		echo $javascript->link('jquery.autocomplete');
+		echo $javascript->link('autocomplete');		
 		echo $scripts_for_layout;
 	?>
 </head>
