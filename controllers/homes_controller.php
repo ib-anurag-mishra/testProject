@@ -8,13 +8,33 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array('Html','Ajax','Javascript','Form' );
-    var $components = array('RequestHandler');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist');
-    
+    //var $components = array('RequestHandler','ValidatePatron');
+	var $components = array('RequestHandler');
+    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library');
+    var $beforeFilter = array('validatePatron');
+ 
+   /* function beforeFilter()
+    {
+        $this->validatePatron();
+    }*/
     
     function index()
     {
-        $this->set('songs',$this->Home->getSongs());
+        //$this->validatePatron();
+        $this->Physicalproduct->Behaviors->attach('Containable');	
+		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
+																	array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'), 
+																 'contain' => 
+																	array('Audio' => array('fields' => 
+																						array('Audio.FileID'),
+																						'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
+																					),
+																		'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist'))
+																	),'order'=> 'rand()','limit' => '8'
+															)
+												);
+        $this->set('songs',$songDetails);
+        //$this->set('songs',$this->Home->getSongs());
         $this->set('distinctArtists', $this->Physicalproduct->getallartist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());

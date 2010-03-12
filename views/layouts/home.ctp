@@ -13,25 +13,31 @@
 		//echo $javascript->link('jquery-1.2.6');
 		echo $javascript->link('jquery-1');
 		echo $javascript->link('jquery');
-		echo $javascript->link('curvycorners');		
+		echo $javascript->link('curvycorners');
+		echo $javascript->link('swfobject');
+		//echo $javascript->link('jquery.min');
+		echo $javascript->link('audioPlayer');
 		echo $javascript->link('freegal');
 		echo $javascript->link('jquery.bgiframe');
-		echo $javascript->link('jquery.autocomplete');			
+		echo $javascript->link('jquery.autocomplete');
 		echo $scripts_for_layout;
 	?>
 	<script type="text/javascript">
-	$().ready(function(){	
-		$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
-		{
-		minChars: 1,
-		cacheLength: 10,
-		
-		 autoFill: true
-		 });
+		$().ready(function() {
+			$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
+			{
+				minChars: 1,
+				cacheLength: 10,
+				autoFill: true
+			});
 		});
+		
+		var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
+		swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "1", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
 	</script>
 </head>
 <body>
+	<div id="audioPlayer"></div>
 	<?php $session->flash(); ?>
 	<div id="container">
 		<?php echo $this->element('header'); ?>

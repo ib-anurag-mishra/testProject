@@ -20,23 +20,23 @@
 	Suggestions
 	<div id="suggestionsBox">
 		<table cellspacing="0" cellpadding="0">
-			<?php foreach($songs as $randomSongs): ?>
+			<?php foreach($songs as $key => $randomSongs): ?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
 						<p class='suggest_text'>
 							<?php
-								if (strlen($randomSongs['Home']['Title']) >= 28 ) {
-									echo $html->link(substr($randomSongs['Home']['Title'], 0, 28) . "...", array(
+								if (strlen($randomSongs['Metadata']['Title']) >= 28 ) {
+									echo $html->link(substr($randomSongs['Metadata']['Title'], 0, 28) . "...", array(
 										'controller' => 'artists', 
 										'action' => 'view', 
-										$randomSongs['Home']['Title']
+										$randomSongs['Metadata']['Title']
 										)
 									);
 								} else {
-									echo $html->link($randomSongs['Home']['Title'], array(
+									echo $html->link($randomSongs['Metadata']['Title'], array(
 										'controller' => 'artists', 
 										'action' => 'view', 
-										$randomSongs['Home']['Title']
+										$randomSongs['Metadata']['Title']
 										)
 									);
 								}
@@ -44,14 +44,17 @@
 							<br />
 							by&nbsp;
 							<?php
-								echo $html->link($randomSongs['Home']['Artist'], array(
+								echo $html->link($randomSongs['Metadata']['Artist'], array(
 									'controller' => 'artists',
 									'action' => 'view',
-									base64_encode($randomSongs['Home']['Artist'])
+									base64_encode($randomSongs['Metadata']['Artist'])
 									)
 								);
+								$songUrl = shell_exec('perl files/tokengen ' . $randomSongs['Audio'][0]['Files']['CdnPath']."/".$randomSongs['Audio'][0]['Files']['SaveAsName']);
+								$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
-							<?php echo $html->image('button.png', array("alt" => "Play Sample")); ?>
+							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($songs).', '.$randomSongs["Physicalproduct"]["ProdID"].');')); ?>
 						</p>
 					</td>
 				</tr>
