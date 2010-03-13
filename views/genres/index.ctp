@@ -5,7 +5,7 @@
 	<?php
 	$i = 0;
 	foreach($categories as $category)
-	{
+	{		
 		if($i%2 == '0')
 		{?>
 		
@@ -31,7 +31,7 @@
 		<?php }
 		
 		$j = 0;
-		foreach($category as $catG)
+		foreach($category as $key => $catG)
 		{
 			if($j < 3)
 			{?>
@@ -52,7 +52,11 @@
 				
 			</div>
 			<div class="songSample">
-				<a href='#'><img src='/img/button.png'></a>
+				<?php					
+					$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
+					$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+					echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($category).', '.$catG["ProdId"].', "'.$this->webroot.'");'));
+				?>
 			</div>
 			<div class="songData">
 				<?php echo $catG['Song']; ?><br />

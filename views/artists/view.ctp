@@ -40,7 +40,7 @@
 		<div id="songResults">
 			<?php
 			$i = 1;
-			foreach($albumSongs[$album['Physicalproduct']['ReferenceID']] as $albumSong):			
+			foreach($albumSongs[$album['Physicalproduct']['ReferenceID']] as  $key => $albumSong):			
 				$class = null;
 				if ($i++ % 2 == 0) {
 					$class = ' class="altrow"';
@@ -49,7 +49,14 @@
 			<table cellspacing="0" cellpadding="0" border="0">
 				<tr <?php echo $class; ?>>
 					<td width="20" valign="top" align="center">
-						<p><a href="#"><?php echo $html->image('button.png'); ?></a></p>
+						<p>
+					<?php
+						$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio'][0]['Files']['CdnPath']."/".$albumSong['Audio'][0]['Files']['SaveAsName']);
+						$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+						$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+						echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($albumSongs[$album['Physicalproduct']['ReferenceID']]).', '.$albumSong["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
+					?>
+						</p>
 					</td>
 					<td width="380" valign="top" align="left">
 						<p><?php echo $albumSong['Metadata']['Title'];?></p>

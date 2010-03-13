@@ -88,13 +88,16 @@ Class GenresController extends AppController
 			foreach($genreDetails as $genre)
 			{
 				$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
-				$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SaveAsName']);
+				$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
+				$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['0']['Files']['CdnPath']."/".$genre['Audio']['0']['Files']['SaveAsName']);
 				$finalArr[$i]['Album'] = $genre['Physicalproduct']['Title'];
 				$finalArr[$i]['Song'] = $genre['Metadata']['Title'];
 				$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
 				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 				$finalArr[$i]['SongUrl'] = $songUrl;
 				$finalArr[$i]['SaleStartDate'] = $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'];
+				$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
+				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
 				$i++;				
 			}			
 			$finalArray[$j] = $finalArr;

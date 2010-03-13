@@ -21,7 +21,7 @@
 	if($genres != 0)
 	{
 		$i = 1;
-		foreach($genres as $genre):
+		foreach($genres as $key => $genre):		
 			$class = null;
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';
@@ -53,7 +53,13 @@
 							echo $genre['Metadata']['Title']; 
 					 	} 
 					?>
-					<span><?php echo $genre['Metadata']['Title']; ?></span></a><a href='#'><img src='/img/button.png'></a></p>
+					<span><?php echo $genre['Metadata']['Title']; ?></span></a>						
+				<?php
+					$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio'][0]['Files']['CdnPath']."/".$genre['Audio'][0]['Files']['SaveAsName']);
+					$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+					$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+					echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($genres).', '.$genre["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
+				?>
 				</td>
 				<td width="150" align="center">
 					<?php
