@@ -29,7 +29,7 @@ body  {
 
 #header {
 	width: 965px;
-	height: 132px;
+	height: 96px;
 }
 
 #header_title {
@@ -48,7 +48,7 @@ body  {
 }
 
 #navigation {
-	height: 34px;
+	height: 36px;
 	background: #0099FF;
 }
 
@@ -107,9 +107,9 @@ a.logout {
 }
 
 /* Form */
-#content form fieldset {margin: 0 10px 0 10px; padding:10px 20px; _padding-top:0; border:1px solid #e0e0e0;}
-#content form fieldset legend {padding:0 10px; _margin-bottom:10px;}
-#content form fieldset input, #content fieldset select {margin-top:3px; margin-bottom:10px;}
+#content form fieldset {margin: 0 10px 0 10px; padding:0; _padding-top:0; border:0px solid #e0e0e0;}
+#content form fieldset legend {padding:0; _margin-bottom:10px;font-size: 24px; color: #0099FF; font-weight: normal;}
+/* #content form fieldset input, #content fieldset select {margin:0;} */
 #content form fieldset textarea {width:95%;}
 #content form fieldset label input {margin-bottom:0;}
 #content form p.submit input {padding:0 10px; margin-bottom:0;}
@@ -260,4 +260,60 @@ div.actions {
 div.actions h3 {
 	padding-top:0;
 	color:#777;
+}
+div.formFieldsContainer {
+	border: 1px solid #e0e0e0;
+	width: 863px;
+	height: auto;
+	margin-top: 25px;
+	float: left;
+}
+div.formStepsbox {
+	height: 40px;
+	float: left;
+}
+div.active_step {
+	border-right: 1px solid #B4B4B4;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 12px 8px;
+	width: auto;
+	float: left;
+	cursor: pointer;
+	color: #0099FF;
+}
+div.inactive_step {
+	border-right: 1px solid #B4B4B4;
+	background: #fff url(../img/background.png) repeat-x scroll 0 -54px;
+	font-weight: bold;
+	font-size: 14px;
+	padding: 12px 8px;
+	width: auto;
+	float: left;
+	cursor: pointer;
+}
+div.formFieldsbox {
+	float: left;
+	width: 843px;
+	height: 100%;
+	padding: 10px;
+}
+div.form_steps {
+	display: block;
+	float: left;
+	width: 843px;
+}
+div.form_steps > h1 {
+	margin: 20px;
+	font-size: 20px;
+	font-weight: normal;
+	color: #000000;
+}
+label {
+	margin: 0 0 0 20px;
+	font-size: 12px;
+	font-weight: normal;
+}
+.form_fields {
+	margin: 0 0 0 20px;
 }

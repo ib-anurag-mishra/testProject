@@ -1,6 +1,6 @@
 	<ul id="menu" class="sf-menu">
 		<li>
-			<a href="#" <?php if ($this->pageTitle == "Users") echo "class=\"current\""; ?>>Users</a>
+			<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Users</a>
 			<ul>
 				<li>
 					<?php echo $html->link('Add User', array('controller' => 'users', 'action' => 'userform'));?>

@@ -3,3 +3,8 @@ config/database.php
 .DS_Store
 /app/config/database.php
 /app/tmp
+/app/webroot/img/Thumbs.db
+/app/webroot/img/artistimg/Thumbs.db
+/app/webroot/img/featuredimg/Thumbs.db
+/app/webroot/img/internet_explorer/Thumbs.db
+/app/webroot/img/newartistimg/Thumbs.db

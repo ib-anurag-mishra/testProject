@@ -54,7 +54,7 @@
 								$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
-							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($songs).', '.$randomSongs["Physicalproduct"]["ProdID"].');')); ?>
+							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($songs).', '.$randomSongs["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");')); ?>
 						</p>
 					</td>
 				</tr>
