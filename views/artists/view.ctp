@@ -19,6 +19,7 @@
 		</div>
 		<div class="artistInfo">
 			<?php
+				echo $html->link(__('Genre: ').$album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 				if ($album['Metadata']['ArtistURL'] != '') {
 					echo $html->link('http://' . $album['Metadata']['ArtistURL'], 'http://' . $album['Metadata']['ArtistURL'], array('target' => 'blank'));
 					echo '<br />';
