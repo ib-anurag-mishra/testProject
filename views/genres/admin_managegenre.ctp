@@ -1,5 +1,5 @@
 <?php 
-    $this->pageTitle = 'Admin';
+    $this->pageTitle = 'Content';
     echo $this->Form->create('Genre', array( 'controller' => 'Genre','action' => 'managegenre'));
     foreach ($allGenres as $allGenre):
     if(in_array($allGenre['Genre']['Genre'],$selectedGenres))
