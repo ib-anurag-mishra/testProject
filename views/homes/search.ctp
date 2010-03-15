@@ -37,13 +37,15 @@
 					<p><?php echo $searchResult['Physicalproduct']['Title']; ?></p>
 				</td>
 				<td width="400" valign="top">
-					<p><a href="#" class="info"><?php echo $searchResult['Metadata']['Title']; ?><span><?php echo $searchResult['Metadata']['Title']; ?></span></a>                                                                                        
-                                    <?php
-					$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio'][0]['Files']['CdnPath']."/".$searchResult['Audio'][0]['Files']['SaveAsName']);
-					$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
-					$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-					echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($searchResults).', 0, '.$searchResult["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
-                                    ?>
+					<p><a href="#" class="info"><?php echo $searchResult['Metadata']['Title']; ?><span><?php echo $searchResult['Metadata']['Title']; ?></span></a>
+					<?php
+						if($searchResult['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d')) {
+							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio'][0]['Files']['CdnPath']."/".$searchResult['Audio'][0]['Files']['SaveAsName']);
+							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($searchResults).', 0, '.$searchResult["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
+						}
+					?>
 				</td>
 				<td width="150" align="center">
 					<?php
@@ -55,7 +57,7 @@
 					<?php
 					}else{
 						?>
-						<p>Comming Soon( <?php echo $searchResult['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</p>
+						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $searchResult['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</span></p>
 						<?php
 					}
 					?>

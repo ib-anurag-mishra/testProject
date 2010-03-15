@@ -49,11 +49,13 @@
 							<tr <?php echo $class; ?>>
 								<td width="20" valign="top" align="center">
 									<p>
-										<?php
+									<?php
+										if($albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d')) {
 											$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio'][0]['Files']['CdnPath']."/".$albumSong['Audio'][0]['Files']['SaveAsName']);
 											$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 											$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "play_audio'.$album_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($albumSongs[$album['Physicalproduct']['ReferenceID']]).', '.count($albumData).', '.$albumSong["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
+										}
 										?>
 									</p>
 								</td>
@@ -73,7 +75,7 @@
 									<?php
 										}else{
 									?>
-											<p>Coming Soon( <?php echo $albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</p>
+											<p class="info">Coming Soon<span>Coming Soon ( <?php echo $albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</span></p>
 									<?php
 										}
 									?>	
