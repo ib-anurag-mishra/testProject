@@ -8,15 +8,14 @@
 	</title>
    	<?php
                 echo $this->Html->meta('icon');
-                
+		
                 echo $this->Html->css('freegal_admin_styles');
                 echo $this->Html->css('superfish');
                 echo $this->Html->css('colorbox');
-                
-                echo $javascript->link('jquery-1');       
+		
+                echo $javascript->link('jquery-1');
                 echo $javascript->link('admin_functions');
-                echo $javascript->link(array('https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js',
-                                 'http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js'));
+                echo $javascript->link(array('https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js', 'http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js'));
                 echo $javascript->link('jquery.colorbox');
                 echo $javascript->link('jquery.hoverIntent.min.js');
                 echo $javascript->link('superfish.js');
@@ -24,6 +23,9 @@
                 
                 echo $scripts_for_layout;
 	?>
+	<script type="text/javascript">
+		var webroot = '<? echo $this->webroot; ?>';
+	</script>
 </head>
 <body>
 	<?php $session->flash(); ?>
