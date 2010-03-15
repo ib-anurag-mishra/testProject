@@ -75,7 +75,7 @@
 					<?php
 					}else{
 						?>
-							<p>Coming Soon( <?php echo $albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</p>
+							<p class="info">Coming Soon<span>Coming Soon ( <?php echo $albumSong['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</span></p>
 						<?php
 						}
 						?>	

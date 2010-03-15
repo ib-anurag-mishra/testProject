@@ -31,10 +31,10 @@
 	?>
 			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p><?php echo $html->link($genre['Physicalproduct']['ArtistText'], array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?></p>
+					<p class="info"><?php echo $html->link($genre['Physicalproduct']['ArtistText'], array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?><span><?php echo $genre['Physicalproduct']['ArtistText']; ?></span></p>
 				</td>
 				<td width="200" valign="top">
-					<p><a href="#" class="info">
+					<p class="info">
 					<?php
 						if (strlen($albumData[$genre['Physicalproduct']['ReferenceID']]) >= 24) {
 							echo substr($albumData[$genre['Physicalproduct']['ReferenceID']], 0, 24) . '...'; 
@@ -42,10 +42,10 @@
 							echo $albumData[$genre['Physicalproduct']['ReferenceID']];
 						} 
 					?>
-					<span><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></span></a></p>
+					<span><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></span></p>
 				</td>
 				<td width="400" valign="top">
-					<p><a href="#" class="info">
+					<p class="info">
 					<?php
 						if (strlen($genre['Metadata']['Title']) >= 48) {
 							echo substr($genre['Metadata']['Title'], 0, 48) . '...';
@@ -53,7 +53,7 @@
 							echo $genre['Metadata']['Title']; 
 					 	} 
 					?>
-					<span><?php echo $genre['Metadata']['Title']; ?></span></a>						
+					<span><?php echo $genre['Metadata']['Title']; ?></span>						
 				<?php
 					$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio'][0]['Files']['CdnPath']."/".$genre['Audio'][0]['Files']['SaveAsName']);
 					$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
