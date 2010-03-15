@@ -104,6 +104,12 @@ a.logout {
 
 .message {
 	margin-left:10px;
+	background:none repeat scroll 0 0 #FF0000;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size: 15px;
+	margin:10px;
+	padding:5px;
 }
 
 /* Form */
@@ -304,7 +310,7 @@ div.form_steps {
 	width: 843px;
 }
 div.form_steps > h1 {
-	margin: 20px;
+	margin: 5px 20px;
 	font-size: 20px;
 	font-weight: normal;
 	color: #000000;
@@ -316,4 +322,10 @@ label {
 }
 .form_fields {
 	margin: 0 0 0 20px;
+}
+.error-message {
+	font-size:12px;
+	font-weight:normal;
+	margin:0 0 0 20px;
+	color: #FF0000;
 }

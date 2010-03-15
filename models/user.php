@@ -120,15 +120,15 @@ class User extends AppModel
     */
    
   public function getalllibraryadmins($condition,$id)
-  {   
+  {
     $this->recursive = -1;
     $librarytObj = new Library();
     $existingLibraries = $librarytObj->find('all', array(
-                              'field' => 'admin_id'));    
+                              'field' => 'library_admin_id'));    
     $finalArr = array();
     foreach($existingLibraries as $existingLibrary)
     {
-      array_push($finalArr,$existingLibrary['Library']['admin_id']);
+      array_push($finalArr,$existingLibrary['Library']['library_admin_id']);
     }    
     $allAdmins = $this->find('all', array(
               'conditions' => array(
@@ -140,7 +140,7 @@ class User extends AppModel
     if($condition == 'edit')
     {
       $libraryDetails = $librarytObj->getlibrarydata($id);      
-      $adminDetails = $this->getuserdata($libraryDetails['Library']['admin_id']);
+      $adminDetails = $this->getuserdata($libraryDetails['Library']['library_admin_id']);
       $finalArray[$adminDetails['User']['id']] = $adminDetails['User']['email'];      
     }
     if($allAdmins != '')
@@ -149,7 +149,7 @@ class User extends AppModel
       {
         $finalArray[$allAdmin['User']['id']] =  $allAdmin['User']['email'];
       }
-    }   
+    }
     return $finalArray;
   }
     

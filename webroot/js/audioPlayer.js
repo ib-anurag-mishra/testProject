@@ -14,6 +14,7 @@ var URLOne;
 var URLTwo;
 var URLThree;
 var TtlCount;
+var TtlUpperLoopCount;
 var PID;
 var webRootURL;
 
@@ -150,20 +151,33 @@ function seek(event) {
 
 function stop(event) {
     document.getElementById('audioPlayer').stop();
-    document.getElementById(imageID).onclick = function(){playSample(this, imageID, URLOne, URLTwo, URLThree, TtlCount, PID, webRootURL);};
+    document.getElementById(imageID).onclick = function(){playSample(this, imageID, URLOne, URLTwo, URLThree, TtlCount, TtlUpperLoopCount, PID, webRootURL);};
 }
 
-function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, totalCount, playID, webRoot) {
-    for(i = 0; i < totalCount; i++) {
-        document.getElementById("play_audio"+i).src = webRoot+'img/play.png';
-        var onClickAttrs = document.getElementById("play_audio"+i).getAttribute("onClick");
-        document.getElementById("play_audio"+i).onclick = new Function(onClickAttrs);
+function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, totalCount, totalUpperLoopCount, playID, webRoot) {
+    if(totalUpperLoopCount == 0) {
+        for(i = 0; i < totalCount; i++) {
+            document.getElementById("play_audio"+i).src = webRoot+'img/play.png';
+            var onClickAttrs = document.getElementById("play_audio"+i).getAttribute("onClick");
+            document.getElementById("play_audio"+i).onclick = new Function(onClickAttrs);
+        }
     }
+    else {
+        for(i = 0; i < totalUpperLoopCount; i++) {
+            for(j = 0; j < totalCount; j++) {
+                document.getElementById("play_audio"+i+j).src = webRoot+'img/play.png';
+                var onClickAttrs = document.getElementById("play_audio"+i+j).getAttribute("onClick");
+                document.getElementById("play_audio"+i+j).onclick = new Function(onClickAttrs);
+            }
+        }
+    }
+    
     imageID = objID;
     URLOne = audioURLOne;
     URLTwo = audioURLTwo;
     URLThree = audioURLThree;
     TtlCount = totalCount;
+    TtlUpperLoopCount = totalUpperLoopCount;
     PID = playID;
     webRootURL = webRoot;
     load(obj, audioURLOne, audioURLTwo, audioURLThree, playID);
