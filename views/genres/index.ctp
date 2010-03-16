@@ -55,7 +55,7 @@
 				<?php					
 					$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
 					$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-					echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "play_audio'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($category).', '.count($categories).', '.$catG["ProdId"].', "'.$this->webroot.'");'));
+					echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "play_audio'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$catG["ProdId"].', "'.$this->webroot.'");'));
 				?>
 			</div>
 			<div class="songData">

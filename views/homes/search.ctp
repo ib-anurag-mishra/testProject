@@ -43,7 +43,7 @@
 							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio'][0]['Files']['CdnPath']."/".$searchResult['Audio'][0]['Files']['SaveAsName']);
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.count($searchResults).', 0, '.$searchResult["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
+							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$searchResult["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
 						}
 					?>
 				</td>
