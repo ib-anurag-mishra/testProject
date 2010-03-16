@@ -72,6 +72,7 @@ class Physicalproduct extends AppModel
 
   public function getallartistname($condition,$artistName)
   {
+    $this->recursive = -1;
     $allArtists = $this->find('all', array(	
 	'fields' => 'DISTINCT ArtistText', 
 	'order' => 'ArtistText')
@@ -116,6 +117,7 @@ class Physicalproduct extends AppModel
   */
   public function allartistname($condition,$artistName)
   {
+    $this->recursive = -1;
     $allArtists = $this->find('all', array(	
 	'fields' => 'DISTINCT ArtistText', 
 	'order' => 'ArtistText')
@@ -154,6 +156,7 @@ class Physicalproduct extends AppModel
   
   public function searchArtist($search)
   {
+      $this->recursive = -1;
       $allArtists = $this->find('all', array(
 	      'fields' => array(
 		      'ArtistText'
