@@ -28,10 +28,10 @@
 			{
 				minChars: 1,
 				cacheLength: 10,
-				autoFill: true
+				autoFill: false
 			});
-		});
-		
+		});		
+		var webroot = '<? echo $this->webroot; ?>';	
 		var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 		swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "1", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
 	</script>
