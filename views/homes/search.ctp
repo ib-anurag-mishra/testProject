@@ -39,7 +39,7 @@
 				<td width="400" valign="top">
 					<p><a href="#" class="info"><?php echo $searchResult['Metadata']['Title']; ?><span><?php echo $searchResult['Metadata']['Title']; ?></span></a>
 					<?php
-						if($searchResult['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d')) {
+						if($searchResult['Physicalproduct']['SalesDate'] <= date('Y-m-d')) {
 							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio'][0]['Files']['CdnPath']."/".$searchResult['Audio'][0]['Files']['SaveAsName']);
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
@@ -49,7 +49,7 @@
 				</td>
 				<td width="150" align="center">
 					<?php
-					if($searchResult['ProductOffer']['SalesTerritory']['SALES_START_DATE'] <= date('Y-m-d'))
+					if($searchResult['Physicalproduct']['SalesDate'] <= date('Y-m-d'))
 					{					
 						$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio']['1']['Files']['CdnPath']."/".$searchResult['Audio']['1']['Files']['SaveAsName']);
 						?>
@@ -57,7 +57,7 @@
 					<?php
 					}else{
 						?>
-						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $searchResult['ProductOffer']['SalesTerritory']['SALES_START_DATE']; ?>)</span></p>
+						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $searchResult['Physicalproduct']['SalesDate']; ?>)</span></p>
 						<?php
 					}
 					?>
