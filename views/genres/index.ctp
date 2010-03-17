@@ -73,14 +73,14 @@
 			</div>
 			<div class="songDownload">
 				<?php
-					if($catG['SaleStartDate'] <= date('Y-m-d'))
+					if($catG['SalesDate'] <= date('Y-m-d'))
 					{						
 						?>
 						<p><a href='http://music.freegalmusic.com<?php echo $catG['SongUrl']; ?>'>Download Now</a></p>
 						<?php
 					}else{
 						?>
-						<p>Comming Soon( <?php echo $catG['SaleStartDate']; ?>)</p>
+						<p>Comming Soon( <?php echo $catG['SalesDate']; ?>)</p>
 						<?php
 					}
 					?>
