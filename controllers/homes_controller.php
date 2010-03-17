@@ -22,7 +22,14 @@ class HomesController extends AppController
     {        
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
-                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'), 
+                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'),
+                                'fields' => array(
+                                                    'Physicalproduct.ProdID',
+                                                    'Physicalproduct.Title',
+                                                    'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.DownloadStatus',
+                                                    'Physicalproduct.SalesDate'
+                                                    ),
                                 'contain' => 
                                 array('Audio' => array('fields' => 
                                                                         array('Audio.FileID'),
@@ -106,6 +113,13 @@ class HomesController extends AppController
                                                     array('Metadata.Title LIKE' => $searchKey.'%')
                                                 )
                                     ),
+                                    'fields' => array(
+                                                    'Physicalproduct.ProdID',
+                                                    'Physicalproduct.Title',
+                                                    'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.DownloadStatus',
+                                                    'Physicalproduct.SalesDate'
+                                                    ),
                                     'contain' => array(                                                                       
                                     'Metadata' => array(
                                             'fields' => array(
