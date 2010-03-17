@@ -31,7 +31,15 @@ Class GenresController extends AppController
 							array('Physicalproduct.DownloadStatus' => 1)
 						      )
 						),
-					  'contain' => array(
+					  'fields' => array(
+							'Physicalproduct.ProdID',
+							'Physicalproduct.ReferenceID',
+							'Physicalproduct.Title',
+							'Physicalproduct.ArtistText',
+							'Physicalproduct.DownloadStatus',
+							'Physicalproduct.SalesDate'
+							),
+					  'contain' => array(							
 						'Genre' => array(
 							'fields' => array(
 								'Genre.Genre'								
@@ -63,7 +71,7 @@ Class GenresController extends AppController
 								)
 							)
 							)                                    
-						),'limit' => '3'));			//'order'=> 'rand()',
+						),'order'=> 'rand()','limit' => '3'));			//'order'=> 'rand()',		 
 			$finalArr = Array();
 			foreach($genreDetails as $genre)
 			{
@@ -106,6 +114,14 @@ Class GenresController extends AppController
 							array('Physicalproduct.DownloadStatus' => 1)
 						      )
 						),
+					  'fields' => array(
+							'Physicalproduct.ProdID',
+							'Physicalproduct.Title',
+							'Physicalproduct.ReferenceID',
+							'Physicalproduct.ArtistText',
+							'Physicalproduct.DownloadStatus',
+							'Physicalproduct.SalesDate'
+							),
 					  'contain' => array(
 						'Genre' => array(
 							'fields' => array(
