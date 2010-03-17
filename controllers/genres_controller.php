@@ -25,13 +25,10 @@ Class GenresController extends AppController
 		  $genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
 					  array('and' =>
 						array(
-							array('Genre.Genre' => $genreName),
-							array('Availability.AvailabilityType' => "PERMANENT"),
-							array('Availability.AvailabilityStatus' => "I"),
+							array('Genre.Genre' => $genreName),							
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 							array('Physicalproduct.TrackBundleCount' => 0),
-							array('ProductOffer.PRODUCT_OFFER_ID >' => 1),
-							array('ProductOffer.PURCHASE' => 'T')
+							array('Physicalproduct.DownloadStatus' => 1)
 						      )
 						),
 					  'contain' => array(
@@ -48,24 +45,7 @@ Class GenresController extends AppController
 								'Files.SourceURL'
 								)
 							)
-							),
-						'Availability' => array(
-							'fields' => array(
-								'Availability.AvailabilityType',
-								'Availability.AvailabilityStatus'
-								)
-							),
-						'ProductOffer' => array(
-							'fields' => array(
-								'ProductOffer.PRODUCT_OFFER_ID',
-								'ProductOffer.PURCHASE'
-								),
-							'SalesTerritory' => array(
-							'fields' => array(
-								'SalesTerritory.SALES_START_DATE'                                                    
-								)
-							)
-							),
+							),						
 						'Metadata' => array(
 							'fields' => array(
 								'Metadata.Title',
@@ -95,8 +75,9 @@ Class GenresController extends AppController
 				$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
 				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 				$finalArr[$i]['SongUrl'] = $songUrl;
-				$finalArr[$i]['SaleStartDate'] = $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'];
+				//$finalArr[$i]['SaleStartDate'] = $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'];
 				$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
+				$finalArr[$i]['SalesDate'] = $genre['Physicalproduct']['SalesDate'];
 				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
 				$i++;				
 			}			
@@ -119,13 +100,10 @@ Class GenresController extends AppController
 		  $this->paginate = array('conditions' =>
 					  array('and' =>
 						array(
-							array('Genre.Genre' => base64_decode($Genre)),
-							array('Availability.AvailabilityType' => "PERMANENT"),
-							array('Availability.AvailabilityStatus' => "I"),
+							array('Genre.Genre' => base64_decode($Genre)),							
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 							array('Physicalproduct.TrackBundleCount' => 0),
-							array('ProductOffer.PRODUCT_OFFER_ID >' => 1),
-							array('ProductOffer.PURCHASE' => 'T')
+							array('Physicalproduct.DownloadStatus' => 1)
 						      )
 						),
 					  'contain' => array(
@@ -133,24 +111,7 @@ Class GenresController extends AppController
 							'fields' => array(
 								'Genre.Genre'								
 								)
-							),
-						'Availability' => array(
-							'fields' => array(
-								'Availability.AvailabilityType',
-								'Availability.AvailabilityStatus'
-								)
-							),
-						'ProductOffer' => array(
-							'fields' => array(
-								'ProductOffer.PRODUCT_OFFER_ID',
-								'ProductOffer.PURCHASE'
-								),
-							'SalesTerritory' => array(
-							'fields' => array(
-								'SalesTerritory.SALES_START_DATE'                                                    
-								)
-							)
-							),
+							),						
 						'Metadata' => array(
 							'fields' => array(
 								'Metadata.Title',
@@ -174,24 +135,6 @@ Class GenresController extends AppController
 		$this->set('genre',base64_decode($Genre));		
 		$this->Physicalproduct->recursive = 2;
 		$data = $this->paginate('Physicalproduct');		
-		/*$data = $this->paginate('Product',array('joins' => array(
-							    array(
-								'table' => 'PRODUCT_OFFER',
-								'alias' => 'Productoffer',
-								'type' => 'left',
-								'foreignKey' => false,
-								'conditions'=> array('Productoffer.ProdID = Product.ProdID')
-							    ),
-							    array(
-								'table' => 'SALES_TERRITORY',
-								'alias' => 'Salesterritory',
-								'type' => 'left',
-								'foreignKey' => false,
-								'conditions'=> array(
-								    'Salesterritory.PRODUCT_OFFER_ID = Productoffer.PRODUCT_OFFER_ID'
-								)
-							    )
-							)));*/
 		if(count($data) > 0)
 		{
 		  $album = array();
