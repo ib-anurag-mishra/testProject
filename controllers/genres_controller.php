@@ -71,7 +71,7 @@ Class GenresController extends AppController
 								)
 							)
 							)                                    
-						),'order'=> 'rand()','limit' => '3'));			//'order'=> 'rand()',		 
+						),'limit' => '3'));			//'order'=> 'rand()',		 
 			$finalArr = Array();
 			foreach($genreDetails as $genre)
 			{
