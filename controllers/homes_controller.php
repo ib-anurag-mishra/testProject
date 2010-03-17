@@ -8,31 +8,30 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array('Html','Ajax','Javascript','Form' );
-    //var $components = array('RequestHandler','ValidatePatron');
-	var $components = array('RequestHandler');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library');
+    //var $components = array('RequestHandler','ValidatePatron','Download');
+    var $components = array('RequestHandler');
+    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata');
     var $beforeFilter = array('validatePatron');
  
-   /* function beforeFilter()
-    {
+   /*function beforeFilter()
+    {        
         $this->validatePatron();
     }*/
     
     function index()
-    {
-        //$this->validatePatron();
+    {        
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
-																	array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'), 
-																 'contain' => 
-																	array('Audio' => array('fields' => 
-																						array('Audio.FileID'),
-																						'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
-																					),
-																		'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist'))
-																	),'order'=> 'rand()','limit' => '8'
-															)
-												);
+                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'), 
+                                'contain' => 
+                                array('Audio' => array('fields' => 
+                                                                        array('Audio.FileID'),
+                                                                        'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
+                                                                ),
+                                        'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist'))
+                                ),'order'=> 'rand()','limit' => '8'
+                )
+        );
         $this->set('songs',$songDetails);
         //$this->set('songs',$this->Home->getSongs());
         $this->set('distinctArtists', $this->Physicalproduct->getallartist());
@@ -95,12 +94,9 @@ class HomesController extends AppController
         $this -> paginate = array('conditions' =>
                                 array('and' =>
                                         array(                                                      
-                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
-                                                array('Availability.AvailabilityType' => "PERMANENT"),
-                                                array('Availability.AvailabilityStatus' => "I"),
-                                                array('ProductOffer.PRODUCT_OFFER_ID >' => 0),
+                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                
                                                 array('Physicalproduct.TrackBundleCount' => 0),
-                                                array('ProductOffer.PURCHASE' => 'T')
+                                                array('Physicalproduct.DownloadStatus' => 1)
                                             )
                                         ,
                                     'or' =>
@@ -110,24 +106,7 @@ class HomesController extends AppController
                                                     array('Metadata.Title LIKE' => $searchKey.'%')
                                                 )
                                     ),
-                                    'contain' => array(                                   
-                                    'Availability' => array(
-                                            'fields' => array(
-                                                    'Availability.AvailabilityType',
-                                                    'Availability.AvailabilityStatus'
-                                                    )
-                                            ),
-                                    'ProductOffer' => array(
-                                            'fields' => array(
-                                                    'ProductOffer.PRODUCT_OFFER_ID',
-                                                    'ProductOffer.PURCHASE'
-                                                    ),
-                                            'SalesTerritory' => array(
-                                            'fields' => array(
-                                                    'SalesTerritory.SALES_START_DATE'                                                    
-                                                    )
-                                            )
-                                            ),
+                                    'contain' => array(                                                                       
                                     'Metadata' => array(
                                             'fields' => array(
                                                     'Metadata.Title',
@@ -144,7 +123,7 @@ class HomesController extends AppController
                                                     'Files.SaveAsName'
                                                     )
                                             )
-                                            )                                    
+                                        )                                    
                                     )
 
                                 );
@@ -153,5 +132,16 @@ class HomesController extends AppController
         $this->set('searchResults', $searchResults);
         $this->layout = 'home';
     }
+    
+    function userDownload()
+    {          
+        $libId = $_REQUEST['libId'];
+        $patId = $_REQUEST['patId'];
+        $prodId = $_REQUEST['prodId'];       
+        $trackDetails = $this->Metadata->gettrackdata($prodId);
+        $artist = $trackDetails['Metadata']['Artist'];
+        $track = $trackDetails['Metadata']['Title'];
+    }    
+    
 }
 ?>
