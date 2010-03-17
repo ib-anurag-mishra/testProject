@@ -14,7 +14,7 @@ Class ArtistsController extends AppController
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view','search','download');
+	    $this->Auth->allowedActions = array('view','search','downloadStatus','test','download');
 	}
 	
 	/*
@@ -463,19 +463,59 @@ Class ArtistsController extends AppController
                 $albumSongs = array();
                 foreach($albumData as $album)
                 {
-                    $albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+                    /*$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
                                                   'conditions' =>
                                                             array('and' =>
                                                                   array(
                                                                           array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),
                                                                           array( "Physicalproduct.ProdID <> Physicalproduct.ReferenceID"),
-                                                                          array('Availability.AvailabilityType' => "PERMANENT"),
-                                                                          array('Availability.AvailabilityStatus' => "I"),
-                                                                          array('ProductOffer.PRODUCT_OFFER_ID >' => 0),
-                                                                          array('ProductOffer.PURCHASE' => 'T')
+                                                                          
                                                                         )
                                                                   ),'order' => 'Physicalproduct.ReferenceID'
-                                                            ));
+                                                            ));*/
+		    $albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+					  'conditions' =>
+					  array('and' =>
+						array(
+							array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
+							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
+							array('Physicalproduct.TrackBundleCount' => 0),
+							array('Physicalproduct.DownloadStatus' => 1)
+						      )
+						),
+					  'fields' => array(
+							'Physicalproduct.ProdID',
+							'Physicalproduct.Title',
+							'Physicalproduct.ArtistText',
+							'Physicalproduct.DownloadStatus',
+							'Physicalproduct.SalesDate'
+							),
+					  'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'								
+								)
+							),						
+						'Metadata' => array(
+							'fields' => array(
+								'Metadata.Title',
+								'Metadata.Artist'
+								)
+							),
+						'Audio' => array(
+							'fields' => array(
+								'Audio.FileID',
+								'Audio.Duration'                                                    
+								),
+							'Files' => array(
+							'fields' => array(
+								'Files.CdnPath' ,
+								'Files.SaveAsName'
+								)
+							)
+							)                                  
+						),'order' => 'Physicalproduct.ReferenceID'  
+					  ));
                 }
 		
                 $this->set('albumData', $albumData);		
