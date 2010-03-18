@@ -536,7 +536,8 @@ Class ArtistsController extends AppController
 						'Metadata' => array(
 							'fields' => array(
 								'Metadata.Title',
-								'Metadata.Artist'
+								'Metadata.Artist',
+								'Metadata.Advisory'
 								)
 							),
 						'Audio' => array(

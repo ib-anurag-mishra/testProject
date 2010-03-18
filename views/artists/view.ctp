@@ -63,11 +63,15 @@
 								<td width="340" valign="top" align="left">
 									<?php
 										if (strlen($albumSong['Metadata']['Title']) >= 40) {
-											echo '<p class="info">' . substr($albumSong['Metadata']['Title'], 0, 40) . '...<span>' . $albumSong['Metadata']['Title'] . '</span></p>';
+											echo '<p class="info">' . substr($albumSong['Metadata']['Title'], 0, 40) . '...<span>' . $albumSong['Metadata']['Title'] . '</span>';
 										} else {
-											echo '<p>' . $albumSong['Metadata']['Title'] . '</p>';
+											echo '<p>' . $albumSong['Metadata']['Title'];
+										}
+										if ($albumSong['Metadata']['Advisory'] == 'T') {
+											echo '<span class="explicit"> (Explicit)</span>';
 										}
 									?>
+									</p>
 								</td>
 								<td width="125" valighn="top" align="left">
 									<?php

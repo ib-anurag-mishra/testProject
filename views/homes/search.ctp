@@ -56,7 +56,10 @@
 							echo substr($searchResult['Physicalproduct']['Title'], 0, 24) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
 						} else { 
 							echo $searchResult['Physicalproduct']['Title'];
-						} 
+						}
+						if ($genre['Metadata']['Advisory'] == 'T') {
+							echo '<div class="explicit"> (Explicit)</div>';
+						}
 					?>
 					</p>
 				</td>

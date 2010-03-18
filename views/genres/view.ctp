@@ -68,9 +68,11 @@
 						} else {
 							echo $genre['Metadata']['Title']; 
 					 	} 
-					?>
-											
-				<?php
+
+						if ($genre['Metadata']['Advisory'] == 'T') {
+							echo '<p class="explicit"> (Explicit)</p>';
+						}
+					
 					if($genre['Physicalproduct']['SalesDate'] <= date('Y-m-d')) {
 						$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio'][0]['Files']['CdnPath']."/".$genre['Audio'][0]['Files']['SaveAsName']);
 						$finalSongUrl = "http://music.freegalmusic.com".$songUrl;

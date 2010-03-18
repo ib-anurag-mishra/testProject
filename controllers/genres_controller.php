@@ -61,7 +61,8 @@ Class GenresController extends AppController
 						'Metadata' => array(							
 							'fields' => array(
 								'Metadata.Title',
-								'Metadata.Artist'
+								'Metadata.Artist',
+								'Metadata.Advisory'
 								)
 							),
 						'Audio' => array(
@@ -141,7 +142,8 @@ Class GenresController extends AppController
 						'Metadata' => array(
 							'fields' => array(
 								'Metadata.Title',
-								'Metadata.Artist'
+								'Metadata.Artist',
+								'Metadata.Advisory'
 								)
 							),
 						'Audio' => array(

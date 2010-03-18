@@ -725,6 +725,10 @@ body  {
 			color: #666;
 		}
 		
+.explicit {
+	color: red;
+	display: inline;
+}
 /** FAQs **/
 .questions h2 {
 	margin: 0 0 0 10px;
