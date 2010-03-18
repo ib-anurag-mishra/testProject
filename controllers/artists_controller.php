@@ -491,7 +491,7 @@ Class ArtistsController extends AppController
 								)
 							)
 							)			                                
-						),'limit' => '5'
+						),'limit' => '3'
 						/*,
                                                  'group' => 'Physicalproduct.ReferenceID'*/
 					  );
