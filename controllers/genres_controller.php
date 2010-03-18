@@ -28,7 +28,7 @@ Class GenresController extends AppController
 							array('Genre.Genre' => $genreName),							
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 							array('Physicalproduct.TrackBundleCount' => 0),
-							array('Physicalproduct.DownloadStatus' => 1)
+							array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week")))
 						      )
 						),
 					  'fields' => array(
@@ -75,7 +75,7 @@ Class GenresController extends AppController
 								)
 							)
 							)                                    
-						),'limit' => '10'));			//'order'=> 'rand()',		 
+						),'limit' => '30'));			//'order'=> 'rand()',		 
 			$finalArr = Array();
 			$rand_keys = array_rand($genreDetails,3);
 			$songArr = Array();
