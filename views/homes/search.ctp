@@ -57,7 +57,7 @@
 						} else { 
 							echo $searchResult['Physicalproduct']['Title'];
 						}
-						if ($genre['Metadata']['Advisory'] == 'T') {
+						if ($searchResult['Metadata']['Advisory'] == 'T') {
 							echo '<div class="explicit"> (Explicit)</div>';
 						}
 					?>
