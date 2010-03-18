@@ -62,12 +62,12 @@
 				<p class="info">
 				<?php 
 					if (strlen($catG['Song']) >= 32) { 
-						echo substr($catG['Song'], 0, 32) . '...';
+						echo substr($catG['Song'], 0, 32) . '...<span>' . $catG['Song'] . '</span>';
 					} else {
 						echo $catG['Song'];
 					}
 				?>
-				<span><?php echo $catG['Song']; ?></span></p>
+				</p>
 				<?php echo $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))); ?><br />
 				<?php echo $catG['Album']; ?><br />
 			</div>
