@@ -10,8 +10,8 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
-	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
-	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Download');
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
+	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Download');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
