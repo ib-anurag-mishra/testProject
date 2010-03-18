@@ -57,9 +57,7 @@
 						} else { 
 							echo $searchResult['Physicalproduct']['Title'];
 						}
-						if ($searchResult['Metadata']['Advisory'] == 'T') {
-							echo '<div class="explicit"> (Explicit)</div>';
-						}
+						
 					?>
 					</p>
 				</td>
@@ -71,6 +69,9 @@
 						} else {
 							echo $searchResult['Metadata']['Title']; 
 					 	}
+						if ($searchResult['Metadata']['Advisory'] == 'T') {
+							echo '<div class="explicit"> (Explicit)</div>';
+						}
 						if($searchResult['Physicalproduct']['SalesDate'] <= date('Y-m-d')) {
 							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio'][0]['Files']['CdnPath']."/".$searchResult['Audio'][0]['Files']['SaveAsName']);
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
