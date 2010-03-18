@@ -47,7 +47,7 @@
 								echo $html->link($randomSongs['Metadata']['Artist'], array(
 									'controller' => 'artists',
 									'action' => 'view',
-									base64_encode($randomSongs['Metadata']['Artist'])
+									base64_encode($randomSongs['Physicalproduct']['ArtistText'])
 									)
 								);
 								$songUrl = shell_exec('perl files/tokengen ' . $randomSongs['Audio'][0]['Files']['CdnPath']."/".$randomSongs['Audio'][0]['Files']['SaveAsName']);
