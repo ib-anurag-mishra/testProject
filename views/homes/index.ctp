@@ -23,7 +23,7 @@
 			<?php foreach($songs as $key => $randomSongs): ?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text'>
+						<p class='suggest_text info'>
 							<?php
 								if (strlen($randomSongs['Metadata']['Title']) >= 28 ) {
 									echo $html->link(substr($randomSongs['Metadata']['Title'], 0, 28) . "...", array(
@@ -31,7 +31,7 @@
 										'action' => 'view', 
 										$randomSongs['Metadata']['Title']
 										)
-									);
+									) . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
 								} else {
 									echo $html->link($randomSongs['Metadata']['Title'], array(
 										'controller' => 'artists', 
@@ -44,12 +44,21 @@
 							<br />
 							by&nbsp;
 							<?php
-								echo $html->link($randomSongs['Metadata']['Artist'], array(
-									'controller' => 'artists',
-									'action' => 'view',
-									base64_encode($randomSongs['Physicalproduct']['ArtistText'])
-									)
-								);
+								if (strlen($randomSongs['Metadata']['Artist']) >= 24 ) {
+									echo $html->link(substr($randomSongs['Metadata']['Artist'], 0, 24) . "...", array(
+										'controller' => 'artists',
+										'action' => 'view',
+										base64_encode($randomSongs['Physicalproduct']['ArtistText'])
+										)
+									) . "<span>" . $randomSongs['Metadata']['Artist'] . "</span>";
+								} else {
+									echo $html->link($randomSongs['Metadata']['Artist'], array(
+										'controller' => 'artists',
+										'action' => 'view',
+										base64_encode($randomSongs['Physicalproduct']['ArtistText'])
+										)
+									);
+								}
 								$songUrl = shell_exec('perl files/tokengen ' . $randomSongs['Audio'][0]['Files']['CdnPath']."/".$randomSongs['Audio'][0]['Files']['SaveAsName']);
 								$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
