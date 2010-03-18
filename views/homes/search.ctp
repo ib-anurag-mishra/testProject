@@ -37,7 +37,7 @@
 							$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
 							echo $html->link(
 								$ArtistName,
-								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Metadata']['Artist']))); ?>
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']))); ?>
 							<span><?php echo $searchResult['Metadata']['Artist']; ?></span>
 						<?php
 						} else {
