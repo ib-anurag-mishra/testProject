@@ -31,14 +31,43 @@
 	?>
 			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>>
 				<td width="180" valign="top">
-					<p><?php echo $html->link($searchResult['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']))); ?></p>
+					<p class="info">
+						<?php
+						if (strlen($searchResult['Metadata']['Artist']) >= 19) {
+							$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
+							echo $html->link(
+								$ArtistName,
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Metadata']['Artist']))); ?>
+							<span><?php echo $searchResult['Metadata']['Artist']; ?></span>
+						<?php
+						} else {
+							$ArtistName = $searchResult['Metadata']['Artist'];
+							echo $html->link(
+								$ArtistName,
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText'])));
+						} 
+					?>
+					</p>
 				</td>
 				<td width="200" valign="top">
-					<p><?php echo $searchResult['Physicalproduct']['Title']; ?></p>
+					<p class="info">
+					<?php
+						if (strlen($searchResult['Physicalproduct']['Title']) >= 24) {
+							echo substr($searchResult['Physicalproduct']['Title'], 0, 24) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
+						} else { 
+							echo $searchResult['Physicalproduct']['Title'];
+						} 
+					?>
+					</p>
 				</td>
 				<td width="400" valign="top">
-					<p><a href="#" class="info"><?php echo $searchResult['Metadata']['Title']; ?><span><?php echo $searchResult['Metadata']['Title']; ?></span></a>
-					<?php
+					<p class="info">
+					<?php 
+						if (strlen($searchResult['Metadata']['Title']) >= 48) {
+							echo substr($searchResult['Metadata']['Title'], 0, 48) . '...<span>' . $searchResult['Metadata']['Title'] . '</span>';
+						} else {
+							echo $searchResult['Metadata']['Title']; 
+					 	}
 						if($searchResult['Physicalproduct']['SalesDate'] <= date('Y-m-d')) {
 							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio'][0]['Files']['CdnPath']."/".$searchResult['Audio'][0]['Files']['SaveAsName']);
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
@@ -46,6 +75,7 @@
 							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$searchResult["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
 						}
 					?>
+					</p>
 				</td>
 				<td width="150" align="center">
 					<?php
