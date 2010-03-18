@@ -33,6 +33,7 @@
 				</div>
 				<div class="songBox">
 					<span class="songHeader">Tracks</span>
+					<span class="artistHeader">Artist</span>
 					<span class="timeHeader">Time</span>
 					<span class="downloadHeader">Download</span>
 				</div>
@@ -59,9 +60,24 @@
 										?>
 									</p>
 								</td>
-								<td width="380" valign="top" align="left">
-									<p><?php echo $albumSong['Metadata']['Title'];?></p>
+								<td width="340" valign="top" align="left">
+									<?php
+										if (strlen($albumSong['Metadata']['Title']) >= 40) {
+											echo '<p class="info">' . substr($albumSong['Metadata']['Title'], 0, 40) . '...<span>' . $albumSong['Metadata']['Title'] . '</span></p>';
+										} else {
+											echo '<p>' . $albumSong['Metadata']['Title'] . '</p>';
+										}
+									?>
 								</td>
+								<td width="125" valighn="top" align="left">
+									<?php
+										if (strlen($albumSong['Metadata']['Artist']) >= 12) {
+											echo '<p class="info">' . substr($albumSong['Metadata']['Artist'], 0, 12) . '...<span>' . $albumSong['Metadata']['Artist'] . '</span></p>';
+										} else {
+											echo '<p>' . $albumSong['Metadata']['Artist'] . '</p>';
+										}
+									?>
+								<td>
 								<td width="50" valign="top" align="center">
 									<p><?php echo $albumSong['Audio']['1']['Duration']?></p>
 								</td>

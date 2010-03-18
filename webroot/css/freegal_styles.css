@@ -653,7 +653,7 @@ body  {
 		}
 
 		.songBox {
-			width:600px;
+			width:685px;
 			height: 20px;
 			background-color:#ccc;
 			text-align: center;
@@ -672,7 +672,12 @@ body  {
 
 		.songHeader {
 			float:left;
-			width:400px;
+			width:360px;
+		}
+		
+		.artistHeader {
+			float:left;
+			width:125px;
 		}
 
 		.timeHeader {
