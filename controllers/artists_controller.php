@@ -10,7 +10,8 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
-	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
+	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Download');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -455,11 +456,47 @@ Class ArtistsController extends AppController
 							array( 'Physicalproduct.ArtistText' => base64_decode($id)),
                                                         array( "Physicalproduct.ProdID = Physicalproduct.ReferenceID")
 						      )
-						)/*,
+						),
+						'fields' => array(
+							'Physicalproduct.ProdID',
+							'Physicalproduct.Title',
+							'Physicalproduct.ArtistText',
+							'Physicalproduct.ReferenceID'							
+							),
+						'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'								
+								)
+							),						
+						'Metadata' => array(
+							'fields' => array(
+								'Metadata.Title',
+								'Metadata.Artist',
+								'Metadata.ArtistURL',
+								'Metadata.Label',
+								'Metadata.Copyright'
+								)
+							),
+						'Graphic' => array(
+							'fields' => array(
+							'Graphic.ProdID',
+							'Graphic.FileID'
+							),
+							'Files' => array(
+							'fields' => array(
+								'Files.CdnPath' ,
+								'Files.SaveAsName',
+								'Files.SourceURL'
+								)
+							)
+							)			                                
+						),'limit' => '5'
+						/*,
                                                  'group' => 'Physicalproduct.ReferenceID'*/
 					  );
                 $this->Physicalproduct->recursive = 2;
-                $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
+                $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist		
                 $albumSongs = array();
                 foreach($albumData as $album)
                 {
