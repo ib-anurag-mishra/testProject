@@ -22,7 +22,7 @@ Class GenresController extends AppController
 			//$this->Genre->recursive = '2';
 			//$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
 			$this->Physicalproduct->Behaviors->attach('Containable');	
-		  $genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
+			$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
 					  array('and' =>
 						array(
 							array('Genre.Genre' => $genreName),							
@@ -46,6 +46,10 @@ Class GenresController extends AppController
 								)
 							),
 						'Graphic' => array(
+							'fields' => array(
+							'Graphic.ProdID',
+							'Graphic.FileID'
+							),
 							'Files' => array(
 							'fields' => array(
 								'Files.CdnPath' ,
@@ -54,7 +58,7 @@ Class GenresController extends AppController
 								)
 							)
 							),						
-						'Metadata' => array(
+						'Metadata' => array(							
 							'fields' => array(
 								'Metadata.Title',
 								'Metadata.Artist'
@@ -71,9 +75,15 @@ Class GenresController extends AppController
 								)
 							)
 							)                                    
-						),'limit' => '3'));			//'order'=> 'rand()',		 
+						),'limit' => '10'));			//'order'=> 'rand()',		 
 			$finalArr = Array();
-			foreach($genreDetails as $genre)
+			$rand_keys = array_rand($genreDetails,3);
+			$songArr = Array();
+			$songArr[0] = $genreDetails[$rand_keys[0]];
+			$songArr[1] = $genreDetails[$rand_keys[1]];
+			$songArr[2] = $genreDetails[$rand_keys[2]];			
+			//$
+			foreach($songArr as $genre)
 			{
 				$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
 				$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
