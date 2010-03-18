@@ -69,7 +69,7 @@
 			echo $html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array(
 				"alt" => "Featured Arstist",
 				'url' => array(
-					'controller' => 'artist',
+					'controller' => 'artists',
 					'action' => 'view',
 					base64_encode($featuredArtist['Featuredartist']['artist_name'])
 					)
