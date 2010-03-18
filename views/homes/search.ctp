@@ -3,13 +3,13 @@
 	Search Results
 </div>
 <div id="genreArtist">
-	Artist
+	<?php echo $paginator->sort('Artist', 'Metadata.Artist');?>
 </div>
 <div id="genreAlbum">
-	Album
+	<?php echo $paginator->sort('Album', 'Physicalproduct.Title');?>
 </div>
 <div id="genreTrack">
-	Track
+	<?php echo $paginator->sort('Track', 'Metadata.Title');?>
 </div>
 <div id="genreDownload">
 	Download
@@ -20,16 +20,16 @@
 	<?php
 	if(count($searchResults) != 0)
 	{
-		$i = 1;
+		// $i = 1;
 		foreach($searchResults as $key => $searchResult):
 			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
+			// if ($i++ % 2 == 0) {
+			// 				$class = ' class="altrow"';
+			// 			}
 			
 			
 	?>
-			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php echo $class; ?>>
+			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>>
 				<td width="180" valign="top">
 					<p><?php echo $html->link($searchResult['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']))); ?></p>
 				</td>

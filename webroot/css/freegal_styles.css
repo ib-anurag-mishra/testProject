@@ -372,6 +372,11 @@ body  {
 	font-size:13px;
 }
 
+#genreArtist a {
+	text-decoration: none;
+	color: #666;
+}
+
 #genreAlbum {
 	float:left;
 	width: 200px;
@@ -383,6 +388,11 @@ body  {
 	font-size:13px;
 }
 
+#genreAlbum a {
+	text-decoration: none;
+	color: #666;
+}
+
 #genreTrack {
 	float:left;
 	width: 400px;
@@ -392,6 +402,11 @@ body  {
 	margin: 10px 0 0 3px;
 	line-height: 20px;
 	font-size:13px;
+}
+
+#genreTrack a {
+	text-decoration: none;
+	color: #666;
 }
 
 #genreDownload {
@@ -420,8 +435,11 @@ body  {
 	text-decoration: none;
 	color:#000;
 }
+
 #genreResults td {
-	border: 1px solid #fff;
+	border-left: 1px solid #FFF;
+	border-right: 1px solid #fff;
+	border-bottom: 1px solid #E1E8EB;
 }
 
 #genreResults img {

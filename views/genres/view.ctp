@@ -3,13 +3,13 @@
 	<?php echo $genre; ?>
 </div>
 <div id="genreArtist">
-	Artist
+	<?php echo $paginator->sort('Artist', 'Metadata.Artist');?>
 </div>
 <div id="genreAlbum">
-	Album
+	<?php echo $paginator->sort('Album', 'Physicalproduct.Title');?>
 </div>
 <div id="genreTrack">
-	Track
+	<?php echo $paginator->sort('Track', 'Metadata.Title');?>
 </div>
 <div id="genreDownload">
 	Download
@@ -20,40 +20,56 @@
 	<?php
 	if(count($genres) != 0)
 	{
-		$i = 1;
+		// $i = 1;
 		foreach($genres as $key => $genre):		
 			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
+			// if ($i++ % 2 == 0) {
+			// 				$class = ' class="altrow"';
+			// 			}
 			
 			
 	?>
-			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php echo $class; ?>>
+			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>>
 				<td width="180" valign="top">
-					<p class="info"><?php echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?><span><?php echo $genre['Metadata']['Artist']; ?></span></p>
+					<p class="info">
+						<?php
+						if (strlen($genre['Metadata']['Artist']) >= 19) {
+							$ArtistName = substr($genre['Metadata']['Artist'], 0, 19) . '...';
+							echo $html->link(
+								$ArtistName,
+								array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?>
+							<span><?php echo $genre['Metadata']['Artist']; ?></span>
+						<?php
+						} else {
+							$ArtistName = $genre['Metadata']['Artist'];
+							echo $html->link(
+								$ArtistName,
+								array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText'])));
+						} 
+					?>
+					</p>
 				</td>
 				<td width="200" valign="top">
 					<p class="info">
 					<?php
 						if (strlen($albumData[$genre['Physicalproduct']['ReferenceID']]) >= 24) {
-							echo substr($albumData[$genre['Physicalproduct']['ReferenceID']], 0, 24) . '...'; 
+							echo substr($albumData[$genre['Physicalproduct']['ReferenceID']], 0, 24) . '...<span>' . $albumData[$genre['Physicalproduct']['ReferenceID']] . '</span>'; 
 						} else { 
 							echo $albumData[$genre['Physicalproduct']['ReferenceID']];
 						} 
 					?>
-					<span><?php echo $albumData[$genre['Physicalproduct']['ReferenceID']]; ?></span></p>
+					</p>
 				</td>
 				<td width="400" valign="top">
 					<p class="info">
 					<?php
 						if (strlen($genre['Metadata']['Title']) >= 48) {
-							echo substr($genre['Metadata']['Title'], 0, 48) . '...';
+							echo substr($genre['Metadata']['Title'], 0, 48) . '...<span>' . $genre['Metadata']['Title'] . '</span>';
 						} else {
 							echo $genre['Metadata']['Title']; 
 					 	} 
 					?>
-					<span><?php echo $genre['Metadata']['Title']; ?></span>						
+											
 				<?php
 					if($genre['Physicalproduct']['SalesDate'] <= date('Y-m-d')) {
 						$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio'][0]['Files']['CdnPath']."/".$genre['Audio'][0]['Files']['SaveAsName']);
@@ -62,6 +78,7 @@
 						echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$genre["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
 					}
 				?>
+					</p>
 				</td>
 				<td width="150" align="center">
 					<?php
