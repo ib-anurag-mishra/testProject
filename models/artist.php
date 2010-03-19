@@ -35,8 +35,8 @@ class Artist extends AppModel
 
     public function getartistdata($id)
     {
-    $getArtistData = $this->find('first', array('conditions' => array('artist.id' => $id)));
-    return $getArtistData;
+        $getArtistData = $this->find('first', array('conditions' => array('id' => $id)));       
+        return $getArtistData;
     }
 
     /*
