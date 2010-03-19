@@ -52,24 +52,38 @@
 				
 			</div>
 			<div class="songSample">
-				<?php					
-					$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
-					$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-					echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "play_audio'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$catG["ProdId"].', "'.$this->webroot.'");'));
+				<?php
+					if($catG['SalesDate'] <= date('Y-m-d')) {
+						$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
+						$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+						echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "play_audio'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$catG["ProdId"].', "'.$this->webroot.'");'));
+					}
 				?>
 			</div>
 			<div class="songData">
-				<p class="info">
 				<?php 
+					echo '<p class="info">';
 					if (strlen($catG['Song']) >= 32) { 
 						echo substr($catG['Song'], 0, 32) . '...<span>' . $catG['Song'] . '</span>';
 					} else {
 						echo $catG['Song'];
 					}
+					if ($catG['Advisory'] == 'T') {
+						echo '<p class="explicit"> (Explicit)</p>';
+					}
+					echo '</p>';
+					if (strlen($catG['Artist']) >= 32) {
+						$ArtistName = substr($catG['Artist'], 0, 32) . '...';
+						echo '<p class="info">' . $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))) . '<span>' . $catG['Artist'] . '</span></p>';
+					} else {
+						echo '<p>'. $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))) . '</p>';
+					}
+					if (strlen($catG['Album']) >= 32) {
+						echo '<p class="info">' . substr($catG['Album'], 0, 32) . '...<span>' . $catG['Album'] . '</span></p>';
+					} else {
+						echo '<p>'. $catG['Album'] . '</p>';
+					}
 				?>
-				</p>
-				<?php echo $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))); ?><br />
-				<?php echo $catG['Album']; ?><br />
 			</div>
 			<div class="songDownload">
 				<?php
@@ -80,7 +94,7 @@
 						<?php
 					}else{
 						?>
-						<p>Comming Soon( <?php echo $catG['SalesDate']; ?>)</p>
+						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $catG['SalesDate']; ?>)</span></p>
 						<?php
 					}
 					?>
