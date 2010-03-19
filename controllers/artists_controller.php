@@ -10,8 +10,8 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
-	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
-	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Download');
+	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
 	
 	function beforeFilter() {
 	    parent::beforeFilter(); 
@@ -184,7 +184,7 @@ Class ArtistsController extends AppController
 				$this -> set( 'formAction', 'admin_createartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit Artist' );
 				$getArtistrDataObj = new Artist();
-				$getData = $getArtistrDataObj -> getartistdata( $artistId );
+				$getData = $getArtistrDataObj -> getartistdata( $artistId );				
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
 				$artistName = $getData[ 'Artist' ][ 'artist_name' ];
@@ -275,8 +275,8 @@ Class ArtistsController extends AppController
 			}
 		}
 		
-		$getArtistDataObj = new Physicalproduct();
-		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
+		$getArtistDataObj = new Physicalproduct();		
+		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );		
 		$this -> set( 'getArtistData', $getArtistData );
 	}/*
     Function Name : managenewartist
@@ -450,11 +450,25 @@ Class ArtistsController extends AppController
 	public function view($id = null) {
 		$this->layout = 'home';
                 $this->set('artistName',base64_decode($id));
+		$patId = $_SESSION['patron'];
+		$libId = $_SESSION['library'];
+		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		$this->set('libraryDownload',$libraryDownload);
+		$this->set('patronDownload',$patronDownload);
+		if($_SESSION['block'] == 'yes')
+		{
+		    $cond = array('Metadata.Advisory' => 'T');
+		}
+		else
+		{
+		    $cond = "";
+		}	
                 $this -> paginate =  array('conditions' =>
 					  array('and' =>
 						array(
-							array( 'Physicalproduct.ArtistText' => base64_decode($id)),
-                                                        array( "Physicalproduct.ProdID = Physicalproduct.ReferenceID")
+							array('Physicalproduct.ArtistText' => base64_decode($id)),
+                                                        array("Physicalproduct.ProdID = Physicalproduct.ReferenceID")							
 						      )
 						),
 						'fields' => array(
@@ -475,7 +489,7 @@ Class ArtistsController extends AppController
 								'Metadata.Artist',
 								'Metadata.ArtistURL',
 								'Metadata.Label',
-								'Metadata.Copyright'
+								'Metadata.Copyright',								
 								)
 							),
 						'Graphic' => array(
@@ -517,7 +531,7 @@ Class ArtistsController extends AppController
 							array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 							array('Physicalproduct.TrackBundleCount' => 0),
-							array('Physicalproduct.DownloadStatus' => 1)
+							array('Physicalproduct.DownloadStatus' => 1),$cond
 						      )
 						),
 					  'fields' => array(

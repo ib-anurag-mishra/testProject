@@ -8,18 +8,30 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array('Html','Ajax','Javascript','Form' );
-    //var $components = array('RequestHandler','ValidatePatron','Download');
-    var $components = array('RequestHandler');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata');
+    var $components = array('RequestHandler','ValidatePatron','Downloads');
+    //var $components = array('RequestHandler');
+    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download');
     var $beforeFilter = array('validatePatron');
  
    /*function beforeFilter()
     {        
-        $this->validatePatron();
+        $validPatron = $this->ValidatePatron->validatepatron();
+        if($validPatron)
+        {
+            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+        }
+        else
+        {
+            $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+        }
     }*/
     
     function index()
     {        
+        //For testing purpose we are assigning some test values
+        $this ->Session->write("library", '1');
+        $this ->Session->write("patron", '2242');
+        $this ->Session->write("block", 'no');       
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
                                 array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'),
@@ -97,13 +109,27 @@ class HomesController extends AppController
     function search()
     {        
         $searchKey = $this->data['Home']['search'];
+        $patId = $_SESSION['patron'];
+        $libId = $_SESSION['library'];
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+        $this->set('libraryDownload',$libraryDownload);
+        $this->set('patronDownload',$patronDownload);
+        if($_SESSION['block'] == 'yes')
+        {
+              $cond = array('Metadata.Advisory' => 'T');
+        }
+        else
+        {
+              $cond = "";
+        }
         $this->Physicalproduct->Behaviors->attach('Containable');
         $this -> paginate = array('conditions' =>
                                 array('and' =>
                                         array(                                                      
                                                 array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                
                                                 array('Physicalproduct.TrackBundleCount' => 0),
-                                                array('Physicalproduct.DownloadStatus' => 1)
+                                                array('Physicalproduct.DownloadStatus' => 1),$cond
                                             )
                                         ,
                                     'or' =>
@@ -125,7 +151,7 @@ class HomesController extends AppController
                                             'fields' => array(
                                                     'Metadata.Title',
                                                     'Metadata.Artist',
-													'Metadata.Advisory'
+						    'Metadata.Advisory'
                                                     )
                                             ),
                                     'Audio' => array(
@@ -150,13 +176,69 @@ class HomesController extends AppController
     
     function userDownload()
     {          
-        $libId = $_REQUEST['libId'];
-        $patId = $_REQUEST['patId'];
-        $prodId = $_REQUEST['prodId'];       
-        $trackDetails = $this->Metadata->gettrackdata($prodId);
-        $artist = $trackDetails['Metadata']['Artist'];
-        $track = $trackDetails['Metadata']['Title'];
-    }    
+        $libId = $_SESSION['library'];
+        $patId = $_SESSION['patron'];
+        //hardcoded for testing purpose        
+        //$patId = 223401;
+        $prodId = $_REQUEST['prodId'];                
+        $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);        
+        $insertArr = Array();
+        $insertArr['library_id'] = $libId;
+        $insertArr['patron_id'] = $patId;
+        $insertArr['ProdID'] = $prodId;     
+        $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
+        $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
+        $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];        
+        $this->Download->save($insertArr);
+        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
+        $this->Library->query($sql);
+    }
     
+    function setDownload()
+    {      
+      $currentDate = date('Y-m-d');
+      $date = date('y-m-d');
+      list($year, $month, $day) = explode('-', $date);
+      $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-date('w'), date('Y')));
+      $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
+      $yearFirstDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $year));      
+      $qry = "Select * from libraries";
+      $results = mysql_query($qry);
+      while($resultsArr = mysql_fetch_assoc($results))
+      {
+        $downloadType = $resultsArr['library_download_type'];
+        if($downloadType == "daily")
+        {            
+                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                mysql_query($sql);            
+        }
+        else if($downloadType == "weekly")
+        {
+            if($currentDate == $weekFirstDay)
+            {
+                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                mysql_query($sql);
+            }
+        }
+        else if($downloadType == "monthly")
+        {
+            if($currentDate == $monthFirstDate)
+            {
+                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                mysql_query($sql);
+            }
+        }
+        else if($downloadType == "annually")
+        {
+            if($currentDate == $yearFirstDate)
+            {
+                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                mysql_query($sql);
+            }
+        }
+      }
+     
+    }    
 }
 ?>

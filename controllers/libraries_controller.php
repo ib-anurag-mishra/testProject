@@ -8,8 +8,8 @@ Class LibrariesController extends AppController
 {
     var $name = 'Libraries';
     var $layout = 'admin';
-    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
-    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
+    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
+    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Download');
     var $uses = array( 'Library', 'User', 'LibraryTemplate', 'LibraryPurchase' );
     
     /*
@@ -266,5 +266,38 @@ Class LibrariesController extends AppController
             $this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
             $this -> redirect( 'managelibrary' );
         }
-    }
+    }    
+    function patron()
+    {        
+        $this->layout = false;        
+        if(isset($_REQUEST['url']))
+        {
+          $requestUrlArr = explode("/", $_REQUEST['url']);
+          $patronId = $requestUrlArr['2'];          
+        }       
+        $referrerUrl = $_SERVER['HTTP_REFERER'];
+        $this->Library->recursive = -1;
+        $existingLibraries = $this->Library->find('all',array(
+                                                'conditions' => array('library_domain_name' => $referrerUrl,'library_status' => 'active')
+                                                )
+                                            );        
+        if(count($existingLibraries) == 0)
+        {            
+            $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+        }        
+        else
+        {          
+            $this ->Session->write("library", $existingLibraries['0']['Library']['id']);
+            $this ->Session->write("patron", $patronId);
+            if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1')
+            {
+              $this ->Session->write("block", 'yes');
+            }
+            else{
+              $this ->Session->write("block", 'no');
+            }
+            $this->redirect(array('controller' => 'homes', 'action' => 'index'));            
+        }
+    } 
+    
 }
