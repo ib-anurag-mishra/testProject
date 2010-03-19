@@ -8,9 +8,16 @@ ini_set('memory_limit', '1024M');
 Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
 	
 	function index() {
 		$this->layout = 'home';
+		$patId = $_SESSION['patron'];
+		$libId = $_SESSION['library'];
+		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		$this->set('libraryDownload',$libraryDownload);
+		$this->set('patronDownload',$patronDownload);
 		$this->Genre->recursive = -1;
 		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));		
 		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));		
@@ -21,14 +28,22 @@ Class GenresController extends AppController
 			$genreName = $category['Category']['Genre'];			
 			//$this->Genre->recursive = '2';
 			//$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
-			$this->Physicalproduct->Behaviors->attach('Containable');	
+			if($_SESSION['block'] == 'yes')
+			{
+				$cond = array('Metadata.Advisory' => 'T');
+			}
+			else
+			{
+				$cond = "";
+			}
+			$this->Physicalproduct->Behaviors->attach('Containable');			
 			$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
 					  array('and' =>
 						array(
 							array('Genre.Genre' => $genreName),							
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-							array('Physicalproduct.TrackBundleCount' => 0),
-							array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week")))
+							array('Physicalproduct.TrackBundleCount' => 0),								
+							array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
 						      )
 						),
 					  'fields' => array(
@@ -116,6 +131,20 @@ Class GenresController extends AppController
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
+		  $patId = $_SESSION['patron'];
+		  $libId = $_SESSION['library'];
+		  $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+		  $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		  $this->set('libraryDownload',$libraryDownload);
+		  $this->set('patronDownload',$patronDownload);
+		  if($_SESSION['block'] == 'yes')
+		  {
+			$cond = array('Metadata.Advisory' => 'T');
+		  }
+		  else
+		  {
+			$cond = "";
+		  }
 		  $this->Physicalproduct->Behaviors->attach('Containable');	
 		  $this->paginate = array('conditions' =>
 					  array('and' =>
@@ -123,7 +152,7 @@ Class GenresController extends AppController
 							array('Genre.Genre' => base64_decode($Genre)),							
 							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 							array('Physicalproduct.TrackBundleCount' => 0),
-							array('Physicalproduct.DownloadStatus' => 1)
+							array('Physicalproduct.DownloadStatus' => 1),$cond
 						      )
 						),
 					  'fields' => array(

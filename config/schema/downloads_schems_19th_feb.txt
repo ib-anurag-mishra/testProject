@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `downloads` (
+  `id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `library_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `patron_id` char(36) COLLATE utf8_unicode_ci NOT NULL,
+  `ProdID` bigint(20) NOT NULL,
+  `ProductID` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
+  `ISRC` char(12) COLLATE utf8_unicode_ci NOT NULL,
+  `artist` varchar(254) COLLATE utf8_unicode_ci NOT NULL,
+  `track_title` varchar(200) COLLATE utf8_unicode_ci NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;

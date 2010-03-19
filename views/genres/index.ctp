@@ -88,10 +88,19 @@
 			<div class="songDownload">
 				<?php
 					if($catG['SalesDate'] <= date('Y-m-d'))
-					{						
-						?>
-						<p><a href='http://music.freegalmusic.com<?php echo $catG['SongUrl']; ?>'>Download Now</a></p>
-						<?php
+					{
+						if($libraryDownload == '1' && $patronDownload == '1')
+						{						
+							$finalSongUrl = "http://music.freegalmusic.com".$catG['SongUrl'];
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
+							<p><a href='#' onclick='Javascript: userDownload("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></p>
+						<?php		}											
+						else
+						{
+							?>
+							<p>Download Limit Has Exceeded.</p>
+							<?php
+						}						
 					}else{
 						?>
 						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $catG['SalesDate']; ?>)</span></p>

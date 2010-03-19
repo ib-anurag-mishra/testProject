@@ -1,11 +1,11 @@
-<?php $this->pageTitle = 'Admin'; ?>
+<?php $this->pageTitle = 'Libraries'; ?>
 <form>
 <fieldset>
-<legend>User Listing</legend>
+<legend>Library Listing</legend>
   <table id="list">
           <tr>            
-            <th class="left">Library Name</th>
-            <th>Edit</th>
+            <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
+            <th style="border-right:1px solid #E0E0E0">Edit</th>
 	    <th>Delete</th>
           </tr>
           <?php

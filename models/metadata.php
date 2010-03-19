@@ -14,6 +14,12 @@ class Metadata extends AppModel {
 			'className' => 'Product',
 			'foreignKey' => 'ProdID'
 		)
-  );
+	);
+	 
+	public function gettrackdata($id)
+	{
+		$getTrackData = $this->find('first', array('conditions' => array('ProdID' => $id),'fields' => array('Title','Artist')));
+		return $getTrackData;
+	} 
 	
 }

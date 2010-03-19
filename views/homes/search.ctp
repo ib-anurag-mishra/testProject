@@ -85,10 +85,19 @@
 					<?php
 					if($searchResult['Physicalproduct']['SalesDate'] <= date('Y-m-d'))
 					{					
-						$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio']['1']['Files']['CdnPath']."/".$searchResult['Audio']['1']['Files']['SaveAsName']);
-						?>
-						<p><a href='http://music.freegalmusic.com<?php echo $songUrl; ?>'>Download Now</a></p>
-					<?php
+						if($libraryDownload == '1' && $patronDownload == '1')
+                                                {	
+                                                        $songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio']['1']['Files']['CdnPath']."/".$searchResult['Audio']['1']['Files']['SaveAsName']);                                                
+                                                        $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+                                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
+                                                        <p><a href='#' onclick='Javascript: userDownload("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></p>
+                                <?php		}											
+                                                else
+                                                {
+                                                        ?>
+                                                        <p>Download Limit Has Exceeded.</p>
+                                                        <?php
+                                                }                                             
 					}else{
 						?>
 						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $searchResult['Physicalproduct']['SalesDate']; ?>)</span></p>

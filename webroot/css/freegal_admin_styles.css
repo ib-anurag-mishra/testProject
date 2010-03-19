@@ -29,7 +29,7 @@ body  {
 
 #header {
 	width: 965px;
-	height: 96px;
+	height: 132px;
 }
 
 #header_title {
@@ -54,7 +54,7 @@ body  {
 
 .logout {
 	float:right;
-	margin: 7px 10px 0 0;
+	padding: 9px 10px;
 	color: #FFF;
 }
 
@@ -62,6 +62,10 @@ a.logout {
 	text-decoration:none;
 }
 
+a.logout:hover {
+	text-decoration: none;
+	background: #333366;
+}
 
 #content {
 	min-height: 500px;
@@ -104,7 +108,21 @@ a.logout {
 
 .message {
 	margin-left:10px;
+}
+
+.error_message {
+	margin-left:10px;
 	background:none repeat scroll 0 0 #FF0000;
+	color:#FFFFFF;
+	font-weight:bold;
+	font-size: 15px;
+	margin:10px;
+	padding:5px;
+}
+
+.success_message {
+	margin-left:10px;
+	background:none repeat scroll 0 0 #0099FF;
 	color:#FFFFFF;
 	font-weight:bold;
 	font-size: 15px;
@@ -122,7 +140,7 @@ a.logout {
 
 /* Tables */
 #content table {width:98%;}
-#content table#list, #content table.info {border:1px solid #e0e0e0; border-collapse:collapse;}
+#content table#list, #content table.info {border:1px solid #e0e0e0; border-collapse:collapse;margin-top:25px;}
 #content table#list th {border-bottom:1px solid #e0e0e0;}
 #content table#list th, #content table.info th {background-color:#f5f5f5; }
 #content table#list th, #content table#list td {padding:5px 10px; text-align:center;}
@@ -282,7 +300,7 @@ div.active_step {
 	border-right: 1px solid #B4B4B4;
 	font-weight: bold;
 	font-size: 14px;
-	padding: 12px 8px;
+	padding: 12px 14px;
 	width: auto;
 	float: left;
 	cursor: pointer;
@@ -293,7 +311,7 @@ div.inactive_step {
 	background: #fff url(../img/background.png) repeat-x scroll 0 -54px;
 	font-weight: bold;
 	font-size: 14px;
-	padding: 12px 8px;
+	padding: 12px;
 	width: auto;
 	float: left;
 	cursor: pointer;
@@ -322,6 +340,20 @@ label {
 }
 .form_fields {
 	margin: 0 0 0 20px;
+}
+.select_fields {
+	margin: 0 0 0 20px;
+	width: 150px;
+}
+.radio_fields {
+	margin: 20px 10px 20px 0;
+	float: left;
+}
+.radio_div {
+	width:50px;
+	height:50px;
+	float: left;
+	margin: 0 30px 0 0;
 }
 .error-message {
 	font-size:12px;

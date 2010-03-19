@@ -8,7 +8,7 @@
  endforeach;
  foreach($songResults as $songResult):
      $finalResults[$songResult['Home']['Title']] = $songResult['Home']['Title'];
- endforeach;
+ endforeach; 
  if($finalResults != '')
  {
    foreach($finalResults as $key => $value):

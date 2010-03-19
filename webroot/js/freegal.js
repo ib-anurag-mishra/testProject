@@ -25,4 +25,23 @@ jQuery(document).ready(function() {
 		timeout: 12000
 	});
 });
+function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
+{	
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId;
+	jQuery.ajax({
+	type: "post",  // Request method: post, get
+	url: webroot+"/homes/userDownload", // URL to request
+	data: data,  // post data
+	success: function(response) {
+	location.href = unescape(finalURL);
+	},
+	error:function (XMLHttpRequest, textStatus, errorThrown) {
+	alert(textStatus);
+	}
+	});
+	return false; 
+}
 

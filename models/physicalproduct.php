@@ -171,6 +171,38 @@ class Physicalproduct extends AppModel
       ));
       return $allArtists;
   }
-    
+  
+  public function getdownloaddata($id)
+  {
+    $this->recursive = 2;
+    $this->Behaviors->attach('Containable');
+    $downloadData = $this->find('all', array(
+		'conditions'=>array('Physicalproduct.ProdID' => $id),
+		'fields' => array(
+			'ProdID','ProductID'
+		),
+		'contain' => array(
+											
+						'Metadata' => array(
+							'fields' => array(
+								'Metadata.Title',
+								'Metadata.Artist',
+								'Metadata.ISRC'
+								)
+							),
+						'Audio' => array(
+							'fields' => array(
+								'Audio.FileID',
+								                                                
+								),
+							'Files' => array(
+							'fields' => array(
+								'Files.CdnPath'
+							)
+							)                                  
+						)
+	)));
+    return $downloadData;
+  }
 }
 ?>

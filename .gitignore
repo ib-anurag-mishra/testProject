@@ -8,3 +8,4 @@ config/database.php
 /app/webroot/img/featuredimg/Thumbs.db
 /app/webroot/img/internet_explorer/Thumbs.db
 /app/webroot/img/newartistimg/Thumbs.db
+webroot/img/libraryimg/*
