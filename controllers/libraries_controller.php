@@ -9,7 +9,7 @@ Class LibrariesController extends AppController
     var $name = 'Libraries';
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
-    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Download');
+    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
     var $uses = array( 'Library', 'User', 'LibraryTemplate', 'LibraryPurchase' );
     
     /*

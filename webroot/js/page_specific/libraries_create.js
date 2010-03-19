@@ -96,7 +96,6 @@ $(function() {
 		var currentStep = $("#LibraryLibraryStepNum").val();
 		if(typeof(data.data.LibraryPurchase.library_id) != 'undefined')
 		{
-			alert(data.data.LibraryPurchase.library_id);
 			var libraryID = data.data.LibraryPurchase.library_id;
 		}
 		else {
