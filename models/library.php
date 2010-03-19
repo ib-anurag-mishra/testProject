@@ -1,7 +1,7 @@
 <?php
  /*
- File Name : admin.php
- File Description : Models page for the  login functionality.
+ File Name : library.php
+ File Description : Models page for the  libraries functionality.
  Author : maycreate
  */
 class Library extends AppModel
@@ -10,14 +10,41 @@ class Library extends AppModel
     
     var $actsAs = array('Multivalidatable');
     
-    /*var $validate = array(
+    var $belongsTo = array(
+      'User' => array(
+      'className' => 'User',
+      'foreignKey' => 'library_admin_id',
+      'condition' => 'User.type_id = 4'
+      )
+    );
+    
+    var $hasOne = array(
+      'LibraryTemplate' => array(
+          'className'    => 'LibraryTemplate',
+          'dependent'    => false,
+          'foreignKey' => 'id'
+      )
+    );
+    
+    var $hasMany = array(
+      'LibraryPurchase' => array(
+          'className'    => 'LibraryPurchase',
+          'dependent'    => false,
+          'foreignKey' => 'library_id'
+      )
+    );
+    
+    var $validate = array(
       'library_name' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Name.'),
       'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
       'library_contact_fname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact Last Name.'),
-      'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
+      'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.'),
+      'library_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Limit.'),
+      'library_download_type' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Type.'),
+      'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\' Download Limit.')
     );
-    */
+    
     var $validationSets = array(
      'library_step1' => array(
       'library_name' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Name.'),
@@ -25,15 +52,15 @@ class Library extends AppModel
       'library_contact_fname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
-     ),  
-     'library_step2' => array(
-      'city' => array('rule' => '/[A-Za-z ]+/', 'message' => 'City name must contain letters and spaces only.'),  
-      'state' => array('rule' => '/[A-Za-z ]+/', 'message' => 'State name must contain letters and spaces only.'),  
-      'country' => array('rule' => array( 'minLength' , 1 ), 'message' => 'You must select a country.'),  
-      'phone' => array('rule' => 'phone', 'message' => 'Please enter a phone number.')  
-     )  
-    );  
-   
+     ),
+     'library_step3' => array(
+       'library_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Limit.'),
+       'library_download_type' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Type.')
+      ),
+     'library_step4' => array(
+       'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\' Download Limit.')
+      )
+    );
     
     /*
     Function Name : getalllibraries
