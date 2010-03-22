@@ -9,7 +9,23 @@ Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
-	
+	function beforeFilter() {	  
+	    parent::beforeFilter(); 
+	    $this->Auth->allowedActions = array('view','index');	  
+	}
+
+	/*function beforeFilter()
+	{        
+	    $validPatron = $this->ValidatePatron->validatepatron();
+	    if($validPatron)
+	    {
+		$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+	    }
+	    else
+	    {
+		$this->redirect(array('controller' => 'homes', 'action' => 'error'));
+	    }
+	}*/
 	function index() {
 		$this->layout = 'home';
 		$patId = $_SESSION['patron'];
