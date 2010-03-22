@@ -26,19 +26,21 @@
 						<p class='suggest_text info'>
 							<?php
 								if (strlen($randomSongs['Metadata']['Title']) >= 28 ) {
-									echo $html->link(substr($randomSongs['Metadata']['Title'], 0, 28) . "...", array(
-										'controller' => 'artists', 
-										'action' => 'view', 
-										$randomSongs['Metadata']['Title']
-										)
-									) . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
+									// echo $html->link(substr($randomSongs['Metadata']['Title'], 0, 28) . "...", array(
+									// 		'controller' => 'artists', 
+									// 		'action' => 'view', 
+									// 		$randomSongs['Metadata']['Title']
+									// 		)
+									// 	) . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
+									echo substr($randomSongs['Metadata']['Title'], 0, 28) . "..." . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
 								} else {
-									echo $html->link($randomSongs['Metadata']['Title'], array(
-										'controller' => 'artists', 
-										'action' => 'view', 
-										$randomSongs['Metadata']['Title']
-										)
-									);
+									// echo $html->link($randomSongs['Metadata']['Title'], array(
+									// 		'controller' => 'artists', 
+									// 		'action' => 'view', 
+									// 		$randomSongs['Metadata']['Title']
+									// 		)
+									// 	);
+									echo $randomSongs['Metadata']['Title'];
 								}
 							?>
 							<br />
