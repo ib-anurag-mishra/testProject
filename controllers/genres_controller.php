@@ -123,6 +123,7 @@ Class GenresController extends AppController
 				$finalArr[$i]['Album'] = $genre['Physicalproduct']['Title'];
 				$finalArr[$i]['Song'] = $genre['Metadata']['Title'];
 				$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
+				$finalArr[$i]['ProdArtist'] = $genre['Physicalproduct']['ArtistText'];
 				$finalArr[$i]['Advisory'] = $genre['Metadata']['Advisory'];
 				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 				$finalArr[$i]['SongUrl'] = $songUrl;

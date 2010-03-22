@@ -74,9 +74,9 @@
 					echo '</p>';
 					if (strlen($catG['Artist']) >= 32) {
 						$ArtistName = substr($catG['Artist'], 0, 32) . '...';
-						echo '<p class="info">' . $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))) . '<span>' . $catG['Artist'] . '</span></p>';
+						echo '<p class="info">' . $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($catG['ProdArtist']))) . '<span>' . $catG['Artist'] . '</span></p>';
 					} else {
-						echo '<p>'. $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['Artist']))) . '</p>';
+						echo '<p>'. $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['ProdArtist']))) . '</p>';
 					}
 					if (strlen($catG['Album']) >= 32) {
 						echo '<p class="info">' . substr($catG['Album'], 0, 32) . '...<span>' . $catG['Album'] . '</span></p>';
