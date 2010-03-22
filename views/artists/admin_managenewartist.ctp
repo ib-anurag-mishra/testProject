@@ -1,4 +1,4 @@
-<?php $this->pageTitle = 'Admin'; ?>
+<?php $this->pageTitle = 'Content'; ?>
 <form>
 <fieldset>
 <legend>New Listing</legend>

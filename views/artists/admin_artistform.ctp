@@ -1,5 +1,5 @@
 <?php
-$this->pageTitle = 'Admin'; 
+$this->pageTitle = 'Content'; 
 echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));       	 	
 if(empty($getData))
 {
