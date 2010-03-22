@@ -23,7 +23,7 @@
 			<?php foreach($songs as $key => $randomSongs): ?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text info'>
+						<p class='suggest_text info_suggest'>
 							<?php
 								if (strlen($randomSongs['Metadata']['Title']) >= 28 ) {
 									// echo $html->link(substr($randomSongs['Metadata']['Title'], 0, 28) . "...", array(
