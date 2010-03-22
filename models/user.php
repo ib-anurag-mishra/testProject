@@ -40,6 +40,8 @@ class User extends AppModel
   
   var $validationSets = array(
      'library_step2' => array(
+      'first_name' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Admin First Name.'),
+      'last_name' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Admin Last Name.'),
       'email' => array(
                        'email-1' => array(
                                           'rule' => array('email', true),
@@ -48,10 +50,11 @@ class User extends AppModel
                        ),
                        'email-2' => array(
                                           'rule' => 'isUnique',
-                                          'message' => 'This user name/email id already exists in our database.'
+                                          'message' => 'This user name/email id already exists in our database.',
+                                          'on' => 'create'
                        )
                  ),
-      'password' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide password.'),
+      'password' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide password.', 'on' => 'create')
      )
     );
   

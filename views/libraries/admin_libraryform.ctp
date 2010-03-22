@@ -1,6 +1,6 @@
 <?php
 	$this->pageTitle = 'Libraries'; 
-	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file'));
+	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file', 'id' => 'LibraryAdminForm'));
 	if(empty($getData))
 	{
 	        $getData['Library']['id'] = "";
@@ -11,16 +11,17 @@
 		$getData['Library']['library_contact_fname'] = "";
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
+		$getData['Library']['library_download_limit'] = "";
 	        $getData['Library']['library_user_download_limit'] = "";
-	        $getData['Library']['library_download_daily_limit'] = "";
-	        $getData['Library']['library_download_weekly_limit'] = "";
-	        $getData['Library']['library_download_monthly_limit'] = "";
-	        $getData['Library']['library_download_annual_limit'] = "";
+	        $getData['Library']['library_download_type'] = "daily";
+		$getData['Library']['library_image_name'] = "";
+		$getData['Library']['library_block_explicit_content'] = 0;
+		$getData['User']['first_name'] = "";
+		$getData['User']['last_name'] = "";
 		$getData['User']['email'] = "";
 		$getData['LibraryPurchase']['purchased_order_num'] = "";
 		$getData['LibraryPurchase']['purchased_tracks'] = "";
 		$getData['LibraryPurchase']['purchased_amount'] = "";
-		$getData['Library']['library_download_limit_manual'] = "";
 	}
 ?>
 <fieldset>
@@ -92,10 +93,14 @@
 							<input type="file" name="fileToUpload" id="fileToUpload" class="form_fields" />
 						</td>
 					</tr>
-					<tr style="display: none;">
-						<td align="right" width="250"><?php echo $this->Form->label('Preview');?></td>
-						<td align="left"></td>
-					</tr>
+					<?php if($getData['Library']['library_image_name'] != "") { ?>
+						<tr>
+							<td align="right" width="250" valign="top"><?php echo $this->Form->label('Preview');?></td>
+							<td align="left">
+								<?php echo $html->image('libraryimg/'.$getData['Library']['library_image_name'], array('alt' => 'Library Image', 'class' => 'form_fields'))?>
+							</td>
+						</tr>
+					<?php } ?>
 					<tr>
 						<td colspan="2" align="right"><?php echo $this->Form->button('Next >', array('type' => 'button', 'id' => 'next_btn1'));?></td>
 					</tr>
@@ -107,6 +112,14 @@
 					<tr><td id="formError2" class="formError" colspan="2"></td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Admin');?></td></tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('First Name');?></td>
+						<td align="left"><?php echo $this->Form->input('User.last_name',array('label' => false ,'value' => $getData['User']['last_name'], 'div' => false, 'class' => 'form_fields'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Last Name');?></td>
+						<td align="left"><?php echo $this->Form->input('User.password',array( 'type' => 'password', 'label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
+					</tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('UserName');?></td>
 						<td align="left"><?php echo $this->Form->input('User.email',array('label' => false ,'value' => $getData['User']['email'], 'div' => false, 'class' => 'form_fields'));?></td>
@@ -127,6 +140,12 @@
 					<tr>
 						<td colspan="2">
 							<?php
+								if($getData['Library']['library_download_limit'] != '5000' && $getData['Library']['library_download_limit'] != '10000' && $getData['Library']['library_download_limit'] != '15000' && $getData['Library']['library_download_limit'] != '20000') {
+									$default_download_limit = 'manual';
+								}
+								else {
+									$default_download_limit = $getData['Library']['library_download_limit'];
+								}
 								echo $this->Form->input('library_download_limit', array('options' => array(
 									'' => 'Number Of Songs',
 									'5000' => '5000',
@@ -134,11 +153,12 @@
 									'15000' => '15000',
 									'20000' => '20000',
 									'manual' => 'Manually',
-									), 'label' => false, 'div' => false, 'class' => 'select_fields')
+									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $default_download_limit)
 								);
 							?>
-							<span id="manual_download" style="display:none">
+							<span id="manual_download" <?php if($default_download_limit != "manual") { ?> style="display:none" <?php } ?>>
 							<?
+								
 								echo $this->Form->input('library_download_limit_manual',array('label' => false ,'value' => $getData['Library']['library_download_limit'], 'div' => false, 'class' => 'form_fields'));
 							?>
 							</span>
@@ -154,7 +174,7 @@
 									'weekly' => 'Weekly',
 									'monthly' => 'Monthly',
 									'anually' => 'Anually'
-									), 'label' => false, 'div' => false, 'class' => 'select_fields')
+									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_download_type'])
 								);
 							?>
 						</td>
@@ -163,7 +183,14 @@
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="left" colspan="2">
-							<?php echo $this->Form->checkbox('library_block_explicit_content', array('label' => false, 'div' => false, 'class' => 'form_fields')); ?>
+							<?php
+								if($getData['Library']['library_block_explicit_content'] == 0) {
+									$checked = false;
+								}
+								elseif($getData['Library']['library_block_explicit_content'] == 1) {
+									$checked = true;
+								}
+								echo $this->Form->checkbox('library_block_explicit_content', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked)); ?>
 							<?php echo $this->Form->label('Block Explicit Content');?>
 						</td>
 					</tr>
@@ -189,7 +216,7 @@
 									'10' => '10',
 									'15' => '15',
 									'20' => '20'
-									), 'label' => false, 'div' => false, 'class' => 'select_fields')
+									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_user_download_limit'])
 								);
 							?>
 						</td>
@@ -210,15 +237,15 @@
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Purchase Order #');?></td>
-						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_order_num',array('label' => false ,'value' => $getData['LibraryPurchase']['purchased_order_num'], 'div' => false, 'class' => 'form_fields'));?></td>
+						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_order_num',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('# of Purchased Tracks');?></td>
-						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_tracks',array('label' => false ,'value' => $getData['LibraryPurchase']['purchased_tracks'], 'div' => false, 'class' => 'form_fields'));?></td>
+						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_tracks',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Purchased Amount in $');?></td>
-						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_amount',array('label' => false ,'value' => $getData['LibraryPurchase']['purchased_amount'], 'div' => false, 'class' => 'form_fields'));?></td>
+						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_amount',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2">&nbsp;</td></tr>

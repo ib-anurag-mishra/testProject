@@ -5,8 +5,14 @@ $(function() {
 		$('#next_btn1').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('1');
-		$.post(webroot+'admin/libraries/ajax_validate',
-			$('#LibraryAdminLibraryformForm').serializeArray(),
+		if($("#LibraryId").val() != "") {
+			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
+		}
+		else {
+			var postURL = webroot+'admin/libraries/ajax_validate';
+		}
+		$.post( postURL,
+			$('#LibraryAdminForm').serializeArray(),
 			afterValidate,
 			"json"
 		);
@@ -17,8 +23,14 @@ $(function() {
 		$('#next_btn2').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('2');
-		$.post(webroot+'admin/libraries/ajax_validate',
-			$('#LibraryAdminLibraryformForm').serializeArray(),
+		if($("#LibraryId").val() != "") {
+			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
+		}
+		else {
+			var postURL = webroot+'admin/libraries/ajax_validate';
+		}
+		$.post( postURL,
+			$('#LibraryAdminForm').serializeArray(),
 			afterValidate,
 			"json"
 		);
@@ -29,8 +41,14 @@ $(function() {
 		$('#next_btn3').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('3');
-		$.post(webroot+'admin/libraries/ajax_validate',
-			$('#LibraryAdminLibraryformForm').serializeArray(),
+		if($("#LibraryId").val() != "") {
+			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
+		}
+		else {
+			var postURL = webroot+'admin/libraries/ajax_validate';
+		}
+		$.post( postURL,
+			$('#LibraryAdminForm').serializeArray(),
 			afterValidate,
 			"json"
 		);
@@ -41,8 +59,14 @@ $(function() {
 		$('#next_btn4').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('4');
-		$.post(webroot+'admin/libraries/ajax_validate',
-			$('#LibraryAdminLibraryformForm').serializeArray(),
+		if($("#LibraryId").val() != "") {
+			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
+		}
+		else {
+			var postURL = webroot+'admin/libraries/ajax_validate';
+		}
+		$.post( postURL,
+			$('#LibraryAdminForm').serializeArray(),
 			afterValidate,
 			"json"
 		);
@@ -53,8 +77,14 @@ $(function() {
 		$('#next_btn5').attr('disabled', 'disabled');
 		_loadingDiv.show();
 		$("#LibraryLibraryStepNum").val('5');
-		$.post(webroot+'admin/libraries/ajax_validate',
-			$('#LibraryAdminLibraryformForm').serializeArray(),
+		if($("#LibraryId").val() != "") {
+			var postURL = webroot+'admin/libraries/ajax_validate/id:'+$("#LibraryId").val();
+		}
+		else {
+			var postURL = webroot+'admin/libraries/ajax_validate';
+		}
+		$.post( postURL,
+			$('#LibraryAdminForm').serializeArray(),
 			afterValidate,
 			"json"
 		);
@@ -101,12 +131,20 @@ $(function() {
 		else {
 			var libraryID = '';
 		}
+		
+		if($("#LibraryId").val() != "") {
+			var postURL = webroot+'admin/libraries/doajaxfileupload/id:'+$("#LibraryId").val();
+		}
+		else {
+			var postURL = webroot+'admin/libraries/doajaxfileupload';
+		}
+		
 		if(currentStep == '1' || currentStep == '5') {
 			$.ajaxFileUpload
 			(
 				
 				{
-					url:webroot+'admin/libraries/doajaxfileupload',
+					url:postURL,
 					secureuri:false,
 					fileElementId:'fileToUpload',
 					StepId:"LibraryLibraryStepNum",

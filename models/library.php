@@ -8,7 +8,7 @@ class Library extends AppModel
 {
     var $name = 'Library';
     
-    var $actsAs = array('Multivalidatable');
+    var $actsAs = array('Multivalidatable', 'Containable');
     
     var $belongsTo = array(
       'User' => array(
@@ -42,7 +42,7 @@ class Library extends AppModel
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.'),
       'library_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Limit.'),
       'library_download_type' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Type.'),
-      'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\' Download Limit.')
+      'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\'s Download Limit.')
     );
     
     var $validationSets = array(
@@ -58,7 +58,7 @@ class Library extends AppModel
        'library_download_type' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Type.')
       ),
      'library_step4' => array(
-       'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\' Download Limit.')
+       'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\'s Download Limit.')
       )
     );
     

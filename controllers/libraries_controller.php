@@ -36,36 +36,36 @@ Class LibrariesController extends AppController
             {
                 $this -> set( 'formAction', 'admin_libraryform/id:' . $libraryId );
                 $this -> set( 'formHeader', 'Edit Library' );
-                $getLibraryDataObj = new Library();
-                $getData = $getLibraryDataObj -> getlibrarydata( $libraryId );
-                $this -> set( 'getData', $getData );//editting a value
-                if( isset( $this -> data ) )
-                {
-                    $updateObj = new Library();
-                    $getData[ 'Library' ] = $this -> data[ 'Library' ];
-                    $this -> set( 'getData', $getData );
-                    $this -> Library -> id = $this -> data[ 'Library' ][ 'id' ];
-                    
-                    /*if( trim( $this -> data[ 'Library' ][ 'password' ] ) != '' )
-                    {
-                            $this -> data[ 'Library' ][ 'password' ] = md5( $this -> data[ 'Library' ][ 'password' ] );
-                    }
-                    else
-                    {// do not update the password
-                            $this -> data[ 'Library' ] = $updateObj -> arrayremovekey( $this -> data[ 'Library' ], 'password' );
-                    }*/
-                    
-                    $this -> Library -> set( $this -> data[ 'Library' ] );
-                    
-                    if( $this -> Library -> save() )
-                    {
-                        $this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-                        $this -> redirect( 'managelibrary' );
-                    }//}
-                    else {
-                        $this -> Session -> setFlash( 'Data could not be updated.', 'modal', array( 'class' => 'modal problem' ) );
-                    }
-                }//editting a value
+                $this->Library->Behaviors->attach('Containable');
+                $getData = $this->Library->find('first', array('conditions' => array('Library.id' => $libraryId),
+                                                               'fields' => array(
+                                                                                'Library.id',
+                                                                                'Library.library_name',
+                                                                                'Library.library_domain_name',
+                                                                                'Library.library_template_id',
+                                                                                'Library.library_contact_fname',
+                                                                                'Library.library_contact_lname',
+                                                                                'Library.library_contact_email',
+                                                                                'Library.library_user_download_limit',
+                                                                                'Library.library_admin_id',
+                                                                                'Library.library_download_type',
+                                                                                'Library.library_download_limit',
+                                                                                'Library.library_image_name',
+                                                                                'Library.library_block_explicit_content',
+                                                                                'Library.library_available_downloads',
+                                                                                ),
+                                                               'contain' => array(
+                                                                            'User' => array(
+                                                                                    'fields' => array(
+                                                                                                    'User.id',
+                                                                                                    'User.first_name',
+                                                                                                    'User.last_name',
+                                                                                                    'User.email',
+                                                                                                    'User.password'
+                                                                                                )
+                                                                            )
+                                                                )));
+                $this -> set( 'getData', $getData );
             }
         }
         else
@@ -87,7 +87,44 @@ Class LibrariesController extends AppController
         Configure::write('debug', 0);
 	$this->layout = false;
 	if ($this->RequestHandler->isAjax()) {
+            if(!empty($this->params['named']['id'])) {
+                $libraryId = $this->params['named']['id'];
+            }
+            else {
+                $libraryId = "";
+            }
             if (!empty($this->data)) {
+                if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                    $getData = $this->Library->find('first', array('conditions' => array('Library.id' => $libraryId),
+                                                               'fields' => array(
+                                                                                'Library.id',
+                                                                                'Library.library_name',
+                                                                                'Library.library_domain_name',
+                                                                                'Library.library_template_id',
+                                                                                'Library.library_contact_fname',
+                                                                                'Library.library_contact_lname',
+                                                                                'Library.library_contact_email',
+                                                                                'Library.library_user_download_limit',
+                                                                                'Library.library_admin_id',
+                                                                                'Library.library_download_type',
+                                                                                'Library.library_download_limit',
+                                                                                'Library.library_image_name',
+                                                                                'Library.library_block_explicit_content',
+                                                                                'Library.library_available_downloads',
+                                                                                ),
+                                                               'contain' => array(
+                                                                            'User' => array(
+                                                                                    'fields' => array(
+                                                                                                    'User.id',
+                                                                                                    'User.first_name',
+                                                                                                    'User.last_name',
+                                                                                                    'User.email',
+                                                                                                    'User.password'
+                                                                                                )
+                                                                            )
+                                                                )));
+                    $this->Library->id = $this->data['Library']['id'];
+                }
                 
                 if($this->data['Library']['library_download_limit'] == 'manual') {
                     $this->data['Library']['library_download_limit'] = $this->data['Library']['library_download_limit_manual'];
@@ -97,7 +134,12 @@ Class LibrariesController extends AppController
                     if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6") {
                      $this->data['User']['password'] = "";
                     }
-                    $this->User->create();
+                    if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                        $this->User->id = $getData['Library']['library_admin_id'];
+                    }
+                    else {
+                        $this->User->create();
+                    }
                     $this->User->set($this->data['User']);
                     $this->User->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
                     if($this->User->validates()){
@@ -115,24 +157,44 @@ Class LibrariesController extends AppController
                 elseif($this->data['Library']['libraryStepNum'] == '5') {
                     $this->LibraryPurchase->create();
                     $this->LibraryPurchase->set($this->data['LibraryPurchase']);
-                    $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
+                    if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                        $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_edit');
+                    }
+                    else {
+                        $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum']);    
+                    }
                     if($this->LibraryPurchase->validates()){
+                        if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                            $this->User->id = $getData['Library']['library_admin_id'];
+                        }
                         $this->data['User']['type_id'] = 4;
                         if($this->User->save($this->data['User'])) {
-                            $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+                            if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                                $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
+                            }
+                            else {
+                                $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+                            }
                             $this->data['Library']['library_admin_id'] = $this->User->id;
                             if($this->Library->save($this->data['Library'])) {
-                                $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
-                                if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
+                                if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
+                                    $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
+                                    if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
+                                        $message = __('You will be redirected to the next step shortly...', true);
+                                        $data = $this->data;
+                                        $this->set('success', compact('message', 'data'));
+                                    }
+                                    else {
+                                        $message = __('To proceed further please enter the data correctly.', true);
+                                        $LibraryPurchase = $this->LibraryPurchase->invalidFields();
+                                        $data = compact('LibraryPurchase');
+                                        $this->set('errors', compact('message', 'data'));
+                                    }
+                                }
+                                else {
                                     $message = __('You will be redirected to the next step shortly...', true);
                                     $data = $this->data;
                                     $this->set('success', compact('message', 'data'));
-                                }
-                                else {
-                                    $message = __('To proceed further please enter the data correctly.', true);
-                                    $LibraryPurchase = $this->LibraryPurchase->invalidFields();
-                                    $data = compact('LibraryPurchase');
-                                    $this->set('errors', compact('message', 'data'));
                                 }
                             }
                             else {
@@ -183,43 +245,7 @@ Class LibrariesController extends AppController
         $error = "";
 	$msg = "";
 	$fileElementName = 'fileToUpload';
-	if(!empty($_FILES[$fileElementName]['error']))
-	{
-            switch($_FILES[$fileElementName]['error'])
-            {
-
-                case '1':
-                        $error = 'The uploaded file exceeds the upload_max_filesize directive in php.ini';
-                        break;
-                case '2':
-                        $error = 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form';
-                        break;
-                case '3':
-                        $error = 'The uploaded file was only partially uploaded';
-                        break;
-                case '4':
-                        $error = 'No file was uploaded.';
-                        break;
-
-                case '6':
-                        $error = 'Missing a temporary folder';
-                        break;
-                case '7':
-                        $error = 'Failed to write file to disk';
-                        break;
-                case '8':
-                        $error = 'File upload stopped by extension';
-                        break;
-                case '999':
-                default:
-                        $error = 'No error code avaiable';
-            }
-	}
-        elseif(empty($_FILES[$fileElementName]['tmp_name']) || $_FILES[$fileElementName]['tmp_name'] == 'none')
-	{
-	    $error = 'No file was uploaded..';
-	}
-        else 
+        if($_FILES[$fileElementName]['tmp_name'] != '')
 	{
             $p = $_FILES[$fileElementName]['name'];
             $pos = strrpos($p,".");
@@ -253,20 +279,36 @@ Class LibrariesController extends AppController
     Function Name : admin_delete
     Desc : For deleting a library
    */
-    public function admin_delete()
-    {
+    /*
+    public function admin_delete() {
         $this->Library->id = $this->params['named']['id'];
         if($this->Library->saveField('library_status', 'inactive'))
         {
-            $this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this -> Session -> setFlash( 'Library deactivated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
             $this -> redirect( 'managelibrary' );
         }
         else
         {
-            $this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
+            $this -> Session -> setFlash( 'Error occured while deactivating the library', 'modal', array( 'class' => 'modal problem' ) );
             $this -> redirect( 'managelibrary' );
         }
-    }    
+    }
+    
+    public function admin_activate() {
+        $this->autoRender = false;
+        $this->Library->id = $this->params['named']['id'];
+        if($this->Library->saveField('library_status', 'active'))
+        {
+            $this -> Session -> setFlash( 'Library Activated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this -> redirect( 'managelibrary' );
+        }
+        else
+        {
+            $this -> Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
+            $this -> redirect( 'managelibrary' );
+        }
+    }
+    */
     function patron()
     {        
         $this->layout = false;        
