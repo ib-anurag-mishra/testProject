@@ -33,7 +33,7 @@ class User extends AppModel
                                     'email-1' => array('rule' => array('email', true), 'message' => 'Please provide a valid email address.', 'last' => true),
                                     'email-2' => array('rule' => 'isUnique', 'message' => 'This email already exists in our database.')
                               ),
-                  'encrypt_password' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide password'),
+                  'password' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide password'),
                   'usernameRule-2' => array('rule' => 'isUnique', 'message' => 'This username has already been taken.'),
                   'type_id' => array('rule' => 'notEmpty', 'message' => 'Select a User Type.')
   );
