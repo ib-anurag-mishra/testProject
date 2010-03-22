@@ -114,11 +114,11 @@
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('First Name');?></td>
-						<td align="left"><?php echo $this->Form->input('User.last_name',array('label' => false ,'value' => $getData['User']['last_name'], 'div' => false, 'class' => 'form_fields'));?></td>
+						<td align="left"><?php echo $this->Form->input('User.first_name',array('label' => false ,'value' => $getData['User']['first_name'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Last Name');?></td>
-						<td align="left"><?php echo $this->Form->input('User.password',array( 'type' => 'password', 'label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
+						<td align="left"><?php echo $this->Form->input('User.last_name',array('label' => false ,'value' => $getData['User']['last_name'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('UserName');?></td>
