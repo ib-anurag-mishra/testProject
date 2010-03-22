@@ -683,6 +683,16 @@ body  {
 			text-align: left;
 			margin-left:10px;
 		}
+		
+		#songResults a {
+			text-decoration: none;
+			color:#666;
+		}
+		
+		#songResults a:hover {
+			text-decoration: underline;
+			color:#666;
+		}
 
 		#songResults img {
 			margin-top:2px;
