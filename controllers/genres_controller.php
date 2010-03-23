@@ -9,6 +9,8 @@ Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
+	var $helpers = array('Cache');
+
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 
 	    $this->Auth->allowedActions = array('view','index');	  
@@ -107,7 +109,7 @@ Class GenresController extends AppController
 								)
 							)
 							)                                    
-						),'limit' => '30'));			//'order'=> 'rand()',		 
+						),'limit' => '30','cache' => 'Genre'));			//'order'=> 'rand()',		 
 			$finalArr = Array();
 			$songArr = Array();
 			if(count($genreDetails) > 3)
@@ -216,7 +218,7 @@ Class GenresController extends AppController
 		
 		$this->set('genre',base64_decode($Genre));		
 		$this->Physicalproduct->recursive = 2;
-		$data = $this->paginate('Physicalproduct');		
+		$data = $this->paginate('Physicalproduct');	
 		if(count($data) > 0)
 		{
 		  $album = array();
