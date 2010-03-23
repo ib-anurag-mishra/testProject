@@ -119,13 +119,13 @@
             endforeach;
             ?>
     </div>
-    <div id="artist_search">
-        Artist Search&nbsp;&nbsp;
-        <a href="#" onclick="searchArtist('')">#</a>&nbsp;
-        <a href="#" onclick="searchArtist('a')">A</a>&nbsp;
-        <a href="#" onclick="searchArtist('b')">B</a>&nbsp;
-        <a href="#" onclick="searchArtist('c')">C</a>&nbsp;
-        <a href="#" onclick="searchArtist('d')">D</a>&nbsp;
+    <div id="artist_search"><a name="bottom">
+		Artist Search&nbsp;&nbsp;
+		<a href="#bottom" onclick="searchArtist('')">#</a>&nbsp;
+		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
+		<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;
+		<a href="#" onclick="searchArtist('c')">C</a>&nbsp;
+		<a href="#" onclick="searchArtist('d')">D</a>&nbsp;
 
         <a href="#" onclick="searchArtist('e')">E</a>&nbsp;
         <a href="#" onclick="searchArtist('f')">F</a>&nbsp;
