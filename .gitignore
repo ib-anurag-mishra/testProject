@@ -9,3 +9,6 @@ config/database.php
 /app/webroot/img/internet_explorer/Thumbs.db
 /app/webroot/img/newartistimg/Thumbs.db
 webroot/img/libraryimg/*
+webroot/img/artistimg/*
+webroot/img/featuredimg/*
+webroot/img/newartistimg/*
