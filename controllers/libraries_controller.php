@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     public function admin_managelibrary()
     {
         $this->Library->recursive = -1;
-        $this -> set('libraries', $this->Library->getalllibraries());
+        $this->set('libraries', $this->Library->getalllibraries());
     }
 	
     /*
@@ -276,39 +276,58 @@ Class LibrariesController extends AppController
     }
     
     /*
-    Function Name : admin_delete
-    Desc : For deleting a library
+    Function Name : admin_deactivate
+    Desc : For deactivating a library
    */
-    /*
-    public function admin_delete() {
-        $this->Library->id = $this->params['named']['id'];
-        if($this->Library->saveField('library_status', 'inactive'))
+
+    public function admin_deactivate() {
+        $libraryID = $this->params['named']['id'];
+        if(trim($libraryID) != "" && is_numeric($libraryID))
         {
-            $this -> Session -> setFlash( 'Library deactivated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-            $this -> redirect( 'managelibrary' );
+            $this->Session -> setFlash( 'Library deactivated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->Library->id = $libraryID;
+            $this->Library->saveField('library_status', 'inactive', false);
+            $this->autoRender = false;
+            header("Location: ".$this->webroot."admin/libraries/managelibrary");
+            exit();
         }
         else
         {
-            $this -> Session -> setFlash( 'Error occured while deactivating the library', 'modal', array( 'class' => 'modal problem' ) );
-            $this -> redirect( 'managelibrary' );
+            $this->Session->setFlash('Error occured while deactivating the library', 'modal', array('class' => 'modal problem'));
+            $this->autoRender = false;
+            header("Location: ".$this->webroot."admin/libraries/managelibrary");
+            exit();
         }
     }
     
+    /*
+    Function Name : admin_activate
+    Desc : For activating a library
+   */
     public function admin_activate() {
-        $this->autoRender = false;
-        $this->Library->id = $this->params['named']['id'];
-        if($this->Library->saveField('library_status', 'active'))
+        $libraryID = $this->params['named']['id'];
+        if(trim($libraryID) != "" && is_numeric($libraryID))
         {
-            $this -> Session -> setFlash( 'Library Activated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
-            $this -> redirect( 'managelibrary' );
+            $this->Session -> setFlash( 'Library Activated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->Library->id = $libraryID;
+            $this->Library->saveField('library_status', 'active', false);
+            $this->autoRender = false;
+            header("Location: ".$this->webroot."admin/libraries/managelibrary");
+            exit();
         }
         else
         {
-            $this -> Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
-            $this -> redirect( 'managelibrary' );
+            $this->Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
+            $this->autoRender = false;
+            header("Location: ".$this->webroot."admin/libraries/managelibrary");
+            exit();
         }
     }
-    */
+
+    /*
+    Function Name : patron
+    Desc : For validating the patrons for libraries
+   */
     function patron()
     {        
         $this->layout = false;        
