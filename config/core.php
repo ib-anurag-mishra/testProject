@@ -283,6 +283,7 @@
  *
  *   Memcache (http://www.danga.com/memcached/)
  */
+
   	 Cache::config('default', array(
  		'engine' => 'Memcache', //[required]
  		'duration'=> '+5 minutes', //[optional]
@@ -296,4 +297,3 @@
  
  
 	//Cache::config('default', array('engine' => 'File'));
-?>
