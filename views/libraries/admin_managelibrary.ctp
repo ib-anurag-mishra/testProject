@@ -6,7 +6,7 @@
           <tr>            
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
             <th style="border-right:1px solid #E0E0E0">Edit</th>
-	    <!--<th>Action</th>-->
+	    <th>Action</th>
           </tr>
           <?php
           foreach($libraries as $library)
@@ -17,16 +17,16 @@
                 <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
 		
 		<?php
-		//if($library['Library']['library_status'] == 'active') {
+		if($library['Library']['library_status'] == 'active') {
 		?>
-		<!--	<td><?php echo $html->link('Deactivate', array('controller'=>'libraries','action'=>'delete','id'=>$library['Library']['id']));?></td> -->
+			<td><?php echo $html->link('Deactivate', array('controller'=>'libraries','action'=>'deactivate','id'=>$library['Library']['id']));?></td>
 		<?php
-		//}
-		//elseif($library['Library']['library_status'] == 'inactive') {
+		}
+		elseif($library['Library']['library_status'] == 'inactive') {
 		?>
-		<!--	<td><?php echo $html->link('Activate', array('controller'=>'libraries','action'=>'delete','id'=>$library['Library']['id']));?></td> -->
+			<td><?php echo $html->link('Activate', array('controller'=>'libraries','action'=>'activate','id'=>$library['Library']['id']));?></td>
 		<?php
-		//}
+		}
 		?>
             </tr>            
             <?php
