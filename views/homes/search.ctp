@@ -118,8 +118,12 @@
 </table>
 </div>
 <div class="paging">
+        <?php //$paginator->options(array('search_key' => 'Acda & De Munnik'));
+        //$paginator->options(array('url' => $this->data['Home']));
+        $paginator->options(array('url' => array("?"=>$searchKey)));
+        ?>
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
+  	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div id="genreAdvSearch">
