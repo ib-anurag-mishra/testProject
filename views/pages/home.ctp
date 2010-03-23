@@ -1,4 +1,4 @@
-<?php echo $javascript->link('freegal_002'); ?>
+<?php echo $javascript->link('freegal_home_curvy'); ?>
 <div id="artist_slideshow">
 	<div id="slideshow">
 		<a href="artist?artist=foo_fighters"><img src="img/foofighters.png" border="0"></a>
