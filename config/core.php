@@ -286,7 +286,7 @@
 
   	 Cache::config('default', array(
  		'engine' => 'Memcache', //[required]
- 		'duration'=> '+5 minutes', //[optional]
+ 		'duration'=> '+15 minutes', //[optional]
  		'probability'=> 100, //[optional]
   		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
   		'servers' => array(
@@ -294,6 +294,16 @@
   		), //[optional]
   		'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
  	));
- 
+         
+        Cache::config('paginate_cache', array(
+ 		'engine' => 'Memcache', //[required]
+ 		'duration'=> '+15 minutes', //[optional]
+ 		'probability'=> 100, //[optional]
+  		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
+  		'servers' => array(
+  			'127.0.0.1:11211' // localhost, default port 11211
+  		), //[optional]
+  		'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
+ 	));     
  
 	//Cache::config('default', array('engine' => 'File'));
