@@ -109,7 +109,7 @@ Class GenresController extends AppController
 								)
 							)
 							)                                    
-						),'limit' => '30','cache' => 'Genre'));			//'order'=> 'rand()',		 
+						),'limit' => '30'));			//'order'=> 'rand()',		 
 			$finalArr = Array();
 			$songArr = Array();
 			if(count($genreDetails) > 3)
