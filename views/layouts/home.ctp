@@ -10,12 +10,10 @@
 		echo $this->Html->meta('icon');
 		echo $this->Html->css('freegal_styles');
 		echo $this->Html->css('jquery.autocomplete');
-		//echo $javascript->link('jquery-1.2.6');
-		echo $javascript->link('jquery-1');
-		echo $javascript->link('jquery');
+		echo $javascript->link('jquery.min');
+		echo $javascript->link('jquery.cycle.all');
 		echo $javascript->link('curvycorners');
 		echo $javascript->link('swfobject');
-		//echo $javascript->link('jquery.min');
 		echo $javascript->link('audioPlayer');
 		echo $javascript->link('freegal');
 		echo $javascript->link('jquery.bgiframe');
@@ -35,6 +33,14 @@
 		var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 		swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "1", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
 	</script>
+	<style>
+		#slideshow a { display: none }
+		#slideshow a.first { display: block }
+		#featured_artist a { display: none }
+		#featured_artist a.first { display: block }
+		#newly_added a { display: none }
+		#newly_added a.first { display: block }
+	</style>
 </head>
 <body>
 	<div id="audioPlayer"></div>
@@ -43,7 +49,7 @@
 		<?php echo $this->element('header'); ?>
 		<div id="content">
 			<?php echo $this->element('navigation'); ?>
-            <?php echo $content_for_layout; ?>
+			<?php echo $content_for_layout; ?>
 		</div>
 		<br class="clr">
 	</div>

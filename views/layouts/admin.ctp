@@ -8,17 +8,15 @@
 	</title>
    	<?php
                 echo $this->Html->meta('icon');
-		
                 echo $this->Html->css('freegal_admin_styles');
                 echo $this->Html->css('superfish');
                 echo $this->Html->css('colorbox');
-		
-                echo $javascript->link('jquery-1');
-                echo $javascript->link('admin_functions');
-                echo $javascript->link(array('https://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js', 'http://cdn.jquerytools.org/1.1.2/jquery.tools.min.js'));
+                echo $javascript->link('jquery-1.3.2.min');
+		echo $javascript->link('jquery.tools.min');
+		echo $javascript->link('admin_functions');
                 echo $javascript->link('jquery.colorbox');
-                echo $javascript->link('jquery.hoverIntent.min.js');
-                echo $javascript->link('superfish.js');
+                echo $javascript->link('jquery.hoverIntent.min');
+                echo $javascript->link('superfish');
                 echo $javascript->link('supersubs');
                 
                 echo $scripts_for_layout;

@@ -59,8 +59,10 @@ class Physicalproduct extends AppModel
 			'ArtistText',
 		),
 		'order' => array(
-			'ArtistText ASC'
-		)
+			'ArtistText ASC'		
+		),
+		'cache' => 'ArtistText'
+		
 	));    
       return $allArtists;
   }

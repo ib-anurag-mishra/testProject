@@ -7,8 +7,8 @@
 <?php
     echo $html->css('default');
     echo $html->css('colorbox');    
-    echo $javascript->link('jquery-1');
-    echo $javascript->link('jquery');        
+    echo $javascript->link('jquery.min');
+    echo $javascript->link('jquery.cycle.all');
     echo $javascript->link('admin_functions');
     echo $javascript->link('jquery-1.3.2.min');
     echo $javascript->link('jquery.colorbox'); 
