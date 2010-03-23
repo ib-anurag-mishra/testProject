@@ -3,13 +3,13 @@
 	Search Results
 </div>
 <div id="genreArtist">
-	<?php echo $paginator->sort('Artist', 'Metadata.Artist', array('url' => array("?"=>$searchKey)));?>
+	<?php echo $paginator->sort('Artist ', 'Metadata.Artist', array('url' => array("?"=>$searchKey)))  . $html->image('sort_arrows.png');?>
 </div>
 <div id="genreAlbum">
-	<?php echo $paginator->sort('Album', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey)));?>
+	<?php echo $paginator->sort('Album ', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey))) . $html->image('sort_arrows.png');?>
 </div>
 <div id="genreTrack">
-	<?php echo $paginator->sort('Track', 'Metadata.Title', array('url' => array("?"=>$searchKey)));?>
+	<?php echo $paginator->sort('Track ', 'Metadata.Title', array('url' => array("?"=>$searchKey))) . $html->image('sort_arrows.png');?>
 </div>
 <div id="genreDownload">
 	Download
