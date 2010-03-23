@@ -11,9 +11,9 @@ class AppController extends Controller
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
 		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
-		$this -> set ( 'genresMenu' ,  $this -> Category -> find ('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));	
-		$this -> set ( 'featuredArtistMenu' ,  $this -> Featuredartist -> find ('all'));
-		$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find ('all'));
+		$this -> set ( 'genresMenu' ,  $this -> Category -> find ('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre')));	
+		$this -> set ( 'featuredArtistMenu' ,  $this -> Featuredartist -> find ('all',array('cache' => array('artist_name','artist_image'))));
+		$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find ('all',array('cache' => array('artist_name','artist_image'))));
 	}
 	
 	
