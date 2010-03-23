@@ -98,7 +98,7 @@
 						else
 						{
 							?>
-							<p>Download Limit Has Exceeded.</p>
+							<p>Limit Exceeded</p>
 							<?php
 						}						
 					}else{
