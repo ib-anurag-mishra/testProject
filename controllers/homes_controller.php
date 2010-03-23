@@ -107,14 +107,23 @@ class HomesController extends AppController
     }
     
     function search()
-    {        
-        $searchKey = $this->data['Home']['search'];
+    {
+        $searchKey = '';      
+        if(isset($_REQUEST['search']) && $_REQUEST['search'] != '')
+        {
+            $searchKey = $_REQUEST['search'];
+        }        
+        if($searchKey == '')
+        {
+            $searchKey = $this->data['Home']['search'];    
+        }        
         $patId = $_SESSION['patron'];
-        $libId = $_SESSION['library'];
+        $libId = $_SESSION['library'];        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
+        $this->set('searchKey','search='.$searchKey);
         if($_SESSION['block'] == 'yes')
         {
               $cond = array('Metadata.Advisory' => 'T');
@@ -166,7 +175,6 @@ class HomesController extends AppController
                                             )
                                         )                                    
                                     )
-
                                 );
         $this->Physicalproduct->recursive = 2;        
         $searchResults = $this->paginate('Physicalproduct');       
@@ -229,7 +237,7 @@ class HomesController extends AppController
                 mysql_query($sql);
             }
         }
-        else if($downloadType == "annually")
+        else if($downloadType == "anually")
         {
             if($currentDate == $yearFirstDate)
             {

@@ -22,14 +22,11 @@
 	</title>
 	<?php
 		echo $this->Html->meta('icon');
-
 		echo $this->Html->css('freegal_styles');
-		
-        echo $javascript->link('jquery-1');
-        echo $javascript->link('jquery');
-        echo $javascript->link('freegal');
-        echo $javascript->link('curvycorners');
-       
+		echo $javascript->link('jquery.min');
+		echo $javascript->link('jquery.cycle.all');
+		echo $javascript->link('freegal');
+		echo $javascript->link('curvycorners');
 		echo $scripts_for_layout;
 	?>
 </head>
