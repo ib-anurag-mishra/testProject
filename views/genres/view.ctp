@@ -63,8 +63,8 @@
 				<td width="400" valign="top">
 					<p class="info">
 					<?php
-						if (strlen($genre['Metadata']['Title']) >= 48) {
-							echo substr($genre['Metadata']['Title'], 0, 48) . '...<span>' . $genre['Metadata']['Title'] . '</span>';
+						if (strlen($genre['Metadata']['Title']) >= 46) {
+							echo substr($genre['Metadata']['Title'], 0, 46) . '...<span>' . $genre['Metadata']['Title'] . '</span>';
 						} else {
 							echo $genre['Metadata']['Title']; 
 					 	} 
