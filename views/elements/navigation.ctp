@@ -71,9 +71,9 @@
 			<?php echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form'));	
 			      /*echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>*/
 			      echo $this->Form->input('search', array('size'=>'24', 'id'=>'autoComplete', 'label' => false));?>
-				<div style="float:left;">
-					<input type="submit" class="searchButton" value=""></input>
-				</div>
+				<!-- <div style="float:left;">
+									<input type="submit" class="searchButton" value=""></input>
+								</div> -->
 			<!-- </form>-->
 			<?php echo $this->Form->end(); ?>
 			<a href="#">Advanced Search</a>

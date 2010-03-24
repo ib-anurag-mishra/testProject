@@ -395,6 +395,7 @@ body  {
 }
 
 #search input {	
+	background:transparent url(../img/search.png) top right no-repeat;
 	line-height:14px;
 }
 
