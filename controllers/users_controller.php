@@ -86,8 +86,7 @@ Class UsersController extends AppController
                     $updateObj = new User();
                     $getData['User'] = $this->data['User'];
                     $getData['Group']['id'] = $this->data['User']['type_id'];
-                    $this->set('getData', $getData);
-                
+                    $this->set('getData', $getData);                    
                     $this->User->id = $this->data['User']['id'];
                     if(trim($this->data['User']['password']) == "7f86df28b26af363bb0d519f137a4e22ec6e64a6")
                     {
@@ -97,7 +96,7 @@ Class UsersController extends AppController
                     $this->User->set($this->data['User']);  
                     if($this->User->save())
                     {
-                      $this->Session->setFlash('Data has been saved Sucessfully!', 'modal', array('class' => 'modal success'));
+                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                       $this->redirect('manageuser');
                     }                
                 }
@@ -112,20 +111,19 @@ Class UsersController extends AppController
                 //insertion Operation
                 if(isset($this->data))
                 {
-                    $insertObj = new User();
+                    $insertObj = new User();                    
                     $getData['User'] = $this->data['User'];
                     $getData['Group']['id'] = $this->data['User']['type_id'];
-                    $this->set('getData', $getData);
-                  
+                    $this->set('getData', $getData);                  
                     if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6")
-                    {
-                     $this->data['User']['password'] = "";
-                      
-                    }              
+                    {                     
+                     $this->data['User']['password'] = "";                      
+                    }
+                   
                     $this->User->set($this->data['User']);                  
                     if($this->User->save())
                     {                    
-                      $this->Session->setFlash('Data has been saved Sucessfully!', 'modal', array('class' => 'modal success'));
+                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                       $this->redirect('manageuser');
                     }
                     else
@@ -150,7 +148,7 @@ Class UsersController extends AppController
       $deleteAdminUserId = $this->params['named']['id'];      
       if($this->User->delete($deleteAdminUserId))
       {
-        $this->Session->setFlash('Data deleted Sucessfully!', 'modal', array('class' => 'modal success'));
+        $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
         $this->redirect('manageuser');
       }else{
         $this->Session->setFlash('Error occured while deleteting the record', 'modal', array('class' => 'modal problem'));
