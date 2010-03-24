@@ -41,112 +41,122 @@ Class GenresController extends AppController
 		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));		
 		$i = 0;
 		$j = 0;
-		foreach ($categories as $category)
-		{
-			$genreName = $category['Category']['Genre'];			
-			//$this->Genre->recursive = '2';
-			//$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
-			if($_SESSION['block'] == 'yes')
+		if (($genres = Cache::read('genres')) === false)
+		{			
+			foreach ($categories as $category)
 			{
-				$cond = array('Metadata.Advisory' => 'T');
-			}
-			else
-			{
-				$cond = "";
-			}
-			$this->Physicalproduct->Behaviors->attach('Containable');			
-			$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
-					  array('and' =>
-						array(
-							array('Genre.Genre' => $genreName),							
-							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-							array('Physicalproduct.TrackBundleCount' => 0),								
-							array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
-						      )
-						),
-					  'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.ReferenceID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.DownloadStatus',
-							'Physicalproduct.SalesDate'
+				$genreName = $category['Category']['Genre'];			
+				//$this->Genre->recursive = '2';
+				//$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
+				if($_SESSION['block'] == 'yes')
+				{
+					$cond = array('Metadata.Advisory' => 'T');
+				}
+				else
+				{
+					$cond = "";
+				}
+				$this->Physicalproduct->Behaviors->attach('Containable');			
+				$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
+						  array('and' =>
+							array(
+								array('Genre.Genre' => $genreName),							
+								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
+								array('Physicalproduct.TrackBundleCount' => 0),								
+								//array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
+							      )
 							),
-					  'contain' => array(							
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'								
-								)
-							),
-						'Graphic' => array(
-							'fields' => array(
-							'Graphic.ProdID',
-							'Graphic.FileID'
-							),
-							'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName',
-								'Files.SourceURL'
-								)
-							)
-							),						
-						'Metadata' => array(							
-							'fields' => array(
-								'Metadata.Title',
-								'Metadata.Artist',
-								'Metadata.Advisory'
-								)
-							),
-						'Audio' => array(
-							'fields' => array(
-								'Audio.FileID',                                                    
+						  'fields' => array(
+								'Physicalproduct.ProdID',
+								'Physicalproduct.ReferenceID',
+								'Physicalproduct.Title',
+								'Physicalproduct.ArtistText',
+								'Physicalproduct.DownloadStatus',
+								'Physicalproduct.SalesDate'
 								),
-							'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName'
+						  'contain' => array(							
+							'Genre' => array(
+								'fields' => array(
+									'Genre.Genre'								
+									)
+								),
+							'Graphic' => array(
+								'fields' => array(
+								'Graphic.ProdID',
+								'Graphic.FileID'
+								),
+								'Files' => array(
+								'fields' => array(
+									'Files.CdnPath' ,
+									'Files.SaveAsName',
+									'Files.SourceURL'
+									)
 								)
-							)
-							)                                    
-						),'limit' => '30'));			//'order'=> 'rand()',		 
-			$finalArr = Array();
-			$songArr = Array();
-			if(count($genreDetails) > 3)
-			{
-			  $rand_keys = array_rand($genreDetails,3);			
-			  $songArr[0] = $genreDetails[$rand_keys[0]];
-			  $songArr[1] = $genreDetails[$rand_keys[1]];
-			  $songArr[2] = $genreDetails[$rand_keys[2]];				
+								),						
+							'Metadata' => array(							
+								'fields' => array(
+									'Metadata.Title',
+									'Metadata.Artist',
+									'Metadata.Advisory'
+									)
+								),
+							'Audio' => array(
+								'fields' => array(
+									'Audio.FileID',                                                    
+									),
+								'Files' => array(
+								'fields' => array(
+									'Files.CdnPath' ,
+									'Files.SaveAsName'
+									)
+								)
+								)                                    
+							),'limit' => '30'));			//'order'=> 'rand()',		 
+				$finalArr = Array();
+				$songArr = Array();
+				if(count($genreDetails) > 3)
+				{
+				  $rand_keys = array_rand($genreDetails,3);			
+				  $songArr[0] = $genreDetails[$rand_keys[0]];
+				  $songArr[1] = $genreDetails[$rand_keys[1]];
+				  $songArr[2] = $genreDetails[$rand_keys[2]];				
+				}
+				else{
+				  $songArr = $genreDetails;	
+				}
+				
+				//$
+				foreach($songArr as $genre)
+				{
+					$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
+					$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
+					$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['0']['Files']['CdnPath']."/".$genre['Audio']['0']['Files']['SaveAsName']);
+					$finalArr[$i]['Album'] = $genre['Physicalproduct']['Title'];
+					$finalArr[$i]['Song'] = $genre['Metadata']['Title'];
+					$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
+					$finalArr[$i]['ProdArtist'] = $genre['Physicalproduct']['ArtistText'];
+					$finalArr[$i]['Advisory'] = $genre['Metadata']['Advisory'];
+					$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
+					$finalArr[$i]['SongUrl'] = $songUrl;
+					//$finalArr[$i]['SaleStartDate'] = $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'];
+					$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
+					$finalArr[$i]['SalesDate'] = $genre['Physicalproduct']['SalesDate'];
+					$finalArr[$i]['SampleSong'] = $sampleSongUrl;
+					$i++;				
+				}				
+				$finalArray[$j] = $finalArr;
+				$finalArray[$j]['Genre'] = $genreName;
+				$j++;
 			}
-			else{
-			  $songArr = $genreDetails;	
-			}
-			
-			//$
-			foreach($songArr as $genre)
-			{
-				$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
-				$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
-				$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['0']['Files']['CdnPath']."/".$genre['Audio']['0']['Files']['SaveAsName']);
-				$finalArr[$i]['Album'] = $genre['Physicalproduct']['Title'];
-				$finalArr[$i]['Song'] = $genre['Metadata']['Title'];
-				$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
-				$finalArr[$i]['ProdArtist'] = $genre['Physicalproduct']['ArtistText'];
-				$finalArr[$i]['Advisory'] = $genre['Metadata']['Advisory'];
-				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
-				$finalArr[$i]['SongUrl'] = $songUrl;
-				//$finalArr[$i]['SaleStartDate'] = $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'];
-				$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
-				$finalArr[$i]['SalesDate'] = $genre['Physicalproduct']['SalesDate'];
-				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
-				$i++;				
-			}			
-			$finalArray[$j] = $finalArr;
-			$finalArray[$j]['Genre'] = $genreName;
-			$j++;
+			$this->set('categories',$finalArray);
+			Cache::write('genres', $finalArray);
 		}		
-		$this->set('categories',$finalArray);		
+		else
+		{			
+			$categories = Cache::read('genres');
+			$this->set('categories',$categories);
+		}
+		
 	}
 	
 	function view( $Genre = null )
