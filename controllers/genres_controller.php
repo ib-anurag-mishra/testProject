@@ -61,9 +61,8 @@ Class GenresController extends AppController
 						  array('and' =>
 							array(
 								array('Genre.Genre' => $genreName),							
-								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-								array('Physicalproduct.TrackBundleCount' => 0),								
-								//array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
+								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),																
+								array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
 							      )
 							),
 						  'fields' => array(
@@ -186,8 +185,7 @@ Class GenresController extends AppController
 					  array('and' =>
 						array(
 							array('Genre.Genre' => base64_decode($Genre)),							
-							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-							array('Physicalproduct.TrackBundleCount' => 0),
+							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
 							array('Physicalproduct.DownloadStatus' => 1),$cond
 						      )
 						),
