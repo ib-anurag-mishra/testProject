@@ -13,5 +13,5 @@
  **/
 ?>
 <div id="footer">
-	<a href="about">About Freegal Music</a> | <a href="terms">Terms &amp; Conditions</a> | <a href="faq">FAQ</a>
+	<a href="#">About Freegal Music</a> | <a href="#">Terms &amp; Conditions</a> | <a href="#">FAQ</a>
 </div>
