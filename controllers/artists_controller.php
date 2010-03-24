@@ -13,9 +13,22 @@ Class ArtistsController extends AppController
 	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
 	
-	function beforeFilter() {
+	function beforeFilter() {	  
 	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view','search','downloadStatus','test','download');
+	    $this->Auth->allowedActions = array('view');
+	  /*  $libraryCheckArr = array("view");
+	    if(in_array($this->action,$libraryCheckArr))
+	    {
+	      $validPatron = $this->ValidatePatron->validatepatron();
+	      if($validPatron)
+	      {
+		  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+	      }
+	      else
+	      {
+		  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+	      }
+	    }*/	    
 	}
 	
 	/*
@@ -139,7 +152,7 @@ Class ArtistsController extends AppController
 			
 			if( $updateObj -> insert( $updateArr ) )
 			{
-				$this -> Session -> setFlash( 'Data has been updated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
@@ -159,7 +172,7 @@ Class ArtistsController extends AppController
 		
 		if( $deleteObj -> del( $deleteArtistUserId ) )
 		{
-			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
 		else
@@ -217,7 +230,7 @@ Class ArtistsController extends AppController
 						
 						if( $updateObj -> insert( $updateArr ) )
 						{
-							$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+							$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 							$this -> redirect( 'manageartist' );
 						}
 					}
@@ -264,7 +277,7 @@ Class ArtistsController extends AppController
 					
 					if( $insertObj -> insert( $insertArr ) )
 					{
-						$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+						$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 						$this -> redirect( 'manageartist' );
 					}
 				}
@@ -298,7 +311,7 @@ Class ArtistsController extends AppController
 		
 		if( $deleteObj -> del( $deleteArtistUserId ) )
 		{
-			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'manageartist' );
 		}
 		else
@@ -356,7 +369,7 @@ Class ArtistsController extends AppController
 						
 						if( $updateObj -> insert( $updateArr ) )
 						{
-							$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+							$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 							$this -> redirect( 'managenewartist' );
 						}
 					}
@@ -403,7 +416,7 @@ Class ArtistsController extends AppController
 					
 					if( $insertObj -> insert( $insertArr ) )
 					{
-						$this -> Session -> setFlash( 'Data has been saved Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+						$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 						$this -> redirect( 'managenewartist' );
 					}
 				}
@@ -437,7 +450,7 @@ Class ArtistsController extends AppController
 		
 		if( $deleteObj -> del( $deleteArtistUserId ) )
 		{
-			$this -> Session -> setFlash( 'Data deleted Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managenewartist' );
 		}
 		else
@@ -568,8 +581,7 @@ Class ArtistsController extends AppController
 							)                                  
 						),'order' => 'Physicalproduct.ReferenceID'  
 					  ));
-                }
-		
+                }		
                 $this->set('albumData', $albumData);		
                if($albumData[0]['Metadata']['ArtistURL'] != "" )
                 {
