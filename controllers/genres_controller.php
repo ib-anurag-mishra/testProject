@@ -63,7 +63,7 @@ Class GenresController extends AppController
 								array(
 									array('Genre.Genre' => $genreName),							
 									array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),																
-									array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
+									array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-2 week"))),$cond
 								      )
 								),
 							  'fields' => array(
@@ -111,7 +111,7 @@ Class GenresController extends AppController
 										)
 									)
 									)                                    
-								),'limit' => '30'));			//'order'=> 'rand()',
+								),'limit' => '50'));			//'order'=> 'rand()',
 					Cache::write($genreName, $genreDetails);
 				}				
 				$genreDetails = Cache::read($genreName);
