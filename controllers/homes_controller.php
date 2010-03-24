@@ -136,8 +136,7 @@ class HomesController extends AppController
         $this -> paginate = array('conditions' =>
                                 array('and' =>
                                         array(                                                      
-                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                
-                                                array('Physicalproduct.TrackBundleCount' => 0),
+                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
                                                 array('Physicalproduct.DownloadStatus' => 1),$cond
                                             )
                                         ,
