@@ -100,7 +100,7 @@
                                                 }                                             
 					}else{
 						?>
-						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $searchResult['Physicalproduct']['SalesDate']; ?>)</span></p>
+						<p class="info">Coming Soon<span>Coming Soon ( <?php echo date("F d Y", strtotime($searchResult['Physicalproduct']['SalesDate'])); ?> )</span></p>
 						<?php
 					}
 					?>

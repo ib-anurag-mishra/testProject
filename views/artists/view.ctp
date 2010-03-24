@@ -107,7 +107,7 @@
 										}else{
 									?>
 											<p class="info">Coming Soon<span>Coming Soon ( <?php echo 
-												date("F d Y", strtotime($albumSong['Physicalproduct']['SalesDate'])); ?>)</span></p>
+												date("F d Y", strtotime($albumSong['Physicalproduct']['SalesDate'])); ?> )</span></p>
 									<?php
 										}
 									?>	

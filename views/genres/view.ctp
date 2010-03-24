@@ -106,7 +106,7 @@
 						<?php	*/					
 					}else{
 						?>
-						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $genre['Physicalproduct']['SalesDate']; ?>)</span></p>
+						<p class="info">Coming Soon<span>Coming Soon ( <?php echo date("F d Y", strtotime($genre['Physicalproduct']['SalesDate'])); ?> )</span></p>
 						<?php
 					}
 					?>
