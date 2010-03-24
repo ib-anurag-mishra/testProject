@@ -41,8 +41,7 @@ Class GenresController extends AppController
 		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));		
 		$i = 0;
 		$j = 0;
-		if (($genres = Cache::read('genres')) === false)
-		{			
+				
 			foreach ($categories as $category)
 			{
 				$genreName = $category['Category']['Genre'];			
@@ -56,61 +55,66 @@ Class GenresController extends AppController
 				{
 					$cond = "";
 				}
-				$this->Physicalproduct->Behaviors->attach('Containable');			
-				$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
-						  array('and' =>
-							array(
-								array('Genre.Genre' => $genreName),							
-								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),																
-								array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
-							      )
-							),
-						  'fields' => array(
-								'Physicalproduct.ProdID',
-								'Physicalproduct.ReferenceID',
-								'Physicalproduct.Title',
-								'Physicalproduct.ArtistText',
-								'Physicalproduct.DownloadStatus',
-								'Physicalproduct.SalesDate'
+				if (($genres = Cache::read($genreName)) === false)
+				{					
+					$this->Physicalproduct->Behaviors->attach('Containable');			
+					$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
+							  array('and' =>
+								array(
+									array('Genre.Genre' => $genreName),							
+									array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),																
+									array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
+								      )
 								),
-						  'contain' => array(							
-							'Genre' => array(
-								'fields' => array(
-									'Genre.Genre'								
-									)
-								),
-							'Graphic' => array(
-								'fields' => array(
-								'Graphic.ProdID',
-								'Graphic.FileID'
-								),
-								'Files' => array(
-								'fields' => array(
-									'Files.CdnPath' ,
-									'Files.SaveAsName',
-									'Files.SourceURL'
-									)
-								)
-								),						
-							'Metadata' => array(							
-								'fields' => array(
-									'Metadata.Title',
-									'Metadata.Artist',
-									'Metadata.Advisory'
-									)
-								),
-							'Audio' => array(
-								'fields' => array(
-									'Audio.FileID',                                                    
+							  'fields' => array(
+									'Physicalproduct.ProdID',
+									'Physicalproduct.ReferenceID',
+									'Physicalproduct.Title',
+									'Physicalproduct.ArtistText',
+									'Physicalproduct.DownloadStatus',
+									'Physicalproduct.SalesDate'
 									),
-								'Files' => array(
-								'fields' => array(
-									'Files.CdnPath' ,
-									'Files.SaveAsName'
+							  'contain' => array(							
+								'Genre' => array(
+									'fields' => array(
+										'Genre.Genre'								
+										)
+									),
+								'Graphic' => array(
+									'fields' => array(
+									'Graphic.ProdID',
+									'Graphic.FileID'
+									),
+									'Files' => array(
+									'fields' => array(
+										'Files.CdnPath' ,
+										'Files.SaveAsName',
+										'Files.SourceURL'
+										)
 									)
-								)
-								)                                    
-							),'limit' => '30'));			//'order'=> 'rand()',		 
+									),						
+								'Metadata' => array(							
+									'fields' => array(
+										'Metadata.Title',
+										'Metadata.Artist',
+										'Metadata.Advisory'
+										)
+									),
+								'Audio' => array(
+									'fields' => array(
+										'Audio.FileID',                                                    
+										),
+									'Files' => array(
+									'fields' => array(
+										'Files.CdnPath' ,
+										'Files.SaveAsName'
+										)
+									)
+									)                                    
+								),'limit' => '30'));			//'order'=> 'rand()',
+					Cache::write($genreName, $genreDetails);
+				}				
+				$genreDetails = Cache::read($genreName);
 				$finalArr = Array();
 				$songArr = Array();
 				if(count($genreDetails) > 3)
@@ -148,13 +152,13 @@ Class GenresController extends AppController
 				$j++;
 			}
 			$this->set('categories',$finalArray);
-			Cache::write('genres', $finalArray);
-		}		
-		else
-		{			
-			$categories = Cache::read('genres');
-			$this->set('categories',$categories);
-		}
+			//Cache::write('genres', $finalArray);
+		//}		
+		//else
+		//{			
+		//	$categories = Cache::read('genres');
+		//	$this->set('categories',$categories);
+		//}
 		
 	}
 	
