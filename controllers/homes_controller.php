@@ -52,6 +52,20 @@ class HomesController extends AppController
                 )
         );
         $this->set('songs',$songDetails);
+		$this->Physicalproduct->recursive = -1;
+		$upcoming = $this->Physicalproduct->find('all', array(
+			'conditions' => array(
+				'Physicalproduct.ReferenceID = Physicalproduct.ProdID', 
+				'SalesDate >' => date('Y-m-d')
+				),
+				'fields' => array(
+					'Physicalproduct.Title',
+                    'Physicalproduct.ArtistText',
+					'Physicalproduct.SalesDate'
+				)
+			)
+		);
+		$this->set('upcoming', $upcoming);
         //$this->set('songs',$this->Home->getSongs());
         $this->set('distinctArtists', $this->Physicalproduct->getallartist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());

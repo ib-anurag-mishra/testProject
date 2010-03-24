@@ -1,4 +1,5 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
+<?php echo $javascript->link('jquery.marquee.min'); ?>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
@@ -20,6 +21,16 @@
 		endforeach; 
 	?>					
 	</div>
+</div>
+<div id="ticker">
+	Upcoming Releases
+	<ul id="marquee" class="marquee">
+		<?php 
+		foreach($upcoming as $newreleases):
+			echo '<li>Coming ' . date("F d", strtotime($newreleases['Physicalproduct']['SalesDate'])) . ' ' . $newreleases['Physicalproduct']['ArtistText'] . ' - ' . $newreleases['Physicalproduct']['Title'] . '</li>';
+		endforeach;
+		?>
+	</ul>
 </div>
 <div id="suggestions">
     Suggestions

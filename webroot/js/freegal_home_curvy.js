@@ -41,7 +41,12 @@ function initCorners() {
   curvyCorners(settings, "#featured_artist");
   curvyCorners(settings, "#newly_added");
   curvyCorners(settings, "#slideshow");
+  curvyCorners(settings, "#ticker");
 }
+
+$(document).ready(function (){ 
+  $("#marquee").marquee(); 
+});
 
 function searchArtist(searchID) {
   var data = "search="+ searchID;
