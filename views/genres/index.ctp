@@ -36,12 +36,18 @@
 			if($j < 3)
 			{?>
 			<div class="smAlbumArtwork">
-				<?php
-				echo $html->link(
-					$html->image('http://music.freegalmusic.com' . $catG['AlbumArtwork'], array("alt" => "Album Artwork", "width" => "60", "height" => "60")),
-					array('controller'=>'artists', 'action'=>'view', base64_encode($catG['ProdArtist'])),
-					array('escape'=>false)
-				    );
+				<?php echo $html->link(
+						$html->image('http://music.freegalmusic.com' . $catG['AlbumArtwork'], array(
+							"alt" => "Album Artwork", 
+							"width" => "60", 
+							"height" => "60"
+						)),
+						'http://music.freegalmusic.com' . $catG['AlbumArtwork'], array(
+							'escape' => false, 
+							"rel" => "image", 
+							"onclick" => "show_uploaded_images();"
+						)
+					  );
 				?>
 				
 			</div>
