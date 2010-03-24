@@ -284,7 +284,7 @@ Class LibrariesController extends AppController
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID))
         {
-            $this->Session -> setFlash( 'Library deactivated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->Session -> setFlash( 'Library deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
             $this->Library->saveField('library_status', 'inactive', false);
             $this->autoRender = false;
@@ -308,7 +308,7 @@ Class LibrariesController extends AppController
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID))
         {
-            $this->Session -> setFlash( 'Library Activated Sucessfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->Session -> setFlash( 'Library activated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
             $this->Library->saveField('library_status', 'active', false);
             $this->autoRender = false;
