@@ -542,8 +542,7 @@ Class ArtistsController extends AppController
 					  array('and' =>
 						array(
 							array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
-							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-							array('Physicalproduct.TrackBundleCount' => 0),
+							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
 							array('Physicalproduct.DownloadStatus' => 1),$cond
 						      )
 						),
