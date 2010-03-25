@@ -68,9 +68,23 @@
 		</li>
 		<li id="search">
 			<!--<form name="search_form" method="post" action="homes/search" class="search_form">-->
-			<?php echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form'));	
+			<?php
+			if(isset($_REQUEST['search']) &&  $_REQUEST['search'] != "")
+			{
+				$search = $_REQUEST['search'];
+			}
+			else{				
+				if(isset($_REQUEST['data']['Home']['search']) &&  $_REQUEST['data']['Home']['search'] != "")
+				{
+					$search = $_REQUEST['data']['Home']['search'];
+				}
+				else{
+					$search = "";
+				}
+			}
+			echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form'));	
 			      /*echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>*/
-			      echo $this->Form->input('search', array('size'=>'24', 'id'=>'autoComplete', 'label' => false));?>
+			      echo $this->Form->input('search', array('size'=>'24', 'id'=>'autoComplete', 'label' => false, 'value' => $search));?>
 				<!-- <div style="float:left;">
 									<input type="submit" class="searchButton" value=""></input>
 								</div> -->
