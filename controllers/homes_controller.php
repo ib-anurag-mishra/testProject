@@ -67,7 +67,7 @@ class HomesController extends AppController
 		);
 		$this->set('upcoming', $upcoming);
         //$this->set('songs',$this->Home->getSongs());
-        $this->set('distinctArtists', $this->Physicalproduct->getallartist());
+        $this->set('distinctArtists', $this->Physicalproduct->selectArtist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
         $this->set('artists', $this->Artist->getallartists());
