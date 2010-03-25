@@ -30,10 +30,10 @@
 	<div id="container">
 		<div id="header">
 			<div id="header_title">
-				<a href="/users">Library Ideas / Freegal Music Admin</a>
+				<a href="/admin">Library Ideas / Freegal Music Admin</a>
 			</div>
 			<div id="header_image">
-				<?php echo $html->image('freegal_logo.png', array('alt' => 'Freegal Music')); ?>
+				<?php echo $html->image('freegal_logo.png', array("alt" => "Freegal Music")); ?>
 			</div>
 		</div>
 		<div id="navigation">
