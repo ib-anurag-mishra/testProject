@@ -199,6 +199,13 @@ class HomesController extends AppController
     {          
         $libId = $_SESSION['library'];
         $patId = $_SESSION['patron'];
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+	$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+        if($libraryDownload != '1' || $patronDownload != '1')
+        {
+            echo "error";
+            exit;
+        }        
         //hardcoded for testing purpose        
         //$patId = 223401;
         $prodId = $_REQUEST['prodId'];                
