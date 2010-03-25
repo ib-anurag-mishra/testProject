@@ -4,7 +4,13 @@
 	<?php echo $this->Html->charset(); ?>
 	<title>
 		<?php __('Freegal Music : The New Music Library :'); ?>
-		<?php echo $title_for_layout; ?>
+		<?php
+			if ($title_for_layout == "Homes") {
+				echo substr($title_for_layout, 0, -1);
+			} else {
+				echo $title_for_layout;
+			}
+			?>
 	</title>
    	<?php
 		echo $this->Html->meta('icon');
