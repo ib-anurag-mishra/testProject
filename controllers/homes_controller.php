@@ -221,6 +221,7 @@ class HomesController extends AppController
         $this->Download->save($insertArr);
         $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
         $this->Library->query($sql);
+        echo "success";
     }
     
     function setDownload()
