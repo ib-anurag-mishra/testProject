@@ -38,7 +38,7 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/userDownload", // URL to request
 		data: data,  // post data
-		success: function(response) {
+		success: function(response) {			
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
@@ -48,7 +48,7 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 			}
 			location.href = unescape(finalURL);
 		},
-		error:function (XMLHttpRequest, textStatus, errorThrown) {
+		error:function (XMLHttpRequest, textStatus, errorThrown) {			
 			alert(textStatus);
 		}
 	});
