@@ -820,6 +820,43 @@ padding: 5px 10px 15px;
 background-color:#F4F4F8;
 }
 
+/** Advance Search **/
+#advance_search {
+	min-height:600px;
+	margin: 10px 0 0 10px;
+}
+
+#advance_search_box {
+	float:left;
+	font-size:13px;
+	width:200px;
+	height: 20px;
+	background-color:#ccc;
+	text-align: center;
+	margin: 10px 0 0 10px;
+	line-height:20px;
+}
+
+#advance_search form label {
+	clear:both;
+	float: left;
+	width:100px;
+	display: block;
+	margin-bottom:3px;
+}
+#advance_search form .input {
+	vertical-align: text-bottom;
+	padding: 1%;
+	margin-bottom: 10px;
+}
+#advance_search form select {
+	vertical-align: text-bottom;
+}
+#advance_search form div.submit {
+	border: 0;
+	clear: both;
+	margin-top: 10px;
+}
 
 /** Paging **/
 div.paging {
@@ -991,5 +1028,5 @@ div.code-coverage-results span.result-good {
 }
 
 .input{
-	float:left;
+/*	float:left;*/
 }

@@ -269,6 +269,13 @@ class HomesController extends AppController
         }
       }
      
-    }    
+    }
+
+	function advance_search() {
+		$this->layout = 'home';
+		
+		$Genre = ClassRegistry::init('Genre');
+		$genres = $Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
+		$this->set(compact('genres'));
+	}
 }
-?>

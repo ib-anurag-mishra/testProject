@@ -90,7 +90,7 @@
 								</div> -->
 			<!-- </form>-->
 			<?php echo $this->Form->end(); ?>
-			<a href="#">Advanced Search</a>
+			<?php echo $html->link('Advance Search', array('controller' => 'homes', 'action' => 'advance_search')); ?>
 		</li>	
 	</ul>
 </div>
