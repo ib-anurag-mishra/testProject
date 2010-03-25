@@ -39,6 +39,13 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 		url: webroot+"homes/userDownload", // URL to request
 		data: data,  // post data
 		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
 			location.href = unescape(finalURL);
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
