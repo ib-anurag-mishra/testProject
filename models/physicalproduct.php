@@ -157,9 +157,24 @@ class Physicalproduct extends AppModel
   }
   
   public function searchArtist($search)
-  {
-      $this->recursive = -1;
-      $allArtists = $this->find('all', array(
+  {      
+      if($search == 'special')
+      {
+	$allArtists = $this->find('all', array(
+	      'fields' => array(
+		      'ArtistText'
+	      ), 
+	      'group' => array(
+		      'ArtistText',
+	      ),
+	      'order' => array(
+		      'ArtistText ASC',			
+	      ),
+	      'conditions' => array("ArtistText REGEXP '^[^A-Za-z]'")
+	));
+      }
+      else{
+	$allArtists = $this->find('all', array(
 	      'fields' => array(
 		      'ArtistText'
 	      ), 
@@ -170,7 +185,8 @@ class Physicalproduct extends AppModel
 		      'ArtistText ASC',			
 	      ),
 	      'conditions' => array('ArtistText LIKE' => $search.'%')
-      ));
+	));
+      }      
       return $allArtists;
   }
   
@@ -205,6 +221,24 @@ class Physicalproduct extends AppModel
 						)
 	)));
     return $downloadData;
+  }
+  
+  public function selectArtist()
+  {
+      $this->recursive = -1;
+      $allArtists = $this->find('all', array(
+	      'fields' => array(
+		      'ArtistText'
+	      ), 
+	      'group' => array(
+		      'ArtistText',
+	      ),
+	      'order' => array(
+		      'ArtistText ASC',			
+	      ),
+	      'conditions' => array('ArtistText LIKE' => 'A%')
+      ));
+      return $allArtists;
   }
 }
 ?>

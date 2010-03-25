@@ -35,30 +35,30 @@ class Library extends AppModel
     );
     
     var $validate = array(
-      'library_name' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Name.'),
+      'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_contact_fname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact First Name.'),
-      'library_contact_lname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact Last Name.'),
+      'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
+      'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.'),
-      'library_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Limit.'),
-      'library_download_type' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Type.'),
-      'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\'s Download Limit.')
+      'library_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Limit.'),
+      'library_download_type' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Type.'),
+      'library_user_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library User\'s Download Limit.')
     );
     
     var $validationSets = array(
      'library_step1' => array(
-      'library_name' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Name.'),
+      'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_contact_fname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact First Name.'),
-      'library_contact_lname' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide Library Contact Last Name.'),
+      'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
+      'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
      ),
      'library_step3' => array(
-       'library_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Limit.'),
-       'library_download_type' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library Download Type.')
+       'library_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Limit.'),
+       'library_download_type' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Type.')
       ),
      'library_step4' => array(
-       'library_user_download_limit' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a Library User\'s Download Limit.')
+       'library_user_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library User\'s Download Limit.')
       )
     );
     

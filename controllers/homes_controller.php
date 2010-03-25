@@ -67,7 +67,7 @@ class HomesController extends AppController
 		);
 		$this->set('upcoming', $upcoming);
         //$this->set('songs',$this->Home->getSongs());
-        $this->set('distinctArtists', $this->Physicalproduct->getallartist());
+        $this->set('distinctArtists', $this->Physicalproduct->selectArtist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
         $this->set('artists', $this->Artist->getallartists());
@@ -217,10 +217,12 @@ class HomesController extends AppController
         $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
         $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
         $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];        
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];	
         $this->Download->save($insertArr);
-        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
+        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;	
         $this->Library->query($sql);
+        echo "success";
+	exit;
     }
     
     function setDownload()
