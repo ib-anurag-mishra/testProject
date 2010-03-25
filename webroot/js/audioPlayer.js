@@ -29,14 +29,14 @@ function onPlayerReady() {
 function onStateChange(state) {
     if (state == "buffering") {
             document.getElementById(imageID).src = webRootURL+'img/ajax-loader.gif';
-            document.getElementById(imageID).onclick = function(){stop(this);};
+            document.getElementById(imageID).onclick = function(){stopThis(this);};
     }
     else if (state == "playing") {
             document.getElementById(imageID).src = webRootURL+'img/stop.png';
-            document.getElementById(imageID).onclick=function(){stop(this);};
+            document.getElementById(imageID).onclick = function(){stopThis(this);};
     }
     else {
-            document.getElementById(imageID).src = webRootURL+'img/play.png';
+        document.getElementById(imageID).src = webRootURL+'img/play.png';
     }
 }
 
@@ -147,18 +147,19 @@ function seek(event) {
     document.getElementById('audioPlayer').seek(20);
 }
 
-function stop(event) {
-    document.getElementById('audioPlayer').stop();
+function stopThis(event) {
+    document.getElementById('audioPlayer').pause();
     document.getElementById(imageID).onclick = function(){playSample(this, imageID, URLOne, URLTwo, URLThree, PID, webRootURL);};
 }
 
 function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID, webRoot) {
     $("img[id^='play_audio']").each(function() {
-        $(this).attr("src", webRoot+'img/play.png');
-        var onClickAttrs = $(this).attr("onClick");
-        $(this).click = new Function(onClickAttrs);
+        if($(this).attr("src") == webRoot+'img/stop.png' || $(this).attr("src") == webRoot+'img/ajax-loader.gif') {
+            document.getElementById(imageID).src = webRoot+'img/play.png';
+            var tempStr = 'playSample(this, "'+imageID+'", "'+URLOne+'", "'+URLTwo+'", "'+URLThree+'", "'+PID+'", "'+webRootURL+'");'
+            document.getElementById(imageID).onclick = new Function(tempStr);
+        }
     });
-    
     imageID = objID;
     URLOne = audioURLOne;
     URLTwo = audioURLTwo;
