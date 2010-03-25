@@ -206,5 +206,23 @@ class Physicalproduct extends AppModel
 	)));
     return $downloadData;
   }
+  
+  public function selectArtist()
+  {
+      $this->recursive = -1;
+      $allArtists = $this->find('all', array(
+	      'fields' => array(
+		      'ArtistText'
+	      ), 
+	      'group' => array(
+		      'ArtistText',
+	      ),
+	      'order' => array(
+		      'ArtistText ASC',			
+	      ),
+	      'conditions' => array('ArtistText LIKE' => 'A%')
+      ));
+      return $allArtists;
+  }
 }
 ?>
