@@ -160,6 +160,11 @@ function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID,
             document.getElementById(imageID).onclick = new Function(tempStr);
         }
     });
+    var hasRequiredVersion = DetectFlashVer(9, 0, 0);
+    if (!hasRequiredVersion) {
+        $(".example8").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
+	$(".example8").click().delay(800);
+    }
     imageID = objID;
     URLOne = audioURLOne;
     URLTwo = audioURLTwo;
