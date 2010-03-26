@@ -10,7 +10,8 @@
 		echo $form->input('artist');
 		echo $form->input('song');
 		echo $form->input('album');
-		echo $form->input('Genre');
+		echo $form->label('Genres');
+		echo $form->select('genre',$genres);
 		echo $form->end('Advance Search');
 	?>
 </div>
