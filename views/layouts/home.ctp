@@ -37,14 +37,6 @@
 				autoFill: false
 			});
 		});
-		$().ready(function() {
-			var hasRequiredVersion = DetectFlashVer(10, 0, 0);
-			if (!hasRequiredVersion)
-			{
-				$(".example8").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
-				$(".example8").click().delay(800);
-			}
-		});
 		var webroot = '<?php echo $this->webroot; ?>';	
 		var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 		swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "1", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
