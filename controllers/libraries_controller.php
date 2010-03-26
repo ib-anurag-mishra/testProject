@@ -287,16 +287,14 @@ Class LibrariesController extends AppController
             $this->Session -> setFlash( 'Library deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
             $this->Library->saveField('library_status', 'inactive', false);
-            $this->autoRender = false;
-            header("Location: ".$this->webroot."admin/libraries/managelibrary");
-            exit();
+            $this->autoRender = false;            
+            $this->redirect('managelibrary');
         }
         else
         {
             $this->Session->setFlash('Error occured while deactivating the library', 'modal', array('class' => 'modal problem'));
-            $this->autoRender = false;
-            header("Location: ".$this->webroot."admin/libraries/managelibrary");
-            exit();
+            $this->autoRender = false;            
+            $this->redirect('managelibrary');
         }
     }
     
@@ -311,16 +309,14 @@ Class LibrariesController extends AppController
             $this->Session -> setFlash( 'Library activated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
             $this->Library->saveField('library_status', 'active', false);
-            $this->autoRender = false;
-            header("Location: ".$this->webroot."admin/libraries/managelibrary");
-            exit();
+            $this->autoRender = false;            
+            $this->redirect('managelibrary');
         }
         else
         {
             $this->Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
-            $this->autoRender = false;
-            header("Location: ".$this->webroot."admin/libraries/managelibrary");
-            exit();
+            $this->autoRender = false;            
+            $this->redirect('managelibrary');
         }
     }
 

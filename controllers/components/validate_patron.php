@@ -1,5 +1,5 @@
 <?php
-Class ValidatePatronComponent extends Component
+Class ValidatePatronComponent extends Object
 {    
     var $components = array( 'Session');
 
