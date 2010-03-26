@@ -227,55 +227,61 @@ class HomesController extends AppController
     
     function setDownload()
     {      
-      $currentDate = date('Y-m-d');
-      $date = date('y-m-d');
-      list($year, $month, $day) = explode('-', $date);
-      $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-date('w'), date('Y')));
-      $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
-      $yearFirstDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $year));      
-      $qry = "Select * from libraries";
-      $results = mysql_query($qry);
-      while($resultsArr = mysql_fetch_assoc($results))
-      {
-        $downloadType = $resultsArr['library_download_type'];
-        if($downloadType == "daily")
-        {            
+        $currentDate = date('Y-m-d');
+        $date = date('y-m-d');
+        list($year, $month, $day) = explode('-', $date);
+        $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-date('w'), date('Y')));
+        $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
+        $yearFirstDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $year));      
+        $qry = "Select * from libraries";
+        $results = mysql_query($qry);
+        while($resultsArr = mysql_fetch_assoc($results))
+        {
+            $downloadType = $resultsArr['library_download_type'];
+            if($downloadType == "daily")
+            {            
                 $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
                 mysql_query($sql);            
-        }
-        else if($downloadType == "weekly")
-        {
-            if($currentDate == $weekFirstDay)
-            {
-                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-                mysql_query($sql);
             }
-        }
-        else if($downloadType == "monthly")
-        {
-            if($currentDate == $monthFirstDate)
+            else if($downloadType == "weekly")
             {
-                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-                mysql_query($sql);
+                if($currentDate == $weekFirstDay)
+                {
+                    $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                    mysql_query($sql);
+                }
             }
-        }
-        else if($downloadType == "anually")
-        {
-            if($currentDate == $yearFirstDate)
+            else if($downloadType == "monthly")
             {
-                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-                mysql_query($sql);
+                if($currentDate == $monthFirstDate)
+                {
+                    $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                    mysql_query($sql);
+                }
             }
-        }
-      }
-     
+            else if($downloadType == "anually")
+            {
+                if($currentDate == $yearFirstDate)
+                {
+                    $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                    mysql_query($sql);
+                }
+            }
+        }     
     }
 
-	function advance_search() {
-		$this->layout = 'home';
-		
-		$Genre = ClassRegistry::init('Genre');
-		$genres = $Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
-		$this->set(compact('genres'));
+	function advance_search()
+        {
+            $this->layout = 'home';
+            
+            $Genre = ClassRegistry::init('Genre');
+            $genres = $Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));                
+            //$this->set(compact('genres'));
+            $resultArr = array();
+            foreach($genres as $genre)
+            {                  
+                $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
+            }
+            $this->set('genres',$resultArr);
 	}
 }
