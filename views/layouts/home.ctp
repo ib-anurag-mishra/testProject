@@ -56,7 +56,7 @@
 	<a class='example8' href="#"></a>
 	<div style="display:none;">
 		<div id="upgradeFlash_div">   
-			This site requires Flash player version 10 or more to play the sample audio files.
+			This site requires Flash player version 9 or more to play the sample audio files.
 			Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a> 
 			to upgrade your Flash Player.<br /><br />
 		</div>
