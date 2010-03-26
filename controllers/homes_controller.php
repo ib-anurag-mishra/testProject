@@ -10,7 +10,7 @@ class HomesController extends AppController
     var $helpers = array('Html','Ajax','Javascript','Form' );
     var $components = array('RequestHandler','ValidatePatron','Downloads');
     //var $components = array('RequestHandler');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download');
+    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre');
     var $beforeFilter = array('validatePatron');
  
    /*function beforeFilter()
@@ -270,18 +270,16 @@ class HomesController extends AppController
         }     
     }
 
-	function advance_search()
-        {
-            $this->layout = 'home';
-            
-            $Genre = ClassRegistry::init('Genre');
-            $genres = $Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));                
-            //$this->set(compact('genres'));
-            $resultArr = array();
-            foreach($genres as $genre)
-            {                  
-                $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
-            }
-            $this->set('genres',$resultArr);
+    function advance_search()
+    {
+	$this->layout = 'home';           
+	$this->Genre->recursive = -1;
+	$genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
+	$resultArr = array();
+	foreach($genres as $genre)
+	{                  
+	    $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
 	}
+	$this->set('genres',$resultArr);
+    }
 }
