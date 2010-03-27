@@ -122,43 +122,108 @@ class HomesController extends AppController
     
     function search()
     {
-        $searchKey = '';      
-        if(isset($_REQUEST['search']) && $_REQUEST['search'] != '')
-        {
-            $searchKey = $_REQUEST['search'];
-        }        
-        if($searchKey == '')
-        {
-            $searchKey = $this->data['Home']['search'];    
-        }        
         $patId = $_SESSION['patron'];
         $libId = $_SESSION['library'];        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
-        $this->set('searchKey','search='.urlencode($searchKey));
         if($_SESSION['block'] == 'yes')
         {
-              $cond = array('Metadata.Advisory' => 'T');
+            $cond = array('Metadata.Advisory' => 'T');
         }
         else
         {
-              $cond = "";
+            $cond = "";
         }
-        $this->Physicalproduct->Behaviors->attach('Containable');
-        $this -> paginate = array('conditions' =>
+        if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != ''))
+        {
+            if(isset($_REQUEST['match']) && $_REQUEST['match'] != '')
+            {
+                if($_REQUEST['match'] == 'All')
+                {
+                    $condition = "and";
+                    $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
+                    $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
+                }
+                else
+                {
+                    $condition = "or";
+                    $preCondition1 =  "";
+                    $preCondition2 = "";
+                }
+                $artist =  $_REQUEST['artist'];
+                $song =  $_REQUEST['song'];
+                $album =  $_REQUEST['album'];
+                $genre =  $_REQUEST['genre'];
+            }            
+            if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')
+            {
+                if($this->data['Home']['Match'] == 'All')
+                {
+                    $condition = "and";
+                    $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
+                    $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
+                }
+                else
+                {
+                    $condition = "or";
+                    $preCondition1 =  "";
+                    $preCondition2 = "";
+                }
+                $artist =  $this->data['Home']['artist'];
+                $song =  $this->data['Home']['song'];
+                $album =  $this->data['Home']['album'];
+                $genre =  $this->data['Home']['genre'];
+            }            
+            if($artist != '')
+            {
+                $artistSearch = array('Physicalproduct.ArtistText LIKE' => '%'.$artist.'%');    
+            }
+            else
+            {
+                $artistSearch = '';
+            }
+            if($song != '')
+            {
+                $songSearch = array('Metadata.Title LIKE' => '%'.$song.'%');    
+            }
+            else
+            {
+                $songSearch = '';
+            }
+            if($album != '')
+            {
+                $albumSearch = array('Physicalproduct.Title LIKE' => '%'.$album.'%');    
+            }
+            else
+            {
+                $albumSearch = '';
+            }
+            if($genre != '')
+            {
+                $genreSearch = array('Genre.Genre LIKE' => '%'.$genre.'%');    
+            }
+            else
+            {
+                $genreSearch = '';
+            }
+            $this->set('searchKey','match=all&artist='.urlencode($artist).'&song='.urlencode($song).'&album='.$album.'&genre='.$genre);
+            $this->Physicalproduct->Behaviors->attach('Containable');
+            $this -> paginate = array('conditions' =>
                                 array('and' =>
                                         array(                                                      
                                                 array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
                                                 array('Physicalproduct.DownloadStatus' => 1),$cond
                                             )
                                         ,
-                                    'or' =>
+                                    $condition =>
                                             array(
-                                                    array('Physicalproduct.ArtistText LIKE' => $searchKey.'%'),
-                                                    array('Physicalproduct.Title LIKE' => $searchKey.'%'),
-                                                    array('Metadata.Title LIKE' => $searchKey.'%')
+                                                    /*array('Physicalproduct.ArtistText LIKE' => '%'.$artist.'%'),
+                                                    array('Physicalproduct.Title LIKE' => '%'.$album.'%'),
+                                                    array('Metadata.Title LIKE' => '%'.$song.'%'),
+                                                    array('Genre.Genre LIKE' => '%'.$genre.'%')*/
+                                                    $artistSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$cond
                                                 )
                                     ),
                                     'fields' => array(
@@ -176,6 +241,11 @@ class HomesController extends AppController
 						    'Metadata.Advisory'
                                                     )
                                             ),
+                                    'Genre' => array(
+                                            'fields' => array(
+                                                    'Genre.Genre'                                                   
+                                                    )
+                                            ),
                                     'Audio' => array(
                                             'fields' => array(
                                                     'Audio.FileID',                                                    
@@ -189,9 +259,69 @@ class HomesController extends AppController
                                         )                                    
                                     )
                                 );
-        $this->Physicalproduct->recursive = 2;        
-        $searchResults = $this->paginate('Physicalproduct');       
-        $this->set('searchResults', $searchResults);
+            $this->Physicalproduct->recursive = 2;        
+            $searchResults = $this->paginate('Physicalproduct');           
+            $this->set('searchResults', $searchResults);           
+        }
+        else
+        {   
+            $searchKey = '';      
+            if(isset($_REQUEST['search']) && $_REQUEST['search'] != '')
+            {
+                $searchKey = $_REQUEST['search'];
+            }        
+            if($searchKey == '')
+            {
+                $searchKey = $this->data['Home']['search'];    
+            }     
+            $this->set('searchKey','search='.urlencode($searchKey));            
+            $this->Physicalproduct->Behaviors->attach('Containable');
+            $this -> paginate = array('conditions' =>
+                                    array('and' =>
+                                            array(                                                      
+                                                    array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
+                                                    array('Physicalproduct.DownloadStatus' => 1),$cond
+                                                )
+                                            ,
+                                        'or' =>
+                                                array(
+                                                        array('Physicalproduct.ArtistText LIKE' => $searchKey.'%'),
+                                                        array('Physicalproduct.Title LIKE' => $searchKey.'%'),
+                                                        array('Metadata.Title LIKE' => $searchKey.'%')
+                                                    )
+                                        ),
+                                        'fields' => array(
+                                                        'Physicalproduct.ProdID',
+                                                        'Physicalproduct.Title',
+                                                        'Physicalproduct.ArtistText',
+                                                        'Physicalproduct.DownloadStatus',
+                                                        'Physicalproduct.SalesDate'
+                                                        ),
+                                        'contain' => array(                                                                       
+                                        'Metadata' => array(
+                                                'fields' => array(
+                                                        'Metadata.Title',
+                                                        'Metadata.Artist',
+                                                        'Metadata.Advisory'
+                                                        )
+                                                ),
+                                        'Audio' => array(
+                                                'fields' => array(
+                                                        'Audio.FileID',                                                    
+                                                        ),
+                                                'Files' => array(
+                                                'fields' => array(
+                                                        'Files.CdnPath' ,
+                                                        'Files.SaveAsName'
+                                                        )
+                                                )
+                                            )                                    
+                                        )
+                                    );
+            $this->Physicalproduct->recursive = 2;        
+            $searchResults = $this->paginate('Physicalproduct');       
+            $this->set('searchResults', $searchResults);
+        }
         $this->layout = 'home';
     }
     
