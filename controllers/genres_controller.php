@@ -267,6 +267,7 @@ Class GenresController extends AppController
 				}			
 			  }
 			}
+			$this->Session -> setFlash( 'Your selection saved successfully!!', 'modal', array( 'class' => 'modal success' ) );
 		}
 		
 				
