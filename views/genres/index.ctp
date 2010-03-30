@@ -1,5 +1,3 @@
-<?php echo $html->css('colorbox', false); ?>
-<?php echo $javascript->link('jquery.colorbox', false); ?>
 <?php echo $javascript->link('freegal_genreall_curvy', false); ?>
 <div id="genreAll">
 	<?php

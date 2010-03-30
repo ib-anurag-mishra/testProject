@@ -5,8 +5,8 @@
 <br class="clr">
 <div id="advance_search">
 	<?php
-		echo $form->create('Home', array('action' => 'advance_search'));
-		echo $form->input('Match', array('options' => array('All', 'Any')));
+		echo $form->create('Home', array('action' => 'search'));
+		echo $form->input('Match', array('options' => array('All' => 'All', 'Any' => 'Any')));
 		echo $form->input('artist');
 		echo $form->input('song');
 		echo $form->input('album');

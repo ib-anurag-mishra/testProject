@@ -7,7 +7,7 @@
 Class UsersController extends AppController
 {
    var $name = 'Users';
-   var $helpers = array('Html','Ajax','Javascript','Form');
+   var $helpers = array('Html','Ajax','Javascript','Form', 'User');
    var $layout = 'admin';
    var $components = array('Session','Auth','Acl');
    var $uses = array('User','Group');
@@ -79,21 +79,21 @@ Class UsersController extends AppController
             {
                 $this->set('formAction','admin_userform/id:'.$adminUserId);
                 $this->set('formHeader','Edit User');     
-               $this->set('getData', $this->User->getuserdata($adminUserId));
+                $this->set('getData', $this->User->getuserdata($adminUserId));
                 //editting a value
                 if(isset($this->data))
                 {
                     $updateObj = new User();
                     $getData['User'] = $this->data['User'];
                     $getData['Group']['id'] = $this->data['User']['type_id'];
-                    $this->set('getData', $getData);                    
+                    $this->set('getData', $getData);
                     $this->User->id = $this->data['User']['id'];
                     if(trim($this->data['User']['password']) == "7f86df28b26af363bb0d519f137a4e22ec6e64a6")
                     {
                        // do not update the password
                        $this->data['User']= $updateObj->arrayremovekey($this->data['User'],'password');
                     }
-                    $this->User->set($this->data['User']);  
+                    $this->User->set($this->data['User']);
                     if($this->User->save())
                     {
                       $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -114,7 +114,7 @@ Class UsersController extends AppController
                     $insertObj = new User();                    
                     $getData['User'] = $this->data['User'];
                     $getData['Group']['id'] = $this->data['User']['type_id'];
-                    $this->set('getData', $getData);                  
+                    $this->set('getData', $getData);
                     if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6")
                     {                     
                      $this->data['User']['password'] = "";                      
@@ -133,7 +133,7 @@ Class UsersController extends AppController
                     }             
                 }
                 //insertion operation
-            }
+        }
         $this->set('options',$this->Group->getallusertype());
       
     }

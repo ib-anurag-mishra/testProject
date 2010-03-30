@@ -1,7 +1,7 @@
 <?php $this->pageTitle = 'Content'; ?>
 <form>
 <fieldset>
-<legend>New Listing</legend>
+<legend>Newly Added Artists Listing</legend>
   <table id="list">
           <tr>            
             <th class="left">Artist Name</th>
@@ -26,9 +26,6 @@
           }
           ?>
         </table>
-  
 <?php echo $session->flash();?>
-  
 </fieldset>
 </form>
-
