@@ -8,26 +8,23 @@ ini_set('memory_limit', '1024M');
 Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
-	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	var $helpers = array('Cache');
 
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view','index');	  
+	    $this->Auth->allowedActions = array('view','index');
+	    $libraryCheckArr = array("view","index");	   
+	    if(in_array($this->action,$libraryCheckArr))
+	    {
+	      $validPatron = $this->ValidatePatron->validatepatron();	     
+	      if(!$validPatron)
+	      {
+		  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+	      }	      
+	    }	    
 	}
-
-	/*function beforeFilter()
-	{        
-	    $validPatron = $this->ValidatePatron->validatepatron();
-	    if($validPatron)
-	    {
-		$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-	    }
-	    else
-	    {
-		$this->redirect(array('controller' => 'homes', 'action' => 'error'));
-	    }
-	}*/
+	
 	function index() {
 		$this->layout = 'home';
 		$patId = $_SESSION['patron'];

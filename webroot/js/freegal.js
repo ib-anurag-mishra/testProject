@@ -55,6 +55,24 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	return false; 
 }
 
+function checkPatron(libid,patronid)
+{	
+	var data = "libid="+libid+"&patronid="+patronid;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/checkPatron", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			setTimeout('checkPatron('+libid+','+patronid+')',30000);
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {			
+			alert(textStatus);
+		}
+	});
+	return false; 
+}
+
+
 var isIE  = (navigator.appVersion.indexOf("MSIE") != -1) ? true : false;
 var isWin = (navigator.appVersion.toLowerCase().indexOf("win") != -1) ? true : false;
 var isOpera = (navigator.userAgent.indexOf("Opera") != -1) ? true : false;
