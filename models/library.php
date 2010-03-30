@@ -18,14 +18,6 @@ class Library extends AppModel
       )
     );
     
-    var $hasOne = array(
-      'LibraryTemplate' => array(
-          'className'    => 'LibraryTemplate',
-          'dependent'    => false,
-          'foreignKey' => 'id'
-      )
-    );
-    
     var $hasMany = array(
       'LibraryPurchase' => array(
           'className'    => 'LibraryPurchase',

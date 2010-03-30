@@ -7,7 +7,14 @@
 	        $getData['Library']['library_admin_id'] = "";
 	        $getData['Library']['library_name'] = "";
 	        $getData['Library']['library_domain_name'] = "";
-		$getData['Library']['library_template_id'] = "";
+		$getData['Library']['library_bgcolor'] = "606060";
+		$getData['Library']['library_content_bgcolor'] = "FFFFFF";
+		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
+		$getData['Library']['library_text_color'] = "666666";
+		$getData['Library']['library_links_color'] = "666666";
+		$getData['Library']['library_links_hover_color'] = "000000";
+		$getData['Library']['library_navlinks_color'] = "FFFFFF";
+		$getData['Library']['library_navlinks_hover_color'] = "FFFFFF";
 		$getData['Library']['library_contact_fname'] = "";
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
@@ -53,23 +60,38 @@
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td colspan="2"><?php echo $this->Form->label('Template ( Choose One )');?></td></tr>
+					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
 					<tr>
-						<td>&nbsp;</td>
-						<td align="left">
-							<?
-								if(count($allTemplates) > 0) {
-									$libraryTemplates = array();
-									foreach($allTemplates as $templates) {
-										$libraryTemplates[$templates['LibraryTemplate']['id']] = "<div style='background:".$templates['LibraryTemplate']['template_color']."' class='radio_div'></div>";
-									}
-									echo $this->Form->radio('library_template_id', $libraryTemplates, array('legend' => false, 'label' => false, 'class' => 'radio_fields', 'value' => $getData['Library']['library_template_id']));
-								}
-								else {
-									echo '<label>There are no templates available at this moment.</label>';
-								}
-							?>
-						</td>
+						<td align="right" width="250"><?php echo $this->Form->label('Background Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_bgcolor',array('label' => false ,'value' => $getData['Library']['library_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Content Background Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_content_bgcolor',array('label' => false ,'value' => $getData['Library']['library_content_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Navigation Background Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_nav_bgcolor',array('label' => false ,'value' => $getData['Library']['library_nav_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Text Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_text_color',array('label' => false ,'value' => $getData['Library']['library_text_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Page Links Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_links_color',array('label' => false ,'value' => $getData['Library']['library_links_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Page Links Hover Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_links_hover_color',array('label' => false ,'value' => $getData['Library']['library_links_hover_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Navigation Links Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_navlinks_color',array('label' => false ,'value' => $getData['Library']['library_navlinks_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Navigation Links Hover Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_navlinks_hover_color',array('label' => false ,'value' => $getData['Library']['library_navlinks_hover_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Contact');?></td></tr>
@@ -140,7 +162,7 @@
 					<tr>
 						<td colspan="2">
 							<?php
-								if($getData['Library']['library_download_limit'] != '5000' && $getData['Library']['library_download_limit'] != '10000' && $getData['Library']['library_download_limit'] != '15000' && $getData['Library']['library_download_limit'] != '20000') {
+								if($getData['Library']['library_download_limit'] != '5000' && $getData['Library']['library_download_limit'] != '10000' && $getData['Library']['library_download_limit'] != '15000' && $getData['Library']['library_download_limit'] != '20000' && $getData['Library']['library_download_limit'] != '') {
 									$default_download_limit = 'manual';
 								}
 								else {
@@ -248,13 +270,53 @@
 						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_amount',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td colspan="2">&nbsp;</td></tr>
-					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td colspan="2" align="right"><?php echo $this->Form->button('Save', array('type' => 'button', 'id' => 'next_btn5'));?></td>
 					</tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
 				</table>
+				<?php
+				if($getData['Library']['id'] != "") {
+				?>
+					<h1>Previously Purchased Downloads</h1>
+					<table cellspacing="10" cellpadding="0" border="0">
+						<?php
+						if(count($allPurchases) == 0) {
+						?>
+							<tr>
+								<td colspan="2"><label>There are no current purchases data available for this library at this moment.</label></td>
+							</tr>
+						<?php
+						}
+						else {
+						?>
+							<tr>
+								<th><label><b>Sl.No.</b></label></th>
+								<th><label><b>Purchase Order #</b></label></th>
+								<th><label><b># Of Purchased Tracks</b></label></th>
+								<th><label><b>Purchased Amount In $</b></label></th>
+								<th><label><b>Purchase Entry Date</b></lable></th>
+							</tr>
+						<?php
+							foreach($allPurchases as $key=>$purchases) {
+						?>
+								<tr>
+									<td><label><?php echo $key+1; ?></label></td>
+									<td><label><?php echo $purchases['LibraryPurchase']['purchased_order_num']; ?></label></td>
+									<td><label><?php echo $purchases['LibraryPurchase']['purchased_tracks']; ?></label></td>
+									<td><label>$<?php echo $purchases['LibraryPurchase']['purchased_amount']; ?></label></td>
+									<td><label><?php echo $purchases['LibraryPurchase']['created']; ?></label></td>
+								</tr>
+						<?php
+							}
+						}
+						?>
+						<tr><td colspan="2">&nbsp;</td></tr>
+						<tr><td colspan="2">&nbsp;</td></tr>
+					</table>
+				<?php
+				}
+				?>
 			</div>
 		</div>
 	</div>

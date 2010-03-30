@@ -10,7 +10,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
-    var $uses = array( 'Library', 'User', 'LibraryTemplate', 'LibraryPurchase' );
+    var $uses = array( 'Library', 'User', 'LibraryPurchase' );
     
     /*
     Function Name : admin_managelibrary
@@ -42,7 +42,14 @@ Class LibrariesController extends AppController
                                                                                 'Library.id',
                                                                                 'Library.library_name',
                                                                                 'Library.library_domain_name',
-                                                                                'Library.library_template_id',
+                                                                                'Library.library_bgcolor',
+                                                                                'Library.library_content_bgcolor',
+                                                                                'Library.library_nav_bgcolor',
+                                                                                'Library.library_text_color',
+                                                                                'Library.library_links_color',
+                                                                                'Library.library_links_hover_color',
+                                                                                'Library.library_navlinks_color',
+                                                                                'Library.library_navlinks_hover_color',
                                                                                 'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
@@ -66,6 +73,9 @@ Class LibrariesController extends AppController
                                                                             )
                                                                 )));
                 $this -> set( 'getData', $getData );
+                $this->LibraryPurchase->recursive = -1;
+                $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId)));
+                $this->set('allPurchases', $allPurchases);
             }
         }
         else
@@ -77,9 +87,6 @@ Class LibrariesController extends AppController
             $this -> set( 'formAction', 'admin_libraryform' );
             $this -> set( 'formHeader', 'Library Setup' );
         }
-        $this->LibraryTemplate->recursive = -1;
-        $allTemplates = $this->LibraryTemplate->find('all');
-        $this -> set( 'allTemplates', $allTemplates );
     }
     
     public function admin_ajax_validate()
@@ -100,7 +107,14 @@ Class LibrariesController extends AppController
                                                                                 'Library.id',
                                                                                 'Library.library_name',
                                                                                 'Library.library_domain_name',
-                                                                                'Library.library_template_id',
+                                                                                'Library.library_bgcolor',
+                                                                                'Library.library_content_bgcolor',
+                                                                                'Library.library_nav_bgcolor',
+                                                                                'Library.library_text_color',
+                                                                                'Library.library_links_color',
+                                                                                'Library.library_links_hover_color',
+                                                                                'Library.library_navlinks_color',
+                                                                                'Library.library_navlinks_hover_color',
                                                                                 'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
@@ -148,73 +162,121 @@ Class LibrariesController extends AppController
                         $this->set('success', compact('message', 'data'));
                     }
                     else {
-                        $message = __('To proceed further please enter the data correctly.', true);
+                        $message = __('To proceed further please enter the data correctly.|2', true);
                         $User = $this->User->invalidFields();
                         $data = compact('User');
                         $this->set('errors', compact('message', 'data'));
                     }
                 }
                 elseif($this->data['Library']['libraryStepNum'] == '5') {
-                    $this->LibraryPurchase->create();
-                    $this->LibraryPurchase->set($this->data['LibraryPurchase']);
-                    if(trim($libraryId) != '' && is_numeric($libraryId)) {
-                        $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_edit');
-                    }
-                    else {
-                        $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum']);    
-                    }
-                    if($this->LibraryPurchase->validates()){
+                    $this->Library->create();
+                    $this->Library->set($this->data['Library']);
+                    $this->Library->setValidation('library_step1');
+                    if($this->Library->validates()){
+                        if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6") {
+                            $this->data['User']['password'] = "";
+                        }
                         if(trim($libraryId) != '' && is_numeric($libraryId)) {
                             $this->User->id = $getData['Library']['library_admin_id'];
                         }
-                        $this->data['User']['type_id'] = 4;
-                        if($this->User->save($this->data['User'])) {
-                            if(trim($libraryId) != '' && is_numeric($libraryId)) {
-                                $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
-                            }
-                            else {
-                                $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
-                            }
-                            $this->data['Library']['library_admin_id'] = $this->User->id;
-                            if($this->Library->save($this->data['Library'])) {
-                                if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
-                                    $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
-                                    if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
-                                        $message = __('You will be redirected to the next step shortly...', true);
-                                        $data = $this->data;
-                                        $this->set('success', compact('message', 'data'));
+                        else {
+                            $this->User->create();
+                        }
+                        $this->User->set($this->data['User']);
+                        $this->User->setValidation('library_step2');
+                        if($this->User->validates()){
+                            $this->Library->setValidation('library_step3');
+                            if($this->Library->validates()){
+                                $this->Library->setValidation('library_step4');
+                                if($this->Library->validates()){
+                                    $this->LibraryPurchase->create();
+                                    $this->LibraryPurchase->set($this->data['LibraryPurchase']);
+                                    if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                                        $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_edit');
                                     }
                                     else {
-                                        $message = __('To proceed further please enter the data correctly.', true);
+                                        $this->LibraryPurchase->setValidation('library_step'.$this->data['Library']['libraryStepNum']);    
+                                    }
+                                    if($this->LibraryPurchase->validates()){
+                                        if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                                            $this->User->id = $getData['Library']['library_admin_id'];
+                                        }
+                                        $this->data['User']['type_id'] = 4;
+                                        if($this->User->save($this->data['User'])) {
+                                            if(trim($libraryId) != '' && is_numeric($libraryId)) {
+                                                $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
+                                            }
+                                            else {
+                                                $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+                                            }
+                                            $this->data['Library']['library_admin_id'] = $this->User->id;
+                                            if($this->Library->save($this->data['Library'])) {
+                                                if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
+                                                    $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
+                                                    if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
+                                                        $message = __('You will be redirected to the next step shortly...', true);
+                                                        $data = $this->data;
+                                                        $this->set('success', compact('message', 'data'));
+                                                    }
+                                                    else {
+                                                        $message = __('To proceed further please enter the data correctly.|5', true);
+                                                        $LibraryPurchase = $this->LibraryPurchase->invalidFields();
+                                                        $data = compact('LibraryPurchase');
+                                                        $this->set('errors', compact('message', 'data'));
+                                                    }
+                                                }
+                                                else {
+                                                    $message = __('You will be redirected to the next step shortly...', true);
+                                                    $data = $this->data;
+                                                    $this->set('success', compact('message', 'data'));
+                                                }
+                                            }
+                                            else {
+                                                $message = __('To proceed further please enter the data correctly.|1', true);
+                                                $Library = $this->Library->invalidFields();
+                                                $data = compact('Library');
+                                                $this->set('errors', compact('message', 'data'));
+                                            }
+                                        }
+                                        else {
+                                            $message = __('To proceed further please enter the data correctly.|2', true);
+                                            $User = $this->User->invalidFields();
+                                            $data = compact('User');
+                                            $this->set('errors', compact('message', 'data'));
+                                        }
+                                    }
+                                    else {
+                                        $message = __('To proceed further please enter the data correctly.|5', true);
                                         $LibraryPurchase = $this->LibraryPurchase->invalidFields();
                                         $data = compact('LibraryPurchase');
                                         $this->set('errors', compact('message', 'data'));
                                     }
                                 }
                                 else {
-                                    $message = __('You will be redirected to the next step shortly...', true);
-                                    $data = $this->data;
-                                    $this->set('success', compact('message', 'data'));
+                                    $message = __('To proceed further please enter the data correctly.|4', true);
+                                    $Library = $this->Library->invalidFields();
+                                    $data = compact('Library');
+                                    $this->set('errors', compact('message', 'data'));
                                 }
                             }
                             else {
-                                $message = __('To proceed further please enter the data correctly.', true);
+                                $message = __('To proceed further please enter the data correctly.|3', true);
                                 $Library = $this->Library->invalidFields();
                                 $data = compact('Library');
                                 $this->set('errors', compact('message', 'data'));
                             }
                         }
                         else {
-                            $message = __('To proceed further please enter the data correctly.', true);
+                            $message = __('To proceed further please enter the data correctly.|2', true);
                             $User = $this->User->invalidFields();
                             $data = compact('User');
                             $this->set('errors', compact('message', 'data'));
                         }
                     }
                     else {
-                        $message = __('To proceed further please enter the data correctly.', true);
-                        $LibraryPurchase = $this->LibraryPurchase->invalidFields();
-                        $data = compact('LibraryPurchase');
+                        $message = __('To proceed further please enter the data correctly.|1', true);
+                        $Library = $this->Library->invalidFields();
+                        $data = compact('Library');
                         $this->set('errors', compact('message', 'data'));
                     }
                 }
@@ -228,7 +290,7 @@ Class LibrariesController extends AppController
                         $this->set('success', compact('message', 'data'));
                     }
                     else {
-                        $message = __('To proceed further please enter the data correctly.', true);
+                        $message = __('To proceed further please enter the data correctly.|'.$this->data['Library']['libraryStepNum'], true);
                         $Library = $this->Library->invalidFields();
                         $data = compact('Library');
                         $this->set('errors', compact('message', 'data'));

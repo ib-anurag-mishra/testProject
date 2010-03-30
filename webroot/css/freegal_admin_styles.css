@@ -300,7 +300,7 @@ div.active_step {
 	border-right: 1px solid #B4B4B4;
 	font-weight: bold;
 	font-size: 14px;
-	padding: 12px 14px;
+	padding: 12px;
 	width: auto;
 	float: left;
 	cursor: pointer;
@@ -311,7 +311,7 @@ div.inactive_step {
 	background: #fff url(../img/background.png) repeat-x scroll 0 -54px;
 	font-weight: bold;
 	font-size: 14px;
-	padding: 12px;
+	padding: 12px 14px;
 	width: auto;
 	float: left;
 	cursor: pointer;
@@ -335,6 +335,11 @@ div.form_steps > h1 {
 }
 label {
 /*	margin: 0 0 0 20px;*/
+	font-size: 12px;
+	font-weight: normal;
+}
+.formFieldsbox label {
+	margin: 0 0 0 20px;
 	font-size: 12px;
 	font-weight: normal;
 }
@@ -406,4 +411,12 @@ td.actions a:hover {
 	background: #e1e1e1;
 	background: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#c1c1c1));
 }
+.colorpicker .inputcolor {
+    width: 70px;
+}
 
+.colorpicker .samplebox {
+    border: 1px solid #000;
+    display: inline;
+    cursor: pointer;
+}

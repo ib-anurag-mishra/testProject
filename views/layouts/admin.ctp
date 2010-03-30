@@ -11,6 +11,7 @@
                 echo $this->Html->css('freegal_admin_styles');
                 echo $this->Html->css('superfish');
                 echo $this->Html->css('colorbox');
+		echo $this->Html->css('colorpicker');
                 echo $javascript->link('jquery-1.3.2.min');
 		echo $javascript->link('jquery.tools.min');
 		echo $javascript->link('admin_functions');
@@ -18,6 +19,7 @@
                 echo $javascript->link('jquery.hoverIntent.min');
                 echo $javascript->link('superfish');
                 echo $javascript->link('supersubs');
+		echo $javascript->link('colorpicker');
                 
                 echo $scripts_for_layout;
 	?>

@@ -108,6 +108,96 @@ $(function() {
 		}
 	});
 	
+	$('#step1').click(function(){
+		$("#LibraryLibraryStepNum").val(1);
+		$("div[id^='step']").each(function() {
+			$(this).removeClass('active_step').addClass('inactive_step');
+		});
+		$(this).removeClass('inactive_step').addClass('active_step');
+		$("div[id^='form_step']").each(function() {
+			$(this).hide();
+		});
+		$("#form_step1").fadeIn();
+		_loadingDiv.hide();
+		$("input[id^='next_btn']").each(function() {
+			$(this).removeAttr("disabled");
+		});
+	});
+	
+	$('#step2').click(function(){
+		$("#LibraryLibraryStepNum").val(2);
+		$("div[id^='step']").each(function() {
+			$(this).removeClass('active_step').addClass('inactive_step');
+		});
+		$(this).removeClass('inactive_step').addClass('active_step');
+		$("div[id^='form_step']").each(function() {
+			$(this).hide();
+		});
+		$("#form_step2").fadeIn();
+		_loadingDiv.hide();
+		$("input[id^='next_btn']").each(function() {
+			$(this).removeAttr("disabled");
+		});
+	});
+	
+	$('#step3').click(function(){
+		$("#LibraryLibraryStepNum").val(3);
+		$("div[id^='step']").each(function() {
+			$(this).removeClass('active_step').addClass('inactive_step');
+		});
+		$(this).removeClass('inactive_step').addClass('active_step');
+		$("div[id^='form_step']").each(function() {
+			$(this).hide();
+		});
+		$("#form_step3").fadeIn();
+		_loadingDiv.hide();
+		$("input[id^='next_btn']").each(function() {
+			$(this).removeAttr("disabled");
+		});
+	});
+	
+	$('#step4').click(function(){
+		$("#LibraryLibraryStepNum").val(4);
+		$("div[id^='step']").each(function() {
+			$(this).removeClass('active_step').addClass('inactive_step');
+		});
+		$(this).removeClass('inactive_step').addClass('active_step');
+		$("div[id^='form_step']").each(function() {
+			$(this).hide();
+		});
+		$("#form_step4").fadeIn();
+		_loadingDiv.hide();
+		$("input[id^='next_btn']").each(function() {
+			$(this).removeAttr("disabled");
+		});
+	});
+	
+	$('#step5').click(function(){
+		$("#LibraryLibraryStepNum").val(5);
+		$("div[id^='step']").each(function() {
+			$(this).removeClass('active_step').addClass('inactive_step');
+		});
+		$(this).removeClass('inactive_step').addClass('active_step');
+		$("div[id^='form_step']").each(function() {
+			$(this).hide();
+		});
+		$("#form_step5").fadeIn();
+		_loadingDiv.hide();
+		$("input[id^='next_btn']").each(function() {
+			$(this).removeAttr("disabled");
+		});
+	});
+	
+	$('#LibraryLibraryBgcolor, #LibraryLibraryContentBgcolor, #LibraryLibraryNavBgcolor, #LibraryLibraryTextColor, #LibraryLibraryLinksColor, #LibraryLibraryLinksHoverColor, #LibraryLibraryNavlinksColor, #LibraryLibraryNavlinksHoverColor').ColorPicker({
+		onSubmit: function(hsb, hex, rgb, el) {
+			$(el).val(hex.toUpperCase());
+			$(el).ColorPickerHide();
+		},
+		onBeforeShow: function () {
+			$(this).ColorPickerSetColor(this.value);
+		}
+	})
+	
 	// Post-submit callback 
 	function afterValidate(data, status)  {
 		$(".error_message").remove();
@@ -224,6 +314,18 @@ $(function() {
 			$('#next_btn'+errorStep).removeAttr("disabled");
 		}
 		else {
+			$("#LibraryLibraryStepNum").val(data.stepNum);
+			$("div[id^='step']").each(function() {
+				$(this).removeClass('active_step').addClass('inactive_step');
+			});
+			$('#step'+data.stepNum).removeClass('inactive_step').addClass('active_step');
+			$("div[id^='form_step']").each(function() {
+				$(this).hide();
+			});
+			$("#form_step"+data.stepNum).fadeIn();
+			$("input[id^='next_btn']").each(function() {
+				$(this).removeAttr("disabled");
+			});
 			flashMessage(data.message, 'error');
 			$.each(data.data, function(model, errors) {
 				for (fieldName in this) {

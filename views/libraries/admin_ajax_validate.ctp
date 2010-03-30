@@ -1,7 +1,9 @@
 <?php
 	$output = array();
 	if($this->validationErrors) {
-		$output = Set::insert($output, 'errors', array('message' => $errors['message']));
+		$errorArr = explode("|", $errors['message']);
+		$output = Set::insert($output, 'errors', array('message' => $errorArr[0]));
+		$output['errors']['stepNum'] = $errorArr[1];
 		foreach ($errors['data'] as $model => $errs) {
 			foreach ($errs as $field => $message) {
 				$output['errors']['data'][$model][$field] = $message;
