@@ -1,5 +1,5 @@
 <?php
-/* Questions Test cases generated on: 2010-03-02 08:03:59 : 1267535339*/
+/* Questions Test cases generated on: 2010-03-25 12:03:39 : 1269536139*/
 App::import('Controller', 'Questions');
 
 class TestQuestionsController extends QuestionsController {
@@ -11,7 +11,7 @@ class TestQuestionsController extends QuestionsController {
 }
 
 class QuestionsControllerTestCase extends CakeTestCase {
-	var $fixtures = array('app.question', 'app.genre', 'app.metadata', 'app.product', 'app.availability', 'app.p_r_o_d_u_c_t__o_f_f_e_r', 'app.s_a_l_e_s__t_e_r_r_i_t_o_r_y', 'app.physicalproduct', 'app.featuredartist', 'app.newartist');
+	var $fixtures = array('app.question', 'app.section', 'app.genre', 'app.metadata', 'app.physicalproduct', 'app.availability', 'app.product', 'app.p_r_o_d_u_c_t__o_f_f_e_r', 'app.s_a_l_e_s__t_e_r_r_i_t_o_r_y', 'app.graphic', 'app.files', 'app.audio', 'app.featuredartist', 'app.newartist', 'app.category');
 
 	function startTest() {
 		$this->Questions =& new TestQuestionsController();

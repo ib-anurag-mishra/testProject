@@ -4,7 +4,6 @@ class QuestionsController extends AppController {
 	var $name = 'Questions';
 
 	function index() {
-		$this->layout = 'home';
 		$this->Question->recursive = 0;
 		$this->set('questions', $this->paginate());
 	}
@@ -43,6 +42,8 @@ class QuestionsController extends AppController {
 				$this->Session->setFlash(sprintf(__('The %s could not be saved. Please, try again.', true), 'question'));
 			}
 		}
+		$sections = $this->Question->Section->find('list');
+		$this->set(compact('sections'));
 	}
 
 	function admin_edit($id = null) {
@@ -62,6 +63,8 @@ class QuestionsController extends AppController {
 		if (empty($this->data)) {
 			$this->data = $this->Question->read(null, $id);
 		}
+		$sections = $this->Question->Section->find('list');
+		$this->set(compact('sections'));
 	}
 
 	function admin_delete($id = null) {

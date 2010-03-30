@@ -334,7 +334,7 @@ div.form_steps > h1 {
 	color: #000000;
 }
 label {
-	margin: 0 0 0 20px;
+/*	margin: 0 0 0 20px;*/
 	font-size: 12px;
 	font-weight: normal;
 }
@@ -361,3 +361,49 @@ label {
 	margin:0 0 0 20px;
 	color: #FF0000;
 }
+
+/**  Actions  **/
+div.actions ul {
+	margin: 0;
+	padding: 0;
+}
+div.actions li {
+	margin:0 0 0.5em 0;
+	list-style-type: none;
+	white-space: nowrap;
+	padding: 0;
+}
+div.actions ul li a {
+	font-weight: normal;
+	display: block;
+	clear: both;
+}
+div.actions ul li a:hover {
+	text-decoration: none;
+}
+
+input[type=submit],
+div.actions ul li a,
+td.actions a {
+	font-size: 14px;
+	font-weight:normal;
+	padding: 0px 8px;
+	background:#eeeeee;
+	background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+	background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+	color:#333;
+	border:1px solid #ccc;
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	text-decoration:none;
+	text-shadow: #fff 0px 1px 0px;
+	min-width: 0;
+}
+input[type=submit]:hover,
+div.actions ul li a:hover,
+td.actions a:hover {
+	background: #e1e1e1;
+	background: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#c1c1c1));
+}
+

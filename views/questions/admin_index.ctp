@@ -3,6 +3,7 @@
 	<h2><?php __('Questions');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
+			<th><?php echo $this->Paginator->sort('section_id');?></th>
 			<th><?php echo $this->Paginator->sort('question');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
@@ -15,6 +16,9 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
+		<td>
+			<?php echo $this->Html->link($question['Section']['title'], array('controller' => 'sections', 'action' => 'view', $question['Section']['id'])); ?>
+		</td>
 		<td><?php echo $question['Question']['question']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $question['Question']['id'])); ?>
@@ -42,5 +46,7 @@
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Question', true)), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Section', true)), array('controller' => 'sections', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
