@@ -10,28 +10,25 @@ class HomesController extends AppController
     var $helpers = array('Html','Ajax','Javascript','Form' );
     var $components = array('RequestHandler','ValidatePatron','Downloads');
     //var $components = array('RequestHandler');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre');
-    var $beforeFilter = array('validatePatron');
+    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron');
+    //var $beforeFilter = array('validatePatron');
  
-   /*function beforeFilter()
-    {        
-        $validPatron = $this->ValidatePatron->validatepatron();
-        if($validPatron)
+   function beforeFilter()
+    {  
+        if($this->action != 'error')
         {
-            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+            parent::beforeFilter();        
+            $validPatron = $this->ValidatePatron->validatepatron();       
+            if(!$validPatron)
+            {            
+                $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+            }          
         }
-        else
-        {
-            $this->redirect(array('controller' => 'homes', 'action' => 'error'));
-        }
-    }*/
+        
+    }
     
     function index()
-    {        
-        //For testing purpose we are assigning some test values
-        $this ->Session->write("library", '1');
-        $this ->Session->write("patron", '2242');
-        $this ->Session->write("block", 'no');       
+    {      
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
                                 array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'),
@@ -412,4 +409,18 @@ class HomesController extends AppController
 	}
 	$this->set('genres',$resultArr);
     }
+    
+    function checkPatron()
+    {
+	$libid = $_REQUEST['libid'];       
+        $patronid = $_REQUEST['patronid'];        
+        $this->layout = false;           	
+	$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
+	if(count($currentPatron) > 0)
+        {
+          $updateArr = array();
+          $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];          
+          $this->Currentpatron->save($updateArr);
+        }
+    }    
 }

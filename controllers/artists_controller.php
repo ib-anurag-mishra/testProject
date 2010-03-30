@@ -11,24 +11,20 @@ Class ArtistsController extends AppController
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form' );
 	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
-	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads');
+	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view');
-	  /*  $libraryCheckArr = array("view");
+	    $this->Auth->allowedActions = array('view','test');
+	    $libraryCheckArr = array("view");	   
 	    if(in_array($this->action,$libraryCheckArr))
 	    {
-	      $validPatron = $this->ValidatePatron->validatepatron();
-	      if($validPatron)
-	      {
-		  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-	      }
-	      else
+	      $validPatron = $this->ValidatePatron->validatepatron();	      
+	      if(!$validPatron)
 	      {
 		  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
-	      }
-	    }*/	    
+	      }	      
+	    }	    
 	}
 	
 	/*
@@ -270,15 +266,14 @@ Class ArtistsController extends AppController
 				$insertArr = array();
 				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
 				$insertArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-				$insertObj = new Artist();
-				
+				$insertObj = new Artist();				
 				if( empty( $errorMsg ) )
 				{
 					
 					if( $insertObj -> insert( $insertArr ) )
 					{
 						$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-						$this -> redirect( 'manageartist' );
+						$this -> redirect( 'manageartist' );						
 					}
 				}
 				else
@@ -582,13 +577,17 @@ Class ArtistsController extends AppController
 					  ));
                 }		
                 $this->set('albumData', $albumData);		
-               if($albumData[0]['Metadata']['ArtistURL'] != "" )
+                if($albumData[0]['Metadata']['ArtistURL'] != "" )
                 {
                    $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
                 }else{
                    $this->set('artistUrl', "N/A");
                 }		
                 $this->set('albumSongs',$albumSongs);		
-	}	
+	}
+	function test()
+	{
+	  $this->layout = 'home';        
+	}
   }	
 ?>

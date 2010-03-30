@@ -24,7 +24,7 @@ Class DownloadsComponent extends Object
         $libraryInstance->recursive = -1;
         $libraryResults = $libraryInstance->find('all',array('conditions' => array('Library.id' => $libId)));        
         $patronLimit = $libraryResults['0']['Library']['library_user_download_limit'];        
-        $results = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId),'patron_id' => $patId));
+        $results = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
         if($results < $patronLimit)
         {
             return 1;

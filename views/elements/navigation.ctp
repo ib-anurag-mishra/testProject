@@ -34,7 +34,7 @@
 		</li>
 		<li class="item3"><a href="#"><span>Featured Artist</span></a>
 			<ul>
-				<?php
+				<?php				
 				foreach($featuredArtistMenu as $featuredArtistM) {
 				?>
 					<li class="parent item">

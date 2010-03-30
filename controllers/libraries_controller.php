@@ -10,8 +10,24 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase' );
-    
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron');
+    function beforeFilter() {	  
+        parent::beforeFilter(); 
+        $this->Auth->allowedActions = array('patron');
+      /*  $libraryCheckArr = array("view");
+        if(in_array($this->action,$libraryCheckArr))
+        {
+          $validPatron = $this->ValidatePatron->validatepatron();
+          if($validPatron)
+          {
+              $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+          }
+          else
+          {
+              $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+          }
+        }*/	    
+    }
     /*
     Function Name : admin_managelibrary
     Desc : action for listing all the libraries
@@ -387,36 +403,65 @@ Class LibrariesController extends AppController
     Desc : For validating the patrons for libraries
    */
     function patron()
-    {        
+    {    
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
           $requestUrlArr = explode("/", $_REQUEST['url']);
           $patronId = $requestUrlArr['2'];          
-        }       
+        }    
         $referrerUrl = $_SERVER['HTTP_REFERER'];
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('library_domain_name' => $referrerUrl,'library_status' => 'active')
                                                 )
-                                            );        
+                                            );       
         if(count($existingLibraries) == 0)
         {            
             $this->redirect(array('controller' => 'homes', 'action' => 'error'));
         }        
         else
         {          
+            $currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+            if(count($currentPatron) > 0)
+            {             
+              $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
+              $date = strtotime(date('Y-m-d H:i:s'));              
+              if(!(isset($_SESSION['patron'])))
+              {        
+                if(($date-$modifiedTime) > 60)
+                {                 
+                  $updateArr = array();
+                  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+                  $updateArr['created'] = date('Y-m-d H:i:s');                   
+                  $this->Currentpatron->save($updateArr);
+                }
+                else
+                {
+                  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                }
+              }              
+            }
+            else
+            {
+                $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+                $insertArr['patronid'] = $patronId;
+                $this->Currentpatron->save($insertArr);
+            }                 
             $this ->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this ->Session->write("patron", $patronId);
+            $this ->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+            $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId)));
+            $this ->Session->write("downloadsUsed", $results);
             if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1')
             {
               $this ->Session->write("block", 'yes');
             }
             else{
               $this ->Session->write("block", 'no');
-            }
+            }            
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));            
         }
-    } 
+    }  
     
 }
