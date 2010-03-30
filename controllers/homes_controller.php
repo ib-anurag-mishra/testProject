@@ -14,21 +14,20 @@ class HomesController extends AppController
     //var $beforeFilter = array('validatePatron');
  
    function beforeFilter()
-    {  
+   {
         if($this->action != 'error')
         {
-            parent::beforeFilter();        
-            $validPatron = $this->ValidatePatron->validatepatron();       
+            parent::beforeFilter();
+            $validPatron = $this->ValidatePatron->validatepatron();
             if(!$validPatron)
-            {            
+            {
                 $this->redirect(array('controller' => 'homes', 'action' => 'error'));
-            }          
+            }
         }
-        
     }
     
     function index()
-    {      
+    {
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
                                 array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'),

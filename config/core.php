@@ -33,7 +33,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 0);
+	Configure::write('debug', 2);
 
 /**
  * CakePHP Log Level:
@@ -190,7 +190,8 @@
  * CakePHP session IDs are also regenerated between requests if
  * 'Security.level' is set to 'high'.
  */
-	Configure::write('Security.level', 'medium');
+	//Configure::write('Security.level', 'medium');
+	Configure::write('Security.level', 'low');
 
 /**
  * A random string used in security hashing methods.
