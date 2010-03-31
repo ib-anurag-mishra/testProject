@@ -22,11 +22,8 @@ $libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 		</div>
 	<?php
 	}
-	else {
-		echo '<div id="lib_name">'.$libraryInfo['Library']['library_name'].'</div>';
-	}
 	?>
-	
+	<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
 	<div id="header_right">
 		<ul>
 			<li>Weekly Downloads <span id="downloads_used"><?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $this->Session->read('downloadsAllotted'); ?><a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
