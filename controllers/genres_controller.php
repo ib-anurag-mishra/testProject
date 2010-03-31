@@ -9,7 +9,7 @@ Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
-	var $helpers = array('Cache');
+	var $helpers = array('Cache','Library');
 
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 

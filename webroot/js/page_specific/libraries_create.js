@@ -188,7 +188,7 @@ $(function() {
 		});
 	});
 	
-	$('#LibraryLibraryBgcolor, #LibraryLibraryContentBgcolor, #LibraryLibraryNavBgcolor, #LibraryLibraryTextColor, #LibraryLibraryLinksColor, #LibraryLibraryLinksHoverColor, #LibraryLibraryNavlinksColor, #LibraryLibraryNavlinksHoverColor').ColorPicker({
+	$('#LibraryLibraryBgcolor, #LibraryLibraryContentBgcolor, #LibraryLibraryNavBgcolor, #LibraryLibraryBoxheaderBgcolor, #LibraryLibraryBoxheaderTextColor, #LibraryLibraryTextColor, #LibraryLibraryLinksColor, #LibraryLibraryLinksHoverColor, #LibraryLibraryNavlinksColor, #LibraryLibraryNavlinksHoverColor').ColorPicker({
 		onSubmit: function(hsb, hex, rgb, el) {
 			$(el).val(hex.toUpperCase());
 			$(el).ColorPickerHide();

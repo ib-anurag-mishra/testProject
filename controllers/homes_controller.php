@@ -7,7 +7,7 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array('Html','Ajax','Javascript','Form' );
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library' );
     var $components = array('RequestHandler','ValidatePatron','Downloads');
     //var $components = array('RequestHandler');
     var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron');

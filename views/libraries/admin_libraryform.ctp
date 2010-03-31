@@ -10,6 +10,8 @@
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_content_bgcolor'] = "FFFFFF";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
+		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
+		$getData['Library']['library_boxheader_text_color'] = "666666";
 		$getData['Library']['library_text_color'] = "666666";
 		$getData['Library']['library_links_color'] = "666666";
 		$getData['Library']['library_links_hover_color'] = "000000";
@@ -72,6 +74,14 @@
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Navigation Background Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_nav_bgcolor',array('label' => false ,'value' => $getData['Library']['library_nav_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Box Header Background Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_boxheader_bgcolor',array('label' => false ,'value' => $getData['Library']['library_boxheader_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Box Header Text Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_boxheader_text_color',array('label' => false ,'value' => $getData['Library']['library_boxheader_text_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
 					</tr>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Text Color');?></td>
