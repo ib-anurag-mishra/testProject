@@ -347,7 +347,9 @@ class HomesController extends AppController
         $this->Download->save($insertArr);
         $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;	
         $this->Library->query($sql);
-        echo "success";
+        $downloadsUsed = $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId)));
+        $this ->Session->write("downloadsUsed", $downloadsUsed);
+        echo $downloadsUsed;
 	exit;
     }
     
@@ -418,7 +420,8 @@ class HomesController extends AppController
 	if(count($currentPatron) > 0)
         {
           $updateArr = array();
-          $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];          
+          $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
+          $updateArr['session_id'] = session_id();
           $this->Currentpatron->save($updateArr);
         }
     }    

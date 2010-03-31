@@ -46,6 +46,15 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				location.reload();
 				return false;
 			}
+			else
+			{
+				var msg = response.substring(0,2);
+				if(isNaN(msg))
+				{
+					msg = response.substring(0,1);
+				}				
+				document.getElementById('downloads_used').innerHTML = msg;
+			}
 			location.href = unescape(finalURL);
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {			
