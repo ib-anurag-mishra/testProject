@@ -1,0 +1,2 @@
+ALTER TABLE `libraries` ADD `library_boxheader_bgcolor` VARCHAR( 100 ) NOT NULL DEFAULT 'CCCCCC' AFTER `library_nav_bgcolor` ,
+ADD `library_boxheader_text_color` VARCHAR( 100 ) NOT NULL DEFAULT '666666' AFTER `library_boxheader_bgcolor`;
