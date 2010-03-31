@@ -8,7 +8,7 @@
 	        $getData['Library']['library_name'] = "";
 	        $getData['Library']['library_domain_name'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
-		$getData['Library']['library_content_bgcolor'] = "FFFFFF";
+		//$getData['Library']['library_content_bgcolor'] = "FFFFFF";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
 		$getData['Library']['library_boxheader_text_color'] = "666666";
@@ -67,10 +67,10 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Background Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_bgcolor',array('label' => false ,'value' => $getData['Library']['library_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
 					</tr>
-					<tr>
+					<!--<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Content Background Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_content_bgcolor',array('label' => false ,'value' => $getData['Library']['library_content_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
-					</tr>
+					</tr>-->
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Navigation Background Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_nav_bgcolor',array('label' => false ,'value' => $getData['Library']['library_nav_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>

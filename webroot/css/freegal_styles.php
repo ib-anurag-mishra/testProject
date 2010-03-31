@@ -380,8 +380,10 @@ ul.marquee li {
 }
 
 #nav li.hover li a, #nav li:hover li a {
-	background:url(../img/nav_back80.png) top left repeat;
-	color:#fff; 
+	/*background:url(../img/nav_back80.png) top left repeat;*/
+        background:<?php echo $library_nav_bgcolor; ?>;
+        opacity: .9; filter: alpha(opacity=90); -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=90)";
+	color:<?php echo $library_navlinks_color; ?>;
 	text-align:center;
 	text-decoration:none;
 }
@@ -395,8 +397,10 @@ ul.marquee li {
 }
 
 #nav li.hover li.hover a, #nav li:hover li:hover a {
-	background:url(../img/nav_back_grey.png) top left repeat;
-/*	text-decoration: underline;*/
+	/*background:url(../img/nav_back_grey.png) top left repeat;*/
+        /*text-decoration: underline;*/
+        opacity: .5; filter: alpha(opacity=50); -ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+        color:<?php echo $library_navlinks_hover_color; ?>;
 }
 
 .navigation{
