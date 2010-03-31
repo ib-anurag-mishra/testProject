@@ -30,7 +30,7 @@ class HomesController extends AppController
     {
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
-                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID'),
+                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1),
                                 'fields' => array(
                                                     'Physicalproduct.ProdID',
                                                     'Physicalproduct.Title',
