@@ -214,9 +214,9 @@ $(function() {
 	
 	function onSuccess(data) {
 		var currentStep = $("#LibraryLibraryStepNum").val();
-		if(typeof(data.data.LibraryPurchase.library_id) != 'undefined')
+		if(typeof(data.data.Library.id) != 'undefined')
 		{
-			var libraryID = data.data.LibraryPurchase.library_id;
+			var libraryID = data.data.Library.id;
 		}
 		else {
 			var libraryID = '';
