@@ -407,8 +407,8 @@ Class LibrariesController extends AppController
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
-          $requestUrlArr = explode("/", $_REQUEST['url']);
-          $patronId = $requestUrlArr['2'];          
+            $requestUrlArr = explode("/", $_REQUEST['url']);
+            $patronId = $requestUrlArr['2'];          
         }
         $referrerUrl = $_SERVER['HTTP_REFERER'];
         $this->Library->recursive = -1;
@@ -425,27 +425,48 @@ Class LibrariesController extends AppController
             $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
             if(count($currentPatron) > 0)
             {
-              $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-              $date = strtotime(date('Y-m-d H:i:s'));              
-              if(!(isset($_SESSION['patron'])))
-              {
-                if(($date-$modifiedTime) > 60)
-                {
-                  $updateArr = array();
-                  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                  $updateArr['created'] = date('Y-m-d H:i:s');                   
-                  $this->Currentpatron->save($updateArr);
+                $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
+                $date = strtotime(date('Y-m-d H:i:s'));              
+                if(!(isset($_SESSION['patron'])))
+                {               
+                    if(($date-$modifiedTime) > 60)
+                    {
+                        $updateArr = array();
+                        $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+                        $updateArr['created'] = date('Y-m-d H:i:s');
+                        $updateArr['session_id'] = session_id();
+                        $this->Currentpatron->save($updateArr);
+                    }
+                    else
+                    {                        
+                        $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                    }
                 }
                 else
                 {
-                  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                    $sessionId = session_id();                    
+                    if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId)
+                    {                        
+                        if(($date-$modifiedTime) > 60)
+                        {                            
+                            $updateArr = array();
+                            $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+                            $updateArr['created'] = date('Y-m-d H:i:s');
+                            $updateArr['session_id'] = session_id();
+                            $this->Currentpatron->save($updateArr);
+                        }
+                        else
+                        {                            
+                            $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                        }                  
+                    }                    
                 }
-              }              
             }
             else
-            {
+            {                
                 $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
                 $insertArr['patronid'] = $patronId;
+                $insertArr['session_id'] = session_id();
                 $this->Currentpatron->save($insertArr);
             }
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
@@ -455,10 +476,10 @@ Class LibrariesController extends AppController
             $this ->Session->write("downloadsUsed", $results);
             if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1')
             {
-              $this ->Session->write("block", 'yes');
+                $this ->Session->write("block", 'yes');
             }
             else{
-              $this ->Session->write("block", 'no');
+                $this ->Session->write("block", 'no');
             }
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
