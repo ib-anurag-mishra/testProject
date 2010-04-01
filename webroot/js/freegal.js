@@ -57,8 +57,7 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 			}
 			location.href = unescape(finalURL);
 		},
-		error:function (XMLHttpRequest, textStatus, errorThrown) {			
-			alert(textStatus);
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
 		}
 	});
 	return false; 
@@ -74,8 +73,7 @@ function checkPatron(libid,patronid)
 		success: function(response) {
 			setTimeout('checkPatron('+libid+','+patronid+')',30000);
 		},
-		error:function (XMLHttpRequest, textStatus, errorThrown) {			
-			alert(textStatus);
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
 		}
 	});
 	return false; 
