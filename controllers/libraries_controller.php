@@ -475,8 +475,10 @@ Class LibrariesController extends AppController
             }
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
+            $weekFirstDay = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), date('d')-date('w'), date('Y')));
+            $currentDay = date('Y-m-d H:i:s');            
             $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-            $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId)));
+            $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($weekFirstDay, $currentDay))));
             $this ->Session->write("downloadsUsed", $results);
             if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1')
             {
