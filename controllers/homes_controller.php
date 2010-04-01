@@ -424,6 +424,8 @@ class HomesController extends AppController
           $updateArr['session_id'] = session_id();
           $this->Currentpatron->save($updateArr);
         }
+        echo "Success";
+        exit;
     }    
 
 	function error() {
