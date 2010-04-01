@@ -3,7 +3,7 @@
 <head>
 	<?php echo $this->Html->charset(); ?>
 	<title>
-		<?php __('Freegal Music : The New Music Library :'); ?>
+		<?php __('Freegal Music : Your New Music Library :'); ?>
 		<?php
 			if ($title_for_layout == "Homes") {
 				echo substr($title_for_layout, 0, -1);
