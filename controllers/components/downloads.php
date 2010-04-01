@@ -7,7 +7,7 @@ Class DownloadsComponent extends Object
     {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
-        $results = $libraryInstance->find('count',array('conditions' => array('library_download_limit >' => 'library_current_downloads'),'Library.id' => $libId));       
+        $results = $libraryInstance->find('count',array('conditions' => array('library_download_limit > library_current_downloads','id' => $libId)));
         if($results > 0)
         {
             return 1;
