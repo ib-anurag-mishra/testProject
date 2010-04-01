@@ -51,6 +51,7 @@
 			<div id="form_step1" class="form_steps">
 				<h1>Site Setup</h1>
 				<?php echo $this->Form->hidden( 'id', array('value' => $getData['Library']['id'])); ?>
+				<?php echo $this->Form->hidden( 'LibraryPurchase.library_id', array('value' => $getData['Library']['id'])); ?>
 				<table cellspacing="10" cellpadding="0" border="0">
 					<tr><td id="formError1" class="formError" colspan="2"></td></tr>
 					<tr>

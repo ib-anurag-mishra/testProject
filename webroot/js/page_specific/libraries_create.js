@@ -249,7 +249,12 @@ $(function() {
 							}
 							else {
 								if(currentStep == '5') {
-									flashMessage('The library has been added successfully! You will be redirected shortly...', 'success');
+									if(libraryID == "") {
+										flashMessage('The library has been added successfully! You will be redirected shortly...', 'success');
+									}
+									else {
+										flashMessage('The library has been updated successfully! You will be redirected shortly...', 'success');
+									}
 									window.setTimeout(function() {
 										window.location = webroot+'admin/libraries/managelibrary';
 									}, 1000);
