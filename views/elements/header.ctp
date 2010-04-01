@@ -26,7 +26,7 @@ $libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 	<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
 	<div id="header_right">
 		<ul>
-			<li>Weekly Downloads <span id="downloads_used"><?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $this->Session->read('downloadsAllotted'); ?> <a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
+			<li>Weekly Downloads <span id="downloads_used"><?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?> <a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
 			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
 		</ul>
 	</div>
