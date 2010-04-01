@@ -30,7 +30,7 @@ class HomesController extends AppController
     {
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
-                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1),
+                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'T'),
                                 'fields' => array(
                                                     'Physicalproduct.ProdID',
                                                     'Physicalproduct.Title',
@@ -43,7 +43,7 @@ class HomesController extends AppController
                                                                         array('Audio.FileID'),
                                                                         'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
                                                                 ),
-                                        'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist'))
+                                        'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
                                 ),'order'=> 'rand()','limit' => '8'
                 )
         );
