@@ -427,4 +427,8 @@ class HomesController extends AppController
         echo "Success";
         exit;
     }    
+
+	function error() {
+		$this->layout = 'home';
+	}
 }
