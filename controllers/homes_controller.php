@@ -425,4 +425,8 @@ class HomesController extends AppController
           $this->Currentpatron->save($updateArr);
         }
     }    
+
+	function error() {
+		$this->layout = 'home';
+	}
 }
