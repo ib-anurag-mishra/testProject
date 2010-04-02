@@ -1,7 +1,6 @@
 <?php
 ob_start("ob_gzhandler");
 header("Content-type: text/css; charset: UTF-8");
-print_r($_REQUEST);
 if(isset($_REQUEST['library_bgcolor']) && isset($_REQUEST['library_content_bgcolor']) &&
    isset($_REQUEST['library_nav_bgcolor']) && isset($_REQUEST['library_boxheader_bgcolor']) &&
    isset($_REQUEST['library_boxheader_text_color']) && isset($_REQUEST['library_text_color']) &&
