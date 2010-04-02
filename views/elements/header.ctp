@@ -11,7 +11,10 @@
 /**
  * Header file for home page
  **/
-$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
+if(isset($_SESSION['library']) && $_SESSION['library'] != '')
+{
+	$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
+
 ?>
 <div id="header">
 	<?php
@@ -31,3 +34,19 @@ $libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 		</ul>
 	</div>
 </div>
+<?php
+}
+else {
+?>
+<div id="header">
+	<div id="lib_name">FreegalMusic.Com</div>
+	<div id="header_right">
+		<ul>
+			<li><a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
+			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
+		</ul>
+	</div>
+</div>
+<?php
+}
+?>

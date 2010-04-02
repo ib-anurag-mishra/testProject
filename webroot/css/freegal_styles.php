@@ -1,16 +1,35 @@
 <?php
 ob_start("ob_gzhandler");
 header("Content-type: text/css; charset: UTF-8");
-$library_bgcolor = "#".$_REQUEST['library_bgcolor'];
-$library_content_bgcolor = "#".$_REQUEST['library_content_bgcolor'];
-$library_nav_bgcolor = "#".$_REQUEST['library_nav_bgcolor'];
-$library_boxheader_bgcolor = "#".$_REQUEST['library_boxheader_bgcolor'];
-$library_boxheader_text_color = "#".$_REQUEST['library_boxheader_text_color'];
-$library_text_color = "#".$_REQUEST['library_text_color'];
-$library_links_color = "#".$_REQUEST['library_links_color'];
-$library_links_hover_color = "#".$_REQUEST['library_links_hover_color'];
-$library_navlinks_color = "#".$_REQUEST['library_navlinks_color'];
-$library_navlinks_hover_color = "#".$_REQUEST['library_navlinks_hover_color'];
+print_r($_REQUEST);
+if(isset($_REQUEST['library_bgcolor']) && isset($_REQUEST['library_content_bgcolor']) &&
+   isset($_REQUEST['library_nav_bgcolor']) && isset($_REQUEST['library_boxheader_bgcolor']) &&
+   isset($_REQUEST['library_boxheader_text_color']) && isset($_REQUEST['library_text_color']) &&
+   isset($_REQUEST['library_links_color']) && isset($_REQUEST['library_links_hover_color']) &&
+   isset($_REQUEST['library_navlinks_color']) && isset($_REQUEST['library_navlinks_hover_color'])) {
+    $library_bgcolor = "#".$_REQUEST['library_bgcolor'];
+    $library_content_bgcolor = "#".$_REQUEST['library_content_bgcolor'];
+    $library_nav_bgcolor = "#".$_REQUEST['library_nav_bgcolor'];
+    $library_boxheader_bgcolor = "#".$_REQUEST['library_boxheader_bgcolor'];
+    $library_boxheader_text_color = "#".$_REQUEST['library_boxheader_text_color'];
+    $library_text_color = "#".$_REQUEST['library_text_color'];
+    $library_links_color = "#".$_REQUEST['library_links_color'];
+    $library_links_hover_color = "#".$_REQUEST['library_links_hover_color'];
+    $library_navlinks_color = "#".$_REQUEST['library_navlinks_color'];
+    $library_navlinks_hover_color = "#".$_REQUEST['library_navlinks_hover_color'];
+}
+else {
+    $library_bgcolor = "#606060";
+    $library_content_bgcolor = "#FFFFFF";
+    $library_nav_bgcolor = "#3F3F3F";
+    $library_boxheader_bgcolor = "#CCCCCC";
+    $library_boxheader_text_color = "#666666";
+    $library_text_color = "#666666";
+    $library_links_color = "#666666";
+    $library_links_hover_color = "#000000";
+    $library_navlinks_color = "#FFFFFF";
+    $library_navlinks_hover_color = "#FFFFFF";
+}
 ?>
 @charset "UTF-8";
 
@@ -510,6 +529,13 @@ ul.marquee li {
 	margin: 10px 0 0 3px;
 	line-height: 20px;
 	font-size:13px;
+}
+
+#aboutUs {
+	margin-left:10px;
+	margin-bottom:10px;
+	font-size:13px;
+	min-height:375px;
 }
 
 #genreResults {

@@ -27,39 +27,54 @@
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');
 		echo $scripts_for_layout;
-		$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
+		if(isset($_SESSION['library']) && $_SESSION['library'] != '')
+		{
+			$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 	?>
-	<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>" type="text/css" rel="stylesheet">
-	<script type="text/javascript">
-		$().ready(function() {
-			$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
-			{
-				minChars: 1,
-				cacheLength: 10,
-				autoFill: false
-			});
-			checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-			<?php
-			if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
-			{
-			?>
-				$(".termsApproval").colorbox({width:"50%", inline:true, href:"#termsApproval_div"});
-				$(".termsApproval").click().delay(800);	
-			<?php }	?>		
-		});
-		
-		var webroot = '<?php echo $this->webroot; ?>';	
-		var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
-		swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
-	</script>
-	<style>
-		#slideshow a { display: none }
-		#slideshow a.first { display: block }
-		#featured_artist a { display: none }
-		#featured_artist a.first { display: block }
-		#newly_added a { display: none }
-		#newly_added a.first { display: block }
-	</style>
+			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>" type="text/css" rel="stylesheet">
+			<script type="text/javascript">
+				$().ready(function() {
+					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
+					{
+						minChars: 1,
+						cacheLength: 10,
+						autoFill: false
+					});
+					checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
+					<?php
+					if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+					{
+					?>
+						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+					<?php }	?>
+				});
+				
+				var webroot = '<?php echo $this->webroot; ?>';	
+				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
+				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
+			</script>
+			<style>
+				<?php
+				if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+				{
+				?>
+				#cboxClose{display:none !important;}
+				<?php }	?>
+				#slideshow a { display: none }
+				#slideshow a.first { display: block }
+				#featured_artist a { display: none }
+				#featured_artist a.first { display: block }
+				#newly_added a { display: none }
+				#newly_added a.first { display: block }
+			</style>
+	<?php
+		}
+		else {
+	?>
+			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet">
+	<?php
+		}
+	?>
 </head>
 <body>
 	<div id="audioPlayer"></div>
@@ -76,13 +91,14 @@
 	if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
 	{ ?>
 		<a class='termsApproval' href="#"></a>
-		<div id="loaderDiv" style="display:none;position:absolute;width:863px;text-align:center;top:300px;">
-			<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-		</div>
 		<div style="display:none;">
-			<div id="termsApproval_div">   
-				You need to accept the terms and conditions to browse the site.<br/>
-				<input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');"><input type="button" value="Deny" onclick="Javascript: history.back();">
+			<div id="termsApproval_div">
+				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+				</div>
+				<b>You need to accept the terms and conditions to browse the site.</b><br />
+				<div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;"><?php echo $page->getPageContent('terms'); ?></div><br />
+				<input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');"> <input type="button" value="Deny" onclick="Javascript: history.back();">
 			</div>
 		</div>
 	<?php } ?>

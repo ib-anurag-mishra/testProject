@@ -52,7 +52,12 @@
 					</ul>
 				</li>
 				<li>
-					<?php echo $html->link('Manage FAQs', array('controller' => 'questions', 'action' => 'index'));?>
+					<a href="#">Manage Pages</a>
+					<ul>
+						<li><?php echo $html->link('Manage FAQs', array('controller' => 'questions', 'action' => 'index'));?></li>
+						<li><?php echo $html->link('Manage About Us', array('controller' => 'homes', 'action' => 'aboutusform'));?></li>
+						<li><?php echo $html->link('Manage Terms & Condition', array('controller' => 'homes', 'action' => 'termsform'));?></li>
+					</ul>
 				</li>
 			</ul>
 		</li>

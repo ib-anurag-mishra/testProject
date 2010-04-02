@@ -80,7 +80,7 @@ function checkPatron(libid,patronid)
 }
 
 function approvePatron(libid,patronid)
-{	
+{
 	var _loaderDiv = $("#loaderDiv");
 	_loaderDiv.show();
 	var data = "libid="+libid+"&patronid="+patronid;

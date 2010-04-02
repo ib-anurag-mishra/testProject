@@ -7,15 +7,15 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library' );
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page' );
     var $components = array('RequestHandler','ValidatePatron','Downloads');
     //var $components = array('RequestHandler');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron');
+    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page');
     //var $beforeFilter = array('validatePatron');
  
    function beforeFilter()
    {
-        if($this->action != 'aboutus')
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform'))
         {
             parent::beforeFilter();
             $validPatron = $this->ValidatePatron->validatepatron();
@@ -445,5 +445,97 @@ class HomesController extends AppController
         }
         echo "Success";
         exit;
-    }	
+    }
+    
+    public function admin_aboutusform()
+    {
+	if(isset($this->data)) {
+	    if($this->data['Home']['id'] != "") {
+		$this->Page->id = $this->data['Home']['id'];
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save())
+		{
+		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+	    }
+	    else {
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()) {
+		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+		else {
+		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		}
+	    }
+	}
+        $this -> set( 'formAction', 'admin_aboutusform');
+        $this -> set( 'formHeader', 'Manage About Us Page Content' );
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus')));
+	if(count($getPageData) != 0) {
+	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
+	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+	    $this -> set( 'getData', $getData );
+	}
+	else {
+	    $arr = array();
+	    $this->set('getData',$arr);
+	}
+	$this->layout = 'admin';
+    }
+    
+    public function admin_termsform()
+    {
+	if(isset($this->data)) {
+	    if($this->data['Home']['id'] != "") {
+		$this->Page->id = $this->data['Home']['id'];
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save())
+		{
+		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+	    }
+	    else {
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()) {
+		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+		else {
+		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		}
+	    }
+	}
+        $this -> set( 'formAction', 'admin_termsform');
+        $this -> set( 'formHeader', 'Manage Terms & Condition Page Content' );
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms')));
+	if(count($getPageData) != 0) {
+	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
+	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+	    $this -> set( 'getData', $getData );
+	}
+	else {
+	    $arr = array();
+	    $this->set('getData',$arr);
+	}
+	$this->layout = 'admin';
+    }
+    
+    public function aboutus()
+    {
+	$this->layout = 'home';
+    }
+    
+    public function terms()
+    {
+	$this->layout = 'home';
+    }
 }
