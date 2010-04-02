@@ -414,15 +414,16 @@ Class LibrariesController extends AppController
             $requestUrlArr = explode("/", $_REQUEST['url']);
             $patronId = $requestUrlArr['2'];          
         }
-        $referrerUrl = $_SERVER['HTTP_REFERER'];
+        $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);        
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_domain_name' => $referrerUrl,'library_status' => 'active')
+                                                'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active')
                                                 )
-                                            );       
-	 if(count($existingLibraries) == 0)
+                                            );        
+	if(count($existingLibraries) == 0)
         {
-            $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+            $this -> Session -> setFlash("You are not authorized to view this location.");
+            $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
         }        
         else
         {
@@ -442,8 +443,9 @@ Class LibrariesController extends AppController
                         $this->Currentpatron->save($updateArr);
                     }
                     else
-                    {                        
-                        $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                    {                
+                        $this -> Session -> setFlash("This account is already active.");
+                        $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                     }
                 }
                 else
@@ -461,7 +463,8 @@ Class LibrariesController extends AppController
                         }
                         else
                         {                            
-                            $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                            $this -> Session -> setFlash("This account is already active.");
+                            $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                         }                  
                     }                    
                 }
@@ -475,6 +478,8 @@ Class LibrariesController extends AppController
             }
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
+            $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+            $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $weekFirstDay = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), date('d')-date('w'), date('Y')));
             $currentDay = date('Y-m-d H:i:s');            
             $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
