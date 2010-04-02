@@ -20,7 +20,8 @@ Class GenresController extends AppController
 	      $validPatron = $this->ValidatePatron->validatepatron();	     
 	      if(!$validPatron)
 	      {
-		  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+		  $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
+                  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 	      }	      
 	    }	    
 	}
@@ -228,17 +229,17 @@ Class GenresController extends AppController
 		
 		$this->set('genre',base64_decode($Genre));		
 		$this->Physicalproduct->recursive = 2;
-		$data = $this->paginate('Physicalproduct');	
+		$data = $this->paginate('Physicalproduct');		
 		if(count($data) > 0)
 		{
 		  $album = array();
 		  foreach($data as $distinctData)
 		  {
-		    $albumData = $this->Metadata->find('first', array('conditions' => array('Metadata.ProdID' => $distinctData['Physicalproduct']['ReferenceID'])));
+		    $albumData = $this->Metadata->find('first', array('conditions' => array('Metadata.ProdID' => $distinctData['Physicalproduct']['ReferenceID'])));		    
 		    $album[$albumData['Metadata']['ProdID']]  =  $albumData['Metadata']['Title'];
 		  }	
 		  $this->set('genres', $data);
-		  $this->set('albumData', $album);
+		  $this->set('albumData', $album);		  
 		}else{
 		  $this->set('genres', 0);
 		}
