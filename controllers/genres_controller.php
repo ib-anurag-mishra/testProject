@@ -9,7 +9,7 @@ Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
-	var $helpers = array('Cache','Library');
+	var $helpers = array('Cache','Library','Metadata');
 
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 
@@ -151,14 +151,6 @@ Class GenresController extends AppController
 				$j++;
 			}
 			$this->set('categories',$finalArray);
-			//Cache::write('genres', $finalArray);
-		//}		
-		//else
-		//{			
-		//	$categories = Cache::read('genres');
-		//	$this->set('categories',$categories);
-		//}
-		
 	}
 	
 	function view( $Genre = null )
@@ -169,80 +161,28 @@ Class GenresController extends AppController
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
-		  $patId = $_SESSION['patron'];
-		  $libId = $_SESSION['library'];
-		  $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
-		  $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		  $this->set('libraryDownload',$libraryDownload);
-		  $this->set('patronDownload',$patronDownload);
-		  if($_SESSION['block'] == 'yes')
-		  {
-			$cond = array('Metadata.Advisory' => 'T');
-		  }
-		  else
-		  {
-			$cond = "";
-		  }
-		  $this->Physicalproduct->Behaviors->attach('Containable');	
-		  $this->paginate = array('conditions' =>
-					  array('and' =>
-						array(
-							array('Genre.Genre' => base64_decode($Genre)),							
-							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
-							array('Physicalproduct.DownloadStatus' => 1),$cond
-						      )
-						),
-					  'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ReferenceID',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.DownloadStatus',
-							'Physicalproduct.SalesDate'
-							),
-					  'contain' => array(
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'								
-								)
-							),						
-						'Metadata' => array(
-							'fields' => array(
-								'Metadata.Title',
-								'Metadata.Artist',
-								'Metadata.Advisory'
-								)
-							),
-						'Audio' => array(
-							'fields' => array(
-								'Audio.FileID',                                                    
-								),
-							'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName'
-								)
-							)
-							)                                    
-						)
-					  );		
-		
-		$this->set('genre',base64_decode($Genre));		
-		$this->Physicalproduct->recursive = 2;
-		$data = $this->paginate('Physicalproduct');		
-		if(count($data) > 0)
+		$patId = $_SESSION['patron'];
+		$libId = $_SESSION['library'];
+		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		$this->set('libraryDownload',$libraryDownload);
+		$this->set('patronDownload',$patronDownload);
+		if($_SESSION['block'] == 'yes')
 		{
-		  $album = array();
-		  foreach($data as $distinctData)
-		  {
-		    $albumData = $this->Metadata->find('first', array('conditions' => array('Metadata.ProdID' => $distinctData['Physicalproduct']['ReferenceID'])));		    
-		    $album[$albumData['Metadata']['ProdID']]  =  $albumData['Metadata']['Title'];
-		  }	
-		  $this->set('genres', $data);
-		  $this->set('albumData', $album);		  
-		}else{
-		  $this->set('genres', 0);
+		      $cond = array('Metadata.Advisory' => 'T');
 		}
+		else
+		{
+		      $cond = "";
+		} 
+		$allArtists = $this->Metadata->find('all', array(	
+		      'fields' => array('DISTINCT Artist'),
+		      'conditions' => array('Genre.Genre' => base64_decode($Genre)),			
+		      'order' => 'Artist'
+		      )						      
+		);
+		$this->set('genres', $allArtists);
+		$this->set('genre',base64_decode($Genre));		 
 	}
 	
 	function admin_managegenre()
