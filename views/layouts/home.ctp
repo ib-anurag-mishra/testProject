@@ -39,6 +39,13 @@
 				autoFill: false
 			});
 			checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
+			<?php
+			if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+			{
+			?>
+				$(".termsApproval").colorbox({width:"50%", inline:true, href:"#termsApproval_div"});
+				$(".termsApproval").click().delay(800);	
+			<?php }	?>		
 		});
 		
 		var webroot = '<?php echo $this->webroot; ?>';	
@@ -57,7 +64,7 @@
 <body>
 	<div id="audioPlayer"></div>
 	<?php $session->flash(); ?>
-	<a class='example8' href="#"></a>
+	<a class='upgradeFlash' href="#"></a>
 	<div style="display:none;">
 		<div id="upgradeFlash_div">   
 			This site requires Flash player version 9 or more to play the sample audio files.
@@ -65,11 +72,29 @@
 			to upgrade your Flash Player.<br /><br />
 		</div>
 	</div>
+	<?php
+	if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+	{ ?>
+		<a class='termsApproval' href="#"></a>
+		<div id="loaderDiv" style="display:none;position:absolute;width:863px;text-align:center;top:300px;">
+			<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+		</div>
+		<div style="display:none;">
+			<div id="termsApproval_div">   
+				You need to accept the terms and conditions to browse the site.<br/>
+				<input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');"><input type="button" value="Deny" onclick="Javascript: history.back();">
+			</div>
+		</div>
+	<?php } ?>
 	<div id="container">
 		<?php echo $this->element('header'); ?>
 		<div id="content">
-			<?php echo $this->element('navigation'); ?>
-			<?php echo $content_for_layout; ?>
+			<?php
+			if(isset($_SESSION['library']) && $_SESSION['library'] != '')
+			{
+				echo $this->element('navigation');
+			}
+			echo $content_for_layout; ?>
 		</div>
 		<br class="clr">
 	</div>
