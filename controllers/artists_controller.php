@@ -22,7 +22,8 @@ Class ArtistsController extends AppController
 	      $validPatron = $this->ValidatePatron->validatepatron();	      
 	      if(!$validPatron)
 	      {
-		  $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+		  $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
+                  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 	      }	      
 	    }	    
 	}
