@@ -6,7 +6,12 @@ class PageHelper extends AppHelper {
     function getPageContent($type) {
         $pageInstance = ClassRegistry::init('Page');
         $pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type)));
-        return $pageDetails[0]['Page']['page_content'];
+        if(count($pageDetails) != 0) {
+            return $pageDetails[0]['Page']['page_content'];
+        }
+        else {
+            return "Coming Soon....";
+        }
     }
 }
 

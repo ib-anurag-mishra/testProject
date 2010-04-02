@@ -532,10 +532,16 @@ ul.marquee li {
 }
 
 #aboutUs {
-	margin-left:10px;
-	margin-bottom:10px;
+	margin:10px;
 	font-size:13px;
 	min-height:375px;
+}
+
+.error_div {
+        margin:10px;
+	font-size:13px;
+        text-align:center;
+        height:20px;
 }
 
 #genreResults {

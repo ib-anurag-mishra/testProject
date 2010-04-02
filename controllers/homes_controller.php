@@ -15,9 +15,9 @@ class HomesController extends AppController
  
    function beforeFilter()
    {
+	parent::beforeFilter();
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform'))
         {
-            parent::beforeFilter();
             $validPatron = $this->ValidatePatron->validatepatron();
             if(!$validPatron)
             {
