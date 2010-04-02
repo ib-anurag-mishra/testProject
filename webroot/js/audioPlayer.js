@@ -162,8 +162,8 @@ function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID,
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
     if (!hasRequiredVersion) {
-        $(".example8").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
-	$(".example8").click().delay(800);
+        $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
+	$(".upgradeFlash").click().delay(800);
     }
     imageID = objID;
     URLOne = audioURLOne;
