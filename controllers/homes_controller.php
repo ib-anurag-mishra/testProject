@@ -15,13 +15,14 @@ class HomesController extends AppController
  
    function beforeFilter()
    {
-        if($this->action != 'error')
+        if($this->action != 'aboutus')
         {
             parent::beforeFilter();
             $validPatron = $this->ValidatePatron->validatepatron();
             if(!$validPatron)
             {
-                $this->redirect(array('controller' => 'homes', 'action' => 'error'));
+                $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
+                $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
             }
         }
     }
@@ -426,9 +427,23 @@ class HomesController extends AppController
         }
         echo "Success";
         exit;
-    }    
-
-	function error() {
-		$this->layout = 'home';
-	}
+    }
+    
+    function approvePatron()
+    {
+	$libid = $_REQUEST['libid'];       
+        $patronid = $_REQUEST['patronid'];        
+        $this->layout = false;           	
+	$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
+	if(count($currentPatron) > 0)
+        {
+          $updateArr = array();
+          $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
+          $updateArr['is_approved'] = 'yes';          
+          $this->Currentpatron->save($updateArr);
+          $this->Session->write('approved', 'yes');
+        }
+        echo "Success";
+        exit;
+    }	
 }
