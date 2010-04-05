@@ -174,10 +174,11 @@ Class GenresController extends AppController
 		else
 		{
 		      $cond = "";
-		}		
+		}	
 		$this->paginate = array(
 		      'conditions' => array('Genre.Genre' => base64_decode($Genre)),
 		      'fields' => array('DISTINCT ArtistText'),
+			  'recursive' => '0',
 		      'order' => 'Artist',
 		      'limit' => '60'
 		      );		
