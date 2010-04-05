@@ -174,15 +174,16 @@ Class GenresController extends AppController
 		else
 		{
 		      $cond = "";
-		} 
-		$allArtists = $this->Metadata->find('all', array(	
+		}		
+		$this->paginate = array(
+		      'conditions' => array('Genre.Genre' => base64_decode($Genre)),
 		      'fields' => array('DISTINCT Artist'),
-		      'conditions' => array('Genre.Genre' => base64_decode($Genre)),			
-		      'order' => 'Artist'
-		      )						      
-		);
+		      'order' => 'Artist',
+		      'limit' => '60'
+		      );		
+		$allArtists = $this->paginate('Metadata');		
 		$this->set('genres', $allArtists);
-		$this->set('genre',base64_decode($Genre));		 
+		$this->set('genre',base64_decode($Genre));
 	}
 	
 	function admin_managegenre()
