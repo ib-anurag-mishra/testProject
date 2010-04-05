@@ -20,21 +20,15 @@
     <?php
 		$i=0;
         foreach ($genres as $genre):
-            if($i%3 == 0)
-            {
+            if($i%3 == 0) {
                 echo "<tr><td>";        
-            }
-            else
-            {            
+            } else {            
                 echo "<td>";
             } 
             echo $html->link($genre['Physicalproduct']['ArtistText'], array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText'])));
-            if(($i+1)%3 == 0)
-            {            
+            if(($i+1)%3 == 0) {            
                 echo "</td></tr>";        
-            }
-            else
-            {            
+            } else {            
                 echo "</td>";
             }
             $i++;
