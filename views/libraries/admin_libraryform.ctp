@@ -337,7 +337,7 @@
 <?php
 	if (isset ($javascript)) {
 	?>
-		<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=freegal/app/webroot/js&amp;f=page_specific/libraries_create.js,page_specific/ajaxfileupload.js"></script>
+		<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=page_specific/libraries_create.js,page_specific/ajaxfileupload.js"></script>
 	<?php
 		//$javascript->link(array('page_specific/libraries_create'), false);
 		//$javascript->link(array('page_specific/ajaxfileupload'), false);

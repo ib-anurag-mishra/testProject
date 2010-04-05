@@ -27,14 +27,14 @@
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');*/
 	?>		
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=freegal/app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,swfobject.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
+                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,swfobject.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
 	<?php
 		echo $scripts_for_layout;
 		if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 		{
 			$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 	?>
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=freegal/app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
+			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>" type="text/css" rel="stylesheet">
 			<script type="text/javascript">
 				$().ready(function() {
@@ -77,7 +77,7 @@
 		}
 		else {
 	?>
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=freegal/app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
+			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet">
 	<?php
 		}
