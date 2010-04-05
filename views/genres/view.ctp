@@ -3,7 +3,7 @@
 	<?php echo $genre; ?>
 </div>
 <div id="genreArtist">
-	Artist
+	<?php echo $paginator->sort('Artist ', 'Metadata.Artist') . $html->image('sort_arrows.png'); ?>
 </div>
 <!--<div id="genreAlbum">
 	<?php //echo $paginator->sort('Album ', 'Physicalproduct.Title') . $html->image('sort_arrows.png'); ?>
@@ -61,6 +61,11 @@
 	
 	?>
 </table>
+</div>
+<div class="paging">
+	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+ | 	<?php echo $paginator->numbers();?>
+	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
 <div id="genreAdvSearch">
 	Can't find what you are looking for, try our <?php echo $html->link('Advanced Search', array('controller' => 'homes', 'action' => 'advance_search')); ?>.
