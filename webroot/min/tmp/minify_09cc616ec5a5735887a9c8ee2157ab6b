@@ -1,0 +1,120 @@
+@charset "UTF-8";*{margin:0px;padding:0px}.clr{clear:both}img{border:0px}body{font:100% Verdana, Arial, Helvetica, sans-serif;background:#fff url(/freegal/app/webroot/img/background.png) repeat-x;margin:0px;padding:0px;text-align:center;color:#666}#container{width:965px;margin:0
+auto;text-align:left}#header{width:965px;height:132px}#header_title{float:left;font:24px bold;margin:35px
+0 0 10px}#header_title
+a{text-decoration:none;color:#666}#header_image{float:right;margin:30px
+10px 0 0}#navigation{height:36px;background:#09F}.logout{float:right;padding:9px
+10px;color:#FFF}a.logout{text-decoration:none}a.logout:hover{text-decoration:none;background:#336}#content{min-height:500px;background:#FFF}#login{width:300px;height:200px;background:#F3F3F3;border-top:2px solid #CCC;border-bottom:2px solid #CCC;margin:100px
+auto 0px;display:block}#login
+label{display:block;width:100px;float:left;margin-top:10px;margin-left:20px}#login
+input{width:150px;float:right;margin-top:10px;margin-right:20px}.loginbox{margin-top:50px}#footer{font-size:10px;float:left;margin:10px
+0 0 10px}.message{margin-left:10px}.error_message{margin-left:10px;background:none repeat scroll 0 0 #F00;color:#FFF;font-weight:bold;font-size:15px;margin:10px;padding:5px}.success_message{margin-left:10px;background:none repeat scroll 0 0 #09F;color:#FFF;font-weight:bold;font-size:15px;margin:10px;padding:5px}#content form
+fieldset{margin:0
+10px 0 10px;padding:0;_padding-top:0;border:0px
+solid #e0e0e0}#content form fieldset
+legend{padding:0;_margin-bottom:10px;font-size:24px;color:#09F;font-weight:normal}#content form fieldset
+textarea{width:95%}#content form fieldset label
+input{margin-bottom:0}#content form p.submit
+input{padding:0
+10px;margin-bottom:0}.formFieldsbox
+table{width:98%}#content table#list, #content
+table.info{border:1px
+solid #e0e0e0;border-collapse:collapse;margin-top:25px}#content table#list
+th{border-bottom:1px solid #e0e0e0}#content table#list th, #content table.info
+th{background-color:#f5f5f5}#content table#list th, #content table#list
+td{padding:5px
+10px;text-align:center}#content table#list th.left, #content table#list
+td.left{float:none;text-align:left}#content table#list tr.even
+td{background-color:#ecf5fb}#content table.info th, #content table.info
+td{border:1px
+solid #ccc}#content table.info th, #content table.info
+td{padding:5px
+10px;text-align:left}#content table.info th.center, #content table.info
+td.center{text-align:center}.modal{width:350px;padding:60px;margin:50px
+50px;color:blue}.success{border:1px
+solid #004000}.problem{border:1px
+solid #800000}pre{color:#000;background:#f0f0f0;padding:1em}pre.cake-debug{background:#fc0;font-size:120%;line-height:140%;margin-top:1em;overflow:auto;position:relative}div.cake-stack-trace{background:#fff;color:#333;margin:0px;padding:6px;font-size:120%;line-height:140%;overflow:auto;position:relative}div.cake-code-dump
+pre{position:relative;overflow:auto}div.cake-stack-trace pre, div.cake-code-dump
+pre{color:#000;background-color:#F0F0F0;margin:0px;padding:1em;overflow:auto}div.cake-code-dump pre, div.cake-code-dump pre
+code{clear:both;font-size:12px;line-height:15px;margin:4px
+2px;padding:4px;overflow:auto}div.cake-code-dump span.code-highlight{background-color:#ff0;padding:4px}div.code-coverage-results div.code-line{padding-left:5px;display:block;margin-left:10px}div.code-coverage-results div.uncovered
+span.content{background:#ecc}div.code-coverage-results div.covered
+span.content{background:#cec}div.code-coverage-results div.ignored
+span.content{color:#aaa}div.code-coverage-results span.line-num{color:#666;display:block;float:left;width:20px;text-align:right;margin-right:5px}div.code-coverage-results span.line-num
+strong{color:#666}div.code-coverage-results
+div.start{border:1px
+solid #aaa;border-width:1px 1px 0px 1px;margin-top:30px;padding-top:5px}div.code-coverage-results
+div.end{border:1px
+solid #aaa;border-width:0px 1px 1px 1px;margin-bottom:30px;padding-bottom:5px}div.code-coverage-results
+div.realstart{margin-top:0px}div.code-coverage-results
+p.note{color:#bbb;padding:5px;margin:5px
+0 10px;font-size:10px}div.code-coverage-results span.result-bad{color:#a00}div.code-coverage-results span.result-ok{color:#fa0}div.code-coverage-results span.result-good{color:#0a0}div.form,div.index,div.view{float:right;width:76%;border-left:1px solid #666;padding:10px
+2%}div.actions{float:left;width:16%;padding:10px
+1.5%}div.actions
+h3{padding-top:0;color:#777}div.formFieldsContainer{border:1px
+solid #e0e0e0;width:875px;height:auto;margin-top:25px;float:left}div.formStepsbox{height:40px;float:left}div.active_step{border-right:1px solid #B4B4B4;font-weight:bold;font-size:14px;padding:12px;width:auto;float:left;cursor:pointer;color:#09F}div.inactive_step{border-right:1px solid #B4B4B4;background:#fff url(/freegal/app/webroot/img/background.png) repeat-x scroll 0 -54px;font-weight:bold;font-size:14px;padding:12px
+14px;width:auto;float:left;cursor:pointer}div.formFieldsbox{float:left;width:843px;height:100%;padding:10px}div.form_steps{display:block;float:left;width:843px}div.form_steps>h1{margin:5px
+20px;font-size:20px;font-weight:normal;color:#000}label{font-size:12px;font-weight:normal}.formFieldsbox
+label{margin:0
+0 0 20px;font-size:12px;font-weight:normal}.form_fields{margin:0
+0 0 20px}.select_fields{margin:0
+0 0 20px;width:150px}.radio_fields{margin:20px
+10px 20px 0;float:left}.radio_div{width:50px;height:50px;float:left;margin:0
+30px 0 0}.error-message{font-size:12px;font-weight:normal;margin:0
+0 0 20px;color:#F00}div.actions
+ul{margin:0;padding:0}div.actions
+li{margin:0
+0 0.5em 0;list-style-type:none;white-space:nowrap;padding:0}div.actions ul li
+a{font-weight:normal;display:block;clear:both}div.actions ul li a:hover{text-decoration:none}input[type=submit],
+div.actions ul li a,
+td.actions
+a{font-size:14px;font-weight:normal;padding:0px
+8px;background:#eee;background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);color:#333;border:1px
+solid #ccc;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;text-decoration:none;text-shadow:#fff 0px 1px 0px;min-width:0}input[type=submit]:hover,
+div.actions ul li a:hover,
+td.actions a:hover{background:#e1e1e1;background: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#c1c1c1))}.colorpicker
+.inputcolor{width:70px}.colorpicker
+.samplebox{border:1px
+solid #000;display:inline;cursor:pointer}@charset "UTF-8";.sf-menu, .sf-menu
+*{margin:0;padding:0;list-style:none}.sf-menu{line-height:1.0}.sf-menu
+ul{position:absolute;top:			-999em;width:10em}.sf-menu ul
+li{width:100%}.sf-menu li:hover{visibility:inherit}.sf-menu
+li{float:left;position:relative}.sf-menu
+a{display:block;position:relative}.sf-menu li:hover ul,
+.sf-menu li.sfHover
+ul{left:0;top:34px;z-index:99}ul.sf-menu li:hover li ul,
+ul.sf-menu li.sfHover li
+ul{top:			-999em}ul.sf-menu li li:hover ul,
+ul.sf-menu li li.sfHover
+ul{left:10em;top:0}ul.sf-menu li li:hover li ul,
+ul.sf-menu li li.sfHover li
+ul{top:			-999em}ul.sf-menu li li li:hover ul,
+ul.sf-menu li li li.sfHover
+ul{left:10em;top:0}.sf-menu{float:left;margin-bottom:1em}.sf-menu
+a{border-left:0px solid #fff;border-top:0px solid #CFDEFF;padding:10px
+15px;text-decoration:none}.sf-menu a, .sf-menu a:visited{color:#fff}.sf-menu
+li{background:#09F}.sf-menu li
+li{background:#09F}.sf-menu li li
+li{background:#09F}.sf-menu li:hover, .sf-menu li.sfHover,
+.sf-menu a:focus, .sf-menu a:hover, .sf-menu a:active{background:#336;outline:0}a.current{background:#336}.sf-menu a.sf-with-ul{padding-right:2.25em;min-width:1px}.sf-sub-indicator{position:absolute;display:block;right:			.75em;top:1.05em;width:10px;height:10px;text-indent: 	-999em;overflow:hidden;background:url('/freegal/app/webroot/img/arrows.png') no-repeat -10px -100px}a>.sf-sub-indicator{top:			.8em;background-position:0 -100px}a:focus>.sf-sub-indicator,a:hover>.sf-sub-indicator,a:active>.sf-sub-indicator,li:hover>a>.sf-sub-indicator,li.sfHover>a>.sf-sub-indicator{background-position: -10px -100px}.sf-menu ul .sf-sub-indicator{background-position:  -10px 0}.sf-menu ul a>.sf-sub-indicator{background-position:0 0}.sf-menu ul a:focus > .sf-sub-indicator,
+.sf-menu ul a:hover > .sf-sub-indicator,
+.sf-menu ul a:active > .sf-sub-indicator,
+.sf-menu ul li:hover > a > .sf-sub-indicator,
+.sf-menu ul li.sfHover>a>.sf-sub-indicator{background-position: -10px 0}.sf-shadow
+ul{background:url('/freegal/app/webroot/img/shadow.png') no-repeat bottom right;padding:0
+8px 9px 0;-moz-border-radius-bottomleft:17px;-moz-border-radius-topright:17px;-webkit-border-top-right-radius:17px;-webkit-border-bottom-left-radius:17px}.sf-shadow ul.sf-shadow-off{background:transparent}#colorbox,#cboxOverlay,#cboxWrapper{position:absolute;top:0;left:0;z-index:9999;overflow:hidden;font:12px Verdana,Arial,Helvetica,sans-serif}#cboxOverlay{position:fixed;width:100%;height:100%}#cboxMiddleLeft,#cboxBottomLeft{clear:left}#cboxContent{position:relative;overflow:hidden}#cboxLoadedContent{overflow:auto}#cboxLoadedContent
+iframe{display:block;width:100%;height:100%;border:0}#cboxTitle{margin:0}#cboxLoadingOverlay,#cboxLoadingGraphic{position:absolute;top:0;left:0;width:100%}#cboxPrevious,#cboxNext,#cboxClose,#cboxSlideshow{cursor:pointer}//#cboxOverlay{background:url(/freegal/app/webroot/img/overlay.png) 0 0 repeat}#cboxOverlay{background:#EEE}#colorbox{}#cboxTopLeft{width:21px;height:21px;background:url(/freegal/app/webroot/img/controls.png) -100px 0 no-repeat}#cboxTopRight{width:21px;height:21px;background:url(/freegal/app/webroot/img/controls.png) -129px 0 no-repeat}#cboxBottomLeft{width:21px;height:21px;background:url(/freegal/app/webroot/img/controls.png) -100px -29px no-repeat}#cboxBottomRight{width:21px;height:21px;background:url(/freegal/app/webroot/img/controls.png) -129px -29px no-repeat}#cboxMiddleLeft{width:21px;background:url(/freegal/app/webroot/img/controls.png) left top repeat-y}#cboxMiddleRight{width:21px;background:url(/freegal/app/webroot/img/controls.png) right top repeat-y}#cboxTopCenter{height:21px;background:url(/freegal/app/webroot/img/border.png) 0 0 repeat-x}#cboxBottomCenter{height:21px;background:url(/freegal/app/webroot/img/border.png) 0 -29px repeat-x}#cboxContent{background:#fff}#cboxLoadedContent{margin-bottom:28px}#cboxTitle{position:absolute;bottom:4px;left:0;text-align:center;width:100%;color:#949494}#cboxCurrent{position:absolute;bottom:4px;left:58px;color:#949494}#cboxSlideshow{position:absolute;bottom:4px;right:30px;color:#0092ef}#cboxLoadingOverlay{background:url(/freegal/app/webroot/img/loading_background.png) center center no-repeat}#cboxLoadingGraphic{background:url(/freegal/app/webroot/img/loading.gif) center center no-repeat}#cboxClose{position:absolute;bottom:0;right:0;background:url(/freegal/app/webroot/img/controls.png) -25px 0px no-repeat;width:25px;height:25px;text-indent:-9999px}#cboxClose.hover{background-position:-25px -25px}.cboxIE
+#cboxTopLeft{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderTopLeft.png, sizingMethod='scale')}.cboxIE
+#cboxTopCenter{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderTopCenter.png, sizingMethod='scale')}.cboxIE
+#cboxTopRight{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderTopRight.png, sizingMethod='scale')}.cboxIE
+#cboxBottomLeft{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderBottomLeft.png, sizingMethod='scale')}.cboxIE
+#cboxBottomCenter{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderBottomCenter.png, sizingMethod='scale')}.cboxIE
+#cboxBottomRight{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderBottomRight.png, sizingMethod='scale')}.cboxIE
+#cboxMiddleLeft{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderMiddleLeft.png, sizingMethod='scale')}.cboxIE
+#cboxMiddleRight{background:transparent;filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src=../img/internet_explorer/borderMiddleRight.png, sizingMethod='scale')}.colorpicker{width:356px;height:176px;overflow:hidden;position:absolute;background:url(/freegal/app/webroot/img/colorpicker_background.png);font-family:Arial,Helvetica,sans-serif;display:none}.colorpicker_color{width:150px;height:150px;left:14px;top:13px;position:absolute;background:#f00;overflow:hidden;cursor:crosshair}.colorpicker_color
+div{position:absolute;top:0;left:0;width:150px;height:150px;background:url(/freegal/app/webroot/img/colorpicker_overlay.png)}.colorpicker_color div
+div{position:absolute;top:0;left:0;width:11px;height:11px;overflow:hidden;background:url(/freegal/app/webroot/img/colorpicker_select.gif);margin: -5px 0 0 -5px}.colorpicker_hue{position:absolute;top:13px;left:171px;width:35px;height:150px;cursor:n-resize}.colorpicker_hue
+div{position:absolute;width:35px;height:9px;overflow:hidden;background:url(/freegal/app/webroot/img/colorpicker_indic.gif) left top;margin: -4px 0 0 0;left:0px}.colorpicker_new_color{position:absolute;width:60px;height:30px;left:213px;top:13px;background:#f00}.colorpicker_current_color{position:absolute;width:60px;height:30px;left:283px;top:13px;background:#f00}.colorpicker
+input{background-color:transparent;border:1px
+solid transparent;position:absolute;font-size:10px;font-family:Arial,Helvetica,sans-serif;color:#898989;top:4px;right:11px;text-align:right;margin:0;padding:0;height:11px}.colorpicker_hex{position:absolute;width:72px;height:22px;background:url(/freegal/app/webroot/img/colorpicker_hex.png) top;left:212px;top:142px}.colorpicker_hex
+input{right:6px}.colorpicker_field{height:22px;width:62px;background-position:top;position:absolute}.colorpicker_field
+span{position:absolute;width:12px;height:22px;overflow:hidden;top:0;right:0;cursor:n-resize}.colorpicker_rgb_r{background-image:url(/freegal/app/webroot/img/colorpicker_rgb_r.png);top:52px;left:212px}.colorpicker_rgb_g{background-image:url(/freegal/app/webroot/img/colorpicker_rgb_g.png);top:82px;left:212px}.colorpicker_rgb_b{background-image:url(/freegal/app/webroot/img/colorpicker_rgb_b.png);top:112px;left:212px}.colorpicker_hsb_h{background-image:url(/freegal/app/webroot/img/colorpicker_hsb_h.png);top:52px;left:282px}.colorpicker_hsb_s{background-image:url(/freegal/app/webroot/img/colorpicker_hsb_s.png);top:82px;left:282px}.colorpicker_hsb_b{background-image:url(/freegal/app/webroot/img/colorpicker_hsb_b.png);top:112px;left:282px}.colorpicker_submit{position:absolute;width:22px;height:22px;background:url(/freegal/app/webroot/img/colorpicker_submit.png) top;left:322px;top:142px;overflow:hidden}.colorpicker_focus{background-position:center}.colorpicker_hex.colorpicker_focus{background-position:bottom}.colorpicker_submit.colorpicker_focus{background-position:bottom}.colorpicker_slider{background-position:bottom}
