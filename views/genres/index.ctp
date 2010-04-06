@@ -120,9 +120,29 @@
 <div id="genreViewAll">
 	<p>View All Genres</p>
 	<?php
-		foreach($genresAll as $genre) {
-			echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
-			echo ' | ';
-		}
+		// foreach($genresAll as $genre) {
+		// 			echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
+		// 			echo ' | ';
+		// 		}
 	?>
+	
+	<table cellspacing="10" cellpadding="0" border="0" width="100%">
+    <?php
+		$i=0;
+        foreach ($genresAll as $genre):
+            if($i%4 == 0) {
+                echo "<tr><td align='center'>";        
+            } else {            
+                echo "<td align='center'>";
+            } 
+            echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
+            if(($i+1)%4 == 0) {            
+                echo "</td></tr>";        
+            } else {            
+                echo "</td>";
+            }
+            $i++;
+        endforeach;
+    ?>
+    </table>
 </div>
