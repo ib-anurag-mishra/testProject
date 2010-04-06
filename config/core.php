@@ -287,7 +287,7 @@
 
   	 Cache::config('default', array(
  		'engine' => 'Memcache', //[required]
- 		'duration'=> '+5 minutes', //[optional]
+ 		'duration'=> '+1 hours', //[optional]
  		'probability'=> 100, //[optional]
   		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
   		'servers' => array(
@@ -298,7 +298,7 @@
          
         Cache::config('paginate_cache', array(
  		'engine' => 'Memcache', //[required]
- 		'duration'=> '+5 minutes', //[optional]
+ 		'duration'=> '+1 hours', //[optional]
  		'probability'=> 100, //[optional]
   		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
   		'servers' => array(
