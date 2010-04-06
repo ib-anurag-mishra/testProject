@@ -7,7 +7,8 @@ Class ValidatePatronComponent extends Object
     {
         if(!isset($_SESSION['library']) && !isset($_SESSION['patron']))
         {
-            return 0;
+			echo 'no session set';
+			return 0;
         }
         else
         {
@@ -16,6 +17,7 @@ Class ValidatePatronComponent extends Object
                 return 1;
            }
            else{
+				echo 'session set';
                 return 0;
            }
         }
