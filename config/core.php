@@ -159,7 +159,7 @@
 /**
  * The name of CakePHP's session cookie.
  */
-	Configure::write('Session.cookie', 'CAKEPHP');
+	Configure::write('Session.cookie', 'FreegalMusic');
 
 /**
  * Session time out time (in seconds).
@@ -196,13 +196,13 @@
 /**
  * A random string used in security hashing methods.
  */
-	Configure::write('Security.salt', 'freegalmusic');
+	Configure::write('Security.salt', 'afQZobaVZDyxDhkDW4GDihXndcTnCbChgdXid2uh');
 
 /**
  * A random numeric string (digits only) used to encrypt/decrypt strings.
  */
 	//Configure::write('Security.cipher_seed', '76859309657453542496749683645');
-        Configure::write('Security.cipher_seed', '98756432');
+        Configure::write('Security.cipher_seed', '73676243349747682486');
 
 /**
  * Apply timestamps with the last modified time to static assets (js, css, images).
