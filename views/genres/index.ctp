@@ -61,8 +61,8 @@
 			<div class="songData">
 				<?php 
 					echo '<p class="info">';
-					if (strlen($catG['Song']) >= 32) { 
-						echo substr($catG['Song'], 0, 32) . '...<span>' . $catG['Song'] . '</span>';
+					if (strlen($catG['Song']) >= 30) { 
+						echo substr($catG['Song'], 0, 30) . '...<span>' . $catG['Song'] . '</span>';
 					} else {
 						echo $catG['Song'];
 					}
@@ -70,14 +70,14 @@
 						echo '<p class="explicit"> (Explicit)</p>';
 					}
 					echo '</p>';
-					if (strlen($catG['Artist']) >= 32) {
-						$ArtistName = substr($catG['Artist'], 0, 32) . '...';
+					if (strlen($catG['Artist']) >= 30) {
+						$ArtistName = substr($catG['Artist'], 0, 30) . '...';
 						echo '<p class="info">' . $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($catG['ProdArtist']))) . '<span>' . $catG['Artist'] . '</span></p>';
 					} else {
 						echo '<p>'. $html->link($catG['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($catG['ProdArtist']))) . '</p>';
 					}
-					if (strlen($catG['Album']) >= 32) {
-						echo '<p class="info">' . substr($catG['Album'], 0, 32) . '...<span>' . $catG['Album'] . '</span></p>';
+					if (strlen($catG['Album']) >= 30) {
+						echo '<p class="info">' . substr($catG['Album'], 0, 30) . '...<span>' . $catG['Album'] . '</span></p>';
 					} else {
 						echo '<p>'. $catG['Album'] . '</p>';
 					}
