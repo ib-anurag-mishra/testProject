@@ -131,9 +131,9 @@
 		$i=0;
         foreach ($genresAll as $genre):
             if($i%4 == 0) {
-                echo "<tr><td align='center'>";        
+                echo "<tr><td>";        
             } else {            
-                echo "<td align='center'>";
+                echo "<td>";
             } 
             echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
             if(($i+1)%4 == 0) {            
