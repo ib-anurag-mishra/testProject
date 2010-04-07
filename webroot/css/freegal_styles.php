@@ -576,6 +576,18 @@ ul.marquee li {
 	margin-right:10px;
 }
 
+#genreViewAllBox {
+	float:left;
+	width: 200px;
+	height: 20px;
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+        color:<?php echo $library_boxheader_text_color; ?>;
+	text-align: center;
+	margin: 10px 0 0 3px;
+	line-height: 20px;
+	font-size:13px;
+}
+
 .info {
 	position:relative;
 	z-index:24;

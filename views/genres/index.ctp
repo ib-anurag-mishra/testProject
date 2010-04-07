@@ -118,7 +118,10 @@
 </div>
 <br class="clr">
 <div id="genreViewAll">
-	<p>View All Genres</p>
+	<div id="genreViewAllBox">
+		View All Genres
+	</div>
+	<br class="clr" />
 	<?php
 		// foreach($genresAll as $genre) {
 		// 			echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
