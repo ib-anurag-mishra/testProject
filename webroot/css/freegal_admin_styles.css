@@ -288,7 +288,7 @@ div.actions h3 {
 }
 div.formFieldsContainer {
 	border: 1px solid #e0e0e0;
-	width: 843px;
+/*	width: 843px; */
 	height: auto;
 	margin-top: 25px;
 	float: left;
@@ -302,7 +302,7 @@ div.active_step {
 	font-weight: bold;
 	font-size: 14px;
 	padding: 12px;
-	width: auto;
+/*	width: auto;*/
 	float: left;
 	cursor: pointer;
 	color: #0099FF;
@@ -313,20 +313,20 @@ div.inactive_step {
 	font-weight: bold;
 	font-size: 14px;
 	padding: 12px 14px;
-	width: auto;
+/*	width: auto;*/
 	float: left;
 	cursor: pointer;
 }
 div.formFieldsbox {
 	float: left;
-	width: 843px;
+/*	width: 843px;*/
 	height: 100%;
 	padding: 10px;
 }
 div.form_steps {
 	display: block;
 	float: left;
-	width: 843px;
+/*	width: 843px;*/
 }
 div.form_steps > h1 {
 	margin: 5px 20px;
