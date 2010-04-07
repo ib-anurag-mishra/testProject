@@ -1,3 +1,4 @@
+<br class="clr" />
 <div class="error_div">
     <?php echo $session->flash(); ?>
 </div>
