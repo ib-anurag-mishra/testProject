@@ -421,3 +421,6 @@ td.actions a:hover {
     display: inline;
     cursor: pointer;
 }
+.reportsTable {
+	font-size:12px;
+}

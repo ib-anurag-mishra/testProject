@@ -63,5 +63,16 @@
 		</li>
 		<li>
 			<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
+			<ul>
+				<li>
+					<?php echo $html->link('Library Reports', array('controller' => 'reports', 'action' => 'index'));?>
+				</li>
+				<li>
+					<?php echo $html->link('Library Renewal Reports', "#");?>
+				</li>
+				<li>
+					<?php echo $html->link('Sony Sales Reports', array('controller' => 'reports', 'action' => 'sonyreports'));?>
+				</li>
+			</ul>
 		</li>	
 	</ul>
