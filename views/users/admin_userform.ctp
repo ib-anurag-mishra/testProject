@@ -41,7 +41,14 @@
                                                  <td align="right" width="390"><?php echo $this->Form->label('Admin Type');?></td>
                                                  <td align="left"><?php echo $this->Form->input('type_id', array('type' => 'select', 'label' => false, 'options' => $options, 'selected' => $getData['Group']['id'], 'div' => false, 'class' => 'select_fields')) ;?></td>
                                           </tr>
-                                   <? } ?>
+                                   <?php
+                                   }
+                                   else {
+                                   ?>
+                                          <?php echo $this->Form->hidden( 'type_id', array( 'label' => false ,'value' => $getData['Group']['id'])); ?>
+                                   <?php       
+                                   }
+                                   ?>
                                    <tr>
                                           <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
                                    </tr>
