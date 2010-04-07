@@ -30,8 +30,22 @@
                 echo "<tr" . $class . "><td width='308'>";        
             } else {            
                 echo "<td width='308'>";
-            } 
-            echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText'])));
+            }
+			echo '<p class="info">';
+			if (strlen($genre['Metadata']['Artist']) >= 38) {
+				$ArtistName = substr($genre['Metadata']['Artist'], 0, 38) . '...';
+				echo $html->link(
+					$ArtistName, 
+					array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText']))); ?>
+				<span><?php echo $genre['Metadata']['Artist']; ?></span>
+			<?php
+			} else {
+				$ArtistName = $genre['Metadata']['Artist'];
+				echo $html->link(
+					$ArtistName, 
+					array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText'])));
+			}
+			echo '</p>';
             if(($i+1)%3 == 0) {            
                 echo "</td></tr>";        
             } else {            
