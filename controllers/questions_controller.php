@@ -2,8 +2,22 @@
 class QuestionsController extends AppController {
 
 	var $name = 'Questions';
+	var $helpers = array('Library');
+	var $components = array('RequestHandler','ValidatePatron');
+	
+	function beforeFilter() {
+		parent::beforeFilter();
+		if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform')) {
+			$validPatron = $this->ValidatePatron->validatepatron();
+			if(!$validPatron) {
+				$this->Session->setFlash("Please follow proper guidelines before accessing our site.");
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}
+		}
+	}
 
 	function index() {
+		$this->layout = 'home';
 		$this->Question->recursive = 0;
 		$this->set('questions', $this->paginate());
 	}

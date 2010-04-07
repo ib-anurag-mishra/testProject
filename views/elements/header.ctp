@@ -29,7 +29,13 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 	<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
 	<div id="header_right">
 		<ul>
-			<li>Weekly Downloads <span id="downloads_used"><?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?> <a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
+			<li>
+				Weekly Downloads <span id="downloads_used">
+					<?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
+				<a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a>
+				&nbsp;|&nbsp;
+				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
+			</li>
 			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
 		</ul>
 	</div>
@@ -42,7 +48,8 @@ else {
 	<div id="lib_name">FreegalMusic.Com</div>
 	<div id="header_right">
 		<ul>
-			<li><a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
+			<li>
+				<a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a> | <a href="#">FAQ</a></li>
 			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
 		</ul>
 	</div>

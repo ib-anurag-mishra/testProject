@@ -13,5 +13,9 @@
  **/
 ?>
 <div id="footer">
-	<a href="#">About Freegal Music</a> | <a href="#">Terms &amp; Conditions</a> | <a href="#">FAQ</a>
+	<?php echo $html->link('About Freegal Music', array('controller' => 'homes', 'action' => 'aboutus')); ?>
+	&nbsp;|&nbsp;
+	<?php echo $html->link('Terms & Conditions', array('controller' => 'homes', 'action' => 'terms')); ?>
+	&nbsp;|&nbsp;
+	<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 </div>
