@@ -20,16 +20,15 @@
 	<?php
 	if(count($searchResults) != 0)
 	{
-		// $i = 1;
+		$i = 1;
 		foreach($searchResults as $key => $searchResult):
 			$class = null;
-			// if ($i++ % 2 == 0) {
-			// 				$class = ' class="altrow"';
-			// 			}
-			
-			
+			if ($i++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
 	?>
-			<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>>
+			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
+			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
 					<p class="info">
 						<?php
