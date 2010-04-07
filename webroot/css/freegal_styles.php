@@ -559,11 +559,16 @@ ul.marquee li {
 	text-decoration: none;
 	color:#000;
 }
+#genreResults tr {
+	display: block;
+	margin-left: 10px;
+}
 
 #genreResults td {
-	border-left: 1px solid #FFF;
-	border-right: 1px solid #fff;
-	border-bottom: 1px solid #E1E8EB;
+//	border-left: 1px solid #FFF;
+//	border-right: 1px solid #fff;
+//	border-bottom: 1px solid #E1E8EB;
+	padding: 5px 0 5px 0;
 }
 
 #genreResults img {

@@ -28,8 +28,8 @@ addEvent(window, 'load', initCorners);
 	}
 
     curvyCorners(genre, "#genre");
-	curvyCorners(artist, "#genreArtist");
-	curvyCorners(middle, "#genreAlbum");
-	curvyCorners(middle, "#genreTrack");
-	curvyCorners(download, "#genreDownload");
+	// curvyCorners(artist, "#genreArtist");
+	// 	curvyCorners(middle, "#genreAlbum");
+	// 	curvyCorners(middle, "#genreTrack");
+	// 	curvyCorners(download, "#genreDownload");
   }

@@ -1,4 +1,4 @@
-<!-- <script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script> -->
+<?php echo $javascript->link('freegal_genre_curvy'); ?>
 <div id="genre">
 	<?php echo $genre; ?>	
 </div>
@@ -16,15 +16,20 @@
 </div> -->
 <br class="clr">
 <div id="genreResults">
-	<table cellspacing="10" cellpadding="0" border="0" width="100%">
+	<table cellspacing="0" cellpadding="0" border="0">
     <?php
 		$i=0;
+		$j=1;
         foreach ($genres as $genre):
-	$artistInfo = $metadata->getArtistDetails($genre['Metadata']['Artist']);
+			$class = null;
+			if ($j++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
+			$artistInfo = $metadata->getArtistDetails($genre['Metadata']['Artist']);
             if($i%3 == 0) {
-                echo "<tr><td>";        
+                echo "<tr" . $class . "><td width='308'>";        
             } else {            
-                echo "<td>";
+                echo "<td width='308'>";
             } 
             echo $html->link($genre['Metadata']['Artist'], array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText'])));
             if(($i+1)%3 == 0) {            
