@@ -23,16 +23,20 @@ class Physicalproduct extends AppModel
 		'Metadata' => array(
 			'className' => 'Metadata',
 			'foreignKey' => 'ProdID'
-		),'Availability' => array(
-			'className' => 'Availability',
-			'foreignKey' => 'ProdID'
-		),'ProductOffer' => array(
-			'className' => 'ProductOffer',
-			'foreignKey' => 'ProdID'
-		),'Graphic' => array(
+		),
+		// 'Availability' => array(
+		// 			'className' => 'Availability',
+		// 			'foreignKey' => 'ProdID'
+		// 		),
+		// 'ProductOffer' => array(
+		// 			'className' => 'ProductOffer',
+		// 			'foreignKey' => 'ProdID'
+		// 		),
+		'Graphic' => array(
 			'className' => 'Graphic',
 			'foreignKey' => 'ProdID'
-		),'Genre' => array(
+		),
+		'Genre' => array(
 			'className' => 'Genre',
 			'foreignKey' => 'ProdID'
 		)
