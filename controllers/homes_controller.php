@@ -72,7 +72,8 @@ class HomesController extends AppController
     }
     
     function autoComplete()
-    {      
+    {
+	Configure::write('debug', 0);
         $this->Physicalproduct->recursive = -1;
         $albumResults = $this->Physicalproduct->find('all', array(
 	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%'						
