@@ -23,12 +23,12 @@
         $displaydateRange = " for week of ".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
     }
     elseif($this->data['Report']['reports_daterange'] == 'month') {
-        $savedateRange = "_for_month_of_".date("F", $date_arr[0])."_".date("Y", $date_arr[2]);
-        $displaydateRange = " for month of ".date("F", $date_arr[0])."_".date("Y", $date_arr[2]);
+        $savedateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
+        $displaydateRange = " for month of ".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))." ".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
     }
-    elseif($this->data['Report']['reports_daterange'] == 'Year') {
-        $savedateRange = "_for_".date("Y", $date_arr[2]);
-        $displaydateRange = " for ".date("Y", $date_arr[2]);
+    elseif($this->data['Report']['reports_daterange'] == 'year') {
+        $savedateRange = "_for_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
+        $displaydateRange = " for ".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
     }
     elseif($this->data['Report']['reports_daterange'] == 'manual') {
         $savedateRange = "_for_".$date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]."_to_".$date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1];

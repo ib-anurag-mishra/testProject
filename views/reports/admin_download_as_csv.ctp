@@ -23,10 +23,10 @@ elseif($this->data['Report']['reports_daterange'] == 'week') {
     $dateRange = "_for_week_of_".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {
-    $dateRange = "_for_month_of_".date("F", $date_arr[0])."_".date("Y", $date_arr[2]);
+    $dateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
 }
-elseif($this->data['Report']['reports_daterange'] == 'Year') {
-    $dateRange = "_for_".date("Y", $date_arr[2]);
+elseif($this->data['Report']['reports_daterange'] == 'year') {
+    $dateRange = "_for_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
 }
 elseif($this->data['Report']['reports_daterange'] == 'manual') {
     $dateRange = "_for_".$date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]."_to_".$date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1];

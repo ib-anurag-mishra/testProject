@@ -90,7 +90,7 @@
                     </tr>
                     <tr><td colspan="4">&nbsp;</td></tr>
                     <tr>
-                        <td colspan="4" align="center"><?php echo $this->Form->submit('Generate Report');?></td>
+                        <td colspan="4" align="center"><?php echo $this->Form->submit('Generate Report', array('id' => 'generateReportSubmit'));?></td>
                     </tr>
                     <tr><td colspan="4">&nbsp;</td></tr>
                     <?php
@@ -184,6 +184,10 @@
     <?php
         if(!empty($downloads)) {
     ?>
+            $("#generateReportSubmit").click(function() {
+                $("#ReportAdminIndexForm").attr('action','/admin/reports/index');
+            });
+            
             $("#downloadCVSOne").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsCsv');
                 $("#ReportAdminIndexForm").submit();
