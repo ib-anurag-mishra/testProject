@@ -10,12 +10,27 @@ Class ReportsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Library', 'User', 'Download', 'Report' );
+    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport' );
     
     public function admin_index()
     {
+        if($this->Session->read("Auth.User.type_id") == 4) {
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+        }
+        else {
+            $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+            $this->set('libraryID', "");
+        }
         if(isset($this->data)) {
             $this->Report->set($this->data);
+            if($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            }
+            else {
+                $this->Report->setValidation('reports_manual');
+            }
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     $downloads = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
@@ -33,22 +48,24 @@ Class ReportsController extends AppController
                     $downloads = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
                 }
                 $this->set('downloads', $downloads);
+                $arr = array();
+                $this->set('errors', $arr);
             }
             else {
                 $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
                 $arr = array();
                 $this->set('downloads', $arr);
+                $this->set('errors', $this->Report->invalidFields());
             }
             $this -> set( 'formAction', 'admin_index' );
-            $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             $this->set('getData', $this->data);
         }
         else {
             $this -> set( 'formAction', 'admin_index' );
-            $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-            $arr = array();
+             $arr = array();
             $this->set('getData', $arr);
             $this->set('downloads', $arr);
+            $this->set('errors', $arr);
         }
     }
     
@@ -121,6 +138,30 @@ Class ReportsController extends AppController
             $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
             $this->redirect(array('action'=>'index'), null, true);
         }
+    }
+    
+    public function admin_sonyreports()
+    {
+        if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
+        {
+            $sonyReport = $this->SonyReport->find("first", array('conditions' => array('id' => base64_decode($this->params['named']['id']))));
+            $path = $sonyReport['SonyReport']['report_location']; // change the path to fit your websites document structure
+            $fullPath = $path."/".$sonyReport['SonyReport']['report_name'];
+            if ($fd = fopen ($fullPath, "r")) {
+                $fsize = filesize($fullPath);
+                header("Content-type: application/octet-stream");
+                header("Content-Disposition: filename=\"".$sonyReport['SonyReport']['report_name']."\"");
+                header("Content-length: $fsize");
+                header("Cache-control: private"); //use this to open files directly
+                while(!feof($fd)) {
+                    $buffer = fread($fd, 2048);
+                    echo $buffer;
+                }
+            }
+            fclose ($fd);
+            exit;
+        }
+        $this->set("sonyReports", $this->SonyReport->find("all"));
     }
 }
 ?>

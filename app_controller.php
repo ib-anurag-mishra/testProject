@@ -7,7 +7,7 @@ class AppController extends Controller
 	
 	function beforeFilter()
 	{
-		//$this->Auth->authorize = 'actions';
+		$this->Auth->authorize = 'actions';
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
 		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
@@ -306,8 +306,6 @@ class AppController extends Controller
 		return $arr;
 	}
 	
-	
-	
 	function initDB()
 	{
 		$adminType = & $this -> User -> Group;
@@ -317,20 +315,22 @@ class AppController extends Controller
 		//allow finance admin nothing for now
 		$adminType -> id = 2;
 		$this -> Acl -> deny( $adminType, 'controllers' );
-		$this -> Acl -> allow( $adminType, 'controllers/users/index' );
-		$this -> Acl -> allow( $adminType, 'controllers/users/logout' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_index' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_logout' );
 		//$this->Acl->deny($adminType, 'controllers/Artists');
 		//allow content editor nothing for now
 		$adminType -> id = 3;
 		$this -> Acl -> deny( $adminType, 'controllers' );
-		$this -> Acl -> allow( $adminType, 'controllers/users/index' );
-		$this -> Acl -> allow( $adminType, 'controllers/users/logout' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_index' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_logout' );
 		$this -> Acl -> allow( $adminType, 'controllers/Artists' );
 		$adminType -> id = 4;
 		$this -> Acl -> deny( $adminType, 'controllers' );
-		$this -> Acl -> allow( $adminType, 'controllers/users/index' );
-		$this -> Acl -> allow( $adminType, 'controllers/users/logout' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_index' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_logout' );
+		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_index' );
+		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsCsv' );
+		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsPdf' );
 	}
-	
 }
 ?>

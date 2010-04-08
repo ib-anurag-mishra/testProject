@@ -11,34 +11,59 @@
     }
 ?>
 <fieldset>
-<legend>Generate Libraries Report</legend>
-    <div class="formFieldsContainer">
-        <div class="formFieldsbox">
-            <div id="form_step" class="form_steps">
+<legend>Generate Libraries Report <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
+    <div class="formFieldsContainer" style="width:100%;">
+        <div class="formFieldsbox" style="width:100%;">
+            <div id="form_step" class="form_steps" style="width:100%;">
                 <h1>Report Settings</h1>
-                <table cellspacing="10" cellpadding="0" border="0">
+                <table cellspacing="10" cellpadding="0" border="0" width="100%">
                     <tr><td id="formError" class="formError" colspan="4"></td></tr>
                     <tr>
-                        <td align="right"><?php echo $this->Form->label('Select Library');?></td>
-                        <td align="left">
-                            <?php
-                                $libraries['all'] = "All Libraries";
-                                echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
-                            ?>
-                        </td>
-                        <td align="right"><?php echo $this->Form->label('Range');?></td>
-                        <td align="left">
-                            <?php
-                                echo $this->Form->input('reports_daterange', array('options' => array(
-                                                                'day' => 'Day',
-                                                                'week' => 'Week',
-                                                                'month' => 'Month',
-                                                                'year' => 'Year',
-                                                                'manual' => 'Manual'
-                                                                ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
-                                                        );
-                            ?>
-                        </td>
+                        <?php
+                            if($libraryID == "") {
+                        ?>
+                            <td align="right"><?php echo $this->Form->label('Select Library');?></td>
+                            <td align="left">
+                        <?php    
+                                    $libraries['all'] = "All Libraries";
+                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
+                        ?>
+                            </td>
+                            <td align="right"><?php echo $this->Form->label('Range');?></td>
+                            <td align="left">
+                                <?php
+                                    echo $this->Form->input('reports_daterange', array('options' => array(
+                                                                    'day' => 'Day',
+                                                                    'week' => 'Week',
+                                                                    'month' => 'Month',
+                                                                    'year' => 'Year',
+                                                                    'manual' => 'Manual'
+                                                                    ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
+                                                            );
+                                ?>
+                            </td>
+                        <?php
+                            }
+                            else {
+                        ?>
+                            <td align="center" colspan="4">
+                                <?php
+                                    echo $this->Form->label('Range');
+                                    echo $this->Form->hidden('library_id', array('value' => $libraryID));
+                                    echo $this->Form->input('reports_daterange', array('options' => array(
+                                                                    'day' => 'Day',
+                                                                    'week' => 'Week',
+                                                                    'month' => 'Month',
+                                                                    'year' => 'Year',
+                                                                    'manual' => 'Manual'
+                                                                    ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
+                                                            );
+                                ?>
+                            </td>
+                        <?php
+                            }
+                        ?>
+                        
                     </tr>
                     <tr><td colspan="4">&nbsp;</td></tr>
                     <tr id="initial_date_range" <?php if($getData['Report']['reports_daterange'] == "manual") {?>style="display:none;"<?php } ?>>
@@ -50,10 +75,14 @@
                         </td>
                     </tr>
                     <tr id="date_range" <?php if($getData['Report']['reports_daterange'] != "manual") {?>style="display:none;"<?php } ?>>
-                        <td align="center" colspan="4">
+                        <td align="right" colspan="2">
                             <?php
                                 echo $this->Form->label('From');
                                 echo $this->Form->input('date_from',array('label' => false ,'value' => $getData['Report']['date_from'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly'));
+                            ?>
+                        </td>
+                        <td align="left" colspan="2">
+                            <?php
                                 echo $this->Form->label('To');
                                 echo $this->Form->input('date_to',array('label' => false ,'value' => $getData['Report']['date_to'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly'));
                             ?>
@@ -83,25 +112,21 @@
                         <td colspan="4" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
-                                    <th>Sl No.</th>
-                                    <th>Library ID</th>
                                     <th>Library Name</th>
                                     <th>Patron ID</th>
                                     <th>Artists Name</th>
                                     <th>Track Title</th>
-                                    <th>Downloaded Date</th>
+                                    <th>Download</th>
                                 </tr>
                                 <?php
                                 foreach($downloads as $key => $download) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $key+1; ?></td>
-                                        <td><?php echo $download['Download']['library_id']; ?></td>
                                         <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
                                         <td><?php echo $download['Download']['patron_id']; ?></td>
                                         <td><?php echo $download['Download']['artist']; ?></td>
                                         <td><?php echo $download['Download']['track_title']; ?></td>
-                                        <td><?php echo $download['Download']['created']; ?></td>
+                                        <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
                                     </tr>
                                 <?php
                                 }
@@ -109,19 +134,16 @@
                             </table>
                         </td>
                     </tr>
+                    <?php
+                    }
+                    elseif(empty($downloads) && empty($errors)) {
+                    ?>
                     <tr>
-                        <td colspan="2" align="center">
-                            <?php
-                                echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadCVSTwo'));
-                            ?>
-                        </td>
-                        <td colspan="2" align="center">
-                            <?php
-                                echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadPDFTwo'));
-                            ?>
-                        </td>
+                        <td colspan="4" align="center"><label>There are not downloads found for the selected criteria.</label></td>
                     </tr>
-                    <?php } ?>
+                    <?php
+                    }
+                    ?>
                 </table>
             </div>
         </div>
@@ -168,16 +190,6 @@
             });
             
             $("#downloadPDFOne").click(function() {
-                $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsPdf');
-                $("#ReportAdminIndexForm").submit();
-            });
-            
-            $("#downloadCVSTwo").click(function() {
-                $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsCsv');
-                $("#ReportAdminIndexForm").submit();
-            });
-            
-            $("#downloadPDFTwo").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsPdf');
                 $("#ReportAdminIndexForm").submit();
             });

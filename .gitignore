@@ -14,3 +14,5 @@ webroot/img/featuredimg/*
 webroot/img/newartistimg/*
 webroot/img/internet_explorer/*
 webroot/min/tmp/*
+webroot/sony_reports/*
+webroot/cron/config.php

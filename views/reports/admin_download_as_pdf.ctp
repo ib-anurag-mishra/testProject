@@ -1,6 +1,6 @@
 <?php
     App::import('Vendor','xtcpdf'); 
-    $tcpdf = new XTCPDF();
+    $tcpdf = new XTCPDF('L', 'mm', 'LETTER', true, 'UTF-8', false);
     $textfont = 'freesans'; // looks better, finer, and more condensed than 'dejavusans'
     
     if($this->data['Report']['library_id'] == "all") {
@@ -36,27 +36,23 @@
     }
     
     // set document information
-    //$tcpdf->SetCreator("FreegalMusic.com");
-    //$tcpdf->SetAuthor('MayCreate');
-    //$tcpdf->SetTitle('Downloads Report');
-    //$tcpdf->SetSubject('Library Downloads Report');
-    //$tcpdf->SetKeywords('Library, Downloads, Report');
+    $tcpdf->SetCreator("FreegalMusic.com");
+    $tcpdf->SetAuthor('MayCreate');
+    $tcpdf->SetTitle('Downloads Report');
+    $tcpdf->SetSubject('Library Downloads Report');
+    $tcpdf->SetKeywords('Library, Downloads, Report');
     
     //set auto page breaks
     $tcpdf->SetAutoPageBreak(TRUE, "20");
     
     // set default header data
-    //$tcpdf->SetHeaderData($this->webroot."img/freegal_logo.png", "118", "Powered By Freegal", "Powered By Freegal");
     // set header and footer fonts
-    $tcpdf->setHeaderFont(array($textfont,'',10));
-    $tcpdf->setFooterFont(Array("freesans", '', "8"));
-    $tcpdf->SetHeaderData("http://www.google.co.in/images/nav_logo8.png", "118", "Powered By Freegal", "Powered By Freegal");
-    //$tcpdf->xheadercolor = array(150,0,0);
-    //$tcpdf->xheadertext = 'Libraries Download Report for '.$displaylibraryName.$displaydateRange;
+    $tcpdf->setHeaderFont(array($textfont,'',12));
+    $tcpdf->xheadertext = 'Libraries Download Report for '.$displaylibraryName.$displaydateRange;
     $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
     
     //set margins
-    $tcpdf->SetMargins("0", "10", "0");
+    $tcpdf->SetMargins("0", "15", "0");
     $tcpdf->SetHeaderMargin("10");
     $tcpdf->SetFooterMargin("10");
     
@@ -72,23 +68,23 @@
     $tcpdf->AddPage();
     
     //Column titles
-    $header = array('Sl No.', 'Library ID', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Downloaded Date');
+    $header = array('Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
     
     //Data loading
     foreach($downloads as $key => $download) {
         $libraryName = $library->getLibraryName($download['Download']['library_id']);
-        $data[] = array($key+1, $download['Download']['library_id'], $libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], $download['Download']['created']);
+        $data[] = array($libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
     
     // print colored table
     // Colors, line width and bold font
-    $tcpdf->SetFillColor(255, 0, 0);
+    $tcpdf->SetFillColor(0, 153, 255);
     $tcpdf->SetTextColor(255);
-    $tcpdf->SetDrawColor(128, 0, 0);
+    $tcpdf->SetDrawColor(224, 224, 224);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 15, 40, 25, 40, 40, 40);
+    $w = array(70, 25, 70, 85, 30);
     for($i = 0; $i < count($header); $i++)
         $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -99,13 +95,11 @@
     // Data
     $fill = 0;
     foreach($data as $row) {
-        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[1], 6, number_format($row[1]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[0], 6, $row[0], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[3], 6, number_format($row[3]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
-        $tcpdf->Cell($w[6], 6, $row[6], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Ln();
         $fill=!$fill;
     }
