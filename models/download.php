@@ -28,8 +28,8 @@ class Download extends AppModel
           $lib_condition = "and library_id = ".$libraryID;
       }
       $date_arr = explode("/", $date);
-      $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])), $date_arr[2]))." 00:00:00";
-      $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(6-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]))." 23:59:59";
+      $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]))." 00:00:00";
+      $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]))." 23:59:59";
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );

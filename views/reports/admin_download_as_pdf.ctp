@@ -19,8 +19,10 @@
         $displaydateRange = " for ".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
     }
     elseif($this->data['Report']['reports_daterange'] == 'week') {
-        $savedateRange = "_for_week_of_".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
-        $displaydateRange = " for week of ".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+        $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]));
+        $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+        $savedateRange = "_for_week_of_".$startDate."_to_".$endDate;
+        $displaydateRange = " for week of ".$startDate." to ".$endDate;
     }
     elseif($this->data['Report']['reports_daterange'] == 'month') {
         $savedateRange = "_for_month_of_".date("F", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."_".date("Y", mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]));
