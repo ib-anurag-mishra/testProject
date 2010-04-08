@@ -136,7 +136,7 @@
                     </tr>
                     <?php
                     }
-                    elseif(empty($downloads) && empty($errors)) {
+                    elseif(empty($downloads) && empty($errors) && isset($this->data)) {
                     ?>
                     <tr>
                         <td colspan="4" align="center"><label>There are not downloads found for the selected criteria.</label></td>

@@ -62,7 +62,7 @@ Class ReportsController extends AppController
         }
         else {
             $this -> set( 'formAction', 'admin_index' );
-             $arr = array();
+            $arr = array();
             $this->set('getData', $arr);
             $this->set('downloads', $arr);
             $this->set('errors', $arr);
