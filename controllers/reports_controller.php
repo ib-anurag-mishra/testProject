@@ -144,6 +144,7 @@ Class ReportsController extends AppController
     {
         if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
         {
+            Configure::write('debug',0); // Otherwise we cannot use this method while developing 
             $sonyReport = $this->SonyReport->find("first", array('conditions' => array('id' => base64_decode($this->params['named']['id']))));
             $path = $sonyReport['SonyReport']['report_location']; // change the path to fit your websites document structure
             $fullPath = $path."/".$sonyReport['SonyReport']['report_name'];
