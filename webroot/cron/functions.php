@@ -4,6 +4,8 @@ File Name : functions.php
 File Description : Contains all the necessary function for the xml parser
 @author : Maycreate
 **/
+include 'config.php';
+include 'dbconnect.php';
 
 function sendReportFile($src,$dst,$logFileWrite)
 {
@@ -42,4 +44,48 @@ function sendReportFile($src,$dst,$logFileWrite)
 	}
 }
 
+function resetDownloads()
+{
+    $currentDate = date('Y-m-d');
+    $date = date('y-m-d');
+    list($year, $month, $day) = explode('-', $date);
+    $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w')-1), date('Y')));
+    $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
+    $yearFirstDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $year));      
+    $qry = "Select * from libraries";
+    $results = mysql_query($qry);
+    while($resultsArr = mysql_fetch_assoc($results))
+    {
+	$downloadType = $resultsArr['library_download_type'];
+	if($downloadType == "daily")
+	{
+	    $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+	    mysql_query($sql);            
+	}
+	else if($downloadType == "weekly")
+	{
+	    if($currentDate == $weekFirstDay)
+	    {
+		$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+		mysql_query($sql);
+	    }
+	}
+	else if($downloadType == "monthly")
+	{
+	    if($currentDate == $monthFirstDate)
+	    {
+		$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+		mysql_query($sql);
+	    }
+	}
+	else if($downloadType == "anually")
+	{
+	    if($currentDate == $yearFirstDate)
+	    {
+		$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+		mysql_query($sql);
+	    }
+	}
+    }     
+}
 ?>

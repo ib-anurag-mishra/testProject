@@ -8,8 +8,6 @@
  * @package report
  * This cron script is intended to run on every week to generate the download report for Sony and SCP to sony server
  **/
-include 'config.php';
-include 'dbconnect.php';
 include 'functions.php';
 
 $reports_dir = SONY_REPORTFILES;

@@ -9,8 +9,7 @@
  * Contract Start Date by adding One Year.
  * @package update_library_status_cron
  **/
-include 'config.php';
-include 'dbconnect.php';
+include 'functions.php';
 
 $query = 'SELECT * FROM `libraries`';
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
@@ -30,3 +29,6 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 	$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 	echo "Library satus updated successfully for Library ID ".$line['id']." to $status !!\n";
 }
+//Reseting library download limit for all the libraries so the download can be available and checked for patrons
+resetDownloads();
+?>
