@@ -22,7 +22,7 @@
 		<td class="left"><?php echo $user->getAdminType($admin['User']['type_id']); ?></td>
                 <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'userform','id'=>$admin['User']['id']));?></td>
 		<?php
-		if($admin['User']['type_id'] != 4) {
+		if($admin['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $admin['User']['id']) {
 		?>
 			<td><?php echo $html->link('Delete', array('controller'=>'users','action'=>'admin_delete','id'=>$admin['User']['id']));?></td>
 		<? } ?>
