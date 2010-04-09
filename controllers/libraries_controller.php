@@ -494,10 +494,10 @@ Class LibrariesController extends AppController
             $this->Session->write("patron", $patronId);
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-            $weekFirstDay = date('Y-m-d H:i:s', mktime(0, 0, 0, date('m'), date('d')-date('w'), date('Y')));
-            $currentDay = date('Y-m-d H:i:s');            
+            $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
+            $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";           
             $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-            $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($weekFirstDay, $currentDay))));
+            $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
             $this ->Session->write("downloadsUsed", $results);
             if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1')
             {
