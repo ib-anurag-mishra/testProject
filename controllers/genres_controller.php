@@ -174,14 +174,17 @@ Class GenresController extends AppController
 		else
 		{
 		      $cond = "";
-		}	
+		}
+		$this->Physicalproduct->Behaviors->attach('Containable');
+		$this->Physicalproduct->recursive = 1;
+		$genre = base64_decode($Genre);				
 		$this->paginate = array(
-		      'conditions' => array('Genre.Genre' => base64_decode($Genre)),
-		      'fields' => array('DISTINCT Artist'),
-		      'order' => 'Artist',
+		      'conditions' => array("Genre.Genre = '$genre'",'1 = 1 GROUP BY Physicalproduct.ArtistText'),
+		      'fields' => array('ArtistText'),
+		      'order' => 'ArtistText ASC',		      
 		      'limit' => '60'
 		      );		
-		$allArtists = $this->paginate('Metadata');
+		$allArtists = $this->paginate('Physicalproduct');		
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
