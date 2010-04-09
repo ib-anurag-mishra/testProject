@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` ADD `library_contract_start_date` DATE NOT NULL AFTER `library_block_explicit_content`;
