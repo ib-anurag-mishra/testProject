@@ -19,6 +19,10 @@ class QuestionsController extends AppController {
 	function index() {
 		$this->layout = 'home';
 		$this->Question->recursive = 0;
+		$this->paginate = array('conditions' => array(),		     
+		      'order' => 'Section.Title ASC'		     
+		      );	
+		$questions = $this->paginate('Question');				
 		$this->set('questions', $this->paginate());
 	}
 
