@@ -167,7 +167,7 @@ Class LibrariesController extends AppController
                 }
                 
                 if($this->data['Library']['libraryStepNum'] == '2') {
-                    if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6") {
+                    if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
                      $this->data['User']['password'] = "";
                     }
                     if(trim($libraryId) != '' && is_numeric($libraryId)) {
@@ -195,7 +195,7 @@ Class LibrariesController extends AppController
                     $this->Library->set($this->data['Library']);
                     $this->Library->setValidation('library_step1');
                     if($this->Library->validates()){
-                        if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6") {
+                        if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
                             $this->data['User']['password'] = "";
                         }
                         if(trim($libraryId) != '' && is_numeric($libraryId)) {

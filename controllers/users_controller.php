@@ -88,7 +88,7 @@ Class UsersController extends AppController
                     $getData['Group']['id'] = $this->data['User']['type_id'];
                     $this->set('getData', $getData);
                     $this->User->id = $this->data['User']['id'];
-                    if(trim($this->data['User']['password']) == "7f86df28b26af363bb0d519f137a4e22ec6e64a6")
+                    if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5")
                     {
                        // do not update the password
                        $this->data['User']= $updateObj->arrayremovekey($this->data['User'],'password');
@@ -115,7 +115,7 @@ Class UsersController extends AppController
                     $getData['User'] = $this->data['User'];
                     $getData['Group']['id'] = $this->data['User']['type_id'];
                     $this->set('getData', $getData);
-                    if($this->data['User']['password'] == "7f86df28b26af363bb0d519f137a4e22ec6e64a6")
+                    if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5")
                     {                     
                      $this->data['User']['password'] = "";                      
                     }
