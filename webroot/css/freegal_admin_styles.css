@@ -288,7 +288,7 @@ div.actions h3 {
 }
 div.formFieldsContainer {
 	border: 1px solid #e0e0e0;
-/*	width: 843px; */
+	width: 100%;
 	height: auto;
 	margin-top: 25px;
 	float: left;
@@ -319,6 +319,7 @@ div.inactive_step {
 }
 div.formFieldsbox {
 	float: left;
+	width: 100%;
 /*	width: 843px;*/
 	height: 100%;
 	padding: 10px;
@@ -326,6 +327,7 @@ div.formFieldsbox {
 div.form_steps {
 	display: block;
 	float: left;
+	width: 100%;
 /*	width: 843px;*/
 }
 div.form_steps > h1 {

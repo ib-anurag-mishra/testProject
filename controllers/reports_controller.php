@@ -140,6 +140,23 @@ Class ReportsController extends AppController
         }
     }
     
+    public function admin_libraryrenewalreport()
+    {
+        if(isset($this->data)) {
+            Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+            $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
+            if($this->data['downloadType'] == 'pdf') {
+                $this->layout = 'pdf';
+                $this->render("/reports/admin_downloadLibraryRenewalReportAsPdf");
+            }
+            elseif($this->data['downloadType'] == 'csv') {
+                $this->layout = false;
+                $this->render("/reports/admin_downloadLibraryRenewalReportAsCsv");
+            }
+        }
+        $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
+    }
+    
     public function admin_sonyreports()
     {
         if(!empty($this->params['named']['id']))//gets the values from the url in form  of array

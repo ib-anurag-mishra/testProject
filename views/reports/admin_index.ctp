@@ -12,9 +12,9 @@
 ?>
 <fieldset>
 <legend>Generate Libraries Report <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
-    <div class="formFieldsContainer" style="width:100%;">
-        <div class="formFieldsbox" style="width:100%;">
-            <div id="form_step" class="form_steps" style="width:100%;">
+    <div class="formFieldsContainer">
+        <div class="formFieldsbox">
+            <div id="form_step" class="form_steps">
                 <h1>Report Settings</h1>
                 <table cellspacing="10" cellpadding="0" border="0" width="100%">
                     <tr><td id="formError" class="formError" colspan="4"></td></tr>

@@ -51,6 +51,12 @@ class Library extends AppModel
       ),
      'library_step4' => array(
        'library_user_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library User\'s Download Limit.')
+      ),
+     'library_step_date' => array(
+       'library_contract_start_date' => array(
+        'library_contract_start_dateRule-1' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select a Library Contract Start Date.', 'last' => true),
+        'library_contract_start_dateRule-2' => array('rule' => array('date', 'ymd'), 'allowEmpty' =>  false, 'message' => 'Enter the Library Contract Start Date in a valid date format.') 
+       )
       )
     );
     

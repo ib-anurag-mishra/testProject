@@ -20,7 +20,6 @@ class LibraryPurchase extends AppModel
                           'library_step5' => array(
                            'purchased_order_num' => array(
                                                          'purchased_order_num-1' => array('rule' => 'notEmpty', 'allowEmpty' =>  false, 'message' => 'Please provide a purchase order number.', 'last' => true),
-                                                         //'purchased_order_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  false, 'message' => 'This purchase order number already exists in our database.')
                                                          'purchased_order_num-2' => array('rule' => array('noDuplicates', array('library_id', 'purchased_order_num')), 'allowEmpty' =>  false, 'message' => 'This purchase order number already exists in our database for this Library.')
                                                     ),
                            'purchased_tracks' => array(
@@ -33,7 +32,6 @@ class LibraryPurchase extends AppModel
                                                  )
                           ),
                           'library_step5_edit' => array(
-                           //'purchased_order_num' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This purchase order number already exists in our database.'),
                            'purchased_order_num' => array('rule' => array('noDuplicates', array('library_id', 'purchased_order_num')), 'allowEmpty' =>  true, 'message' => 'This purchase order number already exists in our database for this Library.'),
                            'purchased_tracks' => array('rule' => 'numeric', 'allowEmpty' =>  true, 'message' => 'Please provide the total number of purchased tracks as a numeric value.'),
                            'purchased_amount' => array('rule' => 'numeric', 'allowEmpty' =>  true, 'message' => 'Please provide the total amount for purchased tracks as a numeric value.')

@@ -7,7 +7,7 @@ class QuestionsController extends AppController {
 	
 	function beforeFilter() {
 		parent::beforeFilter();
-		if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform')) {
+		if(($this->action != 'admin_index') && ($this->action != 'admin_view') && ($this->action != 'admin_add') && ($this->action != 'admin_edit') && ($this->action != 'admin_delete')) {
 			$validPatron = $this->ValidatePatron->validatepatron();
 			if(!$validPatron) {
 				$this->Session->setFlash("Please follow proper guidelines before accessing our site.");

@@ -84,7 +84,7 @@
 						<?php echo $html->link('Library Reports', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
 					<li>
-						<?php echo $html->link('Library Renewal Reports', "#");?>
+						<?php echo $html->link('Libraries Renewal Report', array('controller' => 'reports', 'action' => 'libraryrenewalreport'));?>
 					</li>
 					<li>
 						<?php echo $html->link('Sony Sales Reports', array('controller' => 'reports', 'action' => 'sonyreports'));?>
