@@ -25,25 +25,25 @@
 			if ($j++ % 2 == 0) {
 				$class = ' class="altrow"';
 			}
-			$artistInfo = $metadata->getArtistDetails($genre['Metadata']['Artist']);
+			//$artistInfo = $metadata->getArtistDetails($genre['Metadata']['Artist']);
             if($i%3 == 0) {
                 echo "<tr" . $class . "><td width='308'>";        
             } else {            
                 echo "<td width='308'>";
             }
 			echo '<p class="info">';
-			if (strlen($genre['Metadata']['Artist']) >= 38) {
-				$ArtistName = substr($genre['Metadata']['Artist'], 0, 38) . '...';
+			if (strlen($genre['Physicalproduct']['ArtistText']) >= 38) {
+				$ArtistName = substr($genre['Physicalproduct']['ArtistText'], 0, 38) . '...';
 				echo $html->link(
 					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText']))); ?>
-				<span><?php echo $genre['Metadata']['Artist']; ?></span>
+					array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?>
+				<span><?php echo $genre['Physicalproduct']['Artist']; ?></span>
 			<?php
 			} else {
-				$ArtistName = $genre['Metadata']['Artist'];
+				$ArtistName = $genre['Physicalproduct']['ArtistText'];
 				echo $html->link(
 					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText'])));
+					array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText'])));
 			}
 			echo '</p>';
             if(($i+1)%3 == 0) {            
