@@ -10,11 +10,12 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
 	var $layout = 'admin';
 	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page' );
+	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view');
+	    $this->Auth->allowedActions = array('view','test');
 	    $libraryCheckArr = array("view");	   
 	    if(in_array($this->action,$libraryCheckArr))
 	    {
@@ -28,18 +29,18 @@ Class ArtistsController extends AppController
 	}
 	
 	/*
-	Function Name : managefeaturedartist
-	Desc : action for listing all the featured artists
-	*/
+    Function Name : managefeaturedartist
+    Desc : action for listing all the featured artists
+   */
 	public function admin_managefeaturedartist()
 	{
-		$this -> set( 'artists', $this->paginate('Featuredartist') );
-	}
-	
-	/*
-	Function Name : artistform
-	Desc : action for displaying the add/edit featured artist form
-	*/
+		$artistObj = new Featuredartist();
+		$artists = $artistObj -> getallartists();
+		$this -> set( 'artists', $artists );
+	}/*
+    Function Name : artistform
+    Desc : action for displaying the add/edit featured artist form
+   */
 	public function admin_artistform()
 	{
 		if( !empty( $this -> params[ 'named' ] ) )//gets the values from the url in form  of array
@@ -70,12 +71,10 @@ Class ArtistsController extends AppController
 		$getArtistDataObj = new Physicalproduct();
 		$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
-	}
-	
-	/*
-	Function Name : insertfeaturedartist
-	Desc : inserts a featured artist
-	*/
+	}/*
+    Function Name : insertfeaturedartist
+    Desc : inserts a featured artist
+   */
 	public function admin_insertfeaturedartist()
 	{
 		$errorMsg = '';
@@ -115,12 +114,10 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
-	}
-	
-	/*
-	Function Name : updatefeaturedartist
-	Desc : Updates a featured artist
-	*/
+	}/*
+    Function Name : updatefeaturedartist
+    Desc : Updates a featured artist
+   */
 	public function admin_updatefeaturedartist()
 	{
 		$errorMsg = '';
@@ -161,12 +158,10 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-	}
-	
-	/*
-	Function Name : delete
-	Desc : For deleting a featured artist
-	*/
+	}/*
+    Function Name : delete
+    Desc : For deleting a featured artist
+   */
 	public function admin_delete()
 	{
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
@@ -182,12 +177,10 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-	}
-	
-	/*
-	Function Name : createartist
-	Desc : assigns artists with images
-	*/
+	}/*
+    Function Name : createartist
+    Desc : assigns artists with images
+   */
 	public function admin_createartist()
 	{
 		$errorMsg = '';
@@ -294,21 +287,19 @@ Class ArtistsController extends AppController
 		$getArtistDataObj = new Physicalproduct();		
 		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );		
 		$this -> set( 'getArtistData', $getArtistData );
-	}
-	
-	/*
-	Function Name : managenewartist
-	Desc : manages new artists with images
-	*/
+	}/*
+    Function Name : managenewartist
+    Desc : manages new artists with images
+   */
 	public function admin_manageartist()
 	{
-		$this -> set( 'artists', $this->paginate('Artist') );
-	}
-	
-	/*
-	Function Name : deletenewartists
-	Desc : For deleting a new artist
-	*/
+		$artistObj = new Artist();
+		$artists = $artistObj -> getallartists();
+		$this -> set( 'artists', $artists );
+	}/*
+    Function Name : deletenewartists
+    Desc : For deleting a new artist
+   */
 	public function admin_deleteartists()
 	{
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
@@ -324,12 +315,10 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'manageartist' );
 		}
-	}
-	
-	/*
-	Function Name : createartist
-	Desc : assigns artists with images
-	*/
+	}/*
+    Function Name : createartist
+    Desc : assigns artists with images
+   */
 	public function admin_addnewartist()
 	{
 		$errorMsg = '';
@@ -437,21 +426,19 @@ Class ArtistsController extends AppController
 		$getArtistDataObj = new Physicalproduct();
 		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
-	}
-	
-	/*
-	Function Name : managenewartist
-	Desc : manages artists with images
-	*/
+	}/*
+    Function Name : managenewartist
+    Desc : manages artists with images
+   */
 	public function admin_managenewartist()
 	{
-		$this -> set( 'artists', $this->paginate('Newartist') );
-	}
-	
-	/*
-	Function Name : deletenewartists
-	Desc : For deleting a featured artist
-	*/
+		$artistObj = new Newartist();
+		$artists = $artistObj -> getallnewartists();
+		$this -> set( 'artists', $artists );
+	}/*
+    Function Name : deletenewartists
+    Desc : For deleting a featured artist
+   */
 	public function admin_deletenewartists()
 	{
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
@@ -490,7 +477,8 @@ Class ArtistsController extends AppController
 					  array('and' =>
 						array(
 							array('Physicalproduct.ArtistText' => base64_decode($id)),
-                                                        array("Physicalproduct.ProdID = Physicalproduct.ReferenceID")							
+                                                        array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
+							array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = 1)")
 						      )
 						),
 						'fields' => array(
@@ -527,13 +515,25 @@ Class ArtistsController extends AppController
 								)
 							)
 							)			                                
-						),'limit' => '3', 'cache' => 'yes'
+						),'limit' => '3','cache' => 'yes'
+						/*,
+                                                 'group' => 'Physicalproduct.ReferenceID'*/
 					  );
                 $this->Physicalproduct->recursive = 2;
                 $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist		
                 $albumSongs = array();
                 foreach($albumData as $album)
                 {
+                    /*$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+                                                  'conditions' =>
+                                                            array('and' =>
+                                                                  array(
+                                                                          array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),
+                                                                          array( "Physicalproduct.ProdID <> Physicalproduct.ReferenceID"),
+                                                                          
+                                                                        )
+                                                                  ),'order' => 'Physicalproduct.ReferenceID'
+                                                            ));*/
 		    $albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
 					  'conditions' =>
 					  array('and' =>
@@ -586,6 +586,6 @@ Class ArtistsController extends AppController
                    $this->set('artistUrl', "N/A");
                 }		
                 $this->set('albumSongs',$albumSongs);		
-	}
-  }
+	}	
+  }	
 ?>
