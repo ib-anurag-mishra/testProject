@@ -20,7 +20,7 @@
     $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
     
     //set margins
-    $tcpdf->SetMargins("0", "15", "0");
+    $tcpdf->SetMargins("10", "15", "0");
     $tcpdf->SetHeaderMargin("10");
     $tcpdf->SetFooterMargin("10");
     
@@ -59,7 +59,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(150, 40, 40, 50);
+    $w = array(130, 40, 40, 50);
     for($i = 0; $i < count($header); $i++)
         $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
