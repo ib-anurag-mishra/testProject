@@ -37,7 +37,7 @@
 				echo $html->link(
 					$ArtistName, 
 					array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?>
-				<span><?php echo $genre['Physicalproduct']['Artist']; ?></span>
+				<span><?php echo $genre['Physicalproduct']['ArtistText']; ?></span>
 			<?php
 			} else {
 				$ArtistName = $genre['Physicalproduct']['ArtistText'];
