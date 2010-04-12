@@ -74,7 +74,7 @@ class HomesController extends AppController
 	Configure::write('debug', 0);
         $this->Physicalproduct->recursive = -1;
         $albumResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%'						
+	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1						
 	   ),
            'fields' => array(
 			  'Title'
@@ -85,7 +85,7 @@ class HomesController extends AppController
                   'limit' => '6'));            
 	$this->set('albumResults', $albumResults);        
         $artistResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%'
+	   'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1
 	   ),
            'fields' => array(
 			  'ArtistText'
@@ -93,10 +93,11 @@ class HomesController extends AppController
 		  'group' => array(
 			  'ArtistText',
 		  ),
-                  'limit' => '6'));        
+                  'limit' => '6'));       
 	$this->set('artistResults', $artistResults);
-        $songResults = $this->Home->find('all', array(
-	   'conditions'=>array('Title LIKE'=>$_GET['q'].'%'
+        $this->Metadata->recursive=2;
+        $songResults = $this->Metadata->find('all', array(
+	   'conditions'=>array('Metadata.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1
 	   ),
            'fields' => array(
 			  'Title'
