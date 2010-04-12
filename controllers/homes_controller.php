@@ -9,9 +9,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page' );
     var $components = array('RequestHandler','ValidatePatron','Downloads');
-    //var $components = array('RequestHandler');
     var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page');
-    //var $beforeFilter = array('validatePatron');
  
    function beforeFilter()
    {
@@ -217,10 +215,6 @@ class HomesController extends AppController
                                         ,
                                     $condition =>
                                             array(
-                                                    /*array('Physicalproduct.ArtistText LIKE' => '%'.$artist.'%'),
-                                                    array('Physicalproduct.Title LIKE' => '%'.$album.'%'),
-                                                    array('Metadata.Title LIKE' => '%'.$song.'%'),
-                                                    array('Genre.Genre LIKE' => '%'.$genre.'%')*/
                                                     $artistSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$cond
                                                 )
                                     ),
@@ -255,9 +249,9 @@ class HomesController extends AppController
                                                     )
                                             )
                                         )                                    
-                                    )
+                                    ), 'cache' => 'yes'
                                 );
-            $this->Physicalproduct->recursive = 2;        
+            $this->Physicalproduct->recursive = 2;
             $searchResults = $this->paginate('Physicalproduct');           
             $this->set('searchResults', $searchResults);           
         }
@@ -333,9 +327,7 @@ class HomesController extends AppController
         {
             echo "error";
             exit;
-        }        
-        //hardcoded for testing purpose        
-        //$patId = 223401;
+        }
         $prodId = $_REQUEST['prodId'];                
         $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);        
         $insertArr = Array();

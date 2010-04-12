@@ -179,7 +179,7 @@ Class ReportsController extends AppController
             fclose ($fd);
             exit;
         }
-        $this->set("sonyReports", $this->SonyReport->find("all"));
+        $this->set("sonyReports", $this->paginate('SonyReport'));
     }
 }
 ?>

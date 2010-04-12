@@ -14,19 +14,6 @@ Class LibrariesController extends AppController
     function beforeFilter() {	  
         parent::beforeFilter(); 
         $this->Auth->allowedActions = array('patron');
-      /*  $libraryCheckArr = array("view");
-        if(in_array($this->action,$libraryCheckArr))
-        {
-          $validPatron = $this->ValidatePatron->validatepatron();
-          if($validPatron)
-          {
-              $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-          }
-          else
-          {
-              $this->redirect(array('controller' => 'homes', 'action' => 'error'));
-          }
-        }*/	    
     }
     /*
     Function Name : admin_managelibrary
@@ -35,7 +22,7 @@ Class LibrariesController extends AppController
     public function admin_managelibrary()
     {
         $this->Library->recursive = -1;
-        $this->set('libraries', $this->Library->getalllibraries());
+        $this->set('libraries', $this->paginate('Library'));
     }
 	
     /*

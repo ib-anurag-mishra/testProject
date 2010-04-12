@@ -25,7 +25,6 @@ Class UsersController extends AppController
  
    public function admin_index()
     {
-         //$this->layout = 'login';
         //takes to the default admin home page
          $this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header 
     }
@@ -60,9 +59,9 @@ Class UsersController extends AppController
     Desc : action for listing all the admin users
    */
     
-   public function admin_manageuser()
+    public function admin_manageuser()
     {  
-        $this->set('admins', $this->User->getallusers());
+        $this->set('admins', $this->paginate('User'));
     }
     
     /*

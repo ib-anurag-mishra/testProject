@@ -36,5 +36,4 @@ Class DownloadsComponent extends Object
         }
     }
 }
-    
-    
+?>

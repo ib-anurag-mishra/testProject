@@ -4,12 +4,13 @@
  File Description : Genre controller page
  Author : maycreate
  */
+
 ini_set('memory_limit', '1024M');
 Class GenresController extends AppController
 {
 	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
-	var $helpers = array('Cache','Library','Metadata','Page');
+	var $helpers = array('Cache','Library','Page');
 
 	function beforeFilter() {	  
 	    parent::beforeFilter(); 
@@ -42,9 +43,7 @@ Class GenresController extends AppController
 				
 			foreach ($categories as $category)
 			{
-				$genreName = $category['Category']['Genre'];			
-				//$this->Genre->recursive = '2';
-				//$genreDetails = $this->Genre->find('all',array('conditions' => array('Genre' => $genreName),'order'=> 'rand()','limit' => '3'));
+				$genreName = $category['Category']['Genre'];
 				if($_SESSION['block'] == 'yes')
 				{
 					$cond = array('Metadata.Advisory' => 'T');
@@ -110,7 +109,7 @@ Class GenresController extends AppController
 										)
 									)
 									)                                    
-								),'limit' => '50'));			//'order'=> 'rand()',
+								),'limit' => '50'));
 					Cache::write($genreName, $genreDetails);
 				}				
 				$genreDetails = Cache::read($genreName);
@@ -127,7 +126,6 @@ Class GenresController extends AppController
 				  $songArr = $genreDetails;	
 				}
 				
-				//$
 				foreach($songArr as $genre)
 				{
 					$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
@@ -140,7 +138,6 @@ Class GenresController extends AppController
 					$finalArr[$i]['Advisory'] = $genre['Metadata']['Advisory'];
 					$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 					$finalArr[$i]['SongUrl'] = $songUrl;
-					//$finalArr[$i]['SaleStartDate'] = $genre['ProductOffer']['SalesTerritory']['SALES_START_DATE'];
 					$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
 					$finalArr[$i]['SalesDate'] = $genre['Physicalproduct']['SalesDate'];
 					$finalArr[$i]['SampleSong'] = $sampleSongUrl;
@@ -182,7 +179,7 @@ Class GenresController extends AppController
 		      'conditions' => array("Genre.Genre = '$genre'",'1 = 1 GROUP BY Physicalproduct.ArtistText'),
 		      'fields' => array('ArtistText'),
 		      'order' => 'ArtistText ASC',		      
-		      'limit' => '60'
+		      'limit' => '60', 'cache' => 'yes'
 		      );		
 		$allArtists = $this->paginate('Physicalproduct');		
 		$this->set('genres', $allArtists);
@@ -232,4 +229,4 @@ Class GenresController extends AppController
 		$this->layout = 'admin';
 	}
 }
-
+?>

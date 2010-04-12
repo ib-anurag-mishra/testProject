@@ -18,3 +18,4 @@ Class ValidatePatronComponent extends Object
         }
     }
 }
+?>
