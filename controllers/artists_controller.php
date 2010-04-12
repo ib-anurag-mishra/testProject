@@ -431,9 +431,8 @@ Class ArtistsController extends AppController
     Desc : manages artists with images
    */
 	public function admin_managenewartist()
-	{
-		$artistObj = new Newartist();
-		$artists = $artistObj -> getallnewartists();
+	{			
+		$artists = $this->paginate('Newartist');
 		$this -> set( 'artists', $artists );
 	}/*
     Function Name : deletenewartists
