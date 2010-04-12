@@ -26,18 +26,12 @@
 		template_external_list_url : "lists/template_list.js",
 		external_link_list_url : "lists/link_list.js",
 		external_image_list_url : "lists/image_list.js",
-		media_external_list_url : "lists/media_list.js",
-
-		// Replace values for the template plugin
-		template_replace_values : {
-			username : "Some User",
-			staffid : "991234"
-		}
+		media_external_list_url : "lists/media_list.js"
 	});'
 	);
 ?>
 <div class="questions form">
-<?php echo $this->Form->create('Question');?>
+<?php echo $this->Form->create('FAQs');?>
 	<fieldset>
  		<legend><?php printf(__('Admin Add %s', true), __('Question', true)); ?></legend>
 	<?php

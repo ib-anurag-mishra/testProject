@@ -1,6 +1,6 @@
 <?php $this->pageTitle = 'Content'; ?>
 <div class="questions index">
-	<h2><?php __('Questions');?></h2>
+	<h2><?php __('FAQs');?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('section_id');?></th>
