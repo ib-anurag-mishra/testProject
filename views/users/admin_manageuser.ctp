@@ -9,7 +9,7 @@
             <th class="left">Email</th>
 	    <th class="left">Admin Type</th>
             <th>Edit</th>
-	    <th>Delete</th>
+	    <!-- <th>Delete</th> -->
           </tr>
           <?php
           foreach($admins as $admin)
@@ -24,7 +24,7 @@
 		<?php
 		if($admin['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $admin['User']['id']) {
 		?>
-			<td><?php echo $html->link('Delete', array('controller'=>'users','action'=>'admin_delete','id'=>$admin['User']['id']));?></td>
+			<!-- <td><?php //echo $html->link('Delete', array('controller'=>'users','action'=>'admin_delete','id'=>$admin['User']['id']));?></td> -->
 		<? } ?>
             </tr>
             
@@ -33,6 +33,12 @@
           ?>
         </table>
 	<br class="clr" />
+	<p>
+	<?php
+	echo $paginator->counter(array(
+	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+	));
+	?></p>
 	<div class="paging">
 	      <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	| 	<?php echo $paginator->numbers();?>
