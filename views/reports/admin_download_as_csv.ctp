@@ -1,10 +1,10 @@
 <?php
-$line = array('Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
+$line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
 $csv->addRow($line);
 
 foreach($downloads as $key => $download) {
     $libraryName = $library->getLibraryName($download['Download']['library_id']);
-    $line = array($libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+    $line = array($key+1, $libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     $csv->addRow($line);
 }
 if($this->data['Report']['library_id'] == "all") {

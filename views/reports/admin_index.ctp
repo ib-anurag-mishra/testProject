@@ -112,6 +112,7 @@
                         <td colspan="4" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
+									<th>&nbsp;</th>
                                     <th>Library Name</th>
                                     <th>Patron ID</th>
                                     <th>Artists Name</th>
@@ -119,9 +120,11 @@
                                     <th>Download</th>
                                 </tr>
                                 <?php
+								$i = 1;
                                 foreach($downloads as $key => $download) {
                                 ?>
                                     <tr>
+										<td><?php echo $i; ?></td>
                                         <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
                                         <td><?php echo $download['Download']['patron_id']; ?></td>
                                         <td><?php echo $download['Download']['artist']; ?></td>
@@ -129,6 +132,7 @@
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
                                     </tr>
                                 <?php
+									$i++;
                                 }
                                 ?>
                             </table>
