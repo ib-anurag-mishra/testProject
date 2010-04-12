@@ -11,6 +11,8 @@
 /**
  * Footer file for home page
  **/
+
+if (isset($_SESSION['library']) && $_SESSION['library'] != '') {
 ?>
 <div id="footer">
 	<?php echo $html->link('About Freegal Music', array('controller' => 'homes', 'action' => 'aboutus')); ?>
@@ -19,3 +21,5 @@
 	&nbsp;|&nbsp;
 	<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 </div>
+<?php
+}
