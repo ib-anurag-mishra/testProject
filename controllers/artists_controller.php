@@ -33,9 +33,8 @@ Class ArtistsController extends AppController
     Desc : action for listing all the featured artists
    */
 	public function admin_managefeaturedartist()
-	{
-		$artistObj = new Featuredartist();
-		$artists = $artistObj -> getallartists();
+	{		
+		$artists = $this->paginate('Featuredartist');
 		$this -> set( 'artists', $artists );
 	}/*
     Function Name : artistform
@@ -292,9 +291,8 @@ Class ArtistsController extends AppController
     Desc : manages new artists with images
    */
 	public function admin_manageartist()
-	{
-		$artistObj = new Artist();
-		$artists = $artistObj -> getallartists();
+	{		
+		$artists = $this->paginate('Artist');
 		$this -> set( 'artists', $artists );
 	}/*
     Function Name : deletenewartists
