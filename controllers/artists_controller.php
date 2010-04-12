@@ -29,19 +29,18 @@ Class ArtistsController extends AppController
 	}
 	
 	/*
-    Function Name : managefeaturedartist
-    Desc : action for listing all the featured artists
-   */
-	public function admin_managefeaturedartist()
-	{		
+	Function Name : managefeaturedartist
+	Desc : action for listing all the featured artists
+       */
+	function admin_managefeaturedartist() {
 		$artists = $this->paginate('Featuredartist');
 		$this -> set( 'artists', $artists );
-	}/*
-    Function Name : artistform
-    Desc : action for displaying the add/edit featured artist form
-   */
-	public function admin_artistform()
-	{
+	}
+	/*
+	Function Name : artistform
+	Desc : action for displaying the add/edit featured artist form
+       */
+	function admin_artistform() {
 		if( !empty( $this -> params[ 'named' ] ) )//gets the values from the url in form  of array
 		{
 			$artistId = $this -> params[ 'named' ][ 'id' ];
@@ -70,12 +69,12 @@ Class ArtistsController extends AppController
 		$getArtistDataObj = new Physicalproduct();
 		$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
-	}/*
-    Function Name : insertfeaturedartist
-    Desc : inserts a featured artist
-   */
-	public function admin_insertfeaturedartist()
-	{
+	}
+	/*
+	Function Name : insertfeaturedartist
+	Desc : inserts a featured artist
+       */
+	function admin_insertfeaturedartist() {
 		$errorMsg = '';
 		$newPath = '../webroot/img/featuredimg/';
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
@@ -113,12 +112,12 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
-	}/*
-    Function Name : updatefeaturedartist
-    Desc : Updates a featured artist
-   */
-	public function admin_updatefeaturedartist()
-	{
+	}
+	/*
+	Function Name : updatefeaturedartist
+	Desc : Updates a featured artist
+       */
+	function admin_updatefeaturedartist() {
 		$errorMsg = '';
 		$this -> Featuredartist -> id = $this -> data[ 'Artist' ][ 'id' ];
 		$newPath = '../webroot/img/featuredimg/';
@@ -157,12 +156,12 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-	}/*
-    Function Name : delete
-    Desc : For deleting a featured artist
-   */
-	public function admin_delete()
-	{
+	}
+	/*
+	Function Name : delete
+	Desc : For deleting a featured artist
+       */
+	function admin_delete() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Featuredartist();
 		
@@ -176,12 +175,13 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-	}/*
-    Function Name : createartist
-    Desc : assigns artists with images
-   */
-	public function admin_createartist()
-	{
+	}
+	
+	/*
+	Function Name : createartist
+	Desc : assigns artists with images
+       */
+	function admin_createartist() {
 		$errorMsg = '';
 		
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
@@ -286,20 +286,22 @@ Class ArtistsController extends AppController
 		$getArtistDataObj = new Physicalproduct();		
 		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );		
 		$this -> set( 'getArtistData', $getArtistData );
-	}/*
-    Function Name : managenewartist
-    Desc : manages new artists with images
-   */
-	public function admin_manageartist()
-	{		
+	}
+	
+	/*
+	Function Name : managenewartist
+	Desc : manages new artists with images
+       */
+	function admin_manageartist() {
 		$artists = $this->paginate('Artist');
 		$this -> set( 'artists', $artists );
-	}/*
-    Function Name : deletenewartists
-    Desc : For deleting a new artist
-   */
-	public function admin_deleteartists()
-	{
+	}
+	
+	/*
+	Function Name : deletenewartists
+	Desc : For deleting a new artist
+       */
+	function admin_deleteartists() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Artist();
 		
@@ -313,12 +315,13 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'manageartist' );
 		}
-	}/*
-    Function Name : createartist
-    Desc : assigns artists with images
-   */
-	public function admin_addnewartist()
-	{
+	}
+	
+	/*
+	Function Name : createartist
+	Desc : assigns artists with images
+       */
+	function admin_addnewartist() {
 		$errorMsg = '';
 		
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
@@ -424,20 +427,22 @@ Class ArtistsController extends AppController
 		$getArtistDataObj = new Physicalproduct();
 		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
-	}/*
-    Function Name : managenewartist
-    Desc : manages artists with images
-   */
-	public function admin_managenewartist()
-	{			
+	}
+	
+	/*
+	Function Name : managenewartist
+	Desc : manages artists with images
+       */
+	function admin_managenewartist() {
 		$artists = $this->paginate('Newartist');
 		$this -> set( 'artists', $artists );
-	}/*
-    Function Name : deletenewartists
-    Desc : For deleting a featured artist
-   */
-	public function admin_deletenewartists()
-	{
+	}
+	
+	/*
+	Function Name : deletenewartists
+	Desc : For deleting a featured artist
+	*/
+	function admin_deletenewartists() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Newartist();
 		
@@ -453,7 +458,7 @@ Class ArtistsController extends AppController
 		}
 	}
 	
-	public function view($id = null) {
+	function view($id = null) {
 		$this->layout = 'home';
                 $this->set('artistName',base64_decode($id));
 		$patId = $_SESSION['patron'];
