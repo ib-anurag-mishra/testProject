@@ -5,10 +5,8 @@ class Home extends AppModel
   var $useTable = 'METADATA';
   
   //Function to get random songs
-  public function getSongs()
-  {
-     $randomSongs = $this->find('all', array(//'order' => 'rand()',
-	                                              'limit' => 8));
+  function getSongs() {
+     $randomSongs = $this->find('all', array('limit' => 8));
      return $randomSongs;
   }
 }  

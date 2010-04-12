@@ -8,18 +8,9 @@ class Product extends AppModel {
 	var $name = 'Product';
 	var $useTable = 'PRODUCT';
 	var $primaryKey = 'ProdID';
-	
-       /* var $hasMany = array(
-		'Availability' => array(
-			'className' => 'Availability',
-			'foreignKey' => 'ProdID'
-		)
-       	);*/
+
 	var $hasOne = array(
-		/*'Metadata' => array(
-			'className' => 'Metadata',
-			'foreignKey' => 'ProdID'
-		)*/'ProductOffer' => array(
+		'ProductOffer' => array(
 			'className' => 'ProductOffer',
 			'foreignKey' => 'ProdID'
 		),

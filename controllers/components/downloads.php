@@ -3,8 +3,7 @@ Class DownloadsComponent extends Object
 {    
     var $components = array('Session');
 
-    function checkLibraryDownload($libId)
-    {
+    function checkLibraryDownload($libId) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
         $results = $libraryInstance->find('count',array('conditions' => array('library_download_limit > library_current_downloads','id' => $libId)));
@@ -17,8 +16,7 @@ Class DownloadsComponent extends Object
         }
     }
     
-    function checkPatronDownload($patId,$libId)
-    {
+    function checkPatronDownload($patId,$libId) {
         $downloadInstance = ClassRegistry::init('Download');
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;

@@ -1,8 +1,7 @@
 <?php
 class AppModel extends Model {
  
-    function find($conditions = null, $fields = array(), $order = null, $recursive = null)
-    {
+    function find($conditions = null, $fields = array(), $order = null, $recursive = null) {
         $doQuery = true;
         // check if we want the cache
         if (!empty($fields['cache'])) {
@@ -25,8 +24,7 @@ class AppModel extends Model {
         return $data;
     }
     
-    function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array())
-    { 
+    function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
         if(isset($extra['cache']) &&  $extra['cache'] == 'yes')
         {
           $args = func_get_args();
@@ -50,8 +48,7 @@ class AppModel extends Model {
         return $pagination;
     }
 
-    function paginateCount ($conditions = null, $recursive = 0, $extra = array())
-    {       
+    function paginateCount ($conditions = null, $recursive = 0, $extra = array()) {
         $args = func_get_args();
         $uniqueCacheId = '';
         foreach ($args as $arg) {

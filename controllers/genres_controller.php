@@ -12,19 +12,17 @@ Class GenresController extends AppController
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	var $helpers = array('Cache','Library','Page');
 
-	function beforeFilter() {	  
-	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view','index');
-	    $libraryCheckArr = array("view","index");	   
-	    if(in_array($this->action,$libraryCheckArr))
-	    {
-	      $validPatron = $this->ValidatePatron->validatepatron();	     
-	      if(!$validPatron)
-	      {
-		  $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
-                  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-	      }	      
-	    }	    
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allowedActions = array('view','index');
+		$libraryCheckArr = array("view","index");
+		if(in_array($this->action,$libraryCheckArr)) {
+		  $validPatron = $this->ValidatePatron->validatepatron();
+		  if(!$validPatron) {
+		    $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
+		    $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+		  }
+		}
 	}
 	
 	function index() {
@@ -150,11 +148,9 @@ Class GenresController extends AppController
 			$this->set('categories',$finalArray);
 	}
 	
-	function view( $Genre = null )
-	{
-		$this -> layout = 'home';		
-		if( !base64_decode($Genre) )
-		{
+	function view( $Genre = null ) {
+		$this -> layout = 'home';
+		if( !base64_decode($Genre) ) {
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
@@ -164,12 +160,10 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		if($_SESSION['block'] == 'yes')
-		{
+		if($_SESSION['block'] == 'yes') {
 		      $cond = array('Metadata.Advisory' => 'T');
 		}
-		else
-		{
+		else {
 		      $cond = "";
 		}
 		$this->Physicalproduct->Behaviors->attach('Containable');
@@ -186,11 +180,8 @@ Class GenresController extends AppController
 		$this->set('genre',base64_decode($Genre));
 	}
 	
-	function admin_managegenre()
-	{
-			
-		if($this->data)
-		{
+	function admin_managegenre() {
+		if($this->data) {
 			$this->Category->deleteAll(array('1 = 1'), false);
 			$selectedGenres = Array();
 			$i = 0;		

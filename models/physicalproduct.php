@@ -13,25 +13,12 @@ class Physicalproduct extends AppModel
   var $primaryKey = 'ProdID';
   var $actsAs = array('Containable');
   var $uses = array('Physicalproduct','Featuredartist','Artist','Productoffer');
-  /*var $belongsTo = array(
-		'Product' => array(
-			'className' => 'Product',
-			'foreignKey' => 'ProdID'
-		)
-  );*/
+
  var $hasOne = array(
 		'Metadata' => array(
 			'className' => 'Metadata',
 			'foreignKey' => 'ProdID'
 		),
-		// 'Availability' => array(
-		// 			'className' => 'Availability',
-		// 			'foreignKey' => 'ProdID'
-		// 		),
-		// 'ProductOffer' => array(
-		// 			'className' => 'ProductOffer',
-		// 			'foreignKey' => 'ProdID'
-		// 		),
 		'Graphic' => array(
 			'className' => 'Graphic',
 			'foreignKey' => 'ProdID'
@@ -52,8 +39,7 @@ class Physicalproduct extends AppModel
    Function Name : getallartist
    Desc : gets the list of all the artists
   */
-  public function getallartist()
-  {
+  function getallartist() {
 	$this->recursive = -1;
 	$allArtists = $this->find('all', array(
 		'fields' => array(
@@ -76,8 +62,7 @@ class Physicalproduct extends AppModel
    Desc : This would returna a set of featured artist which does not have images associated with them.
   */
 
-  public function getallartistname($condition,$artistName)
-  {
+  function getallartistname($condition,$artistName) {
     $this->recursive = -1;
     $allArtists = $this->find('all', array(	
 	'fields' => 'DISTINCT ArtistText', 
@@ -121,8 +106,7 @@ class Physicalproduct extends AppModel
    Function Name : allartistname
    Desc : This would returna a set of artist which does not have images associated with them.
   */
-  public function allartistname($condition,$artistName)
-  {
+  function allartistname($condition,$artistName) {
     $this->recursive = -1;
     $allArtists = $this->find('all', array(	
 	'fields' => 'DISTINCT ArtistText', 
@@ -160,8 +144,7 @@ class Physicalproduct extends AppModel
     return $resultArr;
   }
   
-  public function searchArtist($search)
-  {      
+  function searchArtist($search) {
       if($search == 'special')
       {
 	$allArtists = $this->find('all', array(
@@ -194,8 +177,7 @@ class Physicalproduct extends AppModel
       return $allArtists;
   }
   
-  public function getdownloaddata($id)
-  {
+  function getdownloaddata($id) {
     $this->recursive = 2;
     $this->Behaviors->attach('Containable');
     $downloadData = $this->find('all', array(
@@ -227,8 +209,7 @@ class Physicalproduct extends AppModel
     return $downloadData;
   }
   
-  public function selectArtist()
-  {
+  function selectArtist() {
       $this->recursive = -1;
       $allArtists = $this->find('all', array(
 	      'fields' => array(

@@ -1,4 +1,10 @@
 <?php
+/*
+ File Name : artist.php
+ File Description : Models page for the artists table.
+ Author : maycreate
+*/
+
 class Artist extends AppModel
 {
     var $name = 'Artist';
@@ -8,8 +14,7 @@ class Artist extends AppModel
     Desc : save an artist imahe in the db
     */
 
-    public function insert($data)
-    {
+    function insert($data) {
         if($this->save($data))
         {
             return true;
@@ -22,19 +27,16 @@ class Artist extends AppModel
     Function Name : getallartists
     Desc : lists all the artists for slideshow in the homepage
     */
-    public function getallartists()
-    {
-    $getArtists = $this->find('all');
-    return $getArtists;
+    function getallartists() {
+        $getArtists = $this->find('all');
+        return $getArtists;
     }
     
-     /*
+    /*
     Function Name : getartistdata
     Desc : 
     */
-
-    public function getartistdata($id)
-    {
+    function getartistdata($id) {
         $getArtistData = $this->find('first', array('conditions' => array('id' => $id)));       
         return $getArtistData;
     }
@@ -43,8 +45,7 @@ class Artist extends AppModel
     Function Name : del
     Desc : 
     */
-    public function del($id)
-    {
+    function del($id) {
         if($this->delete($id))
         {
             return true;

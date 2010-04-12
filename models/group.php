@@ -13,28 +13,28 @@ class Group extends AppModel
   Desc : Gets all the User Types
   */
   var $actsAs = array('Acl' => array('type' => 'requester'));
+  
   function parentNode(){
-      return null;
-    }
+    return null;
+  }
   
   var $hasMany = array(
-  'User' => array(
-   'className' => 'User',
-   'foreignKey' => 'type_id',
-   'dependent' => false,
-   'conditions' => '',
-   'fields' => '',
-   'order' => '',
-   'limit' => '',
-   'offset' => '',
-   'exclusive' => '',
-   'finderQuery' => '',
-   'counterQuery' => ''
-  )
- ); 
+   'User' => array(
+    'className' => 'User',
+    'foreignKey' => 'type_id',
+    'dependent' => false,
+    'conditions' => '',
+    'fields' => '',
+    'order' => '',
+    'limit' => '',
+    'offset' => '',
+    'exclusive' => '',
+    'finderQuery' => '',
+    'counterQuery' => ''
+   )
+  ); 
 
-  public function getallusertype()
-  {
+  function getallusertype() {
    $getAdminTypes = $this->find('all');
    $resultArr = array();
    foreach($getAdminTypes as $getAdminType)

@@ -12,8 +12,7 @@ Class ReportsController extends AppController
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
     var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport' );
     
-    public function admin_index()
-    {
+    function admin_index() {
         if($this->Session->read("Auth.User.type_id") == 4) {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
@@ -69,8 +68,7 @@ Class ReportsController extends AppController
         }
     }
     
-    public function admin_downloadAsCsv()
-    {
+    function admin_downloadAsCsv() {
         Configure::write('debug', 0);
         $this->layout = false;
         if(isset($this->data)) {
@@ -104,8 +102,7 @@ Class ReportsController extends AppController
         }
     }
     
-    public function admin_downloadAsPdf()
-    {
+    function admin_downloadAsPdf() {
         Configure::write('debug',0); // Otherwise we cannot use this method while developing 
         if(isset($this->data)) {
             $this->Report->set($this->data);
@@ -140,8 +137,7 @@ Class ReportsController extends AppController
         }
     }
     
-    public function admin_libraryrenewalreport()
-    {
+    function admin_libraryrenewalreport() {
         if(isset($this->data)) {
             Configure::write('debug',0); // Otherwise we cannot use this method while developing 
             $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
@@ -157,8 +153,7 @@ Class ReportsController extends AppController
         $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
     }
     
-    public function admin_sonyreports()
-    {
+    function admin_sonyreports() {
         if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
         {
             Configure::write('debug',0); // Otherwise we cannot use this method while developing 

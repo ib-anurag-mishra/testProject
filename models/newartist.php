@@ -7,8 +7,7 @@ class Newartist extends AppModel
     Function Name : insert
     Desc : updatesa admin user data
     */
-    public function insert($data)
-    {
+    function insert($data) {
       if($this->save($data))
       {
         return true;
@@ -16,12 +15,12 @@ class Newartist extends AppModel
         return false; 
       }
     }
+    
     /*
     Function Name : getallartists
     Desc : gets all the artists
     */
-    public function getallnewartists()
-    {
+    function getallnewartists() {
         $getArtists = $this->find('all');
         return $getArtists;
     }
@@ -30,8 +29,7 @@ class Newartist extends AppModel
     Function Name : getartistdata
     Desc : gets data for the specified artist
     */
-    public function getartistdata($id)
-    {
+    function getartistdata($id) {
        $getArtistData = $this->find('first', array('conditions' => array('Newartist.id' => $id)));
        return $getArtistData;
     }
@@ -40,8 +38,7 @@ class Newartist extends AppModel
     Function Name : del
     Desc : deletes a featured artist
     */
-    public function del($id)
-    {
+    function del($id) {
      if($this->delete($id))
       {
             return true;

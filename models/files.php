@@ -11,6 +11,5 @@ class Files extends AppModel
   var $name = 'Files';
   var $useTable = 'File';
   var $primaryKey = 'FileID';
-  
-  
 }
+?>

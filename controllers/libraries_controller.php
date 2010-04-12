@@ -11,6 +11,7 @@ Class LibrariesController extends AppController
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron');
+    
     function beforeFilter() {	  
         parent::beforeFilter(); 
         $this->Auth->allowedActions = array('patron');
@@ -19,8 +20,7 @@ Class LibrariesController extends AppController
     Function Name : admin_managelibrary
     Desc : action for listing all the libraries
    */
-    public function admin_managelibrary()
-    {
+    function admin_managelibrary() {
         $this->Library->recursive = -1;
         $this->set('libraries', $this->paginate('Library'));
     }
@@ -29,8 +29,7 @@ Class LibrariesController extends AppController
     Function Name : admin_libraryform
     Desc : action for adding the libraries
    */
-    public function admin_libraryform()
-    {
+    function admin_libraryform() {
         if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
         {
             $libraryId = $this -> params[ 'named' ][ 'id' ];
@@ -95,8 +94,7 @@ Class LibrariesController extends AppController
         }
     }
     
-    public function admin_ajax_validate()
-    {
+    function admin_ajax_validate() {
         Configure::write('debug', 0);
 	$this->layout = false;
 	if ($this->RequestHandler->isAjax()) {
@@ -321,8 +319,7 @@ Class LibrariesController extends AppController
         }
     }
     
-    public function admin_doajaxfileupload()
-    {
+    function admin_doajaxfileupload() {
         Configure::write('debug', 0);
 	$this->layout = false;
         $error = "";
@@ -385,7 +382,7 @@ Class LibrariesController extends AppController
     Function Name : admin_activate
     Desc : For activating a library
    */
-    public function admin_activate() {
+    function admin_activate() {
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID))
         {
@@ -407,8 +404,7 @@ Class LibrariesController extends AppController
     Function Name : patron
     Desc : For validating the patrons for libraries
    */
-    function patron()
-    {    
+    function patron() {
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
@@ -495,6 +491,6 @@ Class LibrariesController extends AppController
             }
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
-    }  
-    
+    }
 }
+?>

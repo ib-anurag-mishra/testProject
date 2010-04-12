@@ -3,8 +3,7 @@ Class ValidatePatronComponent extends Object
 {
     var $components = array('Session');
 
-    function validatepatron()
-    {
+    function validatepatron() {
         if(!isset($_SESSION['library']) && !isset($_SESSION['patron'])) {
 	    return 0;
         }

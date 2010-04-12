@@ -23,11 +23,5 @@ class Genre extends AppModel {
 			'foreignKey' => 'ProdID'
 		)		
 	);
-	
-	/*var $hasOne = array(		
-		'Product' => array(
-			'className' => 'Product',
-			'foreignKey' => 'ProdID'
-		)
-	);*/
 }
+?>

@@ -65,8 +65,7 @@ class Library extends AppModel
     Desc : gets all the library details from the db
     */
     
-    public function getalllibraries()
-    {
+    function getalllibraries() {
         $getLibraries = $this->find('all');
         return $getLibraries;
     }
@@ -76,8 +75,7 @@ class Library extends AppModel
     Desc : gets the details for a library
     */
     
-    public function getlibrarydata($id)
-    {
+    function getlibrarydata($id) {
        $getLibraryData = $this->find('first', array('conditions' => array('Library.id' => $id)));
        return $getLibraryData;
     }
@@ -87,8 +85,7 @@ class Library extends AppModel
     Desc : Checks the presence of username
     */
     
-    public function checkusername($username,$id = ' ')
-    {
+    function checkusername($username,$id = ' ') {
      if($id == ' ')
      {
        $getUsernameCount = $this->find('count', array('conditions' => array('username' => $username)));
@@ -108,8 +105,7 @@ class Library extends AppModel
     Desc : removes the elements from an array based on keys
     */
      
-    public function arrayremovekey()
-    {
+    function arrayremovekey() {
      $args = func_get_args();
      $arr = $args[0];
      $keys = array_slice($args,1);     

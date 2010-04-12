@@ -58,8 +58,7 @@ class User extends AppModel
      )
     );
   
-  function parentNode()
-  {
+  function parentNode() {
     if (!$this->id && empty($this->data)) {
     return null;
     }
@@ -78,8 +77,7 @@ class User extends AppModel
   Desc : gets all the admin users details from the db
   */
   
-  public function getallusers()
-  {
+  function getallusers() {
     $getAdmins = $this->find('all');
     return $getAdmins;
   }
@@ -89,8 +87,7 @@ class User extends AppModel
   Desc : gets the details for a user
   */
   
-  public function getuserdata($id)
-  {
+  function getuserdata($id) {
     $getAdminData = $this->find('first', array('conditions' => array('User.id' => $id)));
     return $getAdminData;
   }
@@ -101,8 +98,7 @@ class User extends AppModel
   Desc : removes the elements from an array based on keys
   */
   
-  public function arrayremovekey()
-  {
+  function arrayremovekey() {
     $args = func_get_args();
     $arr = $args[0];
     $keys = array_slice($args,1);
@@ -114,8 +110,7 @@ class User extends AppModel
     return $arr;
   }
   
-  public function del($id)
-  {
+  function del($id) {
    if($this->delete($id))
    {
    return true;
@@ -129,8 +124,7 @@ class User extends AppModel
     Desc : gets all the library admins from the db
     */
    
-  public function getalllibraryadmins($condition,$id)
-  {
+  function getalllibraryadmins($condition,$id) {
     $this->recursive = -1;
     $librarytObj = new Library();
     $existingLibraries = $librarytObj->find('all', array(
