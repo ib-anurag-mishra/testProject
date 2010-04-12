@@ -2,6 +2,12 @@
 <form>
 <fieldset>
 <legend>User Listing</legend>
+<p>
+<?php
+echo $paginator->counter(array(
+'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+));
+?></p>
   <table id="list">
           <tr>
             <th class="left">First Name</th>
@@ -33,12 +39,6 @@
           ?>
         </table>
 	<br class="clr" />
-	<p>
-	<?php
-	echo $paginator->counter(array(
-	'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
-	));
-	?></p>
 	<div class="paging">
 	      <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	| 	<?php echo $paginator->numbers();?>
