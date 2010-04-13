@@ -459,8 +459,18 @@ Class ArtistsController extends AppController
 	}
 	
 	function view($id = null) {
-		$this->layout = 'home';
-                $this->set('artistName',base64_decode($id));
+	if(isset($_REQUEST['url']))
+        {
+            $requestUrlArr = explode("/", $_REQUEST['url']);
+		$id = $requestUrlArr['2'];
+		if(count($requestUrlArr) > 3)
+		{
+			for($i=3;$i<count($requestUrlArr);$i++)
+            		$id .= '/'.$requestUrlArr[$i];
+		}          
+        }	
+	$this->layout = 'home';	
+              $this->set('artistName',base64_decode($id));
 		$patId = $_SESSION['patron'];
 		$libId = $_SESSION['library'];
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
