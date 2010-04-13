@@ -32,6 +32,9 @@ Class UsersController extends AppController
    */
    function admin_login() {
       $this->layout = 'admin';
+      if (empty($this->data)) {
+         $this->Session->delete('Message.auth');
+      }
       if ($this->Session->read('Auth.User'))
       {
        $this->redirect('/users/admin_index');
