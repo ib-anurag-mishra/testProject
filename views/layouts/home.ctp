@@ -124,7 +124,7 @@
 			margin-top: -14px;
 		}
 		.genreSeeAll {
-			margin-top: -14px;
+			margin-top: -18px;
 		}
 	</style>
 <![endif]-->
