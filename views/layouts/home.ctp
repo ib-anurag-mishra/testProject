@@ -120,6 +120,9 @@
 <![endif]-->
 <!--[if = IE 7]>
 	<style>
+		#ticker {
+			line-height: 16px;
+		}
 		ul.marquee {
 			margin-top: -14px;
 		}
