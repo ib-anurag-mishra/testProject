@@ -118,7 +118,7 @@
     	</div>
   	</div>
 <![endif]-->
-<!--[if == IE 7]>
+<!--[if IE 7]>
 	<style>
 		#ticker {
 			line-height: 16px;
