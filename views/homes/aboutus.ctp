@@ -1,13 +1,5 @@
 <br class="clr" />
-<?php
-	if ($session->flash() != '') {
-?>
-		<div class="error_div">
-		    <?php echo $session->flash(); ?>
-		</div>
-<?php
-	}
-?>
+<?php echo $session->flash(); ?>
 <div id="aboutUs">
-    <?php echo $page->getPageContent('aboutus'); ?>
+    <?php echo $page->getPageContent('aboutus'); ?>
 </div>
