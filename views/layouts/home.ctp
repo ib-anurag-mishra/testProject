@@ -124,7 +124,7 @@
 			line-height: 16px;
 		}
 		ul.marquee {
-			margin-top: -14px;
+			margin-top: -16px;
 		}
 		.genreSeeAll {
 			margin-top: -20px;
