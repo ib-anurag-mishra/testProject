@@ -395,6 +395,8 @@ Class UsersController extends AppController
     $this->Email->subject = 'FreegalMusic - New patron account information';
     $this->Email->smtpHostNames = Configure::read('App.SMTP');
     $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+    $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+    $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
     $result = $this->Email->send(); 
    }
    
@@ -411,6 +413,8 @@ Class UsersController extends AppController
     $this->Email->subject = 'FreegalMusic - Patron account password changed!!';
     $this->Email->smtpHostNames = Configure::read('App.SMTP');
     $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+    $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+    $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
     $result = $this->Email->send(); 
    }
    
