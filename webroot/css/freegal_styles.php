@@ -1121,3 +1121,7 @@ div.code-coverage-results span.result-good {
 .input{
 /*	float:left;*/
 }
+
+#terms p {
+	margin-bottom:10px;
+}

@@ -1,4 +1,4 @@
 <br class="clr" />
-<div id="aboutUs">
+<div id="terms">
     <?php echo $page->getPageContent('terms'); ?>
 </div>
