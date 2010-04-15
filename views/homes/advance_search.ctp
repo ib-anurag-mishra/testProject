@@ -1,6 +1,6 @@
 <?php echo $javascript->link('freegal_advsearch_curvy'); ?>
 <div id="advance_search_box">
-	Advance Search
+	Advanced Search
 </div>
 <br class="clr">
 <div id="advance_search">
@@ -12,6 +12,6 @@
 		echo $form->input('album');
 		echo $form->label('Genres');
 		echo $form->select('genre',$genres);
-		echo $form->end('Advance Search');
+		echo $form->end('Advanced Search');
 	?>
 </div>
