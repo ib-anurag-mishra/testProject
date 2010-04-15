@@ -8,13 +8,13 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page' );
-    var $components = array('RequestHandler','ValidatePatron','Downloads');
-    var $uses = array('Home','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email');
+    var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page');
  
    function beforeFilter()
    {
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform'))
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'forgot_password'))
         {
             $validPatron = $this->ValidatePatron->validatepatron();
             if(!$validPatron)
@@ -478,15 +478,62 @@ class HomesController extends AppController
 	    $this->set('getData',$arr);
 	}
 	$this->layout = 'admin';
-    }
-    
-    public function aboutus()
-    {
+    }    
+    function aboutus(){
 	$this->layout = 'home';
     }
     
-    public function terms()
-    {
+    function terms(){
 	$this->layout = 'home';
+    }
+    function check_email($email){
+        $email_regexp = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$";
+        return eregi($email_regexp, $email);
+    }
+    function _sendForgotPasswordMail($id, $password) {
+        Configure::write('debug', 0);
+        $this->Email->template = 'email/forgotPasswordEmail';
+        $this->User->recursive = -1;
+        $Patron = $this->User->read(null,$id);
+        $this->set('Patron', $Patron);
+        $this->set('password', $password);        
+        $this->Email->from = Configure::read('App.adminEmail');
+        $this->Email->fromName = Configure::read('App.fromName');
+        $this->Email->to = $Patron['User']['email'];
+        $this->Email->subject = 'FreegalMusic - New Password information';
+        $this->Email->smtpHostNames = Configure::read('App.SMTP');
+        $result = $this->Email->send(); 
+    }
+    
+    function forgot_password(){
+        $this->layout = 'home';
+        $errorMsg ='';
+        if($this->data){
+            $email = $this->data['Home']['email'];
+            if($email == ''){
+                $errorMsg = "Please provide your email address.";
+            }
+            elseif(!($this->check_email($email))){
+                $errorMsg = "This is not a valid email.";
+            }
+            else{
+                $email_exists = $this->User->find('all',array('conditions' => array('email' => $email, 'type_id' => '5')));               
+                if(count($email_exists) == 0){
+                    $errorMsg = "This is not a valid patron email.";    
+                }                
+            }            
+            if($errorMsg != ''){                
+                $this->Session->setFlash($errorMsg);
+                $this->redirect($this->webroot.'homes/forgot_password');
+            }            
+            else{
+                $temp_password = $this->PasswordHelper->generatePassword(8);
+                $this->User->id = $email_exists[0]['User']['id'];                
+                $this->User->saveField('password', Security::hash(Configure::read('Security.salt').$temp_password), false);
+                $this->_sendForgotPasswordMail($this->User->id, $temp_password);
+                $this->Session->setFlash("An email with your new password has been sent to your email account.");
+                $this->redirect($this->webroot.'homes/forgot_password');
+            }            
+        }        
     }
 }
