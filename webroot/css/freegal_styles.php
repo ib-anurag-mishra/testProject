@@ -536,6 +536,20 @@ ul.marquee li {
 	min-height:375px;
 }
 
+#aboutUs p {
+	margin-bottom:10px;
+}
+
+#terms {
+	margin:10px;
+	font-size:13px;
+	min-height:375px;
+}
+
+#terms p {
+	margin-bottom:10px;
+}
+
 .error_div {
         margin:10px;
 	font-size:13px;
@@ -1120,8 +1134,4 @@ div.code-coverage-results span.result-good {
 
 .input{
 /*	float:left;*/
-}
-
-#terms p {
-	margin-bottom:10px;
 }
