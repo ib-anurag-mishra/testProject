@@ -333,6 +333,8 @@ class AppController extends Controller
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_index' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsCsv' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsPdf' );
+		$adminType -> id = 5;
+		$this -> Acl -> allow( $adminType, 'controllers' );
 	}
 }
 ?>

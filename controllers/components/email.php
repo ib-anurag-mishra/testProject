@@ -69,7 +69,7 @@ class EmailComponent
 
     function send()
     {
-      App::import('vendor', 'PHPMailer', array('file' => 'phpMailer/class.phpmailer.php'));
+      App::import('vendor', 'PHPMailer', array('file' => 'phpmailer/class.phpmailer.php'));
   
       $mail = new PHPMailer();
   
