@@ -540,6 +540,15 @@ ul.marquee li {
 	margin-bottom:10px;
 }
 
+#aboutUs a {
+        text-decoration: none;
+        color:<?php echo $library_links_color; ?>;
+}
+
+#aboutUs a:hover {
+        text-decoration: none;
+        color:<?php echo $library_links_hover_color; ?>;
+}
 #terms {
 	margin:10px;
 	font-size:13px;
@@ -548,6 +557,16 @@ ul.marquee li {
 
 #terms p {
 	margin-bottom:10px;
+}
+
+#terms a {
+        text-decoration: none;
+        color:<?php echo $library_links_color; ?>;
+}
+
+#terms a:hover {
+        text-decoration: none;
+        color:<?php echo $library_links_hover_color; ?>;
 }
 
 .error_div {
