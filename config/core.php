@@ -285,7 +285,7 @@
  *   Memcache (http://www.danga.com/memcached/)
  */
 
-  	 Cache::config('default', array(
+  	Cache::config('default', array(
  		'engine' => 'Memcache', //[required]
  		'duration'=> '+1 hours', //[optional]
  		'probability'=> 100, //[optional]
@@ -308,3 +308,9 @@
  	));     
  
 	//Cache::config('default', array('engine' => 'File'));
+
+/**
+ * The classname and database used in CakePHP's
+ * access control lists.
+ */
+        Configure::load('config');

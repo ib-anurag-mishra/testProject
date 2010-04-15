@@ -16,3 +16,4 @@ webroot/img/internet_explorer/*
 webroot/min/tmp/*
 webroot/sony_reports/*
 webroot/cron/config.php
+config/config.php

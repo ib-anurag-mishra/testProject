@@ -3,7 +3,7 @@
  <p>  Email: <?php echo $Patron['User']['email']; ?><br />
    Password: <?php echo $password; ?></p>
    
- <p> <a href="<?php echo $webroot.'users/login'; ?>">Click Here</a> to login to the website.</p>
+ <p> <a href="<?php echo Configure::read('App.base_url').'users/login'; ?>">Click Here</a> to login to the website.</p>
    
  <p>Thanks<br />
- FreegalMusic.com</p>
+ <?php echo Configure::read('App.name'); ?></p>

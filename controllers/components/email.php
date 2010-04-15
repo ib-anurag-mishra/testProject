@@ -14,7 +14,7 @@ class EmailComponent
     var $fromName     = "FreegalMusic.com";
     var $smtpUserName = '';  // SMTP username
     var $smtpPassword = ''; // SMTP password
-    var $smtpHostNames= "192.168.10.1";  // specify main and backup server
+    var $smtpHostNames= "localhost";  // specify main and backup server
     var $text_body = null;
     var $html_body = null;
     var $to = null;
