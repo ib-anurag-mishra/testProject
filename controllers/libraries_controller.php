@@ -406,7 +406,7 @@ Class LibrariesController extends AppController
     Function Name : patron
     Desc : For validating the patrons for libraries
    */
-    function patron() {
+    function patron() {        
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
@@ -416,7 +416,8 @@ Class LibrariesController extends AppController
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);        
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active')
+                                                'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active','library_authentication_method' => 'referral_url')
+                                                //'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active')
                                                 )
                                             );        
 	if(count($existingLibraries) == 0)
