@@ -465,8 +465,12 @@ Class ArtistsController extends AppController
 		$id = $requestUrlArr['2'];
 		if(count($requestUrlArr) > 3)
 		{
-			for($i=3;$i<count($requestUrlArr);$i++)
-            		$id .= '/'.$requestUrlArr[$i];
+			for($i=3;$i<count($requestUrlArr);$i++){
+				$check = substr($requestUrlArr[$i],0,4);
+				if($check != 'page'){
+					$id .= '/'.$requestUrlArr[$i];
+				}
+			}             		
 		}          
         }	
 	$this->layout = 'home';	
