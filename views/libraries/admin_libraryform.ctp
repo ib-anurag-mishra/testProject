@@ -7,8 +7,8 @@
 	        $getData['Library']['library_admin_id'] = "";
 	        $getData['Library']['library_name'] = "";
 	        $getData['Library']['library_domain_name'] = "";
+		$getData['Library']['library_authentication_method'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
-		//$getData['Library']['library_content_bgcolor'] = "FFFFFF";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
 		$getData['Library']['library_boxheader_text_color'] = "666666";
@@ -62,6 +62,18 @@
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
+						<td align="left">
+							<?php
+								echo $this->Form->input('library_authentication_method', array('options' => array(
+									'' => 'Select a Method',
+									'referral_url' => 'Referral URL',
+									'user_account' => 'User Account'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
+								);
+							?>
+						</td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>

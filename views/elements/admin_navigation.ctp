@@ -3,6 +3,17 @@
 ?>
 		<ul id="menu" class="sf-menu">
 			<li>
+				<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Patrons</a>
+				<ul>
+					<li>
+						<?php echo $html->link('Add Patron', array('controller' => 'users', 'action' => 'patronform'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Manage Patron', array('controller' => 'users', 'action' => 'managepatron'));?>
+					</li>
+				</ul>
+			</li>
+			<li>
 				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
 				<ul>
 					<li>
@@ -23,6 +34,12 @@
 					</li>
 					<li>
 						<?php echo $html->link('Manage User', array('controller' => 'users', 'action' => 'manageuser'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Add Patron', array('controller' => 'users', 'action' => 'patronform'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Manage Patron', array('controller' => 'users', 'action' => 'managepatron'));?>
 					</li>
 				</ul>
 			</li>

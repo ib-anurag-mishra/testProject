@@ -7,10 +7,10 @@
 Class UsersController extends AppController
 {
    var $name = 'Users';
-   var $helpers = array('Html','Ajax','Javascript','Form', 'User');
+   var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library');
    var $layout = 'admin';
-   var $components = array('Session','Auth','Acl');
-   var $uses = array('User','Group');
+   var $components = array('Session','Auth','Acl','PasswordHelper','Email');
+   var $uses = array('User','Group', 'Library');
    
    function before_filter() {
      $this->Auth->userModel = 'User';
@@ -55,7 +55,8 @@ Class UsersController extends AppController
     Desc : action for listing all the admin users
    */
    function admin_manageuser()
-   {  
+   {
+        $this->paginate = array('conditions' => array('type_id <> 5'));
         $this->set('admins', $this->paginate('User'));
    }
     
@@ -129,7 +130,126 @@ Class UsersController extends AppController
        }
        $this->set('options',$this->Group->getallusertype());
    }
-    
+   
+   /*
+    Function Name : managepatron
+    Desc : action for listing all the patron users
+   */
+   function admin_managepatron()
+   {
+        if($this->Session->read("Auth.User.type_id") == 4) {
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+            $this->paginate = array('conditions' => array('type_id' => 5, 'library_id' => $libraryAdminID["Library"]["id"]));
+        }
+        else {
+            $this->set('libraryID', "");
+            $this->paginate = array('conditions' => array('type_id' => 5));
+        }
+        $this->User->recursive = -1;
+        $this->set('patrons', $this->paginate('User'));
+   }
+   
+   /*
+    Function Name : patronform
+    Desc : action for displaying the add/edit patron form
+   */
+   function admin_patronform() {
+       if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
+       {
+           $patronUserId = $this->params['named']['id'];
+           if(trim($patronUserId) != "" && is_numeric($patronUserId))
+           {
+               $this->set('formAction','admin_patronform/id:'.$patronUserId);
+               $this->set('formHeader','Edit Patron');     
+               $this->set('getData', $this->User->getuserdata($patronUserId));
+               //editting a value
+               if(isset($this->data))
+               {
+                   $updateObj = new User();
+                   $getData['User'] = $this->data['User'];
+                   $getData['Group']['id'] = $this->data['User']['type_id'];
+                   $this->set('getData', $getData);
+                   $this->User->id = $this->data['User']['id'];
+                   $password = trim($this->data['User']['password']);
+                   if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5")
+                   {
+                      // do not update the password
+                      $this->data['User'] = $updateObj->arrayremovekey($this->data['User'],'password');
+                   }
+                   $this->User->set($this->data['User']);
+                   $this->User->setValidation('validate_patron_super_admin');
+                   if($this->User->validates()) {
+                    if($this->User->save())
+                    {
+                     if($password != "48d63321789626f8844afe7fdd21174eeacb5ee5")
+                     {
+                      $temp_password = $this->data['User']['original_password'];
+                      $this->_sendModifyPatronMail( $this->User->id, $temp_password );
+                     }
+                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+                      $this->redirect('managepatron');
+                    }
+                    else {
+                     $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+                    }
+                   }
+                   else {
+                    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+                   }
+               }
+                //editting a value
+           }
+       }else{
+               $arr = array();
+               $this->set('getData',$arr);
+               $this->set('formAction','admin_patronform');
+               $this->set('formHeader','Create Patron');
+               
+               //insertion Operation
+               if(isset($this->data))
+               {
+                   $insertObj = new User();
+                   $getData['User'] = $this->data['User'];
+                   $getData['Group']['id'] = $this->data['User']['type_id'];
+                   $this->set('getData', $getData);
+                  
+                   $this->User->set($this->data['User']);
+                   $this->User->setValidation('validate_patron_super_admin');
+                   if($this->User->validates()) {
+                    $temp_password = $this->PasswordHelper->generatePassword(8);
+                    $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);
+                    $this->User->set($this->data['User']);
+                    if($this->User->save())
+                    {
+                      $this->_sendNewPatronMail( $this->User->id, $temp_password );
+                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+                      $this->redirect('managepatron');
+                    }
+                    else
+                    {
+                      $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+                    }
+                   }
+                   else
+                   {
+                     $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+                   }
+               }
+               //insertion operation
+       }
+       if($this->Session->read("Auth.User.type_id") == 4) {
+           $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+           $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+           $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+       }
+       else {
+           $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+           $this->set('libraryID', "");
+       }
+       $this->set('options',$this->Group->getallusertype());
+   }
      
    /*
     Function Name : delete
@@ -146,6 +266,31 @@ Class UsersController extends AppController
        $this->redirect('manageuser');
      }
    }
-    
+   
+   function _sendNewPatronMail($id, $password) {
+    Configure::write('debug', 0);
+    $this->Email->template = 'email/newPatronEmail';
+    $this->User->recursive = -1;
+    $Patron = $this->User->read(null,$id);
+    $this->set('Patron', $Patron);
+    $this->set('password', $password);
+    $this->set('webroot', $this->webroot);
+    $this->Email->to = $Patron['User']['email'];
+    $this->Email->subject = 'FreegalMusic - New patron account information';
+    $result = $this->Email->send(); 
+   }
+   
+   function _sendModifyPatronMail($id, $password) {
+    Configure::write('debug', 0);
+    $this->Email->template = 'email/modifyPatronEmail';
+    $this->User->recursive = -1;
+    $Patron = $this->User->read(null,$id);
+    $this->set('Patron', $Patron);
+    $this->set('password', $password);
+    $this->set('webroot', $this->webroot);
+    $this->Email->to = $Patron['User']['email'];
+    $this->Email->subject = 'FreegalMusic - Patron account password changed!!';
+    $result = $this->Email->send(); 
+   }
 }
 ?>

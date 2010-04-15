@@ -7,7 +7,7 @@ Author : maycreate
 class User extends AppModel
 {
   var $name = 'User';
-  var $actsAs = array('Acl' => 'requester', 'Multivalidatable');
+  var $actsAs = array('Acl' => 'requester', 'Multivalidatable', 'Containable');
   var $belongsTo = array(
                     'Group' => array(
                         'className' => 'Group',
@@ -55,21 +55,39 @@ class User extends AppModel
                        )
                  ),
       'password' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please provide password.', 'on' => 'create')
+     ),
+     'validate_patron_super_admin' => array(
+      'first_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Admin First Name.'),
+      'last_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Admin Last Name.'),
+      'email' => array(
+                       'email-1' => array(
+                                          'rule' => array('email', true),
+                                          'message' => 'Please provide a valid user name/email id.',
+                                          'last' => true
+                       ),
+                       'email-2' => array(
+                                          'rule' => 'isUnique',
+                                          'message' => 'This user name/email id already exists in our database.',
+                                          'on' => 'create'
+                       )
+                 ),
+      'library_id' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a library.')
      )
     );
-  
+
   function parentNode() {
     if (!$this->id && empty($this->data)) {
-    return null;
+      return null;
     }
     $data = $this->data;
     if (empty($this->data)) {
-    $data = $this->read();
+      $data = $this->read();
     }
     if (!$data['User']['type_id']) {
-    return null;
-    } else {   
-    return array('Group' => array('id' => $data['User']['type_id']));
+      return null;
+    }
+    else {   
+      return array('Group' => array('id' => $data['User']['type_id']));
     }
   }  
   /*

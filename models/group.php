@@ -39,7 +39,7 @@ class Group extends AppModel
    $resultArr = array();
    foreach($getAdminTypes as $getAdminType)
    {
-    if($getAdminType['Group']['id'] != 4) {
+    if($getAdminType['Group']['id'] != 4 && $getAdminType['Group']['id'] != 5) {
      $resultArr[$getAdminType['Group']['id']] = $getAdminType['Group']['type'];
     }
    }

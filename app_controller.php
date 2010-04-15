@@ -328,6 +328,8 @@ class AppController extends Controller
 		$this -> Acl -> deny( $adminType, 'controllers' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_index' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_logout' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_patronform' );
+		$this -> Acl -> allow( $adminType, 'controllers/users/admin_managepatron' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_index' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsCsv' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsPdf' );
