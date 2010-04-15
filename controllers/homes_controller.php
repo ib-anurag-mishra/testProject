@@ -502,6 +502,7 @@ class HomesController extends AppController
         $this->Email->to = $Patron['User']['email'];
         $this->Email->subject = 'FreegalMusic - New Password information';
         $this->Email->smtpHostNames = Configure::read('App.SMTP');
+	$this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
         $result = $this->Email->send(); 
     }
     

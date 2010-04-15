@@ -24,6 +24,7 @@ class EmailComponent
     var $bcc = null;
     var $template = 'email/default';
     var $attachments = null;
+    var $smtpAuth = false;
 
     var $controller;
 
@@ -73,7 +74,7 @@ class EmailComponent
       $mail = new PHPMailer();
   
       $mail->IsSMTP();            // set mailer to use SMTP
-      $mail->SMTPAuth = false;     // turn on SMTP authentication
+      $mail->SMTPAuth = $this->smtpAuth;     // turn on SMTP authentication
       $mail->Host   = $this->smtpHostNames;
       $mail->Username = $this->smtpUserName;
       $mail->Password = $this->smtpPassword;
