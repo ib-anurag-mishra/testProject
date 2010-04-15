@@ -83,11 +83,13 @@ class User extends AppModel
     if (empty($this->data)) {
       $data = $this->read();
     }
-    if (!$data['User']['type_id']) {
-      return null;
-    }
-    else {   
-      return array('Group' => array('id' => $data['User']['type_id']));
+    if(isset($data['User']['type_id'])){    
+      if (!$data['User']['type_id']) {
+        return null;
+      }
+      else {   
+        return array('Group' => array('id' => $data['User']['type_id']));
+      }
     }
   }  
   /*

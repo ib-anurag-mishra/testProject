@@ -34,7 +34,16 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 					<?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
 				<a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a>
 				&nbsp;|&nbsp;
+				<?php if ($this->Session->read('Auth.User')) { ?>					
+					<?php echo $html->link('MY ACCOUNT', array('controller' => 'users', 'action' => 'my_account'));?>
+					&nbsp;|&nbsp;
+				<?php } ?>
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
+				<?php if ($this->Session->read('Auth.User')) { ?>
+					&nbsp;|&nbsp;
+					<?php echo $html->link('LOGOUT', array('controller' => 'users', 'action' => 'logout'));
+				}?>
+				
 			</li>
 			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
 		</ul>
