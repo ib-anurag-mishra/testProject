@@ -1,6 +1,8 @@
 <?php echo $javascript->link('freegal_questions'); ?>
 <div class="questions index">
-	<h2><?php __('FAQs');?></h2>
+	<div id="about">
+		<?php __('FAQs');?>
+	</div>
 	<div class="question_list">
 		<?php $Title = "";
 		 foreach ($questions as $question): ?>
@@ -14,3 +16,4 @@
 		<?php endforeach; ?>
 	</div>
 </div>
+<?php echo $javascript->link('freegal_about_curvy'); ?>
