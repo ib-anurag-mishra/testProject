@@ -168,7 +168,8 @@ Class GenresController extends AppController
 		}
 		$this->Physicalproduct->Behaviors->attach('Containable');
 		$this->Physicalproduct->recursive = 1;
-		$genre = base64_decode($Genre);					
+		$genre = base64_decode($Genre);
+		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
 		      'conditions' => array("Genre.Genre = '$genre'",'1 = 1 GROUP BY Physicalproduct.ArtistText'),
 		      'fields' => array('ArtistText'),
