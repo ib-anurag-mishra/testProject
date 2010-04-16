@@ -563,7 +563,8 @@ ul.marquee li {
         color:<?php echo $library_links_hover_color; ?>;
 }
 #terms {
-	margin:10px;
+	clear: both;
+	margin: 10px;
 	font-size:13px;
 	min-height:375px;
 }

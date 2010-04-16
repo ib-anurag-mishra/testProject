@@ -493,6 +493,11 @@ class HomesController extends AppController
     function terms(){
 	$this->layout = 'home';
     }
+
+	function limits() {
+		$this->layout = 'home';
+	}
+	
     function check_email($email){
         $email_regexp = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$";
         return eregi($email_regexp, $email);

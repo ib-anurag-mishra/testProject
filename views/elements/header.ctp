@@ -32,7 +32,7 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 			<li>
 				Weekly Downloads <span id="downloads_used">
 					<?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
-				<a href="#"><img src="<?php echo $this->webroot; ?>img/question.png" border="0" width="12" height="14"></a>
+				<?php echo $html->link($html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14)), array('controller' => 'homes', 'action' => 'limits'), array('escape' => false)); ?>
 				&nbsp;|&nbsp;
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 				<?php if ($this->Session->read('Auth.User')) { ?>
