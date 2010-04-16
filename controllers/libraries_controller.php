@@ -180,7 +180,15 @@ Class LibrariesController extends AppController
                 elseif($this->data['Library']['libraryStepNum'] == '5') {
                     $this->Library->create();
                     $this->Library->set($this->data['Library']);
-                    $this->Library->setValidation('library_step1');
+                    if($this->data['Library']['library_authentication_method'] == 'referral_url') {
+                        $this->Library->setValidation('library_step1_with_domain');
+                    }
+                    elseif($this->data['Library']['library_authentication_method'] == 'user_account') {
+                        $this->Library->setValidation('library_step1_without_domain');
+                    }
+                    else {
+                        $this->Library->setValidation('library_step1');
+                    }
                     if($this->Library->validates()){
                         if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
                             $this->data['User']['password'] = "";
@@ -304,7 +312,16 @@ Class LibrariesController extends AppController
                 else {
                     $this->Library->create();
                     $this->Library->set($this->data['Library']);
-                    $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
+                    if($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'referral_url') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_with_domain');
+                    }
+                    elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'user_account') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_without_domain');
+                    }
+                    else {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
+                    }
+                    
                     if($this->Library->validates()){
                         $message = __('You will be redirected to the next step shortly...', true);
                         $data = $this->data;

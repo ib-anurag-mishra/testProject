@@ -252,6 +252,9 @@ Class UsersController extends AppController
    */
    function admin_managepatron()
    {
+       if($this->Session->read("Auth.User.type_id") == 4 && $this->Library->getAuthenticationType($this->Session->read('Auth.User.id')) == "referral_url") {
+        $this->redirect('/admin/reports/index');
+       }
         if($this->Session->read("Auth.User.type_id") == 4) {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
@@ -271,6 +274,9 @@ Class UsersController extends AppController
     Desc : action for displaying the add/edit patron form
    */
    function admin_patronform() {
+       if($this->Session->read("Auth.User.type_id") == 4 && $this->Library->getAuthenticationType($this->Session->read('Auth.User.id')) == "referral_url") {
+        $this->redirect('/admin/reports/index');
+       }
        if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
        {
            $patronUserId = $this->params['named']['id'];

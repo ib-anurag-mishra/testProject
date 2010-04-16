@@ -109,6 +109,10 @@ $(function() {
 	});
 	
 	$('#step1').click(function(){
+		$(".error_message").remove();
+		$(".success_message").remove();
+		$(".error-message").remove();
+		$(".error-br").remove();
 		$("#LibraryLibraryStepNum").val(1);
 		$("div[id^='step']").each(function() {
 			$(this).removeClass('active_step').addClass('inactive_step');
@@ -125,6 +129,10 @@ $(function() {
 	});
 	
 	$('#step2').click(function(){
+		$(".error_message").remove();
+		$(".success_message").remove();
+		$(".error-message").remove();
+		$(".error-br").remove();
 		$("#LibraryLibraryStepNum").val(2);
 		$("div[id^='step']").each(function() {
 			$(this).removeClass('active_step').addClass('inactive_step');
@@ -141,6 +149,10 @@ $(function() {
 	});
 	
 	$('#step3').click(function(){
+		$(".error_message").remove();
+		$(".success_message").remove();
+		$(".error-message").remove();
+		$(".error-br").remove();
 		$("#LibraryLibraryStepNum").val(3);
 		$("div[id^='step']").each(function() {
 			$(this).removeClass('active_step').addClass('inactive_step');
@@ -157,6 +169,10 @@ $(function() {
 	});
 	
 	$('#step4').click(function(){
+		$(".error_message").remove();
+		$(".success_message").remove();
+		$(".error-message").remove();
+		$(".error-br").remove();
 		$("#LibraryLibraryStepNum").val(4);
 		$("div[id^='step']").each(function() {
 			$(this).removeClass('active_step').addClass('inactive_step');
@@ -173,6 +189,10 @@ $(function() {
 	});
 	
 	$('#step5').click(function(){
+		$(".error_message").remove();
+		$(".success_message").remove();
+		$(".error-message").remove();
+		$(".error-br").remove();
 		$("#LibraryLibraryStepNum").val(5);
 		$("div[id^='step']").each(function() {
 			$(this).removeClass('active_step').addClass('inactive_step');
