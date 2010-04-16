@@ -160,8 +160,15 @@ Class UsersController extends AppController
    }
    
    function logout() {
-      session_destroy(); 
-      $this->redirect($this->Auth->logout()); 
+      $patronId = $this->Session->read('patron');
+      $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId)));
+      if(count($patronDetails) > 0){         
+         $updateTime = date( "Y-m-d H:i:s", time()-60 );
+         $this->Currentpatron->id = $patronId;         
+         $this->Currentpatron->saveField('modified',$updateTime, false);         
+         session_destroy();
+         $this->redirect($this->Auth->logout()); 
+      }     
    }
    
    
@@ -389,14 +396,9 @@ Class UsersController extends AppController
     $Patron = $this->User->read(null,$id);
     $this->set('Patron', $Patron);
     $this->set('password', $password);
+    $this->set('webroot', $this->webroot);
     $this->Email->to = $Patron['User']['email'];
-    $this->Email->from = Configure::read('App.adminEmail');
-    $this->Email->fromName = Configure::read('App.fromName');
     $this->Email->subject = 'FreegalMusic - New patron account information';
-    $this->Email->smtpHostNames = Configure::read('App.SMTP');
-    $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-    $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-    $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
     $result = $this->Email->send(); 
    }
    
@@ -407,15 +409,10 @@ Class UsersController extends AppController
     $Patron = $this->User->read(null,$id);
     $this->set('Patron', $Patron);
     $this->set('password', $password);
+    $this->set('webroot', $this->webroot);
     $this->Email->to = $Patron['User']['email'];
-    $this->Email->from = Configure::read('App.adminEmail');
-    $this->Email->fromName = Configure::read('App.fromName');
     $this->Email->subject = 'FreegalMusic - Patron account password changed!!';
-    $this->Email->smtpHostNames = Configure::read('App.SMTP');
-    $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-    $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-    $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-    $result = $this->Email->send();
+    $result = $this->Email->send(); 
    }
    
    function my_account(){
