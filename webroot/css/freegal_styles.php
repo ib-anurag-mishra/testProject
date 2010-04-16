@@ -543,7 +543,7 @@ ul.marquee li {
 }
 
 #aboutUs {
-	margin:10px;
+	margin: 0 10px 10px 10px;
 	font-size:13px;
 	min-height:375px;
 }
