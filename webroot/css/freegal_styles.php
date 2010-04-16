@@ -530,6 +530,18 @@ ul.marquee li {
 	font-size:13px;
 }
 
+#aboutBox {
+	float:left;
+	font-size:13px;
+	width:250px;
+	height: 20px;
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+    color:<?php echo $library_boxheader_text_color; ?>;
+	text-align: center;
+	margin: 10px 0 10px 10px;
+	line-height:20px;
+}
+
 #aboutUs {
 	margin:10px;
 	font-size:13px;
