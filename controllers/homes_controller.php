@@ -127,7 +127,7 @@ class HomesController extends AppController
         $this->set('patronDownload',$patronDownload);
         if($_SESSION['block'] == 'yes')
         {
-            $cond = array('Metadata.Advisory' => 'T');
+            $cond = array('Metadata.Advisory' => 'F');
         }
         else
         {
@@ -211,7 +211,8 @@ class HomesController extends AppController
                                 array('and' =>
                                         array(                                                      
                                                 array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
-                                                array('Physicalproduct.DownloadStatus' => 1),$cond
+                                                array('Physicalproduct.DownloadStatus' => 1),
+                                                array('Physicalproduct.TrackBundleCount' => 0),$cond
                                             )
                                         ,
                                     $condition =>
@@ -253,8 +254,8 @@ class HomesController extends AppController
                                     ), 'cache' => 'yes'
                                 );
             $this->Physicalproduct->recursive = 2;
-            $searchResults = $this->paginate('Physicalproduct');           
-            $this->set('searchResults', $searchResults);           
+            $searchResults = $this->paginate('Physicalproduct');
+            $this->set('searchResults', $searchResults);
         }
         else
         {   
@@ -270,49 +271,55 @@ class HomesController extends AppController
             $this->set('searchKey','search='.urlencode($searchKey));            
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
-                                    array('and' =>
-                                            array(                                                      
-                                                    array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
-                                                    array('Physicalproduct.DownloadStatus' => 1),$cond
-                                                )
-                                            ,
-                                        'or' =>
+                                array('and' =>
+                                        array(                                                      
+                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
+                                                array('Physicalproduct.DownloadStatus' => 1),
+                                                array('Physicalproduct.TrackBundleCount' => 0),$cond
+                                            )
+                                        ,
+                                    'or' =>
                                                 array(
                                                         array('Physicalproduct.ArtistText LIKE' => $searchKey.'%'),
                                                         array('Physicalproduct.Title LIKE' => $searchKey.'%'),
                                                         array('Metadata.Title LIKE' => $searchKey.'%')
                                                     )
                                         ),
-                                        'fields' => array(
-                                                        'Physicalproduct.ProdID',
-                                                        'Physicalproduct.Title',
-                                                        'Physicalproduct.ArtistText',
-                                                        'Physicalproduct.DownloadStatus',
-                                                        'Physicalproduct.SalesDate'
-                                                        ),
-                                        'contain' => array(                                                                       
-                                        'Metadata' => array(
-                                                'fields' => array(
-                                                        'Metadata.Title',
-                                                        'Metadata.Artist',
-                                                        'Metadata.Advisory'
-                                                        )
-                                                ),
-                                        'Audio' => array(
-                                                'fields' => array(
-                                                        'Audio.FileID',                                                    
-                                                        ),
-                                                'Files' => array(
-                                                'fields' => array(
-                                                        'Files.CdnPath' ,
-                                                        'Files.SaveAsName'
-                                                        )
-                                                )
-                                            )                                    
-                                        )
-                                    );
-            $this->Physicalproduct->recursive = 2;        
-            $searchResults = $this->paginate('Physicalproduct');       
+                                    'fields' => array(
+                                                    'Physicalproduct.ProdID',
+                                                    'Physicalproduct.Title',
+                                                    'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.DownloadStatus',
+                                                    'Physicalproduct.SalesDate'
+                                                    ),
+                                    'contain' => array(                                                                       
+                                    'Metadata' => array(
+                                            'fields' => array(
+                                                    'Metadata.Title',
+                                                    'Metadata.Artist',
+						    'Metadata.Advisory'
+                                                    )
+                                            ),
+                                    'Genre' => array(
+                                            'fields' => array(
+                                                    'Genre.Genre'                                                   
+                                                    )
+                                            ),
+                                    'Audio' => array(
+                                            'fields' => array(
+                                                    'Audio.FileID',                                                    
+                                                    ),
+                                            'Files' => array(
+                                            'fields' => array(
+                                                    'Files.CdnPath' ,
+                                                    'Files.SaveAsName'
+                                                    )
+                                            )
+                                        )                                    
+                                    ), 'cache' => 'yes'
+                                );
+            $this->Physicalproduct->recursive = 2;
+            $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
         $this->layout = 'home';
