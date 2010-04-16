@@ -3,6 +3,7 @@
 	<div id="aboutBox">
 		<?php __('FAQs');?>
 	</div>
+	<br class="clr" />
 	<div class="question_list">
 		<?php $Title = "";
 		 foreach ($questions as $question): ?>
