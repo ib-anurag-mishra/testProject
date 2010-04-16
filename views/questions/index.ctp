@@ -1,6 +1,6 @@
 <?php echo $javascript->link('freegal_questions'); ?>
 <div class="questions index">
-	<div id="about">
+	<div id="aboutBox">
 		<?php __('FAQs');?>
 	</div>
 	<div class="question_list">
