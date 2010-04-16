@@ -1167,3 +1167,14 @@ div.code-coverage-results span.result-good {
 .input{
 /*	float:left;*/
 }
+
+div.message {
+	clear: both;
+	color: #fff;
+	font-size: 100%;
+	font-weight: bold;
+	margin: 0 0 1em 0;
+	text-align: center;
+	background: #c73e14;
+	padding: 5px;
+}
