@@ -486,6 +486,48 @@ class HomesController extends AppController
 	}
 	$this->layout = 'admin';
     }    
+
+	public function admin_limitsform()
+    {
+	if(isset($this->data)) {
+	    if($this->data['Home']['id'] != "") {
+		$this->Page->id = $this->data['Home']['id'];
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save())
+		{
+		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+	    }
+	    else {
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()) {
+		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+		else {
+		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		}
+	    }
+	}
+        $this -> set( 'formAction', 'admin_limitsform');
+        $this -> set( 'formHeader', 'Manage Download Limits Page Content' );
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits')));
+	if(count($getPageData) != 0) {
+	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
+	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+	    $this -> set( 'getData', $getData );
+	}
+	else {
+	    $arr = array();
+	    $this->set('getData',$arr);
+	}
+	$this->layout = 'admin';
+    }
+
     function aboutus(){
 	$this->layout = 'home';
     }

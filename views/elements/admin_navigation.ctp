@@ -96,6 +96,7 @@
 							<li><?php echo $html->link('Manage FAQs', array('controller' => 'questions', 'action' => 'index'));?></li>
 							<li><?php echo $html->link('Manage About Us', array('controller' => 'homes', 'action' => 'aboutusform'));?></li>
 							<li><?php echo $html->link('Manage Terms & Condition', array('controller' => 'homes', 'action' => 'termsform'));?></li>
+							<li><?php echo $html->link('Manage Download Limits', array('controller' => 'homes', 'action' => 'limitsform'));?></li>
 						</ul>
 					</li>
 				</ul>
