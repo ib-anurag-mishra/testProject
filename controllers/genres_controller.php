@@ -44,7 +44,7 @@ Class GenresController extends AppController
 				$genreName = $category['Category']['Genre'];
 				if($_SESSION['block'] == 'yes')
 				{
-					$cond = array('Metadata.Advisory' => 'T');
+					$cond = array('Metadata.Advisory' => 'F');
 				}
 				else
 				{
