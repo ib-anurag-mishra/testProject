@@ -28,8 +28,8 @@ class Library extends AppModel
     
     var $validate = array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
-      'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
+      'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.'),
@@ -41,8 +41,24 @@ class Library extends AppModel
     var $validationSets = array(
      'library_step1' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
-      'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
+      'library_domain_name' => array('rule' => 'url', 'message' => 'Please provide a valid Library Domain Name.'),
+      'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
+      'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
+      'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
+     ),
+     'library_step1_with_domain' => array(
+      'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+      'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
+      'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  false, 'message' => 'Please provide a valid Library Domain Name.'),
+      'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
+      'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
+      'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
+     ),
+     'library_step1_without_domain' => array(
+      'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+      'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
+      'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
@@ -80,6 +96,13 @@ class Library extends AppModel
     function getlibrarydata($id) {
        $getLibraryData = $this->find('first', array('conditions' => array('Library.id' => $id)));
        return $getLibraryData;
+    }
+    
+    function getAuthenticationType($id) {
+        $libraryInstance = ClassRegistry::init('Library');
+        $libraryInstance->recursive = -1;
+        $libraryDetails = $libraryInstance->find('first', array('conditions' => array('library_admin_id' => $id), 'fields' => 'library_authentication_method'));
+        return $libraryDetails['Library']['library_authentication_method'];
     }
     
     /*

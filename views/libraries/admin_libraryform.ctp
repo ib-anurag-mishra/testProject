@@ -59,10 +59,19 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Library Name');?></td>
 						<td align="left"><?php echo $this->Form->input('library_name',array('label' => false ,'value' => $getData['Library']['library_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
+					<?php
+					if($getData['Library']['library_authentication_method'] == "user_account") {
+					?>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
-						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
+						<td align="left"><label>User Account</label>
+							<?php echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method'])); ?>
+						</td>
 					</tr>
+					<?php
+					}
+					else {
+					?>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
 						<td align="left">
@@ -74,6 +83,13 @@
 								);
 							?>
 						</td>
+					</tr>
+					<?php
+					}
+					?>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
+						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>

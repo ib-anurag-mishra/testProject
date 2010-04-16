@@ -2,17 +2,23 @@
 	if ($this->Session->read('Auth.User.type_id') == 4) {
 ?>
 		<ul id="menu" class="sf-menu">
-			<li>
-				<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Patrons</a>
-				<ul>
-					<li>
-						<?php echo $html->link('Add Patron', array('controller' => 'users', 'action' => 'patronform'));?>
-					</li>
-					<li>
-						<?php echo $html->link('Manage Patron', array('controller' => 'users', 'action' => 'managepatron'));?>
-					</li>
-				</ul>
-			</li>
+			<?php
+			if($library->getAuthenticationType($this->Session->read('Auth.User.id')) == "user_account") {
+			?>
+				<li>
+					<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Patrons</a>
+					<ul>
+						<li>
+							<?php echo $html->link('Add Patron', array('controller' => 'users', 'action' => 'patronform'));?>
+						</li>
+						<li>
+							<?php echo $html->link('Manage Patron', array('controller' => 'users', 'action' => 'managepatron'));?>
+						</li>
+					</ul>
+				</li>
+			<?php
+			}
+			?>
 			<li>
 				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
 				<ul>
