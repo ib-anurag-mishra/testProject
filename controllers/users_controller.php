@@ -93,8 +93,7 @@ Class UsersController extends AppController
                     if(($date-$modifiedTime) > 60)
                     {
                         $updateArr = array();
-                        $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                        $updateArr['created'] = date('Y-m-d H:i:s');
+                        $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                        
                         $updateArr['session_id'] = session_id();
                         $this->Currentpatron->save($updateArr);
                     }
@@ -112,8 +111,7 @@ Class UsersController extends AppController
                         if(($date-$modifiedTime) > 60)
                         {                            
                             $updateArr = array();
-                            $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                            $updateArr['created'] = date('Y-m-d H:i:s');
+                            $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                           
                             $updateArr['session_id'] = session_id();
                             $this->Currentpatron->save($updateArr);
                         }
@@ -164,7 +162,7 @@ Class UsersController extends AppController
       $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId)));
       if(count($patronDetails) > 0){         
          $updateTime = date( "Y-m-d H:i:s", time()-60 );
-         $this->Currentpatron->id = $patronId;         
+         $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
          $this->Currentpatron->saveField('modified',$updateTime, false);         
          session_destroy();
          $this->redirect($this->Auth->logout()); 
