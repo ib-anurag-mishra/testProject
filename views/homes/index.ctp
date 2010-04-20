@@ -42,20 +42,8 @@
                         <p class='suggest_text info_suggest'>
                             <?php
                                 if (strlen($randomSongs['Metadata']['Title']) >= 28 ) {
-                                        // echo $html->link(substr($randomSongs['Metadata']['Title'], 0, 28) . "...", array(
-                                        // 		'controller' => 'artists', 
-                                        // 		'action' => 'view', 
-                                        // 		$randomSongs['Metadata']['Title']
-                                        // 		)
-                                        // 	) . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
                                         echo substr($randomSongs['Metadata']['Title'], 0, 28) . "..." . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
                                 } else {
-                                        // echo $html->link($randomSongs['Metadata']['Title'], array(
-                                        // 		'controller' => 'artists', 
-                                        // 		'action' => 'view', 
-                                        // 		$randomSongs['Metadata']['Title']
-                                        // 		)
-                                        // 	);
                                         echo $randomSongs['Metadata']['Title'];
                                 }
                             ?>
@@ -81,7 +69,9 @@
                                 $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
                                 $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
                             ?>
-                            <?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "play_audio'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$randomSongs["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");')); ?>
+                            <?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$randomSongs["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");')); ?>
+                            <?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); ?>
+                            <?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); ?>
                         </p>
                     </td>
                 </tr>

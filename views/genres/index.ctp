@@ -54,7 +54,9 @@
 					if($catG['SalesDate'] <= date('Y-m-d')) {
 						$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
 						$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-						echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "play_audio'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$catG["ProdId"].', "'.$this->webroot.'");'));
+						echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$catG["ProdId"].', "'.$this->webroot.'");'));
+						echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$category_key.$key));
+						echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$category_key.$key, "onClick" => 'stopThis(this, "'.$category_key.$key.'");'));
 					}
 				?>
 			</div>
