@@ -152,7 +152,7 @@ class HomesController extends AppController
                 $artist =  $_REQUEST['artist'];
                 $song =  $_REQUEST['song'];
                 $album =  $_REQUEST['album'];
-                $genre =  $_REQUEST['genre'];
+                $genre =  $_REQUEST['genre_id'];
             }            
             if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')
             {
@@ -171,7 +171,7 @@ class HomesController extends AppController
                 $artist =  $this->data['Home']['artist'];
                 $song =  $this->data['Home']['song'];
                 $album =  $this->data['Home']['album'];
-                $genre =  $this->data['Home']['genre'];
+                $genre =  $this->data['Home']['genre_id'];
             }            
             if($artist != '')
             {
@@ -357,18 +357,16 @@ class HomesController extends AppController
 	exit;
     }
 
-    function advance_search()
-    {
-	$this->layout = 'home';           
-	$this->Genre->recursive = -1;
-	$genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
-	$resultArr = array();
-	foreach($genres as $genre)
-	{                  
-	    $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
+    function advance_search() {
+		$this->layout = 'home';           
+		$this->Genre->recursive = -1;
+		$genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
+		$resultArr = array();
+		foreach($genres as $genre) {                  
+			$resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
+		}
+		$this->set('genres',$resultArr);
 	}
-	$this->set('genres',$resultArr);
-    }
     
     function checkPatron()
     {

@@ -960,8 +960,8 @@ background-color:#F4F4F8;
 
 /** Advance Search **/
 #advance_search {
-	min-height:600px;
-	margin: 10px 0 0 10px;
+	min-height:400px;
+	margin: 100px 0 0 340px;
 }
 
 #advance_search_box {
