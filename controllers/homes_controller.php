@@ -573,7 +573,7 @@ class HomesController extends AppController
     Desc : To send mail to patrons with new password
    */
     function forgot_password(){
-        $this->layout = 'home';
+        $this->layout = 'login';
         $errorMsg ='';
         if($this->data){
             $email = $this->data['Home']['email'];

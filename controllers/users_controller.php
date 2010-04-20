@@ -59,7 +59,8 @@ Class UsersController extends AppController
      $this->redirect($this->Auth->logout()); 
    }
    
-   function login(){     
+   function login(){ 
+      $this->layout = 'login';
       if ($this->Session->read('Auth.User')){
          $userType = $this->Session->read('Auth.User.type_id');
          if($userType == '5'){

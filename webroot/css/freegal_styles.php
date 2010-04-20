@@ -1179,3 +1179,32 @@ div.message {
 	background: #c73e14;
 	padding: 5px;
 }
+
+#login {
+	width: 300px;
+	height: 200px;
+	background: #F3F3F3;
+	border-top: 2px solid #CCC;
+	border-bottom: 2px solid #CCC;
+	margin:100px auto 0px;
+	display:block;
+}
+
+#login label {
+	display:block;
+	width: 100px;
+	float: left;
+	margin-top:10px;
+	margin-left:20px;
+}
+
+#login input {
+	width: 150px;
+	float:right;
+	margin-top:10px;
+	margin-right:20px;
+}
+
+.loginbox {
+	margin-top:50px;
+}

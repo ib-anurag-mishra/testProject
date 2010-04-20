@@ -26,6 +26,7 @@ body  {
 	margin: 0 auto;
 	text-align: left;
 	background-color: #fff;
+	min-height: 500px;
 }
 
 #header {  
@@ -282,6 +283,10 @@ body  {
 	margin:0 auto;
 	padding-right:10px;
 	line-height:16px;
+}
+
+#copyright {
+	float:left;
 }
 
 #footer a {
@@ -1030,4 +1035,64 @@ div.code-coverage-results span.result-good {
 
 .input{
 /*	float:left;*/
+}
+
+div.message {
+	clear: both;
+	color: #fff;
+	font-size: 100%;
+	font-weight: bold;
+	margin: 0 0 1em 0;
+	text-align: center;
+	background: #c73e14;
+	padding: 5px;
+}
+
+#login {
+	width: 300px;
+	height: 200px;
+	background: #F3F3F3;
+	border-top: 2px solid #CCC;
+	border-bottom: 2px solid #CCC;
+	margin:100px auto 0px;
+	display:block;
+}
+
+#login label {
+	display:block;
+	width: 100px;
+	float: left;
+	margin-top:10px;
+	margin-left:20px;
+}
+
+#login input {
+	width: 150px;
+	float:right;
+	margin-top:10px;
+	margin-right:20px;
+}
+
+.loginbox {
+	margin-top:43px;
+}
+
+.forgot_password {
+	font-size: 13px;
+}
+.forgot_password a {
+	float:right;
+	margin: 2px 40px 0 0;
+	text-decoration: none;
+	color:#666;
+}
+
+.forgot_password a:hover {
+	text-decoration: underline;
+	color:#666;
+}
+
+.forgot_text {
+	display:block;
+	margin-left: 82px;
 }
