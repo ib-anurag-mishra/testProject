@@ -28,15 +28,19 @@ function onPlayerReady() {
  */
 function onStateChange(state) {
     if (state == "buffering") {
-            document.getElementById(imageID).src = webRootURL+'img/ajax-loader.gif';
-            document.getElementById(imageID).onclick = function(){stopThis(this);};
+        document.getElementById("play_audio"+imageID).style.display = "none";
+	 document.getElementById("load_audio"+imageID).style.display = "block";
+	 document.getElementById("stop_audio"+imageID).style.display = "none";
     }
     else if (state == "playing") {
-            document.getElementById(imageID).src = webRootURL+'img/stop.png';
-            document.getElementById(imageID).onclick = function(){stopThis(this);};
+        document.getElementById("play_audio"+imageID).style.display = "none";
+	 document.getElementById("load_audio"+imageID).style.display = "none";
+	 document.getElementById("stop_audio"+imageID).style.display = "block";
     }
     else {
-        document.getElementById(imageID).src = webRootURL+'img/play.png';
+        document.getElementById("play_audio"+imageID).style.display = "block";
+	 document.getElementById("load_audio"+imageID).style.display = "none";
+	 document.getElementById("stop_audio"+imageID).style.display = "none";
     }
 }
 
@@ -52,7 +56,9 @@ function onPlaybackUpdate(time, duration) {
  *	Called from the audio player swf when the stream has completed playback.
  */
 function onPlaybackComplete() {
-    document.getElementById(imageID).src = webRootURL+'img/play.png';
+       document.getElementById("play_audio"+imageID).style.display = "block";
+	document.getElementById("load_audio"+imageID).style.display = "none";
+	document.getElementById("stop_audio"+imageID).style.display = "none";
 }
 
 /*
@@ -72,7 +78,9 @@ function onLoadComplete() {
  *	Called from the audio player swf when the load of the stream throws an error.
  */
 function onLoadError() {
-    document.getElementById(imageID).src = webRootURL+'img/play.png';
+       document.getElementById("play_audio"+imageID).style.display = "block";
+	document.getElementById("load_audio"+imageID).style.display = "none";
+	document.getElementById("stop_audio"+imageID).style.display = "none";
 }
 
 //--------------------------------------------------------------
@@ -147,22 +155,26 @@ function seek(event) {
     document.getElementById('audioPlayer').seek(20);
 }
 
-function stopThis(event) {
+function stopThis(event, objID) {
     document.getElementById('audioPlayer').pause();
-    document.getElementById(imageID).onclick = function(){playSample(this, imageID, URLOne, URLTwo, URLThree, PID, webRootURL);};
+    document.getElementById("play_audio"+objID).style.display = "block";
+    document.getElementById("load_audio"+objID).style.display = "none";
+    document.getElementById("stop_audio"+objID).style.display = "none";
 }
 
 function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID, webRoot) {
     $("img[id^='play_audio']").each(function() {
-        if($(this).attr("src") == webRoot+'img/stop.png' || $(this).attr("src") == webRoot+'img/ajax-loader.gif') {
-            document.getElementById(imageID).src = webRoot+'img/play.png';
-            var tempStr = 'playSample(this, "'+imageID+'", "'+URLOne+'", "'+URLTwo+'", "'+URLThree+'", "'+PID+'", "'+webRootURL+'");'
-            document.getElementById(imageID).onclick = new Function(tempStr);
-        }
+        document.getElementById($(this).attr("id")).style.display = "block";
+    });
+    $("img[id^='load_audio']").each(function() {
+        document.getElementById($(this).attr("id")).style.display = "none";
+    });
+    $("img[id^='stop_audio']").each(function() {
+        document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
     if (!hasRequiredVersion) {
-        $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
+       $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
 	$(".upgradeFlash").click().delay(800);
     }
     imageID = objID;
