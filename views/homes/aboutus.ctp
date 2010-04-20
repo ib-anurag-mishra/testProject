@@ -1,4 +1,3 @@
-<br class="clr" />
 <?php echo $session->flash(); ?>
 <div id="aboutBox">
 	About Freegal Music&trade;

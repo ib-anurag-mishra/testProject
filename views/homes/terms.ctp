@@ -1,4 +1,3 @@
-<br class="clr" />
 <div id="aboutBox">
 	Terms &amp; Conditions
 </div>
