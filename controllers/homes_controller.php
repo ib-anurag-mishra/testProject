@@ -7,9 +7,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page' );
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Physicalproduct', 'Wishlist' );
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email');
-    var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page');
+    var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page','Wishlist');
  
    function beforeFilter()
    {
@@ -536,14 +536,21 @@ class HomesController extends AppController
 	$this->layout = 'home';
     }
 
-	function limits() {
-		$this->layout = 'home';
-	}
-	
+    function limits() {
+            $this->layout = 'home';
+    }
+     /*
+    Function Name : check_email
+    Desc : check for a valid email
+   */
     function check_email($email){
         $email_regexp = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$";
         return eregi($email_regexp, $email);
     }
+     /*
+    Function Name : _sendForgotPasswordMail
+    Desc : email function for forgot password
+   */
     function _sendForgotPasswordMail($id, $password) {
         Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
@@ -561,7 +568,10 @@ class HomesController extends AppController
 	$this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
         $result = $this->Email->send(); 
     }
-    
+     /*
+    Function Name : forgot_password
+    Desc : To send mail to patrons with new password
+   */
     function forgot_password(){
         $this->layout = 'home';
         $errorMsg ='';
@@ -592,5 +602,148 @@ class HomesController extends AppController
                 $this->redirect($this->webroot.'homes/forgot_password');
             }            
         }        
+    }
+     /*
+    Function Name : addToWishlist
+    Desc : To let the patron add songs to wishlist
+   */
+    function addToWishlist(){
+        $libraryId = $this->Session->read('library');
+        $patronId = $this->Session->read('patron');
+        $this->Library->recursive = -1;
+        $libraryDetails = $this->Library->find('all',array('conditions' => array('Library.id' => $libraryId),'fields' => 'library_user_download_limit'));
+        //get patron limit per week
+        $patronLimit = $libraryDetails[0]['Library']['library_user_download_limit'];        
+        $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
+        $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
+        //get no of downloads for this week
+        $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'week_start_date' => $startDate,'week_end_date' => $endDate)));
+        if($wishlistCount >= $patronLimit){            
+            echo "error";
+            exit;        
+        }
+        else{
+            $prodId = $_REQUEST['prodId'];
+            //get song details
+            $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);
+            $insertArr = Array();
+            $insertArr['library_id'] = $libraryId;
+            $insertArr['patron_id'] = $patronId;
+            $insertArr['ProdID'] = $prodId;
+            $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
+            $insertArr['album'] = $trackDetails['0']['Physicalproduct']['Title'];
+            $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
+            $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
+            $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
+            $insertArr['week_start_date'] = $startDate;
+            $insertArr['week_end_date'] = $endDate;
+            //insert into wishlist table
+            $this->Wishlist->save($insertArr);
+            //update the libraries table
+            $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-1 Where id=".$libraryId;
+            $this->Library->query($sql);
+            echo "Success";
+            exit;
+        }
+    }    
+    /*
+    Function Name : my_wishlist
+    Desc : To show songs present in wishlist
+   */
+    function my_wishlist(){        
+        $this->layout = 'home';
+        $libraryId = $this->Session->read('library');
+        $patronId = $this->Session->read('patron');        
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);		
+	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+        $this->set('libraryDownload',$libraryDownload);
+        $this->set('patronDownload',$patronDownload);
+        $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
+        $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
+        $wishlistResults = Array();
+        //$wishlistInfo = $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+        $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'week_start_date' => $startDate,'week_end_date' => $endDate)));
+        //if(count($wishlistInfo) > 0){            
+        //}
+        $this->set('wishlistResults',$wishlistResults);
+    }
+    /*
+    Function Name : removeWishlistSong
+    Desc : For removing a song from wishlist page
+   */
+    function removeWishlistSong() {
+        $deleteSongId = $this->params['named']['id'];
+        $libraryId = $this->Session->read('library');
+        if($this->Wishlist->delete($deleteSongId)){
+            $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
+            $this->Library->query($sql);  
+            $this->Session->setFlash('Data deleted successfully!');
+            $this->redirect('my_wishlist');
+        }else{
+            $this->Session->setFlash('Error occured while deleteting the record');
+            $this->redirect('my_wishlist');
+        }
+    }
+    
+    function setStatus(){
+        $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), (date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1))-7, date('Y')))." 00:00:00";        
+        $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y'))))-7, date('Y')))." 23:59:59";
+        $sql = "SELECT * FROM `wishlists` WHERE `week_start_date` = '".$startDate."' AND `week_end_date` = '".$startDate."'";
+        //$sql = "SELECT * FROM `wishlists` WHERE `week_start_date` = '2010-04-19 00:00:00' AND `week_end_date` = '2010-04-25 23:59:59'";
+        $result = mysql_query($sql);
+        while ($row = mysql_fetch_assoc($result)) {
+            $libraryId = $row['library_id'];
+            $id = $row['id'];
+            $qry="DELETE FROM `wishlists` WHERE `wishlists`.`id` = ".$id;
+            mysql_query($qry);
+            $sql="UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
+            mysql_query($sql);
+        }
+    }
+    
+    /*
+    Function Name : wishlistDownload
+    Desc : For downloading a song in wishlist page
+   */
+    function wishlistDownload(){
+        $libId = $_SESSION['library'];
+        $patId = $_SESSION['patron'];
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+	$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+        //check for download availability
+        if($libraryDownload != '1' || $patronDownload != '1')
+        {
+            echo "error";
+            exit;
+        }
+        $id = $_REQUEST['id'];       
+        $prodId = $_REQUEST['prodId'];
+        //get details for this song
+        $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);        
+        $insertArr = Array();
+        $insertArr['library_id'] = $libId;
+        $insertArr['patron_id'] = $patId;
+        $insertArr['ProdID'] = $prodId;     
+        $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
+        $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
+        $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
+        //save to downloads table
+        $this->Download->save($insertArr);
+        //update library table
+        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;	
+        $this->Library->query($sql);
+        //delete from wishlist table
+        $deleteSongId = $id;     
+        $this->Wishlist->delete($deleteSongId);
+        //get start and end day of the week
+        $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
+        $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
+        //get no of downloads for this week
+        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
+        //set in session to show on top of every page
+        $this ->Session->write("downloadsUsed", $downloadsUsed);
+        echo $downloadsUsed;
+	exit;
     }
 }

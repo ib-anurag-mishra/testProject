@@ -35,6 +35,8 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 				<?php echo $html->link($html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14)), array('controller' => 'homes', 'action' => 'limits'), array('escape' => false)); ?>
 				&nbsp;|&nbsp;
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
+				&nbsp;|&nbsp;
+				<?php echo $html->link('My Wishlist', array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
 				<?php if ($this->Session->read('Auth.User')) { ?>
 					&nbsp;|&nbsp;					
 					<?php echo $html->link('My Account', array('controller' => 'users', 'action' => 'my_account'));?>

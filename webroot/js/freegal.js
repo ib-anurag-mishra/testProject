@@ -30,6 +30,7 @@ jQuery(document).ready(function() {
 
 function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 {	
+	document.getElementById('download_loader_'+prodId).style.display = 'block';	
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
 	finalURL += downloadUrl3;
@@ -47,14 +48,83 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				return false;
 			}
 			else
-			{
+			{				
 				var msg = response.substring(0,2);
 				if(isNaN(msg))
 				{
 					msg = response.substring(0,1);
 				}				
 				document.getElementById('downloads_used').innerHTML = msg;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+			}			
+			location.href = unescape(finalURL);			
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
+		}
+	});
+	return false; 
+}
+
+function addToWishlist(prodId)
+{	
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
+	var data = "prodId="+prodId;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/addToWishlist", // URL to request
+		data: data,  // post data
+		success: function(response) {			
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("You can not add more songs to your wishlist.");
+				location.reload();
+				return false;
 			}
+			else
+			{	var msg = response.substring(0,7);
+				if(msg == 'Success'){
+					document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
+					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				}				
+			}			
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
+		}
+	});
+	return false; 
+}
+
+function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
+{	
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId+"&id="+id;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/wishlistDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {			
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{				
+				var msg = response.substring(0,2);
+				if(isNaN(msg))
+				{
+					msg = response.substring(0,1);
+				}				
+				document.getElementById('downloads_used').innerHTML = msg;
+				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+			}			
 			location.href = unescape(finalURL);
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
@@ -72,6 +142,7 @@ function checkPatron(libid,patronid)
 		data: data,  // post data
 		success: function(response) {
 			setTimeout('checkPatron('+libid+','+patronid+')',30000);
+			//setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
 		}

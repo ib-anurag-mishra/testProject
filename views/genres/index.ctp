@@ -91,14 +91,24 @@
 						{						
 							$finalSongUrl = "http://music.freegalmusic.com".$catG['SongUrl'];
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
-							<p><a href='#' onclick='Javascript: userDownload("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></p>
+							<p><a href='#' onclick='Javascript: userDownload("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a><span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 						<?php		}											
-						else
-						{
-							?>
-							<p>Limit Exceeded</p>
-							<?php
-						}						
+						else{
+							if($libraryDownload != '1'){
+								$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);
+								if($wishlistInfo == 'Added to Wishlist'){
+									?> <p>Added to Wishlist</p>
+								<?php }
+								else{ ?>
+									<p><span id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+								<?php	
+								}
+							}
+							else{ ?>
+								<p>Limit Exceeded</p>
+							<?php	
+							}												
+						}
 					}else{
 						?>
 						<p class="info">Coming Soon<span>Coming Soon ( <?php echo $catG['SalesDate']; ?>)</span></p>

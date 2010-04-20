@@ -183,7 +183,7 @@ class Physicalproduct extends AppModel
     $downloadData = $this->find('all', array(
 		'conditions'=>array('Physicalproduct.ProdID' => $id),
 		'fields' => array(
-			'ProdID','ProductID'
+			'ProdID','ProductID','Title'
 		),
 		'contain' => array(
 											

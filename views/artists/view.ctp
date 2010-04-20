@@ -91,18 +91,26 @@
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
-												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);
-									?>
-												<!--<p><a href='http://music.freegalmusic.com<?php //echo $songUrl; ?>' target='_blank' onclick='Javascript: userDownload("<?php //echo $albumSong["Physicalproduct"]["ProdID"]; ?>");'>Download Now</a></p>-->
+												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);?>
 									<?php			$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 												$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
-												<p><a href='#' onclick='Javascript: userDownload("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></p>
+												<p><a href='#' onclick='Javascript: userDownload("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a><span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 									<?php		}											
-											else
-											{
-												?>
-												<p>Limit Exceeded</p>
-												<?php
+											else{
+												if($libraryDownload != '1'){
+													$wishlistInfo = $wishlist->getWishlistData($albumSong["Physicalproduct"]["ProdID"]);
+													if($wishlistInfo == 'Added to Wishlist'){
+														?> <p>Added to Wishlist</p>
+													<?php }
+													else{ ?>
+														<p><span id="wishlist<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+													<?php	
+													}
+												}
+												else{ ?>
+													<p>Limit Exceeded</p>
+												<?php	
+												}												
 											}
 										}else{
 									?>

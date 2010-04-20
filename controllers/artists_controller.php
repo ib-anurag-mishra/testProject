@@ -9,7 +9,7 @@ Class ArtistsController extends AppController
 	var $name = 'Artists';
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
 	var $layout = 'admin';
-	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page' );
+	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
 	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
 	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	
