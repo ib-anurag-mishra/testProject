@@ -1214,7 +1214,7 @@ div.message {
 	color: #c73e14;
 }
 
-.UserMyAccountForm {
+#UserMyAccountForm {
 	display:block;
-	margin-top: 50px;
+	margin-top: 70px;
 }
