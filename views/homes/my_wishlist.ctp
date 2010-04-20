@@ -16,7 +16,7 @@
 	Download
 </div>
 <div id="genreDownload">
-	Remove from list
+	
 </div>
 <br class="clr">
 <div id="genreResults">
