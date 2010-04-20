@@ -183,7 +183,7 @@
 						<td align="left"><?php echo $this->Form->input('User.last_name',array('label' => false ,'value' => $getData['User']['last_name'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label('UserName');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label('Email');?></td>
 						<td align="left"><?php echo $this->Form->input('User.email',array('label' => false ,'value' => $getData['User']['email'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr>

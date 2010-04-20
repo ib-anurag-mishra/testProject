@@ -27,8 +27,8 @@ class User extends AppModel
   );
 
   var $validate = array(
-                  'first_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Firstname.'),
-                  'last_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Lastname.'),
+                  'first_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide First Name.'),
+                  'last_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Last Name.'),
                   'email' => array(
                                     'email-1' => array('rule' => array('email', true), 'message' => 'Please provide a valid email address.', 'last' => true),
                                     'email-2' => array('rule' => 'isUnique', 'message' => 'This email already exists in our database.')

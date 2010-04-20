@@ -55,6 +55,7 @@ body  {
 
 #container { 
 	width: 965px;
+	min-height: 500px;
 	margin: 0 auto;
 	text-align: left;
 	background-color: <?php echo $library_content_bgcolor; ?>;
@@ -1207,4 +1208,13 @@ div.message {
 
 .loginbox {
 	margin-top:50px;
+}
+
+.error-message {
+	color: #c73e14;
+}
+
+.UserMyAccountForm {
+	display:block;
+	margin-top: 50px;
 }
