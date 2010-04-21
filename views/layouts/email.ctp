@@ -14,7 +14,7 @@
         <TABLE style="FONT-SIZE: 12px; FONT-FAMILY: Verdana; color:#000080" cellSpacing=0 cellPadding=0 width=100% border=0>
             <TBODY>
                 <TR><TD><?php echo $content_for_layout; ?></TD></TR>
-                <TR><TD align="left"><IMG src="<?php echo Configure::read('App.base_url').'img/freegal_logo.png'; ?>"></TD></TR>
+                <TR><TD align="left"><?php echo $html->image(FULL_BASE_URL . '/img/freegal_logo.png', array("alt" => "FreegalMusic.com")); ?></TD></TR>
             </TBODY>
         </TABLE>
     </body>
