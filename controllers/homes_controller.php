@@ -555,10 +555,10 @@ class HomesController extends AppController
         $this->User->recursive = -1;
         $Patron = $this->User->read(null,$id);
         $this->set('Patron', $Patron);
-        $this->set('password', $password);        
-        $this->Email->from = Configure::read('App.adminEmail');
-        $this->Email->fromName = Configure::read('App.fromName');
+        $this->set('password', $password);
         $this->Email->to = $Patron['User']['email'];
+	$this->Email->from = Configure::read('App.adminEmail');
+        $this->Email->fromName = Configure::read('App.fromName');
         $this->Email->subject = 'FreegalMusic - New Password information';
         $this->Email->smtpHostNames = Configure::read('App.SMTP');
 	$this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
