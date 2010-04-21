@@ -594,13 +594,19 @@ class HomesController extends AppController
             else{
                 $temp_password = $this->PasswordHelper->generatePassword(8);
                 $this->User->id = $email_exists[0]['User']['id'];                
-                $this->User->saveField('password', Security::hash(Configure::read('Security.salt').$temp_password), false);
-                $this->_sendForgotPasswordMail($this->User->id, $temp_password);
-                $this->Session->setFlash("An email with your new password has been sent to your email account.");
+                $this->data['User']['email'] = $email;
+                $this->data['User']['type_id'] = '5';
+                $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);               
+                $this->User->set($this->data['User']);
+                if($this->User->save()){
+                    $this->_sendForgotPasswordMail($this->User->id, $temp_password);
+                    $this->Session->setFlash("An email with your new password has been sent to your email account.");
+                }
                 $this->redirect($this->webroot.'homes/forgot_password');
             }            
         }        
-    }
+    }   
+    
      /*
     Function Name : addToWishlist
     Desc : To let the patron add songs to wishlist
