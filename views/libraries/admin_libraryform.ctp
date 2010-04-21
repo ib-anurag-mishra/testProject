@@ -6,8 +6,10 @@
 	        $getData['Library']['id'] = "";
 	        $getData['Library']['library_admin_id'] = "";
 	        $getData['Library']['library_name'] = "";
-	        $getData['Library']['library_domain_name'] = "";
 		$getData['Library']['library_authentication_method'] = "";
+	        $getData['Library']['library_domain_name'] = "";
+		$getData['Library']['library_authentication_num'] = "";
+		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
@@ -60,12 +62,23 @@
 						<td align="left"><?php echo $this->Form->input('library_name',array('label' => false ,'value' => $getData['Library']['library_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<?php
-					if($getData['Library']['library_authentication_method'] == "user_account") {
+					if($getData['Library']['library_authentication_method'] != "") {
 					?>
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
-						<td align="left"><label>User Account</label>
-							<?php echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method'])); ?>
+						<td align="left">
+							<?php
+								if($getData['Library']['library_authentication_method'] == "referral_url") {
+									echo "<label>Referral URL</label>";
+								}
+								elseif($getData['Library']['library_authentication_method'] == "user_account") {
+									echo "<label>User Account</label>";
+								}
+								elseif($getData['Library']['library_authentication_method'] == "innovative") {
+									echo "<label>Innovative</label>";
+								}
+								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
+							?>
 						</td>
 					</tr>
 					<?php
@@ -79,7 +92,8 @@
 								echo $this->Form->input('library_authentication_method', array('options' => array(
 									'' => 'Select a Method',
 									'referral_url' => 'Referral URL',
-									'user_account' => 'User Account'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
+									'user_account' => 'User Account',
+									'innovative' => 'Innovative'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
 								);
 							?>
 						</td>
@@ -87,9 +101,17 @@
 					<?php
 					}
 					?>
-					<tr>
+					<tr id="referral_url" <?php if($getData['Library']['library_authentication_method'] != "referral_url"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Libray Authentication Number');?></td>
+						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="innovative2" <?php if($getData['Library']['library_authentication_method'] != "innovative"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Libray Authentication URL');?></td>
+						<td align="left"><?php echo $this->Form->input('library_authentication_url',array( 'label' => false ,'value' => $getData['Library']['library_authentication_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
@@ -97,10 +119,6 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Background Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_bgcolor',array('label' => false ,'value' => $getData['Library']['library_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
 					</tr>
-					<!--<tr>
-						<td align="right" width="250"><?php echo $this->Form->label('Content Background Color');?></td>
-						<td align="left"><?php echo $this->Form->input('library_content_bgcolor',array('label' => false ,'value' => $getData['Library']['library_content_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
-					</tr>-->
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Navigation Background Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_nav_bgcolor',array('label' => false ,'value' => $getData['Library']['library_nav_bgcolor'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
@@ -375,6 +393,23 @@
 		<script type="text/javascript">
 			$(function() {
 				$("#LibraryLibraryContractStartDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd'});
+				$("#LibraryLibraryAuthenticationMethod").change(function() {
+					if($(this).val() == 'referral_url') {
+						$("#referral_url").show();
+						$("#innovative1").hide();
+						$("#innovative2").hide();
+					}
+					else if ($(this).val() == 'innovative') {
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").show();
+					}
+					else {
+						$("#referral_url").hide();
+						$("#innovative1").hide();
+						$("#innovative2").hide();
+					}
+				});
 			});
 		</script>
 <?php

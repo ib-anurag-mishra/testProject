@@ -45,6 +45,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_name',
                                                                                 'Library.library_domain_name',
                                                                                 'Library.library_authentication_method',
+                                                                                'Library.library_authentication_num',
+                                                                                'Library.library_authentication_url',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -113,6 +115,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_name',
                                                                                 'Library.library_domain_name',
                                                                                 'Library.library_authentication_method',
+                                                                                'Library.library_authentication_num',
+                                                                                'Library.library_authentication_url',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -181,10 +185,13 @@ Class LibrariesController extends AppController
                     $this->Library->create();
                     $this->Library->set($this->data['Library']);
                     if($this->data['Library']['library_authentication_method'] == 'referral_url') {
-                        $this->Library->setValidation('library_step1_with_domain');
+                        $this->Library->setValidation('library_step1_referral_url');
                     }
                     elseif($this->data['Library']['library_authentication_method'] == 'user_account') {
-                        $this->Library->setValidation('library_step1_without_domain');
+                        $this->Library->setValidation('library_step1_user_account');
+                    }
+                    elseif($this->data['Library']['library_authentication_method'] == 'innovative') {
+                        $this->Library->setValidation('library_step1_innovative');
                     }
                     else {
                         $this->Library->setValidation('library_step1');
@@ -313,10 +320,13 @@ Class LibrariesController extends AppController
                     $this->Library->create();
                     $this->Library->set($this->data['Library']);
                     if($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'referral_url') {
-                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_with_domain');
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_referral_url');
                     }
                     elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'user_account') {
-                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_without_domain');
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_user_account');
+                    }
+                    elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
                     }
                     else {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
