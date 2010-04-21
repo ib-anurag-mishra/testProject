@@ -46,7 +46,7 @@
 			<div id="step4" class="inactive_step">User Download Control</div>
 			<div id="step5" class="inactive_step">Purchase Downloads</div>
 		</div>
-		<div id="loadingDiv" style="display:none;position:absolute;width:863px;text-align:center;top:300px;">
+		<div id="loadingDiv" style="display:none;position:absolute;left:40%; right:40%;text-align:center;top:300px;">
 			<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
 		</div>
 		<div class="formFieldsbox">
