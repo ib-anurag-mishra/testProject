@@ -372,7 +372,7 @@ Class UsersController extends AppController
            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
        }
        else {
-           $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+           $this->set('libraries', $this->Library->find('list', array("conditions" => array('library_authentication_method' => 'user_account'), 'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
            $this->set('libraryID', "");
        }
        $this->set('options',$this->Group->getallusertype());
