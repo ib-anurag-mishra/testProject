@@ -31,9 +31,9 @@
 	);
 ?>
 <div class="questions form">
-<?php echo $this->Form->create('FAQs');?>
+<?php echo $this->Form->create('Question');?>
 	<fieldset>
- 		<legend><?php printf(__('Admin Add %s', true), __('Question', true)); ?></legend>
+ 		<legend><?php printf(__('Add %s', true), __('FAQs', true)); ?></legend>
 	<?php
 		echo $this->Form->input('section_id');
 		echo $this->Form->input('question', array('cols' => '80', 'rows' => '10'));
