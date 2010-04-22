@@ -131,6 +131,13 @@
 		}
 	</style>
 <![endif]-->
+<!--[if IE]>
+	<style>
+		#search .submit {
+			padding: 0 0 0 0;
+		}
+	</style>
+<![endif]-->
   
 </head>
 <body>
