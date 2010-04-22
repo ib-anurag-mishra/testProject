@@ -135,7 +135,7 @@
 	<style>
 		#search .submit {
 			padding: 0 0 0 0;
-			height:16px;
+			height:20px;
 		}
 	</style>
 <![endif]-->
