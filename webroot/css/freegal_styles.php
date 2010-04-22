@@ -358,7 +358,7 @@ ul.marquee li {
 #nav a{
 	float:left;
 	text-align:center;
-	width:146px;
+	width:144px;
 /*	background:url(../images/tab-gray.png) top left no-repeat;*/
 	text-decoration:none;
 	color:<?php echo $library_navlinks_color; ?>;
@@ -367,7 +367,7 @@ ul.marquee li {
 #nav li ul{
 	position:absolute;
 	display:none;
-	width:146px;
+	width:144px;
 	left:-1px;
 	top:27px;
 	list-style:none;
@@ -440,9 +440,13 @@ ul.marquee li {
 	background:#fff;
 }
 
-#search input {	
+#search .ac_input {	
 	background:transparent url(../img/search.png) top right no-repeat;
 	line-height:14px;
+}
+
+#search .input {
+	float:left;
 }
 
 .searchButton {
@@ -453,6 +457,13 @@ ul.marquee li {
 	width:12px;
 	cursor:pointer;	
 } 
+
+#search .submit {
+	float:left;
+	background:<?php echo $library_nav_bgcolor; ?>;
+	padding: 2px 0 0 2px;
+	height:18px;
+}
 
 /* Genre Page */
 #genre {

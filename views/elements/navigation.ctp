@@ -89,7 +89,7 @@
 									<input type="submit" class="searchButton" value=""></input>
 								</div> -->
 			<!-- </form>-->
-			<?php echo $this->Form->end(); ?>
+			<?php echo $this->Form->end('GO'); ?>
 			<?php echo $html->link('Advanced Search', array('controller' => 'homes', 'action' => 'advance_search')); ?>
 		</li>	
 	</ul>
