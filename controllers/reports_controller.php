@@ -10,7 +10,7 @@ Class ReportsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport' );
+    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist' );
     
     function admin_index() {
         if($this->Session->read("Auth.User.type_id") == 4) {
@@ -73,6 +73,12 @@ Class ReportsController extends AppController
         $this->layout = false;
         if(isset($this->data)) {
             $this->Report->set($this->data);
+            if($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            }
+            else {
+                $this->Report->setValidation('reports_manual');
+            }
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     $downloads = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
@@ -106,6 +112,12 @@ Class ReportsController extends AppController
         Configure::write('debug',0); // Otherwise we cannot use this method while developing 
         if(isset($this->data)) {
             $this->Report->set($this->data);
+            if($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            }
+            else {
+                $this->Report->setValidation('reports_manual');
+            }
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     $downloads = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
@@ -151,6 +163,57 @@ Class ReportsController extends AppController
             }
         }
         $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
+    }
+    
+    function admin_librarywishlistreport() {
+        if($this->Session->read("Auth.User.type_id") == 4) {
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+        }
+        else {
+            $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+            $this->set('libraryID', "");
+        }
+        if(isset($this->data)) {
+            Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+            $this->Report->set($this->data);
+            if($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            }
+            else {
+                $this->Report->setValidation('reports_manual');
+            }
+            if($this->Report->validates()) {
+                $wishlists = $this->Wishlist->getWishListInformation($this->data['Report']['library_id'], $this->data['Report']['reports_daterange'], $this->data['Report']['date'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
+                $this->set('wishlists', $wishlists);
+                $arr = array();
+                $this->set('errors', $arr);
+                if($this->data['Report']['downloadType'] == 'pdf') {
+                    $this->layout = 'pdf';
+                    $this->render("/reports/admin_downloadLibraryWishListReportAsPdf");
+                }
+                elseif($this->data['Report']['downloadType'] == 'csv') {
+                    $this->layout = false;
+                    $this->render("/reports/admin_downloadLibraryWishListReportAsCsv");
+                }
+            }
+            else {
+                $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
+                $arr = array();
+                $this->set('wishlists', $arr);
+                $this->set('errors', $this->Report->invalidFields());
+            }
+            $this -> set( 'formAction', 'admin_librarywishlistreport' );
+            $this->set('getData', $this->data);
+        }
+        else {
+            $this -> set( 'formAction', 'admin_librarywishlistreport' );
+            $arr = array();
+            $this->set('getData', $arr);
+            $this->set('wishlists', $arr);
+            $this->set('errors', $arr);
+        }
     }
     
     function admin_sonyreports() {

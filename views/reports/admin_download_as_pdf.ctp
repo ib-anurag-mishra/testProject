@@ -96,13 +96,30 @@
     $tcpdf->SetFont('');
     // Data
     $fill = 0;
-    foreach($data as $row) {
+    foreach($data as $k=>$row) {
+        if($k%28 == 0 && $k != 0) {
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($header); $i++)
+                $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+        
         $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[4], 6, $row[4], 'LR', 0, 'L', $fill, '', 3);
-		$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
+	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Ln();
         $fill=!$fill;
     }
