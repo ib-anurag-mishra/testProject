@@ -134,8 +134,8 @@
 <!--[if IE]>
 	<style>
 		#search .submit {
-			padding: -1px 0 0 2px;
-			height:21px;
+			padding: 0 0 0 2px;
+			height:20px;
 		}
 	</style>
 <![endif]-->
