@@ -505,6 +505,7 @@ Class LibrariesController extends AppController
             }
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
+            $this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";

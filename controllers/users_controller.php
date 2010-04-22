@@ -12,15 +12,18 @@ Class UsersController extends AppController
    var $components = array('Session','Auth','Acl','PasswordHelper','Email');
    var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download');
    
-   function before_filter() {
+   /*function before_filter() {
      $this->Auth->userModel = 'User';
      $this->Auth->loginAction = array('controller' => 'users', 'action' => 'admin_login');
      $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'admin_index');
      $this->Auth->logoutRedirect = '/users/admin_login';
      $this->Auth->allow('admin_login','admin_logout','forgot_password');
      $this->set('username', $this->Session->read('Auth.User.username'));
+   }*/
+   function beforeFilter(){
+	parent::beforeFilter();
+        $this->Auth->allow('logout');
    }
- 
    function admin_index() {
          $userType = $this->Session->read('Auth.User.type_id');
          if($userType == '5'){
@@ -166,7 +169,12 @@ Class UsersController extends AppController
          $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
          $this->Currentpatron->saveField('modified',$updateTime, false);         
          session_destroy();
-         $this->redirect($this->Auth->logout()); 
+         if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')){            
+            $this->redirect($_SESSION['referral_url'], null, true);  
+         }
+         else{            
+            $this->redirect($this->Auth->logout());    
+         }         
       }     
    }
    

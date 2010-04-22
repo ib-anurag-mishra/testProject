@@ -39,11 +39,10 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 				<?php echo $html->link('My Wishlist', array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
 				<?php if ($this->Session->read('Auth.User')) { ?>
 					&nbsp;|&nbsp;					
-					<?php echo $html->link('My Account', array('controller' => 'users', 'action' => 'my_account'));?>
-					&nbsp;|&nbsp;
-					<?php echo $html->link('Logout', array('controller' => 'users', 'action' => 'logout'));
+					<?php echo $html->link('My Account', array('controller' => 'users', 'action' => 'my_account'));					
 				}?>
-				
+				&nbsp;|&nbsp;
+				<?php echo $html->link('Logout', array('controller' => 'users', 'action' => 'logout'));?>				
 			</li>
 			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
 		</ul>
