@@ -1,4 +1,3 @@
-<?php echo $javascript->link('freegal_questions'); ?>
 <div class="questions index">
 	<div id="aboutBox">
 		<?php __('FAQs');?>
@@ -11,10 +10,11 @@
 			{?>
 				<p><?php echo $question['Section']['title']; ?></p>
 			<?}?>			
-			<p class="question"><?php echo $question['Question']['question']; ?></p>
+			<div class="question"><?php echo $question['Question']['question']; ?></div>
 			<div class="answer"><?php echo $question['Question']['answer']; ?></div>
 			<?php $Title = $question['Section']['title']; ?>
 		<?php endforeach; ?>
 	</div>
 </div>
+<?php echo $javascript->link('freegal_questions'); ?>
 <?php echo $javascript->link('freegal_about_curvy'); ?>
