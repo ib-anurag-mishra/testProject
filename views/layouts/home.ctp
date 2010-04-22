@@ -129,9 +129,13 @@
 		.genreSeeAll {
 			margin-top: -20px;
 		}
+		#search .submit {
+			padding: 0 0 0 2px;
+			height:18px;
+		}
 	</style>
 <![endif]-->
-<!--[if IE]>
+<!--[if IE 8]>
 	<style>
 		#search .submit {
 			padding: 0 0 0 2px;
