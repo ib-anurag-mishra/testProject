@@ -23,7 +23,7 @@ class Section extends AppModel {
 			'dependent' => false,
 			'conditions' => '',
 			'fields' => '',
-			'order' => '',
+			'order' => 'Question.id',
 			'limit' => '',
 			'offset' => '',
 			'exclusive' => '',
