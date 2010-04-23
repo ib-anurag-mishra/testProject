@@ -459,21 +459,7 @@ Class ArtistsController extends AppController
 	}
 	
 	function view($id = null) {
-	  if(isset($this->params['named']['id']) && ($this->params['named']['id'] != '')){
-	  $id = $this->params['named']['id'];
-	  }
-	  $album = "";
-	  if(isset($this->params['named']['album']) && ($this->params['named']['album'] != '')){
-	    $album = $this->params['named']['album'];  
-	  }  
-	  $passArr = $this->params['pass'];
-	  if(count($passArr) > 0){
-	    foreach($passArr as $pass){
-	      $id.= "/".$pass;    
-	    }
-	  }
-	  
-	if($id == '')
+	if(isset($_REQUEST['url']))
         {
             $requestUrlArr = explode("/", $_REQUEST['url']);
 		$id = $requestUrlArr['2'];
@@ -502,59 +488,8 @@ Class ArtistsController extends AppController
 		else
 		{
 		    $cond = "";
-		}
-		if($album != ''){
-		   $this -> paginate =  array('conditions' =>
-					  array('and' =>
-						array(
-							array('Physicalproduct.ArtistText' => base64_decode($id)),
-                                                        array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
-							array('Physicalproduct.ReferenceID' => $album)
-						      )
-						),
-						'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.ReferenceID'							
-							),
-						'contain' => array(
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'								
-								)
-							),						
-						'Metadata' => array(
-							'fields' => array(
-								'Metadata.Title',
-								'Metadata.Artist',
-								'Metadata.ArtistURL',
-								'Metadata.Label',
-								'Metadata.Copyright',								
-								)
-							),
-						'Graphic' => array(
-							'fields' => array(
-							'Graphic.ProdID',
-							'Graphic.FileID'
-							),
-							'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName',
-								'Files.SourceURL'
-								)
-							)
-							)			                                
-						),'limit' => '3','cache' => 'yes'
-						/*,
-                                                 'group' => 'Physicalproduct.ReferenceID'*/
-					  );
-                $this->Physicalproduct->recursive = 2;
-                $albumData = $this->paginate('Physicalproduct');		
-		}
-		else{
-		  $this -> paginate =  array('conditions' =>
+		}	
+                $this -> paginate =  array('conditions' =>
 					  array('and' =>
 						array(
 							array('Physicalproduct.ArtistText' => base64_decode($id)),
@@ -601,8 +536,7 @@ Class ArtistsController extends AppController
                                                  'group' => 'Physicalproduct.ReferenceID'*/
 					  );
                 $this->Physicalproduct->recursive = 2;
-                $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
-		}                		
+                $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist		
                 $albumSongs = array();
                 foreach($albumData as $album)
                 {
