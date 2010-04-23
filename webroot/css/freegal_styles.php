@@ -966,12 +966,17 @@ width: 875px;
 padding: 5px 10px;
 cursor: pointer;
 position: relative;
-background-color:#FFCCCC;
-margin:1px;
+//background-color:#FFCCCC;
+margin:1px 0 0 100px;
 }
 .answer {
 padding: 5px 10px 15px;
-background-color:#F4F4F8;
+background-color:#d8d8d8;
+margin-left: 100px
+}
+
+.answer p {
+	margin-bottom: 10px;
 }
 
 /** Advance Search **/
