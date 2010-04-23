@@ -28,18 +28,15 @@ jQuery(document).ready(function() {
 	});
 });
 
-function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
-{	
-	document.getElementById('download_loader_'+prodId).style.display = 'block';	
-	var finalURL = downloadUrl1;
-	finalURL += downloadUrl2;
-	finalURL += downloadUrl3;
-	var data = "prodId="+prodId;	
+function userDownload(prodId)
+{
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	var data = "prodId="+prodId;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/userDownload", // URL to request
 		data: data,  // post data
-		success: function(response) {			
+		success: function(response) {
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
@@ -48,25 +45,18 @@ function userDownload(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				return false;
 			}
 			else
-			{				
-				var msg = response.substring(0,2);
-				if(isNaN(msg))
-				{
-					msg = response.substring(0,1);
-				}				
-				document.getElementById('downloads_used').innerHTML = msg;
+			{
+				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
-			}			
-			location.href = unescape(finalURL);			
+			}
 		},
-		error:function (XMLHttpRequest, textStatus, errorThrown) {						
-		}
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
 	return false; 
 }
 
 function addToWishlist(prodId)
-{	
+{
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
 	var data = "prodId="+prodId;	
 	jQuery.ajax({
@@ -95,18 +85,15 @@ function addToWishlist(prodId)
 	return false; 
 }
 
-function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
-{	
+function wishlistDownload(prodId,id)
+{
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
-	var finalURL = downloadUrl1;
-	finalURL += downloadUrl2;
-	finalURL += downloadUrl3;
 	var data = "prodId="+prodId+"&id="+id;	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/wishlistDownload", // URL to request
 		data: data,  // post data
-		success: function(response) {			
+		success: function(response) {
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
@@ -115,20 +102,13 @@ function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 				return false;
 			}
 			else
-			{				
-				var msg = response.substring(0,2);
-				if(isNaN(msg))
-				{
-					msg = response.substring(0,1);
-				}				
-				document.getElementById('downloads_used').innerHTML = msg;
+			{
+				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-			}			
-			location.href = unescape(finalURL);
+			}
 		},
-		error:function (XMLHttpRequest, textStatus, errorThrown) {						
-		}
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
 	return false; 
 }

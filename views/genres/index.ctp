@@ -92,9 +92,10 @@
 						if($libraryDownload == '1' && $patronDownload == '1')
 						{						
 							$finalSongUrl = "http://music.freegalmusic.com".$catG['SongUrl'];
-							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
-							<p><a href='#' onclick='Javascript: userDownload("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a><span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
-						<?php		}											
+						?>
+							<p><a onclick='return userDownload("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a><span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+						<?php
+						}
 						else{
 							if($libraryDownload != '1'){
 								$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);

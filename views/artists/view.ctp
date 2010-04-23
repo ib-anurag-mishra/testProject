@@ -93,10 +93,10 @@
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
-												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);?>
-									<?php			$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
-												$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
-												<p><a href='#' onclick='Javascript: userDownload("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a><span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);
+												$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+									?>
+												<p><a onclick='return userDownload("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a><span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 									<?php		}											
 											else{
 												if($libraryDownload != '1'){
