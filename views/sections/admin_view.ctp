@@ -2,11 +2,6 @@
 <div class="sections view">
 <h2><?php  __('Section');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
-		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $section['Section']['id']; ?>
-			&nbsp;
-		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Title'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $section['Section']['title']; ?>
@@ -17,7 +12,7 @@
 			<?php echo $section['Section']['created']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Modified'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __(' Last Modified'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $section['Section']['modified']; ?>
 			&nbsp;
@@ -36,16 +31,14 @@
 	</ul>
 </div>
 <div class="related">
+	<br class="clr" />
 	<h3><?php printf(__('Related %s', true), __('Questions', true));?></h3>
 	<?php if (!empty($section['Question'])):?>
 	<table cellpadding = "0" cellspacing = "0">
 	<tr>
-		<th><?php __('Id'); ?></th>
-		<th><?php __('Section Id'); ?></th>
 		<th><?php __('Question'); ?></th>
 		<th><?php __('Answer'); ?></th>
-		<th><?php __('Created'); ?></th>
-		<th><?php __('Modified'); ?></th>
+		<th><?php __('Last Modified'); ?></th>
 		<th class="actions"><?php __('Actions');?></th>
 	</tr>
 	<?php
@@ -57,11 +50,8 @@
 			}
 		?>
 		<tr<?php echo $class;?>>
-			<td><?php echo $question['id'];?></td>
-			<td><?php echo $question['section_id'];?></td>
 			<td><?php echo $question['question'];?></td>
 			<td><?php echo $question['answer'];?></td>
-			<td><?php echo $question['created'];?></td>
 			<td><?php echo $question['modified'];?></td>
 			<td class="actions">
 				<?php echo $this->Html->link(__('View', true), array('controller' => 'questions', 'action' => 'view', $question['id'])); ?>

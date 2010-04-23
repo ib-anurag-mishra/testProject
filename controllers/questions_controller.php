@@ -20,8 +20,8 @@ class QuestionsController extends AppController {
 		$this->layout = 'home';
 		$this->Question->recursive = 0;
 		$this->paginate = array('conditions' => array(),		     
-		      'order' => 'Section.Title ASC, Question.id ASC'		     
-		      );	
+		      'order' => 'Section.Title ASC, Question.id ASC',
+		);	
 		$questions = $this->paginate('Question');				
 		$this->set('questions', $this->paginate());
 	}
@@ -37,6 +37,9 @@ class QuestionsController extends AppController {
 	function admin_index() {
 		$this->layout = 'admin';
 		$this->Question->recursive = 0;
+		$this->paginate = array('conditions' => array(),		     
+		      'order' => 'Section.Title ASC, Question.id ASC'		     
+		);
 		$this->set('questions', $this->paginate());
 	}
 

@@ -426,3 +426,193 @@ td.actions a:hover {
 .reportsTable {
 	font-size:12px;
 }
+
+/** Questions Tables **/
+.questions table, .sections table, .related table {
+	background: #fff;
+	border-right:0;
+	clear: both;
+	color: #333;
+	margin-bottom: 10px;
+	width: 100%;
+}
+.questions th, .sections th, .related th {
+	border:0;
+	border-bottom:2px solid #555;
+	text-align: left;
+	padding:4px;
+}
+.questions th a, .sections th a, .related th a {
+	display: block;
+	padding: 2px 4px;
+	text-decoration: none;
+}
+.questions th a.asc:after, .sections th a.asc:after, .related th a.asc:after {
+	content: ' ⇣';
+}
+.questions th a.desc:after, .sections th a.desc:after, .related th a.desc:after {
+	content: ' ⇡';
+}
+.questions table tr td, .sections table tr td, .related table tr td {
+	background: #fff;
+	padding: 6px;
+	text-align: left;
+	vertical-align: top;
+	border-bottom:1px solid #ddd;
+}
+.questions table tr:nth-child(2n) td, .sections table tr:nth-child(2n) td, .related table tr:nth-child(2n) td {
+	background: #e9f7fd;
+}
+.questions table .altrow td, .sections table .altrow td, .related table .altrow td {
+	background: #e9f7fd;
+}
+.questions td.actions, .sections td.actions, .related td.actions {
+	text-align: center;
+	white-space: nowrap;
+}
+.questions table td.actions a, .sections table td.actions a, .related table td.actions a {
+	margin: 0px 6px;
+	padding:2px 5px;
+}
+
+/** Scaffold View **/
+.questions dl, .sections dl, .related dl {
+	line-height: 2em;
+	margin: 0em 0em;
+	width: 100%;
+}
+.questions dl .altrow, .sections dl .altrow, .related dl .altrow {
+	background: #e9f7fd;
+}
+.questions dt, .sections dt, .related dt {
+	font-weight: bold;
+	padding-left: 4px;
+	vertical-align: top;
+}
+.questions dd, .sections dd, .related dd {
+	margin-left: 10em;
+	margin-top: -2em;
+	vertical-align: top;
+}
+
+/** Forms **/
+.questions form, .sections form, .related form {
+	clear: both;
+	margin-right: 20px;
+	padding: 0;
+	width: 95%;
+}
+.questions fieldset, .sections fieldset, .related fieldset {
+	border: 1px solid #ccc;
+	margin-bottom: 1em;
+	padding: 16px 20px;
+}
+.questions fieldset legend, .sections fieldset legend, .related fieldset legend {
+	background:#fff;
+	color: #e32;
+	font-size: 100%;
+	font-weight: bold;
+}
+.questions fieldset fieldset, .sections fieldset fieldset, .related fieldset fieldset {
+	margin-top: 0px;
+	margin-bottom: 20px;
+	padding: 16px 10px;
+}
+.questions fieldset fieldset legend, .sections fieldset fieldset legend, .related fieldset fieldset legend {
+	font-size: 100%;
+	font-weight: normal;
+}
+.questions fieldset fieldset div, .sections fieldset fieldset div, .related fieldset fieldset div {
+	clear: left;
+	margin: 0 20px;
+}
+.questions form div, .sections form div, .related form div {
+	clear: both;
+	margin-bottom: 1em;
+	padding: .5em;
+	vertical-align: text-top;
+}
+.questions form .input, .sections form .input, .related form .input {
+	color: #444;
+}
+.questions form .required, .sections form .required, .related form .required {
+	font-weight: bold;
+}
+.questions form .required label:after, .sections form .required label:after, .related form .required label:after {
+	color: #e32;
+	content: '*';
+	display:inline;
+}
+.questions form div.submit, .sections form div.submit, .related form div.submit {
+	border: 0;
+	clear: both;
+	margin-top: 10px;
+}
+.questions label, .sections label, .related label {
+	display: block;
+	font-size: 100%;
+	margin-bottom:3px;
+}
+.questions input, textarea, .sections input, textarea, .related input, textarea {
+	clear: both;
+	/*font-size: 100%;
+		font-family: "frutiger linotype", "lucida grande", "verdana", sans-serif;*/
+/*	padding: 1%;*/
+	width:98%;
+}
+.questions select, .sections select, .related select {
+	clear: both;
+	font-size: 80%;
+	vertical-align: text-bottom;
+}
+.questions select[multiple=multiple], .sections select[multiple=multiple], .related select[multiple=multiple] {
+	width: 100%;
+}
+.questions option, .sections option, .related option {
+	font-size: 100%;
+	padding: 0 3px;
+}
+.questions input[type=checkbox], .sections input[type=checkbox], .related input[type=checkbox] {
+	clear: left;
+	float: left;
+	margin: 0px 6px 7px 2px;
+	width: auto;
+}
+.questions div.checkbox label, .sections div.checkbox label, .related div.checkbox label {
+	display: inline;
+}
+.questions input[type=radio], .sections input[type=radio], .related input[type=radio] {
+	float:left;
+	width:auto;
+	margin: 0 3px 7px 0;
+}
+.questions div.radio label, .sections div.radio label, .related div.radio label {
+	margin: 0 0 6px 20px;
+}
+.questions input[type=submit], .sections input[type=submit], .related input[type=submit] {
+	display: inline;
+	font-size: 90%;
+	width: auto;
+}
+.questions form .submit input[type=submit], .sections form .submit input[type=submit], .related form .submit input[type=submit] {
+	background:#eeeeee;
+	background: -webkit-gradient(linear, left top, left bottom, from(#eeeeee), to(#cccccc));
+	background-image: -moz-linear-gradient(top, #eeeeee, #cccccc);
+	border-color: #ccc;
+	color: #000;
+/*	text-shadow: #8cee7c 0px 1px 0px;*/
+}
+.questions form .submit input[type=submit]:hover, .sections form .submit input[type=submit]:hover, .related form .submit input[type=submit]:hover {
+	background:#e1e1e1;
+	background: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#c1c1c1));
+	background-image: -moz-linear-gradient(top, #e1e1e1, #e1e1e1);
+}
+
+.questions a, .sections a, .related a {
+	text-decoration: underline;
+	color: #000;
+}
+
+.related h3, .related table {
+	margin-left:10px;
+}
