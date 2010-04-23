@@ -14,7 +14,7 @@
 if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 {
 	$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
-
+	$downloadCount = $download->getDownloadDetails($_SESSION['library'],$_SESSION['patron']);
 ?>
 <div id="header">
 	<?php
@@ -30,8 +30,7 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 	<div id="header_right">
 		<ul>
 			<li>
-				Weekly Downloads <span id="downloads_used">
-					<?php echo $this->Session->read('downloadsUsed'); ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
+				Weekly Downloads <span id="downloads_used"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
 				<?php echo $html->link($html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14)), array('controller' => 'homes', 'action' => 'limits'), array('escape' => false)); ?>
 				&nbsp;|&nbsp;
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>

@@ -325,12 +325,13 @@ class HomesController extends AppController
         $this->layout = 'home';
     }
     
-    function userDownload()
-    {          
+    function userDownload(){
+        Configure::write('debug', 0);
+        $this->layout = false;
         $libId = $_SESSION['library'];
         $patId = $_SESSION['patron'];
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
-	$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);  
+        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         if($libraryDownload != '1' || $patronDownload != '1')
         {
             echo "error";
@@ -345,16 +346,15 @@ class HomesController extends AppController
         $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
         $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
         $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];	
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC']; 
         $this->Download->save($insertArr);
-        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;	
+        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
         $this->Library->query($sql);
         $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
         $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";           
-        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));       
-        $this ->Session->write("downloadsUsed", $downloadsUsed);
+        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
         echo $downloadsUsed;
-	exit;
+        exit;
     }
 
     function advance_search() {
@@ -621,7 +621,7 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
         $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
         //get no of downloads for this week
-        $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'week_start_date' => $startDate,'week_end_date' => $endDate)));
+        $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
         if($wishlistCount >= $patronLimit){            
             echo "error";
             exit;        
@@ -638,9 +638,7 @@ class HomesController extends AppController
             $insertArr['album'] = $trackDetails['0']['Physicalproduct']['Title'];
             $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
             $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
-            $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
-            $insertArr['week_start_date'] = $startDate;
-            $insertArr['week_end_date'] = $endDate;
+            $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];            
             //insert into wishlist table
             $this->Wishlist->save($insertArr);
             //update the libraries table
@@ -666,7 +664,7 @@ class HomesController extends AppController
         $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
         $wishlistResults = Array();
         //$wishlistInfo = $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
-        $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'week_start_date' => $startDate,'week_end_date' => $endDate)));
+        $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         //if(count($wishlistInfo) > 0){            
         //}
         $this->set('wishlistResults',$wishlistResults);
@@ -710,6 +708,8 @@ class HomesController extends AppController
     Desc : For downloading a song in wishlist page
    */
     function wishlistDownload(){
+        Configure::write('debug', 0);
+        $this->layout = false;
         $libId = $_SESSION['library'];
         $patId = $_SESSION['patron'];
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
@@ -744,9 +744,7 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
         $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
         //get no of downloads for this week
-        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-        //set in session to show on top of every page
-        $this ->Session->write("downloadsUsed", $downloadsUsed);
+        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));        
         echo $downloadsUsed;
 	exit;
     }

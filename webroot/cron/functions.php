@@ -47,6 +47,8 @@ function sendReportFile($src,$dst,$logFileWrite)
 function resetDownloads()
 {
     $currentDate = date('Y-m-d');
+    $nextDayTS = strtotime($currentDate); 
+    $nextDay = date('Y-m-d', strtotime('+1 day', $nextDayTS));    
     $date = date('y-m-d');
     list($year, $month, $day) = explode('-', $date);
     $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w')-1), date('Y')));
@@ -56,7 +58,7 @@ function resetDownloads()
     $results = mysql_query($qry);
     while($resultsArr = mysql_fetch_assoc($results))
     {
-	$downloadType = $resultsArr['library_download_type'];
+	$downloadType = $resultsArr['library_download_type'];	
 	if($downloadType == "daily")
 	{
 	    $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
@@ -86,6 +88,19 @@ function resetDownloads()
 		mysql_query($sql);
 	    }
 	}
+	$libraryId = $resultsArr['id'];	
+	$sql = "SELECT count(*) as count from wishlists where `delete_on` ='".$currentDate."' and `library_id` = ".$libraryId;	
+	$result = mysql_query($sql);
+	$row = mysql_fetch_assoc($result);
+	$count = $row['count'];	
+	$sql="UPDATE `libraries` SET library_available_downloads=library_available_downloads+".$count." Where id=".$libraryId;	
+        mysql_query($sql);
+	$qry = "Delete from wishlists where delete_on ='".$currentDate."'";	
+	mysql_query($qry);
+	if(($resultsArr['library_available_downloads'] > 0) && ($resultsArr['library_download_limit'] > $resultsArr['library_current_downloads'])){		
+		$qry = "UPDATE wishlists SET `delete_on` = '".$nextDay."' WHERE `library_id` = ".$libraryId;		
+		mysql_query($qry);
+	}	
     }     
 }
 ?>
