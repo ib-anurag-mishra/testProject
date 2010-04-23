@@ -33,6 +33,7 @@ class HomesController extends AppController
                                 'fields' => array(
                                                     'Physicalproduct.ProdID',
                                                     'Physicalproduct.Title',
+                                                    'Physicalproduct.ReferenceID',
                                                     'Physicalproduct.ArtistText',
                                                     'Physicalproduct.DownloadStatus',
                                                     'Physicalproduct.SalesDate'

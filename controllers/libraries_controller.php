@@ -472,6 +472,7 @@ Class LibrariesController extends AppController
                     else
                     {                
                         $this -> Session -> setFlash("This account is already active.");
+                        session_destroy();
                         $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                     }
                 }
@@ -491,6 +492,7 @@ Class LibrariesController extends AppController
                         else
                         {                            
                             $this -> Session -> setFlash("This account is already active.");
+                            session_destroy();
                             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                         }                  
                     }                    
