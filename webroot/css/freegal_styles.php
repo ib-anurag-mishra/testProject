@@ -977,6 +977,14 @@ background-color:#d8d8d8;
 margin-left: 100px;
 font-size: 13px;
 }
+.answer a {
+	text-decoration: none;
+    color: <?php echo $library_links_color; ?>;
+}
+.answer a:hover {
+        text-decoration: underline;
+        color: <?php echo $library_links_hover_color; ?>;
+}
 
 .answer p {
 	margin-bottom: 10px;
