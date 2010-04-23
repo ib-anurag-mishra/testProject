@@ -53,17 +53,13 @@
                                 if (strlen($randomSongs['Metadata']['Artist']) >= 24 ) {
                                         echo $html->link(substr($randomSongs['Metadata']['Artist'], 0, 24) . "...", array(
                                                 'controller' => 'artists',
-                                                'action' => 'view',
-                                                'id' => base64_encode($randomSongs['Physicalproduct']['ArtistText']),
-						'album' => $randomSongs['Physicalproduct']['ReferenceID']
+                                                'action' => 'view',base64_encode($randomSongs['Physicalproduct']['ArtistText'])
                                                 )
                                         ) . "<span>" . $randomSongs['Metadata']['Artist'] . "</span>";
                                 } else {
                                         echo $html->link($randomSongs['Metadata']['Artist'], array(
                                                 'controller' => 'artists',
-                                                'action' => 'view',
-                                                'id' => base64_encode($randomSongs['Physicalproduct']['ArtistText']),
-						'album' => $randomSongs['Physicalproduct']['ReferenceID']
+                                                'action' => 'view',base64_encode($randomSongs['Physicalproduct']['ArtistText'])
                                                 )
                                         );
                                 }
