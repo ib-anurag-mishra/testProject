@@ -101,7 +101,7 @@
 								<!--[if IE]>
 									<a onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 								<![endif]-->
-								<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+								<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
 						<?php
 						}

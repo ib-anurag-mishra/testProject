@@ -104,7 +104,7 @@
 													<!--[if IE]>
 														<a onclick='return userDownloadIE("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 													<![endif]-->
-													<span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+													<span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 												</p>
 									<?php		}											
 											else{

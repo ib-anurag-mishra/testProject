@@ -50,7 +50,7 @@
     // set default header data
     // set header and footer fonts
     $tcpdf->setHeaderFont(array($textfont,'',12));
-    $tcpdf->xheadertext = 'Libraries Download Report for '.$displaylibraryName.$displaydateRange;
+    $tcpdf->xheadertext = 'Libraries/Patrons Download Report for '.$displaylibraryName.$displaydateRange;
     $tcpdf->xfootertext = 'Copyright © %d FreegalMusic.com. All rights reserved.';
     
     //set margins
@@ -71,6 +71,7 @@
     
     //Column titles
     $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
+    $patron_header = array('', 'Patron ID', 'Total Number of Tracks Downloaded');
     
     //Data loading
     foreach($downloads as $key => $download) {
@@ -78,15 +79,25 @@
         $data[] = array($key+1, $libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
     
+    foreach($patronDownloads as $key => $patronDownload) {
+        $patron_data[] = array($key+1, $patronDownload['Download']['patron_id'], $patronDownload[0]['totalDownloads']);
+    }
+    
     // print colored table
     // Colors, line width and bold font
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Library Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Ln();
+    
     $tcpdf->SetFillColor(0, 153, 255);
     $tcpdf->SetTextColor(255);
     $tcpdf->SetDrawColor(224, 224, 224);
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(5, 50, 25, 60, 80, 30);
+    $w = array(10, 50, 20, 60, 80, 30);
     for($i = 0; $i < count($header); $i++)
         $tcpdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -96,8 +107,15 @@
     $tcpdf->SetFont('');
     // Data
     $fill = 0;
+    $lineNum = 0;
     foreach($data as $k=>$row) {
-        if($k%28 == 0 && $k != 0) {
+        if($lineNum%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Library Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+            
             // Colors, line width and bold font
             $tcpdf->SetFillColor(0, 153, 255);
             $tcpdf->SetTextColor(255);
@@ -122,7 +140,66 @@
 	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Ln();
         $fill=!$fill;
+        $lineNum++;
     }
+    
+    // add a page
+    $tcpdf->AddPage();
+    
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Patron Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Ln();
+    
+    $tcpdf->SetFillColor(0, 153, 255);
+    $tcpdf->SetTextColor(255);
+    $tcpdf->SetDrawColor(224, 224, 224);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    // Header
+    $w = array(10, 50, 190);
+    for($i = 0; $i < count($patron_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $patron_header[$i], 1, 0, 'C', 1);
+        $tcpdf->Ln();
+    // Color and font restoration
+    $tcpdf->SetFillColor(224, 235, 255);
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetFont('');
+    // Data
+    $fill = 0;
+    foreach($patron_data as $k=>$row) {
+        if($lineNum%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Patron Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+            
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($patron_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $patron_header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+        
+        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'C', $fill, '', 3);
+        $tcpdf->Ln();
+        $fill=!$fill;
+        $lineNum++;
+    }
+    
     $tcpdf->Cell(array_sum($w), 0, '', 'T');
     
     echo $tcpdf->Output('DownloadsReport_'.$savelibraryName.$savedateRange.'.pdf', 'D');

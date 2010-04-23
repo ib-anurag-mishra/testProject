@@ -449,6 +449,12 @@ ul.marquee li {
 	float:left;
 }
 
+#search input {
+        float:left;
+        line-height:14px;
+        margin-top:-4px;
+}
+
 .searchButton {
 	background:transparent url(../img/search.png) center center no-repeat;
 	line-height:14px;

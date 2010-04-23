@@ -84,7 +84,7 @@
 									<!--[if IE]>
 									<a onclick='return wishlistDownloadIE("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 								</span>
-								<span id="wishlist_loader_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+								<span id="wishlist_loader_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
 					<?php	}
 						else{ ?>

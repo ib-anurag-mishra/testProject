@@ -17,7 +17,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return $this->find('all', compact('conditions'));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY patron_id'), 'fields' => array('patron_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id')));
   }
   
   function getWeeksDownloadInformation($libraryID, $date) {
@@ -33,7 +33,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return $this->find('all', compact('conditions'));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY patron_id'), 'fields' => array('patron_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id')));
   }
   
   function getMonthsDownloadInformation($libraryID, $date) {
@@ -49,7 +49,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return $this->find('all', compact('conditions'));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY patron_id'), 'fields' => array('patron_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id')));
   }
   
   function getYearsDownloadInformation($libraryID, $date) {
@@ -65,7 +65,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return $this->find('all', compact('conditions'));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY patron_id'), 'fields' => array('patron_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id')));
   }
   
   function getManualDownloadInformation($libraryID, $date_from, $date_to) {
@@ -82,6 +82,6 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return $this->find('all', compact('conditions'));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'"', '1 = 1 GROUP BY patron_id'), 'fields' => array('patron_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id')));
   }
 }

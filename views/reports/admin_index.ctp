@@ -108,6 +108,8 @@
                             ?>
                         </td>
                     </tr>
+                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><th colspan="4" align="center">Library Downloads Report</th></tr>
                     <tr>
                         <td colspan="4" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
@@ -130,6 +132,32 @@
                                         <td><?php echo $download['Download']['artist']; ?></td>
                                         <td><?php echo $download['Download']['track_title']; ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
+                                    </tr>
+                                <?php
+				    $i++;
+                                }
+                                ?>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><th colspan="4" align="center">Patron Downloads Report</th></tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
+                                <tr>
+				    <th>&nbsp;</th>
+                                    <th>Patron ID</th>
+                                    <th>Total Number of Tracks Downloaded</th>
+                                </tr>
+                                <?php
+				$i = 1;
+                                foreach($patronDownloads as $key => $patronDownload) {
+                                ?>
+                                    <tr>
+					<td><?php echo $i; ?></td>
+                                        <td><?php echo $patronDownload['Download']['patron_id']; ?></td>
+                                        <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
                                     </tr>
                                 <?php
 				    $i++;
