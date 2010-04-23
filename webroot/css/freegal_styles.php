@@ -452,7 +452,6 @@ ul.marquee li {
 #search input {
         float:left;
         line-height:14px;
-        margin-top:-4px;
 }
 
 .searchButton {
