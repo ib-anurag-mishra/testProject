@@ -14,6 +14,11 @@ class AppController extends Controller
 		$this -> set ( 'genresMenu' ,  $this -> Category -> find ('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre')));	
 		$this -> set ( 'featuredArtistMenu' ,  $this -> Featuredartist -> find ('all',array('cache' => array('artist_name','artist_image'))));
 		$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find ('all',array('cache' => array('artist_name','artist_image'))));
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
+		header('Last-Modified: ' . gmdate('D, d M Y H:i:S') . ' GMT');
+		header('Cache-Control: no-store, no-cache, must-revalidate');
+		header('Cache-Control: post-check=0, pre-check=0', false);
+		header('Pragma: no-cache');
 	}
 	
 	

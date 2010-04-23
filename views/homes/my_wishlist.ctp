@@ -74,8 +74,18 @@
 						if($libraryDownload == '1' && $patronDownload == '1'){
 							$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Audio']['1']['Files']['CdnPath']."/".$productInfo[0]['Audio']['1']['Files']['SaveAsName']);                                                
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 					?>
-							<p><span id="wishlist_song_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>"><a onclick='return wishlistDownload("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>","<?php echo $wishlistResult['Wishlist']['id']; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></span><span id="wishlist_loader_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+							<p>
+								<span id="wishlist_song_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>">
+									<![if !IE]>
+										<a href='#' onclick='return wishlistDownloadOthers("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+									<![endif]>
+									<!--[if IE]>
+									<a onclick='return wishlistDownloadIE("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+								</span>
+								<span id="wishlist_loader_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+							</p>
 					<?php	}
 						else{ ?>
 							<p>Limit Exceeded</p>

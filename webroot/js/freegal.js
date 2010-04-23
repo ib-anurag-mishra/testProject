@@ -28,7 +28,7 @@ jQuery(document).ready(function() {
 	});
 });
 
-function userDownload(prodId)
+function userDownloadIE(prodId)
 {
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	var data = "prodId="+prodId;
@@ -54,6 +54,38 @@ function userDownload(prodId)
 	});
 	return false; 
 }
+
+function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/userDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				location.href = unescape(finalURL);
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
+}
+
 
 function addToWishlist(prodId)
 {
@@ -85,7 +117,7 @@ function addToWishlist(prodId)
 	return false; 
 }
 
-function wishlistDownload(prodId,id)
+function wishlistDownloadIE(prodId,id)
 {
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 	var data = "prodId="+prodId+"&id="+id;	
@@ -106,6 +138,38 @@ function wishlistDownload(prodId,id)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
+}
+
+function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId+"&id="+id;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/wishlistDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				location.href = unescape(finalURL);
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}

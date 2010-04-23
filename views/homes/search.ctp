@@ -90,9 +90,18 @@
                                                 {	
                                                         $songUrl = shell_exec('perl files/tokengen ' . $searchResult['Audio']['1']['Files']['CdnPath']."/".$searchResult['Audio']['1']['Files']['SaveAsName']);                                                
                                                         $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
-                                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));?>
-                                                        <p><a onclick='return userDownload("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a><span id="download_loader_<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
-                                <?php		}											
+                                                        $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+					?>
+                                                        <p>
+								<![if !IE]>
+									<a href='#' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+								<![endif]>
+								<!--[if IE]>
+									<a onclick='return userDownloadIE("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+								<![endif]-->
+								<span id="download_loader_<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+							</p>
+					<?php	}											
                                                 else{
 							if($libraryDownload != '1'){
 								$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);
