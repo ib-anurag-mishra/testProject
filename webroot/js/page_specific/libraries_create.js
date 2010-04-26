@@ -216,7 +216,7 @@ $(function() {
 		onBeforeShow: function () {
 			$(this).ColorPickerSetColor(this.value);
 		}
-	})
+	});
 	
 	// Post-submit callback 
 	function afterValidate(data, status)  {

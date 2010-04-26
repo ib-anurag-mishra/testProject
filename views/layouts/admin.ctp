@@ -21,13 +21,13 @@
                 echo $javascript->link('supersubs');
 		echo $javascript->link('colorpicker');*/
 		?>
-		<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=superfish.css,freegal_admin_styles.css,colorbox.css,colorpicker.css" />
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery-1.3.2.min.js,jquery.tools.min.js,admin_functions.js,jquery.colorbox.js,jquery.hoverIntent.min.js,superfish.js,supersubs.js,colorpicker.js"></script>
+		<link type="text/css" rel="stylesheet" href="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=superfish.css,freegal_admin_styles.css,colorbox.css,colorpicker.css" />
+                <script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery-1.3.2.min.js,jquery.tools.min.js,admin_functions.js,jquery.colorbox.js,jquery.hoverIntent.min.js,superfish.js,supersubs.js,colorpicker.js"></script>
         <?php
 		echo $scripts_for_layout;
 	?>
 	<script type="text/javascript">
-		var webroot = '<? echo $this->webroot; ?>';
+		var webroot = '<?php echo $this->webroot; ?>';
 	</script>
 </head>
 <body>
