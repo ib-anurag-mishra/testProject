@@ -294,6 +294,28 @@ ul.marquee li {
         color:<?php echo $library_links_hover_color; ?>;
 }
 
+#genre_artist_search {
+        font-size:13px;
+        clear:both;
+        width:945px;
+        height:20px;
+        text-align:center;
+        background-color:<?php echo $library_boxheader_bgcolor; ?>;
+        color:<?php echo $library_boxheader_text_color; ?>;
+        margin:10px 10px 0;
+        display:block;
+}
+
+#genre_artist_search a {
+        text-decoration: none;
+        color:<?php echo $library_links_color; ?>;
+}
+
+#genre_artist_search a:hover {
+/*		text-decoration: underline;*/
+        color:<?php echo $library_links_hover_color; ?>;
+}
+
 #artist_searchBox {
     background-color: <?php echo $library_content_bgcolor; ?>;
     border: 1px solid #999;

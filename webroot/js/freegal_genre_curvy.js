@@ -6,7 +6,11 @@ addEvent(window, 'load', initCorners);
 	    tr: { radius: 5 },
 	    antiAlias: true
     }
-
+    var genreArtist = {
+    	tl: { radius: 5 },
+	    tr: { radius: 5 },
+	    antiAlias: true
+    }
 	var artist = {
 		tl: { radius: 5},
 		bl: { radius: 5},
@@ -28,6 +32,7 @@ addEvent(window, 'load', initCorners);
 	}
 
     curvyCorners(genre, "#genre");
+    curvyCorners(genreArtist, "#genre_artist_search");
 	// curvyCorners(artist, "#genreArtist");
 	// 	curvyCorners(middle, "#genreAlbum");
 	// 	curvyCorners(middle, "#genreTrack");

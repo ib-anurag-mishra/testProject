@@ -149,7 +149,7 @@ Class GenresController extends AppController
 			$this->set('categories',$finalArray);
 	}
 	
-	function view( $Genre = null ) {
+	function view($Genre = null,$Artist = null) {
 		$this -> layout = 'home';
 		if( !base64_decode($Genre) ) {
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
@@ -167,12 +167,21 @@ Class GenresController extends AppController
 		else {
 		      $cond = "";
 		}
+		if($Artist == '#'){
+			$condition = array("Physicalproduct.ArtistText REGEXP '^[^A-Za-z]'");			
+		}
+		elseif($Artist != ''){
+			$condition = array('Physicalproduct.ArtistText LIKE' => $Artist.'%');
+		}
+		else{
+			$condition = "";
+		}
 		$this->Physicalproduct->Behaviors->attach('Containable');
 		$this->Physicalproduct->recursive = 1;
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
-		      'conditions' => array("Genre.Genre = '$genre'",'1 = 1 GROUP BY Physicalproduct.ArtistText'),
+		      'conditions' => array("Genre.Genre = '$genre'",$condition,'1 = 1 GROUP BY Physicalproduct.ArtistText'),
 		      'fields' => array('ArtistText'),
 		      'order' => 'ArtistText ASC',		      
 		      'limit' => '60', 'cache' => 'yes'
