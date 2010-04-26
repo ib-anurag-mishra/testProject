@@ -225,6 +225,7 @@ class HomesController extends AppController
                                                     'Physicalproduct.ProdID',
                                                     'Physicalproduct.Title',
                                                     'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.ReferenceID',
                                                     'Physicalproduct.DownloadStatus',
                                                     'Physicalproduct.SalesDate'
                                                     ),
@@ -290,6 +291,7 @@ class HomesController extends AppController
                                                     'Physicalproduct.ProdID',
                                                     'Physicalproduct.Title',
                                                     'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.ReferenceID',
                                                     'Physicalproduct.DownloadStatus',
                                                     'Physicalproduct.SalesDate'
                                                     ),

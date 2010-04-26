@@ -36,14 +36,14 @@
 							$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
 							echo $html->link(
 								$ArtistName,
-								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']))); ?>
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID'])); ?>
 							<span><?php echo $searchResult['Metadata']['Artist']; ?></span>
 						<?php
 						} else {
 							$ArtistName = $searchResult['Metadata']['Artist'];
 							echo $html->link(
 								$ArtistName,
-								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText'])));
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID']));
 						} 
 					?>
 					</p>

@@ -175,7 +175,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-	}
+	}	
 	
 	/*
 	Function Name : createartist
@@ -457,151 +457,148 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'managenewartist' );
 		}
 	}
-	
-	function view($id = null) {
-	if(isset($_REQUEST['url']))
-        {
-            $requestUrlArr = explode("/", $_REQUEST['url']);
-		$id = $requestUrlArr['2'];
-		if(count($requestUrlArr) > 3)
-		{
-			for($i=3;$i<count($requestUrlArr);$i++){
-				$check = substr($requestUrlArr[$i],0,4);
-				if($check != 'page'){
-					$id .= '/'.$requestUrlArr[$i];
-				}
-			}             		
-		}          
-        }	
-	$this->layout = 'home';	
-              $this->set('artistName',base64_decode($id));
-		$patId = $_SESSION['patron'];
-		$libId = $_SESSION['library'];
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
-		if($_SESSION['block'] == 'yes')
-		{
-		    $cond = array('Metadata.Advisory' => 'F');
+	function view($id=null,$album=null) {	  	  
+	    if(count($this -> params['pass']) > 1){
+		$count = count($this -> params['pass']);	      
+		$id = $this -> params['pass'][0];	      
+		for($i=1;$i<$count;$i++){
+		  if(!is_numeric($this -> params['pass'][$i])){
+		      $id .= "/".$this -> params['pass'][$i];  
+		  }		
 		}
-		else
-		{
-		    $cond = "";
-		}	
-                $this -> paginate =  array('conditions' =>
-					  array('and' =>
-						array(
-							array('Physicalproduct.ArtistText' => base64_decode($id)),
-                                                        array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
-							array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1')")
-						      )
-						),
-						'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.ReferenceID'							
-							),
-						'contain' => array(
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'								
-								)
-							),						
-						'Metadata' => array(
-							'fields' => array(
-								'Metadata.Title',
-								'Metadata.Artist',
-								'Metadata.ArtistURL',
-								'Metadata.Label',
-								'Metadata.Copyright',								
-								)
-							),
-						'Graphic' => array(
-							'fields' => array(
-							'Graphic.ProdID',
-							'Graphic.FileID'
-							),
-							'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName',
-								'Files.SourceURL'
-								)
-							)
-							)			                                
-						),'limit' => '3','cache' => 'yes'
-						/*,
-                                                 'group' => 'Physicalproduct.ReferenceID'*/
-					  );
-                $this->Physicalproduct->recursive = 2;
-                $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist		
-                $albumSongs = array();
-                foreach($albumData as $album)
-                {
-                    /*$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
-                                                  'conditions' =>
-                                                            array('and' =>
-                                                                  array(
-                                                                          array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),
-                                                                          array( "Physicalproduct.ProdID <> Physicalproduct.ReferenceID"),
-                                                                          
-                                                                        )
-                                                                  ),'order' => 'Physicalproduct.ReferenceID'
-                                                            ));*/
-		    $albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
-					  'conditions' =>
-					  array('and' =>
-						array(
-							array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
-							array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
-							array('Physicalproduct.DownloadStatus' => 1),$cond
-						      )
-						),
-					  'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.DownloadStatus',
-							'Physicalproduct.SalesDate'
-							),
-					  'contain' => array(
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'								
-								)
-							),						
-						'Metadata' => array(
-							'fields' => array(
-								'Metadata.Title',
-								'Metadata.Artist',
-								'Metadata.Advisory'
-								)
-							),
-						'Audio' => array(
-							'fields' => array(
-								'Audio.FileID',
-								'Audio.Duration'                                                    
-								),
-							'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName'
-								)
-							)
-							)                                  
-						),'order' => 'Physicalproduct.ReferenceID'  
-					  ));
-                }		
-                $this->set('albumData', $albumData);		
-                if($albumData[0]['Metadata']['ArtistURL'] != "" )
-                {
-                   $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
-                }else{
-                   $this->set('artistUrl', "N/A");
-                }		
-                $this->set('albumSongs',$albumSongs);		
+		if(is_numeric($this -> params['pass'][$count - 1])){
+		    $album = $this -> params['pass'][$count - 1];
+		}
+		else{
+		  $album = "";
+		}	      
+	    }	  
+	    if($album != ''){
+	      $condition = array("Physicalproduct.ReferenceID" => $album);
+	    }
+	    else{
+	      $condition = "";
+	    }
+	    $this->layout = 'home';	
+	    $this->set('artistName',base64_decode($id));
+	    $patId = $_SESSION['patron'];
+	    $libId = $_SESSION['library'];
+	    $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+	    $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+	    $this->set('libraryDownload',$libraryDownload);
+	    $this->set('patronDownload',$patronDownload);
+	    if($_SESSION['block'] == 'yes')
+	    {
+		$cond = array('Metadata.Advisory' => 'F');
+	    }
+	    else
+	    {
+		$cond = "";
+	    }	
+	    $this -> paginate =  array('conditions' =>
+				      array('and' =>
+					    array(
+						    array('Physicalproduct.ArtistText' => base64_decode($id)),
+						    array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
+						    //array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1')"),
+						    $condition
+						  )
+					    ),
+					    'fields' => array(
+						    'Physicalproduct.ProdID',
+						    'Physicalproduct.Title',
+						    'Physicalproduct.ArtistText',
+						    'Physicalproduct.ReferenceID'							
+						    ),
+					    'contain' => array(
+					    'Genre' => array(
+						    'fields' => array(
+							    'Genre.Genre'								
+							    )
+						    ),						
+					    'Metadata' => array(
+						    'fields' => array(
+							    'Metadata.Title',
+							    'Metadata.Artist',
+							    'Metadata.ArtistURL',
+							    'Metadata.Label',
+							    'Metadata.Copyright',								
+							    )
+						    ),
+					    'Graphic' => array(
+						    'fields' => array(
+						    'Graphic.ProdID',
+						    'Graphic.FileID'
+						    ),
+						    'Files' => array(
+						    'fields' => array(
+							    'Files.CdnPath' ,
+							    'Files.SaveAsName',
+							    'Files.SourceURL'
+							    )
+						    )
+						    )			                                
+					    ),'limit' => '3','cache' => 'yes'
+					    /*,
+					     'group' => 'Physicalproduct.ReferenceID'*/
+				      );
+	    $this->Physicalproduct->recursive = 2;
+	    $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist		
+	    $albumSongs = array();
+	    foreach($albumData as $album)
+	    {		
+		$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+				      'conditions' =>
+				      array('and' =>
+					    array(
+						    array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
+						    array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
+						    array('Physicalproduct.DownloadStatus' => 1),$cond
+						  )
+					    ),
+				      'fields' => array(
+						    'Physicalproduct.ProdID',
+						    'Physicalproduct.Title',
+						    'Physicalproduct.ArtistText',
+						    'Physicalproduct.DownloadStatus',
+						    'Physicalproduct.SalesDate'
+						    ),
+				      'contain' => array(
+					    'Genre' => array(
+						    'fields' => array(
+							    'Genre.Genre'								
+							    )
+						    ),						
+					    'Metadata' => array(
+						    'fields' => array(
+							    'Metadata.Title',
+							    'Metadata.Artist',
+							    'Metadata.Advisory'
+							    )
+						    ),
+					    'Audio' => array(
+						    'fields' => array(
+							    'Audio.FileID',
+							    'Audio.Duration'                                                    
+							    ),
+						    'Files' => array(
+						    'fields' => array(
+							    'Files.CdnPath' ,
+							    'Files.SaveAsName'
+							    )
+						    )
+						    )                                  
+					    ),'order' => 'Physicalproduct.ReferenceID'  
+				      ));
+	    }		
+	    $this->set('albumData', $albumData);		
+	    if($albumData[0]['Metadata']['ArtistURL'] != "" )
+	    {
+	       $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
+	    }else{
+	       $this->set('artistUrl', "N/A");
+	    }		
+	    $this->set('albumSongs',$albumSongs);		
 	}	
   }	
 ?>
