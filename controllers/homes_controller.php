@@ -75,7 +75,7 @@ class HomesController extends AppController
 	Configure::write('debug', 0);
         $this->Physicalproduct->recursive = -1;
         $albumResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1						
+	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
 	   ),
            'fields' => array(
 			  'Title'
