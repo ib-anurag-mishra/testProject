@@ -162,7 +162,7 @@ Class GenresController extends AppController
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		if($_SESSION['block'] == 'yes') {
-		      $cond = array('Metadata.Advisory' => 'T');
+		      $cond = array('Metadata.Advisory' => 'F');
 		}
 		else {
 		      $cond = "";
