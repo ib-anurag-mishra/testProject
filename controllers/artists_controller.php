@@ -500,7 +500,7 @@ Class ArtistsController extends AppController
 					    array(
 						    array('Physicalproduct.ArtistText' => base64_decode($id)),
 						    array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
-						    //array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1')"),
+						    array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1')"),
 						    $condition
 						  )
 					    ),
