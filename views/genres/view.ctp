@@ -2,18 +2,38 @@
 <div id="genre">
 	<?php echo $genre; ?>	
 </div>
-<!-- <div id="genreArtist">
-	<?php // echo $paginator->sort('Artist ', 'Metadata.Artist') . $html->image('sort_arrows.png'); ?>
-</div> -->
-<!--<div id="genreAlbum">
-	<?php //echo $paginator->sort('Album ', 'Physicalproduct.Title') . $html->image('sort_arrows.png'); ?>
+<br class="clr">
+<div id="genre_artist_search">
+ <a name="bottom">Artist Search&nbsp;</a>&nbsp;
+ <?php echo $html->link('ALL',array('controller' => 'genres', 'action' => 'view', base64_encode($genre)));?>&nbsp;
+ <?php echo $html->link('#',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'#'));?>&nbsp;
+ <?php echo $html->link('A',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'A'));?>&nbsp;
+ <?php echo $html->link('B',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'B'));?>&nbsp;
+ <?php echo $html->link('C',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'C'));?>&nbsp;
+ <?php echo $html->link('D',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'D'));?>&nbsp;
+ <?php echo $html->link('E',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'E'));?>&nbsp;
+ <?php echo $html->link('F',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'F'));?>&nbsp;
+ <?php echo $html->link('G',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'G'));?>&nbsp;
+ <?php echo $html->link('H',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'H'));?>&nbsp;
+ <?php echo $html->link('I',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'I'));?>&nbsp;
+ <?php echo $html->link('J',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'J'));?>&nbsp;
+ <?php echo $html->link('K',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'K'));?>&nbsp;
+ <?php echo $html->link('L',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'L'));?>&nbsp;
+ <?php echo $html->link('M',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'M'));?>&nbsp;
+ <?php echo $html->link('N',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'N'));?>&nbsp;
+ <?php echo $html->link('O',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'O'));?>&nbsp;
+ <?php echo $html->link('P',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'P'));?>&nbsp;
+ <?php echo $html->link('Q',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'Q'));?>&nbsp;
+ <?php echo $html->link('R',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'R'));?>&nbsp;
+ <?php echo $html->link('S',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'S'));?>&nbsp;
+ <?php echo $html->link('T',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'T'));?>&nbsp;
+ <?php echo $html->link('U',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'U'));?>&nbsp;
+ <?php echo $html->link('V',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'V'));?>&nbsp;
+ <?php echo $html->link('W',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'W'));?>&nbsp;
+ <?php echo $html->link('X',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'X'));?>&nbsp;
+ <?php echo $html->link('Y',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'Y'));?>&nbsp;
+ <?php echo $html->link('Z',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'Z'));?>&nbsp;
 </div>
-<div id="genreTrack">
-	<?php //echo $paginator->sort('Track ', 'Metadata.Title') . $html->image('sort_arrows.png');?>
-</div>
-<div id="genreDownload">
-	Download
-</div> -->
 <br class="clr">
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0" border="0">
@@ -25,143 +45,31 @@
 			$class = ' class="altrow"';
 		}
 		echo "<tr" . $class . ">";
-		if($i < count($genres)) {
-			echo "<td width='308'><p class='info'>";
-			if (strlen($genres[$i]['Physicalproduct']['ArtistText']) >= 38) {
-				$ArtistName = substr($genres[$i]['Physicalproduct']['ArtistText'], 0, 38) . '...';
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$i]['Physicalproduct']['ArtistText']))); ?>
-				<span><?php echo $genres[$i]['Physicalproduct']['ArtistText']; ?></span>
-			<?php
-			} else {
-				$ArtistName = $genres[$i]['Physicalproduct']['ArtistText'];
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$i]['Physicalproduct']['ArtistText'])));
+		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)));
+		foreach ($counters as $counter):
+			if($counter < count($genres)) {
+				
+				echo "<td width='308'><p class='info'>";
+				if (strlen($genres[$counter]['Physicalproduct']['ArtistText']) >= 38) {
+					$ArtistName = substr($genres[$counter]['Physicalproduct']['ArtistText'], 0, 38) . '...';
+					echo $html->link(
+						$ArtistName, 
+						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Physicalproduct']['ArtistText']))); ?>
+					<span><?php echo $genres[$counter]['Physicalproduct']['ArtistText']; ?></span>
+				<?php
+				} else {
+					$ArtistName = $genres[$counter]['Physicalproduct']['ArtistText'];
+					echo $html->link(
+						$ArtistName, 
+						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Physicalproduct']['ArtistText'])));
+				}
+				echo '</p></td>';
 			}
-			echo '</p></td>';
-		}
-		if(($i+($totalRows*1)) < count($genres)) {
-			echo '<td width="308"><p class="info">';
-			if (strlen($genres[$i+($totalRows*1)]['Physicalproduct']['ArtistText']) >= 38) {
-				$ArtistName = substr($genres[$i+($totalRows*1)]['Physicalproduct']['ArtistText'], 0, 38) . '...';
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$i+($totalRows*1)]['Physicalproduct']['ArtistText']))); ?>
-				<span><?php echo $genres[$i+($totalRows*1)]['Physicalproduct']['ArtistText']; ?></span>
-			<?php
-			} else {
-				$ArtistName = $genres[$i+($totalRows*1)]['Physicalproduct']['ArtistText'];
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$i+($totalRows*1)]['Physicalproduct']['ArtistText'])));
-			}
-			echo '</p></td>';
-		}
-		if(($i+($totalRows*2)) < count($genres)) {
-			echo '<td width="308"><p class="info">';
-			if (strlen($genres[$i+($totalRows*2)]['Physicalproduct']['ArtistText']) >= 38) {
-				$ArtistName = substr($genres[$i+($totalRows*2)]['Physicalproduct']['ArtistText'], 0, 38) . '...';
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$i+($totalRows*2)]['Physicalproduct']['ArtistText']))); ?>
-				<span><?php echo $genres[$i+($totalRows*2)]['Physicalproduct']['ArtistText']; ?></span>
-			<?php
-			} else {
-				$ArtistName = $genres[$i+($totalRows*2)]['Physicalproduct']['ArtistText'];
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$i+($totalRows*2)]['Physicalproduct']['ArtistText'])));
-			}
-			echo '</p></td>';
-		}
+		endforeach;
 		echo '</tr>';
 	}
-	/*	$i=0;
-		$j=1;
-        foreach ($genres as $genre):
-		$class = null;
-		if ($j++ % 2 == 0) {
-			$class = ' class="altrow"';
-		}
-		//$artistInfo = $metadata->getArtistDetails($genre['Metadata']['Artist']);
-		if($i%3 == 0) {
-		    echo "<tr" . $class . "><td width='308'>";
-		} else {
-		    echo "<td width='308'>";
-		}
-		echo '<p class="info">';
-		if (strlen($genre['Physicalproduct']['ArtistText']) >= 38) {
-			$ArtistName = substr($genre['Physicalproduct']['ArtistText'], 0, 38) . '...';
-			echo $html->link(
-				$ArtistName, 
-				array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText']))); ?>
-			<span><?php echo $genre['Physicalproduct']['ArtistText']; ?></span>
-		<?php
-		} else {
-			$ArtistName = $genre['Physicalproduct']['ArtistText'];
-			echo $html->link(
-				$ArtistName, 
-				array('controller' => 'artists', 'action' => 'view', base64_encode($genre['Physicalproduct']['ArtistText'])));
-		}
-		echo '</p>';
-		if(($i+1)%3 == 0) {
-		    echo "</td></tr>";        
-		} else {            
-		    echo "</td>";
-		}
-		$i++;
-        endforeach;*/
 	?>
 	</table>
-	
-	
-	<!-- <table cellspacing="0" cellpadding="0">
-		<?php
-		// if(count($genres) != 0)
-		{
-			// $i = 1;
-			// foreach($genres as $key => $genre):		
-				// $class = null;
-				// $artistInfo = $metadata->getArtistDetails($genre['Metadata']['Artist']);			
-				// if ($i++ % 2 == 0) {
-				// 				$class = ' class="altrow"';
-				// 			}
-				
-				
-		?>
-				<tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>>
-					<td width="180" valign="top">
-						<p class="info">
-							<?php
-							// if (strlen($genre['Metadata']['Artist']) >= 19) {
-								// $ArtistName = substr($genre['Metadata']['Artist'], 0, 19) . '...';
-								// echo $html->link(
-									// $ArtistName,
-									// array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText']))); ?>
-								<span><?php // echo $genre['Metadata']['Artist']; ?></span>
-							<?php
-							// } else {
-								// $ArtistName = $genre['Metadata']['Artist'];
-								// echo $html->link(
-									// $ArtistName,
-									// array('controller' => 'artists', 'action' => 'view', base64_encode($artistInfo['Physicalproduct']['ArtistText'])));
-							} 
-						?>
-						</p>
-					</td>				
-				</tr>
-		<?php
-			// endforeach;
-		// }else{
-			// echo '<td width="180" valign="top">
-						// <p>No records found</p>
-					// </td>';
-		// }
-		
-		?>
-	</table> -->
 </div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>

@@ -144,30 +144,19 @@
 		View All Genres
 	</div>
 	<br class="clr" />
-	<?php
-		// foreach($genresAll as $genre) {
-		// 			echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
-		// 			echo ' | ';
-		// 		}
-	?>
-	
 	<table cellspacing="10" cellpadding="0" border="0" width="100%">
     <?php
-		$i=0;
-        foreach ($genresAll as $genre):
-            if($i%4 == 0) {
-                echo "<tr><td>";        
-            } else {            
-                echo "<td>";
-            } 
-            echo $html->link(ucwords($genre['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genre['Genre']['Genre'])));
-            if(($i+1)%4 == 0) {            
-                echo "</td></tr>";        
-            } else {            
-                echo "</td>";
-            }
-            $i++;
-        endforeach;
+	$totalRows = ceil(count($genresAll)/4);
+	for ($i = 0; $i < $totalRows; $i++) {
+		echo "<tr>";
+		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)), ($i+($totalRows*3)));
+		foreach ($counters as $counter):
+			if($counter < count($genresAll)) {
+				echo "<td>".$html->link(ucwords($genresAll[$counter]['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genresAll[$counter]['Genre']['Genre'])))."</td>";
+			}
+		endforeach;
+		echo '</tr>';
+	}
     ?>
     </table>
 </div>
