@@ -998,6 +998,7 @@ padding: 5px 10px 5px;
 background-color:#d8d8d8;
 margin-left: 100px;
 font-size: 13px;
+display:none;
 }
 .answer a {
 	text-decoration: none;
