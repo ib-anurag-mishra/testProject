@@ -624,7 +624,7 @@ Class UsersController extends AppController
                                              );            
             if(count($existingLibraries) == 0)
             {
-                $this -> Session -> setFlash("This is not a valid creadential.");
+                $this -> Session -> setFlash("This is not a valid credential.");
                 $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
             }        
             else{
