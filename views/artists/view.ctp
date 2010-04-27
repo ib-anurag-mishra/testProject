@@ -77,8 +77,8 @@
 								</td>
 								<td width="125" valighn="top" align="left">
 									<?php
-										if (strlen($albumSong['Metadata']['Artist']) >= 12) {
-											echo '<p class="info">' . substr($albumSong['Metadata']['Artist'], 0, 12) . '...<span>' . $albumSong['Metadata']['Artist'] . '</span></p>';
+										if (strlen($albumSong['Metadata']['Artist']) >= 11) {
+											echo '<p class="info">' . substr($albumSong['Metadata']['Artist'], 0, 11) . '...<span>' . $albumSong['Metadata']['Artist'] . '</span></p>';
 										} else {
 											echo '<p>' . $albumSong['Metadata']['Artist'] . '</p>';
 										}
