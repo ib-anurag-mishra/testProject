@@ -689,23 +689,7 @@ class HomesController extends AppController
             $this->redirect('my_wishlist');
         }
     }
-    
-    function setStatus(){
-        $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), (date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1))-7, date('Y')))." 00:00:00";        
-        $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y'))))-7, date('Y')))." 23:59:59";
-        $sql = "SELECT * FROM `wishlists` WHERE `week_start_date` = '".$startDate."' AND `week_end_date` = '".$startDate."'";
-        //$sql = "SELECT * FROM `wishlists` WHERE `week_start_date` = '2010-04-19 00:00:00' AND `week_end_date` = '2010-04-25 23:59:59'";
-        $result = mysql_query($sql);
-        while ($row = mysql_fetch_assoc($result)) {
-            $libraryId = $row['library_id'];
-            $id = $row['id'];
-            $qry="DELETE FROM `wishlists` WHERE `wishlists`.`id` = ".$id;
-            mysql_query($qry);
-            $sql="UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
-            mysql_query($sql);
-        }
-    }
-    
+   
     /*
     Function Name : wishlistDownload
     Desc : For downloading a song in wishlist page
