@@ -94,7 +94,7 @@
 									'referral_url' => 'Referral URL',
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
-									'innovation_wo_pin' => 'Innovation w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
+									'innovative_wo_pin' => 'Innovative w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
 								);
 							?>
 						</td>
