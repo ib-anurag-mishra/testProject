@@ -619,7 +619,7 @@ Class UsersController extends AppController
             $cardNo = substr($card,0,5);
             $this->Library->recursive = -1;
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovation_wo_pin')
+                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative_wo_pin')
                                                 )
                                              );            
             if(count($existingLibraries) == 0)
