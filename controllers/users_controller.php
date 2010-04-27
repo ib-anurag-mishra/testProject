@@ -177,7 +177,7 @@ Class UsersController extends AppController
          elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')){            
             $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));  
          }
-         elseif(isset($_SESSION['innovative w/o PIN']) && ($_SESSION['innovative w/o PIN'] != '')){            
+         elseif(isset($_SESSION['innovation_wo_pin']) && ($_SESSION['innovation_wo_pin'] != '')){            
             $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));  
          }
          else{            
@@ -619,12 +619,12 @@ Class UsersController extends AppController
             $cardNo = substr($card,0,5);
             $this->Library->recursive = -1;
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative w/o PIN')
+                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovation_wo_pin')
                                                 )
                                              );            
             if(count($existingLibraries) == 0)
             {
-                $this -> Session -> setFlash("This is not a valid creadential.");
+                $this -> Session -> setFlash("This is not a valid credential.");
                 $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
             }        
             else{
@@ -695,7 +695,7 @@ Class UsersController extends AppController
                   }
                   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
                   $this->Session->write("patron", $patronId);
-                  $this->Session->write("innovative w/o PIN","innovative w/o PIN");
+                  $this->Session->write("innovation_wo_pin","innovation_wo_pin");
                   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
                   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
                   $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";

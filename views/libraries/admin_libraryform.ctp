@@ -93,7 +93,8 @@
 									'' => 'Select a Method',
 									'referral_url' => 'Referral URL',
 									'user_account' => 'User Account',
-									'innovative' => 'Innovative'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
+									'innovative' => 'Innovative',
+									'innovation_wo_pin' => 'Innovation w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
 								);
 							?>
 						</td>
@@ -400,6 +401,11 @@
 						$("#innovative2").hide();
 					}
 					else if ($(this).val() == 'innovative') {
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").show();
+					}
+					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
