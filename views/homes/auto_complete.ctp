@@ -12,7 +12,7 @@
  }
  if(count($songResults) > 0){
    foreach($songResults as $songResult):
-       $finalResults[$songResult['Home']['Title']] = $songResult['Home']['Title'];
+       $finalResults[$songResult['Metadata']['Title']] = $songResult['Metadata']['Title'];
    endforeach;
  }
  if($finalResults != '')
