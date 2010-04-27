@@ -52,7 +52,6 @@
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
 					<?php }	?>
 				});
-				
 				var webroot = '<?php echo $this->webroot; ?>';	
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
@@ -82,7 +81,35 @@
 	<?php
 		}
 	?>
-<!--[if lt IE 7]>
+<!--[if IE 7]>
+	<style>
+		#ticker {
+			line-height: 16px;
+		}
+		ul.marquee {
+			margin-top: -16px;
+		}
+		.genreSeeAll {
+			margin-top: -20px;
+		}
+		#search .submit {
+			padding: 0 0 0 2px;
+			height:22px;
+		}
+	</style>
+<![endif]-->
+<!--[if IE 8]>
+	<style>
+		#search .submit {
+			padding: 0 0 0 2px;
+			height:20px;
+		}
+	</style>
+<![endif]-->
+  
+</head>
+<body>
+	<!--[if lt IE 7]>
   	<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
     	<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
 			<a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>
@@ -117,35 +144,7 @@
 			</div>
     	</div>
   	</div>
-<![endif]-->
-<!--[if IE 7]>
-	<style>
-		#ticker {
-			line-height: 16px;
-		}
-		ul.marquee {
-			margin-top: -16px;
-		}
-		.genreSeeAll {
-			margin-top: -20px;
-		}
-		#search .submit {
-			padding: 0 0 0 2px;
-			height:22px;
-		}
-	</style>
-<![endif]-->
-<!--[if IE 8]>
-	<style>
-		#search .submit {
-			padding: 0 0 0 2px;
-			height:20px;
-		}
-	</style>
-<![endif]-->
-  
-</head>
-<body>
+	<![endif]-->
 	<div id="audioPlayer"></div>
 	<?php $session->flash(); ?>
 	<a class='upgradeFlash' href="#"></a>

@@ -193,6 +193,9 @@ Class LibrariesController extends AppController
                     elseif($this->data['Library']['library_authentication_method'] == 'innovative') {
                         $this->Library->setValidation('library_step1_innovative');
                     }
+		    elseif($this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
+                        $this->Library->setValidation('library_step1_innovative');
+                    }
                     else {
                         $this->Library->setValidation('library_step1');
                     }
@@ -326,6 +329,9 @@ Class LibrariesController extends AppController
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_user_account');
                     }
                     elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
+                    }
+		    elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
                     }
                     else {
