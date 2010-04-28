@@ -481,7 +481,7 @@ Class UsersController extends AppController
                $retMsgArr = explode("RETCOD=",$retStr);               
                @$retStatus = $retMsgArr['1'];
 	       if($retStatus == ''){
-                  $this -> Session -> setFlash("authentication server down");
+                  $this -> Session -> setFlash("Authentication server down.");
                   $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
                }
                elseif($retStatus == 0){
@@ -587,13 +587,17 @@ Class UsersController extends AppController
                $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
                $url = $authUrl."/PATRONAPI/".$card."/dump";
                $dom= new DOMDocument();
-               $dom->loadHtmlFile($url);
+               @$dom->loadHtmlFile($url);
                $xpath = new DOMXPath($dom);
                $body = $xpath->query('/html/body');
                $retStr = $dom->saveXml($body->item(0));
+               if($retStr == ''){
+                  $this -> Session -> setFlash("Authentication server down.");
+                  $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
+               }
                $retMsgArr = explode("ERRNUM=",$retStr);              
                if(count($retMsgArr) > 1){
-                  $retStatus = $retMsgArr['1'];
+                  @$retStatus = $retMsgArr['1'];
                   $retMsgArr = explode("<BR>",$retStatus);               
                   if($retMsgArr[0] == 1){
                      $this->set('card',$card); 
