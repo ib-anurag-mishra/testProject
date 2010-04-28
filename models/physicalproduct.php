@@ -206,7 +206,8 @@ class Physicalproduct extends AppModel
 	      'order' => array(
 		      'ArtistText ASC',			
 	      ),
-	      'conditions' => array('ArtistText LIKE' => 'A%')
+	      'conditions' => array('ArtistText LIKE' => 'A%'),
+	      'cache' => 'ArtistText'
       ));
       return $allArtists;
   }

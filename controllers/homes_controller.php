@@ -15,6 +15,7 @@ class HomesController extends AppController
 	parent::beforeFilter();
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'forgot_password')){            $validPatron = $this->ValidatePatron->validatepatron();
             if(!$validPatron){
+                $this->Session->destroy('User');
                 $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
                 $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
             }

@@ -96,8 +96,9 @@ Class UsersController extends AppController
                         $updateArr['session_id'] = session_id();
                         $this->Currentpatron->save($updateArr);
                     }
-                    else{                
-                        $this -> Session -> setFlash("This account is already active.");                        
+                    else{
+                        $this->Session->destroy('user'); 
+                        $this -> Session -> setFlash("This account is already active.");
                         $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                     }
                 }
@@ -110,7 +111,8 @@ Class UsersController extends AppController
                             $updateArr['session_id'] = session_id();
                             $this->Currentpatron->save($updateArr);
                         }
-                        else{                            
+                        else{
+                            $this->Session->destroy('user');
                             $this -> Session -> setFlash("This account is already active.");                            
                             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                         }                  
@@ -472,13 +474,17 @@ Class UsersController extends AppController
                $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
                $url = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";               
                $dom= new DOMDocument();
-               $dom->loadHtmlFile($url);
+               @$dom->loadHtmlFile($url);
                $xpath = new DOMXPath($dom);
                $body = $xpath->query('/html/body');
-               $retStr = $dom->saveXml($body->item(0));
-               $retMsgArr = explode("RETCOD=",$retStr);
-               $retStatus = $retMsgArr['1'];
-               if($retStatus == 0){
+               $retStr = $dom->saveXml($body->item(0));		
+               $retMsgArr = explode("RETCOD=",$retStr);               
+               @$retStatus = $retMsgArr['1'];
+	       if($retStatus == ''){
+                  $this -> Session -> setFlash("authentication server down");
+                  $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
+               }
+               elseif($retStatus == 0){
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
                   if(count($currentPatron) > 0){
                       $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
@@ -491,7 +497,8 @@ Class UsersController extends AppController
                               $updateArr['session_id'] = session_id();
                               $this->Currentpatron->save($updateArr);
                           }
-                          else{                
+                          else{
+                              $this->Session->destroy('user');
                               $this -> Session -> setFlash("This account is already active.");                              
                               $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                           }
@@ -506,7 +513,8 @@ Class UsersController extends AppController
                                   $updateArr['session_id'] = session_id();
                                   $this->Currentpatron->save($updateArr);
                               }
-                              else{                            
+                              else{
+                                  $this->Session->destroy('user'); 
                                   $this -> Session -> setFlash("This account is already active.");                                  
                                   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                               }                  
@@ -606,7 +614,8 @@ Class UsersController extends AppController
                               $updateArr['session_id'] = session_id();
                               $this->Currentpatron->save($updateArr);
                           }
-                          else{                
+                          else{
+                              $this->Session->destroy('user');
                               $this -> Session -> setFlash("This account is already active.");                              
                               $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                           }
@@ -621,7 +630,8 @@ Class UsersController extends AppController
                                   $updateArr['session_id'] = session_id();
                                   $this->Currentpatron->save($updateArr);
                               }
-                              else{                            
+                              else{
+                                  $this->Session->destroy('user');   
                                   $this -> Session -> setFlash("This account is already active.");                                  
                                   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                               }                  

@@ -184,9 +184,8 @@ function checkPatron(libid,patronid)
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/checkPatron", // URL to request
 		data: data,  // post data
-		success: function(response) {
-			setTimeout('checkPatron('+libid+','+patronid+')',30000);
-			//setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
+		success: function(response) {			
+			setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
 		}
