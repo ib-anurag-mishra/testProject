@@ -37,21 +37,16 @@ Class GenresController extends AppController
 		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));		
 		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));		
 		$i = 0;
-		$j = 0;
-				
-			foreach ($categories as $category)
-			{
+		$j = 0;				
+			foreach ($categories as $category){
 				$genreName = $category['Category']['Genre'];
-				if($_SESSION['block'] == 'yes')
-				{
+				if($_SESSION['block'] == 'yes'){
 					$cond = array('Metadata.Advisory' => 'F');
 				}
-				else
-				{
+				else{
 					$cond = "";
 				}
-				if (($genres = Cache::read($genreName)) === false)
-				{					
+				if (($genres = Cache::read($genreName)) === false){					
 					$this->Physicalproduct->Behaviors->attach('Containable');			
 					$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
 							  array('and' =>
@@ -114,8 +109,7 @@ Class GenresController extends AppController
 				$genreDetails = Cache::read($genreName);
 				$finalArr = Array();
 				$songArr = Array();
-				if(count($genreDetails) > 3)
-				{
+				if(count($genreDetails) > 3){
 				  $rand_keys = array_rand($genreDetails,3);			
 				  $songArr[0] = $genreDetails[$rand_keys[0]];
 				  $songArr[1] = $genreDetails[$rand_keys[1]];
@@ -123,10 +117,8 @@ Class GenresController extends AppController
 				}
 				else{
 				  $songArr = $genreDetails;	
-				}
-				
-				foreach($songArr as $genre)
-				{
+				}				
+				foreach($songArr as $genre){
 					$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
 					$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
 					$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['0']['Files']['CdnPath']."/".$genre['Audio']['0']['Files']['SaveAsName']);
@@ -198,10 +190,8 @@ Class GenresController extends AppController
 			$i = 0;		
 			foreach ($this->data['Genre']['Genre'] as $k => $v)
 			{	  
-			  if($i < '8')
-			  {			
-				if($v != '0')
-				{
+			  if($i < '8'){			
+				if($v != '0'){
 				      $selectedGenres['Genre'] = $v;			      
 				      $this->Category->save($selectedGenres);
 				      $this->Category->id = false ;
@@ -210,21 +200,16 @@ Class GenresController extends AppController
 			  }
 			}
 			$this->Session -> setFlash( 'Your selection saved successfully!!', 'modal', array( 'class' => 'modal success' ) );
-		}
-		
-				
+		}		
 		$this->Genre->recursive = -1;
 		$allGenres = $this->Genre->find('all', array(	
 			'fields' => 'DISTINCT Genre', 
 			'order' => 'Genre')
-		    );
-		
+		    );		
 		$this->set('allGenres', $allGenres);
 		$this->Category->recursive = -1;
-		$selectedGenres = $this->Category->find('all',array(	
-			'fields' => 'Genre'));
-		foreach ($selectedGenres as $selectedGenre)
-		{
+		$selectedGenres = $this->Category->find('all',array('fields' => 'Genre'));
+		foreach ($selectedGenres as $selectedGenre){
 			$selArray[] = $selectedGenre['Category']['Genre'];
 		}		
 		$this->set('selectedGenres', $selArray);

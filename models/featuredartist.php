@@ -8,8 +8,7 @@ class Featuredartist extends AppModel
     Desc : updatesa admin user data
     */
     function insert($data) {
-      if($this->save($data))
-      {
+      if($this->save($data)){
         return true;
       }else{
         return false; 
@@ -39,8 +38,7 @@ class Featuredartist extends AppModel
     Desc : deletes a featured artist
     */
     function del($id) {
-     if($this->delete($id))
-      {
+     if($this->delete($id)){
         return true;
       }else{
         return false;

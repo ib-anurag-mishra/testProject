@@ -71,28 +71,21 @@ class Physicalproduct extends AppModel
     $featuredArtistArr = array();
     $featuredArtistObj = new Featuredartist();
     $featuredArtistList = $featuredArtistObj->getallartists();
-    foreach($featuredArtistList as $featuredArtist)
-    {
+    foreach($featuredArtistList as $featuredArtist){
       array_push($featuredArtistArr,$featuredArtist['Featuredartist']['artist_name']);
     }    
     $resultArr = array();
-    foreach($allArtists as $allArtistsNames)
-    {
-      if($condition == 'add')
-      {
-	if(!in_array($allArtistsNames['Physicalproduct']['ArtistText'],$featuredArtistArr))
-	{
+    foreach($allArtists as $allArtistsNames){
+      if($condition == 'add'){
+	if(!in_array($allArtistsNames['Physicalproduct']['ArtistText'],$featuredArtistArr)){
 	  $resultArr[$allArtistsNames['Physicalproduct']['ArtistText']] = $allArtistsNames['Physicalproduct']['ArtistText'];
 	}
       }
-      else
-      {
-	if($allArtistsNames['Physicalproduct']['ArtistText'] == $artistName && $allArtistsNames['Physicalproduct']['ArtistText']!= '')
-	{
+      else{
+	if($allArtistsNames['Physicalproduct']['ArtistText'] == $artistName && $allArtistsNames['Physicalproduct']['ArtistText']!= ''){
 	  $resultArr[$allArtistsNames['Physicalproduct']['ArtistText']] = $allArtistsNames['Physicalproduct']['ArtistText'];
 	}	
-	elseif(!in_array($allArtistsNames['Physicalproduct']['ArtistText'],$featuredArtistArr))
-	{
+	elseif(!in_array($allArtistsNames['Physicalproduct']['ArtistText'],$featuredArtistArr))	{
 	  $resultArr[$allArtistsNames['Physicalproduct']['ArtistText']] = $allArtistsNames['Physicalproduct']['ArtistText'];
 	}
       }
@@ -115,28 +108,21 @@ class Physicalproduct extends AppModel
     $artistArr = array();
     $artistObj = new Artist();
     $artistList = $artistObj->getallartists();
-    foreach($artistList as $artist)
-    {
+    foreach($artistList as $artist){
       array_push($artistArr,$artist['Artist']['artist_name']);
     }    
     $resultArr = array();
-    foreach($allArtists as $allArtistsNames)
-    {
-      if($condition == 'add')
-      {
-	if(!in_array($allArtistsNames['Physicalproduct']['ArtistText'],$artistArr))
-	{
+    foreach($allArtists as $allArtistsNames){
+      if($condition == 'add'){
+	if(!in_array($allArtistsNames['Physicalproduct']['ArtistText'],$artistArr)){
 	  $resultArr[$allArtistsNames['Physicalproduct']['ArtistText']] = $allArtistsNames['Physicalproduct']['ArtistText'];
 	}
       }
-      else
-      {
-	 if($allArtistsNames['Physicalproduct']['ArtistText'] == $artistName && $allArtistsNames['Physicalproduct']['ArtistText']!= '')
-	{
+      else{
+	 if($allArtistsNames['Physicalproduct']['ArtistText'] == $artistName && $allArtistsNames['Physicalproduct']['ArtistText']!= '')	{
 	  $resultArr[$allArtistsNames['Physicalproduct']['ArtistText']] = $allArtistsNames['Physicalproduct']['ArtistText'];
 	}	
-	elseif(!in_array($allArtistsNames['Physicalproduct']['ArtistText'], $artistArr))
-	{
+	elseif(!in_array($allArtistsNames['Physicalproduct']['ArtistText'], $artistArr)){
 	  $resultArr[$allArtistsNames['Physicalproduct']['ArtistText']] = $allArtistsNames['Physicalproduct']['ArtistText'];
 	}
       }
@@ -145,8 +131,7 @@ class Physicalproduct extends AppModel
   }
   
   function searchArtist($search) {
-      if($search == 'special')
-      {
+      if($search == 'special'){
 	$allArtists = $this->find('all', array(
 	      'fields' => array(
 		      'ArtistText'

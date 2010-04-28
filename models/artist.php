@@ -15,8 +15,7 @@ class Artist extends AppModel
     */
 
     function insert($data) {
-        if($this->save($data))
-        {
+        if($this->save($data)){
             return true;
         }else{
             return false;
@@ -46,8 +45,7 @@ class Artist extends AppModel
     Desc : 
     */
     function del($id) {
-        if($this->delete($id))
-        {
+        if($this->delete($id)){
             return true;
         }else{
             return false;

@@ -39,8 +39,7 @@ class Newartist extends AppModel
     Desc : deletes a featured artist
     */
     function del($id) {
-     if($this->delete($id))
-      {
+     if($this->delete($id)){
             return true;
       }else{
           return false;

@@ -131,12 +131,11 @@ class User extends AppModel
   }
   
   function del($id) {
-   if($this->delete($id))
-   {
-   return true;
-   }else{
-   return false;
-   }
+    if($this->delete($id)){
+    return true;
+    }else{
+    return false;
+    }
   }
   
    /*
@@ -150,8 +149,7 @@ class User extends AppModel
     $existingLibraries = $librarytObj->find('all', array(
                               'field' => 'library_admin_id'));
     $finalArr = array();
-    foreach($existingLibraries as $existingLibrary)
-    {
+    foreach($existingLibraries as $existingLibrary){
       array_push($finalArr,$existingLibrary['Library']['library_admin_id']);
     }    
     $allAdmins = $this->find('all', array(
@@ -161,16 +159,13 @@ class User extends AppModel
                       )              
     ));    
     $finalArray = Array();
-    if($condition == 'edit')
-    {
+    if($condition == 'edit'){
       $libraryDetails = $librarytObj->getlibrarydata($id);      
       $adminDetails = $this->getuserdata($libraryDetails['Library']['library_admin_id']);
       $finalArray[$adminDetails['User']['id']] = $adminDetails['User']['email'];      
     }
-    if($allAdmins != '')
-    {
-      foreach($allAdmins as $allAdmin)
-      {
+    if($allAdmins != ''){
+      foreach($allAdmins as $allAdmin){
         $finalArray[$allAdmin['User']['id']] =  $allAdmin['User']['email'];
       }
     }

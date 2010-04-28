@@ -37,8 +37,7 @@ class Group extends AppModel
   function getallusertype() {
    $getAdminTypes = $this->find('all');
    $resultArr = array();
-   foreach($getAdminTypes as $getAdminType)
-   {
+   foreach($getAdminTypes as $getAdminType){
     if($getAdminType['Group']['id'] != 4 && $getAdminType['Group']['id'] != 5) {
      $resultArr[$getAdminType['Group']['id']] = $getAdminType['Group']['type'];
     }

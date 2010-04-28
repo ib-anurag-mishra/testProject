@@ -73,9 +73,7 @@ Class UsersController extends AppController
       }
    }
    
-   function index(){      
-      /*echo "<PRE>";
-      print_r($_SESSION);exit;*/
+   function index(){           
       $patronId = $this->Session->read('Auth.User.id');      
       $typeId = $this->Session->read('Auth.User.type_id');
       if($typeId == '5'){
@@ -88,49 +86,40 @@ Class UsersController extends AppController
          $authMethod = $libraryArr['Library']['library_authentication_method'];        
          if($authMethod == 'user_account'){
             $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libraryId, 'patronid' => $patronId)));           
-            if(count($currentPatron) > 0)
-            {
+            if(count($currentPatron) > 0){
                 $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
                 $date = strtotime(date('Y-m-d H:i:s'));              
-                if(!(isset($_SESSION['patron'])))
-                {               
-                    if(($date-$modifiedTime) > 60)
-                    {
+                if(!(isset($_SESSION['patron']))){               
+                    if(($date-$modifiedTime) > 60){
                         $updateArr = array();
                         $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                        
                         $updateArr['session_id'] = session_id();
                         $this->Currentpatron->save($updateArr);
                     }
-                    else
-                    {                
+                    else{                
                         $this -> Session -> setFlash("This account is already active.");
-                        //session_destroy();
+                        session_destroy();
                         $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                     }
                 }
-                else
-                {
+                else{
                     $sessionId = session_id();                    
-                    if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId)
-                    {                        
-                        if(($date-$modifiedTime) > 60)
-                        {                            
+                    if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
+                        if(($date-$modifiedTime) > 60){                            
                             $updateArr = array();
                             $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                           
                             $updateArr['session_id'] = session_id();
                             $this->Currentpatron->save($updateArr);
                         }
-                        else
-                        {                            
+                        else{                            
                             $this -> Session -> setFlash("This account is already active.");
-                            //session_destroy();
+                            session_destroy();
                             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                         }                  
                     }                    
                 }
             }
-            else
-            {                
+            else{                
                 $insertArr['libid'] = $libraryId;
                 $insertArr['patronid'] = $patronId;
                 $insertArr['session_id'] = session_id();                 
@@ -145,8 +134,7 @@ Class UsersController extends AppController
             $this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
             $results =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
             $this ->Session->write("downloadsUsed", $results);            
-            if($libraryArr['Library']['library_block_explicit_content'] == '1')
-            {
+            if($libraryArr['Library']['library_block_explicit_content'] == '1'){
                 $this ->Session->write("block", 'yes');
             }
             else{
@@ -191,8 +179,7 @@ Class UsersController extends AppController
     Function Name : listuser
     Desc : action for listing all the admin users
    */
-   function admin_manageuser()
-   {
+   function admin_manageuser(){
         $this->paginate = array('conditions' => array('type_id <> 5'));
         $this->set('admins', $this->paginate('User'));
    }
@@ -203,67 +190,54 @@ Class UsersController extends AppController
    */
     
    function admin_userform() {
-       if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
-       {
+       if(!empty($this->params['named']['id'])){ //gets the values from the url in form  of array
            $adminUserId = $this->params['named']['id'];
-           if(trim($adminUserId) != "" && is_numeric($adminUserId))
-           {
+           if(trim($adminUserId) != "" && is_numeric($adminUserId)){
                $this->set('formAction','admin_userform/id:'.$adminUserId);
                $this->set('formHeader','Edit User');     
                $this->set('getData', $this->User->getuserdata($adminUserId));
                //editting a value
-               if(isset($this->data))
-               {
+               if(isset($this->data)){
                    $updateObj = new User();
                    $getData['User'] = $this->data['User'];
                    $getData['Group']['id'] = $this->data['User']['type_id'];
                    $this->set('getData', $getData);
                    $this->User->id = $this->data['User']['id'];
-                   if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5")
-                   {
+                   if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
                       // do not update the password
                       $this->data['User']= $updateObj->arrayremovekey($this->data['User'],'password');
                    }
                    $this->User->set($this->data['User']);
-                   if($this->User->save())
-                   {
+                   if($this->User->save()){
                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                      $this->redirect('manageuser');
                    }                
-               }
-                //editting a value
+               }               
            }
        }else{
                $arr = array();
                $this->set('getData',$arr);
                $this->set('formAction','admin_userform');
-               $this->set('formHeader','Create User');
-               
+               $this->set('formHeader','Create User');               
                //insertion Operation
-               if(isset($this->data))
-               {
+               if(isset($this->data)){
                    $insertObj = new User();                    
                    $getData['User'] = $this->data['User'];
                    $getData['Group']['id'] = $this->data['User']['type_id'];
                    $this->set('getData', $getData);
-                   if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5")
-                   {                     
+                   if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){                     
                     $this->data['User']['password'] = "";                      
-                   }
-                  
+                   }                  
                    $this->User->set($this->data['User']);                  
-                   if($this->User->save())
-                   {                    
+                   if($this->User->save()){                    
                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                      $this->redirect('manageuser');
                    }
-                   else
-                   {
+                   else{
                      $this->data['User']['password'] = '';
                      $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
                    }             
-               }
-               //insertion operation
+               }               
        }
        $this->set('options',$this->Group->getallusertype());
    }
@@ -272,8 +246,7 @@ Class UsersController extends AppController
     Function Name : managepatron
     Desc : action for listing all the patron users
    */
-   function admin_managepatron()
-   {
+   function admin_managepatron(){
        if($this->Session->read("Auth.User.type_id") == 4 && $this->Library->getAuthenticationType($this->Session->read('Auth.User.id')) == "referral_url") {
         $this->redirect('/admin/reports/index');
        }
@@ -299,35 +272,29 @@ Class UsersController extends AppController
        if($this->Session->read("Auth.User.type_id") == 4 && $this->Library->getAuthenticationType($this->Session->read('Auth.User.id')) == "referral_url") {
         $this->redirect('/admin/reports/index');
        }
-       if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
-       {
+       if(!empty($this->params['named']['id'])){ //gets the values from the url in form  of array
            $patronUserId = $this->params['named']['id'];
-           if(trim($patronUserId) != "" && is_numeric($patronUserId))
-           {
+           if(trim($patronUserId) != "" && is_numeric($patronUserId)){
                $this->set('formAction','admin_patronform/id:'.$patronUserId);
                $this->set('formHeader','Edit Patron');     
                $this->set('getData', $this->User->getuserdata($patronUserId));
                //editting a value
-               if(isset($this->data))
-               {
+               if(isset($this->data)){
                    $updateObj = new User();
                    $getData['User'] = $this->data['User'];
                    $getData['Group']['id'] = $this->data['User']['type_id'];
                    $this->set('getData', $getData);
                    $this->User->id = $this->data['User']['id'];
                    $password = trim($this->data['User']['password']);
-                   if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5")
-                   {
+                   if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
                       // do not update the password
                       $this->data['User'] = $updateObj->arrayremovekey($this->data['User'],'password');
                    }
                    $this->User->set($this->data['User']);
                    $this->User->setValidation('validate_patron_super_admin');
                    if($this->User->validates()) {
-                    if($this->User->save())
-                    {
-                     if($password != "48d63321789626f8844afe7fdd21174eeacb5ee5")
-                     {
+                    if($this->User->save()){
+                     if($password != "48d63321789626f8844afe7fdd21174eeacb5ee5"){
                       $temp_password = $this->data['User']['original_password'];
                       $this->_sendModifyPatronMail( $this->User->id, $temp_password );
                      }
@@ -341,42 +308,35 @@ Class UsersController extends AppController
                    else {
                     $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
                    }
-               }
-                //editting a value
+               }                
            }
        }else{
                $arr = array();
                $this->set('getData',$arr);
                $this->set('formAction','admin_patronform');
-               $this->set('formHeader','Create Patron');
-               
+               $this->set('formHeader','Create Patron');               
                //insertion Operation
-               if(isset($this->data))
-               {
+               if(isset($this->data)){
                    $insertObj = new User();
                    $getData['User'] = $this->data['User'];
                    $getData['Group']['id'] = $this->data['User']['type_id'];
-                   $this->set('getData', $getData);
-                  
+                   $this->set('getData', $getData);                  
                    $this->User->set($this->data['User']);
                    $this->User->setValidation('validate_patron_super_admin');
-                   if($this->User->validates()) {
+                   if($this->User->validates()){
                     $temp_password = $this->PasswordHelper->generatePassword(8);
                     $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);
                     $this->User->set($this->data['User']);
-                    if($this->User->save())
-                    {
+                    if($this->User->save()){
                       $this->_sendNewPatronMail( $this->User->id, $temp_password );
                       $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
                       $this->redirect('managepatron');
                     }
-                    else
-                    {
+                    else{
                       $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
                     }
                    }
-                   else
-                   {
+                   else{
                      $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
                    }
                }
@@ -400,8 +360,7 @@ Class UsersController extends AppController
    */
    function admin_delete() {
      $deleteAdminUserId = $this->params['named']['id'];      
-     if($this->User->delete($deleteAdminUserId))
-     {
+     if($this->User->delete($deleteAdminUserId)){
        $this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
        $this->redirect('manageuser');
      }else{
@@ -507,8 +466,7 @@ Class UsersController extends AppController
                                                 'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative')
                                                 )
                                              );           
-            if(count($existingLibraries) == 0)
-            {
+            if(count($existingLibraries) == 0){
                 $this -> Session -> setFlash("This is not a valid credential.");
                 $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
             }        
@@ -524,41 +482,36 @@ Class UsersController extends AppController
                $retStatus = $retMsgArr['1'];
                if($retStatus == 0){
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-                  if(count($currentPatron) > 0)
-                  {
+                  if(count($currentPatron) > 0){
                       $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
                       $date = strtotime(date('Y-m-d H:i:s'));              
                       if(!(isset($_SESSION['patron']))){               
-                          if(($date-$modifiedTime) > 60)
-                          {
+                          if(($date-$modifiedTime) > 60){
                               $updateArr = array();
                               $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
                               $updateArr['created'] = date('Y-m-d H:i:s');
                               $updateArr['session_id'] = session_id();
                               $this->Currentpatron->save($updateArr);
                           }
-                          else
-                          {                
+                          else{                
                               $this -> Session -> setFlash("This account is already active.");
-                              //session_destroy();
+                              session_destroy();
                               $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                           }
                      }
                       else{
                           $sessionId = session_id();                    
                           if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-                              if(($date-$modifiedTime) > 60)
-                              {                            
+                              if(($date-$modifiedTime) > 60){                            
                                   $updateArr = array();
                                   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
                                   $updateArr['created'] = date('Y-m-d H:i:s');
                                   $updateArr['session_id'] = session_id();
                                   $this->Currentpatron->save($updateArr);
                               }
-                              else
-                              {                            
+                              else{                            
                                   $this -> Session -> setFlash("This account is already active.");
-                                  //session_destroy();
+                                  session_destroy();
                                   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                               }                  
                            }                    
@@ -622,8 +575,7 @@ Class UsersController extends AppController
                                                 'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative_wo_pin')
                                                 )
                                              );            
-            if(count($existingLibraries) == 0)
-            {
+            if(count($existingLibraries) == 0){
                 $this -> Session -> setFlash("This is not a valid credential.");
                 $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
             }        
@@ -647,41 +599,36 @@ Class UsersController extends AppController
                }               
                else{
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-                  if(count($currentPatron) > 0)
-                  {
+                  if(count($currentPatron) > 0){
                       $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
                       $date = strtotime(date('Y-m-d H:i:s'));              
                       if(!(isset($_SESSION['patron']))){               
-                          if(($date-$modifiedTime) > 60)
-                          {
+                          if(($date-$modifiedTime) > 60){
                               $updateArr = array();
                               $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
                               $updateArr['created'] = date('Y-m-d H:i:s');
                               $updateArr['session_id'] = session_id();
                               $this->Currentpatron->save($updateArr);
                           }
-                          else
-                          {                
+                          else{                
                               $this -> Session -> setFlash("This account is already active.");
-                              //session_destroy();
+                              session_destroy();
                               $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                           }
                      }
                       else{
                           $sessionId = session_id();                    
                           if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-                              if(($date-$modifiedTime) > 60)
-                              {                            
+                              if(($date-$modifiedTime) > 60){                            
                                   $updateArr = array();
                                   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
                                   $updateArr['created'] = date('Y-m-d H:i:s');
                                   $updateArr['session_id'] = session_id();
                                   $this->Currentpatron->save($updateArr);
                               }
-                              else
-                              {                            
+                              else{                            
                                   $this -> Session -> setFlash("This account is already active.");
-                                  //session_destroy();
+                                  session_destroy();
                                   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                               }                  
                            }                    

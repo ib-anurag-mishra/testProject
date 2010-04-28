@@ -11,22 +11,17 @@ class HomesController extends AppController
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email');
     var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page','Wishlist');
  
-   function beforeFilter()
-   {
+   function beforeFilter(){
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'forgot_password'))
-        {
-            $validPatron = $this->ValidatePatron->validatepatron();
-            if(!$validPatron)
-            {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'forgot_password')){            $validPatron = $this->ValidatePatron->validatepatron();
+            if(!$validPatron){
                 $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
                 $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
             }
         }
     }
     
-    function index()
-    {
+    function index(){
         $this->Physicalproduct->Behaviors->attach('Containable');	
 		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
                                 array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F'),
@@ -48,21 +43,20 @@ class HomesController extends AppController
                 )
         );
         $this->set('songs',$songDetails);
-		$this->Physicalproduct->recursive = -1;
-		$upcoming = $this->Physicalproduct->find('all', array(
-			'conditions' => array(
-				'Physicalproduct.ReferenceID = Physicalproduct.ProdID', 
-				'SalesDate >' => date('Y-m-d')
-				),
-				'fields' => array(
-					'Physicalproduct.Title',
-                    'Physicalproduct.ArtistText',
-					'Physicalproduct.SalesDate'
-				)
-			)
-		);
-		$this->set('upcoming', $upcoming);
-        //$this->set('songs',$this->Home->getSongs());
+        $this->Physicalproduct->recursive = -1;
+        $upcoming = $this->Physicalproduct->find('all', array(
+                'conditions' => array(
+                        'Physicalproduct.ReferenceID = Physicalproduct.ProdID', 
+                        'SalesDate >' => date('Y-m-d')
+                        ),
+                        'fields' => array(
+                                'Physicalproduct.Title',
+            'Physicalproduct.ArtistText',
+                                'Physicalproduct.SalesDate'
+                        )
+                )
+        );
+        $this->set('upcoming', $upcoming);        
         $this->set('distinctArtists', $this->Physicalproduct->selectArtist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
@@ -70,8 +64,7 @@ class HomesController extends AppController
         $this->layout = 'home';
     }
     
-    function autoComplete()
-    {
+    function autoComplete(){
 	Configure::write('debug', 0);
         $this->Physicalproduct->recursive = -1;
         $albumResults = $this->Physicalproduct->find('all', array(
@@ -111,41 +104,33 @@ class HomesController extends AppController
         $this->layout = 'ajax';
     }
     
-    function artistSearch()
-    {
+    function artistSearch(){
 	$search = $_POST['search'];
 	$this->Physicalproduct->recursive = -1;
 	$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
     }
     
-    function search()
-    {
+    function search(){
         $patId = $_SESSION['patron'];
         $libId = $_SESSION['library'];        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
-        if($_SESSION['block'] == 'yes')
-        {
+        if($_SESSION['block'] == 'yes'){
             $cond = array('Metadata.Advisory' => 'F');
         }
-        else
-        {
+        else{
             $cond = "";
         }
-        if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != ''))
-        {
-            if(isset($_REQUEST['match']) && $_REQUEST['match'] != '')
-            {
-                if($_REQUEST['match'] == 'All')
-                {
+        if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')){
+            if(isset($_REQUEST['match']) && $_REQUEST['match'] != ''){
+                if($_REQUEST['match'] == 'All'){
                     $condition = "and";
                     $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
                     $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
                 }
-                else
-                {
+                else{
                     $condition = "or";
                     $preCondition1 =  "";
                     $preCondition2 = "";
@@ -155,16 +140,13 @@ class HomesController extends AppController
                 $album =  $_REQUEST['album'];
                 $genre =  $_REQUEST['genre_id'];
             }            
-            if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')
-            {
-                if($this->data['Home']['Match'] == 'All')
-                {
+            if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != ''){
+                if($this->data['Home']['Match'] == 'All'){
                     $condition = "and";
                     $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
                     $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
                 }
-                else
-                {
+                else{
                     $condition = "or";
                     $preCondition1 =  "";
                     $preCondition2 = "";
@@ -174,36 +156,28 @@ class HomesController extends AppController
                 $album =  $this->data['Home']['album'];
                 $genre =  $this->data['Home']['genre_id'];
             }            
-            if($artist != '')
-            {
+            if($artist != ''){
                 $artistSearch = array('Physicalproduct.ArtistText LIKE' => '%'.$artist.'%');    
             }
-            else
-            {
+            else{
                 $artistSearch = '';
             }
-            if($song != '')
-            {
+            if($song != ''){
                 $songSearch = array('Metadata.Title LIKE' => '%'.$song.'%');    
             }
-            else
-            {
+            else{
                 $songSearch = '';
             }
-            if($album != '')
-            {
+            if($album != ''){
                 $albumSearch = array('Physicalproduct.Title LIKE' => '%'.$album.'%');    
             }
-            else
-            {
+            else{
                 $albumSearch = '';
             }
-            if($genre != '')
-            {
+            if($genre != ''){
                 $genreSearch = array('Genre.Genre LIKE' => '%'.$genre.'%');    
             }
-            else
-            {
+            else{
                 $genreSearch = '';
             }
             $this->set('searchKey','match=all&artist='.urlencode($artist).'&song='.urlencode($song).'&album='.$album.'&genre='.$genre);
@@ -259,15 +233,12 @@ class HomesController extends AppController
             $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
-        else
-        {   
+        else{
             $searchKey = '';      
-            if(isset($_REQUEST['search']) && $_REQUEST['search'] != '')
-            {
+            if(isset($_REQUEST['search']) && $_REQUEST['search'] != ''){
                 $searchKey = $_REQUEST['search'];
             }        
-            if($searchKey == '')
-            {
+            if($searchKey == ''){
                 $searchKey = $this->data['Home']['search'];    
             }     
             $this->set('searchKey','search='.urlencode($searchKey));            
@@ -335,8 +306,7 @@ class HomesController extends AppController
         $patId = $_SESSION['patron'];
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);  
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-        if($libraryDownload != '1' || $patronDownload != '1')
-        {
+        if($libraryDownload != '1' || $patronDownload != '1'){
             echo "error";
             exit;
         }
@@ -361,15 +331,15 @@ class HomesController extends AppController
     }
 
     function advance_search() {
-		$this->layout = 'home';           
-		$this->Genre->recursive = -1;
-		$genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
-		$resultArr = array();
-		foreach($genres as $genre) {                  
-			$resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
-		}
-		$this->set('genres',$resultArr);
-	}
+        $this->layout = 'home';           
+        $this->Genre->recursive = -1;
+        $genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
+        $resultArr = array();
+        foreach($genres as $genre) {                  
+                $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
+        }
+        $this->set('genres',$resultArr);
+    }
     
     function checkPatron()
     {
@@ -377,8 +347,7 @@ class HomesController extends AppController
         $patronid = $_REQUEST['patronid'];        
         $this->layout = false;           	
 	$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
-	if(count($currentPatron) > 0)
-        {
+	if(count($currentPatron) > 0){
           $updateArr = array();
           $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
           $updateArr['session_id'] = session_id();
@@ -388,14 +357,12 @@ class HomesController extends AppController
         exit;
     }
     
-    function approvePatron()
-    {
+    function approvePatron(){
 	$libid = $_REQUEST['libid'];       
         $patronid = $_REQUEST['patronid'];        
         $this->layout = false;           	
 	$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
-	if(count($currentPatron) > 0)
-        {
+	if(count($currentPatron) > 0){
           $updateArr = array();
           $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
           $updateArr['is_approved'] = 'yes';          
@@ -406,16 +373,14 @@ class HomesController extends AppController
         exit;
     }
     
-    public function admin_aboutusform()
-    {
+    function admin_aboutusform(){
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];
 		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
 		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
 		$this->Page->set($pageData['Page']);
-		if($this->Page->save())
-		{
+		if($this->Page->save()){
 		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		}
 	    }
@@ -447,16 +412,14 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }
     
-    public function admin_termsform()
-    {
+    public function admin_termsform(){
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];
 		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
 		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
 		$this->Page->set($pageData['Page']);
-		if($this->Page->save())
-		{
+		if($this->Page->save()){
 		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		}
 	    }
@@ -488,16 +451,14 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }    
 
-	public function admin_limitsform()
-    {
+    function admin_limitsform(){
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];
 		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
 		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
 		$this->Page->set($pageData['Page']);
-		if($this->Page->save())
-		{
+		if($this->Page->save()){
 		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		}
 	    }
@@ -702,8 +663,7 @@ class HomesController extends AppController
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
 	$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         //check for download availability
-        if($libraryDownload != '1' || $patronDownload != '1')
-        {
+        if($libraryDownload != '1' || $patronDownload != '1'){
             echo "error";
             exit;
         }
