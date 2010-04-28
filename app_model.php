@@ -25,8 +25,7 @@ class AppModel extends Model {
     }
     
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
-        if(isset($extra['cache']) &&  $extra['cache'] == 'yes')
-        {
+        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';
           foreach ($args as $arg) {
@@ -60,20 +59,17 @@ class AppModel extends Model {
         }
     
         $paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-        if (empty($paginationcount)) {
-                //$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
+        if (empty($paginationcount)) {                
                 $group = "";
-                foreach($conditions as $k => $v)
-                {                    
-                    if($v == "1 = 1 GROUP BY Physicalproduct.ArtistText")
-                    {
-                        $paginationcount = $this->find('all', compact('conditions', 'contain', 'recursive'));
-                        $paginationcount = count($paginationcount);                        
+                foreach($conditions as $k => $v){                    
+                    if($v == "1 = 1 GROUP BY Physicalproduct.ArtistText"){
+                        $fields = array('fields' => 'ProdID');
+                        $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                        $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
                 }               
-                if($group != "yes")
-                {
+                if($group != "yes"){
                     $paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));                    
                 }                
                 Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');

@@ -97,8 +97,7 @@ Class UsersController extends AppController
                         $this->Currentpatron->save($updateArr);
                     }
                     else{                
-                        $this -> Session -> setFlash("This account is already active.");
-                        session_destroy();
+                        $this -> Session -> setFlash("This account is already active.");                        
                         $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                     }
                 }
@@ -112,8 +111,7 @@ Class UsersController extends AppController
                             $this->Currentpatron->save($updateArr);
                         }
                         else{                            
-                            $this -> Session -> setFlash("This account is already active.");
-                            session_destroy();
+                            $this -> Session -> setFlash("This account is already active.");                            
                             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                         }                  
                     }                    
@@ -494,8 +492,7 @@ Class UsersController extends AppController
                               $this->Currentpatron->save($updateArr);
                           }
                           else{                
-                              $this -> Session -> setFlash("This account is already active.");
-                              session_destroy();
+                              $this -> Session -> setFlash("This account is already active.");                              
                               $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                           }
                      }
@@ -510,8 +507,7 @@ Class UsersController extends AppController
                                   $this->Currentpatron->save($updateArr);
                               }
                               else{                            
-                                  $this -> Session -> setFlash("This account is already active.");
-                                  session_destroy();
+                                  $this -> Session -> setFlash("This account is already active.");                                  
                                   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                               }                  
                            }                    
@@ -611,8 +607,7 @@ Class UsersController extends AppController
                               $this->Currentpatron->save($updateArr);
                           }
                           else{                
-                              $this -> Session -> setFlash("This account is already active.");
-                              session_destroy();
+                              $this -> Session -> setFlash("This account is already active.");                              
                               $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                           }
                      }
@@ -627,8 +622,7 @@ Class UsersController extends AppController
                                   $this->Currentpatron->save($updateArr);
                               }
                               else{                            
-                                  $this -> Session -> setFlash("This account is already active.");
-                                  session_destroy();
+                                  $this -> Session -> setFlash("This account is already active.");                                  
                                   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
                               }                  
                            }                    
