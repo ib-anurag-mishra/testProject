@@ -55,7 +55,7 @@
                                 if (strlen($songs[$i]['Artist']) >= 24 ) {
                                         echo $html->link(substr($songs[$i]['Artist'], 0, 24) . "...", array(
                                                 'controller' => 'artists',
-                                                'action' => 'view',base64_encode($songs[$i]['Artist']),$songs[$i]['ReferenceID']
+                                                'action' => 'view',base64_encode($songs[$i]['ArtistText']),$songs[$i]['ReferenceID']
                                                 )
                                         ) . "<span>" . $songs[$i]['Artist'] . "</span>";
                                 } else {
