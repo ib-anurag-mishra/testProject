@@ -727,6 +727,7 @@ ul.marquee li {
 
 .genretl {
 	float:left;
+        min-height: 300px;
 }
 
 .genreAlltl {
@@ -744,6 +745,7 @@ ul.marquee li {
 
 .genretr {
 	float:right;
+        min-height: 300px;
 }
 
 .genreAlltr {
