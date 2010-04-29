@@ -77,7 +77,7 @@ Class SiteSettingsController extends AppController
                 
                 $sub_child = $doc->createElement("Title");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Physicalproduct']['Title']);
+                $value = $doc->createTextNode($suggestionSong['Metadata']['Title']);
                 $value = $sub_child->appendChild($value);
                 
                 $sub_child = $doc->createElement("ReferenceID");
