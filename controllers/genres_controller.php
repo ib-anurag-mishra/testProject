@@ -55,7 +55,7 @@ Class GenresController extends AppController
 									array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 									array('Physicalproduct.DownloadStatus' => 1),
 									array('Physicalproduct.TrackBundleCount' => 0),
-									array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
+									//array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
 								      )
 								),
 							  'fields' => array(
@@ -130,6 +130,7 @@ Class GenresController extends AppController
 					$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 					$finalArr[$i]['SongUrl'] = $songUrl;
 					$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
+					$finalArr[$i]['ReferenceId'] = $genre['Physicalproduct']['ReferenceID'];
 					$finalArr[$i]['SalesDate'] = $genre['Physicalproduct']['SalesDate'];
 					$finalArr[$i]['SampleSong'] = $sampleSongUrl;
 					$i++;				
