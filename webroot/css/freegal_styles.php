@@ -986,6 +986,7 @@ margin: 10px 10px 0 10px;
 padding: 0px;
 width: 875px;
 font-size: 13px;
+color:<?php echo $library_boxheader_text_color; ?>;
 }
 .question {
 padding: 5px 10px;
@@ -997,7 +998,8 @@ font-size: 13px;
 }
 .answer {
 padding: 5px 10px 5px;
-background-color:#d8d8d8;
+background-color:<?php echo $library_boxheader_bgcolor; ?>;
+//background-color:#d8d8d8;
 margin-left: 100px;
 font-size: 13px;
 display:none;
