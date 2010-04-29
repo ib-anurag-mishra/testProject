@@ -104,12 +104,12 @@
 					<?php	}											
                                                 else{
 							if($libraryDownload != '1'){
-								$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);
+								$wishlistInfo = $wishlist->getWishlistData($searchResult["Physicalproduct"]["ProdID"]);
 								if($wishlistInfo == 'Added to Wishlist'){
 									?> <p>Added to Wishlist</p>
 								<?php }
 								else{ ?>
-									<p><span id="wishlist<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php $searchResult["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+									<p><span id="wishlist<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 								<?php	
 								}
 							}
