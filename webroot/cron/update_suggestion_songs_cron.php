@@ -26,7 +26,7 @@ $root = $doc->appendChild($root);
 
 $suggestionSongsQuery = "SELECT  `Physicalproduct`.`ProdID`, `Physicalproduct`.`Title`, `Physicalproduct`.`ReferenceID`,
                             `Physicalproduct`.`ArtistText`, `Physicalproduct`.`DownloadStatus`, `Physicalproduct`.`SalesDate`,
-                            `Metadata`.`Title`, `Metadata`.`Artist`, `Metadata`.`Advisory` FROM `PhysicalProduct` AS `Physicalproduct`
+                            `Metadata`.`Title` as Songtitle, `Metadata`.`Artist`, `Metadata`.`Advisory` FROM `PhysicalProduct` AS `Physicalproduct`
                             LEFT JOIN `METADATA` AS `Metadata` ON (`Metadata`.`ProdID` = `Physicalproduct`.`ProdID`)
                             WHERE `Physicalproduct`.`ReferenceID` <> `Physicalproduct`.`ProdID` AND
                             `Physicalproduct`.`DownloadStatus` = 1 AND `Physicalproduct`.`TrackBundleCount` = 0 AND
@@ -44,7 +44,7 @@ while ($line = mysql_fetch_array($songsresult, MYSQL_ASSOC)) {
     
     $sub_child = $doc->createElement("Title");
     $sub_child = $child->appendChild($sub_child);
-    $value = $doc->createTextNode($line['Title']);
+    $value = $doc->createTextNode($line['Songtitle']);
     $value = $sub_child->appendChild($value);
     
     $sub_child = $doc->createElement("ReferenceID");
