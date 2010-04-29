@@ -36,44 +36,46 @@
     Suggestions
     <div id="suggestionsBox">
         <table cellspacing="0" cellpadding="0">
-            <?php foreach($songs as $key => $randomSongs): ?>
-                <tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
+            <?php
+	    for($i = 0; $i < 8; $i++) {
+	?>
+		<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
                     <td>
                         <p class='suggest_text info_suggest'>
                             <?php
-                                if (strlen($randomSongs['Metadata']['Title']) >= 28 ) {
-                                        echo substr($randomSongs['Metadata']['Title'], 0, 28) . "..." . "<span>" . $randomSongs['Metadata']['Title'] . "</span>";
+                                if (strlen($songs[$i]['Title']) >= 28 ) {
+                                        echo substr($songs[$i]['Title'], 0, 28) . "..." . "<span>" . $songs[$i]['Title'] . "</span>";
                                 } else {
-                                        echo $randomSongs['Metadata']['Title'];
+                                        echo $songs[$i]['Title'];
                                 }
                             ?>
                             <br />
                             by&nbsp;
                             <?php
-                                if (strlen($randomSongs['Metadata']['Artist']) >= 24 ) {
-                                        echo $html->link(substr($randomSongs['Metadata']['Artist'], 0, 24) . "...", array(
+                                if (strlen($songs[$i]['Artist']) >= 24 ) {
+                                        echo $html->link(substr($songs[$i]['Artist'], 0, 24) . "...", array(
                                                 'controller' => 'artists',
-                                                'action' => 'view',base64_encode($randomSongs['Physicalproduct']['ArtistText']),$randomSongs['Physicalproduct']['ReferenceID']
+                                                'action' => 'view',base64_encode($songs[$i]['Artist']),$songs[$i]['ReferenceID']
                                                 )
-                                        ) . "<span>" . $randomSongs['Metadata']['Artist'] . "</span>";
+                                        ) . "<span>" . $songs[$i]['Artist'] . "</span>";
                                 } else {
-                                        echo $html->link($randomSongs['Metadata']['Artist'], array(
+                                        echo $html->link($songs[$i]['Artist'], array(
                                                 'controller' => 'artists',
-                                                'action' => 'view',base64_encode($randomSongs['Physicalproduct']['ArtistText']),$randomSongs['Physicalproduct']['ReferenceID']
+                                                'action' => 'view',base64_encode($songs[$i]['ArtistText']),$songs[$i]['ReferenceID']
                                                 )
                                         );
                                 }
-                                $songUrl = shell_exec('perl files/tokengen ' . $randomSongs['Audio'][0]['Files']['CdnPath']."/".$randomSongs['Audio'][0]['Files']['SaveAsName']);
+                                $songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['CdnPath']."/".$songs[$i]['SaveAsName']);
                                 $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
                                 $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
                             ?>
-                            <?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$randomSongs["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");')); ?>
-                            <?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); ?>
-                            <?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); ?>
+                            <?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['ProdID'].', "'.$this->webroot.'");')); ?>
+                            <?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
+                            <?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
                         </p>
                     </td>
                 </tr>
-            <?php endforeach; ?>    
+	<?php } ?>
         </table>
     </div>
 </div>

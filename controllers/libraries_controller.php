@@ -134,6 +134,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
                                                                                 'Library.library_download_limit',
+										'Library.library_current_downloads',
+										'Library.library_total_downloads',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
                                                                                 'Library.library_available_downloads',
@@ -234,6 +236,8 @@ Class LibrariesController extends AppController
                                             if($this->User->save($this->data['User'])) {
                                                 if(trim($libraryId) != '' && is_numeric($libraryId)) {
                                                     $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
+						    $this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
+						    $this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
                                                 }
                                                 else {
                                                     $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];

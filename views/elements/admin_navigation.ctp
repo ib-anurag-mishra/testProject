@@ -102,6 +102,9 @@
 							<li><?php echo $html->link('Manage Download Limits', array('controller' => 'homes', 'action' => 'limitsform'));?></li>
 						</ul>
 					</li>
+					<li>
+						<?php echo $html->link('Site Settings', array('controller' => 'site_settings', 'action' => 'index'));?>
+					</li>
 				</ul>
 			</li>
 			<li>

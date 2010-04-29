@@ -8,7 +8,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Physicalproduct', 'Wishlist' );
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
     var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page','Wishlist');
  
    function beforeFilter(){
@@ -24,26 +24,28 @@ class HomesController extends AppController
     }
     
     function index(){
-        $this->Physicalproduct->Behaviors->attach('Containable');	
-		$songDetails = $this->Physicalproduct->find('all', array('conditions' => 
-                                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F'),
-                                'fields' => array(
-                                                    'Physicalproduct.ProdID',
-                                                    'Physicalproduct.Title',
-                                                    'Physicalproduct.ReferenceID',
-                                                    'Physicalproduct.ArtistText',
-                                                    'Physicalproduct.DownloadStatus',
-                                                    'Physicalproduct.SalesDate'
-                                                    ),
-                                'contain' => 
-                                array('Audio' => array('fields' => 
-                                                                        array('Audio.FileID'),
-                                                                        'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
-                                                                ),
-                                        'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
-                                ),'order'=> 'rand()','limit' => '8'
-                )
-        );
+        $this->Physicalproduct->Behaviors->attach('Containable');
+	$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
+	/*$songDetails = $this->Physicalproduct->find('all',
+	    array('conditions' => 
+		array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F'),
+		'fields' => array(
+				    'Physicalproduct.ProdID',
+				    'Physicalproduct.Title',
+				    'Physicalproduct.ReferenceID',
+				    'Physicalproduct.ArtistText',
+				    'Physicalproduct.DownloadStatus',
+				    'Physicalproduct.SalesDate'
+				    ),
+		'contain' => 
+		array('Audio' => array('fields' => 
+							array('Audio.FileID'),
+							'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
+						),
+			'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
+		),'order'=> 'rand()','limit' => '8'
+	    )
+        );*/
         $this->set('songs',$songDetails);
         $this->Physicalproduct->recursive = -1;
         $upcoming = $this->Physicalproduct->find('all', array(

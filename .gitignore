@@ -17,3 +17,4 @@ webroot/min/tmp/*
 webroot/sony_reports/*
 webroot/cron/config.php
 config/config.php
+webroot/suggestion_xml/*

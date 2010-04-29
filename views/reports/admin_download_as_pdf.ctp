@@ -71,7 +71,8 @@
     
     //Column titles
     $header = array('','Library Name', 'Patron ID', 'Artists Name', 'Track title', 'Download');
-    $patron_header = array('', 'Patron ID', 'Total Number of Tracks Downloaded');
+    $patron_header = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
+    $genre_header = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
     
     //Data loading
     foreach($downloads as $key => $download) {
@@ -80,7 +81,11 @@
     }
     
     foreach($patronDownloads as $key => $patronDownload) {
-        $patron_data[] = array($key+1, $patronDownload['Download']['patron_id'], $patronDownload[0]['totalDownloads']);
+        $patron_data[] = array($key+1, $patronDownload['Download']['patron_id'], $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+    }
+    
+    foreach($genreDownloads as $key => $genreDownload) {
+        $genre_data[] = array($key+1, $genreDownload['Genre']['Genre'], $genreDownload[0]['totalProds']);
     }
     
     // print colored table
@@ -107,9 +112,8 @@
     $tcpdf->SetFont('');
     // Data
     $fill = 0;
-    $lineNum = 0;
     foreach($data as $k=>$row) {
-        if($lineNum%27 == 0 && $k != 0) {
+        if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
@@ -140,7 +144,6 @@
 	$tcpdf->Cell($w[5], 6, $row[5], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Ln();
         $fill=!$fill;
-        $lineNum++;
     }
     
     // add a page
@@ -158,7 +161,7 @@
     $tcpdf->SetLineWidth(0.3);
     $tcpdf->SetFont('', 'B');
     // Header
-    $w = array(10, 50, 190);
+    $w = array(10, 50, 100, 90);
     for($i = 0; $i < count($patron_header); $i++)
         $tcpdf->Cell($w[$i], 7, $patron_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -169,7 +172,7 @@
     // Data
     $fill = 0;
     foreach($patron_data as $k=>$row) {
-        if($lineNum%27 == 0 && $k != 0) {
+        if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
             $tcpdf->SetLineWidth(0.3);
             $tcpdf->SetFont('', 'B');
@@ -194,10 +197,66 @@
         
         $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[3], 6, $row[3], 'LR', 0, 'C', $fill, '', 3);
+        $tcpdf->Ln();
+        $fill=!$fill;
+    }
+    
+    // add a page
+    $tcpdf->AddPage();
+    
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Genres Downloads Report', 0, 0, 'C', 0);
+    $tcpdf->Ln();
+    
+    $tcpdf->SetFillColor(0, 153, 255);
+    $tcpdf->SetTextColor(255);
+    $tcpdf->SetDrawColor(224, 224, 224);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    // Header
+    $w = array(10, 50, 190);
+    for($i = 0; $i < count($genre_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $genre_header[$i], 1, 0, 'C', 1);
+        $tcpdf->Ln();
+    // Color and font restoration
+    $tcpdf->SetFillColor(224, 235, 255);
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetFont('');
+    // Data
+    $fill = 0;
+    foreach($genre_data as $k=>$row) {
+        if($k%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Genres Downloads Report', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+            
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($genre_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $genre_header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+        
+        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'C', $fill, '', 3);
         $tcpdf->Ln();
         $fill=!$fill;
-        $lineNum++;
     }
     
     $tcpdf->Cell(array_sum($w), 0, '', 'T');

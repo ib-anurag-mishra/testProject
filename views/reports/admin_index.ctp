@@ -148,6 +148,7 @@
                                 <tr>
 				    <th>&nbsp;</th>
                                     <th>Patron ID</th>
+                                    <th>Library Name</th>
                                     <th>Total Number of Tracks Downloaded</th>
                                 </tr>
                                 <?php
@@ -157,7 +158,34 @@
                                     <tr>
 					<td><?php echo $i; ?></td>
                                         <td><?php echo $patronDownload['Download']['patron_id']; ?></td>
+                                        <td><?php echo $library->getLibraryName($patronDownload['Download']['library_id']); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
+                                    </tr>
+                                <?php
+				    $i++;
+                                }
+                                ?>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><th colspan="4" align="center">Genres Downloads Report</th></tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
+                                <tr>
+				    <th>&nbsp;</th>
+                                    <th>Genre Name</th>
+                                    <th>Total Number of Tracks Downloaded</th>
+                                </tr>
+                                <?php
+				$i = 1;
+                                foreach($genreDownloads as $key => $genreDownload) {
+                                ?>
+                                    <tr>
+					<td><?php echo $i; ?></td>
+                                        <td><?php echo $genreDownload['Genre']['Genre']; ?></td>
+                                        <td align="center"><?php echo $genreDownload[0]['totalProds']; ?></td>
                                     </tr>
                                 <?php
 				    $i++;

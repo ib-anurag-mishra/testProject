@@ -17,11 +17,25 @@ $csv->addRow($line);
 $line = array('Patron Downloads Report');
 $csv->addRow($line);
 
-$line = array('', 'Patron ID', 'Total Number of Tracks Downloaded');
+$line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach($patronDownloads as $key => $patronDownload) {
-    $line = array($key+1, $patronDownload['Download']['patron_id'], $patronDownload[0]['totalDownloads']);
+    $line = array($key+1, $patronDownload['Download']['patron_id'], $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+    $csv->addRow($line);
+}
+
+$line = array('', '', '', '', '', '');
+$csv->addRow($line);
+
+$line = array('Genres Downloads Report');
+$csv->addRow($line);
+
+$line = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
+$csv->addRow($line);
+
+foreach($genreDownloads as $key => $genreDownload) {
+    $line = array($key+1, $genreDownload['Genre']['Genre'], $genreDownload[0]['totalProds']);
     $csv->addRow($line);
 }
 
