@@ -153,7 +153,8 @@ Class UsersController extends AppController
    
    function logout() {      
       $patronId = $this->Session->read('patron');
-      $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId)));
+      $libraryId = $this->Session->read('library');
+      $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
       if(count($patronDetails) > 0){         
          $updateTime = date( "Y-m-d H:i:s", time()-60 );
          $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
@@ -165,7 +166,7 @@ Class UsersController extends AppController
          elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')){            
             $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));  
          }
-         elseif(isset($_SESSION['innovation_wo_pin']) && ($_SESSION['innovation_wo_pin'] != '')){            
+         elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')){            
             $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));  
          }
          else{            
@@ -477,12 +478,20 @@ Class UsersController extends AppController
                @$dom->loadHtmlFile($url);
                $xpath = new DOMXPath($dom);
                $body = $xpath->query('/html/body');
-               $retStr = $dom->saveXml($body->item(0));		
+               $retStr = $dom->saveXml($body->item(0));               
                $retMsgArr = explode("RETCOD=",$retStr);               
-               @$retStatus = $retMsgArr['1'];
+               @$retStatus = $retMsgArr['1'];               
 	       if($retStatus == ''){
-                  $this -> Session -> setFlash("Authentication server down.");
-                  $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
+                  $errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
+                  @$errMsgCount = substr($errMsgArr['1'],0,1);
+                  if($errMsgCount == '1'){
+                     $this -> Session -> setFlash("Requested record not found.");
+                     $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
+                  }
+                  else{
+                     $this -> Session -> setFlash("Authentication server down.");
+                     $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
+                  }                  
                }
                elseif($retStatus == 0){
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
@@ -585,27 +594,30 @@ Class UsersController extends AppController
             }        
             else{
                $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-               $url = $authUrl."/PATRONAPI/".$card."/dump";
+               $url = $authUrl."/PATRONAPI/".$card."/dump";               
                $dom= new DOMDocument();
                @$dom->loadHtmlFile($url);
                $xpath = new DOMXPath($dom);
                $body = $xpath->query('/html/body');
                $retStr = $dom->saveXml($body->item(0));
-               if($retStr == ''){
-                  $this -> Session -> setFlash("Authentication server down.");
-                  $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
-               }
-               $retMsgArr = explode("ERRNUM=",$retStr);              
-               if(count($retMsgArr) > 1){
-                  @$retStatus = $retMsgArr['1'];
-                  $retMsgArr = explode("<BR>",$retStatus);               
-                  if($retMsgArr[0] == 1){
-                     $this->set('card',$card); 
-                     $this -> Session -> setFlash("Requested record not found.");
-                     $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
-                  }   
-               }               
-               else{
+               $pos = strpos($retStr, "CREATED");
+               if ($pos == false) {                  
+                  $retMsgArr = explode("ERRNUM=",$retStr);               
+                  if(count($retMsgArr) > 1){                    
+                     @$retStatus = $retMsgArr['1'];
+                     $retMsgArr = explode("<BR>",$retStatus);               
+                     if($retMsgArr[0] == 1){                         
+                        $this->set('card',$card); 
+                        $this -> Session -> setFlash("Requested record not found.");
+                        $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
+                     }   
+                  }
+                  else{                     
+                     $this -> Session -> setFlash("Authentication server down.");
+                     $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));   
+                  }
+               }                             
+               else{                  
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
                   if(count($currentPatron) > 0){
                       $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           

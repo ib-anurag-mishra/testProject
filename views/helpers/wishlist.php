@@ -7,7 +7,7 @@ class WishlistHelper extends AppHelper {
         $wishlistInstance = ClassRegistry::init('Wishlist');
         $libraryId = $_SESSION['library'];
         $patronId = $_SESSION['patron'];        
-        $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+        $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id)));
         if(count($wishlistDetails) != 0) {
             return "Added to Wishlist";
         }
