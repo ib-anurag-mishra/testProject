@@ -54,7 +54,8 @@
 				});
 				var webroot = '<?php echo $this->webroot; ?>';	
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
-				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
+				var attributes = { id: "audioplayer" };
+				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
 			</script>
 			<style>
 				<?php
