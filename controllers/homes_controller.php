@@ -26,26 +26,6 @@ class HomesController extends AppController
     function index(){
         $this->Physicalproduct->Behaviors->attach('Containable');
 	$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
-	/*$songDetails = $this->Physicalproduct->find('all',
-	    array('conditions' => 
-		array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F'),
-		'fields' => array(
-				    'Physicalproduct.ProdID',
-				    'Physicalproduct.Title',
-				    'Physicalproduct.ReferenceID',
-				    'Physicalproduct.ArtistText',
-				    'Physicalproduct.DownloadStatus',
-				    'Physicalproduct.SalesDate'
-				    ),
-		'contain' => 
-		array('Audio' => array('fields' => 
-							array('Audio.FileID'),
-							'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
-						),
-			'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
-		),'order'=> 'rand()','limit' => '8'
-	    )
-        );*/
         $this->set('songs',$songDetails);
         $this->Physicalproduct->recursive = -1;
         $upcoming = $this->Physicalproduct->find('all', array(
@@ -416,7 +396,7 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }
     
-    public function admin_termsform(){
+    function admin_termsform(){
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];

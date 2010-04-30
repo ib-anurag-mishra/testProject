@@ -107,13 +107,20 @@
 						}
 						else{
 							if($libraryDownload != '1'){
-								$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);
-								if($wishlistInfo == 'Added to Wishlist'){
-									?> <p>Added to Wishlist</p>
-								<?php }
-								else{ ?>
-									<p><span id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
-								<?php	
+								$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
+								$wishlistCount = $wishlist->getWishlistCount();
+								if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
+									?> <p>Limit Exceeded</p> <?php
+								}
+								else{
+									$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);
+									if($wishlistInfo == 'Added to Wishlist'){
+										?> <p>Added to Wishlist</p>
+									<?php }
+									else{ ?>
+										<p><span id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+									<?php	
+									}
 								}
 							}
 							else{ ?>

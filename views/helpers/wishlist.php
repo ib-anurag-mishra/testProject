@@ -15,6 +15,14 @@ class WishlistHelper extends AppHelper {
             return "Add to wishlist";
         }
     }
+    
+    function getWishlistCount() {
+        $wishlistInstance = ClassRegistry::init('Wishlist');
+        $libraryId = $_SESSION['library'];
+        $patronId = $_SESSION['patron'];        
+        $wishlistCount = $wishlistInstance->find('count', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+        return $wishlistCount;
+    }
 }
 
 ?>
