@@ -391,7 +391,7 @@ ul.marquee li {
 	display:none;
 	width:144px;
 	left:-1px;
-	top:27px;
+	top:26px;
 	list-style:none;
 	padding:1px 0 0;
 	margin:0;
