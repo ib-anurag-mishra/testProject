@@ -27,7 +27,8 @@
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');*/
 	?>		
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,swfobject.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
+                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,swfobject.js,freegal.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
+<?php echo $javascript->link('audioPlayer'); ?>
 	<?php
 		echo $scripts_for_layout;
 		if(isset($_SESSION['library']) && $_SESSION['library'] != '')
