@@ -28,19 +28,19 @@ function onPlayerReady() {
  */
 function onStateChange(state) {
     if (state == "buffering") {
-        document.getElementById("play_audio"+imageID).style.display = "none";
-	 document.getElementById("load_audio"+imageID).style.display = "block";
-	 document.getElementById("stop_audio"+imageID).style.display = "none";
+        document.getElementById("playaudio"+imageID).style.display = "none";
+	 document.getElementById("loadaudio"+imageID).style.display = "block";
+	 document.getElementById("stopaudio"+imageID).style.display = "none";
     }
     else if (state == "playing") {
-        document.getElementById("play_audio"+imageID).style.display = "none";
-	 document.getElementById("load_audio"+imageID).style.display = "none";
-	 document.getElementById("stop_audio"+imageID).style.display = "block";
+        document.getElementById("playaudio"+imageID).style.display = "none";
+	 document.getElementById("loadaudio"+imageID).style.display = "none";
+	 document.getElementById("stopaudio"+imageID).style.display = "block";
     }
     else {
-        document.getElementById("play_audio"+imageID).style.display = "block";
-	 document.getElementById("load_audio"+imageID).style.display = "none";
-	 document.getElementById("stop_audio"+imageID).style.display = "none";
+        document.getElementById("playaudio"+imageID).style.display = "block";
+	 document.getElementById("loadaudio"+imageID).style.display = "none";
+	 document.getElementById("stopaudio"+imageID).style.display = "none";
     }
 }
 
@@ -56,9 +56,9 @@ function onPlaybackUpdate(time, duration) {
  *	Called from the audio player swf when the stream has completed playback.
  */
 function onPlaybackComplete() {
-       document.getElementById("play_audio"+imageID).style.display = "block";
-	document.getElementById("load_audio"+imageID).style.display = "none";
-	document.getElementById("stop_audio"+imageID).style.display = "none";
+       document.getElementById("playaudio"+imageID).style.display = "block";
+	document.getElementById("loadaudio"+imageID).style.display = "none";
+	document.getElementById("stopaudio"+imageID).style.display = "none";
 }
 
 /*
@@ -78,9 +78,9 @@ function onLoadComplete() {
  *	Called from the audio player swf when the load of the stream throws an error.
  */
 function onLoadError() {
-       document.getElementById("play_audio"+imageID).style.display = "block";
-	document.getElementById("load_audio"+imageID).style.display = "none";
-	document.getElementById("stop_audio"+imageID).style.display = "none";
+       document.getElementById("playaudio"+imageID).style.display = "block";
+	document.getElementById("loadaudio"+imageID).style.display = "none";
+	document.getElementById("stopaudio"+imageID).style.display = "none";
 }
 
 //--------------------------------------------------------------
@@ -157,19 +157,19 @@ function seek(event) {
 
 function stopThis(event, objID) {
     document.getElementById('audioplayer').pause();
-    document.getElementById("play_audio"+objID).style.display = "block";
-    document.getElementById("load_audio"+objID).style.display = "none";
-    document.getElementById("stop_audio"+objID).style.display = "none";
+    document.getElementById("playaudio"+objID).style.display = "block";
+    document.getElementById("loadaudio"+objID).style.display = "none";
+    document.getElementById("stopaudio"+objID).style.display = "none";
 }
 
 function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID, webRoot) {
-    $("img[id^='play_audio']").each(function() {
+    $("img[id^='playaudio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "block";
     });
-    $("img[id^='load_audio']").each(function() {
+    $("img[id^='loadaudio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
-    $("img[id^='stop_audio']").each(function() {
+    $("img[id^='stopaudio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);

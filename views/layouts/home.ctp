@@ -54,7 +54,7 @@
 				});
 				var webroot = '<?php echo $this->webroot; ?>';	
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
-				var attributes = { id: "audioplayer" };
+				ar attributes = { id: "audioplayer" }; 
 				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
 			</script>
 			<style>
@@ -146,7 +146,7 @@
     	</div>
   	</div>
 	<![endif]-->
-	<div id="audioPlayer"></div>
+	<div id="audioplayer"></div>
 	<?php $session->flash(); ?>
 	<a class='upgradeFlash' href="#"></a>
 	<div style="display:none;">
