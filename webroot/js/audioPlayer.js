@@ -20,7 +20,7 @@ var webRootURL;
  *	Called from the audio player swf when the player is ready to receive calls.
  */
 function onPlayerReady() {
-    document.getElementById('audioplayer').addListeners();
+    document.getElementById('audioPlayer').addListeners();
 }
 
 /*
@@ -28,19 +28,19 @@ function onPlayerReady() {
  */
 function onStateChange(state) {
     if (state == "buffering") {
-        document.getElementById("playaudio"+imageID).style.display = "none";
-	 document.getElementById("loadaudio"+imageID).style.display = "block";
-	 document.getElementById("stopaudio"+imageID).style.display = "none";
+        document.getElementById("play_audio"+imageID).style.display = "none";
+	 document.getElementById("load_audio"+imageID).style.display = "block";
+	 document.getElementById("stop_audio"+imageID).style.display = "none";
     }
     else if (state == "playing") {
-        document.getElementById("playaudio"+imageID).style.display = "none";
-	 document.getElementById("loadaudio"+imageID).style.display = "none";
-	 document.getElementById("stopaudio"+imageID).style.display = "block";
+        document.getElementById("play_audio"+imageID).style.display = "none";
+	 document.getElementById("load_audio"+imageID).style.display = "none";
+	 document.getElementById("stop_audio"+imageID).style.display = "block";
     }
     else {
-        document.getElementById("playaudio"+imageID).style.display = "block";
-	 document.getElementById("loadaudio"+imageID).style.display = "none";
-	 document.getElementById("stopaudio"+imageID).style.display = "none";
+        document.getElementById("play_audio"+imageID).style.display = "block";
+	 document.getElementById("load_audio"+imageID).style.display = "none";
+	 document.getElementById("stop_audio"+imageID).style.display = "none";
     }
 }
 
@@ -56,9 +56,9 @@ function onPlaybackUpdate(time, duration) {
  *	Called from the audio player swf when the stream has completed playback.
  */
 function onPlaybackComplete() {
-       document.getElementById("playaudio"+imageID).style.display = "block";
-	document.getElementById("loadaudio"+imageID).style.display = "none";
-	document.getElementById("stopaudio"+imageID).style.display = "none";
+       document.getElementById("play_audio"+imageID).style.display = "block";
+	document.getElementById("load_audio"+imageID).style.display = "none";
+	document.getElementById("stop_audio"+imageID).style.display = "none";
 }
 
 /*
@@ -78,9 +78,9 @@ function onLoadComplete() {
  *	Called from the audio player swf when the load of the stream throws an error.
  */
 function onLoadError() {
-       document.getElementById("playaudio"+imageID).style.display = "block";
-	document.getElementById("loadaudio"+imageID).style.display = "none";
-	document.getElementById("stopaudio"+imageID).style.display = "none";
+       document.getElementById("play_audio"+imageID).style.display = "block";
+	document.getElementById("load_audio"+imageID).style.display = "none";
+	document.getElementById("stop_audio"+imageID).style.display = "none";
 }
 
 //--------------------------------------------------------------
@@ -106,31 +106,31 @@ function buttonOut(event) {
 }
 
 function getCurrentTime(event) {
-    document.getElementById('audioplayer').getCurrentTime('handleResponse');
+    document.getElementById('audioPlayer').getCurrentTime('handleResponse');
 }
 
 function getDuration(event) {
-    document.getElementById('audioplayer').getDuration('handleResponse');
+    document.getElementById('audioPlayer').getDuration('handleResponse');
 }
 
 function getID(event) {
-    document.getElementById('audioplayer').getID('handleResponse');
+    document.getElementById('audioPlayer').getID('handleResponse');
 }
 
 function getLoadPercent(event) {
-    document.getElementById('audioplayer').getLoadPercent('handleResponse');
+    document.getElementById('audioPlayer').getLoadPercent('handleResponse');
 }
 
 function getState(event) {
-    document.getElementById('audioplayer').getState('handleResponse');
+    document.getElementById('audioPlayer').getState('handleResponse');
 }
 
 function getURL(event) {
-    document.getElementById('audioplayer').getURL('handleResponse');
+    document.getElementById('audioPlayer').getURL('handleResponse');
 }
 
 function getVolume(event) {
-    document.getElementById('audioplayer').getVolume('handleResponse');
+    document.getElementById('audioPlayer').getVolume('handleResponse');
 }
 
 function handleResponse(value) {
@@ -140,36 +140,36 @@ function load(event, audioURLOne, audioURLTwo, audioURLThree, playID) {
     var finalURL = audioURLOne;
     finalURL += audioURLTwo;
     finalURL += audioURLThree;
-    document.getElementById('audioplayer').load(unescape(finalURL), true, playID);
+    document.getElementById('audioPlayer').load(unescape(finalURL), true, playID);
 }
 
 function pause(event) {
-    document.getElementById('audioplayer').pauseAudio();
+    document.getElementById('audioPlayer').pause();
 }
 
 function play(event) {
-    document.getElementById('audioplayer').playAudio();
+    document.getElementById('audioPlayer').play();
 }
 
 function seek(event) {
-    document.getElementById('audioplayer').seekAudio(20);
+    document.getElementById('audioPlayer').seek(20);
 }
 
 function stopThis(event, objID) {
-    document.getElementById('audioplayer').pause();
-    document.getElementById("playaudio"+objID).style.display = "block";
-    document.getElementById("loadaudio"+objID).style.display = "none";
-    document.getElementById("stopaudio"+objID).style.display = "none";
+    document.getElementById('audioPlayer').pause();
+    document.getElementById("play_audio"+objID).style.display = "block";
+    document.getElementById("load_audio"+objID).style.display = "none";
+    document.getElementById("stop_audio"+objID).style.display = "none";
 }
 
 function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID, webRoot) {
-    $("img[id^='playaudio']").each(function() {
+    $("img[id^='play_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "block";
     });
-    $("img[id^='loadaudio']").each(function() {
+    $("img[id^='load_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
-    $("img[id^='stopaudio']").each(function() {
+    $("img[id^='stop_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
