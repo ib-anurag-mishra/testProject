@@ -8,8 +8,8 @@
         $displaylibraryName = "All Libraries";
     }
     else {
-        $savelibraryName = "LibraryID_".$download['Download']['library_id'];
-        $displaylibraryName = "LibraryID ".$download['Download']['library_id'];
+        $savelibraryName = "LibraryID_".$downloads[0]['Download']['library_id'];
+        $displaylibraryName = "LibraryID ".$downloads[0]['Download']['library_id'];
     }
     $date_arr = explode("/", $this->data['Report']['date']);
     $date_arr_from = explode("/", $this->data['Report']['date_from']);

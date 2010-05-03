@@ -31,62 +31,20 @@ Class ReportsController extends AppController
                 $this->Report->setValidation('reports_manual');
             }
             if($this->Report->validates()) {
-                if($this->data['Report']['library_id'] == "all") {
-                    $lib_condition = "";
-                }
-                else {
-                    $lib_condition = "and library_id = ".$this->data['Report']['library_id'];
-                }
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
-                    $endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]))." 00:00:00";
-                    $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
-                    $endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]))." 00:00:00";
-                    $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
-                    $date_arr_from = explode("/", $this->data['Report']['date_from']);
-                    $date_arr_to = explode("/", $this->data['Report']['date_to']);
-                    $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
-                    $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
                 }
                 
                 $this->set('downloads', $downloads);
@@ -125,62 +83,20 @@ Class ReportsController extends AppController
                 $this->Report->setValidation('reports_manual');
             }
             if($this->Report->validates()) {
-                if($this->data['Report']['library_id'] == "all") {
-                    $lib_condition = "";
-                }
-                else {
-                    $lib_condition = "and library_id = ".$this->data['Report']['library_id'];
-                }
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
-                    $endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]))." 00:00:00";
-                    $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
-                    $endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]))." 00:00:00";
-                    $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
-                    $date_arr_from = explode("/", $this->data['Report']['date_from']);
-                    $date_arr_to = explode("/", $this->data['Report']['date_to']);
-                    $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
-                    $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
                 }
                 
                 $this->set('downloads', $downloads);
@@ -209,62 +125,20 @@ Class ReportsController extends AppController
                 $this->Report->setValidation('reports_manual');
             }
             if($this->Report->validates()) {
-                if($this->data['Report']['library_id'] == "all") {
-                    $lib_condition = "";
-                }
-                else {
-                    $lib_condition = "and library_id = ".$this->data['Report']['library_id'];
-                }
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
-                    $endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]))." 00:00:00";
-                    $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
-                    $endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
-                    $date_arr = explode("/", $this->data['Report']['date']);
-                    $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]))." 00:00:00";
-                    $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]))." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
-                    $date_arr_from = explode("/", $this->data['Report']['date_from']);
-                    $date_arr_to = explode("/", $this->data['Report']['date_to']);
-                    $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
-                    $endDate = $date_arr_to[2]."-".$date_arr_to[0]."-".$date_arr_to[1]." 23:59:59";
-                    $conditions = 'WHERE created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition;
-                    $this->Genre->recursive = -1;
-                    $genreDownloads = $this->Genre->find('all', array('conditions' => array("Genre.ProdID IN(SELECT Distinct ProdID  FROM `downloads` $conditions)"),
-                                                          'group' => array('Genre'), 'fields' => array('Genre', 'COUNT(Genre.ProdID) AS totalProds'), 'order' => 'Genre'));
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
                 }
                 
                 $this->set('downloads', $downloads);

@@ -21,7 +21,11 @@ class Genre extends AppModel {
 		),'Product' => array(
 			'className' => 'Product',
 			'foreignKey' => 'ProdID'
-		)		
+		),
+		'Download' => array(
+		    'className'    => 'Download',
+		    'foreignKey' => 'Download.ProdID'
+		)
 	);
 }
 ?>
