@@ -3,9 +3,9 @@ class Download extends AppModel
 {
   var $name = 'Download';
   var $usetable = 'downloads';
-  var $primaryKey = 'ProdID';
+  //var $primaryKey = 'ProdID';
   
-  var $hasOne = array(
+  var $belongsTo = array(
     'Genre' => array(
     'className' => 'Genre',
     'foreignKey' => 'ProdID'

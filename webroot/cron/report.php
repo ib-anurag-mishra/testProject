@@ -14,7 +14,7 @@ $currentDate = date('Y-m-d');
 list($year, $month, $day) = explode('-', $currentDate);
 $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w')-1), date('Y')));
 $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
-
+echo $currentDate."========".$weekFirstDay."==========".$monthFirstDate;
 if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 	$reports_dir = SONY_REPORTFILES;
 	if(!file_exists($reports_dir)) {
@@ -119,8 +119,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
 		}
+		echo "\nWeekly report sent successfully!!\n";
 	}
-	elseif($currentDate == $monthFirstDate) {
+	if($currentDate == $monthFirstDate) {
 		$showStartDate = date("Ymd", strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')));
 		$showEndDate = date("Ymd", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))));
 		$condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
@@ -209,9 +210,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
 		}
+		echo "\nMonthly report sent successfully!!\n";
 	}
 }
 else {
-	echo "Today is not either the week first day or the month first day so the report didn't get generated.";
+	echo "\nToday is not either the week first day or the month first day so the report didn't get generated.\n";
 }
 ?>

@@ -24,8 +24,15 @@ class Genre extends AppModel {
 		),
 		'Download' => array(
 		    'className'    => 'Download',
-		    'foreignKey' => 'Download.ProdID'
+		    'foreignKey' => 'Genre.ProdID'
 		)
+	);
+	
+	var $hasMany = array(
+	  'Genre' => array(
+	  'className' => 'Genre',
+	  'foreignKey' => 'ProdID'
+	  )
 	);
 }
 ?>

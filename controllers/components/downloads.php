@@ -20,6 +20,7 @@ Class DownloadsComponent extends Object
         $downloadInstance = ClassRegistry::init('Download');
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
+        $downloadInstance->recursive = -1;
         $libraryResults = $libraryInstance->find('all',array('conditions' => array('Library.id' => $libId)));        
         $patronLimit = $libraryResults['0']['Library']['library_user_download_limit'];
         $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
