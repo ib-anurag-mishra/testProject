@@ -29,7 +29,7 @@ $suggestionSongsQuery = "SELECT  `Physicalproduct`.`ProdID`, `Physicalproduct`.`
                             `Metadata`.`Title` as Songtitle, `Metadata`.`Artist`, `Metadata`.`Advisory` FROM `PhysicalProduct` AS `Physicalproduct`
                             LEFT JOIN `METADATA` AS `Metadata` ON (`Metadata`.`ProdID` = `Physicalproduct`.`ProdID`)
                             WHERE `Physicalproduct`.`ReferenceID` <> `Physicalproduct`.`ProdID` AND
-                            `Physicalproduct`.`DownloadStatus` = 1 AND `Physicalproduct`.`TrackBundleCount` = 0 AND
+                            `Physicalproduct`.`DownloadStatus` = '1' AND `Physicalproduct`.`TrackBundleCount` = '0' AND
                             `Metadata`.`Advisory` = 'F' ORDER BY rand() ASC LIMIT ".$suggestionCounter['svalue'];
 $songsresult = mysql_query($suggestionSongsQuery) or die('Query failed: ' . mysql_error());
 
