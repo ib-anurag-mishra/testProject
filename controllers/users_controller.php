@@ -502,7 +502,6 @@ Class UsersController extends AppController
                           if(($date-$modifiedTime) > 60){
                               $updateArr = array();
                               $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                              $updateArr['created'] = date('Y-m-d H:i:s');
                               $updateArr['session_id'] = session_id();
                               $this->Currentpatron->save($updateArr);
                           }
@@ -518,7 +517,6 @@ Class UsersController extends AppController
                               if(($date-$modifiedTime) > 60){                            
                                   $updateArr = array();
                                   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                                  $updateArr['created'] = date('Y-m-d H:i:s');
                                   $updateArr['session_id'] = session_id();
                                   $this->Currentpatron->save($updateArr);
                               }
@@ -530,7 +528,7 @@ Class UsersController extends AppController
                            }                    
                      }
                   }
-                  else{                
+                  else{
                      $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
                      $insertArr['patronid'] = $patronId;
                      $insertArr['session_id'] = session_id();
@@ -616,7 +614,7 @@ Class UsersController extends AppController
                      $this -> Session -> setFlash("Authentication server down.");
                      $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));   
                   }
-               }                             
+               }
                else{                  
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
                   if(count($currentPatron) > 0){
@@ -626,7 +624,6 @@ Class UsersController extends AppController
                           if(($date-$modifiedTime) > 60){
                               $updateArr = array();
                               $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                              $updateArr['created'] = date('Y-m-d H:i:s');
                               $updateArr['session_id'] = session_id();
                               $this->Currentpatron->save($updateArr);
                           }
@@ -642,7 +639,6 @@ Class UsersController extends AppController
                               if(($date-$modifiedTime) > 60){                            
                                   $updateArr = array();
                                   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                                  $updateArr['created'] = date('Y-m-d H:i:s');
                                   $updateArr['session_id'] = session_id();
                                   $this->Currentpatron->save($updateArr);
                               }

@@ -475,7 +475,6 @@ Class LibrariesController extends AppController
                     {
                         $updateArr = array();
                         $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                        $updateArr['created'] = date('Y-m-d H:i:s');
                         $updateArr['session_id'] = session_id();
                         $this->Currentpatron->save($updateArr);
                     }
@@ -494,7 +493,6 @@ Class LibrariesController extends AppController
                         {                            
                             $updateArr = array();
                             $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                            $updateArr['created'] = date('Y-m-d H:i:s');
                             $updateArr['session_id'] = session_id();
                             $this->Currentpatron->save($updateArr);
                         }
