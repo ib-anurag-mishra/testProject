@@ -141,6 +141,30 @@ class HomesController extends AppController
                 $genre =  $this->data['Home']['genre_id'];
             }            
             if($artist != ''){
+                $artistSearch = array("match(Physicalproduct.ArtistText) against ('+$artist*' in boolean mode)");    
+            }
+            else{
+                $artistSearch = '';
+            }
+            if($song != ''){
+                $songSearch = array("match(Metadata.Title) against ('+$song*' in boolean mode)");    
+            }
+            else{
+                $songSearch = '';
+            }
+            if($album != ''){
+                $albumSearch = array("match(Physicalproduct.Title) against ('+$album*' in boolean mode)");    
+            }
+            else{
+                $albumSearch = '';
+            }
+            if($genre != ''){
+                $genreSearch = array("match(Genre.Genre) against ('+$genre*' in boolean mode)");    
+            }
+            else{
+                $genreSearch = '';
+            }
+            /*if($artist != ''){
                 $artistSearch = array('Physicalproduct.ArtistText LIKE' => '%'.$artist.'%');    
             }
             else{
@@ -163,8 +187,8 @@ class HomesController extends AppController
             }
             else{
                 $genreSearch = '';
-            }
-            $this->set('searchKey','match=all&artist='.urlencode($artist).'&song='.urlencode($song).'&album='.$album.'&genre='.$genre);
+            }*/
+            $this->set('searchKey','match=all&artist='.urlencode($artist).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
                                 array('and' =>
