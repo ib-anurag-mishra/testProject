@@ -1,4 +1,4 @@
 ALTER TABLE Genre ADD FULLTEXT(Genre);
-ALTER TABLE Physicalproduct ADD FULLTEXT(Title);
-ALTER TABLE Metadata ADD FULLTEXT(Title);
-ALTER TABLE Physicalproduct ADD FULLTEXT(ArtistText);
+ALTER TABLE PhysicalProduct ADD FULLTEXT(Title);
+ALTER TABLE METADATA ADD FULLTEXT(Title);
+ALTER TABLE PhysicalProduct ADD FULLTEXT(ArtistText);
