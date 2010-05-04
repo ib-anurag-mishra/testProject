@@ -476,6 +476,10 @@ class HomesController extends AppController
     }
 
     function aboutus(){
+	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
+	    $this->Session->destroy('User');
+            $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$this->webroot."users/login'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
+	}
 	$this->layout = 'home';
     }
     
