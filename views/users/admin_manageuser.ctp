@@ -46,6 +46,6 @@ echo $paginator->counter(array(
 	</div>
 </fieldset>
 <?php 
- echo $session->flash();
+	echo $session->flash();
 ?>
 </form>
