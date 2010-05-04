@@ -161,7 +161,7 @@ Class LibrariesController extends AppController
                 
                 if($this->data['Library']['libraryStepNum'] == '2') {
                     if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
-                     $this->data['User']['password'] = "";
+			$this->data['User']['password'] = "";
                     }
                     if(trim($libraryId) != '' && is_numeric($libraryId)) {
                         $this->User->id = $getData['Library']['library_admin_id'];
@@ -233,6 +233,10 @@ Class LibrariesController extends AppController
                                                 $this->User->id = $getData['Library']['library_admin_id'];
                                             }
                                             $this->data['User']['type_id'] = 4;
+					    if(trim($this->data['User']['password']) == ""){
+						// do not update the password
+						$this->data['User']['password'] = $getData['User']['password'];
+					    }
                                             if($this->User->save($this->data['User'])) {
                                                 if(trim($libraryId) != '' && is_numeric($libraryId)) {
                                                     $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
