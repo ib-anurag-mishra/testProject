@@ -489,8 +489,16 @@ class HomesController extends AppController
 	    else{
 	       $url = $this->webroot.'users/login';
 	    }
+	    $patronId = $this->Session->read('patron');
+	    $libraryId = $this->Session->read('library');
+	    $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
+	    if(count($patronDetails) > 0){
+		$updateTime = date( "Y-m-d H:i:s", time()-60 );
+		$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
+		$this->Currentpatron->saveField('modified',$updateTime, false);
+	    }
 	    $this->Session->destroy('User');
-           $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
+	    $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
 	}
 	$this->layout = 'home';
     }
