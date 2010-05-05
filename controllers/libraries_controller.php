@@ -4,6 +4,7 @@
  File Description : Library controller page
  Author : maycreate
  */
+
 Class LibrariesController extends AppController
 {
     var $name = 'Libraries';
@@ -12,23 +13,28 @@ Class LibrariesController extends AppController
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron');
     
+    /*
+     Function Name : beforeFilter
+     Desc : actions that needed before other functions are getting called
+    */
     function beforeFilter() {	  
         parent::beforeFilter(); 
         $this->Auth->allowedActions = array('patron');
     }
+    
     /*
-    Function Name : admin_managelibrary
-    Desc : action for listing all the libraries
-   */
+     Function Name : admin_managelibrary
+     Desc : action for listing all the libraries
+    */
     function admin_managelibrary() {
         $this->Library->recursive = -1;
         $this->set('libraries', $this->paginate('Library'));
     }
 	
     /*
-    Function Name : admin_libraryform
-    Desc : action for adding the libraries
-   */
+     Function Name : admin_libraryform
+     Desc : action for adding the libraries
+    */
     function admin_libraryform() {
         if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
         {
@@ -97,6 +103,10 @@ Class LibrariesController extends AppController
         }
     }
     
+    /*
+     Function Name : admin_ajax_validate
+     Desc : actions that for library data validation using Ajax
+    */
     function admin_ajax_validate() {
         Configure::write('debug', 0);
 	$this->layout = false;
@@ -362,6 +372,10 @@ Class LibrariesController extends AppController
         }
     }
     
+    /*
+     Function Name : admin_doajaxfileupload
+     Desc : actions that for library picture upload using Ajax
+    */
     function admin_doajaxfileupload() {
         Configure::write('debug', 0);
 	$this->layout = false;
@@ -399,11 +413,10 @@ Class LibrariesController extends AppController
     }
     
     /*
-    Function Name : admin_deactivate
-    Desc : For deactivating a library
-   */
-
-    public function admin_deactivate() {
+     Function Name : admin_deactivate
+     Desc : For deactivating a library
+    */
+    function admin_deactivate() {
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID))
         {
@@ -422,9 +435,9 @@ Class LibrariesController extends AppController
     }
     
     /*
-    Function Name : admin_activate
-    Desc : For activating a library
-   */
+     Function Name : admin_activate
+     Desc : For activating a library
+    */
     function admin_activate() {
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID))
@@ -444,9 +457,9 @@ Class LibrariesController extends AppController
     }
 
     /*
-    Function Name : patron
-    Desc : For validating the patrons for libraries
-   */
+     Function Name : patron
+     Desc : For validating the patrons for libraries
+    */
     function patron() {        
         $this->layout = false;        
         if(isset($_REQUEST['url']))
@@ -458,7 +471,6 @@ Class LibrariesController extends AppController
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active','library_authentication_method' => 'referral_url')
-                                                //'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active')
                                                 )
                                             );        
 	if(count($existingLibraries) == 0)

@@ -1,9 +1,10 @@
 <?php
- /*
+/*
  File Name : metadata.php
  File Description : Metadata Model
  Author : maycreate
- */
+*/
+ 
 class Metadata extends AppModel {
 	var $name = 'Metadata';
 	var $useTable = 'METADATA';
@@ -27,6 +28,11 @@ class Metadata extends AppModel {
 		)
 
 	);
+	
+	/*
+	 Function Name : gettrackdata
+	 Desc : to get tracks data
+	*/
 	function gettrackdata($id) {
 		$getTrackData = $this->find('first', array('conditions' => array('ProdID' => $id),'fields' => array('Title','Artist')));
 		return $getTrackData;

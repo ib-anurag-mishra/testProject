@@ -10,10 +10,9 @@ class Artist extends AppModel
     var $name = 'Artist';
 
     /*
-    Function Name : insert
-    Desc : save an artist imahe in the db
+     Function Name : insert
+     Desc : save an artist imahe in the db
     */
-
     function insert($data) {
         if($this->save($data)){
             return true;
@@ -23,8 +22,8 @@ class Artist extends AppModel
     }
     
     /*
-    Function Name : getallartists
-    Desc : lists all the artists for slideshow in the homepage
+     Function Name : getallartists
+     Desc : lists all the artists for slideshow in the homepage
     */
     function getallartists() {
         $getArtists = $this->find('all');
@@ -32,8 +31,8 @@ class Artist extends AppModel
     }
     
     /*
-    Function Name : getartistdata
-    Desc : 
+     Function Name : getartistdata
+     Desc : 
     */
     function getartistdata($id) {
         $getArtistData = $this->find('first', array('conditions' => array('id' => $id)));       
@@ -41,8 +40,8 @@ class Artist extends AppModel
     }
 
     /*
-    Function Name : del
-    Desc : 
+     Function Name : del
+     Desc : 
     */
     function del($id) {
         if($this->delete($id)){
@@ -51,6 +50,5 @@ class Artist extends AppModel
             return false;
         }
     }
-    
 }
 ?>

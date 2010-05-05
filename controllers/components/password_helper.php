@@ -1,14 +1,15 @@
 <?php
-class PasswordHelperComponent extends Object {
- 
-/**
+ /**
  * Password generator function
  *
  * This function will randomly generate a password from a given set of characters
  *
  * @param int = 8, length of the password you want to generate
  * @return string, the password
- */    
+ */
+
+class PasswordHelperComponent extends Object
+{
     function generatePassword ($length = 8)
     {
         // initialize variables

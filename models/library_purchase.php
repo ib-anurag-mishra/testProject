@@ -1,9 +1,10 @@
 <?php
- /*
+/*
  File Name : library_purchase.php
  File Description : Models page for the  library purchase functionality.
  Author : maycreate
- */
+*/
+ 
 class LibraryPurchase extends AppModel
 {
     var $name = 'LibraryPurchase';
@@ -38,7 +39,10 @@ class LibraryPurchase extends AppModel
                           )
     );
     
-    
+    /*
+     Function Name : noDuplicates
+     Desc : to validate that there are no duplicate records
+    */
     function noDuplicates($value, $params) {
         /* If we happen to editing an existing record then don't count this record in the check for duplicates */
         if (!empty($this->id))

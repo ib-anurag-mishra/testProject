@@ -4,46 +4,49 @@
  File Description : Artist controller page
  Author : maycreate
  */
+
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
 	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
 	var $layout = 'admin';
-	var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
-	//var $components = array( 'Session', 'Auth', 'Acl','RequestHandler');
-	var $components = array( 'Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
+	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
+	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	
-	function beforeFilter() {	  
-	    parent::beforeFilter(); 
-	    $this->Auth->allowedActions = array('view','test');
-	    $libraryCheckArr = array("view");	   
-	    if(in_array($this->action,$libraryCheckArr))
-	    {
-	      $validPatron = $this->ValidatePatron->validatepatron();	      
-	      if(!$validPatron)
-	      {
-		  $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
-                  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-	      }	      
-	    }	    
+	/*
+	 Function Name : beforeFilter
+	 Desc : actions that needed before other functions are getting called
+        */
+	function beforeFilter() {
+		parent::beforeFilter();
+		$this->Auth->allowedActions = array('view','test');
+		$libraryCheckArr = array("view");
+		if(in_array($this->action,$libraryCheckArr)) {
+			$validPatron = $this->ValidatePatron->validatepatron();
+			if(!$validPatron) {
+				$this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}
+		}
 	}
 	
 	/*
-	Function Name : managefeaturedartist
-	Desc : action for listing all the featured artists
-       */
+	 Function Name : managefeaturedartist
+	 Desc : action for listing all the featured artists
+        */
 	function admin_managefeaturedartist() {
 		$artists = $this->paginate('Featuredartist');
 		$this -> set( 'artists', $artists );
 	}
+	
 	/*
-	Function Name : artistform
-	Desc : action for displaying the add/edit featured artist form
-       */
+	 Function Name : admin_artistform
+	 Desc : action for displaying the add/edit featured artist form
+        */
 	function admin_artistform() {
-		if( !empty( $this -> params[ 'named' ] ) ){ //gets the values from the url in form  of array
-			$artistId = $this -> params[ 'named' ][ 'id' ];			
-			if( trim( $artistId ) != '' && is_numeric( $artistId ) ){
+		if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
+			$artistId = $this -> params[ 'named' ][ 'id' ];
+			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
 				$this -> set( 'formAction', 'admin_updatefeaturedartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit Featured Artist' );
 				$getArtistrDataObj = new Featuredartist();
@@ -53,7 +56,7 @@ Class ArtistsController extends AppController
 				$artistName = $getData[ 'Featuredartist' ][ 'artist_name' ];
 			}
 		}
-		else{
+		else {
 			$this -> set( 'formAction', 'admin_insertfeaturedartist' );
 			$this -> set( 'formHeader', 'Add Featured Artist' );
 			$getFeaturedDataObj = new Featuredartist();
@@ -66,10 +69,11 @@ Class ArtistsController extends AppController
 		$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
 	}
+	
 	/*
-	Function Name : insertfeaturedartist
-	Desc : inserts a featured artist
-       */
+	 Function Name : admin_insertfeaturedartist
+	 Desc : inserts a featured artist
+        */
 	function admin_insertfeaturedartist() {
 		$errorMsg = '';
 		$newPath = '../webroot/img/featuredimg/';
@@ -78,31 +82,32 @@ Class ArtistsController extends AppController
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 		
-		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ){
+		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
-		}	
-		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ){
+		}
+		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 			$errorMsg .= 'Please upload an image.<br/>';
-		}		
+		}
 		$insertArr = array();
 		$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
 		$insertArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-		$insertObj = new Featuredartist();		
-		if( empty( $errorMsg ) ){			
-			if( $insertObj -> insert( $insertArr ) ){
+		$insertObj = new Featuredartist();
+		if( empty( $errorMsg ) ) {
+			if( $insertObj -> insert( $insertArr ) ) {
 				$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
-		else{
+		else {
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
 	}
+	
 	/*
-	Function Name : updatefeaturedartist
-	Desc : Updates a featured artist
-       */
+	 Function Name : admin_updatefeaturedartist
+	 Desc : Updates a featured artist
+        */
 	function admin_updatefeaturedartist() {
 		$errorMsg = '';
 		$this -> Featuredartist -> id = $this -> data[ 'Artist' ][ 'id' ];
@@ -110,100 +115,101 @@ Class ArtistsController extends AppController
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];		
-		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ){
+		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
+		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
-		}		
+		}
 		$updateArr = array();
 		$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-		$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];		
-		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ){
+		$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 			$updateArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-		}		
-		$updateObj = new Featuredartist();		
-		if( empty( $errorMsg ) ){			
+		}
+		$updateObj = new Featuredartist();
+		if( empty( $errorMsg ) ) {
 			if( $updateObj -> insert( $updateArr ) ){
 				$this -> Session -> setFlash( 'Data has been updated successfully!', 'modal', array( 'class' => 'modal success' ) );
 				$this -> redirect( 'managefeaturedartist' );
 			}
 		}
-		else{
+		else {
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
 	}
+	
 	/*
-	Function Name : delete
-	Desc : For deleting a featured artist
-       */
+	 Function Name : admin_delete
+	 Desc : For deleting a featured artist
+        */
 	function admin_delete() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
-		$deleteObj = new Featuredartist();		
-		if( $deleteObj -> del( $deleteArtistUserId ) ){
+		$deleteObj = new Featuredartist();
+		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-		else{
+		else {
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-	}	
+	}
 	
 	/*
-	Function Name : createartist
-	Desc : assigns artists with images
-       */
+	 Function Name : admin_createartist
+	 Desc : assigns artists with images
+        */
 	function admin_createartist() {
-		$errorMsg = '';		
-		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ){ //gets the values from the url in form  of array
-			$artistId = $this -> params[ 'named' ][ 'id' ];			
-			if( trim( $artistId ) != '' && is_numeric( $artistId ) ){
+		$errorMsg = '';
+		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ) { //gets the values from the url in form  of array
+			$artistId = $this -> params[ 'named' ][ 'id' ];
+			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
 				$this -> set( 'formAction', 'admin_createartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit Artist' );
 				$getArtistrDataObj = new Artist();
-				$getData = $getArtistrDataObj -> getartistdata( $artistId );				
+				$getData = $getArtistrDataObj -> getartistdata( $artistId );
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
-				$artistName = $getData[ 'Artist' ][ 'artist_name' ];				
-				if( isset( $this -> data ) ){
+				$artistName = $getData[ 'Artist' ][ 'artist_name' ];
+				if( isset( $this -> data ) ) {
 					$updateObj = new Artist();
-					$updateArr = array();					
-					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ){
+					$updateArr = array();
+					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
 						$errorMsg .= 'Please select Artist Name';
-					}					
+					}
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];					
-					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ){
+					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/artistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 						$updateArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-					}					
-					if( empty( $errorMsg ) ){						
-						if( $updateObj -> insert( $updateArr ) ){
+					}
+					if( empty( $errorMsg ) ) {
+						if( $updateObj -> insert( $updateArr ) ) {
 							$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 							$this -> redirect( 'manageartist' );
 						}
 					}
-					else{
+					else {
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 					}
 				}
 			}
 		}
-		else{
+		else {
 			$this -> set( 'formAction', 'admin_createartist' );
 			$this -> set( 'formHeader', 'Add  Artist' );
 			$condition = 'add';
-			$artistName = '';			
-			if( isset( $this -> data ) ){				
-				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ){
+			$artistName = '';
+			if( isset( $this -> data ) ) {
+				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
-				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ){
+				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ) {
 					$errorMsg .= 'Please select an artist name<br/>';
-				}				
+				}
 				$newPath = '../webroot/img/artistimg/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
@@ -212,57 +218,57 @@ Class ArtistsController extends AppController
 				$insertArr = array();
 				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
 				$insertArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-				$insertObj = new Artist();				
-				if( empty( $errorMsg ) ){					
-					if( $insertObj -> insert( $insertArr ) ){
+				$insertObj = new Artist();
+				if( empty( $errorMsg ) ) {
+					if( $insertObj -> insert( $insertArr ) ) {
 						$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-						$this -> redirect( 'manageartist' );						
+						$this -> redirect( 'manageartist' );
 					}
 				}
-				else{
+				else {
 					$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 				}
 			}
-		}		
-		$getArtistDataObj = new Physicalproduct();		
-		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );		
+		}
+		$getArtistDataObj = new Physicalproduct();
+		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
 	}
 	
 	/*
-	Function Name : managenewartist
-	Desc : manages new artists with images
-       */
+	 Function Name : admin_manageartist
+	 Desc : manages new artists with images
+        */
 	function admin_manageartist() {
 		$artists = $this->paginate('Artist');
 		$this -> set( 'artists', $artists );
 	}
 	
 	/*
-	Function Name : deletenewartists
-	Desc : For deleting a new artist
-       */
+	 Function Name : admin_deleteartists
+	 Desc : For deleting a new artist
+        */
 	function admin_deleteartists() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
-		$deleteObj = new Artist();		
-		if( $deleteObj -> del( $deleteArtistUserId ) ){
+		$deleteObj = new Artist();
+		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'manageartist' );
 		}
-		else{
+		else {
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'manageartist' );
 		}
 	}
 	
 	/*
-	Function Name : createartist
-	Desc : assigns artists with images
-       */
+	 Function Name : admin_addnewartist
+	 Desc : assigns artists with images
+        */
 	function admin_addnewartist() {
-		$errorMsg = '';		
-		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ){ //gets the values from the url in form  of array
-			$artistId = $this -> params[ 'named' ][ 'id' ];			
+		$errorMsg = '';
+		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ) { //gets the values from the url in form  of array
+			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ){
 				$this -> set( 'formAction', 'admin_addnewartist/id:' . $artistId );
 				$this -> set( 'formHeader', 'Edit New Artsit' );
@@ -270,46 +276,46 @@ Class ArtistsController extends AppController
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
-				$artistName = $getData[ 'Newartist' ][ 'artist_name' ];				
-				if( isset( $this -> data ) ){
+				$artistName = $getData[ 'Newartist' ][ 'artist_name' ];
+				if( isset( $this -> data ) ) {
 					$updateObj = new Newartist();
-					$updateArr = array();					
-					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ){
+					$updateArr = array();
+					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
 						$errorMsg .= 'Please select Artist Name';
-					}					
+					}
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];					
-					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ){
+					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/newartistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 						$updateArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
-					if( empty( $errorMsg ) ){						
-						if( $updateObj -> insert( $updateArr ) ){
+					if( empty( $errorMsg ) ) {
+						if( $updateObj -> insert( $updateArr ) ) {
 							$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 							$this -> redirect( 'managenewartist' );
 						}
 					}
-					else{
+					else {
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 					}
 				}
 			}
 		}
-		else{
+		else {
 			$this -> set( 'formAction', 'admin_addnewartist' );
 			$this -> set( 'formHeader', 'Add New Artist' );
 			$condition = 'add';
-			$artistName = '';			
-			if( isset( $this -> data ) ){				
-				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ){
+			$artistName = '';
+			if( isset( $this -> data ) ){
+				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
-				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ){
+				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ) {
 					$errorMsg .= 'Please select an artist name<br/>';
-				}				
+				}
 				$newPath = '../webroot/img/newartistimg/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
@@ -318,14 +324,14 @@ Class ArtistsController extends AppController
 				$insertArr = array();
 				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
 				$insertArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-				$insertObj = new Newartist();				
-				if( empty( $errorMsg ) ){					
-					if( $insertObj -> insert( $insertArr ) ){
+				$insertObj = new Newartist();
+				if( empty( $errorMsg ) ) {
+					if( $insertObj -> insert( $insertArr ) ) {
 						$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
 						$this -> redirect( 'managenewartist' );
 					}
 				}
-				else{
+				else {
 					$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 				}
 			}
@@ -336,168 +342,171 @@ Class ArtistsController extends AppController
 	}
 	
 	/*
-	Function Name : managenewartist
-	Desc : manages artists with images
-       */
+	 Function Name : admin_managenewartist
+	 Desc : manages artists with images
+        */
 	function admin_managenewartist() {
 		$artists = $this->paginate('Newartist');
 		$this -> set( 'artists', $artists );
 	}
 	
 	/*
-	Function Name : deletenewartists
-	Desc : For deleting a featured artist
+	 Function Name : admin_deletenewartists
+	 Desc : For deleting a featured artist
 	*/
 	function admin_deletenewartists() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Newartist();		
-		if( $deleteObj -> del( $deleteArtistUserId ) ){
+		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managenewartist' );
 		}
-		else{
+		else {
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managenewartist' );
 		}
 	}
+	
+	/*
+	 Function Name : view
+	 Desc : For artist view page
+	*/
 	function view($id=null,$album=null) {	  	  
-	    if(count($this -> params['pass']) > 1){
-		$count = count($this -> params['pass']);	      
-		$id = $this -> params['pass'][0];	      
-		for($i=1;$i<$count;$i++){
-		  if(!is_numeric($this -> params['pass'][$i])){
-		      $id .= "/".$this -> params['pass'][$i];  
-		  }		
+		if(count($this -> params['pass']) > 1) {
+			$count = count($this -> params['pass']);	      
+			$id = $this -> params['pass'][0];
+			for($i=1;$i<$count;$i++) {
+				if(!is_numeric($this -> params['pass'][$i])) {
+				      $id .= "/".$this -> params['pass'][$i];
+				}
+			}
+			if(is_numeric($this -> params['pass'][$count - 1])) {
+				$album = $this -> params['pass'][$count - 1];
+			}
+			else {
+				$album = "";
+			}
 		}
-		if(is_numeric($this -> params['pass'][$count - 1])){
-		    $album = $this -> params['pass'][$count - 1];
+		if($album != '') {
+			$condition = array("Physicalproduct.ReferenceID" => $album);
 		}
 		else{
-		  $album = "";
-		}	      
-	    }	  
-	    if($album != ''){
-	      $condition = array("Physicalproduct.ReferenceID" => $album);
-	    }
-	    else{
-	      $condition = "";
-	    }
-	    $this->layout = 'home';	
-	    $this->set('artistName',base64_decode($id));
-	    $patId = $_SESSION['patron'];
-	    $libId = $_SESSION['library'];
-	    $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
-	    $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-	    $this->set('libraryDownload',$libraryDownload);
-	    $this->set('patronDownload',$patronDownload);
-	    if($_SESSION['block'] == 'yes'){
-		$cond = array('Metadata.Advisory' => 'F');
-	    }
-	    else{
-		$cond = "";
-	    }	
-	    $this -> paginate =  array('conditions' =>
-				      array('and' =>
-					    array(
+			$condition = "";
+		}
+		$this->layout = 'home';
+		$this->set('artistName',base64_decode($id));
+		$patId = $_SESSION['patron'];
+		$libId = $_SESSION['library'];
+		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		$this->set('libraryDownload',$libraryDownload);
+		$this->set('patronDownload',$patronDownload);
+		if($_SESSION['block'] == 'yes') {
+			$cond = array('Metadata.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}	
+		$this -> paginate =  array('conditions' =>
+					array('and' =>
+						array(
 						    array('Physicalproduct.ArtistText' => base64_decode($id)),
 						    array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
 						    array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1' and `ProdID` <> `ReferenceID`)"),
 						    $condition
-						  )
-					    ),
-					    'fields' => array(
-						    'Physicalproduct.ProdID',
-						    'Physicalproduct.Title',
-						    'Physicalproduct.ArtistText',
-						    'Physicalproduct.ReferenceID'							
+						)
+					),
+					'fields' => array(
+						'Physicalproduct.ProdID',
+						'Physicalproduct.Title',
+						'Physicalproduct.ArtistText',
+						'Physicalproduct.ReferenceID'							
+						),
+					'contain' => array(
+					'Genre' => array(
+						'fields' => array(
+							'Genre.Genre'								
+							)
+						),						
+					'Metadata' => array(
+						'fields' => array(
+							'Metadata.Title',
+							'Metadata.Artist',
+							'Metadata.ArtistURL',
+							'Metadata.Label',
+							'Metadata.Copyright',								
+							)
+						),
+					'Graphic' => array(
+						'fields' => array(
+						'Graphic.ProdID',
+						'Graphic.FileID'
+						),
+						'Files' => array(
+						'fields' => array(
+							'Files.CdnPath' ,
+							'Files.SaveAsName',
+							'Files.SourceURL'
+							)
+						)
+						)			                                
+					),'limit' => '3','cache' => 'yes'
+				);
+		$this->Physicalproduct->recursive = 2;
+		$albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
+		$albumSongs = array();
+		foreach($albumData as $album) {
+			$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+					'conditions' =>
+						array('and' =>
+							array(
+								array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
+								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
+								array('Physicalproduct.DownloadStatus' => 1),$cond
+							)
+						),
+					'fields' => array(
+							'Physicalproduct.ProdID',
+							'Physicalproduct.Title',
+							'Physicalproduct.ArtistText',
+							'Physicalproduct.DownloadStatus',
+							'Physicalproduct.SalesDate'
 						    ),
-					    'contain' => array(
-					    'Genre' => array(
-						    'fields' => array(
-							    'Genre.Genre'								
-							    )
-						    ),						
-					    'Metadata' => array(
-						    'fields' => array(
-							    'Metadata.Title',
-							    'Metadata.Artist',
-							    'Metadata.ArtistURL',
-							    'Metadata.Label',
-							    'Metadata.Copyright',								
-							    )
-						    ),
-					    'Graphic' => array(
-						    'fields' => array(
-						    'Graphic.ProdID',
-						    'Graphic.FileID'
-						    ),
-						    'Files' => array(
-						    'fields' => array(
-							    'Files.CdnPath' ,
-							    'Files.SaveAsName',
-							    'Files.SourceURL'
-							    )
-						    )
-						    )			                                
-					    ),'limit' => '3','cache' => 'yes'
-					    /*,
-					     'group' => 'Physicalproduct.ReferenceID'*/
-				      );
-	    $this->Physicalproduct->recursive = 2;
-	    $albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist		
-	    $albumSongs = array();
-	    foreach($albumData as $album){		
-		$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
-				      'conditions' =>
-				      array('and' =>
-					    array(
-						    array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
-						    array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
-						    array('Physicalproduct.DownloadStatus' => 1),$cond
-						  )
-					    ),
-				      'fields' => array(
-						    'Physicalproduct.ProdID',
-						    'Physicalproduct.Title',
-						    'Physicalproduct.ArtistText',
-						    'Physicalproduct.DownloadStatus',
-						    'Physicalproduct.SalesDate'
-						    ),
-				      'contain' => array(
-					    'Genre' => array(
-						    'fields' => array(
-							    'Genre.Genre'								
-							    )
-						    ),						
-					    'Metadata' => array(
-						    'fields' => array(
-							    'Metadata.Title',
-							    'Metadata.Artist',
-							    'Metadata.Advisory'
-							    )
-						    ),
-					    'Audio' => array(
-						    'fields' => array(
-							    'Audio.FileID',
-							    'Audio.Duration'                                                    
-							    ),
-						    'Files' => array(
-						    'fields' => array(
-							    'Files.CdnPath' ,
-							    'Files.SaveAsName'
-							    )
-						    )
-						    )                                  
-					    ),'order' => 'Physicalproduct.ReferenceID'  
+					'contain' => array(
+						'Genre' => array(
+								'fields' => array(
+										'Genre.Genre'								
+									)
+								),						
+						'Metadata' => array(
+								'fields' => array(
+										'Metadata.Title',
+										'Metadata.Artist',
+										'Metadata.Advisory'
+									)
+								),
+						'Audio' => array(
+								'fields' => array(
+										'Audio.FileID',
+										'Audio.Duration'                                                    
+									),
+								'Files' => array(
+										'fields' => array(
+											'Files.CdnPath' ,
+											'Files.SaveAsName'
+										)
+									)
+								)
+					),'order' => 'Physicalproduct.ReferenceID'
 				      ));
-	    }		
-	    $this->set('albumData', $albumData);		
-	    if($albumData[0]['Metadata']['ArtistURL'] != "" ){
+	    }
+	    $this->set('albumData', $albumData);
+	    if($albumData[0]['Metadata']['ArtistURL'] != "" ) {
 	       $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
-	    }else{
+	    }else {
 	       $this->set('artistUrl', "N/A");
-	    }		
-	    $this->set('albumSongs',$albumSongs);		
-	}	
-  }	
+	    }
+	    $this->set('albumSongs',$albumSongs);
+	}
+  }
 ?>

@@ -5,7 +5,6 @@
  Author : maycreate
  */
 
-
 class Physicalproduct extends AppModel
 {
   var $name = 'Physicalproduct';
@@ -35,7 +34,8 @@ class Physicalproduct extends AppModel
 			'foreignKey' => 'TrkID'
 		)
   );
-   /*
+  
+  /*
    Function Name : getallartist
    Desc : gets the list of all the artists
   */
@@ -61,7 +61,6 @@ class Physicalproduct extends AppModel
    Function Name : getallartistname
    Desc : This would returna a set of featured artist which does not have images associated with them.
   */
-
   function getallartistname($condition,$artistName) {
     $this->recursive = -1;
     $allArtists = $this->find('all', array(	
@@ -130,6 +129,10 @@ class Physicalproduct extends AppModel
     return $resultArr;
   }
   
+  /*
+   Function Name : searchArtist
+   Desc : This would returna a artist which is searched
+  */
   function searchArtist($search) {
       if($search == 'special'){
 	$allArtists = $this->find('all', array(
@@ -162,6 +165,10 @@ class Physicalproduct extends AppModel
       return $allArtists;
   }
   
+  /*
+   Function Name : allartistname
+   Desc : This would returna the download data for the patron
+  */
   function getdownloaddata($id) {
     $this->recursive = 2;
     $this->Behaviors->attach('Containable');
@@ -194,6 +201,10 @@ class Physicalproduct extends AppModel
     return $downloadData;
   }
   
+  /*
+   Function Name : allartistname
+   Desc : This would returna a set of artist.
+  */
   function selectArtist() {
       $this->recursive = -1;
       $allArtists = $this->find('all', array(

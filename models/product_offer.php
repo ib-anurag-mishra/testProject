@@ -1,9 +1,10 @@
 <?php
- /*
+/*
  File Name : product_offer.php
  File Description : Product Offer page.
  Author : maycreate
- */
+*/
+
 class ProductOffer extends AppModel {
 	var $name = 'PRODUCT_OFFER';
 	var $useTable = 'PRODUCT_OFFER';
@@ -23,3 +24,4 @@ class ProductOffer extends AppModel {
 		)
 	);
 }
+?>

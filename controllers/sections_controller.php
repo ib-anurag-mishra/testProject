@@ -1,14 +1,28 @@
 <?php
-class SectionsController extends AppController {
+/*
+ File Name : sections_controller.php
+ File Description : Sections controller page
+ Author : maycreate
+ */
 
+class SectionsController extends AppController
+{
 	var $name = 'Sections';
-
+	
+	/*
+	 Function Name : admin_index
+	 Desc : actions for faq sections page
+        */
 	function admin_index() {
 		$this->layout = 'admin';
 		$this->Section->recursive = 0;
 		$this->set('sections', $this->paginate());
 	}
-
+	
+	/*
+	 Function Name : admin_view
+	 Desc : actions for faq sections view
+        */
 	function admin_view($id = null) {
 		$this->layout = 'admin';
 		if (!$id) {
@@ -17,7 +31,11 @@ class SectionsController extends AppController {
 		}
 		$this->set('section', $this->Section->read(null, $id));
 	}
-
+	
+	/*
+	 Function Name : admin_add
+	 Desc : actions for faq sections add
+        */
 	function admin_add() {
 		$this->layout = 'admin';
 		if (!empty($this->data)) {
@@ -30,7 +48,11 @@ class SectionsController extends AppController {
 			}
 		}
 	}
-
+	
+	/*
+	 Function Name : admin_edit
+	 Desc : actions for faq sections edit
+        */
 	function admin_edit($id = null) {
 		$this->layout = 'admin';
 		if (!$id && empty($this->data)) {
@@ -49,7 +71,11 @@ class SectionsController extends AppController {
 			$this->data = $this->Section->read(null, $id);
 		}
 	}
-
+	
+	/*
+	 Function Name : admin_delete
+	 Desc : actions for faq sections delete
+        */
 	function admin_delete($id = null) {
 		$this->layout = 'admin';
 		if (!$id) {

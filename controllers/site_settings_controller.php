@@ -4,6 +4,7 @@
  File Description : Site Settings controller page
  Author : maycreate
  */
+
 Class SiteSettingsController extends AppController
 {
     var $name = 'SiteSettings';
@@ -12,6 +13,10 @@ Class SiteSettingsController extends AppController
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
     var $uses = array( 'Siteconfig', 'Physicalproduct', 'Metadata' );
     
+    /*
+     Function Name : admin_index
+     Desc : actions for site settings page
+    */
     function admin_index() {
         if (!empty($this->data)) {
             foreach($this->data['SiteSetting'] as $k => $v) {
@@ -31,6 +36,10 @@ Class SiteSettingsController extends AppController
         $this -> set( 'formAction', 'admin_index' );
     }
     
+    /*
+     Function Name : admin_generateXML
+     Desc : actions for generating XML of suggestion songs
+    */
     function admin_generateXML() {
         $suggestionCounter = $this->Siteconfig->find('all', array('fields' => array('Siteconfig.svalue'), 'conditions' => array('Siteconfig.soption' => 'suggestion_counter')));
         $this->Physicalproduct->Behaviors->attach('Containable');

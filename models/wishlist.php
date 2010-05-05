@@ -1,9 +1,19 @@
 <?php
+/*
+ File Name : wishlist.php
+ File Description : Models page for the  Wishlist functionality.
+ Author : maycreate
+*/
+
 class Wishlist extends AppModel
 {
   var $name = 'Wishlist';
   var $usetable = 'wishlists';
   
+  /*
+   Function Name : getWishListInformation
+   Desc : To get the wishlisted songs based on the user's selection
+  */
   function getWishListInformation($libraryID, $dateRange, $date, $dateFrom, $dateTo) {
     if($dateRange == 'day') {
       $date_arr = explode("/", $date);

@@ -10,12 +10,16 @@ class HomesController extends AppController
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Physicalproduct', 'Wishlist' );
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
     var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page','Wishlist');
- 
-   function beforeFilter(){
+    
+    /*
+     Function Name : beforeFilter
+     Desc : actions that needed before other functions are getting called
+    */
+    function beforeFilter() {
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'forgot_password')){
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'forgot_password')) {
             $validPatron = $this->ValidatePatron->validatepatron();
-            if(!$validPatron){
+            if(!$validPatron) {
                 $this->Session->destroy('User');
                 $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
                 $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
@@ -23,24 +27,28 @@ class HomesController extends AppController
         }
     }
     
-    function index(){
+    /*
+     Function Name : index
+     Desc : actions that is invoked when the user comes to the homes controller
+    */
+    function index() {
         $this->Physicalproduct->Behaviors->attach('Containable');
 	$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
         $this->set('songs',$songDetails);
         $this->Physicalproduct->recursive = -1;
         $upcoming = $this->Physicalproduct->find('all', array(
-                'conditions' => array(
-                        'Physicalproduct.ReferenceID = Physicalproduct.ProdID', 
-                        'SalesDate >' => date('Y-m-d')
-                        ),
-                        'fields' => array(
-                                'Physicalproduct.Title',
-            'Physicalproduct.ArtistText',
-                                'Physicalproduct.SalesDate'
-                        )
-                )
-        );
-        $this->set('upcoming', $upcoming);        
+							    'conditions' => array(
+								'Physicalproduct.ReferenceID = Physicalproduct.ProdID', 
+								'SalesDate >' => date('Y-m-d')
+							    ),
+							    'fields' => array(
+								'Physicalproduct.Title',
+								'Physicalproduct.ArtistText',
+								'Physicalproduct.SalesDate'
+							    )
+							)
+						);
+        $this->set('upcoming', $upcoming);
         $this->set('distinctArtists', $this->Physicalproduct->selectArtist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
@@ -48,52 +56,50 @@ class HomesController extends AppController
         $this->layout = 'home';
     }
     
-    function autoComplete(){
+    /*
+     Function Name : autoComplete
+     Desc : actions that is needed for auto-completeing the search
+    */
+    function autoComplete() {
 	Configure::write('debug', 0);
         $this->Physicalproduct->recursive = -1;
         $albumResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
-	   ),
-           'fields' => array(
-			  'Title'
-		  ), 
-		  'group' => array(
-			  'Title',
-		  ),
-                  'limit' => '6'));            
-	$this->set('albumResults', $albumResults);        
+								'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
+							    ),
+							    'fields' => array('Title'), 
+							    'group' => array('Title',),
+							    'limit' => '6'));
+	$this->set('albumResults', $albumResults);
         $artistResults = $this->Physicalproduct->find('all', array(
-	   'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1
-	   ),
-           'fields' => array(
-			  'ArtistText'
-		  ), 
-		  'group' => array(
-			  'ArtistText',
-		  ),
-                  'limit' => '6'));       
+								'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
+								'fields' => array('ArtistText'), 
+								'group' => array('ArtistText',),
+								'limit' => '6'));
 	$this->set('artistResults', $artistResults);
         $this->Metadata->recursive=2;
         $songResults = $this->Metadata->find('all', array(
-	   'conditions'=>array('Metadata.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1
-	   ),
-           'fields' => array(
-			  'Title'
-		  ), 
-		  'group' => array(
-			  'Title',
-		  ),
-                  'limit' => '6'));        
+							'conditions'=>array('Metadata.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
+							'fields' => array('Title'), 
+							'group' => array('Title',),
+							'limit' => '6'));
 	$this->set('songResults', $songResults);        
         $this->layout = 'ajax';
     }
     
+    /*
+     Function Name : artistSearch
+     Desc : actions that is needed for auto-completeing the search
+    */
     function artistSearch(){
 	$search = $_POST['search'];
 	$this->Physicalproduct->recursive = -1;
 	$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
     }
     
+    /*
+     Function Name : search
+     Desc : actions that is needed for advanced search
+    */
     function search(){
         $patId = $_SESSION['patron'];
         $libId = $_SESSION['library'];        
@@ -101,20 +107,20 @@ class HomesController extends AppController
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
-        if($_SESSION['block'] == 'yes'){
+        if($_SESSION['block'] == 'yes') {
             $cond = array('Metadata.Advisory' => 'F');
         }
-        else{
+        else {
             $cond = "";
         }
-        if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')){
-            if(isset($_REQUEST['match']) && $_REQUEST['match'] != ''){
-                if($_REQUEST['match'] == 'All'){
+        if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
+            if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
+                if($_REQUEST['match'] == 'All') {
                     $condition = "and";
                     $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
                     $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
                 }
-                else{
+                else {
                     $condition = "or";
                     $preCondition1 =  "";
                     $preCondition2 = "";
@@ -123,9 +129,9 @@ class HomesController extends AppController
                 $song =  $_REQUEST['song'];
                 $album =  $_REQUEST['album'];
                 $genre =  $_REQUEST['genre_id'];
-            }            
-            if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != ''){
-                if($this->data['Home']['Match'] == 'All'){
+            }
+            if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
+                if($this->data['Home']['Match'] == 'All') {
                     $condition = "and";
                     $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
                     $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
@@ -140,67 +146,41 @@ class HomesController extends AppController
                 $album =  $this->data['Home']['album'];
                 $genre =  $this->data['Home']['genre_id'];
             }            
-            if($artist != ''){
+            if($artist != '') {
                 $artistSearch = array("match(Physicalproduct.ArtistText) against ('+$artist*' in boolean mode)");    
             }
-            else{
+            else {
                 $artistSearch = '';
             }
-            if($song != ''){
+            if($song != '') {
                 $songSearch = array("match(Metadata.Title) against ('+$song*' in boolean mode)");    
             }
-            else{
+            else {
                 $songSearch = '';
             }
-            if($album != ''){
+            if($album != '') {
                 $albumSearch = array("match(Physicalproduct.Title) against ('+$album*' in boolean mode)");    
             }
-            else{
+            else {
                 $albumSearch = '';
             }
-            if($genre != ''){
+            if($genre != '') {
                 $genreSearch = array("match(Genre.Genre) against ('+$genre*' in boolean mode)");    
             }
-            else{
+            else {
                 $genreSearch = '';
             }
-            /*if($artist != ''){
-                $artistSearch = array('Physicalproduct.ArtistText LIKE' => '%'.$artist.'%');    
-            }
-            else{
-                $artistSearch = '';
-            }
-            if($song != ''){
-                $songSearch = array('Metadata.Title LIKE' => '%'.$song.'%');    
-            }
-            else{
-                $songSearch = '';
-            }
-            if($album != ''){
-                $albumSearch = array('Physicalproduct.Title LIKE' => '%'.$album.'%');    
-            }
-            else{
-                $albumSearch = '';
-            }
-            if($genre != ''){
-                $genreSearch = array('Genre.Genre LIKE' => '%'.$genre.'%');    
-            }
-            else{
-                $genreSearch = '';
-            }*/
             $this->set('searchKey','match=all&artist='.urlencode($artist).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
-                                array('and' =>
-                                        array(                                                      
+				    array('and' =>
+                                        array(
                                                 array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
                                                 array('Physicalproduct.DownloadStatus' => 1),
                                                 array('Physicalproduct.TrackBundleCount' => 0),$cond
-                                            )
-                                        ,
-                                    $condition =>
-                                            array(
-                                                    $artistSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$cond
+                                        ),
+                                    $condition => array(
+						    $artistSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$cond
                                                 )
                                     ),
                                     'fields' => array(
@@ -210,7 +190,7 @@ class HomesController extends AppController
                                                     'Physicalproduct.ReferenceID',
                                                     'Physicalproduct.DownloadStatus',
                                                     'Physicalproduct.SalesDate'
-                                                    ),
+                                                ),
                                     'contain' => array(                                                                       
                                     'Metadata' => array(
                                             'fields' => array(
@@ -241,25 +221,24 @@ class HomesController extends AppController
             $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
-        else{
+        else {
             $searchKey = '';      
-            if(isset($_REQUEST['search']) && $_REQUEST['search'] != ''){
+            if(isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
                 $searchKey = $_REQUEST['search'];
-            }        
-            if($searchKey == ''){
-                $searchKey = $this->data['Home']['search'];    
-            }     
-            $this->set('searchKey','search='.urlencode($searchKey));            
+            }
+            if($searchKey == '') {
+                $searchKey = $this->data['Home']['search'];
+            }
+            $this->set('searchKey','search='.urlencode($searchKey));
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
-                                array('and' =>
-                                        array(                                                      
-                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
+                                array(	'and' =>
+					    array(
+                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
                                                 array('Physicalproduct.DownloadStatus' => 1),
                                                 array('Physicalproduct.TrackBundleCount' => 0),$cond
-                                            )
-                                        ,
-                                    'or' =>
+                                            ),
+					'or' =>
                                                 array(
                                                         array('Physicalproduct.ArtistText LIKE' => $searchKey.'%'),
                                                         array('Physicalproduct.Title LIKE' => $searchKey.'%'),
@@ -307,14 +286,18 @@ class HomesController extends AppController
         $this->layout = 'home';
     }
     
-    function userDownload(){
+    /*
+     Function Name : userDownload
+     Desc : actions that is used for updating user download
+    */
+    function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
         $libId = $_SESSION['library'];
         $patId = $_SESSION['patron'];
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);  
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-        if($libraryDownload != '1' || $patronDownload != '1'){
+        if($libraryDownload != '1' || $patronDownload != '1') {
             echo "error";
             exit;
         }
@@ -338,25 +321,34 @@ class HomesController extends AppController
         echo $downloadsUsed;
         exit;
     }
-
+    
+    /*
+     Function Name : advance_search
+     Desc : actions used for showing advanced search form
+    */
     function advance_search() {
         $this->layout = 'home';           
         $this->Genre->recursive = -1;
         $genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
         $resultArr = array();
-        foreach($genres as $genre) {                  
-                $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
+        foreach($genres as $genre) {
+            $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
         }
         $this->set('genres',$resultArr);
     }
     
-    function checkPatron()
-    {
+    /*
+     Function Name : checkPatron
+     Desc : actions used for validating patron access
+    */
+    function checkPatron() {
+	Configure::write('debug', 0);
+        $this->layout = false;
 	$libid = $_REQUEST['libid'];       
         $patronid = $_REQUEST['patronid'];        
         $this->layout = false;           	
 	$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
-	if(count($currentPatron) > 0){
+	if(count($currentPatron) > 0) {
           $updateArr = array();
           $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
           $updateArr['session_id'] = session_id();
@@ -366,7 +358,13 @@ class HomesController extends AppController
         exit;
     }
     
-    function approvePatron(){
+    /*
+     Function Name : approvePatron
+     Desc : actions used for approve terms access
+    */
+    function approvePatron() {
+	Configure::write('debug', 0);
+        $this->layout = false;
 	$libid = $_REQUEST['libid'];       
         $patronid = $_REQUEST['patronid'];        
         $this->layout = false;           	
@@ -382,7 +380,11 @@ class HomesController extends AppController
         exit;
     }
     
-    function admin_aboutusform(){
+    /*
+     Function Name : admin_aboutusform
+     Desc : actions used for admin abour us form
+    */
+    function admin_aboutusform() {
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];
@@ -421,7 +423,11 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }
     
-    function admin_termsform(){
+    /*
+     Function Name : admin_termsform
+     Desc : actions used for admin terms form
+    */
+    function admin_termsform() {
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];
@@ -460,6 +466,10 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }    
 
+    /*
+     Function Name : admin_limitsform
+     Desc : actions used for admin limits form
+    */
     function admin_limitsform(){
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
@@ -498,25 +508,29 @@ class HomesController extends AppController
 	}
 	$this->layout = 'admin';
     }
-
-    function aboutus(){
+    
+    /*
+     Function Name : aboutus
+     Desc : actions used for aboutus page
+    */
+    function aboutus() {
 	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
-	    if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')){
+	    if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')) {
 		$url = $_SESSION['referral_url'];
 	    }
-	    elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')){
+	    elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')) {
 		$url = $this->webroot.'users/ilogin';
 	    }
-	    elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')){
+	    elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')) {
 		$url = $this->webroot.'users/inlogin';
 	    }
-	    else{
+	    else {
 	       $url = $this->webroot.'users/login';
 	    }
 	    $patronId = $this->Session->read('patron');
 	    $libraryId = $this->Session->read('library');
 	    $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
-	    if(count($patronDetails) > 0){
+	    if(count($patronDetails) > 0) {
 		$updateTime = date( "Y-m-d H:i:s", time()-60 );
 		$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
 		$this->Currentpatron->saveField('modified',$updateTime, false);
@@ -527,25 +541,35 @@ class HomesController extends AppController
 	$this->layout = 'home';
     }
     
+    /*
+     Function Name : terms
+     Desc : actions used for terms page
+    */
     function terms(){
 	$this->layout = 'home';
     }
-
+    
+    /*
+     Function Name : limits
+     Desc : actions used for limits page
+    */
     function limits() {
             $this->layout = 'home';
     }
-     /*
-    Function Name : check_email
-    Desc : check for a valid email
-   */
-    function check_email($email){
+    
+    /*
+     Function Name : check_email
+     Desc : check for a valid email
+    */
+    function check_email($email) {
         $email_regexp = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$";
         return eregi($email_regexp, $email);
     }
-     /*
-    Function Name : _sendForgotPasswordMail
-    Desc : email function for forgot password
-   */
+    
+    /*
+     Function Name : _sendForgotPasswordMail
+     Desc : email function for forgot password
+    */
     function _sendForgotPasswordMail($id, $password) {
         Configure::write('debug', 0);
         $this->Email->template = 'email/forgotPasswordEmail';
@@ -563,11 +587,12 @@ class HomesController extends AppController
 	$this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
         $result = $this->Email->send(); 
     }
-     /*
-    Function Name : forgot_password
-    Desc : To send mail to patrons with new password
-   */
-    function forgot_password(){
+    
+    /*
+     Function Name : forgot_password
+     Desc : To send mail to patrons with new password
+    */
+    function forgot_password() {
         $this->layout = 'login';
         $errorMsg ='';
         if($this->data){
@@ -604,10 +629,10 @@ class HomesController extends AppController
         }        
     }   
     
-     /*
-    Function Name : addToWishlist
-    Desc : To let the patron add songs to wishlist
-   */
+    /*
+     Function Name : addToWishlist
+     Desc : To let the patron add songs to wishlist
+    */
     function addToWishlist(){
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
@@ -619,11 +644,11 @@ class HomesController extends AppController
         $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
         //get no of downloads for this week
         $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-        if($wishlistCount >= $patronLimit){            
+        if($wishlistCount >= $patronLimit) {            
             echo "error";
             exit;        
         }
-        else{
+        else {
             $prodId = $_REQUEST['prodId'];
             //get song details
             $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);
@@ -644,12 +669,13 @@ class HomesController extends AppController
             echo "Success";
             exit;
         }
-    }    
+    }
+    
     /*
-    Function Name : my_wishlist
-    Desc : To show songs present in wishlist
-   */
-    function my_wishlist(){        
+     Function Name : my_wishlist
+     Desc : To show songs present in wishlist
+    */
+    function my_wishlist() {        
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');        
@@ -660,35 +686,34 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))-1), date('Y')))." 00:00:00";
         $endDate = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')+(7-date('w', mktime(0, 0, 0, date('m'), date('d'), date('Y')))), date('Y')))." 23:59:59";
         $wishlistResults = Array();
-        //$wishlistInfo = $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
-        //if(count($wishlistInfo) > 0){            
-        //}
         $this->set('wishlistResults',$wishlistResults);
     }
+    
     /*
-    Function Name : removeWishlistSong
-    Desc : For removing a song from wishlist page
-   */
+     Function Name : removeWishlistSong
+     Desc : For removing a song from wishlist page
+    */
     function removeWishlistSong() {
         $deleteSongId = $this->params['named']['id'];
         $libraryId = $this->Session->read('library');
-        if($this->Wishlist->delete($deleteSongId)){
+        if($this->Wishlist->delete($deleteSongId)) {
             $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
             $this->Library->query($sql);  
             $this->Session->setFlash('Data deleted successfully!');
             $this->redirect('my_wishlist');
-        }else{
+        }
+	else {
             $this->Session->setFlash('Error occured while deleteting the record');
             $this->redirect('my_wishlist');
         }
     }
    
     /*
-    Function Name : wishlistDownload
-    Desc : For downloading a song in wishlist page
-   */
-    function wishlistDownload(){
+     Function Name : wishlistDownload
+     Desc : For downloading a song in wishlist page
+    */
+    function wishlistDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
         $libId = $_SESSION['library'];
@@ -730,3 +755,4 @@ class HomesController extends AppController
 	exit;
     }
 }
+?>

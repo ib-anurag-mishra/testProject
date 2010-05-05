@@ -4,6 +4,7 @@
  File Description : Report controller page
  Author : maycreate
  */
+
 Class ReportsController extends AppController
 {
     var $name = 'Reports';
@@ -12,6 +13,10 @@ Class ReportsController extends AppController
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
     var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre' );
     
+    /*
+     Function Name : admin_index
+     Desc : actions for library reports page
+    */
     function admin_index() {
         if($this->Session->read("Auth.User.type_id") == 4) {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
@@ -71,6 +76,10 @@ Class ReportsController extends AppController
         }
     }
     
+    /*
+     Function Name : admin_downloadAsCsv
+     Desc : actions for library reports download as CSV page
+    */
     function admin_downloadAsCsv() {
         Configure::write('debug', 0);
         $this->layout = false;
@@ -114,6 +123,10 @@ Class ReportsController extends AppController
         }
     }
     
+    /*
+     Function Name : admin_downloadAsPdf
+     Desc : actions for library reports download as PDF page
+    */
     function admin_downloadAsPdf() {
         Configure::write('debug',0); // Otherwise we cannot use this method while developing 
         if(isset($this->data)) {
@@ -158,6 +171,10 @@ Class ReportsController extends AppController
         }
     }
     
+    /*
+     Function Name : admin_libraryrenewalreport
+     Desc : actions for library renewal reports page
+    */
     function admin_libraryrenewalreport() {
         if(isset($this->data)) {
             Configure::write('debug',0); // Otherwise we cannot use this method while developing 
@@ -174,6 +191,10 @@ Class ReportsController extends AppController
         $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
     }
     
+    /*
+     Function Name : admin_librarywishlistreport
+     Desc : actions for library wishlist reports page
+    */
     function admin_librarywishlistreport() {
         if($this->Session->read("Auth.User.type_id") == 4) {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
@@ -225,6 +246,10 @@ Class ReportsController extends AppController
         }
     }
     
+    /*
+     Function Name : admin_sonyreports
+     Desc : actions for library download for sony reports page
+    */
     function admin_sonyreports() {
         if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
         {

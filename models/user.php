@@ -1,9 +1,10 @@
 <?php
 /*
-File Name : user.php
-File Description : Models page for the  login functionality.
-Author : maycreate
+ File Name : user.php
+ File Description : Models page for the  login functionality.
+ Author : maycreate
 */
+
 class User extends AppModel
 {
   var $name = 'User';
@@ -74,7 +75,11 @@ class User extends AppModel
       'library_id' => array('rule' => array( 'minLength' , 1 ), 'message' => 'Please select a library.')
      )
     );
-
+  
+  /*
+   Function Name : parentNode
+   Desc : 
+  */
   function parentNode() {
     if (!$this->id && empty($this->data)) {
       return null;
@@ -91,22 +96,21 @@ class User extends AppModel
         return array('Group' => array('id' => $data['User']['type_id']));
       }
     }
-  }  
-  /*
-  Function Name : login
-  Desc : gets all the admin users details from the db
-  */
+  }
   
+  /*
+   Function Name : login
+   Desc : gets all the admin users details from the db
+  */
   function getallusers() {
     $getAdmins = $this->find('all');
     return $getAdmins;
   }
   
   /*
-  Function Name :  getuserdata
-  Desc : gets the details for a user
+   Function Name :  getuserdata
+   Desc : gets the details for a user
   */
-  
   function getuserdata($id) {
     $getAdminData = $this->find('first', array('conditions' => array('User.id' => $id)));
     return $getAdminData;
@@ -114,10 +118,9 @@ class User extends AppModel
     
  
   /*
-  Function Name : arrayremovekey
-  Desc : removes the elements from an array based on keys
+   Function Name : arrayremovekey
+   Desc : removes the elements from an array based on keys
   */
-  
   function arrayremovekey() {
     $args = func_get_args();
     $arr = $args[0];
@@ -130,6 +133,10 @@ class User extends AppModel
     return $arr;
   }
   
+  /*
+   Function Name : del
+   Desc : deletes the user
+  */
   function del($id) {
     if($this->delete($id)){
     return true;
@@ -138,11 +145,10 @@ class User extends AppModel
     }
   }
   
-   /*
-    Function Name : getalllibraryadmins
-    Desc : gets all the library admins from the db
-    */
-   
+  /*
+   Function Name : getalllibraryadmins
+   Desc : gets all the library admins from the db
+  */
   function getalllibraryadmins($condition,$id) {
     $this->recursive = -1;
     $librarytObj = new Library();
@@ -171,6 +177,5 @@ class User extends AppModel
     }
     return $finalArray;
   }
-    
 }
 ?>

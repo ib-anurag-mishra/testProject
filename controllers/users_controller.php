@@ -1,9 +1,10 @@
 <?php
  /*
- File Name : admins_controller.php
+ File Name : users_controller.php
  File Description : Controller page for the  login functionality.
  Author : maycreate
  */
+ 
 Class UsersController extends AppController
 {
    var $name = 'Users';
@@ -12,18 +13,19 @@ Class UsersController extends AppController
    var $components = array('Session','Auth','Acl','PasswordHelper','Email');
    var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download');
    
-   /*function before_filter() {
-     $this->Auth->userModel = 'User';
-     $this->Auth->loginAction = array('controller' => 'users', 'action' => 'admin_login');
-     $this->Auth->loginRedirect = array('controller' => 'users', 'action' => 'admin_index');
-     $this->Auth->logoutRedirect = '/users/admin_login';
-     $this->Auth->allow('admin_login','admin_logout','forgot_password');
-     $this->set('username', $this->Session->read('Auth.User.username'));
-   }*/
+   /*
+    Function Name : beforeFilter
+    Desc : actions that needed before other functions are getting called
+   */
    function beforeFilter(){
 	parent::beforeFilter();
         $this->Auth->allow('logout','ilogin','inlogin');
    }
+   
+   /*
+    Function Name : admin_index
+    Desc : actions for welcome admin login
+   */
    function admin_index() {
          $userType = $this->Session->read('Auth.User.type_id');
          if($userType == '5'){
@@ -62,6 +64,10 @@ Class UsersController extends AppController
      $this->redirect($this->Auth->logout()); 
    }
    
+   /*
+    Function Name : login
+    Desc : Logs users/patrons in to the system
+   */
    function login(){ 
       $this->layout = 'login';
       if ($this->Session->read('Auth.User')){
@@ -73,6 +79,10 @@ Class UsersController extends AppController
       }
    }
    
+   /*
+    Function Name : index
+    Desc : Users index to allow/disallow valid users
+   */
    function index(){           
       $patronId = $this->Session->read('Auth.User.id');      
       $typeId = $this->Session->read('Auth.User.type_id');
@@ -152,6 +162,10 @@ Class UsersController extends AppController
       }
    }
    
+   /*
+    Function Name : logout
+    Desc : Logs users/patron out of the system
+   */
    function logout() {      
       $patronId = $this->Session->read('patron');
       $libraryId = $this->Session->read('library');
@@ -176,9 +190,8 @@ Class UsersController extends AppController
       }     
    }
    
-   
    /*
-    Function Name : listuser
+    Function Name : admin_manageuser
     Desc : action for listing all the admin users
    */
    function admin_manageuser(){
@@ -187,10 +200,9 @@ Class UsersController extends AppController
    }
     
    /*
-    Function Name : userform
+    Function Name : admin_userform
     Desc : action for displaying the add/edit user form
    */
-    
    function admin_userform() {
        if(!empty($this->params['named']['id'])){ //gets the values from the url in form  of array
            $adminUserId = $this->params['named']['id'];
@@ -245,7 +257,7 @@ Class UsersController extends AppController
    }
    
    /*
-    Function Name : managepatron
+    Function Name : admin_managepatron
     Desc : action for listing all the patron users
    */
    function admin_managepatron(){
@@ -267,7 +279,7 @@ Class UsersController extends AppController
    }
    
    /*
-    Function Name : patronform
+    Function Name : admin_patronform
     Desc : action for displaying the add/edit patron form
    */
    function admin_patronform() {
@@ -371,6 +383,10 @@ Class UsersController extends AppController
      }
    }
    
+   /*
+    Function Name : _sendNewPatronMail
+    Desc : For sending new patron email
+   */
    function _sendNewPatronMail($id, $password) {
     Configure::write('debug', 0);
     $this->Email->template = 'email/newPatronEmail';
@@ -389,6 +405,10 @@ Class UsersController extends AppController
     $result = $this->Email->send(); 
    }
    
+   /*
+    Function Name : _sendModifyPatronMail
+    Desc : For sending modified patron email
+   */
    function _sendModifyPatronMail($id, $password) {
     Configure::write('debug', 0);
     $this->Email->template = 'email/modifyPatronEmail';
@@ -407,6 +427,10 @@ Class UsersController extends AppController
     $result = $this->Email->send(); 
    }
    
+   /*
+    Function Name : my_account
+    Desc : For patron my acount page
+   */
    function my_account(){
       $this->layout = 'home';
       $patronId = $this->Session->read('patron');
@@ -428,6 +452,10 @@ Class UsersController extends AppController
       }
    }
    
+   /*
+    Function Name : ilogin
+    Desc : For patron ilogin(Innovative) login method
+   */
    function ilogin(){      
       $this->layout = 'login';
       if ($this->Session->read('Auth.User')){
@@ -565,7 +593,11 @@ Class UsersController extends AppController
       }
    }
    
-   function inlogin(){      
+   /*
+    Function Name : inlogin
+    Desc : For patron inlogin(Innovative w/o PIN) login method
+   */
+   function inlogin(){
       $this->layout = 'login';     
       if ($this->Session->read('Auth.User')){
          $userType = $this->Session->read('Auth.User.type_id');
@@ -682,5 +714,4 @@ Class UsersController extends AppController
       }
    }
 }
-
 ?>

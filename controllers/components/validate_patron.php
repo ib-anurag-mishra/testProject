@@ -1,4 +1,9 @@
 <?php
+ /**
+ * Validate patrons function
+ * This function will validate the patron access
+ */
+ 
 Class ValidatePatronComponent extends Object
 {
     var $components = array('Session');

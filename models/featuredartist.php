@@ -1,4 +1,10 @@
 <?php
+/*
+ File Name : download.php
+ File Description : Models page for the  downloads table.
+ Author : maycreate
+*/
+
 class Featuredartist extends AppModel
 {
     var $name = 'Featuredartist';

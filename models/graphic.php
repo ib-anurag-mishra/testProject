@@ -3,8 +3,7 @@
  File Name : graphic.php
  File Description : Models page for the  graphic table.
  Author : maycreate
- */
-
+*/
 
 class Graphic extends AppModel
 {

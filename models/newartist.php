@@ -1,11 +1,17 @@
 <?php
+/*
+ File Name : metadata.php
+ File Description : Newartist Model
+ Author : maycreate
+*/
+
 class Newartist extends AppModel
 {
     var $name = 'Newartist';
     
     /*
-    Function Name : insert
-    Desc : updatesa admin user data
+     Function Name : insert
+     Desc : updatesa admin user data
     */
     function insert($data) {
       if($this->save($data))
@@ -17,17 +23,17 @@ class Newartist extends AppModel
     }
     
     /*
-    Function Name : getallartists
-    Desc : gets all the artists
+     Function Name : getallartists
+     Desc : gets all the artists
     */
     function getallnewartists() {
         $getArtists = $this->find('all');
         return $getArtists;
     }
     
-     /*
-    Function Name : getartistdata
-    Desc : gets data for the specified artist
+    /*
+     Function Name : getartistdata
+     Desc : gets data for the specified artist
     */
     function getartistdata($id) {
        $getArtistData = $this->find('first', array('conditions' => array('Newartist.id' => $id)));
@@ -35,8 +41,8 @@ class Newartist extends AppModel
     }
    
     /*
-    Function Name : del
-    Desc : deletes a featured artist
+     Function Name : del
+     Desc : deletes a featured artist
     */
     function del($id) {
      if($this->delete($id)){
@@ -44,6 +50,6 @@ class Newartist extends AppModel
       }else{
           return false;
       }
-   }
+    }
 }
 ?>

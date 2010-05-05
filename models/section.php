@@ -1,4 +1,10 @@
 <?php
+/*
+ File Name : section.php
+ File Description : Section page.
+ Author : maycreate
+*/
+
 class Section extends AppModel {
 	var $name = 'Section';
 	var $displayField = 'title';
@@ -6,16 +12,11 @@ class Section extends AppModel {
 		'title' => array(
 			'notempty' => array(
 				'rule' => array('notempty'),
-				//'message' => 'Your custom message here',
-				//'allowEmpty' => false,
-				//'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
 	);
+	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
-
 	var $hasMany = array(
 		'Question' => array(
 			'className' => 'Question',

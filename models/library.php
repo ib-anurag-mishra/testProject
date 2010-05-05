@@ -1,9 +1,10 @@
 <?php
- /*
+/*
  File Name : library.php
  File Description : Models page for the  libraries functionality.
  Author : maycreate
- */
+*/
+ 
 class Library extends AppModel
 {
     var $name = 'Library';
@@ -112,25 +113,27 @@ class Library extends AppModel
     );
     
     /*
-    Function Name : getalllibraries
-    Desc : gets all the library details from the db
+     Function Name : getalllibraries
+     Desc : gets all the library details from the db
     */
-    
     function getalllibraries() {
         $getLibraries = $this->find('all');
         return $getLibraries;
     }
     
-     /*
-    Function Name :  getlibrarydata
-    Desc : gets the details for a library
+    /*
+     Function Name :  getlibrarydata
+     Desc : gets the details for a library
     */
-    
     function getlibrarydata($id) {
        $getLibraryData = $this->find('first', array('conditions' => array('Library.id' => $id)));
        return $getLibraryData;
     }
     
+    /*
+     Function Name : getalllibraries
+     Desc : get library authentication type
+    */
     function getAuthenticationType($id) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
@@ -142,7 +145,6 @@ class Library extends AppModel
     Function Name : checkusername
     Desc : Checks the presence of username
     */
-    
     function checkusername($username,$id = ' ') {
         if($id == ' '){
           $getUsernameCount = $this->find('count', array('conditions' => array('username' => $username)));
@@ -160,7 +162,6 @@ class Library extends AppModel
     Function Name : arrayremovekey
     Desc : removes the elements from an array based on keys
     */
-     
     function arrayremovekey() {
         $args = func_get_args();
         $arr = $args[0];

@@ -1,9 +1,10 @@
 <?php
  /*
  File Name : genre.php
- File Description : Genre page.
+ File Description : Models page for the  Genre table.
  Author : maycreate
- */
+*/
+ 
 class Genre extends AppModel {
 	var $name = 'Genre';
 	var $useTable = 'Genre';

@@ -1,19 +1,19 @@
 <?php
- /*
+/*
  File Name : group.php
  File Description : model for the admin types
  Author : maycreate
- */
+*/
+ 
 class Group extends AppModel
 {
   var $name = 'Group';
-  
-  /*
-  Function Name : getallusertype
-  Desc : Gets all the User Types
-  */
   var $actsAs = array('Acl' => array('type' => 'requester'));
   
+  /*
+   Function Name : parentNode
+   Desc : 
+  */
   function parentNode(){
     return null;
   }
@@ -34,6 +34,10 @@ class Group extends AppModel
    )
   ); 
 
+  /*
+   Function Name : getallusertype
+   Desc : Gets all the User Types
+  */
   function getallusertype() {
    $getAdminTypes = $this->find('all');
    $resultArr = array();
