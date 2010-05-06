@@ -1,7 +1,6 @@
        <?php
               $this->pageTitle = 'Admin';
               echo $this->Form->create('User', array( 'controller' => 'User','action' => $formAction));
-              // echo $this->element('sql_dump');
               if(empty($getData))
               {
                      $getData['User']['first_name'] = "";
@@ -36,12 +35,25 @@
                                    </tr>
                                    <?php
                                    if($getData['Group']['id'] != 4) {
+                                          if($getData['User']['id'] == $session->read('Auth.User.id')) {
                                    ?>
-                                          <tr>
-                                                 <td align="right" width="390"><?php echo $this->Form->label('Admin Type');?></td>
-                                                 <td align="left"><?php echo $this->Form->input('type_id', array('type' => 'select', 'label' => false, 'options' => $options, 'selected' => $getData['Group']['id'], 'div' => false, 'class' => 'select_fields')) ;?></td>
-                                          </tr>
+                                                 <tr>
+                                                        <td align="right" width="390"><?php echo $this->Form->label('Admin Type');?></td>
+                                                        <td align="left">
+                                                               <?php echo $this->Form->hidden( 'type_id', array( 'label' => false ,'value' => $getData['Group']['id'])); ?>
+                                                               <label class="form_fields"><?php echo $user->getAdminType($getData['User']['type_id']); ?></label>
+                                                        </td>
+                                                 </tr>
                                    <?php
+                                          }
+                                          else {
+                                   ?>
+                                                 <tr>
+                                                        <td align="right" width="390"><?php echo $this->Form->label('Admin Type');?></td>
+                                                        <td align="left"><?php echo $this->Form->input('type_id', array('type' => 'select', 'label' => false, 'options' => $options, 'selected' => $getData['Group']['id'], 'div' => false, 'class' => 'select_fields')) ;?></td>
+                                                 </tr>
+                                   <?php
+                                          }
                                    }
                                    else {
                                    ?>
