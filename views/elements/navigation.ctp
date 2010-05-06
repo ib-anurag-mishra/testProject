@@ -82,7 +82,7 @@
 					$search = "";
 				}
 			}
-			echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form'));	
+			echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'search','class' => 'search_form', 'type' => 'get'));	
 			      /*echo $ajax->autoComplete('autoComplete', '/homes/autoComplete',array('size' => '24', 'onclick' => 'if(this.value=="Search"){this.value="";}','value' => 'Search'))?>*/
 			      echo $this->Form->input('search', array('size'=>'24', 'id'=>'autoComplete', 'label' => false, 'value' => $search));?>
 				<!-- <div style="float:left;">
