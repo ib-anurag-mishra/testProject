@@ -80,8 +80,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		}
 		
 		$market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
-		$market .= "Library Ideas#*#";									// Vendor/Retailer Name
-		$market .= "PM43#*#";											// Vendor Key
+		$market .= "#*#";									// Vendor/Retailer Name was Library Ideas#*#
+		$market .= "#*#";									// Vendor Key was PM43#*#
 		$market .= "US#*#10#*#100";
 		fwrite($file, $market . "\n");
 		
@@ -106,7 +106,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		if($row2['ReportCount'] > 0) {
 			$sql = "UPDATE sony_reports SET created = now(), modified = now(), is_uploaded = 'no' WHERE id = ".$row2['id'];
 			$result4 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-			if(sendReportFile($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite)) {
+			if(sendReportFile($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".$row2['id'];
 				$result5 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
@@ -114,7 +114,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		else {
 			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 			$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-			if(sendReportFile($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite)) {
+			if(sendReportFile($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
@@ -171,8 +171,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		}
 		
 		$market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
-		$market .= "Library Ideas#*#";									// Vendor/Retailer Name
-		$market .= "PM43#*#";											// Vendor Key
+		$market .= "#*#";									// Vendor/Retailer Name was Library Ideas#*#
+		$market .= "#*#";									// Vendor Key was PM43#*#
 		$market .= "US#*#10#*#100";
 		fwrite($file, $market . "\n");
 		
@@ -197,7 +197,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		if($row2['ReportCount'] > 0) {
 			$sql = "UPDATE sony_reports SET created = now(), modified = now(), is_uploaded = 'no' WHERE id = ".$row2['id'];
 			$result4 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-			if(sendReportFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite)) {
+			if(sendReportFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".$row2['id'];
 				$result5 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
@@ -205,7 +205,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		else {
 			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 			$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-			if(sendReportFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite)) {
+			if(sendReportFile($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
