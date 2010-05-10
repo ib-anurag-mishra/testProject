@@ -51,7 +51,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$result = mysql_query($query) or die('Query failed: ' . mysql_error());
 		$numSales = 0;
 		while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			$sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#Library Ideas#*#PM43#*#US#*#SA#*##*##*#";
+			$sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*##*##*#US#*#SA#*##*##*#";
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
@@ -142,7 +142,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$result = mysql_query($query) or die('Query failed: ' . mysql_error());
 		$numSales = 0;
 		while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			$sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#Library Ideas#*#PM43#*#US#*#SA#*##*##*#";
+			$sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*##*##*#US#*#SA#*##*##*#";
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier

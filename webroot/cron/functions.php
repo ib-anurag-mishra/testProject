@@ -24,12 +24,12 @@ function sendReportFile($src,$dst,$logFileWrite,$typeReport)
 		else
 		{
 			$sftp = ssh2_sftp($con);
-			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH.$typeReport))
+			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH.$typeReport."/"))
 			{
-				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH.$typeReport);
+				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH.$typeReport."/");
 			}
 
-			if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH.$typeReport.$dst, 0644)){
+			if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH.$typeReport."/".$dst, 0644)){
 				echo "error sending " . $typeRepport . " report to Sony server\n";
 				fwrite($logFileWrite, "error sending " . $typeRepport . " report to Sony server\n");
 				return false;
