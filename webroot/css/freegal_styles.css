@@ -1054,7 +1054,7 @@ div.message {
 	background: #F3F3F3;
 	border-top: 2px solid #CCC;
 	border-bottom: 2px solid #CCC;
-	margin:100px auto 0px;
+	margin:20px auto 0px;
 	display:block;
 }
 
@@ -1095,4 +1095,34 @@ div.message {
 .forgot_text {
 	display:block;
 	margin-left: 82px;
+}
+
+#loginText {
+	margin: 10px 10px 0 10px;
+	font-size: 90%;
+}
+#loginText p {
+	padding-bottom: 10px;
+}
+#loginText ul {
+	margin-left: 20px;
+	margin-bottom: 10px;
+}
+
+.loginHeading {
+	text-align: center;
+}
+
+.loginSubText {
+	font-size: 12px;
+}
+
+.loginSubText a {
+	text-decoration: none;
+	color: #666;
+}
+
+.loginSubText a:hover {
+	text-decoration: underline;
+	color: #666;
 }
