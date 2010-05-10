@@ -55,18 +55,7 @@
 		<div id="content">
 			<!-- Main contents start here -->
 			<?php echo $content_for_layout; ?>
-			<div id="loginText">
-				<p class="loginHeading">Welcome to the Freegal Music log in page</p>
-				<p>How Freegal Music Works:</p>
-				<ul>
-					<li>Library users have a weekly download limit.  You will be able to keep track of your downloads in the upper right corner of the site. Every song has a sample clip you can listen to before you download.</li>
-					<li>The library may have an overall weekly limit, too.  If your library runs out of downloads for the week, you can go to “My Wishlist” in the upper right corner and queue up for future music.</li>
-					<li>The downloads on this site are all in the MP3 format with no DRM. This service will work with any MP3 player, including iPod, and can be loaded into iTunes.  It works on both PCs and Macs.</li>
-					<li>Be sure to check out the browsing areas, especially Artists A to Z (bottom of page) and the genre lists (menu bar).  Click on see all genres to view dozens of categories.</li>
-				</ul>
-			<p>Enjoy the site!</p>
-			<p class="loginSubText">Freegal Music gives you access to hundreds of thousands of songs in the Sony Music catalog. You can read more about Sony Music at <a href="http://www.sonymusic.com" target="_blank">www.SonyMusic.com</a></p>
-			</div>
+			<div id="loginText"><?php echo $page->getPageContent('login'); ?></div>
 			<!-- Main contents end here -->
 		</div><!-- content -->
 	</div><!-- container -->

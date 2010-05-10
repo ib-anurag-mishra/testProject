@@ -100,6 +100,8 @@
 							<li><?php echo $html->link('Manage About Us', array('controller' => 'homes', 'action' => 'aboutusform'));?></li>
 							<li><?php echo $html->link('Manage Terms & Condition', array('controller' => 'homes', 'action' => 'termsform'));?></li>
 							<li><?php echo $html->link('Manage Download Limits', array('controller' => 'homes', 'action' => 'limitsform'));?></li>
+							<li><?php echo $html->link('Manage Login Screen Text', array('controller' => 'homes', 'action' => 'loginform'));?></li>
+							<li><?php echo $html->link('Manage Wish List Text', array('controller' => 'homes', 'action' => 'wishlistform'));?></li>
 						</ul>
 					</li>
 					<li>

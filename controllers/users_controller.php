@@ -8,7 +8,7 @@
 Class UsersController extends AppController
 {
    var $name = 'Users';
-   var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library');
+   var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page');
    var $layout = 'admin';
    var $components = array('Session','Auth','Acl','PasswordHelper','Email');
    var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download');

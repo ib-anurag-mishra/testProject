@@ -3,6 +3,8 @@
 <div id="genre">
 	Wishlist
 </div>
+<br class="clr">
+<div id="wishlistText"><?php echo $page->getPageContent('wishlist'); ?></div>
 <div id="genreArtist">
 	<P>Artist</p>
 </div>

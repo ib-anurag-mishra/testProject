@@ -1278,3 +1278,20 @@ div.message {
 	display:block;
 	margin-top: 70px;
 }
+
+#wishlistText {
+	margin: 10px 10px 0 10px;
+	font-size: 90%;
+}
+#wishlistText p {
+	padding-bottom: 10px;
+}
+#wishlistText a {
+	text-decoration: none;
+	color: #666;
+}
+
+#wishlistText a:hover {
+	text-decoration: underline;
+	color: #666;
+}

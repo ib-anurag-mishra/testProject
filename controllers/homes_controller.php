@@ -17,7 +17,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'forgot_password')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password')) {
             $validPatron = $this->ValidatePatron->validatepatron();
             if(!$validPatron) {
                 $this->Session->destroy('User');
@@ -462,7 +462,94 @@ class HomesController extends AppController
 	    $this->set('getData',$arr);
 	}
 	$this->layout = 'admin';
-    }    
+    }
+
+	/*
+     Function Name : admin_loginform
+     Desc : actions used for admin login form
+    */
+    function admin_loginform() {
+	if(isset($this->data)) {
+	    if($this->data['Home']['id'] != "") {
+		$this->Page->id = $this->data['Home']['id'];
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()){
+		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+	    }
+	    else {
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()) {
+		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+		else {
+		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		}
+	    }
+	}
+        $this -> set( 'formAction', 'admin_loginform');
+        $this -> set( 'formHeader', 'Manage Login Page Text' );
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login')));
+	if(count($getPageData) != 0) {
+	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
+	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+	    $this -> set( 'getData', $getData );
+	}
+	else {
+	    $arr = array();
+	    $this->set('getData',$arr);
+	}
+	$this->layout = 'admin';
+    }
+
+	/*
+     Function Name : admin_wishlistform
+     Desc : actions used for admin wishlist form
+    */
+    function admin_wishlistform() {
+	if(isset($this->data)) {
+	    if($this->data['Home']['id'] != "") {
+		$this->Page->id = $this->data['Home']['id'];
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()){
+		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+	    }
+	    else {
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()) {
+		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+		else {
+		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		}
+	    }
+	}
+        $this -> set( 'formAction', 'admin_wishlistform');
+        $this -> set( 'formHeader', 'Manage Wishlist Page Text' );
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist')));
+	if(count($getPageData) != 0) {
+	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
+	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+	    $this -> set( 'getData', $getData );
+	}
+	else {
+	    $arr = array();
+	    $this->set('getData',$arr);
+	}
+	$this->layout = 'admin';
+    }
+
 
     /*
      Function Name : admin_limitsform
