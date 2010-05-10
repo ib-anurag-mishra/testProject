@@ -14,20 +14,25 @@ include 'functions.php';
 $query = 'SELECT * FROM `libraries`';
 $result = mysql_query($query) or die('Query failed: ' . mysql_error());
 while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-	$currDate = strtotime(date("Y-m-d"));
-	$contractDate = strtotime($line['library_contract_start_date']);
-	if($contractDate > $currDate) {
-		$status = "inactive";
-	}
-	elseif((date('Y', $currDate)-date('Y', $contractDate)) > 0) {
-		$status = "inactive";
+	if($line['library_status_updated_by'] == 'cron') {
+		$currDate = strtotime(date("Y-m-d"));
+		$contractDate = strtotime($line['library_contract_start_date']);
+		if($contractDate > $currDate) {
+			$status = "inactive";
+		}
+		elseif((date('Y', $currDate)-date('Y', $contractDate)) > 0) {
+			$status = "inactive";
+		}
+		else {
+			$status = "active";
+		}
+		$sql = "UPDATE libraries SET library_status='$status' WHERE id=".$line['id'];
+		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
+		echo "Library satus updated successfully for Library ID ".$line['id']." to $status !!\n";
 	}
 	else {
-		$status = "active";
+		echo "Library ID ".$line['id']." status not changed as it has been modified by the admin!!\n";
 	}
-	$sql = "UPDATE libraries SET library_status='$status' WHERE id=".$line['id'];
-	$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-	echo "Library satus updated successfully for Library ID ".$line['id']." to $status !!\n";
 }
 //Reseting library download limit for all the libraries so the download can be available and checked for patrons
 resetDownloads();

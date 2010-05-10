@@ -418,18 +418,17 @@ Class LibrariesController extends AppController
     */
     function admin_deactivate() {
         $libraryID = $this->params['named']['id'];
-        if(trim($libraryID) != "" && is_numeric($libraryID))
-        {
+        if(trim($libraryID) != "" && is_numeric($libraryID)) {
             $this->Session -> setFlash( 'Library deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
-            $this->Library->saveField('library_status', 'inactive', false);
-            $this->autoRender = false;            
+	    $this->Library->set(array('library_status' => 'inactive', 'library_status_updated_by' => 'admin'));
+            $this->Library->save();
+            $this->autoRender = false;
             $this->redirect('managelibrary');
         }
-        else
-        {
+        else {
             $this->Session->setFlash('Error occured while deactivating the library', 'modal', array('class' => 'modal problem'));
-            $this->autoRender = false;            
+            $this->autoRender = false;
             $this->redirect('managelibrary');
         }
     }
@@ -440,18 +439,17 @@ Class LibrariesController extends AppController
     */
     function admin_activate() {
         $libraryID = $this->params['named']['id'];
-        if(trim($libraryID) != "" && is_numeric($libraryID))
-        {
+        if(trim($libraryID) != "" && is_numeric($libraryID)) {
             $this->Session -> setFlash( 'Library activated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
-            $this->Library->saveField('library_status', 'active', false);
-            $this->autoRender = false;            
+            $this->Library->set(array('library_status' => 'active', 'library_status_updated_by' => 'cron'));
+            $this->Library->save();
+            $this->autoRender = false;
             $this->redirect('managelibrary');
         }
-        else
-        {
+        else {
             $this->Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
-            $this->autoRender = false;            
+            $this->autoRender = false;
             $this->redirect('managelibrary');
         }
     }
