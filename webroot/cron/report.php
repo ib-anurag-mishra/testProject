@@ -92,7 +92,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$trailer = "Z#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$trailer .= $numSales . "#*#";						// Number of Standard Sales Records (total number of N records)
 		$trailer .= "1#*#";									// Number of Market Share Records (total number of M records)
-		$trailer .= $row['Count'] . "#*#";					// Total Quantity
+		//$trailer .= $row['Count'] . "#*#";					// Total Quantity
+		$trailer .= $numSales . "#*#";
 		$trailer .= "0#*#";									// Total Quantity Free
 		$trailer .= "0#*#";									// Total Quantity Promo
 		$trailer .= "0";									// Total Quantity Returned
