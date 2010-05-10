@@ -12,9 +12,9 @@ include 'functions.php';
 
 $currentDate = date('Y-m-d');
 list($year, $month, $day) = explode('-', $currentDate);
-$weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w')-1), date('Y')));
+$weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
 $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
-echo $currentDate."========".$weekFirstDay."==========".$monthFirstDate;
+
 if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 	$reports_dir = SONY_REPORTFILES;
 	if(!file_exists($reports_dir)) {

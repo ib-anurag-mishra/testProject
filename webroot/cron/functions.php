@@ -51,7 +51,7 @@ function resetDownloads()
     $nextDay = date('Y-m-d', strtotime('+1 day', $nextDayTS));    
     $date = date('y-m-d');
     list($year, $month, $day) = explode('-', $date);
-    $weekFirstDay = date('Y-m-d', mktime(0, 0, 0, date('m'), date('d')-(date('w')-1), date('Y')));
+    $weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
     $monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
     $yearFirstDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $year));      
     $qry = "Select * from libraries";

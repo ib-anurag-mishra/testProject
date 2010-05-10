@@ -22,8 +22,8 @@ class Wishlist extends AppModel
     }
     elseif($dateRange == 'week') {
       $date_arr = explode("/", $date);
-      $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]))." 00:00:00";
-      $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]))." 23:59:59";
+      $startDate = date('Y-m-d', strtotime($date_arr[2]."W".date('W', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."1"))." 00:00:00";
+      $endDate = date('Y-m-d', strtotime($date_arr[2]."W".date('W', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."7"))." 23:59:59";
     }
     elseif($dateRange == 'month') {
       $date_arr = explode("/", $date);

@@ -19,8 +19,8 @@
         $displaydateRange = " for ".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
     }
     elseif($this->data['Report']['reports_daterange'] == 'week') {
-        $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]-(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))-1), $date_arr[2]));
-        $endDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], $date_arr[1]+(7-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+        $startDate = date('Y-m-d', strtotime($date_arr[2]."W".date('W', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."1"));
+        $endDate = date('Y-m-d', strtotime($date_arr[2]."W".date('W', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."7"));
         $savedateRange = "_for_week_of_".$startDate."_to_".$endDate;
         $displaydateRange = " for week of ".$startDate." to ".$endDate;
     }
