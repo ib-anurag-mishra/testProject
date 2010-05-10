@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` ADD `library_status_updated_by` VARCHAR( 50 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'cron' AFTER `library_status`;
