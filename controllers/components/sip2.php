@@ -663,8 +663,7 @@ class sip2Component extends Object {
         $this->_debugmsg( "SIP2: Attempting to connect to '$address' on port '{$this->port}'..."); 
 
         /* open a connection to the host */
-        $result = socket_connect($this->socket, $address, $this->port);
-		print $result;exit;
+        $result = socket_connect($this->socket, $address, $this->port);		
         if (!$result) {
             $this->_debugmsg("SIP2: socket_connect() failed.\nReason: ($result) " . socket_strerror($result));
         } else {
