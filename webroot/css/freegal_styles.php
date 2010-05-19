@@ -203,6 +203,7 @@ ul.marquee li {
         padding-bottom:2px;
         border-bottom: 1px solid #999;
         width:252px;
+		color:<?php echo $library_text_color; ?>;
 }
 
 .suggest_text img {
