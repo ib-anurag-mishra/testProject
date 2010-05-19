@@ -531,7 +531,7 @@ ul.marquee li {
 
 #genreArtist a {
 	text-decoration: none;
-	color: <?php echo $library_links_color; ?>;
+	color: <?php echo $library_boxheader_text_color; ?>;
 }
 
 #genreAlbum {
@@ -548,7 +548,7 @@ ul.marquee li {
 
 #genreAlbum a {
 	text-decoration: none;
-	color: <?php echo $library_links_color; ?>;
+	color: <?php echo $library_boxheader_text_color; ?>;
 }
 
 #genreTrack {
@@ -565,7 +565,7 @@ ul.marquee li {
 
 #genreTrack a {
 	text-decoration: none;
-	color: <?php echo $library_links_color; ?>;
+	color: <?php echo $library_boxheader_text_color; ?>;
 }
 
 #genreDownload {
