@@ -715,65 +715,68 @@ Class UsersController extends AppController
    }
    
    
-   
+/*
+	Function Name : slogin
+	Desc : For patron slogin(SIP2 Authentication) login method
+*/ 
    
    
 function slogin(){
-      $this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
-				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
-			}
-		}	            
-		if($this->data){  
-			$card = $this->data['User']['card'];
-			$pin = $this->data['User']['pin'];
-			$patronId = $card;        
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");            
-        
-				if($pin != ''){
-				   $this->set('pin',$pin);
-				}
-				else{
-				   $this->set('pin',"");
-				}            
-			}
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
-				if($card != ''){
-				   $this->set('card',$card);
-				}
-				else{
-				   $this->set('card',"");
-				}            
+	$this->layout = 'login';     
+	if ($this->Session->read('Auth.User')){
+		$userType = $this->Session->read('Auth.User.type_id');
+		if($userType == '5'){
+			$this->redirect('/homes/index');
+			$this->Auth->autoRedirect = false;     
+		}
+	}	            
+	if($this->data){  
+		$card = $this->data['User']['card'];
+		$pin = $this->data['User']['pin'];
+		$patronId = $card;        
+		if($card == ''){            
+			$this -> Session -> setFlash("Please provide card number.");            
+	
+			if($pin != ''){
+			   $this->set('pin',$pin);
 			}
 			else{
-				$cardNo = substr($card,0,5);
-				$this->Library->recursive = -1;
-				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip')
-													)
-												 ); 
+			   $this->set('pin',"");
+			}            
+		}
+		elseif($pin == ''){            
+			$this -> Session -> setFlash("Please provide pin.");            
+			if($card != ''){
+			   $this->set('card',$card);
+			}
+			else{
+			   $this->set('card',"");
+			}            
+		}
+		else{
+			$cardNo = substr($card,0,5);
+			$this->Library->recursive = -1;
+			$existingLibraries = $this->Library->find('all',array(
+												'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip')
+												)
+											 ); 
 
-				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
-					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-				}        
-				else{
-						//Start
-						$mysip = new $this->sip2;
-						$mysip->hostname = $existingLibraries['0']['Library']['library_host_name'];
-						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
+			if(count($existingLibraries) == 0){
+				$this -> Session -> setFlash("This is not a valid credential.");
+				$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
+			}        
+			else{
+					//Start
+					$mysip = new $this->sip2;
+					$mysip->hostname = $existingLibraries['0']['Library']['library_host_name'];
+					$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 
-						if($mysip->connect()) {
-							//send selfcheck status message
-							$in = $mysip->msgSCStatus();
-							$msg_result = $mysip->get_message($in);
+					if($mysip->connect()) {
+						//send selfcheck status message
+						$in = $mysip->msgSCStatus();
+						$msg_result = $mysip->get_message($in);
 
-							// Make sure the response is 98 as expected
+						// Make sure the response is 98 as expected
 						if (preg_match("/^98/", $msg_result)) {
 						
 						
@@ -839,7 +842,7 @@ function slogin(){
 									  }
 									  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 									  $this->Session->write("patron", $patronId);
-									  $this->Session->write("innovative_wo_pin","innovative_wo_pin");
+									  $this->Session->write("sip2","sip2");
 									  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 									  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 									  $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
@@ -881,10 +884,10 @@ function slogin(){
 					$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 				}
-				}
 			}
 		}
-	}	
-   
+	}
+}	
+
 }
 ?>
