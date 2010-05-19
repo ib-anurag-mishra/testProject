@@ -53,6 +53,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_host_name',
+																				'Library.library_port_no',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -86,7 +88,7 @@ Class LibrariesController extends AppController
                                                                                                 )
                                                                             )
                                                                 )));
-                $this -> set( 'getData', $getData );
+				$this -> set( 'getData', $getData );
                 $this->LibraryPurchase->recursive = -1;
                 $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId)));
                 $this->set('allPurchases', $allPurchases);
@@ -108,7 +110,7 @@ Class LibrariesController extends AppController
      Desc : actions that for library data validation using Ajax
     */
     function admin_ajax_validate() {
-        Configure::write('debug', 0);
+    Configure::write('debug', 0);
 	$this->layout = false;
 	if ($this->RequestHandler->isAjax()) {
             if(!empty($this->params['named']['id'])) {
@@ -127,6 +129,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_host_name',
+																				'Library.library_port_no',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -171,7 +175,7 @@ Class LibrariesController extends AppController
                 
                 if($this->data['Library']['libraryStepNum'] == '2') {
                     if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
-			$this->data['User']['password'] = "";
+						$this->data['User']['password'] = "";
                     }
                     if(trim($libraryId) != '' && is_numeric($libraryId)) {
                         $this->User->id = $getData['Library']['library_admin_id'];
@@ -208,7 +212,10 @@ Class LibrariesController extends AppController
 		    elseif($this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
                         $this->Library->setValidation('library_step1_innovative');
                     }
-                    else {
+                     elseif($this->data['Library']['library_authentication_method'] == 'sip') {
+                        $this->Library->setValidation('library_step1_sip');
+                    }
+					else {
                         $this->Library->setValidation('library_step1');
                     }
                     if($this->Library->validates()){
@@ -250,8 +257,8 @@ Class LibrariesController extends AppController
                                             if($this->User->save($this->data['User'])) {
                                                 if(trim($libraryId) != '' && is_numeric($libraryId)) {
                                                     $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
-						    $this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
-						    $this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
+													$this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
+													$this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
                                                 }
                                                 else {
                                                     $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
@@ -349,10 +356,13 @@ Class LibrariesController extends AppController
                     elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
                     }
-		    elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
                     }
-                    else {
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'sip') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_sip');
+                    }
+					else {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
                     }
                     
@@ -377,12 +387,12 @@ Class LibrariesController extends AppController
      Desc : actions that for library picture upload using Ajax
     */
     function admin_doajaxfileupload() {
-        Configure::write('debug', 0);
+    Configure::write('debug', 1);
 	$this->layout = false;
-        $error = "";
+    $error = "";
 	$msg = "";
 	$fileElementName = 'fileToUpload';
-        if($_FILES[$fileElementName]['tmp_name'] != '')
+    if($_FILES[$fileElementName]['tmp_name'] != '')
 	{
             $p = $_FILES[$fileElementName]['name'];
             $pos = strrpos($p,".");
@@ -400,7 +410,7 @@ Class LibrariesController extends AppController
                     if(!file_exists($upload_dir)) {
                         mkdir($upload_dir);
                     }
-                    move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
+                    $test = move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
                     $this->Library->id = $_REQUEST['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
                 }
