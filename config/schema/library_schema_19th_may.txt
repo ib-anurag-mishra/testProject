@@ -1,0 +1,2 @@
+ALTER TABLE `libraries` ADD `library_port_no` INT( 20 ) NULL DEFAULT NULL AFTER `library_authentication_url`  ,
+ADD `library_host_name` VARCHAR( 100 ) NULL DEFAULT NULL AFTER `library_port_no` 
