@@ -332,6 +332,16 @@ ul.marquee li {
         margin: 0px 0 0 30px;
 }
 
+#artist_searchBox a {
+        text-decoration: none;
+        color:<?php echo $library_links_color; ?>;
+}
+
+#artist_searchBox a:hover {
+        text-decoration: none;
+        color:<?php echo $library_links_hover_color; ?>;
+}
+
 .artist_line {
         border-bottom: 1px solid #999;
         width:544px;
