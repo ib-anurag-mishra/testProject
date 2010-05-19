@@ -10,7 +10,7 @@ Class UsersController extends AppController
    var $name = 'Users';
    var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page');
    var $layout = 'admin';
-   var $components = array('Session','Auth','Acl','PasswordHelper','Email');
+   var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2');
    var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download');
    
    /*
@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
    function beforeFilter(){
 	parent::beforeFilter();
-        $this->Auth->allow('logout','ilogin','inlogin');
+        $this->Auth->allow('logout','ilogin','inlogin','slogin');
    }
    
    /*
@@ -570,7 +570,7 @@ Class UsersController extends AppController
                   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
                   $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
                   $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-		  $this->Download->recursive = -1;
+				  $this->Download->recursive = -1;
                   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
                   $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
                   $this ->Session->write("downloadsUsed", $results);
@@ -713,5 +713,178 @@ Class UsersController extends AppController
          }         
       }
    }
+   
+   
+   
+   
+   
+function slogin(){
+      $this->layout = 'login';     
+		if ($this->Session->read('Auth.User')){
+			$userType = $this->Session->read('Auth.User.type_id');
+			if($userType == '5'){
+				$this->redirect('/homes/index');
+				$this->Auth->autoRedirect = false;     
+			}
+		}	            
+		if($this->data){  
+			$card = $this->data['User']['card'];
+			$pin = $this->data['User']['pin'];
+			$patronId = $card;        
+			if($card == ''){            
+				$this -> Session -> setFlash("Please provide card number.");            
+        
+				if($pin != ''){
+				   $this->set('pin',$pin);
+				}
+				else{
+				   $this->set('pin',"");
+				}            
+			}
+			elseif($pin == ''){            
+				$this -> Session -> setFlash("Please provide pin.");            
+				if($card != ''){
+				   $this->set('card',$card);
+				}
+				else{
+				   $this->set('card',"");
+				}            
+			}
+			else{
+				$cardNo = substr($card,0,5);
+				$this->Library->recursive = -1;
+				$existingLibraries = $this->Library->find('all',array(
+													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip')
+													)
+												 ); 
+
+				if(count($existingLibraries) == 0){
+					$this -> Session -> setFlash("This is not a valid credential.");
+					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
+				}        
+				else{
+						//Start
+						$mysip = new $this->sip2;
+						$mysip->hostname = $existingLibraries['0']['Library']['library_host_name'];
+						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
+
+						if($mysip->connect()) {
+							//send selfcheck status message
+							$in = $mysip->msgSCStatus();
+							$msg_result = $mysip->get_message($in);
+
+							// Make sure the response is 98 as expected
+						if (preg_match("/^98/", $msg_result)) {
+						
+						
+							  $result = $mysip->parseACSStatusResponse($msg_result);
+
+							  //  Use result to populate SIP2 setings
+							  $mysip->AO = $result['variable']['AO'][0]; /* set AO to value returned */
+							  $mysip->AN = $result['variable']['AN'][0]; /* set AN to value returned */
+
+							  $mysip->patron = $card;
+							  $mysip->patronpwd = $pin;
+
+							  $in = $mysip->msgPatronStatusRequest();
+							  $msg_result = $mysip->get_message($in);
+
+							  // Make sure the response is 24 as expected
+							  if (preg_match("/^24/", $msg_result)) {
+								  $result = $mysip->parsePatronStatusResponse( $msg_result );
+
+								  if (($result['variable']['BL'][0] == 'Y') and ($result['variable']['CQ'][0] == 'Y')) {
+									  // Success!!!
+									  
+									  
+										$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+										if(count($currentPatron) > 0){
+										  $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
+										  $date = strtotime(date('Y-m-d H:i:s'));              
+										  if(!(isset($_SESSION['patron']))){               
+											  if(($date-$modifiedTime) > 60){
+												  $updateArr = array();
+												  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+												  $updateArr['session_id'] = session_id();
+												  $this->Currentpatron->save($updateArr);
+											  }
+											  else{
+												  $this->Session->destroy('user');
+												  $this -> Session -> setFlash("This account is already active.");                              
+												  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+											  }
+										 }
+										  else{
+											  $sessionId = session_id();                    
+											  if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
+												  if(($date-$modifiedTime) > 60){                            
+													  $updateArr = array();
+													  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+													  $updateArr['session_id'] = session_id();
+													  $this->Currentpatron->save($updateArr);
+												  }
+												  else{
+													  $this->Session->destroy('user');   
+													  $this -> Session -> setFlash("This account is already active.");                                  
+													  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+												  }                  
+											  }                    
+										 }
+									  }
+									  else{                
+										 $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+										 $insertArr['patronid'] = $patronId;
+										 $insertArr['session_id'] = session_id();
+										 $this->Currentpatron->save($insertArr);
+									  }
+									  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
+									  $this->Session->write("patron", $patronId);
+									  $this->Session->write("innovative_wo_pin","innovative_wo_pin");
+									  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+									  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+									  $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+									  $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";           
+									  $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+									  $this->Download->recursive = -1;
+									  $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
+									  $this ->Session->write("downloadsUsed", $results);
+									  if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
+										  $this ->Session->write("block", 'yes');
+									  }
+									  else{
+										  $this ->Session->write("block", 'no');
+									  }
+									  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+								}else{
+									  $this->Session->destroy('user');
+									  $this -> Session -> setFlash("Unable to Connect.");                              
+									  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+
+								}
+								
+								
+							}else{
+								  $this->Session->destroy('user');
+								  $this -> Session -> setFlash("Unable to Connect.");                              
+								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+
+						}
+					}else{
+						  $this->Session->destroy('user');
+						  $this -> Session -> setFlash("Unable to Connect.");                              
+						  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+
+					}
+				}else{
+					$this->Session->destroy('user');
+					$this -> Session -> setFlash("Unable to Connect.");                              
+					$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+
+				}
+				}
+			}
+		}
+	}	
+   
 }
 ?>
