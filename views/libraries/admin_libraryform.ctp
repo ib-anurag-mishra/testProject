@@ -3,13 +3,15 @@
 	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file', 'id' => 'LibraryAdminForm'));
 	if(empty($getData))
 	{
-	        $getData['Library']['id'] = "";
-	        $getData['Library']['library_admin_id'] = "";
-	        $getData['Library']['library_name'] = "";
+	    $getData['Library']['id'] = "";
+	    $getData['Library']['library_admin_id'] = "";
+	    $getData['Library']['library_name'] = "";
 		$getData['Library']['library_authentication_method'] = "";
-	        $getData['Library']['library_domain_name'] = "";
+	    $getData['Library']['library_domain_name'] = "";
 		$getData['Library']['library_authentication_num'] = "";
 		$getData['Library']['library_authentication_url'] = "";
+		$getData['Library']['library_host_name'] = "";
+		$getData['Library']['library_port_no'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
@@ -23,8 +25,8 @@
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
 		$getData['Library']['library_download_limit'] = "";
-	        $getData['Library']['library_user_download_limit'] = "";
-	        $getData['Library']['library_download_type'] = "daily";
+	    $getData['Library']['library_user_download_limit'] = "";
+	    $getData['Library']['library_download_type'] = "daily";
 		$getData['Library']['library_image_name'] = "";
 		$getData['Library']['library_block_explicit_content'] = 0;
 		$getData['User']['first_name'] = "";
@@ -77,6 +79,9 @@
 								elseif($getData['Library']['library_authentication_method'] == "innovative") {
 									echo "<label>Innovative</label>";
 								}
+								elseif($getData['Library']['library_authentication_method'] == "sip") {
+									echo "<label>SIP2 Authentication</label>";
+								}
 								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
 							?>
 						</td>
@@ -91,7 +96,7 @@
 							<?php
 								echo $this->Form->input('library_authentication_method', array('options' => array(
 									'' => 'Select a Method',
-									'referral_url' => 'Referral URL',
+									'referral_url' => 'Referral URL','sip' => 'SIP2 Authentication',
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
 									'innovative_wo_pin' => 'Innovative w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
@@ -106,13 +111,21 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative"){?>style="display:none;"<?php } ?>>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Libray Authentication Number');?></td>
+					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "sip"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr id="innovative2" <?php if($getData['Library']['library_authentication_method'] != "innovative"){?>style="display:none;"<?php } ?>>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Libray Authentication URL');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_url',array( 'label' => false ,'value' => $getData['Library']['library_authentication_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="sip_host" <?php if($getData['Library']['library_authentication_method'] != "sip"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Host Name');?></td>
+						<td align="left"><?php echo $this->Form->input('library_host_name',array( 'label' => false ,'value' => $getData['Library']['library_host_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="sip_port" <?php if($getData['Library']['library_authentication_method'] != "sip"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Port No');?></td>
+						<td align="left"><?php echo $this->Form->input('library_port_no',array( 'label' => false ,'value' => $getData['Library']['library_port_no'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
@@ -400,21 +413,36 @@
 						$("#referral_url").show();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
+						$("#sip_host").hide();
+						$("#sip_port").hide();			
 					}
 					else if ($(this).val() == 'innovative') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
+						$("#sip_host").hide();
+						$("#sip_port").hide();			
 					}
 					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
+						$("#sip_host").hide();
+						$("#sip_port").hide();			
+					}
+					else if ($(this).val() == 'sip') {
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").hide();
+						$("#sip_host").show();
+						$("#sip_port").show();			
 					}
 					else {
 						$("#referral_url").hide();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
+						$("#sip_host").hide();
+						$("#sip_port").hide();						
 					}
 				});
 			});
