@@ -89,13 +89,13 @@ function resetDownloads()
 	    }
 	}
 	$libraryId = $resultsArr['id'];	
-	$sql = "SELECT count(*) as count from wishlists where `delete_on` ='".$currentDate."' and `library_id` = ".$libraryId;	
+	$sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
 	$result = mysql_query($sql);
 	$row = mysql_fetch_assoc($result);
 	$count = $row['count'];	
 	$sql="UPDATE `libraries` SET library_available_downloads=library_available_downloads+".$count." Where id=".$libraryId;	
         mysql_query($sql);
-	$qry = "Delete from wishlists where delete_on ='".$currentDate."'";	
+	$qry = "Delete from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND library_id=".$libraryId;	
 	mysql_query($qry);
 	if(($resultsArr['library_available_downloads'] > 0) && ($resultsArr['library_download_limit'] > $resultsArr['library_current_downloads'])){		
 		$qry = "UPDATE wishlists SET `delete_on` = '".$nextDay."' WHERE `library_id` = ".$libraryId;		
