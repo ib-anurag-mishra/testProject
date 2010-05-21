@@ -1,4 +1,39 @@
 <script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
+<?php echo $javascript->link('qtip'); ?>
+<script type="text/javascript">
+// Create the tooltips only on document load
+
+$(document).ready(function()
+{
+   $('a[title]').qtip({
+      position: {
+         corner: {
+            target: 'topLeft',
+            tooltip: 'bottomRight'
+         }
+      },
+      style: {
+         name: 'cream',
+         padding: '5px 10px',
+         width: {
+            max: 350,
+            min: 0
+         },
+		border: {
+			width: 1,
+			radius: 8,
+			color: '#FAF7AA'
+		},
+         tip: true
+      }
+   });
+});
+</script>
+<style type="text/css">
+.qtip-content {
+    font-size:12px;
+}
+</style>
 <div id="genre">
 	Search Results
 </div>
@@ -94,10 +129,10 @@
 					?>
                                                         <p>
 								<![if !IE]>
-									<a href='#' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+									<a href='#' title='IMPORTANT:  Please note that once you press "download now" you have used up one of your downloads, regardless of whether you then press "cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
 								<![endif]>
 								<!--[if IE]>
-									<a onclick='return userDownloadIE("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+									<a title='IMPORTANT:  Please note that once you press "download now" you have used up one of your downloads, regardless of whether you then press "cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 								<![endif]-->
 								<span id="download_loader_<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
@@ -146,8 +181,8 @@
 </div>
 <div class="paging">
         <?php //$paginator->options(array('search_key' => 'Acda & De Munnik'));
-        //$paginator->options(array('url' => $this->data['Home']));
-        $paginator->options(array('url' => array("?"=>$searchKey)));
+        //$paginator->options(array('url' => $this->data['Home']));        
+        $paginator->options(array('url' => $this->passedArgs,'escape' => false));
         ?>
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
   	<?php echo $paginator->numbers();?>
