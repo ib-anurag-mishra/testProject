@@ -1,10 +1,10 @@
 <?php
 /*
  File Name : libraries_controller.php
- File Description : Library controller page
+ File Descr : Library controller page
  Author : maycreate
  */
-
+ 
 Class LibrariesController extends AppController
 {
     var $name = 'Libraries';
