@@ -203,7 +203,6 @@ ul.marquee li {
         padding-bottom:2px;
         border-bottom: 1px solid #999;
         width:252px;
-		color:<?php echo $library_text_color; ?>;
 }
 
 .suggest_text img {
@@ -287,12 +286,12 @@ ul.marquee li {
 
 #artist_search a {
         text-decoration: none;
-        color:<?php echo $library_boxheader_text_color; ?>;
+        color:<?php echo $library_links_color; ?>;
 }
 
 #artist_search a:hover {
 /*		text-decoration: underline;*/
-        color:<?php echo $library_boxheader_text_color; ?>;
+        color:<?php echo $library_links_hover_color; ?>;
 }
 
 #genre_artist_search {
@@ -309,12 +308,12 @@ ul.marquee li {
 
 #genre_artist_search a {
         text-decoration: none;
-        color:<?php echo $library_boxheader_text_color; ?>;
+        color:<?php echo $library_links_color; ?>;
 }
 
 #genre_artist_search a:hover {
 /*		text-decoration: underline;*/
-        color:<?php echo $library_boxheader_text_color; ?>;
+        color:<?php echo $library_links_hover_color; ?>;
 }
 
 #artist_searchBox {
@@ -330,16 +329,6 @@ ul.marquee li {
         overflow-x:hidden;
         height:79px;
         margin: 0px 0 0 30px;
-}
-
-#artist_searchBox a {
-        text-decoration: none;
-        color:<?php echo $library_links_color; ?>;
-}
-
-#artist_searchBox a:hover {
-        text-decoration: none;
-        color:<?php echo $library_links_hover_color; ?>;
 }
 
 .artist_line {
@@ -531,7 +520,7 @@ ul.marquee li {
 
 #genreArtist a {
 	text-decoration: none;
-	color: <?php echo $library_boxheader_text_color; ?>;
+	color: <?php echo $library_links_color; ?>;
 }
 
 #genreAlbum {
@@ -548,7 +537,7 @@ ul.marquee li {
 
 #genreAlbum a {
 	text-decoration: none;
-	color: <?php echo $library_boxheader_text_color; ?>;
+	color: <?php echo $library_links_color; ?>;
 }
 
 #genreTrack {
@@ -565,7 +554,7 @@ ul.marquee li {
 
 #genreTrack a {
 	text-decoration: none;
-	color: <?php echo $library_boxheader_text_color; ?>;
+	color: <?php echo $library_links_color; ?>;
 }
 
 #genreDownload {
@@ -1305,4 +1294,62 @@ div.message {
 #wishlistText a:hover {
 	text-decoration: underline;
 	color: #666;
+}
+
+.toolTip {
+
+        padding-right: 20px;
+        color: #3366FF;
+
+        cursor: help;
+
+        position: relative;
+
+}
+
+.toolTipWrapper {
+
+        width: 175px;
+
+        position: absolute;
+
+        top: 20px;
+
+        display: none;
+
+        color: #FFF;
+
+        font-weight: bold;
+
+        font-size: 9pt;
+
+}
+
+.toolTipTop {
+
+        width: 175px;
+
+        height: 30px;
+
+        background: url(../img/nav_back_grey.png) no-repeat;
+
+}
+
+.toolTipMid {
+
+        padding: 8px 15px;
+
+        background: #A1D40A url(../img/nav_back_grey.png) repeat-x top;
+
+}
+
+.toolTipBtm {
+
+        height: 13px;
+
+        background: url(../img/nav_back_grey.png) no-repeat;
+
+}
+.qtip-content {
+    font-size:12px;
 }
