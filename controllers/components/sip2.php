@@ -201,8 +201,8 @@ class sip2Component extends Object {
         $this->_addFixedOption($this->_datestamp(), 18);
         $this->_addVarOption('AO',$this->AO);
         $this->_addVarOption('AA',$this->patron);
-        $this->_addVarOption('AC',$this->AC, true);
-        $this->_addVarOption('AD',$this->patronpwd, true);
+        $this->_addVarOption('AC',$this->AC);
+        $this->_addVarOption('AD',$this->patronpwd);
         return $this->_returnMessage();
     }
     
@@ -638,12 +638,12 @@ class sip2Component extends Object {
                 return false;
             }
         }
+
         return $result;
     }	
 
     function connect() 
     {
-
         /* Socket Communications  */
         $this->_debugmsg( "SIP2: --- BEGIN SIP communication ---");  
         
@@ -663,6 +663,7 @@ class sip2Component extends Object {
         $this->_debugmsg( "SIP2: Attempting to connect to '$address' on port '{$this->port}'..."); 
 
         /* open a connection to the host */
+
         $result = socket_connect($this->socket, $address, $this->port);		
         if (!$result) {
             $this->_debugmsg("SIP2: socket_connect() failed.\nReason: ($result) " . socket_strerror($result));
