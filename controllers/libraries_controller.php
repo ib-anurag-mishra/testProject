@@ -1,7 +1,7 @@
 <?php
 /*
  File Name : libraries_controller.php
- File Descr : Library controller page
+ File Description : Library controller page
  Author : maycreate
  */
  
