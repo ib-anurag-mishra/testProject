@@ -12,6 +12,7 @@
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_host_name'] = "";
 		$getData['Library']['library_port_no'] = "";
+		$getData['Library']['library_pin_no'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
@@ -124,8 +125,12 @@
 						<td align="left"><?php echo $this->Form->input('library_host_name',array( 'label' => false ,'value' => $getData['Library']['library_host_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr id="sip_port" <?php if($getData['Library']['library_authentication_method'] != "sip"){?>style="display:none;"<?php } ?>>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Port No');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Port Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_port_no',array( 'label' => false ,'value' => $getData['Library']['library_port_no'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="sip_pin" <?php if($getData['Library']['library_authentication_method'] != "sip"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Pin Number');?></td>
+						<td align="left"><?php echo $this->Form->input('library_pin_no',array( 'label' => false ,'value' => $getData['Library']['library_pin_no'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
@@ -414,35 +419,40 @@
 						$("#innovative1").hide();
 						$("#innovative2").hide();
 						$("#sip_host").hide();
-						$("#sip_port").hide();			
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
 					}
 					else if ($(this).val() == 'innovative') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
 						$("#sip_host").hide();
-						$("#sip_port").hide();			
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
 					}
 					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
 						$("#sip_host").hide();
-						$("#sip_port").hide();			
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
 					}
 					else if ($(this).val() == 'sip') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
 						$("#sip_host").show();
-						$("#sip_port").show();			
+						$("#sip_port").show();
+						$("#sip_pin").show();	
 					}
 					else {
 						$("#referral_url").hide();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
 						$("#sip_host").hide();
-						$("#sip_port").hide();						
+						$("#sip_port").hide();
+						$("#sip_pin").hide();	
 					}
 				});
 			});
