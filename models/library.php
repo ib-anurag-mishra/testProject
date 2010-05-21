@@ -1,7 +1,7 @@
 <?php
 /*
  File Name : library.php
- File Descr : Models page for the  libraries functionality.
+ File Description : Models page for the  libraries functionality.
  Author : maycreate
 */
  
