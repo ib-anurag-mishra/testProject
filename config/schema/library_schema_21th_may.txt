@@ -1,1 +1,0 @@
-ALTER TABLE `libraries` ADD `library_pin_no` INT( 20 ) NULL AFTER `library_host_name` 
