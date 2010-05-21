@@ -67,7 +67,7 @@
 					if($getData['Library']['library_authentication_method'] != "") {
 					?>
 					<tr>
-						<td align="right" width="255"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
 						<td align="left">
 							<?php
 								if($getData['Library']['library_authentication_method'] == "referral_url") {
@@ -94,7 +94,7 @@
 					else {
 					?>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
+						<td align="right" width="255"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
 						<td align="left">
 							<?php
 								echo $this->Form->input('library_authentication_method', array('options' => array(
