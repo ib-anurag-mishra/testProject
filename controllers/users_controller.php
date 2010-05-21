@@ -764,7 +764,7 @@ function slogin(){
 			$cardNo = substr($card,0,5);
 			$this->Library->recursive = -1;
 			$existingLibraries = $this->Library->find('all',array(
-												'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip')
+												'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2')
 												)
 											 ); 
 
@@ -863,7 +863,7 @@ function slogin(){
 									  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
 								}else{
 									  $this->Session->destroy('user');
-									  $this -> Session -> setFlash("Unable to Connect.");                              
+									  $this -> Session -> setFlash("The Card No is Invalid.");                              
 									  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 								}
@@ -871,19 +871,19 @@ function slogin(){
 								
 							}else{
 								  $this->Session->destroy('user');
-								  $this -> Session -> setFlash("Unable to Connect.");                              
+								  $this -> Session -> setFlash("Authentication server down.");                              
 								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 						}
 					}else{
 						  $this->Session->destroy('user');
-						  $this -> Session -> setFlash("Unable to Connect.");                              
+						  $this -> Session -> setFlash("Authentication server down.");                              
 						  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 					}
 				}else{
 					$this->Session->destroy('user');
-					$this -> Session -> setFlash("Unable to Connect.");                              
+					$this -> Session -> setFlash("Authentication server down.");                              
 					$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 				}
@@ -917,10 +917,9 @@ function snlogin(){
 			$cardNo = substr($card,0,5);
 			$this->Library->recursive = -1;
 			$existingLibraries = $this->Library->find('all',array(
-												'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip')
+												'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2_wo_pin')
 												)
 											 ); 
-
 			if(count($existingLibraries) == 0){
 				$this -> Session -> setFlash("This is not a valid credential.");
 				$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
@@ -1018,7 +1017,7 @@ function snlogin(){
 									  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
 								}else{
 									  $this->Session->destroy('user');
-									  $this -> Session -> setFlash("Unable to Connect.");                              
+									  $this -> Session -> setFlash("The Card No is Invalid.");                              
 									  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 								}
@@ -1026,19 +1025,19 @@ function snlogin(){
 								
 							}else{
 								  $this->Session->destroy('user');
-								  $this -> Session -> setFlash("Unable to Connect.");                              
+								  $this -> Session -> setFlash("Authentication server down.");                              
 								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 						}
 					}else{
 						  $this->Session->destroy('user');
-						  $this -> Session -> setFlash("Unable to Connect.");                              
+						  $this -> Session -> setFlash("Authentication server down.");                              
 						  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 					}
 				}else{
 					$this->Session->destroy('user');
-					$this -> Session -> setFlash("Unable to Connect.");                              
+					$this -> Session -> setFlash("Authentication server down.");                              
 					$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 
 				}
