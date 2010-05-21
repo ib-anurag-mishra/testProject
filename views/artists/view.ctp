@@ -1,39 +1,6 @@
 <?php echo $javascript->link('freegal_artist_curvy'); ?>
 <?php echo $javascript->link('qtip'); ?>
-<script type="text/javascript">
-// Create the tooltips only on document load
-
-$(document).ready(function()
-{
-   $('a[title]').qtip({
-      position: {
-         corner: {
-            target: 'topLeft',
-            tooltip: 'bottomRight'
-         }
-      },
-      style: {
-         name: 'cream',
-         padding: '5px 10px',
-         width: {
-            max: 350,
-            min: 0
-         },
-		border: {
-			width: 1,
-			radius: 8,
-			color: '#FAF7AA'
-		},
-         tip: true
-      }
-   });
-});
-</script>
-<style type="text/css">
-.qtip-content {
-    font-size:12px;
-}
-</style>
+<?php echo $javascript->link('qtip_add'); ?>
 <div id="artistBox">
 	<?php echo $artistName; ?>
 </div>

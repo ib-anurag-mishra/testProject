@@ -1,39 +1,6 @@
 <script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
 <?php echo $javascript->link('qtip'); ?>
-<script type="text/javascript">
-// Create the tooltips only on document load
-
-$(document).ready(function()
-{
-   $('a[title]').qtip({
-      position: {
-         corner: {
-            target: 'topLeft',
-            tooltip: 'bottomRight'
-         }
-      },
-      style: {
-         name: 'cream',
-         padding: '5px 10px',
-         width: {
-            max: 350,
-            min: 0
-         },
-		border: {
-			width: 1,
-			radius: 8,
-			color: '#FAF7AA'
-		},
-         tip: true
-      }
-   });
-});
-</script>
-<style type="text/css">
-.qtip-content {
-    font-size:12px;
-}
-</style>
+<?php echo $javascript->link('qtip_add'); ?>
 <div id="genre">
 	Search Results
 </div>
@@ -181,8 +148,8 @@ $(document).ready(function()
 </div>
 <div class="paging">
         <?php //$paginator->options(array('search_key' => 'Acda & De Munnik'));
-        //$paginator->options(array('url' => $this->data['Home']));        
-        $paginator->options(array('url' => $this->passedArgs,'escape' => false));
+        //$paginator->options(array('url' => $this->data['Home']));
+        $paginator->options(array('url' => array("?"=>$searchKey)));
         ?>
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
   	<?php echo $paginator->numbers();?>
