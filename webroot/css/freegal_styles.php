@@ -1296,60 +1296,6 @@ div.message {
 	color: #666;
 }
 
-.toolTip {
-
-        padding-right: 20px;
-        color: #3366FF;
-
-        cursor: help;
-
-        position: relative;
-
-}
-
-.toolTipWrapper {
-
-        width: 175px;
-
-        position: absolute;
-
-        top: 20px;
-
-        display: none;
-
-        color: #FFF;
-
-        font-weight: bold;
-
-        font-size: 9pt;
-
-}
-
-.toolTipTop {
-
-        width: 175px;
-
-        height: 30px;
-
-        background: url(../img/nav_back_grey.png) no-repeat;
-
-}
-
-.toolTipMid {
-
-        padding: 8px 15px;
-
-        background: #A1D40A url(../img/nav_back_grey.png) repeat-x top;
-
-}
-
-.toolTipBtm {
-
-        height: 13px;
-
-        background: url(../img/nav_back_grey.png) no-repeat;
-
-}
 .qtip-content {
     font-size:12px;
 }
