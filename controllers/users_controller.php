@@ -389,6 +389,99 @@ Class UsersController extends AppController
        $this->redirect('manageuser');
      }
    }
+
+    /*
+     Function Name : admin_user_activate
+     Desc : For activating a User
+    */
+	
+    function admin_user_activate() {
+        $userID = $this->params['named']['id'];
+        if(trim($userID) != "" && is_numeric($userID)) {
+			$existingUser = $this->User->getuserdata($userID);
+            $this->User->id = $userID;
+			$this->User->set(array('user_status' => 'active','type_id'=>$existingUser['User']['type_id']));
+            $this->Session -> setFlash( 'User deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->User->save();
+            $this->autoRender = false;
+            $this->redirect('manageuser');
+        }
+        else {
+            $this->Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
+            $this->autoRender = false;
+            $this->redirect('manageuser');
+        }
+    }
+	
+    /*
+     Function Name : admin_user_deactivate
+     Desc : For deactivating a User
+    */
+	
+    function admin_user_deactivate() {
+        $userID = $this->params['named']['id'];
+        if(trim($userID) != "" && is_numeric($userID)) {
+			$existingUser = $this->User->getuserdata($userID);
+            $this->User->id = $userID;
+			$this->User->set(array('user_status' => 'inactive','type_id'=>$existingUser['User']['type_id']));
+            $this->Session -> setFlash( 'User deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->User->save();
+            $this->autoRender = false;
+            $this->redirect('manageuser');
+        }
+        else {
+            $this->Session->setFlash('Error occured while deactivating the User', 'modal', array('class' => 'modal problem'));
+            $this->autoRender = false;
+            $this->redirect('manageuser');
+        }
+    }
+    
+    /*
+     Function Name : admin_user_activate
+     Desc : For activating a User
+    */
+	
+    function admin_patron_activate() {
+        $userID = $this->params['named']['id'];
+        if(trim($userID) != "" && is_numeric($userID)) {
+			$existingUser = $this->User->getuserdata($userID);
+            $this->User->id = $userID;
+			$this->User->set(array('user_status' => 'active','type_id'=>$existingUser['User']['type_id']));
+            $this->Session -> setFlash( 'Patron Activated successfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->User->save();
+            $this->autoRender = false;
+            $this->redirect('managepatron');
+        }
+        else {
+            $this->Session -> setFlash( 'Error occured while activating the library', 'modal', array( 'class' => 'modal problem' ) );
+            $this->autoRender = false;
+            $this->redirect('managepatron');
+        }
+    }
+	
+    /*
+     Function Name : admin_user_deactivate
+     Desc : For deactivating a User
+    */
+	
+    function admin_patron_deactivate() {
+        $userID = $this->params['named']['id'];
+        if(trim($userID) != "" && is_numeric($userID)) {
+			$existingUser = $this->User->getuserdata($userID);
+            $this->User->id = $userID;
+			$this->User->set(array('user_status' => 'inactive','type_id'=>$existingUser['User']['type_id']));
+            $this->Session -> setFlash( 'Patron deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->User->save();
+            $this->autoRender = false;
+            $this->redirect('managepatron');
+        }
+        else {
+            $this->Session->setFlash('Error occured while deactivating the User', 'modal', array('class' => 'modal problem'));
+            $this->autoRender = false;
+            $this->redirect('managepatron');
+        }
+    }
+    
    
    /*
     Function Name : _sendNewPatronMail
