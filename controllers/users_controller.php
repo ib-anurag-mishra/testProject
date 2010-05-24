@@ -99,7 +99,7 @@ Class UsersController extends AppController
       $typeId = $this->Session->read('Auth.User.type_id');
 	  if($this->Session->read('Auth.User.user_status')=='inactive'){
 		  $this->Session->destroy('user'); 
-		  $this -> Session -> setFlash("This account is Inactive.");
+		  $this -> Session -> setFlash("This account has been deactivated.  Please contact your administrator for further questions.");
 		  $this->redirect(array('controller' => 'users', 'action' => 'login'));	
 	  }	  
       if($typeId == '5'){
