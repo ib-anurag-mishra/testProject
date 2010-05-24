@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `user_status` ENUM( 'active', 'inactive' ) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active' AFTER `library_id` 
