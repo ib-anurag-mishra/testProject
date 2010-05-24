@@ -15,6 +15,7 @@ echo $paginator->counter(array(
             <th class="left">Email</th>
 	    <th class="left">Libary Name</th>
             <th>Edit</th>
+			<th>Action</th>
 	    <!-- <th>Delete</th> -->
           </tr>
           <?php
@@ -26,7 +27,15 @@ echo $paginator->counter(array(
                 <td class="left"><?php echo $patron['User']['last_name'];?></td>
                 <td class="left"><?php echo $patron['User']['email'];?></td>
 		<td class="left"><?php echo $library->getLibraryName($patron['User']['library_id']); ?></td>
-                <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'patronform','id'=>$patron['User']['id']));?></td>
+        <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'patronform','id'=>$patron['User']['id']));?></td>
+		<td>
+		<?php if($patron['User']['user_status']=='inactive'){
+			echo $html->link('Activate', array('controller'=>'users','action'=>'patron_activate','id'=>$patron['User']['id']));
+		}else{
+			echo $html->link('Deactivate', array('controller'=>'users','action'=>'patron_deactivate','id'=>$patron['User']['id']));
+		}
+		?>
+		</td>
 		<?php
 		if($patron['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $patron['User']['id']) {
 		?>
