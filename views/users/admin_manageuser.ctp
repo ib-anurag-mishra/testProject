@@ -13,8 +13,9 @@ echo $paginator->counter(array(
             <th class="left">First Name</th>
             <th class="left">Last Name</th>
             <th class="left">Email</th>
-	    <th class="left">Admin Type</th>
+			<th class="left">Admin Type</th>
             <th>Edit</th>
+			<th>Action</th>
 	    <!-- <th>Delete</th> -->
           </tr>
           <?php
@@ -26,7 +27,18 @@ echo $paginator->counter(array(
                 <td class="left"><?php echo $admin['User']['last_name'];?></td>
                 <td class="left"><?php echo $admin['User']['email'];?></td>
 		<td class="left"><?php echo $user->getAdminType($admin['User']['type_id']); ?></td>
-                <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'userform','id'=>$admin['User']['id']));?></td>
+        <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'userform','id'=>$admin['User']['id']));?></td>
+		<td>
+		<?php
+		if($admin['User']['type_id']!=1){
+			if($admin['User']['user_status']=='inactive'){
+				echo $html->link('Activate', array('controller'=>'users','action'=>'user_activate','id'=>$admin['User']['id']));
+			}else{
+				echo $html->link('Deactivate', array('controller'=>'users','action'=>'user_deactivate','id'=>$admin['User']['id']));
+			}
+		}
+		?>
+		</td>
 		<?php
 		if($admin['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $admin['User']['id']) {
 		?>
