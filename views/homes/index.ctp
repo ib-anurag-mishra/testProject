@@ -120,7 +120,9 @@
             endforeach;
             ?>
     </div>
-    <div id="artist_search"><a name="bottom">
+    <div id="artist_search">
+		<div id="artist_links">
+		<a name="bottom">
 		Artist Search&nbsp;&nbsp;
 		<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;
 		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
@@ -153,6 +155,7 @@
         <a href="#bottom" onclick="searchArtist('x')">X</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('z')">Z</a>
+		</div>
         <div id="artist_searchBox">
             <div class="scrollarea">
                     <table cellspacing="0" cellpadding="0">
