@@ -1,0 +1,2 @@
+ALTER TABLE `libraries` ADD `library_box_header_color` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `library_navlinks_hover_color`  ,
+ADD `library_box_hover_color` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL AFTER `library_box_header_color` 
