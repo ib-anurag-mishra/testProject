@@ -21,6 +21,8 @@
 		$getData['Library']['library_links_hover_color'] = "000000";
 		$getData['Library']['library_navlinks_color'] = "FFFFFF";
 		$getData['Library']['library_navlinks_hover_color'] = "FFFFFF";
+		$getData['Library']['library_box_header_color'] = "FFFFFF";
+		$getData['Library']['library_box_hover_color'] = "FFFFFF";
 		$getData['Library']['library_contact_fname'] = "";
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
@@ -168,6 +170,15 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Navigation Links Hover Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_navlinks_hover_color',array('label' => false ,'value' => $getData['Library']['library_navlinks_hover_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
 					</tr>
+
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Box Header Links Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_box_header_color',array('label' => false ,'value' => $getData['Library']['library_box_header_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Box Header Links Hover Color');?></td>
+						<td align="left"><?php echo $this->Form->input('library_box_hover_color',array('label' => false ,'value' => $getData['Library']['library_box_hover_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
+					</tr>					
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Contact');?></td></tr>
 					<tr>
