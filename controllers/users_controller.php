@@ -10,7 +10,7 @@ Class UsersController extends AppController
    var $name = 'Users';
    var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page');
    var $layout = 'admin';
-   var $components = array('Session','Auth','Acl','PasswordHelper','Email','Sip2');
+   var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2');
    var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download');
    
    /*
@@ -158,7 +158,7 @@ Class UsersController extends AppController
             $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
             $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
             $this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
-	    $this->Download->recursive = -1;
+			$this->Download->recursive = -1;
             $results =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
             $this ->Session->write("downloadsUsed", $results);            
             if($libraryArr['Library']['library_block_explicit_content'] == '1'){
@@ -423,7 +423,7 @@ Class UsersController extends AppController
 			$existingUser = $this->User->getuserdata($userID);
             $this->User->id = $userID;
 			$this->User->set(array('user_status' => 'active','type_id'=>$existingUser['User']['type_id']));
-            $this->Session -> setFlash( 'User deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->Session -> setFlash( 'User activated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->User->save();
             $this->autoRender = false;
             $this->redirect('manageuser');
@@ -469,7 +469,7 @@ Class UsersController extends AppController
 			$existingUser = $this->User->getuserdata($userID);
             $this->User->id = $userID;
 			$this->User->set(array('user_status' => 'active','type_id'=>$existingUser['User']['type_id']));
-            $this->Session -> setFlash( 'Patron Activated successfully!', 'modal', array( 'class' => 'modal success' ) );
+            $this->Session -> setFlash( 'Patron activated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->User->save();
             $this->autoRender = false;
             $this->redirect('managepatron');
@@ -1058,6 +1058,7 @@ Class UsersController extends AppController
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 
 						if($mysip->connect()) {
+							print "here";exit;
 							//send selfcheck status message
 							$in = $mysip->msgSCStatus();
 							$msg_result = $mysip->get_message($in);
