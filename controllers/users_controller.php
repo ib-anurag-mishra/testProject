@@ -894,7 +894,7 @@ Class UsersController extends AppController
 				}        
 				else{
 						//Start
-						$mysip = new $this->Sip2;
+						$mysip = new $this->sip2;
 						$mysip->hostname = $existingLibraries['0']['Library']['library_host_name'];
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 						if($mysip->connect()) {
@@ -1058,7 +1058,6 @@ Class UsersController extends AppController
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 
 						if($mysip->connect()) {
-							print "here";exit;
 							//send selfcheck status message
 							$in = $mysip->msgSCStatus();
 							$msg_result = $mysip->get_message($in);
