@@ -208,7 +208,7 @@ $(function() {
 		});
 	});
 	
-	$('#LibraryLibraryBgcolor, #LibraryLibraryNavBgcolor, #LibraryLibraryBoxheaderBgcolor, #LibraryLibraryBoxheaderTextColor, #LibraryLibraryTextColor, #LibraryLibraryLinksColor, #LibraryLibraryLinksHoverColor, #LibraryLibraryNavlinksColor, #LibraryLibraryNavlinksHoverColor').ColorPicker({
+	$('#LibraryLibraryBgcolor, #LibraryLibraryNavBgcolor, #LibraryLibraryBoxheaderBgcolor, #LibraryLibraryBoxheaderTextColor, #LibraryLibraryTextColor, #LibraryLibraryLinksColor, #LibraryLibraryLinksHoverColor, #LibraryLibraryNavlinksColor, #LibraryLibraryNavlinksHoverColor, #LibraryLibraryBoxHeaderColor, #LibraryLibraryBoxHoverColor').ColorPicker({
 		onSubmit: function(hsb, hex, rgb, el) {
 			$(el).val(hex.toUpperCase());
 			$(el).ColorPickerHide();
