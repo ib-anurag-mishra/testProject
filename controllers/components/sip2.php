@@ -6,6 +6,9 @@ class sip2Component extends Object {
     public $library      = ''; 
     public $language     = '001'; /* 001= english */
 
+	public $sip_login;
+	public $sip_password;
+
     /* Patron ID */
     public $patron       = ''; /* AA */
     public $patronpwd    = ''; /* AD */
@@ -29,7 +32,7 @@ class sip2Component extends Object {
     public $debug        = false;
     
     /* Private variables for building messages */
-    public $AO = 'WohlersSIP';
+    public $AO = 'm68InteractiveSIP';
     public $AN = 'SIPCHK';
     
     /* Private variable to hold socket connection */

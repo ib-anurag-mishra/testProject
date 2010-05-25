@@ -12,6 +12,8 @@
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_host_name'] = "";
 		$getData['Library']['library_port_no'] = "";
+		$getData['Library']['library_sip_login'] = "";
+		$getData['Library']['library_sip_password'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
@@ -82,10 +84,10 @@
 									echo "<label>Innovative</label>";
 								}
 								elseif($getData['Library']['library_authentication_method'] == "sip2") {
-									echo "<label>SIP2 Authentication</label>";
+									echo "<label>SIP2</label>";
 								}
 								elseif($getData['Library']['library_authentication_method'] == "sip2_wo_pin") {
-									echo "<label>SIP2 Authentication w/o Pin</label>";
+									echo "<label>SIP2 w/o Pin</label>";
 								}
 								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
 							?>
@@ -101,7 +103,9 @@
 							<?php
 								echo $this->Form->input('library_authentication_method', array('options' => array(
 									'' => 'Select a Method',
-									'referral_url' => 'Referral URL','sip2' => 'SIP2 Authentication','sip2_wo_pin' => 'SIP2 Authentication w/o Pin',
+									'referral_url' => 'Referral URL',
+									'sip2' => 'SIP2',
+									'sip2_wo_pin' => 'SIP2 w/o Pin',
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
 									'innovative_wo_pin' => 'Innovative w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
@@ -131,6 +135,14 @@
 					<tr id="sip_port" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Port Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_port_no',array( 'label' => false ,'value' => $getData['Library']['library_port_no'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="sip_login" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Login');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_sip_login',array('label' => false, 'value' => $getData['Library']['library_sip_login'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="sip_password" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Password');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_sip_password',array('label' => false, 'value' => $getData['Library']['library_sip_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
@@ -430,6 +442,8 @@
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'innovative') {
 						$("#referral_url").hide();
@@ -438,6 +452,8 @@
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#referral_url").hide();
@@ -446,6 +462,8 @@
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'sip2') {
 						$("#referral_url").hide();
@@ -453,7 +471,9 @@
 						$("#innovative2").hide();
 						$("#sip_host").show();
 						$("#sip_port").show();
-						$("#sip_pin").show();	
+						$("#sip_pin").show();
+						$("#sip_login").show();
+						$("#sip_password").show();	
 					}
 					else if ($(this).val() == 'sip2_wo_pin') {
 						$("#referral_url").hide();
@@ -461,7 +481,9 @@
 						$("#innovative2").hide();
 						$("#sip_host").show();
 						$("#sip_port").show();
-						$("#sip_pin").show();	
+						$("#sip_pin").show();
+						$("#sip_login").show();
+						$("#sip_password").show();	
 					}					
 					else {
 						$("#referral_url").hide();
@@ -469,7 +491,9 @@
 						$("#innovative2").hide();
 						$("#sip_host").hide();
 						$("#sip_port").hide();
-						$("#sip_pin").hide();	
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_password").hide();	
 					}
 				});
 			});

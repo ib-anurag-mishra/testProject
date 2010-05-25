@@ -897,7 +897,15 @@ Class UsersController extends AppController
 						$mysip = new $this->sip2;
 						$mysip->hostname = $existingLibraries['0']['Library']['library_host_name'];
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
+						$mysip->sip_login = $existingLibraries['0']['Library']['library_sip_login'];
+						$mysip->sip_password = $existingLibraries['0']['Library']['library_sip_password'];
 						if($mysip->connect()) {
+							
+							if(!empty($mysip->sip_login)){
+								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password);
+								$mysip->parseLoginResponse($mysip->get_message($sc_login));
+							}
+							
 							//send selfcheck status message
 							$in = $mysip->msgSCStatus();
 							$msg_result = $mysip->get_message($in);

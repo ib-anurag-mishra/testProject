@@ -107,6 +107,8 @@ class Library extends AppModel
                                       ),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
 	  'library_port_no' => array('rule' => array('custom', '/\S+/'),  'message' => 'Please provide a Library Port No.'),
+	  'library_sip_login' => array('allowEmpty' => true),
+	  'library_sip_password' => array('allowEmpty' => true),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
@@ -121,6 +123,8 @@ class Library extends AppModel
                                       ),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
 	  'library_port_no' => array('rule' => array('custom', '/\S+/'),  'message' => 'Please provide a Library Port No.'),
+	  'library_sip_login' => array('allowEmpty' => true),
+	  'library_sip_password' => array('allowEmpty' => true),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
