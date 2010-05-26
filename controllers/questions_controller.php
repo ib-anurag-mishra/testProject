@@ -34,7 +34,7 @@ class QuestionsController extends AppController
 		$this->layout = 'home';
 		$this->Question->recursive = 0;
 		$this->paginate = array('conditions' => array(),		     
-		      'order' => 'Section.Title ASC, Question.id ASC',
+		      'order' => 'Question.sort_id ASC',
 		);	
 		$questions = $this->paginate('Question');				
 		$this->set('questions', $this->paginate());
@@ -60,7 +60,7 @@ class QuestionsController extends AppController
 		$this->layout = 'admin';
 		$this->Question->recursive = 0;
 		$this->paginate = array('conditions' => array(),		     
-		      'order' => 'Section.Title ASC, Question.id ASC'		     
+		      'order' => 'Question.sort_id ASC'		     
 		);
 		$this->set('questions', $this->paginate());
 	}
@@ -138,6 +138,14 @@ class QuestionsController extends AppController
 		}
 		$this->Session->setFlash(sprintf(__('%s was not deleted', true), 'Question'));
 		$this->redirect(array('action' => 'index'));
+	}
+	function admin_reorder(){
+		$list = $this->params['url']['table_1'];
+		$all_data = $this->Question->find("all");
+		for($i=0;$i<count($all_data);$i++){
+			$sql = "UPDATE questions SET sort_id=".$i." WHERE id=".$list[$i];
+			mysql_query($sql);
+		}
 	}
 }
 ?>
