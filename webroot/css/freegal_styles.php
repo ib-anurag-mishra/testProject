@@ -309,11 +309,11 @@ ul.marquee li {
 }
 .links a {
         text-decoration: none;
-        color:<?php echo $library_links_color; ?> !important;
+        color:<?php echo $library_box_header_color; ?> !important;
 }
 
 .links a:hover {
-        color:<?php echo $library_links_hover_color; ?> !important;
+        color:<?php echo $library_box_hover_color; ?> !important;
 }
 #genre_artist_search {
         font-size:13px;
