@@ -5,8 +5,7 @@ if(isset($_REQUEST['library_bgcolor']) && isset($_REQUEST['library_content_bgcol
    isset($_REQUEST['library_nav_bgcolor']) && isset($_REQUEST['library_boxheader_bgcolor']) &&
    isset($_REQUEST['library_boxheader_text_color']) && isset($_REQUEST['library_text_color']) &&
    isset($_REQUEST['library_links_color']) && isset($_REQUEST['library_links_hover_color']) &&
-   isset($_REQUEST['library_navlinks_color']) && isset($_REQUEST['library_navlinks_hover_color']) &&
-   isset($_REQUEST['library_box_header_color']) && isset($_REQUEST['library_box_hover_color'])) {
+   isset($_REQUEST['library_navlinks_color']) && isset($_REQUEST['library_navlinks_hover_color'])) {
     $library_bgcolor = "#".$_REQUEST['library_bgcolor'];
     $library_content_bgcolor = "#".$_REQUEST['library_content_bgcolor'];
     $library_nav_bgcolor = "#".$_REQUEST['library_nav_bgcolor'];
@@ -17,8 +16,7 @@ if(isset($_REQUEST['library_bgcolor']) && isset($_REQUEST['library_content_bgcol
     $library_links_hover_color = "#".$_REQUEST['library_links_hover_color'];
     $library_navlinks_color = "#".$_REQUEST['library_navlinks_color'];
     $library_navlinks_hover_color = "#".$_REQUEST['library_navlinks_hover_color'];
-	$library_box_header_color = "#".$_REQUEST['library_box_header_color'];
-	$library_box_hover_color = "#".$_REQUEST['library_box_hover_color'];
+
 }
 else {
     $library_bgcolor = "#606060";
@@ -31,6 +29,12 @@ else {
     $library_links_hover_color = "#000000";
     $library_navlinks_color = "#FFFFFF";
     $library_navlinks_hover_color = "#FFFFFF";
+}
+if($_REQUEST['library_box_header_color']!='' && $_REQUEST['library_box_hover_color']!=''){
+	$library_box_header_color = "#".$_REQUEST['library_box_header_color'];
+	$library_box_hover_color = "#".$_REQUEST['library_box_hover_color'];
+}
+else{
 	$library_box_header_color = "#FFFFFF";
 	$library_box_hover_color = "#FFFFFF";
 }
