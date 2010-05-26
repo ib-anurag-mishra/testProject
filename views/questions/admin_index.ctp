@@ -9,6 +9,7 @@
 			<th><?php echo $this->Paginator->sort('question');?></th>
 			<th class="actions"><?php __('Actions');?></th>
 	</tr>
+	<TBODY>
 	<?php
 	$i = 0;
 	foreach ($questions as $question):
@@ -17,11 +18,12 @@
 			$class = ' class="altrow"';
 		}
 	?>
+
 	<tr<?php echo $class;?> id="<?php echo $question['Question']['id']; ?>">
 		<td>
 			<?php echo $this->Html->link($question['Section']['title'], array('controller' => 'sections', 'action' => 'view', $question['Section']['id'])); ?>
 		</td>
-		<td><?php echo $question['Question']['question']; ?><?php echo $question['Question']['id']; ?>&nbsp;</td>
+		<td><?php echo $question['Question']['question']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $question['Question']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $question['Question']['id'])); ?>
@@ -29,6 +31,7 @@
 		</td>
 	</tr>
 <?php endforeach; ?>
+	</TBODY>
 	</table>
 	<p>
 	<?php
