@@ -319,6 +319,15 @@ ul.marquee li {
 .links a:hover {
         color:<?php echo $library_box_hover_color; ?> !important;
 }
+
+.download_links a {
+        text-decoration: none;
+        color:<?php echo $library_links_color; ?> !important;
+}
+
+.download_links a:hover {
+        color:<?php echo $library_links_hover_color; ?> !important;
+}
 #genre_artist_search {
         font-size:13px;
         clear:both;
