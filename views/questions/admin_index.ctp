@@ -1,7 +1,9 @@
+<?php echo $javascript->link('dragdrop'); ?>
+<?php echo $javascript->link('dragdrop_add'); ?>
 <?php $this->pageTitle = 'Content'; ?>
-<div class="questions index">
+<div class="questions index" id="content">
 	<h2><?php __('FAQs');?></h2>
-	<table cellpadding="0" cellspacing="0">
+	<table cellpadding="0" cellspacing="0" id="table_1">
 	<tr>
 			<th><?php echo $this->Paginator->sort('section_id');?></th>
 			<th><?php echo $this->Paginator->sort('question');?></th>
@@ -15,11 +17,11 @@
 			$class = ' class="altrow"';
 		}
 	?>
-	<tr<?php echo $class;?>>
+	<tr<?php echo $class;?> id="<?php echo $question['Question']['id']; ?>">
 		<td>
 			<?php echo $this->Html->link($question['Section']['title'], array('controller' => 'sections', 'action' => 'view', $question['Section']['id'])); ?>
 		</td>
-		<td><?php echo $question['Question']['question']; ?>&nbsp;</td>
+		<td><?php echo $question['Question']['question']; ?><?php echo $question['Question']['id']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('View', true), array('action' => 'view', $question['Question']['id'])); ?>
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $question['Question']['id'])); ?>
