@@ -1019,6 +1019,7 @@ font-size: 13px;
 .answer {
 padding: 5px 10px 5px;
 background-color:<?php echo $library_boxheader_bgcolor; ?>;
+color:<?php echo $library_boxheader_text_color; ?>;
 //background-color:#d8d8d8;
 margin-left: 100px;
 font-size: 13px;
