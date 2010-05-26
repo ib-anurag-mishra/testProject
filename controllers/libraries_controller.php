@@ -136,7 +136,7 @@ Class LibrariesController extends AppController
 																				'Library.library_host_name',
 																				'Library.library_port_no',
 																				'Library.library_sip_login',
-																				'library.library_sip_password',
+																				'Library.library_sip_password',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
