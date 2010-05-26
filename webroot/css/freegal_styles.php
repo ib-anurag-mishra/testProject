@@ -1006,7 +1006,7 @@ margin: 10px 10px 0 10px;
 padding: 0px;
 width: 875px;
 font-size: 13px;
-color:<?php echo $library_boxheader_text_color; ?>;
+color:<?php echo $library_text_color; ?>;
 }
 .question {
 padding: 5px 10px;
