@@ -190,6 +190,7 @@ ul.marquee li {
         padding-top:15px;
     text-align: left;
     background-color: <?php echo $library_content_bgcolor; ?>;
+	color: <?php echo $library_links_color; ?>;
     border: 1px solid #999;
         line-height:15px;
 }
@@ -308,11 +309,11 @@ ul.marquee li {
 }
 .links a {
         text-decoration: none;
-        color:<?php echo $library_box_header_color; ?> !important;
+        color:<?php echo $library_links_color; ?> !important;
 }
 
 .links a:hover {
-        color:<?php echo $library_box_hover_color; ?> !important;
+        color:<?php echo $library_links_hover_color; ?> !important;
 }
 #genre_artist_search {
         font-size:13px;
@@ -328,12 +329,12 @@ ul.marquee li {
 
 #genre_artist_search a {
         text-decoration: none;
-        color:<?php echo $library_links_color; ?>;
+        color:<?php echo $library_box_header_color; ?>;
 }
 
 #genre_artist_search a:hover {
 /*		text-decoration: underline;*/
-        color:<?php echo $library_links_hover_color; ?>;
+        color:<?php echo $library_box_hover_color; ?>;
 }
 
 #artist_searchBox {
@@ -540,7 +541,7 @@ ul.marquee li {
 
 #genreArtist a {
 	text-decoration: none;
-	color: <?php echo $library_links_color; ?>;
+	color: <?php echo $library_box_header_color; ?>;
 }
 
 #genreAlbum {
@@ -557,7 +558,7 @@ ul.marquee li {
 
 #genreAlbum a {
 	text-decoration: none;
-	color: <?php echo $library_links_color; ?>;
+	color: <?php echo $library_box_header_color; ?>;
 }
 
 #genreTrack {
@@ -574,7 +575,7 @@ ul.marquee li {
 
 #genreTrack a {
 	text-decoration: none;
-	color: <?php echo $library_links_color; ?>;
+	color: <?php echo $library_box_header_color; ?>;
 }
 
 #genreDownload {
@@ -663,7 +664,7 @@ ul.marquee li {
 
 #genreResults a:hover {
 	text-decoration: none;
-	color:#000;
+	color:<?php echo $library_links_hover_color; ?>;
 }
 #genreResults tr {
 	display: block;
@@ -715,7 +716,7 @@ ul.marquee li {
 	width:300px;
 	border: 1px solid #CCC;
 	background: #FFFDC9;
-	color:<?php echo $library_links_hover_color; ?>;
+	color:<?php echo $library_links_color; ?>;
 	text-align: center;
 	font-weight: normal;
 }
@@ -820,16 +821,17 @@ ul.marquee li {
 .genreSeeAll {
 	float:right;
 	margin-right: 40px;
+	color:<?php echo $library_boxheader_text_color; ?>;
 }
 
 .genreSeeAll a {
 	text-decoration: none;
-	color:<?php echo $library_links_color; ?>;
+	color:<?php echo $library_box_header_color; ?>;
 }
 
 .genreSeeAll a:hover {
 	text-decoration: underline;
-	color:<?php echo $library_links_hover_color; ?>;
+	color:<?php echo $library_box_hover_color; ?>;
 }
 
 #genreViewAll {
