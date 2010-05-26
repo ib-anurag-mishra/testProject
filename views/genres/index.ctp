@@ -12,7 +12,7 @@
 		<div class="genretl">
 			<div class="genreAlltl">
 				<span class="genreTitle"><?php echo $category['Genre']; ?></span>
-				<span class="genreSeeAll">
+				<span class="genreSeeAll links">
 					<?php echo $html->link('See All', array('controller' => 'genres', 'action' => 'view', base64_encode($category['Genre']))); ?>
 				</span>
 			</div>
@@ -21,7 +21,7 @@
 		else
 		{?>
 			<div class="genretr">
-			<div class="genreAlltr">
+			<div class="genreAlltr links">
 				<span class="genreTitle"><?php echo $category['Genre']; ?></span>
 				<span class="genreSeeAll">
 					<?php echo $html->link('See All', array('controller' => 'genres', 'action' => 'view', base64_encode($category['Genre']))); ?>
