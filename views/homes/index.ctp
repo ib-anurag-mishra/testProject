@@ -122,7 +122,6 @@
     </div>
     <div id="artist_search">
 		<div id="artist_links">
-		<a name="bottom">
 		Artist Search&nbsp;&nbsp;
 		<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;
 		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
