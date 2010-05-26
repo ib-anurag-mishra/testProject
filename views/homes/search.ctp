@@ -4,13 +4,13 @@
 <div id="genre">
 	Search Results
 </div>
-<div id="genreArtist">
+<div id="genreArtist" class="links">
 	<?php echo $paginator->sort('Artist ', 'Metadata.Artist', array('url' => array("?"=>$searchKey)))  . $html->image('sort_arrows.png');?>
 </div>
-<div id="genreAlbum">
+<div id="genreAlbum" class="links">
 	<?php echo $paginator->sort('Album ', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey))) . $html->image('sort_arrows.png');?>
 </div>
-<div id="genreTrack">
+<div id="genreTrack" class="links">
 	<?php echo $paginator->sort('Track ', 'Metadata.Title', array('url' => array("?"=>$searchKey))) . $html->image('sort_arrows.png');?>
 </div>
 <div id="genreDownload">
@@ -51,7 +51,7 @@
 					</p>
 				</td>
 				<td width="200" valign="top">
-					<p class="info links">
+					<p class="info">
 					<?php
 						if (strlen($searchResult['Physicalproduct']['Title']) >= 24) {
 							echo substr($searchResult['Physicalproduct']['Title'], 0, 24) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
@@ -96,8 +96,7 @@
 					?>
                                                         <p>
 								<![if !IE]>
-									<div class="links"><a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></div>
-								<![endif]>
+									<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
 								<!--[if IE]>
 									<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 								<![endif]-->
