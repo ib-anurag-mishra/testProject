@@ -32,7 +32,7 @@
 			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p class="info links">
+					<p class="info">
 						<?php
 						if (strlen($searchResult['Metadata']['Artist']) >= 19) {
 							$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
@@ -51,7 +51,7 @@
 					</p>
 				</td>
 				<td width="200" valign="top">
-					<p class="info">
+					<p class="info links">
 					<?php
 						if (strlen($searchResult['Physicalproduct']['Title']) >= 24) {
 							echo substr($searchResult['Physicalproduct']['Title'], 0, 24) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
@@ -96,10 +96,10 @@
 					?>
                                                         <p>
 								<![if !IE]>
-									<div class="links"><a href='#' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></div>
+									<div class="links"><a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></div>
 								<![endif]>
 								<!--[if IE]>
-									<div class="links"><a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></div>
+									<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 								<![endif]-->
 								<span id="download_loader_<?php echo $searchResult["Physicalproduct"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
