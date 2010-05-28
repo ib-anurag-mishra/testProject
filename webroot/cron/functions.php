@@ -7,7 +7,54 @@ File Description : Contains all the necessary function for the xml parser
 include 'config.php';
 include 'dbconnect.php';
 
-function sendReportFile($src,$dst,$logFileWrite,$typeReport)
+/*
+Function Name : sendReportFileftp
+Description : Function for sending report through FTP
+*/
+
+function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
+{
+
+	if(!($con = ftp_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
+	{
+		echo "Not Able to Establish Connection\n";
+		return false;
+	}
+	else
+	{
+		if(!ftp_login($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
+		{
+			echo "fail: unable to authenticate\n";
+			return false;
+		}
+		else
+		{
+			ftp_pasv($con, true);
+			if(!is_dir("ftp.".REPORTS_SFTP_PATH.$typeReport."/"))
+			{
+				ftp_mkdir($con,REPORTS_SFTP_PATH.$typeReport."/");
+			}
+			if(!ftp_put($con, $src, REPORTS_SFTP_PATH.$typeReport."/".$dst, FTP_BINARY)){
+				echo "error sending " . $typeReport . " report to Sony server\n";
+				fwrite($logFileWrite, "error sending " . $typeReport . " report to Sony server\n");
+				return false;
+			}
+			else
+			{
+				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+				return true;
+			}
+		}
+	}
+}
+
+/*
+Function Name : sendReportFile
+Description : Function for sending report through SFTP
+*/
+
+function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 {
 	if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
 	{
@@ -102,5 +149,16 @@ function resetDownloads()
 		mysql_query($qry);
 	}	
     }     
+}
+
+/*
+Function Name : sendReportEmail
+Description : Function for sending Email for Reports
+*/
+
+function sendReportEmail($typereport){
+	$subject = $typereport.REPORT_SUBJECT;
+	$success = mail(REPORT_TO,$subject,REPORT_BODY,REPORT_HEADERS);
+	return $success;
 }
 ?>
