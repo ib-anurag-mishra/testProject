@@ -129,9 +129,6 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
 		}
-		if(sendReportEmail('Weekly')){
-			echo '\nA email has been sent to you';
-		}
 	}
 	if($currentDate == $monthFirstDate) {
 		$showStartDate = date("Ymd", strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')));
@@ -229,9 +226,6 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 			}
-		}
-		if(sendReportEmail('Monthly')){
-			echo '\nA email has been sent to you';
 		}
 	}
 }
