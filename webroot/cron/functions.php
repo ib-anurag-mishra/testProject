@@ -34,7 +34,7 @@ function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 			{
 				ftp_mkdir($con,REPORTS_SFTP_PATH.$typeReport."/");
 			}
-			if(!ftp_put($con, $src, REPORTS_SFTP_PATH.$typeReport."/".$dst, FTP_BINARY)){
+			if(!ftp_put($con,REPORTS_SFTP_PATH.$typeReport."/".$dst,$src, FTP_BINARY)){
 				echo "error sending " . $typeReport . " report to Sony server\n";
 				fwrite($logFileWrite, "error sending " . $typeReport . " report to Sony server\n");
 				return false;
@@ -43,6 +43,7 @@ function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 			{
 				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
 				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+				sendReportEmail($typeReport);
 				return true;
 			}
 		}
@@ -85,6 +86,7 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 			{
 				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
 				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+				sendReportEmail($typeReport);
 				return true;
 			}
 		}
