@@ -34,7 +34,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
   }
   
   /*
@@ -54,7 +54,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' ,'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
   }
   
   /*
@@ -74,7 +74,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
   }
   
   /*
@@ -94,7 +94,7 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
   }
   
   /*
@@ -115,6 +115,6 @@ class Download extends AppModel
       $conditions = array(
           'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition
       );
-      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id', 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
+      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(Download.ProdID) AS totalProds'), 'order' => 'Genre.Genre')));
   }
 }
