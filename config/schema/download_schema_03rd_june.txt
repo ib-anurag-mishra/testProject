@@ -1,0 +1,4 @@
+ALTER TABLE `downloads` ADD `user_login_type` VARCHAR( 30 ) NULL AFTER `track_title` ,
+ADD `email` VARCHAR( 50 ) NULL AFTER `user_type` ,
+ADD `user_agent` VARCHAR( 100 ) NULL AFTER `email` ,
+ADD `ip` VARCHAR( 20 ) NULL AFTER `user_agent` 
