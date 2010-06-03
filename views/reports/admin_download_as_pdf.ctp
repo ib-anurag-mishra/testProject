@@ -76,12 +76,22 @@
     
     //Data loading
     foreach($downloads as $key => $download) {
+		if($download['Download']['email']!=''){
+			$patron = $download['Download']['email'];
+		}else{
+			$patron = $download['Download']['patron_id'];
+		}
         $libraryName = $library->getLibraryName($download['Download']['library_id']);
-        $data[] = array($key+1, $libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+        $data[] = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     }
     
     foreach($patronDownloads as $key => $patronDownload) {
-        $patron_data[] = array($key+1, $patronDownload['Download']['patron_id'], $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+		if($patronDownload['Download']['email']!=''){
+			$patron_id = $patronDownload['Download']['email'];
+		}else{
+			$patron_id = $patronDownload['Download']['patron_id'];
+		}
+        $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
     }
     
     foreach($genreDownloads as $key => $genreDownload) {
