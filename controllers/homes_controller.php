@@ -305,12 +305,33 @@ class HomesController extends AppController
         $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
-        $insertArr['patron_id'] = $patId;
+        $insertArr['patron_id'] = $patId;	
         $insertArr['ProdID'] = $prodId;     
         $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
         $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
         $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC']; 
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
+        if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')){            
+            $insertArr['user_login_type'] = 'referral_url';
+         }
+         elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')){            
+			 $insertArr['user_login_type'] = 'innovative';
+         }
+         elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')){            
+            $insertArr['user_login_type'] = 'innovative_wo_pin';  
+         }
+         elseif(isset($_SESSION['sip2']) && ($_SESSION['sip2'] != '')){            
+             $insertArr['user_login_type'] = 'sip2';  
+         }
+		elseif(isset($_SESSION['sip']) && ($_SESSION['sip'] != '')){            
+            $insertArr['user_login_type'] = 'sip';   
+        }
+         else{            
+            $insertArr['user_login_type'] = 'user_account';   
+         }         		
+		$insertArr['email'] = $this->Session->read('Auth.User.email');
+		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
+		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
         $this->Download->save($insertArr);
         $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
         $this->Library->query($sql);
