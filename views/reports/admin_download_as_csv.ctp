@@ -6,8 +6,13 @@ $line = array('', 'Library Name', 'Patron ID', 'Artists Name', 'Track title', 'D
 $csv->addRow($line);
 
 foreach($downloads as $key => $download) {
+	if($download['Download']['email']!=''){
+		$patron = $download['Download']['email'];
+	}else{
+		$patron = $download['Download']['patron_id'];
+	}
     $libraryName = $library->getLibraryName($download['Download']['library_id']);
-    $line = array($key+1, $libraryName, $download['Download']['patron_id'], $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
+    $line = array($key+1, $libraryName, $patron, $download['Download']['artist'], $download['Download']['track_title'], date('Y-m-d', strtotime($download['Download']['created'])));
     $csv->addRow($line);
 }
 
@@ -21,7 +26,12 @@ $line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloade
 $csv->addRow($line);
 
 foreach($patronDownloads as $key => $patronDownload) {
-    $line = array($key+1, $patronDownload['Download']['patron_id'], $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+	if($patronDownload['Download']['email']!=''){
+		$patron_id = $patronDownload['Download']['email'];
+	}else{
+		$patron_id = $patronDownload['Download']['patron_id'];
+	}
+    $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
     $csv->addRow($line);
 }
 
