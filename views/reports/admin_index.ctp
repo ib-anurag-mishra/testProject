@@ -128,7 +128,13 @@
                                     <tr>
 					<td><?php echo $i; ?></td>
                                         <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
-                                        <td><?php echo $download['Download']['patron_id']; ?></td>
+                                        <td><?php 
+											if($download['Download']['email']!=''){
+												echo $download['Download']['email'];
+											}else{
+												echo $download['Download']['patron_id'];
+											}?>
+										</td>
                                         <td><?php echo $download['Download']['artist']; ?></td>
                                         <td><?php echo $download['Download']['track_title']; ?></td>
                                         <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
@@ -157,7 +163,13 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $patronDownload['Download']['patron_id']; ?></td>
+										<td><?php 
+										if($patronDownload['Download']['email']!=''){
+											echo $patronDownload['Download']['email'];
+										}else{
+											echo $patronDownload['Download']['patron_id'];
+										}?>
+										</td>
                                         <td><?php echo $library->getLibraryName($patronDownload['Download']['library_id']); ?></td>
                                         <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
                                     </tr>
