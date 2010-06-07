@@ -372,7 +372,7 @@ Class UsersController extends AppController
                     if($this->User->save()){
 						$receipt = $this->_sendNewPatronMail( $this->User->id, $temp_password );
 						if($receipt == '1'){
-							$this->Session->setFlash('Data has been saved successfully and an Email has been sent!', 'modal', array('class' => 'modal success'));
+							$this->Session->setFlash('Data has been saved successfully and the Email has been sent!', 'modal', array('class' => 'modal success'));
 						} else {
 							$this->Session->setFlash($receipt, 'modal', array('class' => 'modal problem'));					  
 						}
