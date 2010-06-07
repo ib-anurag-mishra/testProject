@@ -82,7 +82,8 @@ class EmailComponent
       $mail->FromName = $this->fromName;
       $mail->AddAddress($this->to, $this->toName );
       $mail->AddReplyTo($this->from, $this->fromName );
-  
+	  $mail->ConfirmReadingTo = 'you@youdomain.com';
+	  
       $mail->CharSet  = 'UTF-8';
       $mail->WordWrap = 50;  // set word wrap to 50 characters
   
@@ -101,7 +102,6 @@ class EmailComponent
       $mail->Subject = $this->subject;
       $mail->Body    = $this->bodyHTML();
       $mail->AltBody = $this->bodyText();
-  
       $result = $mail->Send();
   
       if($result == false ) $result = $mail->ErrorInfo;
