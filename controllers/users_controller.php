@@ -370,12 +370,16 @@ Class UsersController extends AppController
                     $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);
                     $this->User->set($this->data['User']);
                     if($this->User->save()){
-                      $this->_sendNewPatronMail( $this->User->id, $temp_password );
-                      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-                      $this->redirect('managepatron');
+						$receipt = $this->_sendNewPatronMail( $this->User->id, $temp_password );
+						if($receipt == '1'){
+							$this->Session->setFlash('Data has been saved successfully and an Email has been sent!', 'modal', array('class' => 'modal success'));
+						} else {
+							$this->Session->setFlash($receipt, 'modal', array('class' => 'modal problem'));					  
+						}
+						$this->redirect('managepatron');
                     }
                     else{
-                      $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+						$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
                     }
                    }
                    else{
@@ -525,7 +529,8 @@ Class UsersController extends AppController
     $this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
     $this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
     $this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-    $result = $this->Email->send(); 
+    $result = $this->Email->send();
+	return $result;
    }
    
    /*
