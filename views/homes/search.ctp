@@ -5,13 +5,18 @@
 	Search Results
 </div>
 <div id="genreArtist" class="links">
-	<?php echo $paginator->sort('Artist ', 'Metadata.Artist', array('url' => array("?"=>$searchKey)))  . $html->image('sort_arrows.png');?>
+	<?php echo $paginator->sort('Artist ', 'Metadata.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Metadata.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreAlbum" class="links">
-	<?php echo $paginator->sort('Album ', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey))) . $html->image('sort_arrows.png');?>
+<?php if(isset($composer)){?>
+<div id="genreComposer" class="links">
+	<?php echo $paginator->sort('Composer ', 'Participant.Name', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Participant.Name', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreTrack" class="links">
-	<?php echo $paginator->sort('Track ', 'Metadata.Title', array('url' => array("?"=>$searchKey))) . $html->image('sort_arrows.png');?>
+<?php } ?>
+<div id="genreAlbum" class="links" >
+	<?php echo $paginator->sort('Album ', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+</div>
+<div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?>>
+	<?php echo $paginator->sort('Track ', 'Metadata.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Metadata.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreDownload">
 	Download
@@ -50,11 +55,32 @@
 					?>
 					</p>
 				</td>
-				<td width="200" valign="top">
+				<?php if(isset($composer)){?>
+				<td width="180" valign="top">
+					<p class="info">
+						<?php
+						if (strlen($searchResult['Participant']['Name']) >= 19) {
+							$ArtistName = substr($searchResult['Participant']['Name'], 0, 19) . '...';
+							echo $html->link(
+								$ArtistName,
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Participant']['Name']),$searchResult['Physicalproduct']['ReferenceID'])); ?>
+							<span><?php echo $searchResult['Participant']['Name']; ?></span>
+						<?php
+						} else {
+							$ArtistName = $searchResult['Participant']['Name'];
+							echo $html->link(
+								$ArtistName,
+								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Participant']['Name']),$searchResult['Physicalproduct']['ReferenceID']));
+						} 
+					?>
+					</p>
+				</td>
+				<?php } ?>
+				<td width="180" valign="top">
 					<p class="info">
 					<?php
-						if (strlen($searchResult['Physicalproduct']['Title']) >= 24) {
-							echo substr($searchResult['Physicalproduct']['Title'], 0, 24) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
+						if (strlen($searchResult['Physicalproduct']['Title']) >= 22) {
+							echo substr($searchResult['Physicalproduct']['Title'], 0, 22) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
 						} else { 
 							echo $searchResult['Physicalproduct']['Title'];
 						}
@@ -62,11 +88,11 @@
 					?>
 					</p>
 				</td>
-				<td width="400" valign="top">
+				<td <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?> valign="top">
 					<p class="info">
 					<?php 
-						if (strlen($searchResult['Metadata']['Title']) >= 48) {
-							echo substr($searchResult['Metadata']['Title'], 0, 48) . '...<span>' . $searchResult['Metadata']['Title'] . '</span>';
+						if (strlen($searchResult['Metadata']['Title']) >= 25) {
+							echo substr($searchResult['Metadata']['Title'], 0, 25) . '...<span>' . $searchResult['Metadata']['Title'] . '</span>';
 						} else {
 							echo $searchResult['Metadata']['Title']; 
 					 	}
