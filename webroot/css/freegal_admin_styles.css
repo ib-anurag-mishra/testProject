@@ -616,3 +616,14 @@ td.actions a:hover {
 .related h3, .related table {
 	margin-left:10px;
 }
+.all_links a:link, a:visited, a:active {
+		text-decoration: none;
+		color:#666;
+		
+}
+#sort_arrow {
+	background:url(../img/arrow_updown.png) no-repeat scroll 0px 3px;
+	color:#777777 !important;
+	width:9px;
+	height:17px;
+}
