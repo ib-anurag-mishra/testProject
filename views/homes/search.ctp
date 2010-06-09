@@ -59,18 +59,14 @@
 				<td width="180" valign="top">
 					<p class="info">
 						<?php
-						if (strlen($searchResult['Participant']['Name']) >= 19) {
-							$ArtistName = substr($searchResult['Participant']['Name'], 0, 19) . '...';
-							echo $html->link(
-								$ArtistName,
-								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Participant']['Name']),$searchResult['Physicalproduct']['ReferenceID'])); ?>
-							<span><?php echo $searchResult['Participant']['Name']; ?></span>
+						if (strlen($searchResult['Participant']['Name']) >= 17) {
+							$ArtistName = substr($searchResult['Participant']['Name'], 0, 17) . '...';
+							echo $ArtistName;
+						?><span><?php echo $searchResult['Participant']['Name']; ?></span>
 						<?php
 						} else {
 							$ArtistName = $searchResult['Participant']['Name'];
-							echo $html->link(
-								$ArtistName,
-								array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Participant']['Name']),$searchResult['Physicalproduct']['ReferenceID']));
+							echo $ArtistName;
 						} 
 					?>
 					</p>
