@@ -616,7 +616,7 @@ td.actions a:hover {
 .related h3, .related table {
 	margin-left:10px;
 }
-.all_links a:link, a:visited, a:active {
+.left a:link, .left a:visited, .left a:active {
 		text-decoration: none;
 		color:#666;
 		
