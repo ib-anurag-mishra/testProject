@@ -8,7 +8,7 @@ echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
-  <table id="list" class="all_links">
+  <table id="list">
           <tr>
             <th class="left">First Name</th>
             <th class="left"><?php echo $paginator->sort('Last Name', 'last_name')."&nbsp;".$paginator->sort('`', 'last_name', array('id' => 'sort_arrow'));?></th>
