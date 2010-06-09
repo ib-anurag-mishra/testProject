@@ -556,10 +556,25 @@ ul.marquee li {
 	text-decoration: none;
 	color: <?php echo $library_box_header_color; ?>;
 }
+#genreComposer {
+	float:left;
+	width: 180px;
+	height: 20px;
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+        color:<?php echo $library_boxheader_text_color; ?>;
+	text-align: center;
+	margin: 10px 0 0 3px;
+	line-height: 20px;
+	font-size:13px;
+}
 
+#genreComposer a {
+	text-decoration: none;
+	color: <?php echo $library_box_header_color; ?>;
+}
 #genreAlbum {
 	float:left;
-	width: 200px;
+	width: 180px;
 	height: 20px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
@@ -576,7 +591,6 @@ ul.marquee li {
 
 #genreTrack {
 	float:left;
-	width: 400px;
 	height: 20px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
@@ -1334,4 +1348,11 @@ div.message {
 
 .qtip-content {
     font-size:12px;
+}
+
+#sort_arrows {
+	background:url(../img/sort_arrows.png) no-repeat scroll 0px 3px;
+	color:#FFFFFF !important;
+	width:8px;
+	height:11px;
 }
