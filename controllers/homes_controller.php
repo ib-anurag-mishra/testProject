@@ -115,33 +115,43 @@ class HomesController extends AppController
         }
         if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
             if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
-                if($_REQUEST['match'] == 'All') {
-                    $condition = "and";
-                    $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
-                    $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
-                }
-                else {
-                    $condition = "or";
-                    $preCondition1 =  "";
-                    $preCondition2 = "";
-                }
+			 if($_REQUEST['match'] == 'All') {
+				$condition = "and";
+				$preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
+				$preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
+				$preCondition3 = array('Physicalproduct.TrackBundleCount' => 0);
+				$preCondition4 = array('Participant.Role' => 'Composer');
+			}
+			 else {
+				$condition = "or";
+				$preCondition1 =  "";
+				$preCondition2 = "";
+				$preCondition3 = "";
+				$preCondition4 = "";
+			}
                 $artist =  $_REQUEST['artist'];
+				$composer =  $_REQUEST['composer'];
                 $song =  $_REQUEST['song'];
                 $album =  $_REQUEST['album'];
                 $genre =  $_REQUEST['genre_id'];
             }
             if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
-                if($this->data['Home']['Match'] == 'All') {
+				if($this->data['Home']['Match'] == 'All') {
                     $condition = "and";
                     $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
                     $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
+					$preCondition3 = array('Physicalproduct.TrackBundleCount' => 0);
+					$preCondition4 = array('Participant.Role' => 'Composer');
                 }
-                else{
+                else {
                     $condition = "or";
                     $preCondition1 =  "";
                     $preCondition2 = "";
+					$preCondition3 = "";
+					$preCondition4 = "";
                 }
                 $artist =  $this->data['Home']['artist'];
+				$composer = $this->data['Home']['composer'];
                 $song =  $this->data['Home']['song'];
                 $album =  $this->data['Home']['album'];
                 $genre =  $this->data['Home']['genre_id'];
@@ -151,6 +161,13 @@ class HomesController extends AppController
             }
             else {
                 $artistSearch = '';
+            }
+            if($composer != '') {
+                $composerSearch = array("match(Participant.Name) against ('+$composer*' in boolean mode) and Participant.role='Composer'");    
+				$this->set('composer', $composer);
+			}
+            else {
+                $composerSearch = '';
             }
             if($song != '') {
                 $songSearch = array("match(Metadata.Title) against ('+$song*' in boolean mode)");    
@@ -170,17 +187,19 @@ class HomesController extends AppController
             else {
                 $genreSearch = '';
             }
-            $this->set('searchKey','match=all&artist='.urlencode($artist).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+            $this->set('searchKey','match=all&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
 				    array('and' =>
-                                        array(
-                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),                                                                                                
-                                                array('Physicalproduct.DownloadStatus' => 1),
-                                                array('Physicalproduct.TrackBundleCount' => 0),$cond
-                                        ),
-                                    $condition => array(
-						    $artistSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$cond
+							array(
+									array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
+									array("Participant.Role = 'Composer'"),
+									array('Physicalproduct.TrackBundleCount' => 0),
+									array('Physicalproduct.DownloadStatus' => 1),
+									$cond
+									),
+									$condition => array(
+									$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
                                                 )
                                     ),
                                     'fields' => array(
@@ -189,14 +208,20 @@ class HomesController extends AppController
                                                     'Physicalproduct.ArtistText',
                                                     'Physicalproduct.ReferenceID',
                                                     'Physicalproduct.DownloadStatus',
-                                                    'Physicalproduct.SalesDate'
+                                                    'Physicalproduct.SalesDate'													
                                                 ),
-                                    'contain' => array(                                                                       
+                                    'contain' => array(
+									'Participant' => array(
+										'fields' => array(
+												'Participant.Name'                                                   
+												)
+										),
+                                    
                                     'Metadata' => array(
                                             'fields' => array(
                                                     'Metadata.Title',
                                                     'Metadata.Artist',
-						    'Metadata.Advisory'
+													'Metadata.Advisory'
                                                     )
                                             ),
                                     'Genre' => array(
@@ -204,6 +229,7 @@ class HomesController extends AppController
                                                     'Genre.Genre'                                                   
                                                     )
                                             ),
+									
                                     'Audio' => array(
                                             'fields' => array(
                                                     'Audio.FileID',                                                    
@@ -214,8 +240,8 @@ class HomesController extends AppController
                                                     'Files.SaveAsName'
                                                     )
                                             )
-                                        )                                    
-                                    ), 'cache' => 'yes'
+                                        )
+									 ),'cache' => 'yes'
                                 );
             $this->Physicalproduct->recursive = 2;
             $searchResults = $this->paginate('Physicalproduct');
@@ -235,6 +261,7 @@ class HomesController extends AppController
                                 array(	'and' =>
 					    array(
                                                 array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
+												array("Participant.Role = 'Composer'"),
                                                 array('Physicalproduct.DownloadStatus' => 1),
                                                 array('Physicalproduct.TrackBundleCount' => 0),$cond
                                             ),
@@ -253,12 +280,17 @@ class HomesController extends AppController
                                                     'Physicalproduct.DownloadStatus',
                                                     'Physicalproduct.SalesDate'
                                                     ),
-                                    'contain' => array(                                                                       
+                                    'contain' => array(
+									'Participant' => array(
+										'fields' => array(
+												'Participant.Name'                                                   
+												)
+									),
                                     'Metadata' => array(
                                             'fields' => array(
                                                     'Metadata.Title',
                                                     'Metadata.Artist',
-						    'Metadata.Advisory'
+													'Metadata.Advisory'
                                                     )
                                             ),
                                     'Genre' => array(
