@@ -14,6 +14,10 @@ class Physicalproduct extends AppModel
   var $uses = array('Physicalproduct','Featuredartist','Artist','Productoffer');
 
  var $hasOne = array(
+		'Participant' => array(
+			'className' => 'Participant',
+			'foreignKey' => 'ProdID'			
+		),
 		'Metadata' => array(
 			'className' => 'Metadata',
 			'foreignKey' => 'ProdID'
@@ -22,6 +26,7 @@ class Physicalproduct extends AppModel
 			'className' => 'Graphic',
 			'foreignKey' => 'ProdID'
 		),
+		
 		'Genre' => array(
 			'className' => 'Genre',
 			'foreignKey' => 'ProdID'
@@ -32,7 +37,7 @@ class Physicalproduct extends AppModel
   var $hasMany = array('Audio' => array(
 			'className' => 'Audio',
 			'foreignKey' => 'TrkID'
-		)
+		)		
   );
   
   /*
