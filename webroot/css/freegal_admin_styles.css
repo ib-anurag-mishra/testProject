@@ -139,7 +139,7 @@ a.logout:hover {
 #content form p.submit input {padding:0 10px; margin-bottom:0;}
 
 /* Tables */
-#content table {width:98%;}
+#content table {width:110%;}
 .formFieldsbox table {width:98%;}
 #content table#list, #content table.info {border:1px solid #e0e0e0; border-collapse:collapse;margin-top:25px;}
 #content table#list th {border-bottom:1px solid #e0e0e0;}
@@ -623,7 +623,7 @@ td.actions a:hover {
 }
 #sort_arrow {
 	background:url(../img/arrow_updown.png) no-repeat scroll 0px 3px;
-	color:#777777 !important;
-	width:9px;
-	height:17px;
+	color:#FFFFFF !important;
+	width:11px;
+	height:11px;
 }
