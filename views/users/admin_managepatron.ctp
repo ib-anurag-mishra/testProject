@@ -8,12 +8,13 @@ echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
-  <table id="list">
+  <table id="list" class="all_links">
           <tr>
             <th class="left">First Name</th>
-            <th class="left">Last Name</th>
-            <th class="left">Email</th>
-	    <th class="left">Libary Name</th>
+            <th class="left"><?php echo $paginator->sort('Last Name', 'last_name')."&nbsp;".$paginator->sort('`', 'last_name', array('id' => 'sort_arrow'));?></th>
+            <th class="left"><?php echo $paginator->sort('Email', 'email')."&nbsp;".$paginator->sort('`', 'email', array('id' => 'sort_arrow')); ?></th>
+			<th class="left">Libary Name</th>
+			<th class="left"><?php echo $paginator->sort('Created', 'created')."&nbsp;".$paginator->sort('`', 'created', array('id' => 'sort_arrow')); ?></th>
             <th>Edit</th>
 			<th>Action</th>
 	    <!-- <th>Delete</th> -->
@@ -25,17 +26,18 @@ echo $paginator->counter(array(
             <tr>
                 <td class="left"><?php echo $patron['User']['first_name'];?></td>
                 <td class="left"><?php echo $patron['User']['last_name'];?></td>
-                <td class="left"><?php echo $patron['User']['email'];?></td>
-		<td class="left"><?php echo $library->getLibraryName($patron['User']['library_id']); ?></td>
-        <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'patronform','id'=>$patron['User']['id']));?></td>
-		<td>
-		<?php if($patron['User']['user_status']=='inactive'){
-			echo $html->link('Activate', array('controller'=>'users','action'=>'patron_activate','id'=>$patron['User']['id']));
-		}else{
-			echo $html->link('Deactivate', array('controller'=>'users','action'=>'patron_deactivate','id'=>$patron['User']['id']));
-		}
-		?>
-		</td>
+                <td class="left"><?php echo $patron['User']['email'];?></td>				
+				<td class="left"><?php  echo $library->getLibraryName($patron['User']['library_id']); ?></td>
+				<td class="left"><?php echo date("Y-m-d",strtotime($patron['User']['created']));?></td>		
+				<td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'patronform','id'=>$patron['User']['id']));?></td>
+				<td>
+				<?php if($patron['User']['user_status']=='inactive'){
+					echo $html->link('Activate', array('controller'=>'users','action'=>'patron_activate','id'=>$patron['User']['id']));
+				}else{
+					echo $html->link('Deactivate', array('controller'=>'users','action'=>'patron_deactivate','id'=>$patron['User']['id']));
+				}
+				?>
+				</td>
 		<?php
 		if($patron['User']['type_id'] != 4 && $this->Session->read("Auth.User.id") != $patron['User']['id']) {
 		?>
