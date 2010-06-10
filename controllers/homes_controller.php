@@ -115,7 +115,7 @@ class HomesController extends AppController
         }
         if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
             if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
-			 if($_REQUEST['match'] == 'All') {
+			 if($_REQUEST['match'] == 'All') {			 
 				$condition = "and";
 				$preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
 				$preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
@@ -129,11 +129,11 @@ class HomesController extends AppController
 				$preCondition3 = "";
 				$preCondition4 = "";
 			}
-                $artist =  $_REQUEST['artist'];
-				$composer =  $_REQUEST['composer'];
-                $song =  $_REQUEST['song'];
-                $album =  $_REQUEST['album'];
-                $genre =  $_REQUEST['genre_id'];
+			$artist =  $_REQUEST['artist'];
+			$composer =  $_REQUEST['composer'];
+			$song =  $_REQUEST['song'];
+			$album =  $_REQUEST['album'];
+			$genre =  $_REQUEST['genre_id'];
             }
             if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
 				if($this->data['Home']['Match'] == 'All') {
@@ -187,7 +187,7 @@ class HomesController extends AppController
             else {
                 $genreSearch = '';
             }
-            $this->set('searchKey','match=all&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+            $this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
 				    array('and' =>
@@ -369,7 +369,7 @@ class HomesController extends AppController
         $this->Library->query($sql);
         $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-	$this->Download->recursive = -1;
+		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
         echo $downloadsUsed;
         exit;
@@ -716,7 +716,7 @@ class HomesController extends AppController
         $this->set('Patron', $Patron);
         $this->set('password', $password);
         $this->Email->to = $Patron['User']['email'];
-	$this->Email->from = Configure::read('App.adminEmail');
+		$this->Email->from = Configure::read('App.adminEmail');
         $this->Email->fromName = Configure::read('App.fromName');
         $this->Email->subject = 'FreegalMusic - New Password information';
         $this->Email->smtpHostNames = Configure::read('App.SMTP');
@@ -818,7 +818,7 @@ class HomesController extends AppController
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);		
-	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+		$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
         $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
@@ -841,10 +841,10 @@ class HomesController extends AppController
             $this->Session->setFlash('Data deleted successfully!');
             $this->redirect('my_wishlist');
         }
-	else {
-            $this->Session->setFlash('Error occured while deleteting the record');
-            $this->redirect('my_wishlist');
-        }
+		else {
+				$this->Session->setFlash('Error occured while deleteting the record');
+				$this->redirect('my_wishlist');
+		}
     }
    
     /*
@@ -857,7 +857,7 @@ class HomesController extends AppController
         $libId = $_SESSION['library'];
         $patId = $_SESSION['patron'];
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
-	$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         //check for download availability
         if($libraryDownload != '1' || $patronDownload != '1'){
             echo "error";
