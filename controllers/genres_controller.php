@@ -181,6 +181,7 @@ Class GenresController extends AppController
 		else {
 			$condition = "";
 		}
+		$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));		
 		$this->Physicalproduct->Behaviors->attach('Containable');
 		$this->Physicalproduct->recursive = 0;
 		$genre = base64_decode($Genre);
@@ -190,7 +191,8 @@ Class GenresController extends AppController
 		      'fields' => array('ArtistText'),
 		      'order' => 'ArtistText ASC',		      
 		      'limit' => '60', 'cache' => 'yes'
-		      );		
+		      ); 
+		$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Physicalproduct');		
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
@@ -199,7 +201,7 @@ Class GenresController extends AppController
 	/*
 	 Function Name : admin_managegenre
 	 Desc : actions for admin end manage genre to add/edit genres
-        */
+    */
 	function admin_managegenre() {
 		if($this->data) {
 			$this->Category->deleteAll(array('1 = 1'), false);
