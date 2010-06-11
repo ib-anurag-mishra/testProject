@@ -1,7 +1,8 @@
 <script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
 <?php echo $javascript->link('qtip'); ?>
 <?php echo $javascript->link('qtip_add'); ?>
-<div id="genre" style="width:955px;">Search Results</div>
+<div id="genre">Search Results</div>
+<div style="float:left;width:955px;">
 <div id="genreArtist" class="links">
 	<?php echo $paginator->sort('Artist ', 'Metadata.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Metadata.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
@@ -17,6 +18,7 @@
 	<?php echo $paginator->sort('Track ', 'Metadata.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Metadata.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreDownload">Download</div>
+</div>
 <br class="clr">
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0">
