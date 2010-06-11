@@ -120,14 +120,13 @@ class HomesController extends AppController
 				$preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
 				$preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
 				$preCondition3 = array('Physicalproduct.TrackBundleCount' => 0);
-				$preCondition4 = array('Participant.Role' => 'Composer');
+				
 			}
 			 else {
 				$condition = "or";
 				$preCondition1 =  "";
 				$preCondition2 = "";
 				$preCondition3 = "";
-				$preCondition4 = "";
 			}
 			$artist =  $_REQUEST['artist'];
 			$composer =  $_REQUEST['composer'];
@@ -141,14 +140,12 @@ class HomesController extends AppController
                     $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
                     $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
 					$preCondition3 = array('Physicalproduct.TrackBundleCount' => 0);
-					$preCondition4 = array('Participant.Role' => 'Composer');
                 }
                 else {
                     $condition = "or";
                     $preCondition1 =  "";
                     $preCondition2 = "";
 					$preCondition3 = "";
-					$preCondition4 = "";
                 }
                 $artist =  $this->data['Home']['artist'];
 				$composer = $this->data['Home']['composer'];
@@ -165,9 +162,11 @@ class HomesController extends AppController
             if($composer != '') {
                 $composerSearch = array("match(Participant.Name) against ('+$composer*' in boolean mode) and Participant.role='Composer'");    
 				$this->set('composer', $composer);
+				$preCondition4 = array('Participant.Role' => 'Composer'); 
 			}
             else {
                 $composerSearch = '';
+				$preCondition4 = "";
             }
             if($song != '') {
                 $songSearch = array("match(Metadata.Title) against ('+$song*' in boolean mode)");    
@@ -188,12 +187,14 @@ class HomesController extends AppController
                 $genreSearch = '';
             }
             $this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-            $this->Physicalproduct->Behaviors->attach('Containable');
+			if($composer == '') {
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
+			}
+			$this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
 				    array('and' =>
 							array(
 									array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
-									array("Participant.Role = 'Composer'"),
 									array('Physicalproduct.TrackBundleCount' => 0),
 									array('Physicalproduct.DownloadStatus' => 1),
 									$cond
@@ -244,6 +245,9 @@ class HomesController extends AppController
 									 ),'cache' => 'yes'
                                 );
             $this->Physicalproduct->recursive = 2;
+			if($composer == '') {
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
+			}				
             $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
@@ -256,12 +260,14 @@ class HomesController extends AppController
                 $searchKey = $this->data['Home']['search'];
             }
             $this->set('searchKey','search='.urlencode($searchKey));
+			if(!isset($_REQUEST['composer'])) {
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
+			}			
             $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
                                 array(	'and' =>
 					    array(
                                                 array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
-												array("Participant.Role = 'Composer'"),
                                                 array('Physicalproduct.DownloadStatus' => 1),
                                                 array('Physicalproduct.TrackBundleCount' => 0),$cond
                                             ),
@@ -312,6 +318,9 @@ class HomesController extends AppController
                                     ), 'cache' => 'yes'
                                 );
             $this->Physicalproduct->recursive = 2;
+			if(!isset($_REQUEST['composer'])) {
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
+			}				
             $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
