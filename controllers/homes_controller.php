@@ -19,11 +19,16 @@ class HomesController extends AppController
 	parent::beforeFilter();
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password')) {
             $validPatron = $this->ValidatePatron->validatepatron();
-            if(!$validPatron) {
-                $this->Session->destroy('User');
-                $this -> Session -> setFlash("Please follow proper guidelines before accessing our site.");
-                $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-            }
+			if($validPatron == '0') {
+				$this->Session->destroy('User');
+				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}
+			else if($validPatron == '2') {
+				$this->Session->destroy('User');
+				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
+			}			
         }
     }
     
