@@ -10,14 +10,14 @@ Class ValidatePatronComponent extends Object
 
     function validatepatron() {
         if(!isset($_SESSION['library']) && !isset($_SESSION['patron'])) {
-	    return 0;
+			return '0';
         }
         else {
            if($_SESSION['library'] != '' && $_SESSION['patron'] != '') {
-                return 1;
+                return '1';
            }
            else {
-                return 0;
+                return '2';
            }
         }
     }
