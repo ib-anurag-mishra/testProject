@@ -1,4 +1,6 @@
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
+<?php echo $javascript->link('qtip'); ?>
+<?php echo $javascript->link('qtip_add'); ?>
 <div id="genre">
 	<?php echo $genre; ?>	
 </div>
@@ -49,13 +51,12 @@
 		foreach ($counters as $counter):
 			if($counter < count($genres)) {
 				
-				echo "<td width='308'><p class='info'>";
+				echo "<td width='308'><p>";
 				if (strlen($genres[$counter]['Physicalproduct']['ArtistText']) >= 38) {
 					$ArtistName = substr($genres[$counter]['Physicalproduct']['ArtistText'], 0, 38) . '...';
-					echo $html->link(
+					echo '<span title="'.$genres[$counter]['Physicalproduct']['ArtistText'].'">' . $html->link(
 						$ArtistName, 
-						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Physicalproduct']['ArtistText']))); ?>
-					<span><?php echo $genres[$counter]['Physicalproduct']['ArtistText']; ?></span>
+						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Physicalproduct']['ArtistText']))) . '</span>'; ?>
 				<?php
 				} else {
 					$ArtistName = $genres[$counter]['Physicalproduct']['ArtistText'];
