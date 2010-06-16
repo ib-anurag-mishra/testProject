@@ -15,8 +15,8 @@ $(document).ready(function()
             min: 0
          },
 		border: {
-			width: 1,
-			radius: 8
+			width: 0,
+			radius: 1
 		},
          tip: true
       }
@@ -30,15 +30,15 @@ $(document).ready(function()
       },
       style: {
 		 name:'cream',
-		 padding: '10px 0px',
+		 padding: '10px 5px',
 		 margin: 0,
          width: {
-            max: 210,
+            max: 300,
             min: 0
          },
 		border: {
-			width: 7,
-			radius: 5
+			width: 0,
+			radius: 1
 		},
          tip: true
       }
@@ -53,14 +53,14 @@ $(document).ready(function()
       },
       style: {
 		 name:'cream',
-         padding: '2px 5px',
+         padding: '5px 10px',
          width: {
             max: 500,
             min: 0
          },
 		border: {
-			width: 1,
-			radius: 8
+			width: 0,
+			radius: 1
 		},
          tip: true
       }

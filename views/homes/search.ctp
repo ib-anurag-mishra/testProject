@@ -167,7 +167,9 @@
     ?>
 	<?php 
 		echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
+		echo '&nbsp;';
 		echo $paginator->numbers();
+		echo '&nbsp;';
 		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
 	?>
 </div>
