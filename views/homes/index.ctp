@@ -1,5 +1,7 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
+<?php echo $javascript->link('qtip'); ?>
+<?php echo $javascript->link('qtip_add'); ?>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
@@ -41,10 +43,10 @@
 	?>
 		<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
                     <td>
-                        <p class='suggest_text info_suggest'>
+                        <p class='suggest_text'>
                             <?php
                                 if (strlen($songs[$i]['Title']) >= 28 ) {
-                                        echo substr($songs[$i]['Title'], 0, 28) . "..." . "<span>" . $songs[$i]['Title'] . "</span>";
+                                        echo '<span title="'.$songs[$i]['Title'].'">' . substr($songs[$i]['Title'], 0, 28) . "..." . "</span>";
                                 } else {
                                         echo $songs[$i]['Title'];
                                 }
@@ -53,11 +55,11 @@
                             by&nbsp;
                             <?php
                                 if (strlen($songs[$i]['Artist']) >= 24 ) {
-                                        echo $html->link(substr($songs[$i]['Artist'], 0, 24) . "...", array(
+                                        echo '<span title="'.$songs[$i]['Artist'].'">' . $html->link(substr($songs[$i]['Artist'], 0, 24) . "...", array(
                                                 'controller' => 'artists',
                                                 'action' => 'view',base64_encode($songs[$i]['ArtistText']),$songs[$i]['ReferenceID']
                                                 )
-                                        ) . "<span>" . $songs[$i]['Artist'] . "</span>";
+                                        ) . "</span>";
                                 } else {
                                         echo $html->link($songs[$i]['Artist'], array(
                                                 'controller' => 'artists',
