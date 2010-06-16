@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` ADD `show_library_name` ENUM( '0', '1' ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '0' AFTER `library_block_explicit_content`  
