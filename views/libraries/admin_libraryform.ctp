@@ -33,6 +33,7 @@
 	    $getData['Library']['library_download_type'] = "daily";
 		$getData['Library']['library_image_name'] = "";
 		$getData['Library']['library_block_explicit_content'] = 0;
+		$getData['Library']['show_library_name'] = 0;
 		$getData['User']['first_name'] = "";
 		$getData['User']['last_name'] = "";
 		$getData['User']['email'] = "";
@@ -67,6 +68,21 @@
 						<td align="right" width="255"><?php echo $this->Form->label('Library Name');?></td>
 						<td align="left"><?php echo $this->Form->input('library_name',array('label' => false ,'value' => $getData['Library']['library_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
+					<tr>
+						<td align="right">
+							<?php
+								if($getData['Library']['show_library_name'] == 0) {
+									$checked = false;
+								}
+								elseif($getData['Library']['show_library_name'] == 1) {
+									$checked = true;
+								}
+								echo $this->Form->checkbox('show_library_name', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked)); ?>
+						</td>
+						<td>
+							<?php echo $this->Form->label('Do not show library name on site');?>
+						</td>
+					</tr>					
 					<?php
 					if($getData['Library']['library_authentication_method'] != "") {
 					?>
