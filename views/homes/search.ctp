@@ -35,13 +35,12 @@
 			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p class="info">
+					<p>
 						<?php
 							if (strlen($searchResult['Metadata']['Artist']) >= 19) {
 								$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
-								echo $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID']));
+								echo '<span title="'.$searchResult['Metadata']['Artist'].'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID'])).'</span>';
 						?>
-								<span><?php echo $searchResult['Metadata']['Artist']; ?></span>
 						<?php
 							} else {
 								$ArtistName = $searchResult['Metadata']['Artist'];
@@ -52,12 +51,12 @@
 				</td>
 				<?php if(isset($composer)){?>
 				<td width="180" valign="top">
-					<p class="info">
+					<p>
 						<?php
 						if (strlen($searchResult['Participant']['Name']) >= 17) {
 							$ArtistName = substr($searchResult['Participant']['Name'], 0, 17) . '...';
-							echo $ArtistName;
-						?><span><?php echo $searchResult['Participant']['Name']; ?></span>
+							echo '<span title="'.$searchResult['Participant']['Name'].'">'.$ArtistName.'</span>';
+						?>
 						<?php
 						} else {
 							$ArtistName = $searchResult['Participant']['Name'];
@@ -68,10 +67,10 @@
 				</td>
 				<?php } ?>
 				<td width="180" valign="top">
-					<p class="info">
+					<p>
 					<?php
-						if (strlen($searchResult['Physicalproduct']['Title']) >= 22) {
-							echo substr($searchResult['Physicalproduct']['Title'], 0, 22) . '...<span>' . $searchResult['Physicalproduct']['Title'] . '</span>'; 
+						if (strlen($searchResult['Physicalproduct']['Title']) >= 19) {
+							echo '<span title="'.$searchResult['Physicalproduct']['Title'].'">' . substr($searchResult['Physicalproduct']['Title'], 0, 19) . '...' . '</span>'; 
 						} else { 
 							echo $searchResult['Physicalproduct']['Title'];
 						}
@@ -80,10 +79,10 @@
 					</p>
 				</td>
 				<td <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?> valign="top">
-					<p class="info">
+					<p>
 					<?php 
 						if (strlen($searchResult['Metadata']['Title']) >= 25) {
-							echo substr($searchResult['Metadata']['Title'], 0, 25) . '...<span>' . $searchResult['Metadata']['Title'] . '</span>';
+							echo '<span title="'.$searchResult['Metadata']['Title'].'">' . substr($searchResult['Metadata']['Title'], 0, 25) . '...</span>';
 						} else {
 							echo $searchResult['Metadata']['Title']; 
 					 	}
