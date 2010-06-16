@@ -20,7 +20,7 @@ var webRootURL;
  *	Called from the audio player swf when the player is ready to receive calls.
  */
 function onPlayerReady() {
-    document.getElementById('audioPlayer').addListeners();
+    document.getElementById('audioplayer').addListeners();
 }
 
 /*
@@ -106,31 +106,31 @@ function buttonOut(event) {
 }
 
 function getCurrentTime(event) {
-    document.getElementById('audioPlayer').getCurrentTime('handleResponse');
+    document.getElementById('audioplayer').getCurrentTime('handleResponse');
 }
 
 function getDuration(event) {
-    document.getElementById('audioPlayer').getDuration('handleResponse');
+    document.getElementById('audioplayer').getDuration('handleResponse');
 }
 
 function getID(event) {
-    document.getElementById('audioPlayer').getID('handleResponse');
+    document.getElementById('audioplayer').getID('handleResponse');
 }
 
 function getLoadPercent(event) {
-    document.getElementById('audioPlayer').getLoadPercent('handleResponse');
+    document.getElementById('audioplayer').getLoadPercent('handleResponse');
 }
 
 function getState(event) {
-    document.getElementById('audioPlayer').getState('handleResponse');
+    document.getElementById('audioplayer').getState('handleResponse');
 }
 
 function getURL(event) {
-    document.getElementById('audioPlayer').getURL('handleResponse');
+    document.getElementById('audioplayer').getURL('handleResponse');
 }
 
 function getVolume(event) {
-    document.getElementById('audioPlayer').getVolume('handleResponse');
+    document.getElementById('audioplayer').getVolume('handleResponse');
 }
 
 function handleResponse(value) {
@@ -140,23 +140,23 @@ function load(event, audioURLOne, audioURLTwo, audioURLThree, playID) {
     var finalURL = audioURLOne;
     finalURL += audioURLTwo;
     finalURL += audioURLThree;
-    document.getElementById('audioPlayer').load(unescape(finalURL), true, playID);
+    document.getElementById('audioplayer').loadAudio(unescape(finalURL), true, playID);
 }
 
 function pause(event) {
-    document.getElementById('audioPlayer').pause();
+    document.getElementById('audioplayer').pause();
 }
 
 function play(event) {
-    document.getElementById('audioPlayer').play();
+    document.getElementById('audioplayer').play();
 }
 
 function seek(event) {
-    document.getElementById('audioPlayer').seek(20);
+    document.getElementById('audioplayer').seek(20);
 }
 
 function stopThis(event, objID) {
-    document.getElementById('audioPlayer').pause();
+    document.getElementById('audioplayer').pause();
     document.getElementById("play_audio"+objID).style.display = "block";
     document.getElementById("load_audio"+objID).style.display = "none";
     document.getElementById("stop_audio"+objID).style.display = "none";

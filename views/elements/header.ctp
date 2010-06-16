@@ -11,10 +11,6 @@
 /**
  * Header file for home page
  **/
-?>
-<?php echo $javascript->link('qtip'); ?>
-<?php echo $javascript->link('qtip_add'); ?>
-<?php	
 if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 {
 	$libraryInfo = $library->getLibraryDetails($_SESSION['library']);

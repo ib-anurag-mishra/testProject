@@ -16,7 +16,6 @@ if(isset($_REQUEST['library_bgcolor']) && isset($_REQUEST['library_content_bgcol
     $library_links_hover_color = "#".$_REQUEST['library_links_hover_color'];
     $library_navlinks_color = "#".$_REQUEST['library_navlinks_color'];
     $library_navlinks_hover_color = "#".$_REQUEST['library_navlinks_hover_color'];
-
 }
 else {
     $library_bgcolor = "#606060";
@@ -30,7 +29,7 @@ else {
     $library_navlinks_color = "#FFFFFF";
     $library_navlinks_hover_color = "#FFFFFF";
 }
-if($_REQUEST['library_box_header_color']!='' && $_REQUEST['library_box_hover_color']!=''){
+if(isset($_REQUEST['library_box_header_color']) && isset($_REQUEST['library_box_hover_color'])){
 	$library_box_header_color = "#".$_REQUEST['library_box_header_color'];
 	$library_box_hover_color = "#".$_REQUEST['library_box_hover_color'];
 }
@@ -1355,4 +1354,10 @@ div.message {
 	color:#FFFFFF !important;
 	width:8px;
 	height:11px;
+}
+
+#audioPixel {
+	padding: 9px 10px 0 10px;
+	margin: 0;
+	float: left;
 }

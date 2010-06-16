@@ -1,6 +1,4 @@
 <?php echo $javascript->link('freegal_artist_curvy'); ?>
-<?php echo $javascript->link('qtip'); ?>
-<?php echo $javascript->link('qtip_add'); ?>
 <div id="artistBox">
 	<?php echo $artistName; ?>
 </div>

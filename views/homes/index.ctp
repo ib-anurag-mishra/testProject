@@ -1,7 +1,5 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
-<?php echo $javascript->link('qtip'); ?>
-<?php echo $javascript->link('qtip_add'); ?>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php

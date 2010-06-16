@@ -1,6 +1,4 @@
-<script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
-<?php echo $javascript->link('qtip'); ?>
-<?php echo $javascript->link('qtip_add'); ?>
+<?php echo $javascript->link('freegal_genre_curvy'); ?>
 <div id="genre">Search Results</div>
 <div style="float:left;width:955px;">
 <div id="genreArtist" class="links">

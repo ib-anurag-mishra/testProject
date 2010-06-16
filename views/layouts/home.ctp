@@ -14,7 +14,7 @@
 	</title>
    	<?php
 		echo $this->Html->meta('icon');
-		echo $javascript->link('ImageDisableRightClick');
+		//echo $javascript->link('ImageDisableRightClick');
 		/*echo $this->Html->css('freegal_styles');
 		echo $this->Html->css('jquery.autocomplete');
 		echo $html->css('colorbox');
@@ -28,8 +28,10 @@
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');*/
 	?>		
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,swfobject.js,audioPlayer.js,freegal.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
+                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
 	<?php
+		echo $javascript->link('qtip');
+		echo $javascript->link('qtip_add');
 		echo $scripts_for_layout;
 		if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 		{
@@ -55,7 +57,8 @@
 				});
 				var webroot = '<?php echo $this->webroot; ?>';	
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
-				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioPlayer", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params);
+				var attributes = { id: "audioplayer" }; 
+				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
 			</script>
 			<style>
 				<?php
@@ -153,7 +156,7 @@
     	</div>
   	</div>
 	<![endif]-->
-	<div id="audioPlayer"></div>
+	<div id="audioPixel"><div id="audioflash"></div></div>
 	<?php $session->flash(); ?>
 	<a class='upgradeFlash' href="#"></a>
 	<div style="display:none;">

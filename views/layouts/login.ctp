@@ -11,6 +11,8 @@
 		echo $this->Html->css('freegal_styles');
 		echo $scripts_for_layout;
 	?>
+</head>
+<body>
 	<!--[if lt IE 7]>
 	  	<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
 	    	<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
@@ -47,8 +49,6 @@
 	    	</div>
 	  	</div>
 	<![endif]-->
-</head>
-<body>
 	<div id="container"> <!-- content -->
 		<?php echo $this->element('header'); ?>
 		<?php $session->flash(); ?>

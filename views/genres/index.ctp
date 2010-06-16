@@ -1,6 +1,4 @@
 <?php echo $javascript->link('freegal_genreall_curvy', false); ?>
-<?php echo $javascript->link('qtip'); ?>
-<?php echo $javascript->link('qtip_add'); ?>
 <div id="genreAll">
 	<?php
 	$i = 0;
