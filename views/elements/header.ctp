@@ -11,6 +11,10 @@
 /**
  * Header file for home page
  **/
+?>
+<?php echo $javascript->link('qtip'); ?>
+<?php echo $javascript->link('qtip_add'); ?>
+<?php	
 if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 {
 	$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
@@ -26,12 +30,19 @@ if(isset($_SESSION['library']) && $_SESSION['library'] != '')
 	<?php
 	}
 	?>
-	<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+	<?php
+	if(!$libraryInfo['Library']['show_library_name']) {
+	?>
+		<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+	<?php
+	}
+	?>
 	<div id="header_right">
 		<ul>
 			<li>
 				Weekly Downloads <span id="downloads_used"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
-				<?php echo $html->link($html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14)), array('controller' => 'homes', 'action' => 'limits'), array('escape' => false)); ?>
+				<?php 
+				echo $html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14, "id" => 'qtip')); ?>
 				&nbsp;|&nbsp;
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 				&nbsp;|&nbsp;
