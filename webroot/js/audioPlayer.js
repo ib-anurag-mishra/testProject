@@ -144,19 +144,19 @@ function load(event, audioURLOne, audioURLTwo, audioURLThree, playID) {
 }
 
 function pause(event) {
-    document.getElementById('audioplayer').pause();
+    document.getElementById('audioplayer').pauseAudio();
 }
 
 function play(event) {
-    document.getElementById('audioplayer').play();
+    document.getElementById('audioplayer').playAudio();
 }
 
 function seek(event) {
-    document.getElementById('audioplayer').seek(20);
+    document.getElementById('audioplayer').seekAudio(20);
 }
 
 function stopThis(event, objID) {
-    document.getElementById('audioplayer').pause();
+    document.getElementById('audioplayer').stopAudio();
     document.getElementById("play_audio"+objID).style.display = "block";
     document.getElementById("load_audio"+objID).style.display = "none";
     document.getElementById("stop_audio"+objID).style.display = "none";
