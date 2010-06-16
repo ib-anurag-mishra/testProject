@@ -30,7 +30,6 @@
 				$class = ' class="altrow"';
 			}
 	?>
-			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
 					<p>
@@ -167,9 +166,7 @@
     ?>
 	<?php 
 		echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
-		echo '&nbsp;';
 		echo $paginator->numbers();
-		echo '&nbsp;';
 		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
 	?>
 </div>
