@@ -78,6 +78,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_download_limit',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
+																				'Library.show_library_name',
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date'
                                                                                 ),
@@ -160,6 +161,7 @@ Class LibrariesController extends AppController
 																				'Library.library_total_downloads',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
+																				'Library.show_library_name',
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date'
                                                                                 ),
