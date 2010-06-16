@@ -15,6 +15,9 @@
 if (isset($_SESSION['library']) && $_SESSION['library'] != '') {
 ?>
 <div id="footer">
+	<div id="copyright" style="float:left;">
+		&copy; 2010 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
+	</div>	
 	<?php echo $html->link('About Freegal Music', array('controller' => 'homes', 'action' => 'aboutus')); ?>
 	&nbsp;|&nbsp;
 	<?php echo $html->link('Terms & Conditions', array('controller' => 'homes', 'action' => 'terms')); ?>
