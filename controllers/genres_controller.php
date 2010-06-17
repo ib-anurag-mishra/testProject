@@ -54,7 +54,7 @@ Class GenresController extends AppController
 		$j = 0;
 		foreach ($categories as $category) {
 			$genreName = $category['Category']['Genre'];
-			if($_SESSION['block'] == 'yes') {
+			if($this->Session->read('block') == 'yes') {
 				$cond = array('Metadata.Advisory' => 'F');
 			}
 			else {
@@ -172,7 +172,7 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		if($_SESSION['block'] == 'yes') {
+		if($this->Session->read('block') == 'yes') {
 		      $cond = array('Metadata.Advisory' => 'F');
 		}
 		else {
