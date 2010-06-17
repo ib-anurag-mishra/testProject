@@ -371,14 +371,15 @@ ul.marquee li {
 	
 #footer {
 	clear:both;
-	width:955px;
+	width:945px;
 	color:#fff;
 	height: 16px;
 	font-size: 10px;
 	text-align:right;
 	margin:0 auto;
-	padding-right:10px;
+	padding:0 10px;
 	line-height:16px;
+	#margin:0 0 0 20px;
 }
 
 #footer a {
