@@ -33,7 +33,7 @@
 		echo $javascript->link('qtip');
 		echo $javascript->link('qtip_add');
 		echo $scripts_for_layout;
-		if(isset($_SESSION['library']) && $_SESSION['library'] != '')
+		if($this->Session->read('library') && $this->Session->read('library') != '')
 		{
 			$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 	?>
@@ -49,7 +49,7 @@
 					});
 					checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					<?php
-					if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
 					?>
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
@@ -62,7 +62,7 @@
 			</script>
 			<style>
 				<?php
-				if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+				if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 				{
 				?>
 					#cboxClose{display:none !important;}
@@ -167,7 +167,7 @@
 		</div>
 	</div>
 	<?php
-	if(isset($_SESSION['approved']) && $_SESSION['approved'] == 'no')
+	if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 	{ ?>
 		<a class='termsApproval' href="#"></a>
 		<div style="display:none;">
@@ -185,7 +185,7 @@
 		<?php echo $this->element('header'); ?>
 		<div id="content">
 			<?php
-			if(isset($_SESSION['library']) && $_SESSION['library'] != '')
+			if($this->Session->read('library') && $this->Session->read('library') != '')
 			{
 				echo $this->element('navigation');
 			}
