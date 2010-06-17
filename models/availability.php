@@ -17,3 +17,4 @@ class Availability extends AppModel {
 		)
 	);
 }
+?>

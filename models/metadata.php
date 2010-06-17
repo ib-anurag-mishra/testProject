@@ -38,3 +38,4 @@ class Metadata extends AppModel {
 		return $getTrackData;
 	}	
 }
+?>

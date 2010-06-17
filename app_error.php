@@ -22,3 +22,4 @@ class AppError extends ErrorHandler {
 		
 	}
 }
+?>

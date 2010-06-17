@@ -17,3 +17,4 @@ class SalesTerritory extends AppModel {
 		)
 	);
 }
+?>
