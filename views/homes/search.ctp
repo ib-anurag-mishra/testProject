@@ -118,7 +118,7 @@
 					<?php	}
                             else {
 								if($libraryDownload != '1'){
-									$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
+									$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
                                     $wishlistCount = $wishlist->getWishlistCount();
                                     if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
                     ?>
