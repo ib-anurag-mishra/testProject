@@ -20,12 +20,12 @@ class HomesController extends AppController
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
-				$this->Session->destroy('User');
+				$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
-				$this->Session->destroy('User');
+				$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}			
@@ -106,8 +106,8 @@ class HomesController extends AppController
      Desc : actions that is needed for advanced search
     */
     function search(){
-        $patId = $_SESSION['patron'];
-        $libId = $_SESSION['library'];        
+        $patId = $this->Session->read('patron');
+        $libId = $this->Session->read('library');        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
@@ -339,8 +339,8 @@ class HomesController extends AppController
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-        $libId = $_SESSION['library'];
-        $patId = $_SESSION['patron'];
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         if($libraryDownload != '1' || $patronDownload != '1') {
@@ -667,15 +667,21 @@ class HomesController extends AppController
     */
     function aboutus() {
 	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
-	    if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')) {
-		$url = $_SESSION['referral_url'];
+	    if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
+			$url = $this->Session->read('referral_url');
 	    }
-	    elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')) {
-		$url = $this->webroot.'users/ilogin';
+	    elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')) {
+			$url = $this->webroot.'users/ilogin';
 	    }
-	    elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')) {
-		$url = $this->webroot.'users/inlogin';
+	    elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
+			$url = $this->webroot.'users/inlogin';
 	    }
+        elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
+			$url = $this->webroot.'users/slogin';  
+        }
+		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
+			$url = $this->webroot.'users/snlogin';
+        }		
 	    else {
 	       $url = $this->webroot.'users/login';
 	    }
@@ -687,7 +693,7 @@ class HomesController extends AppController
 		$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
 		$this->Currentpatron->saveField('modified',$updateTime, false);
 	    }
-	    $this->Session->destroy('User');
+	    $this->Session->destroy();
 	    $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
 	}
 	$this->layout = 'home';
@@ -868,8 +874,8 @@ class HomesController extends AppController
     function wishlistDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-        $libId = $_SESSION['library'];
-        $patId = $_SESSION['patron'];
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         //check for download availability
