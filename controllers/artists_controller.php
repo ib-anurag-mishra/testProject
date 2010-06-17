@@ -407,7 +407,7 @@ Class ArtistsController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		if($_SESSION['block'] == 'yes') {
+		if($this->Session->read('block') == 'yes') {
 			$cond = array('Metadata.Advisory' => 'F');
 		}
 		else{
