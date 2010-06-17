@@ -115,7 +115,7 @@ Class UsersController extends AppController
             if(count($currentPatron) > 0){
                 $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
                 $date = strtotime(date('Y-m-d H:i:s'));              
-                if(!(isset($_SESSION['patron']))){               
+                if(!($this->Session->read('patron'))){               
                     if(($date-$modifiedTime) > 60){
                         $updateArr = array();
                         $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                        
@@ -191,25 +191,31 @@ Class UsersController extends AppController
          $updateTime = date( "Y-m-d H:i:s", time()-60 );
          $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
          $this->Currentpatron->saveField('modified',$updateTime, false);         
-         session_destroy();
-         if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')){            
-            $this->redirect($_SESSION['referral_url'], null, true);  
+         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
+			$redirect_url = $this->Session->read('referral_url');
+			$this->Session->destroy();
+			$this->redirect($redirect_url, null, true);
          }
-         elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')){            
-            $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));  
+         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
+            $this->Session->destroy();
+			$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));  
          }
-         elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')){            
-            $this->redirect(array('controller' => 'users', 'action' => 'inlogin'));  
+         elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
+            $this->Session->destroy();
+			$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));  
          }
-         elseif(isset($_SESSION['sip2']) && ($_SESSION['sip2'] != '')){            
-            $this->redirect(array('controller' => 'users', 'action' => 'slogin'));  
+         elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
+            $this->Session->destroy();
+			$this->redirect(array('controller' => 'users', 'action' => 'slogin'));  
          }
-		elseif(isset($_SESSION['sip']) && ($_SESSION['sip'] != '')){            
-            $this->redirect(array('controller' => 'users', 'action' => 'snlogin'));  
+		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
+            $this->Session->destroy();
+			$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));  
          }
 
          else{            
-            $this->redirect($this->Auth->logout());    
+            $this->Session->destroy();
+			$this->redirect($this->Auth->logout());    
          }         
       }     
    }
