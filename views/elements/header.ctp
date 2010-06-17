@@ -13,8 +13,8 @@
  **/
 if($this->Session->read('library') && $this->Session->read('library') != '')
 {
-	$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
-	$downloadCount = $download->getDownloadDetails($_SESSION['library'],$_SESSION['patron']);
+	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 ?>
 <div id="header">
 	<?php
