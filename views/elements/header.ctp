@@ -11,7 +11,7 @@
 /**
  * Header file for home page
  **/
-if(isset($_SESSION['library']) && $_SESSION['library'] != '')
+if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($_SESSION['library']);
 	$downloadCount = $download->getDownloadDetails($_SESSION['library'],$_SESSION['patron']);
