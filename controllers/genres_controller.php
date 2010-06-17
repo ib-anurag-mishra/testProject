@@ -23,10 +23,12 @@ Class GenresController extends AppController
 		if(in_array($this->action,$libraryCheckArr)) {
 		  $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
+				$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
+				$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}
@@ -39,8 +41,8 @@ Class GenresController extends AppController
         */
 	function index() {
 		$this->layout = 'home';
-		$patId = $_SESSION['patron'];
-		$libId = $_SESSION['library'];
+		$patId = $this->Session->read('patron');
+		$libId = $this->Session->read('library');
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
@@ -164,8 +166,8 @@ Class GenresController extends AppController
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
-		$patId = $_SESSION['patron'];
-		$libId = $_SESSION['library'];
+		$patId = $this->Session->read('patron');
+		$libId = $this->Session->read('library');
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
