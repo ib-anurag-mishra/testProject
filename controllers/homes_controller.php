@@ -2,8 +2,7 @@
 /* File Name: homes_controller.php
    File Description: Displays the home page for each patron 
    Author: Maycreate
-*/   
-
+*/
 class HomesController extends AppController
 {
     var $name = 'Homes';
@@ -112,7 +111,7 @@ class HomesController extends AppController
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
-        if($_SESSION['block'] == 'yes') {
+        if($this->Session->read('block') == 'yes') {
             $cond = array('Metadata.Advisory' => 'F');
         }
         else {
@@ -357,19 +356,19 @@ class HomesController extends AppController
         $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
         $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
-        if(isset($_SESSION['referral_url']) && ($_SESSION['referral_url'] != '')){            
+        if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
             $insertArr['user_login_type'] = 'referral_url';
          }
-         elseif(isset($_SESSION['innovative']) && ($_SESSION['innovative'] != '')){            
+         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
 			 $insertArr['user_login_type'] = 'innovative';
          }
-         elseif(isset($_SESSION['innovative_wo_pin']) && ($_SESSION['innovative_wo_pin'] != '')){            
+         elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
             $insertArr['user_login_type'] = 'innovative_wo_pin';  
          }
-         elseif(isset($_SESSION['sip2']) && ($_SESSION['sip2'] != '')){            
+         elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
              $insertArr['user_login_type'] = 'sip2';  
          }
-		elseif(isset($_SESSION['sip']) && ($_SESSION['sip'] != '')){            
+		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
             $insertArr['user_login_type'] = 'sip';   
         }
          else{            
