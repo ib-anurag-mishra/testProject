@@ -509,7 +509,7 @@ Class LibrariesController extends AppController
             {
                 $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
                 $date = strtotime(date('Y-m-d H:i:s'));              
-                if(!(isset($_SESSION['patron'])))
+                if(!$this->Session->read('patron'))
                 {               
                     if(($date-$modifiedTime) > 60)
                     {
