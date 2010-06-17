@@ -12,7 +12,7 @@
  * Footer file for home page
  **/
 
-if (isset($_SESSION['library']) && $_SESSION['library'] != '') {
+if ($this->Session->read('library') && $this->Session->read('library') != '') {
 ?>
 <div id="footer">
 	<div id="copyright" style="float:left;">
