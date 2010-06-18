@@ -24,12 +24,12 @@ Class ArtistsController extends AppController
 		if(in_array($this->action,$libraryCheckArr)) {
 			$validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
-				$this->Session->destroy();
+				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
-				$this->Session->destroy();
+				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}
@@ -507,7 +507,7 @@ Class ArtistsController extends AppController
 				      ));
 	    }
 	    $this->set('albumData', $albumData);
-	    if($albumData[0]['Metadata']['ArtistURL'] != "" ) {
+	    if(isset($albumData[0]['Metadata']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
 	    }else {
 	       $this->set('artistUrl', "N/A");
