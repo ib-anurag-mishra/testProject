@@ -19,12 +19,12 @@ class HomesController extends AppController
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
-				$this->Session->destroy();
+				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
-				$this->Session->destroy();
+				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}			
@@ -158,13 +158,13 @@ class HomesController extends AppController
                 $genre =  $this->data['Home']['genre_id'];
             }            
             if($artist != '') {
-                $artistSearch = array("match(Physicalproduct.ArtistText) against ('+$artist*' in boolean mode)");    
+                $artistSearch = array('match(Physicalproduct.ArtistText) against ("+'.$artist.'*" in boolean mode)');    
             }
             else {
                 $artistSearch = '';
             }
             if($composer != '') {
-                $composerSearch = array("match(Participant.Name) against ('+$composer*' in boolean mode) and Participant.role='Composer'");    
+                $composerSearch = array('match(Participant.Name) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
 				$this->set('composer', $composer);
 				$preCondition4 = array('Participant.Role' => 'Composer'); 
 			}
@@ -173,19 +173,19 @@ class HomesController extends AppController
 				$preCondition4 = "";
             }
             if($song != '') {
-                $songSearch = array("match(Metadata.Title) against ('+$song*' in boolean mode)");    
+                $songSearch = array('match(Metadata.Title) against ("+'.$song.'*" in boolean mode)');    
             }
             else {
                 $songSearch = '';
             }
             if($album != '') {
-                $albumSearch = array("match(Physicalproduct.Title) against ('+$album*' in boolean mode)");    
+                $albumSearch = array('match(Physicalproduct.Title) against ("+'.$album.'*" in boolean mode)');    
             }
             else {
                 $albumSearch = '';
             }
             if($genre != '') {
-                $genreSearch = array("match(Genre.Genre) against ('+$genre*' in boolean mode)");    
+                $genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)');    
             }
             else {
                 $genreSearch = '';
@@ -739,9 +739,9 @@ class HomesController extends AppController
         $this->Email->fromName = Configure::read('App.fromName');
         $this->Email->subject = 'FreegalMusic - New Password information';
         $this->Email->smtpHostNames = Configure::read('App.SMTP');
-	$this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
-	$this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
-	$this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
+		$this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
+		$this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
+		$this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
         $result = $this->Email->send(); 
     }
     
