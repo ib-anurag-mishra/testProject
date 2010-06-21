@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -446,7 +446,7 @@ class HomesController extends AppController
     
     /*
      Function Name : admin_aboutusform
-     Desc : actions used for admin abour us form
+     Desc : actions used for admin about us form
     */
     function admin_aboutusform() {
 	if(isset($this->data)) {
@@ -662,7 +662,7 @@ class HomesController extends AppController
     
     /*
      Function Name : aboutus
-     Desc : actions used for aboutus page
+     Desc : actions used for User end checking for cookie and javascript enable
     */
     function aboutus() {
 	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
@@ -701,7 +701,32 @@ class HomesController extends AppController
 	}
 	$this->layout = 'home';
     }
-    
+	
+/*
+ Function Name : aboutus
+ Desc : actions used for Admin end checking for cookie and javascript enable
+*/	
+    function admin_aboutus() {
+	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
+	    $url = $this->webroot.'admin/users/login';
+	    $patronId = $this->Session->read('patron');
+	    $libraryId = $this->Session->read('library');
+	    $patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
+	    if(count($patronDetails) > 0) {
+		$updateTime = date( "Y-m-d H:i:s", time()-60 );
+		$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
+		$this->Currentpatron->saveField('modified',$updateTime, false);
+	    }
+	    $this->Session->destroy();
+	    $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
+	}
+	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
+	    $this->Session->destroy();
+	    $this -> Session -> setFlash("Cookie is required to use this website. For the best experience, please enable Cookie and log back in again if you would like to continue using the site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable Cookie in different type of browsers.");
+	}
+	$this->layout = 'admin';
+    }
+        
     /*
      Function Name : terms
      Desc : actions used for terms page
