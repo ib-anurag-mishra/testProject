@@ -37,7 +37,7 @@ class HomesController extends AppController
     */
     function index() {
         $this->Physicalproduct->Behaviors->attach('Containable');
-	$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
+		$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
         $this->set('songs',$songDetails);
         $this->Physicalproduct->recursive = -1;
         $upcoming = $this->Physicalproduct->find('all', array(
@@ -409,9 +409,9 @@ class HomesController extends AppController
     */
     function checkPatron() {
 	Configure::write('debug', 0);
-        $this->layout = false;
+    $this->layout = false;
 	$libid = $_REQUEST['libid'];       
-        $patronid = $_REQUEST['patronid'];
+    $patronid = $_REQUEST['patronid'];
 	$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
 	if(count($currentPatron) > 0) {
           $updateArr = array();
@@ -694,6 +694,10 @@ class HomesController extends AppController
 	    }
 	    $this->Session->destroy();
 	    $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
+	}
+	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
+	    $this->Session->destroy();
+	    $this -> Session -> setFlash("Cookie is required to use this website. For the best experience, please enable Cookie and log back in again if you would like to continue using the site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable Cookie in different type of browsers.");
 	}
 	$this->layout = 'home';
     }
