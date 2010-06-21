@@ -7,18 +7,18 @@
 		<?php echo $title_for_layout; ?>
 	</title>
    	<?php
-                echo $this->Html->meta('icon');
-                /*echo $this->Html->css('freegal_admin_styles');
-                echo $this->Html->css('superfish');
-                echo $this->Html->css('colorbox');
+		echo $this->Html->meta('icon');
+		/*echo $this->Html->css('freegal_admin_styles');
+		echo $this->Html->css('superfish');
+		echo $this->Html->css('colorbox');
 		echo $this->Html->css('colorpicker');*/
-                /*echo $javascript->link('jquery-1.3.2.min');
+		/*echo $javascript->link('jquery-1.3.2.min');
 		echo $javascript->link('jquery.tools.min');
 		echo $javascript->link('admin_functions');
-                echo $javascript->link('jquery.colorbox');
-                echo $javascript->link('jquery.hoverIntent.min');
-                echo $javascript->link('superfish');
-                echo $javascript->link('supersubs');
+		echo $javascript->link('jquery.colorbox');
+		echo $javascript->link('jquery.hoverIntent.min');
+		echo $javascript->link('superfish');
+		echo $javascript->link('supersubs');
 		echo $javascript->link('colorpicker');*/
 		?>
 		<link type="text/css" rel="stylesheet" href="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=superfish.css,freegal_admin_styles.css,colorbox.css,colorpicker.css" />
@@ -30,6 +30,21 @@
 	<script type="text/javascript">
 		var webroot = '<?php echo $this->webroot; ?>';
 	</script>
+	<noscript>
+		<?php
+			if($this->params['action'] != 'admin_aboutus') {
+				echo $html->meta(null, null, array( 'http-equiv' => 'refresh', 'content' => "0.1;url=".$this->webroot."admin/homes/aboutus/js_err"), false);
+			}
+		 ?>
+	</noscript>
+	<?php
+		setcookie("checkcookie", time());
+		if(!isset($this->params['pass']['0'])){
+			if(!isset($_COOKIE['checkcookie'])) {
+				echo $html->meta(null, null, array( 'http-equiv' => 'refresh', 'content' => "0.1;url=".$this->webroot."admin/homes/aboutus/cookie_err"), false);
+			}
+		}
+	?>
 </head>
 <body>
 	<?php $session->flash(); ?>
