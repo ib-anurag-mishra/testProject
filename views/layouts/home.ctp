@@ -117,6 +117,14 @@
 			}
 		 ?>
 	</noscript>
+		<?php
+			setcookie("checkcookie", time());
+			if(!isset($this->params['pass']['0'])){
+				if(!isset($_COOKIE['checkcookie'])) {
+					echo $html->meta(null, null, array( 'http-equiv' => 'refresh', 'content' => "0.1;url=".$this->webroot."homes/aboutus/cookie_err"), false);
+				}
+			}
+		?>
   
 </head>
 <body>
