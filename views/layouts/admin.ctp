@@ -37,14 +37,18 @@
 			}
 		 ?>
 	</noscript>
-	<?php
-		setcookie("checkcookie", time());
-		if(!isset($this->params['pass']['0'])){
-			if(!isset($_COOKIE['checkcookie'])) {
-				echo $html->meta(null, null, array( 'http-equiv' => 'refresh', 'content' => "0.1;url=".$this->webroot."admin/homes/aboutus/cookie_err"), false);
+	<script type="text/javascript">
+		$().ready(function() {	
+			var tmpcookie = new Date();
+			chkcookie = (tmpcookie.getTime() + '');
+			document.cookie = "chkcookie=" + chkcookie;
+			if (document.cookie.indexOf(chkcookie,0) < 0) {
+				<?php if($this->params['action'] != 'admin_aboutus') { ?>
+					location.href = "<?php echo $this->webroot; ?>admin/homes/aboutus/cookie_err";
+				<?php } ?>
 			}
-		}
-	?>
+		});
+	</script>
 </head>
 <body>
 	<?php $session->flash(); ?>
