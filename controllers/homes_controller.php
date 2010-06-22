@@ -697,7 +697,7 @@ class HomesController extends AppController
 	}
 	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
 	    $this->Session->destroy();
-	    $this -> Session -> setFlash("Cookie is required to use this website. For the best experience, please enable Cookie and log back in again if you would like to continue using the site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable Cookie in different type of browsers.");
+	    $this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
 	}
 	$this->layout = 'home';
     }
@@ -714,7 +714,7 @@ class HomesController extends AppController
 	}
 	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
 	    $this->Session->destroy();
-	    $this -> Session -> setFlash("Cookie is required to use this website. For the best experience, please enable Cookie and log back in again if you would like to continue using the site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable Cookie in different type of browsers.");
+	    $this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
 	}
 	$this->layout = 'admin';
     }
