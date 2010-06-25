@@ -277,9 +277,9 @@ class HomesController extends AppController
                                             ),
 					'or' =>
                                                 array(
-                                                        array('Physicalproduct.ArtistText LIKE' => $searchKey.'%'),
-                                                        array('Physicalproduct.Title LIKE' => $searchKey.'%'),
-                                                        array('Metadata.Title LIKE' => $searchKey.'%')
+                                                        array('match(Physicalproduct.ArtistText) against ("+'.$searchKey.'*" in boolean mode)'),
+														array('match(Physicalproduct.Title) against ("+'.$searchKey.'*" in boolean mode)'),
+                                                        array('match(Metadata.Title) against ("+'.$searchKey.'*" in boolean mode)')
                                                     )
                                         ),
                                     'fields' => array(
