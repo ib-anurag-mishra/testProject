@@ -629,10 +629,12 @@ Class UsersController extends AppController
          else{
             $cardNo = substr($card,0,5);
             $this->Library->recursive = -1;
+			$this->Library->Behaviors->attach('Containable');
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative')
+                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative'),
+												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
                                                 )
-                                             );           
+                                             );
             if(count($existingLibraries) == 0){
                 $this -> Session -> setFlash("This is not a valid credential.");
                 $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
@@ -754,8 +756,10 @@ Class UsersController extends AppController
          else{
             $cardNo = substr($card,0,5);
             $this->Library->recursive = -1;
+			$this->Library->Behaviors->attach('Containable');
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative_wo_pin')
+                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative_wo_pin'),
+												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
                                                 )
                                              );            
             if(count($existingLibraries) == 0){
@@ -836,7 +840,7 @@ Class UsersController extends AppController
                   $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
                   $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";           
                   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-		  $this->Download->recursive = -1;
+				  $this->Download->recursive = -1;
                   $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
                   $this ->Session->write("downloadsUsed", $results);
                   if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
@@ -894,11 +898,12 @@ Class UsersController extends AppController
 			else{
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
+				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2')
+													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2'),
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
-												 ); 
-
+												 );
 				if(count($existingLibraries) == 0){
 					$this -> Session -> setFlash("This is not a valid credential.");
 					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
@@ -1062,10 +1067,12 @@ Class UsersController extends AppController
 			else{
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
+				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2_wo_pin')
+													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2_wo_pin'),
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
-												 ); 
+												 );
 				if(count($existingLibraries) == 0){
 					$this -> Session -> setFlash("This is not a valid credential.");
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
