@@ -24,7 +24,7 @@ Class GenresController extends AppController
 		  $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
-				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
+				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
@@ -49,7 +49,12 @@ Class GenresController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$this->Genre->recursive = -1;
 		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
-		$categories = $this->Category->find('all', array('fields' => 'Genre','order' => 'rand()','limit' => '4'));
+		$category_ids = $this->Category->find('list', array('fields' => 'id'));
+		$rand_keys = array_rand($category_ids, 4);
+		$rand_val = implode(",", $rand_keys);
+		$categories = $this->Category->find('all', array(
+								'conditions' => array('id IN ('.$rand_val.')'),
+								'fields' => 'Genre'));
 		$i = 0;
 		$j = 0;
 		foreach ($categories as $category) {
