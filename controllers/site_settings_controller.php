@@ -43,9 +43,12 @@ Class SiteSettingsController extends AppController
     function admin_generateXML() {
         $suggestionCounter = $this->Siteconfig->find('all', array('fields' => array('Siteconfig.svalue'), 'conditions' => array('Siteconfig.soption' => 'suggestion_counter')));
         $this->Physicalproduct->Behaviors->attach('Containable');
+		$suggestionSongs_ids = $this->Physicalproduct->find('list', array('fields' => 'ProdID'));
+		$rand_keys = array_rand($suggestionSongs_ids, $suggestionCounter[0]['Siteconfig']['svalue']);
+		$rand_val = implode(",", $rand_keys);
         $suggestionSongs = $this->Physicalproduct->find('all',
             array('conditions' => 
-                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F'),
+                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F','Physicalproduct.ProdID IN ('.$rand_val.')'),
                 'fields' => array(
                                     'Physicalproduct.ProdID',
                                     'Physicalproduct.Title',
@@ -60,10 +63,9 @@ Class SiteSettingsController extends AppController
                                                         'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
                                                 ),
                         'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
-                ),'order'=> 'rand()','limit' => $suggestionCounter[0]['Siteconfig']['svalue']
+                )
             )
         );
-        
         if(!file_exists(WWW_ROOT."/suggestion_xml")) {
 		mkdir(WWW_ROOT."/suggestion_xml");
 	}
