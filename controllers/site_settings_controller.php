@@ -4,7 +4,7 @@
  File Description : Site Settings controller page
  Author : maycreate
  */
-
+ini_set('memory_limit', '1024M');
 Class SiteSettingsController extends AppController
 {
     var $name = 'SiteSettings';
@@ -59,9 +59,9 @@ Class SiteSettingsController extends AppController
                                     ),
                 'contain' => 
                 array('Audio' => array('fields' => 
-                                                        array('Audio.FileID'),
-                                                        'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
-                                                ),
+													array('Audio.FileID'),
+													'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
+											),
                         'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
                 )
             )
@@ -125,6 +125,5 @@ Class SiteSettingsController extends AppController
             $this->Session -> setFlash( 'There is some occurred while creating/updating the suggestion songs XML !', 'modal', array( 'class' => 'modal success' ) );
         }
         $this->redirect('index');
-    }
-}
+    }								}
 ?>
