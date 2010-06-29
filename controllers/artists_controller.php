@@ -456,7 +456,7 @@ Class ArtistsController extends AppController
 							)
 						)
 						)			                                
-					),'limit' => '3','cache' => 'yes'
+					),'order' => 'Physicalproduct.SalesDate DESC','limit' => '3','cache' => 'yes'
 				);
 		$this->Physicalproduct->recursive = 2;
 		$albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
