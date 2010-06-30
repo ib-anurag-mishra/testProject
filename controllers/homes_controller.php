@@ -675,6 +675,12 @@ class HomesController extends AppController
 	    elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
 			$url = $this->webroot.'users/inlogin';
 	    }
+	    elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')) {
+			$url = $this->webroot.'users/idlogin';
+	    }
+	    elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')) {
+			$url = $this->webroot.'users/indlogin';
+	    }		
         elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
 			$url = $this->webroot.'users/slogin';  
         }
