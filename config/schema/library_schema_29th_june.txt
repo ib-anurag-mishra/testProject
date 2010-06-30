@@ -1,0 +1,2 @@
+ALTER TABLE `libraries` ADD `library_authentication_variable` VARCHAR( 100 ) NULL AFTER `library_authentication_url`  ,
+ADD `library_authentication_response` INT( 11 ) NULL AFTER `library_authentication_variable` 
