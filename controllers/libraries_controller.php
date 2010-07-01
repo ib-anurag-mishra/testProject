@@ -421,7 +421,7 @@ Class LibrariesController extends AppController
      Desc : actions that for library picture upload using Ajax
     */
     function admin_doajaxfileupload() {
-    Configure::write('debug', 1);
+    Configure::write('debug', 0);
 	$this->layout = false;
     $error = "";
 	$msg = "";
