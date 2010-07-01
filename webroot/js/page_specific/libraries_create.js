@@ -249,7 +249,7 @@ $(function() {
 			var postURL = webroot+'admin/libraries/doajaxfileupload';
 		}
 		
-		if(currentStep == '1' || currentStep == '5') {
+		if(currentStep == '5') {
 			$.ajaxFileUpload
 			(
 				
