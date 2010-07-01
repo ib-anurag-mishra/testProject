@@ -107,9 +107,6 @@
 								elseif($getData['Library']['library_authentication_method'] == "sip2_wo_pin") {
 									echo "<label>SIP2 w/o Pin</label>";
 								}
-								elseif($getData['Library']['library_authentication_method'] == "innovative_var") {
-									echo "<label>Innovative Var</label>";
-								}
 								elseif($getData['Library']['library_authentication_method'] == "innovative_var_wo_pin") {
 									echo "<label>Innovative Var w/o Pin</label>";
 								}								
@@ -133,7 +130,6 @@
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
 									'innovative_wo_pin' => 'Innovative w/o PIN',
-									'innovative_var' =>' Innovative Var',
 									'innovative_var_wo_pin' => 'Innovative Var w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
 								);
 							?>
@@ -170,11 +166,11 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Password');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_password',array('label' => false, 'value' => $getData['Library']['library_sip_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_authentication_variable',array('label' => false, 'value' => $getData['Library']['library_authentication_variable'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative_var_pin" <?php if($getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative_var_pin" <?php if($getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_authentication_response',array('label' => false, 'value' => $getData['Library']['library_authentication_response'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
@@ -527,18 +523,6 @@
 						$("#sip_pin").show();
 						$("#sip_login").show();
 						$("#sip_password").show();	
-					}
-					else if ($(this).val() == 'innovative_var') {
-						$("#referral_url").hide();
-						$("#innovative1").show();
-						$("#innovative2").show();
-						$("#innovative_var").show();
-						$("#innovative_var_pin").show();						
-						$("#sip_host").hide();
-						$("#sip_port").hide();
-						$("#sip_pin").hide();
-						$("#sip_login").hide();
-						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'innovative_var_wo_pin') {
 						$("#referral_url").hide();
