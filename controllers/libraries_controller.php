@@ -294,6 +294,7 @@ Class LibrariesController extends AppController
                                                 if($this->Library->save($this->data['Library'])) {
                                                     if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
                                                         $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
+														$this->data['Library']['id'] = $this->Library->id;
                                                         if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
                                                             $message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
