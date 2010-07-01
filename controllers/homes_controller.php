@@ -358,21 +358,24 @@ class HomesController extends AppController
         $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
             $insertArr['user_login_type'] = 'referral_url';
-         }
-         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
-			 $insertArr['user_login_type'] = 'innovative';
-         }
-         elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
-            $insertArr['user_login_type'] = 'innovative_wo_pin';  
-         }
-         elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
-             $insertArr['user_login_type'] = 'sip2';  
-         }
+        }
+        elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
+			$insertArr['user_login_type'] = 'innovative';
+		}
+		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
+			$insertArr['user_login_type'] = 'innovative_wo_pin';  
+		}
+		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
+			$insertArr['user_login_type'] = 'sip2';  
+		}
 		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
             $insertArr['user_login_type'] = 'sip';   
         }
-         else{            
-            $insertArr['user_login_type'] = 'user_account';   
+		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){            
+			$insertArr['user_login_type'] = 'innovative_var_wo_pin';  
+		}		
+        else{            
+			$insertArr['user_login_type'] = 'user_account';   
          }         		
 		$insertArr['email'] = $this->Session->read('Auth.User.email');
 		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
@@ -674,9 +677,6 @@ class HomesController extends AppController
 	    }
 	    elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
 			$url = $this->webroot.'users/inlogin';
-	    }
-	    elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')) {
-			$url = $this->webroot.'users/idlogin';
 	    }
 	    elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')) {
 			$url = $this->webroot.'users/indlogin';
