@@ -73,20 +73,20 @@ class HomesController extends AppController
 							    'fields' => array('Title'), 
 							    'group' => array('Title',),
 							    'limit' => '6'));
-	$this->set('albumResults', $albumResults);
+		$this->set('albumResults', $albumResults);
         $artistResults = $this->Physicalproduct->find('all', array(
 								'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
 								'fields' => array('ArtistText'), 
 								'group' => array('ArtistText',),
 								'limit' => '6'));
-	$this->set('artistResults', $artistResults);
+		$this->set('artistResults', $artistResults);
         $this->Metadata->recursive=2;
         $songResults = $this->Metadata->find('all', array(
 							'conditions'=>array('Metadata.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
 							'fields' => array('Title'), 
 							'group' => array('Title',),
 							'limit' => '6'));
-	$this->set('songResults', $songResults);        
+		$this->set('songResults', $songResults);        
         $this->layout = 'ajax';
     }
     
@@ -263,6 +263,7 @@ class HomesController extends AppController
             if($searchKey == '') {
                 $searchKey = $this->data['Home']['search'];
             }
+			$searchKey = '"'.$searchKey.'"';
             $this->set('searchKey','search='.urlencode($searchKey));
 			if(!isset($_REQUEST['composer'])) {
 				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
@@ -277,9 +278,9 @@ class HomesController extends AppController
                                             ),
 					'or' =>
                                                 array(
-                                                        array('match(Physicalproduct.ArtistText) against ("+'.$searchKey.'*" in boolean mode)'),
-														array('match(Physicalproduct.Title) against ("+'.$searchKey.'*" in boolean mode)'),
-                                                        array('match(Metadata.Title) against ("+'.$searchKey.'*" in boolean mode)')
+                                                        array("match(Physicalproduct.ArtistText) against ('".$searchKey."' in boolean mode)"),
+														array("match(Physicalproduct.Title) against ('".$searchKey."' in boolean mode)"),
+                                                        array("match(Metadata.Title) against ('".$searchKey."' in boolean mode)")
                                                     )
                                         ),
                                     'fields' => array(
