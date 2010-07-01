@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
    function beforeFilter(){
 	parent::beforeFilter();
-        $this->Auth->allow('logout','ilogin','inlogin','idlogin','indlogin','slogin','snlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate');
+        $this->Auth->allow('logout','ilogin','inlogin','indlogin','slogin','snlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate');
    }
    
    /*
@@ -204,10 +204,6 @@ Class UsersController extends AppController
             $this->Session->destroy();
 			$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));  
          }
-         elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){            
-            $this->Session->destroy();
-			$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));  
-         }		 
          elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){            
             $this->Session->destroy();
 			$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));  
@@ -907,7 +903,8 @@ Class UsersController extends AppController
 					$body = $xpath->query('/html/body');
 					$retStr = $dom->saveXml($body->item(0));
 					$retCardArr = explode("P BARCODE[pb]",$retStr);
-					$retCard = substr($retCardArr['1'],1,14);
+					$retPos = strpos($retCardArr['1'],"<br/>");
+					$retCard = substr($retCardArr['1'],1,$retPos-1);
 					if($card == $retCard){
 						$retStatusArr = explode($existingLibraries['0']['Library']['library_authentication_variable'],$retStr);
 						$retStatus = substr($retStatusArr['1'],1,1);
