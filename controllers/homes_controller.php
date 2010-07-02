@@ -263,8 +263,9 @@ class HomesController extends AppController
             if($searchKey == '') {
                 $searchKey = $this->data['Home']['search'];
             }
-			$searchKey = '"'.$searchKey.'"';
-            $this->set('searchKey','search='.urlencode($searchKey));
+			$searchText = $searchKey;
+			$searchKey = '"'.addslashes($searchKey).'"';
+            $this->set('searchKey','search='.urlencode($searchText));
 			if(!isset($_REQUEST['composer'])) {
 				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
 			}			
