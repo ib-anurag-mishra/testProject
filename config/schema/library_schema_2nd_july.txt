@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` CHANGE `library_authentication_response` `library_authentication_response`  VARCHAR( 100 ) NULL DEFAULT NULL 
