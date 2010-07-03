@@ -109,7 +109,10 @@
 								}
 								elseif($getData['Library']['library_authentication_method'] == "innovative_var_wo_pin") {
 									echo "<label>Innovative Var w/o Pin</label>";
-								}								
+								}		
+								elseif($getData['Library']['library_authentication_method'] == "sip2_var") {
+									echo "<label>SIP2 Var</label>";
+								}									
 								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
 							?>
 						</td>
@@ -127,6 +130,7 @@
 									'referral_url' => 'Referral URL',
 									'sip2' => 'SIP2',
 									'sip2_wo_pin' => 'SIP2 w/o Pin',
+									'sip2_var' => 'SIP2 Var',
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
 									'innovative_wo_pin' => 'Innovative w/o PIN',
@@ -150,27 +154,27 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_url',array( 'label' => false ,'value' => $getData['Library']['library_authentication_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="sip_host" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="sip_host" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Host Name');?></td>
 						<td align="left"><?php echo $this->Form->input('library_host_name',array( 'label' => false ,'value' => $getData['Library']['library_host_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="sip_port" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="sip_port" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Port Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_port_no',array( 'label' => false ,'value' => $getData['Library']['library_port_no'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="sip_login" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="sip_login" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Login');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_login',array('label' => false, 'value' => $getData['Library']['library_sip_login'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="sip_password" <?php if($getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="sip_password" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Password');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_password',array('label' => false, 'value' => $getData['Library']['library_sip_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_authentication_variable',array('label' => false, 'value' => $getData['Library']['library_authentication_variable'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative_var_pin" <?php if($getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative_var_pin" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_authentication_response',array('label' => false, 'value' => $getData['Library']['library_authentication_response'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
@@ -524,6 +528,18 @@
 						$("#sip_login").show();
 						$("#sip_password").show();	
 					}
+					else if ($(this).val() == 'sip2_var') {
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").hide();
+						$("#innovative_var").show();
+						$("#innovative_var_pin").show();
+						$("#sip_host").show();
+						$("#sip_port").show();
+						$("#sip_pin").show();
+						$("#sip_login").show();
+						$("#sip_password").show();
+					}						
 					else if ($(this).val() == 'innovative_var_wo_pin') {
 						$("#referral_url").hide();
 						$("#innovative1").show();
