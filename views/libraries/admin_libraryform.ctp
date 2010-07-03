@@ -146,7 +146,7 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
