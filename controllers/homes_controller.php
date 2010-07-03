@@ -375,6 +375,9 @@ class HomesController extends AppController
         }
 		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){            
 			$insertArr['user_login_type'] = 'innovative_var_wo_pin';  
+		}
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+			$insertArr['user_login_type'] = 'sip2_var';  
 		}		
         else{            
 			$insertArr['user_login_type'] = 'user_account';   
@@ -688,7 +691,10 @@ class HomesController extends AppController
         }
 		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
 			$url = $this->webroot.'users/snlogin';
-        }		
+        }
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+			$url = $this->webroot.'users/sdlogin';
+        }			
 	    else {
 	       $url = $this->webroot.'users/login';
 	    }
