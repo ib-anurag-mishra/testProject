@@ -236,9 +236,12 @@ Class LibrariesController extends AppController
 					elseif($this->data['Library']['library_authentication_method'] == 'sip2') {
                         $this->Library->setValidation('library_step1_sip2');
                     }
-					 elseif($this->data['Library']['library_authentication_method'] == 'sip2_wo_pin') {
+					elseif($this->data['Library']['library_authentication_method'] == 'sip2_wo_pin') {
                         $this->Library->setValidation('library_step1_sip2_wo_pin');
                     }
+					elseif($this->data['Library']['library_authentication_method'] == 'sip2_var') {
+                        $this->Library->setValidation('library_step1_sip2_var');
+                    }					
 					else {
                         $this->Library->setValidation('library_step1');
                     }
@@ -396,7 +399,9 @@ Class LibrariesController extends AppController
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative_var');
                     }				
-
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'sip2_var') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_sip2_var');
+                    }
 					else {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
                     }
