@@ -639,7 +639,7 @@ Class UsersController extends AppController
             $this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative'),
+                                                'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative'),
 												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
                                                 )
                                              );
@@ -766,7 +766,7 @@ Class UsersController extends AppController
             $this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative_wo_pin'),
+                                                'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin'),
 												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
                                                 )
                                              );            
@@ -890,7 +890,7 @@ Class UsersController extends AppController
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin'),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin'),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_authentication_variable','Library.library_authentication_response','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
@@ -1043,7 +1043,7 @@ Class UsersController extends AppController
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2'),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2'),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
@@ -1212,7 +1212,7 @@ Class UsersController extends AppController
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2_wo_pin'),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin'),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
@@ -1392,7 +1392,7 @@ Class UsersController extends AppController
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num' => $cardNo,'library_status' => 'active','library_authentication_method' => 'sip2_var'),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var'),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_authentication_variable','Library.library_authentication_response','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );							 
