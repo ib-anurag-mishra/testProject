@@ -145,7 +145,7 @@
 					}
 					else {
 					?>
-						<p class="info">Coming Soon<span>Coming Soon ( <?php echo date("F d Y", strtotime($searchResult['Physicalproduct']['SalesDate'])); ?> )</span></p>
+						<span title='Coming Soon ( <?php echo date("F d Y", strtotime($searchResult['Physicalproduct']['SalesDate'])); ?> )'>Coming Soon</span>
 					<?php
 					}
 					?>
