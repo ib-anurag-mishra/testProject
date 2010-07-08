@@ -1,5 +1,10 @@
 <?php echo $javascript->link('freegal_artist_curvy'); ?>
 <div id="artistBox">
+	<?php
+	if(strlen($artistName) >= 30){
+		$artistName = substr($artistName, 0, 30). '...';
+	}
+	?>
 	<?php echo $artistName; ?>
 </div>
 <br class="clr">
@@ -13,8 +18,12 @@
 			</div>
 			<div class="albumData">
 				<div class="albumBox">
-					<?php echo $album['Physicalproduct']['Title'];?>
-				</div>
+					<?php
+					if(strlen($album['Physicalproduct']['Title']) >= 50){
+						$album['Physicalproduct']['Title'] = substr($album['Physicalproduct']['Title'], 0, 50). '...';
+					}
+					?>
+					<?php echo $album['Physicalproduct']['Title'];?>				</div>
 				<div class="artistInfo">
 					<?php
 						echo $html->link(__('Genre: ').$album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
@@ -78,6 +87,9 @@
 								<td width="125" valighn="top" align="left">
 									<?php
 										if (strlen($albumSong['Metadata']['Artist']) >= 11) {
+											if(strlen($albumSong['Metadata']['Artist']) >= 60){
+												$albumSong['Metadata']['Artist'] = substr($albumSong['Metadata']['Artist'], 0, 60). '...';
+											}
 											echo '<span title="'.htmlentities($albumSong['Metadata']['Artist']).'">' . substr($albumSong['Metadata']['Artist'], 0, 11) . '...</span>';
 										} else {
 											echo '<p>' . $albumSong['Metadata']['Artist'] . '</p>';
