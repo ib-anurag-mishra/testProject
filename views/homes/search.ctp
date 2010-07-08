@@ -36,7 +36,7 @@
 						<?php
 							if (strlen($searchResult['Metadata']['Artist']) >= 19) {
 								$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
-								echo '<span title="'.$searchResult['Metadata']['Artist'].'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID'])).'</span>';
+								echo '<span title="'.htmlentities($searchResult['Metadata']['Artist']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID'])).'</span>';
 						?>
 						<?php
 							} else {
@@ -52,7 +52,7 @@
 						<?php
 						if (strlen($searchResult['Participant']['Name']) >= 17) {
 							$ArtistName = substr($searchResult['Participant']['Name'], 0, 17) . '...';
-							echo '<span title="'.$searchResult['Participant']['Name'].'">'.$ArtistName.'</span>';
+							echo '<span title="'.htmlentities($searchResult['Participant']['Name']).'">'.$ArtistName.'</span>';
 						?>
 						<?php
 						} else {
@@ -67,7 +67,7 @@
 					<p>
 					<?php
 						if (strlen($searchResult['Physicalproduct']['Title']) >= 19) {
-							echo '<span title="'.$searchResult['Physicalproduct']['Title'].'">' . substr($searchResult['Physicalproduct']['Title'], 0, 19) . '...' . '</span>'; 
+							echo '<span title="'.htmlentities($searchResult['Physicalproduct']['Title']).'">' . substr($searchResult['Physicalproduct']['Title'], 0, 19) . '...' . '</span>'; 
 						} else { 
 							echo $searchResult['Physicalproduct']['Title'];
 						}
@@ -79,7 +79,7 @@
 					<p>
 					<?php 
 						if (strlen($searchResult['Metadata']['Title']) >= 25) {
-							echo '<span title="'.$searchResult['Metadata']['Title'].'">' . substr($searchResult['Metadata']['Title'], 0, 25) . '...</span>';
+							echo '<span title="'.htmlentities($searchResult['Metadata']['Title']).'">' . substr($searchResult['Metadata']['Title'], 0, 25) . '...</span>';
 						} else {
 							echo $searchResult['Metadata']['Title']; 
 					 	}
