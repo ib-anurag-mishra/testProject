@@ -36,6 +36,9 @@
 						<?php
 							if (strlen($searchResult['Metadata']['Artist']) >= 19) {
 								$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
+								if (strlen($searchResult['Metadata']['Artist']) >= 60) {
+									$searchResult['Metadata']['Artist'] = substr($searchResult['Metadata']['Artist'], 0, 60) . '...';
+								}
 								echo '<span title="'.htmlentities($searchResult['Metadata']['Artist']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Physicalproduct']['ArtistText']),$searchResult['Physicalproduct']['ReferenceID'])).'</span>';
 						?>
 						<?php
