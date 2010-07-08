@@ -35,7 +35,7 @@
 					<p>
 						<?php
 							if (strlen($searchResult['Metadata']['Artist']) >= 19) {
-								$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 19) . '...';
+								$ArtistName = substr($searchResult['Metadata']['Artist'], 0, 22) . '..';
 								if (strlen($searchResult['Metadata']['Artist']) >= 60) {
 									$searchResult['Metadata']['Artist'] = substr($searchResult['Metadata']['Artist'], 0, 60) . '...';
 								}
