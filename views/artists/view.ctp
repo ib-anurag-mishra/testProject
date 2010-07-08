@@ -65,7 +65,7 @@
 								<td width="340" valign="top" align="left">
 									<?php
 										if (strlen($albumSong['Metadata']['Title']) >= 40) {
-											echo '<span title="'.$albumSong['Metadata']['Title'].'">'  . substr($albumSong['Metadata']['Title'], 0, 40) . '...</span>';
+											echo '<span title="'.htmlentities($albumSong['Metadata']['Title']).'">'  . substr($albumSong['Metadata']['Title'], 0, 40) . '...</span>';
 										} else {
 											echo '<p>' . $albumSong['Metadata']['Title'];
 										}
@@ -78,7 +78,7 @@
 								<td width="125" valighn="top" align="left">
 									<?php
 										if (strlen($albumSong['Metadata']['Artist']) >= 11) {
-											echo '<span title="'.$albumSong['Metadata']['Artist'].'">' . substr($albumSong['Metadata']['Artist'], 0, 11) . '...</span>';
+											echo '<span title="'.htmlentities($albumSong['Metadata']['Artist']).'">' . substr($albumSong['Metadata']['Artist'], 0, 11) . '...</span>';
 										} else {
 											echo '<p>' . $albumSong['Metadata']['Artist'] . '</p>';
 										}
