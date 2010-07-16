@@ -10,6 +10,9 @@ foreach($libraries_download as $LibraryName => $DownloadCount) {
     $csv->addRow($line);
 	$key++;
 }
+$line = array('', '', '', '', '', '');
+$csv->addRow($line);
+
 $line = array('Library Downloads Report');
 $csv->addRow($line);
 
