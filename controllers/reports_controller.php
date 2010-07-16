@@ -35,6 +35,12 @@ Class ReportsController extends AppController
             else {
                 $this->Report->setValidation('reports_manual');
             }
+			if($this->data['Report']['library_id'] == 'all'){
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+			}
+			else{
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$this->data['Report']['library_id']),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+			}			
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
@@ -91,6 +97,12 @@ Class ReportsController extends AppController
             else {
                 $this->Report->setValidation('reports_manual');
             }
+			if($this->data['Report']['library_id'] == 'all'){
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+			}
+			else{
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$this->data['Report']['library_id']),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+			}			
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
@@ -137,6 +149,12 @@ Class ReportsController extends AppController
             else {
                 $this->Report->setValidation('reports_manual');
             }
+			if($this->data['Report']['library_id'] == 'all'){
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+			}
+			else{
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$this->data['Report']['library_id']),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+			}			
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
