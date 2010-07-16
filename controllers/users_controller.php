@@ -1507,7 +1507,7 @@ Class UsersController extends AppController
 											} 
 											else {
 												$this->Session->destroy('user');
-												$this->Session->setFlash("Requested record not found.");
+												$this->Session->setFlash("Access Denied - Non-Resident Cardholder.");
 												$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 											}											  
 										}
