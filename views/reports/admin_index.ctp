@@ -109,6 +109,32 @@
                         </td>
                     </tr>
                     <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><th colspan="4" align="center">Library Remaining Downloads</th></tr>
+                    <tr>
+                        <td colspan="4" align="center">
+                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
+                                <tr>
+				    <th>&nbsp;</th>
+                                    <th>Library Name</th>
+                                    <th>Number of Remaining Downloads</th>
+                                </tr>
+                                <?php
+				$i = 1;
+                                foreach($libraries_download as $LibraryName => $DownloadCount) {
+                                ?>
+                                    <tr>
+					<td><?php echo $i; ?></td>
+                                        <td><?php echo $LibraryName; ?></td>
+                                        <td align="center"><?php echo $DownloadCount; ?></td>
+                                    </tr>
+                                <?php
+				    $i++;
+                                }
+                                ?>
+                            </table>
+                        </td>
+                    </tr>
+					<tr><td colspan="4">&nbsp;</td></tr>
                     <tr><th colspan="4" align="center">Library Downloads Report</th></tr>
                     <tr>
                         <td colspan="4" align="center">
