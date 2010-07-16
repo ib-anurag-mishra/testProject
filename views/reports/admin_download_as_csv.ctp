@@ -1,4 +1,15 @@
 <?php
+$line = array('Library Remaining Downloads');
+$csv->addRow($line);
+
+$line = array('', 'Library Name', 'Number of Remaining Downloads');
+$csv->addRow($line);
+$key=1;
+foreach($libraries_download as $LibraryName => $DownloadCount) {
+    $line = array($key, $LibraryName, $DownloadCount);
+    $csv->addRow($line);
+	$key++;
+}
 $line = array('Library Downloads Report');
 $csv->addRow($line);
 
@@ -8,7 +19,8 @@ $csv->addRow($line);
 foreach($downloads as $key => $download) {
 	if($download['Download']['email']!=''){
 		$patron = $download['Download']['email'];
-	}else{
+	}
+	else{
 		$patron = $download['Download']['patron_id'];
 	}
     $libraryName = $library->getLibraryName($download['Download']['library_id']);
@@ -28,7 +40,8 @@ $csv->addRow($line);
 foreach($patronDownloads as $key => $patronDownload) {
 	if($patronDownload['Download']['email']!=''){
 		$patron_id = $patronDownload['Download']['email'];
-	}else{
+	}
+	else{
 		$patron_id = $patronDownload['Download']['patron_id'];
 	}
     $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
