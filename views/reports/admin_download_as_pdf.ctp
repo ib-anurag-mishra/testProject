@@ -65,6 +65,70 @@
     
     // set font
     $tcpdf->SetFont('helvetica', '', 8);
+
+    // add a page
+    $tcpdf->AddPage();
+    
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    $tcpdf->Cell(250, 7, 'Library Remaining Downloads', 0, 0, 'C', 0);
+    $tcpdf->Ln();
+    
+    $tcpdf->SetFillColor(0, 153, 255);
+    $tcpdf->SetTextColor(255);
+    $tcpdf->SetDrawColor(224, 224, 224);
+    $tcpdf->SetLineWidth(0.3);
+    $tcpdf->SetFont('', 'B');
+    // Header
+    $w = array(10, 50, 190);
+    $DownloadCount_header = array('', 'Library Name', 'Number of Remaining Downloads');	
+    for($i = 0; $i < count($DownloadCount_header); $i++)
+        $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+        $tcpdf->Ln();
+    // Color and font restoration
+    $tcpdf->SetFillColor(224, 235, 255);
+    $tcpdf->SetTextColor(0);
+    $tcpdf->SetFont('');
+    // Data
+    $fill = 0;
+	$key = 1;
+    foreach($libraries_download as $LibraryName => $DownloadCount) {
+        $libraries_downloads[] = array($key, $LibraryName, $DownloadCount);
+		$key++;
+    }	
+    foreach($libraries_downloads as $k=>$row) {
+        if($k%27 == 0 && $k != 0) {
+            $tcpdf->SetTextColor(0);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            $tcpdf->Cell(250, 7, 'Libraries Remaining Downloads', 0, 0, 'C', 0);
+            $tcpdf->Ln();
+            
+            // Colors, line width and bold font
+            $tcpdf->SetFillColor(0, 153, 255);
+            $tcpdf->SetTextColor(255);
+            $tcpdf->SetDrawColor(224, 224, 224);
+            $tcpdf->SetLineWidth(0.3);
+            $tcpdf->SetFont('', 'B');
+            // Header
+            for($i = 0; $i < count($DownloadCount_header); $i++)
+                $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
+                $tcpdf->Ln();
+        }
+        // Color and font restoration
+        $tcpdf->SetFillColor(224, 235, 255);
+        $tcpdf->SetTextColor(0);
+        $tcpdf->SetFont('');
+        
+        $tcpdf->Cell($w[0], 6, number_format($row[0]), 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[1], 6, $row[1], 'LR', 0, 'L', $fill, '', 3);
+        $tcpdf->Cell($w[2], 6, $row[2], 'LR', 0, 'C', $fill, '', 3);
+        $tcpdf->Ln();
+        $fill=!$fill;
+    }
+    
+    $tcpdf->Cell(array_sum($w), 0, '', 'T');	
     
     // add a page
     $tcpdf->AddPage();
@@ -78,7 +142,8 @@
     foreach($downloads as $key => $download) {
 		if($download['Download']['email']!=''){
 			$patron = $download['Download']['email'];
-		}else{
+		}
+		else{
 			$patron = $download['Download']['patron_id'];
 		}
         $libraryName = $library->getLibraryName($download['Download']['library_id']);
@@ -88,7 +153,8 @@
     foreach($patronDownloads as $key => $patronDownload) {
 		if($patronDownload['Download']['email']!=''){
 			$patron_id = $patronDownload['Download']['email'];
-		}else{
+		}
+		else{
 			$patron_id = $patronDownload['Download']['patron_id'];
 		}
         $patron_data[] = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
