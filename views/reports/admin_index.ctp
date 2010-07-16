@@ -114,7 +114,7 @@
                         <td colspan="4" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
-				    <th>&nbsp;</th>
+									<th>&nbsp;</th>
                                     <th>Library Name</th>
                                     <th>Number of Remaining Downloads</th>
                                 </tr>
