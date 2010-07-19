@@ -1,4 +1,4 @@
-<script type="text/JavaScript" src="/js/freegal_genre_curvy.js"></script>
+<?php echo $javascript->link('freegal_genre_curvy'); ?>
 <?php echo $session->flash();?>
 <div id="genre">
 	Wishlist
@@ -36,39 +36,36 @@
 			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
-					<p class="info">
+
 					<?php
 						if (strlen($wishlistResult['Wishlist']['artist']) >= 19) {
-							$ArtistName = substr($wishlistResult['Wishlist']['artist'], 0, 19) . '...';							
+							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['artist']).'">' .substr($wishlistResult['Wishlist']['artist'], 0, 19) . '...</span>';							
 						} else {
 							$ArtistName = $wishlistResult['Wishlist']['artist'];
+							echo $ArtistName;
 						}
-						echo $ArtistName;
+						
 					?>
-					</p>
+
 				</td>
 				<td width="200" valign="top">
-					<p class="info">
 					<?php
 						if (strlen($wishlistResult['Wishlist']['album']) >= 24) {
-							echo substr($wishlistResult['Wishlist']['album'], 0, 24) . '...<span>' . $wishlistResult['Wishlist']['album'] . '</span>'; 
+							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['album']).'">' .substr($wishlistResult['Wishlist']['album'], 0, 24) . '...</span>';							
 						} else { 
 							echo $wishlistResult['Wishlist']['album'];
 						}
 						
 					?>
-					</p>
 				</td>
 				<td width="250" valign="top">
-					<p class="info">
 					<?php 
 						if (strlen($wishlistResult['Wishlist']['track_title']) >= 48) {
-							echo substr($wishlistResult['Wishlist']['track_title'], 0, 48) . '...<span>' . $wishlistResult['Wishlist']['track_title'] . '</span>';
+							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['track_title']).'">' .substr($wishlistResult['Wishlist']['track_title'], 0, 48) . '...</span>';							
 						} else {
 							echo $wishlistResult['Wishlist']['track_title']; 
 					 	}
 					?>
-					</p>
 				</td>
 				<td width="150" align="center">
 					<?php										
@@ -81,10 +78,11 @@
 							<p>
 								<span id="wishlist_song_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>">
 									<![if !IE]>
-										<a href='#' onclick='return wishlistDownloadOthers("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+										<a href='#' title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return wishlistDownloadOthers("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
 									<![endif]>
 									<!--[if IE]>
-									<a onclick='return wishlistDownloadIE("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+									<a title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return wishlistDownloadIE("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+									<![endif]-->								
 								</span>
 								<span id="wishlist_loader_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
