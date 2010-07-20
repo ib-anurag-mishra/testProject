@@ -89,10 +89,22 @@ class HomesController extends AppController
 		}
         $artistResults = $this->Physicalproduct->find('all', array(
 								'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
-								'fields' => array('ArtistText'), 
+								'fields' => array('ArtistText','ReferenceID'), 
 								'group' => array('ArtistText',),
 								'limit' => '6'));
-		$this->set('artistResults', $artistResults);
+		for($i=0;$i<count($artistResults);$i++){
+			$result_arr = $this->Physicalproduct->find('all', array(
+									'conditions'=>array('Physicalproduct.ReferenceID'=> $artistResults[$i]['Physicalproduct']['ReferenceID'],'Physicalproduct.DownloadStatus' => 1						
+									),
+									'fields' => array('ArtistText'),
+									'limit' => '2'));
+			if(count($result_arr) > 1){
+				$artist[] = $artistResults[$i];
+			}
+		}
+		if(isset($artist)){
+			$this->set('artistResults', $artist);
+		}								
         $this->Metadata->recursive=2;
         $songResults = $this->Metadata->find('all', array(
 							'conditions'=>array('Metadata.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
