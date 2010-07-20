@@ -70,10 +70,23 @@ class HomesController extends AppController
         $albumResults = $this->Physicalproduct->find('all', array(
 								'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
 							    ),
-							    'fields' => array('Title'), 
+							    'fields' => array('Title','ReferenceID'), 
 							    'group' => array('Title',),
 							    'limit' => '6'));
-		$this->set('albumResults', $albumResults);
+
+		for($i=0;$i<count($albumResults);$i++){
+			$result_arr = $this->Physicalproduct->find('all', array(
+									'conditions'=>array('Physicalproduct.ReferenceID'=> $albumResults[$i]['Physicalproduct']['ReferenceID'],'Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
+									),
+									'fields' => array('Title'),
+									'limit' => '2'));
+			if(count($result_arr) > 1){
+				$album[] = $albumResults[$i];
+			}
+		}
+		if(isset($album)){
+			$this->set('albumResults', $album);
+		}
         $artistResults = $this->Physicalproduct->find('all', array(
 								'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
 								'fields' => array('ArtistText'), 
