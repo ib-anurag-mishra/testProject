@@ -987,7 +987,7 @@ Class UsersController extends AppController
 						else{
 							$errStrArr = explode('ERRMSG=',$retStr);
 							$errMsg = $errStrArr['1'];
-							$this -> Session -> setFlash($errMsg);
+							$this->Session->setFlash("Access Denied - Please contact your Library.");
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}
 					}
@@ -1507,7 +1507,7 @@ Class UsersController extends AppController
 											} 
 											else {
 												$this->Session->destroy('user');
-												$this->Session->setFlash("Access Denied - Non-Resident Cardholder.");
+												$this->Session->setFlash("Access Denied - Please contact your Library.");
 												$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 											}											  
 										}
