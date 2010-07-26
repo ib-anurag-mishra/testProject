@@ -177,6 +177,18 @@
 			to upgrade your Flash Player.<br /><br />
 		</div>
 	</div>
+	<a class='getLink' href="#"></a>
+	<div style="display:none;">
+		<div id="getLink_div">
+			<div id="loaderDiv" style="display:none;position:absolute;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+			</div>
+			<span id="textSpan"><b>Please Click on the following link to download the song.</b></span><br /><br />
+			<div id="down_link" style="overflow:auto;text-align: center;">
+			</div>
+		</div>
+	</div>
+	<input type="hidden" id="time">	
 	<?php
 	if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 	{ ?>
