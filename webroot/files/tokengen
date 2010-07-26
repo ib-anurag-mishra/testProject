@@ -13,10 +13,15 @@ $file = $ARGV[0];
 
 ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = gmtime(time);
 $nvb = sprintf("%4d%02d%02d%02d%02d%02d", $year+1900,$mon+1,$mday,$hour,$min,$sec);
-if ($hour == 24) {
-	$hour = 1;
+#if ($hour == 24) {
+#	$hour = 1;
+#} else {
+#	$hour = $hour + 1;
+#}
+if ($min == 00) {
+	$min = 1;
 } else {
-	$hour = $hour + 1;
+	$min = $min + 1;
 }
 $nva = sprintf("%4d%02d%02d%02d%02d%02d", $year+1900,$mon+1,$mday,$hour,$min,$sec);
 
