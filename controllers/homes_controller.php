@@ -417,10 +417,67 @@ class HomesController extends AppController
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-        echo $downloadsUsed;
+
+        $this->Physicalproduct->Behaviors->attach('Containable');		
+		$getData = $this->Physicalproduct->find('all',array(
+								'conditions' => array('Physicalproduct.ProdID' => $prodId),
+								'fields' => array(
+												'Physicalproduct.ProdID',
+												),
+								'contain' => array(
+								'Audio' => array(
+										'fields' => array(
+												'Audio.FileID',                                                    
+												),
+										'Files' => array(
+										'fields' => array(
+												'Files.CdnPath' ,
+												'Files.SaveAsName'
+												)
+										)
+									)                                    
+								), 'cache' => 'yes'
+							));
+		$songUrl = shell_exec('perl files/tokengen ' . $getData[0]['Audio']['1']['Files']['CdnPath']."/".$getData[0]['Audio']['1']['Files']['SaveAsName']);
+        $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+		echo $downloadsUsed."+".$finalSongUrl."+".$prodId;
         exit;
     }
-    
+
+    /*
+     Function Name : getDownloadLink
+     Desc : action used to collect download link after refresh
+    */
+	function getDownloadLink(){
+		Configure::write('debug', 0);
+		$this->layout = false;
+		$prodId = $_REQUEST['prodId'];
+		$this->Physicalproduct->Behaviors->attach('Containable');	
+		$getData = $this->Physicalproduct->find('all',array(
+								'conditions' => array('Physicalproduct.ProdID' => $prodId),
+								'fields' => array(
+												'Physicalproduct.ProdID',
+												),
+								'contain' => array(
+								'Audio' => array(
+										'fields' => array(
+												'Audio.FileID',                                                    
+												),
+										'Files' => array(
+										'fields' => array(
+												'Files.CdnPath' ,
+												'Files.SaveAsName'
+												)
+										)
+									)                                    
+								), 'cache' => 'yes'
+							));
+		$songUrl = shell_exec('perl files/tokengen ' . $getData[0]['Audio']['1']['Files']['CdnPath']."/".$getData[0]['Audio']['1']['Files']['SaveAsName']);
+		$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+		echo $finalSongUrl."+".$prodId;
+		exit;
+	}   
+
     /*
      Function Name : advance_search
      Desc : actions used for showing advanced search form
@@ -993,10 +1050,32 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
         //get no of downloads for this week
-	$this->Download->recursive = -1;
+		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));        
-        echo $downloadsUsed;
-	exit;
+        $this->Physicalproduct->Behaviors->attach('Containable');		
+		$getData = $this->Physicalproduct->find('all',array(
+								'conditions' => array('Physicalproduct.ProdID' => $prodId),
+								'fields' => array(
+												'Physicalproduct.ProdID',
+												),
+								'contain' => array(
+								'Audio' => array(
+										'fields' => array(
+												'Audio.FileID',                                                    
+												),
+										'Files' => array(
+										'fields' => array(
+												'Files.CdnPath' ,
+												'Files.SaveAsName'
+												)
+										)
+									)                                    
+								), 'cache' => 'yes'
+							));
+		$songUrl = shell_exec('perl files/tokengen ' . $getData[0]['Audio']['1']['Files']['CdnPath']."/".$getData[0]['Audio']['1']['Files']['SaveAsName']);
+        $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+		echo $downloadsUsed."+".$finalSongUrl."+".$prodId;
+        exit;
     }
 }
 ?>
