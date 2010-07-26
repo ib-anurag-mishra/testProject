@@ -1362,3 +1362,7 @@ div.message {
 	margin: 0;
 	float: left;
 }
+.links_Modal{
+        text-decoration: none;
+        color:<?php echo $library_links_color; ?> !important;
+}
