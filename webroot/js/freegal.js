@@ -86,12 +86,9 @@ function userDownloadIE(prodId)
 	return false; 
 }
 
-function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
+function userDownload(prodId)
 {
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
-	var finalURL = downloadUrl1;
-	finalURL += downloadUrl2;
-	finalURL += downloadUrl3;
 	var data = "prodId="+prodId;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -107,9 +104,13 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 			}
 			else
 			{
-				document.getElementById('downloads_used').innerHTML = response;
+				var str = response.split("+");
+				var curTime = new Date().getTime();
+				$("#time").val(curTime);
+				$(".getLink").colorbox({initialWidth: "258", initialHeight:"120", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+				$("#down_link").html('<a onClick="return validateUrl(event);" href="'+str[1]+'" target="_blank" class="links_Modal">Click here to Download</a>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
+				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
-				location.href = unescape(finalURL);
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -117,6 +118,74 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	return false; 
 }
 
+function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	document.getElementById('download_loader_'+prodId).style.display='block';
+	var finalURL=downloadUrl1;
+	finalURL+=downloadUrl2;
+	finalURL+=downloadUrl3;
+	alert(finalURL);return false;
+	var data="prodId="+prodId;
+	jQuery.ajax({
+		type:"post",url:webroot+"homes/userDownload",data:data,success:function(response){
+		var msg=response.substring(0,5);
+		if(msg=='error')
+		{
+			alert("Your download limit has exceeded.");location.reload();return false;
+		}
+		else
+		{
+			document.getElementById('downloads_used').innerHTML=response;
+			document.getElementById('download_loader_'+prodId).style.display='none';
+			
+			location.href=unescape(finalURL);
+		}
+		}
+		,error:function(XMLHttpRequest,textStatus,errorThrown){}
+	});return false;
+}
+
+function getDownloadLink(prodId){
+	var data = "prodId="+prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/getDownloadLink", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				var curTime = new Date().getTime();
+				$("#time").val(curTime);			
+				var str = response.split("+");
+				$("#down_link").html('<a onClick="return validateUrl(event);" href="'+str[0]+'" target="_blank" class="links_Modal">Click here to Download</a>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
+				$("#textSpan").html("<b>Please Click on the following link to download the song.</b>");
+				}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
+}
+
+function validateUrl(event){
+	var curTime = new Date().getTime();
+	var time = $("#time").val();
+	var timeDiff = parseInt(curTime-time);
+	if(timeDiff > 60000){
+		$("#textSpan").html("<b>Link has expired.Please Refresh again to get the Song.</b>");
+		event.returnValue=false;
+		return false;
+	} else {
+		$.fn.colorbox.close();
+		event.returnValue=true;
+	}
+}
 
 function addToWishlist(prodId)
 {
@@ -202,6 +271,38 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				location.href = unescape(finalURL);
 			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
+}
+function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	var data = "prodId="+prodId+"&id="+id;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/wishlistDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				var str = response.split("+");
+				var curTime = new Date().getTime();
+				$("#time").val(curTime);				
+				$(".getLink").colorbox({initialWidth: "258", initialHeight:"120", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+				$("#down_link").html('<a href="'+str[1]+'" target="_blank" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a>');
+				document.getElementById('downloads_used').innerHTML = str[0];
+				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
