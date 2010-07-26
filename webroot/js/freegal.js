@@ -88,6 +88,7 @@ function userDownloadIE(prodId)
 
 function userDownload(prodId)
 {
+	document.getElementById('loaderDiv').style.display = 'block';	
 	document.getElementById('download_loader_'+prodId).style.display = 'block';
 	var data = "prodId="+prodId;
 	jQuery.ajax({
@@ -108,10 +109,11 @@ function userDownload(prodId)
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);
 				$(".getLink").colorbox({initialWidth: "258", initialHeight:"120", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<a onClick="return validateUrl(event);" href="'+str[1]+'" target="_blank" class="links_Modal">Click here to Download</a>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
+				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[1]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
-			}
+				document.getElementById('loaderDiv').style.display = 'none';
+				}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
@@ -147,6 +149,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 
 function getDownloadLink(prodId){
 	var data = "prodId="+prodId;
+	document.getElementById('loaderDiv').style.display = 'block';
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/getDownloadLink", // URL to request
@@ -164,8 +167,9 @@ function getDownloadLink(prodId){
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);			
 				var str = response.split("+");
-				$("#down_link").html('<a onClick="return validateUrl(event);" href="'+str[0]+'" target="_blank" class="links_Modal">Click here to Download</a>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
+				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[0]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
 				$("#textSpan").html("<b>Please Click on the following link to download the song.</b>");
+				document.getElementById('loaderDiv').style.display = 'none';
 				}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -178,7 +182,8 @@ function validateUrl(event){
 	var time = $("#time").val();
 	var timeDiff = parseInt(curTime-time);
 	if(timeDiff > 60000){
-		$("#textSpan").html("<b>Link has expired.Please Refresh again to get the Song.</b>");
+	$("#songLink").html('');
+	$("#textSpan").html("<b>Link has expired.Please Refresh again to get the Song.</b>");
 		event.returnValue=false;
 		return false;
 	} else {
@@ -278,6 +283,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 }
 function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 {
+	document.getElementById('loaderDiv').style.display = 'block';
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 	var data = "prodId="+prodId+"&id="+id;	
 	jQuery.ajax({
@@ -291,18 +297,17 @@ function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else
-			{
+			} else {
 				var str = response.split("+");
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);				
 				$(".getLink").colorbox({initialWidth: "258", initialHeight:"120", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<a href="'+str[1]+'" target="_blank" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a>');
+				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" target="_blank" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a>');
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-				}
+				document.getElementById('loaderDiv').style.display = 'block';
+			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
