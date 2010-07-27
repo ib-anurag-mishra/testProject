@@ -109,7 +109,8 @@ function userDownload(prodId)
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);
 				$(".getLink").colorbox({initialWidth: "250", initialHeight:"150", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[1]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a></span>');
+				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[1]+'" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a></span>');
+				$("#cboxClose").css('display','none');	
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('loaderDiv').style.display = 'none';
@@ -167,7 +168,7 @@ function getDownloadLink(prodId){
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);			
 				var str = response.split("+");
-				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[0]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a></span>');
+				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[0]+'" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a></span>');
 				$("#textSpan").html("<b>Please Click on the following link to download the song.</b>");
 				document.getElementById('loaderDiv').style.display = 'none';
 				}
@@ -184,7 +185,7 @@ function validateUrl(event){
 	if(timeDiff > 60000){
 	$("#songLink").html('');
 	$("#refreshLink").css('display','');	
-	$("#textSpan").html("<b>Link has expired.Please Refresh again to get the Song.</b>");
+	$("#textSpan").html("<b>Link has expired.Please Click on the Refresh button below to get the Song again.</b>");
 		event.returnValue=false;
 		return false;
 	} else {
@@ -303,7 +304,8 @@ function wishlistDownload(prodId,id)
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);				
 				$(".getLink").colorbox({initialWidth: "250", initialHeight:"150", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" target="_blank" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a></span>');
+				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a></span>');
+				$("#cboxClose").css('display','none');					
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
