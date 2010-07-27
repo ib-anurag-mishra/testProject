@@ -77,7 +77,7 @@
 					?>
 							<p>
 								<span id="wishlist_song_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>">
-									<a href="#" title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return wishlistDownload("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>");' >Download Now</a>
+									<a href='#' title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return wishlistDownload("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>");'>Download Now</a>
 								</span>
 								<span id="wishlist_loader_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
