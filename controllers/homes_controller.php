@@ -436,7 +436,7 @@ class HomesController extends AppController
 												)
 										)
 									)                                    
-								), 'cache' => 'yes'
+								)
 							));
 		$songUrl = shell_exec('perl files/tokengen ' . $getData[0]['Audio']['1']['Files']['CdnPath']."/".$getData[0]['Audio']['1']['Files']['SaveAsName']);
         $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
@@ -470,7 +470,7 @@ class HomesController extends AppController
 												)
 										)
 									)                                    
-								), 'cache' => 'yes'
+								)
 							));
 		$songUrl = shell_exec('perl files/tokengen ' . $getData[0]['Audio']['1']['Files']['CdnPath']."/".$getData[0]['Audio']['1']['Files']['SaveAsName']);
 		$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
@@ -1070,7 +1070,7 @@ class HomesController extends AppController
 												)
 										)
 									)                                    
-								), 'cache' => 'yes'
+								)
 							));
 		$songUrl = shell_exec('perl files/tokengen ' . $getData[0]['Audio']['1']['Files']['CdnPath']."/".$getData[0]['Audio']['1']['Files']['SaveAsName']);
         $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
