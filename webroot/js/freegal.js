@@ -181,7 +181,7 @@ function validateUrl(event){
 	var curTime = new Date().getTime();
 	var time = $("#time").val();
 	var timeDiff = parseInt(curTime-time);
-	if(timeDiff > 10000){
+	if(timeDiff > 60000){
 	$("#songLink").html('');
 	$("#refreshLink").css('display','');	
 	$("#textSpan").html("<b>Link has expired.Please Refresh again to get the Song.</b>");
