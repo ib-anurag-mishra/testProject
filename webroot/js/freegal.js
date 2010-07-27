@@ -108,8 +108,8 @@ function userDownload(prodId)
 				var str = response.split("+");
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);
-				$(".getLink").colorbox({initialWidth: "258", initialHeight:"120", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[1]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
+				$(".getLink").colorbox({initialWidth: "250", initialHeight:"150", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[1]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a></span>');
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('loaderDiv').style.display = 'none';
@@ -167,7 +167,7 @@ function getDownloadLink(prodId){
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);			
 				var str = response.split("+");
-				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[0]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a>');
+				$("#down_link").html('<span id="songLink"><a onClick="return validateUrl(event);" href="'+str[0]+'" target="_blank" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[1]+')"><img src="/img/refresh.png" alt="Refresh" title="Refresh"></a></span>');
 				$("#textSpan").html("<b>Please Click on the following link to download the song.</b>");
 				document.getElementById('loaderDiv').style.display = 'none';
 				}
@@ -181,8 +181,9 @@ function validateUrl(event){
 	var curTime = new Date().getTime();
 	var time = $("#time").val();
 	var timeDiff = parseInt(curTime-time);
-	if(timeDiff > 60000){
+	if(timeDiff > 10000){
 	$("#songLink").html('');
+	$("#refreshLink").css('display','');	
 	$("#textSpan").html("<b>Link has expired.Please Refresh again to get the Song.</b>");
 		event.returnValue=false;
 		return false;
@@ -281,7 +282,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 	});
 	return false; 
 }
-function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
+function wishlistDownload(prodId,id)
 {
 	document.getElementById('loaderDiv').style.display = 'block';
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
@@ -301,12 +302,12 @@ function wishlistDownload(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 				var str = response.split("+");
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);				
-				$(".getLink").colorbox({initialWidth: "258", initialHeight:"120", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" target="_blank" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a>');
+				$(".getLink").colorbox({initialWidth: "250", initialHeight:"150", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" target="_blank" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a></span>');
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-				document.getElementById('loaderDiv').style.display = 'block';
+				document.getElementById('loaderDiv').style.display = 'none';
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
