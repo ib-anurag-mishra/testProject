@@ -95,7 +95,7 @@
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 						?>
 							<p>
-								<div class="download_links"><a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownload("<?php echo $catG["ProdId"]; ?>");'>Download Now</a></div>
+								<div class="download_links"><a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownload("<?php echo $catG["ProdId"]; ?>");'>Download Now</a></div>
 								<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
 						<?php
