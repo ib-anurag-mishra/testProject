@@ -49,7 +49,7 @@
 				?>
 				
 			</div>
-			<div class="songSample">
+			<div class="songSample" style="float:left">
 				<?php
 					if($catG['SalesDate'] <= date('Y-m-d')) {
 						$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
@@ -60,7 +60,7 @@
 					}
 				?>
 			</div>
-			<div class="songData">
+			<div class="songData" style="float:left">
 				<?php 
 					echo '<p>';
 					if (strlen($catG['Song']) >= 30) { 
