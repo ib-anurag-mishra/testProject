@@ -304,7 +304,7 @@ function wishlistDownload(prodId,id)
 				var curTime = new Date().getTime();
 				$("#time").val(curTime);				
 				$(".getLink").colorbox({initialWidth: "250", initialHeight:"150", width:"300", height:"150", inline:true, open:true, overlayClose:false, noEscape: true, href:"#getLink_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" onClick="return validateUrl(event);" class="links_Modal">Click here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a></span>');
+				$("#down_link").html('<span id="songLink"><a href="'+str[1]+'" onClick="return validateUrl(event);" class="links_Modal">Click Here to Download</a></span>'+"&nbsp;"+'<span id="refreshLink" style="display:none"><a href="JavaScript:void(0);" onClick="getDownloadLink('+str[2]+');"><img src="/img/refresh.png"></a></span>');
 				$("#cboxClose").css('display','none');					
 				document.getElementById('downloads_used').innerHTML = str[0];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
