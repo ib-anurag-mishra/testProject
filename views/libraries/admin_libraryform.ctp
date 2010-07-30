@@ -372,7 +372,7 @@
 									'10' => '10',
 									'15' => '15',
 									'20' => '20'
-									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_user_download_limit'])
+									), 'label' =>false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_user_download_limit'])
 								);
 							?>
 						</td>
