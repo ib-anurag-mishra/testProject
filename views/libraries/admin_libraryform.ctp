@@ -365,6 +365,8 @@
 							<?php
 								echo $form->input('library_user_download_limit', array('options' => array(
 									'' => 'Number Of Songs',
+									'1' => '1',
+									'2' => '2',
 									'3' => '3',
 									'5' => '5',
 									'10' => '10',
