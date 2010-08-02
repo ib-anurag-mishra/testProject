@@ -72,7 +72,6 @@
 									</p>
 								</td>
 								<td width="340" valign="top" align="left">
-									<p>
 									<?php
 										if (strlen($albumSong['Metadata']['Title']) >= 40) {
 											echo '<span title="'.htmlentities($albumSong['Metadata']['Title']).'">'  . substr($albumSong['Metadata']['Title'], 0, 40) . '...</span>';
@@ -106,9 +105,17 @@
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
+												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);
+												$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+												$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 									?>
 												<p>
-													<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownload("<?php echo $albumSong['Physicalproduct']['ProdID'];?>");'>Download Now</a>
+													<![if !IE]>
+														<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+													<![endif]>
+													<!--[if IE]>
+														<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+													<![endif]-->
 													<span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 												</p>
 									<?php		}											
@@ -155,7 +162,6 @@
 <?php
 	endforeach;
 ?>
-<input type="hidden" id="time">
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
