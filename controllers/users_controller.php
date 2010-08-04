@@ -866,7 +866,7 @@ Class UsersController extends AppController
 					}
 					else{
 						$this -> Session -> setFlash("Requested record not found.");
-						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
+						$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
 					}
 				}
 			}         
