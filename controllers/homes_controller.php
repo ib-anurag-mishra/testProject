@@ -6,7 +6,7 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Physicalproduct', 'Wishlist');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Physicalproduct', 'Wishlist' );
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
     var $uses = array('Home','User','Physicalproduct','Featuredartist','Artist','Library','Metadata','Download','Genre','Currentpatron','Page','Wishlist');
     
@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -36,24 +36,24 @@ class HomesController extends AppController
      Desc : actions that is invoked when the user comes to the homes controller
     */
     function index() {
-        $this->Song->Behaviors->attach('Containable');
+        $this->Physicalproduct->Behaviors->attach('Containable');
 		$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
-		$this->set('songs',$songDetails);
-        $this->Album->recursive = -1;
-        $upcoming = $this->Album->find('all', array(
+        $this->set('songs',$songDetails);
+        $this->Physicalproduct->recursive = -1;
+        $upcoming = $this->Physicalproduct->find('all', array(
 							    'conditions' => array(
+								'Physicalproduct.ReferenceID = Physicalproduct.ProdID', 
 								'SalesDate >' => date('Y-m-d')
 							    ),
 							    'fields' => array(
-								'Album.Title',
-								'Album.ArtistText',
-								'Album.SalesDate'
+								'Physicalproduct.Title',
+								'Physicalproduct.ArtistText',
+								'Physicalproduct.SalesDate'
 							    )
 							)
 						);
         $this->set('upcoming', $upcoming);
-        $this->set('distinctArtists', $this->Song->selectArtist());
-		$arr = $this->Song->selectArtist();
+        $this->set('distinctArtists', $this->Physicalproduct->selectArtist());
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
         $this->set('artists', $this->Artist->getallartists());
@@ -66,25 +66,50 @@ class HomesController extends AppController
     */
     function autoComplete() {
 	Configure::write('debug', 0);
-        $this->Album->recursive = -1;
-        $albumResults = $this->Album->find('all', array(
-								'conditions'=>array('Album.AlbumTitle LIKE'=>$_GET['q'].'%','Album.DownloadStatus' => 1,'Album.TrackBundleCount' => 0						
+        $this->Physicalproduct->recursive = -1;
+        $albumResults = $this->Physicalproduct->find('all', array(
+								'conditions'=>array('Physicalproduct.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
 							    ),
-							    'fields' => array('AlbumTitle'), 
-							    'group' => array('AlbumTitle',),
+							    'fields' => array('Title','ReferenceID'), 
+							    'group' => array('Title',),
 							    'limit' => '6'));
-		$this->set('albumResults', $albumResults);
-        $artistResults = $this->Song->find('all', array(
-								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%','Song.DownloadStatus' => 1),
-								'fields' => array('ArtistText'), 
+
+		for($i=0;$i<count($albumResults);$i++){
+			$result_arr = $this->Physicalproduct->find('all', array(
+									'conditions'=>array('Physicalproduct.ReferenceID'=> $albumResults[$i]['Physicalproduct']['ReferenceID'],'Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0						
+									),
+									'fields' => array('Title'),
+									'limit' => '2'));
+			if(count($result_arr) > 1){
+				$album[] = $albumResults[$i];
+			}
+		}
+		if(isset($album)){
+			$this->set('albumResults', $album);
+		}
+        $artistResults = $this->Physicalproduct->find('all', array(
+								'conditions'=>array('Physicalproduct.ArtistText LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
+								'fields' => array('ArtistText','ReferenceID'), 
 								'group' => array('ArtistText',),
 								'limit' => '6'));
-		$this->set('artistResults', $artistResults);
+		for($i=0;$i<count($artistResults);$i++){
+			$result_arr = $this->Physicalproduct->find('all', array(
+									'conditions'=>array('Physicalproduct.ReferenceID'=> $artistResults[$i]['Physicalproduct']['ReferenceID'],'Physicalproduct.DownloadStatus' => 1						
+									),
+									'fields' => array('ArtistText'),
+									'limit' => '2'));
+			if(count($result_arr) > 1){
+				$artist[] = $artistResults[$i];
+			}
+		}
+		if(isset($artist)){
+			$this->set('artistResults', $artist);
+		}								
         $this->Metadata->recursive=2;
-        $songResults = $this->Song->find('all', array(
-							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%','Song.DownloadStatus' => 1),
-							'fields' => array('SongTitle'), 
-							'group' => array('SongTitle',),
+        $songResults = $this->Metadata->find('all', array(
+							'conditions'=>array('Metadata.Title LIKE'=>$_GET['q'].'%','Physicalproduct.DownloadStatus' => 1),
+							'fields' => array('Title'), 
+							'group' => array('Title',),
 							'limit' => '6'));
 		$this->set('songResults', $songResults);        
         $this->layout = 'ajax';
@@ -95,9 +120,9 @@ class HomesController extends AppController
      Desc : actions that is needed for auto-completeing the search
     */
     function artistSearch(){
-		$search = $_POST['search'];
-		$this->Song->recursive = -1;
-		$this->set('distinctArtists', $this->Song->searchArtist($search));  	
+	$search = $_POST['search'];
+	$this->Physicalproduct->recursive = -1;
+	$this->set('distinctArtists', $this->Physicalproduct->searchArtist($search));  	
     }
     
     /*
@@ -112,7 +137,7 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
         if($this->Session->read('block') == 'yes') {
-            $cond = array('Song.Advisory' => 'F');
+            $cond = array('Metadata.Advisory' => 'F');
         }
         else {
             $cond = "";
@@ -121,14 +146,16 @@ class HomesController extends AppController
             if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
 			 if($_REQUEST['match'] == 'All') {			 
 				$condition = "and";
-				$preCondition1 = array('Song.DownloadStatus' => 1);
-				$preCondition2 = array('Song.TrackBundleCount' => 0);
+				$preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
+				$preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
+				$preCondition3 = array('Physicalproduct.TrackBundleCount' => 0);
 				
 			}
 			 else {
 				$condition = "or";
 				$preCondition1 =  "";
 				$preCondition2 = "";
+				$preCondition3 = "";
 			}
 			$artist =  $_REQUEST['artist'];
 			$composer =  $_REQUEST['composer'];
@@ -139,13 +166,15 @@ class HomesController extends AppController
             if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
 				if($this->data['Home']['Match'] == 'All') {
                     $condition = "and";
-                    $preCondition1 = array('Song.DownloadStatus' => 1);
-					$preCondition2 = array('Song.TrackBundleCount' => 0);
+                    $preCondition1 =  array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID');
+                    $preCondition2 = array('Physicalproduct.DownloadStatus' => 1);
+					$preCondition3 = array('Physicalproduct.TrackBundleCount' => 0);
                 }
                 else {
                     $condition = "or";
                     $preCondition1 =  "";
                     $preCondition2 = "";
+					$preCondition3 = "";
                 }
                 $artist =  $this->data['Home']['artist'];
 				$composer = $this->data['Home']['composer'];
@@ -154,7 +183,7 @@ class HomesController extends AppController
                 $genre =  $this->data['Home']['genre_id'];
             }            
             if($artist != '') {
-                $artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');    
+                $artistSearch = array('match(Physicalproduct.ArtistText) against ("+'.$artist.'*" in boolean mode)');    
             }
             else {
                 $artistSearch = '';
@@ -162,20 +191,20 @@ class HomesController extends AppController
             if($composer != '') {
                 $composerSearch = array('match(Participant.Name) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
 				$this->set('composer', $composer);
-				$preCondition3 = array('Participant.Role' => 'Composer'); 
+				$preCondition4 = array('Participant.Role' => 'Composer'); 
 			}
             else {
                 $composerSearch = '';
-				$preCondition3 = "";
+				$preCondition4 = "";
             }
             if($song != '') {
-                $songSearch = array('match(Song.Title) against ("+'.$song.'*" in boolean mode)');    
+                $songSearch = array('match(Metadata.Title) against ("+'.$song.'*" in boolean mode)');    
             }
             else {
                 $songSearch = '';
             }
             if($album != '') {
-                $albumSearch = array('match(Song.SongTitle) against ("+'.$album.'*" in boolean mode)');    
+                $albumSearch = array('match(Physicalproduct.Title) against ("+'.$album.'*" in boolean mode)');    
             }
             else {
                 $albumSearch = '';
@@ -188,30 +217,28 @@ class HomesController extends AppController
             }
             $this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 			if($composer == '') {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
 			}
-			$this->Song->Behaviors->attach('Containable');
+			$this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
 				    array('and' =>
 							array(
-									array('Song.TrackBundleCount' => 0),
-									array('Song.DownloadStatus' => 1),
+									array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
+									array('Physicalproduct.TrackBundleCount' => 0),
+									array('Physicalproduct.DownloadStatus' => 1),
 									$cond
 									),
 									$condition => array(
-									$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$cond
+									$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
                                                 )
                                     ),
                                     'fields' => array(
-                                                    'Song.ProdID',
-                                                    'Song.Title',
-                                                    'Song.ArtistText',
-                                                    'Song.ReferenceID',
-                                                    'Song.DownloadStatus',
-                                                    'Song.SalesDate',
-													'Song.SongTitle',
-													'Song.Artist',
-													'Song.Advisory',
+                                                    'Physicalproduct.ProdID',
+                                                    'Physicalproduct.Title',
+                                                    'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.ReferenceID',
+                                                    'Physicalproduct.DownloadStatus',
+                                                    'Physicalproduct.SalesDate'													
                                                 ),
                                     'contain' => array(
 									'Participant' => array(
@@ -219,31 +246,38 @@ class HomesController extends AppController
 												'Participant.Name'                                                   
 												)
 										),
+                                    
+                                    'Metadata' => array(
+                                            'fields' => array(
+                                                    'Metadata.Title',
+                                                    'Metadata.Artist',
+													'Metadata.Advisory'
+                                                    )
+                                            ),
                                     'Genre' => array(
                                             'fields' => array(
                                                     'Genre.Genre'                                                   
                                                     )
                                             ),
 									
-                                    'Sample_Files' => array(
+                                    'Audio' => array(
                                             'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'                                                   
+                                                    'Audio.FileID',                                                    
                                                     ),
-                                        ),
-                                    'Full_Files' => array(
+                                            'Files' => array(
                                             'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'                                                   
-                                                    ),
-                                        )										
+                                                    'Files.CdnPath' ,
+                                                    'Files.SaveAsName'
+                                                    )
+                                            )
+                                        )
 									 ),'cache' => 'yes'
                                 );
-            $this->Song->recursive = 2;
+            $this->Physicalproduct->recursive = 2;
 			if($composer == '') {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
 			}				
-            $searchResults = $this->paginate('Song');
+            $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
         else {
@@ -258,32 +292,30 @@ class HomesController extends AppController
 			$searchKey = '"'.addslashes($searchKey).'"';
             $this->set('searchKey','search='.urlencode($searchText));
 			if(!isset($_REQUEST['composer'])) {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
 			}			
-            $this->Song->Behaviors->attach('Containable');
+            $this->Physicalproduct->Behaviors->attach('Containable');
             $this -> paginate = array('conditions' =>
                                 array(	'and' =>
 					    array(
-                                                array('Song.DownloadStatus' => 1),
-                                                array('Song.TrackBundleCount' => 0),$cond
+                                                array('Physicalproduct.ProdID <> Physicalproduct.ReferenceID'),
+                                                array('Physicalproduct.DownloadStatus' => 1),
+                                                array('Physicalproduct.TrackBundleCount' => 0),$cond
                                             ),
 					'or' =>
                                                 array(
-                                                        array("match(Song.ArtistText) against ('".$searchKey."' in boolean mode)"),
-														array("match(Song.Title) against ('".$searchKey."' in boolean mode)"),
-                                                        array("match(Song.SongTitle) against ('".$searchKey."' in boolean mode)")
+                                                        array("match(Physicalproduct.ArtistText) against ('".$searchKey."' in boolean mode)"),
+														array("match(Physicalproduct.Title) against ('".$searchKey."' in boolean mode)"),
+                                                        array("match(Metadata.Title) against ('".$searchKey."' in boolean mode)")
                                                     )
                                         ),
                                     'fields' => array(
-                                                    'Song.ProdID',
-                                                    'Song.Title',
-                                                    'Song.ArtistText',
-                                                    'Song.ReferenceID',
-                                                    'Song.DownloadStatus',
-                                                    'Song.SalesDate',
-													'Song.SongTitle',
-													'Song.Artist',
-													'Song.Advisory',
+                                                    'Physicalproduct.ProdID',
+                                                    'Physicalproduct.Title',
+                                                    'Physicalproduct.ArtistText',
+                                                    'Physicalproduct.ReferenceID',
+                                                    'Physicalproduct.DownloadStatus',
+                                                    'Physicalproduct.SalesDate'
                                                     ),
                                     'contain' => array(
 									'Participant' => array(
@@ -291,30 +323,36 @@ class HomesController extends AppController
 												'Participant.Name'                                                   
 												)
 									),
+                                    'Metadata' => array(
+                                            'fields' => array(
+                                                    'Metadata.Title',
+                                                    'Metadata.Artist',
+													'Metadata.Advisory'
+                                                    )
+                                            ),
                                     'Genre' => array(
                                             'fields' => array(
                                                     'Genre.Genre'                                                   
                                                     )
                                             ),
-                                    'Sample_Files' => array(
+                                    'Audio' => array(
                                             'fields' => array(
-                                                    'Sample_Files.CdnPath',
-													'Sample_Files.SaveAsName'
+                                                    'Audio.FileID',                                                    
                                                     ),
-											),
-                                    'Full_Files' => array(
+                                            'Files' => array(
                                             'fields' => array(
-                                                    'Full_Files.CdnPath',
-													'Full_Files.SaveAsName'
-                                                    ),
-											)  											
+                                                    'Files.CdnPath' ,
+                                                    'Files.SaveAsName'
+                                                    )
+                                            )
+                                        )                                    
                                     ), 'cache' => 'yes'
                                 );
-            $this->Song->recursive = 2;
+            $this->Physicalproduct->recursive = 2;
 			if(!isset($_REQUEST['composer'])) {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
 			}				
-            $searchResults = $this->paginate('Song');
+            $searchResults = $this->paginate('Physicalproduct');
             $this->set('searchResults', $searchResults);
         }
         $this->layout = 'home';
@@ -336,15 +374,15 @@ class HomesController extends AppController
             exit;
         }
         $prodId = $_REQUEST['prodId'];
-        $trackDetails = $this->Song->getdownloaddata($prodId);
+        $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;	
         $insertArr['ProdID'] = $prodId;     
-        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['Title'];
-        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+        $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
+        $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
+        $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
             $insertArr['user_login_type'] = 'referral_url';
         }
@@ -830,16 +868,16 @@ class HomesController extends AppController
         else {
             $prodId = $_REQUEST['prodId'];
             //get song details
-            $trackDetails = $this->Song->getdownloaddata($prodId);
+            $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);
             $insertArr = Array();
             $insertArr['library_id'] = $libraryId;
             $insertArr['patron_id'] = $patronId;
             $insertArr['ProdID'] = $prodId;
-            $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-            $insertArr['album'] = $trackDetails['0']['Song']['Title'];
-            $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-            $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];            
+            $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
+            $insertArr['album'] = $trackDetails['0']['Physicalproduct']['Title'];
+            $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
+            $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
+            $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];            
             //insert into wishlist table
             $this->Wishlist->save($insertArr);
             //update the libraries table
@@ -868,7 +906,7 @@ class HomesController extends AppController
         $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         $this->set('wishlistResults',$wishlistResults);
     }
-	
+    
     /*
      Function Name : my_history
      Desc : To show songs user downloaded in last 2 weeks
@@ -882,11 +920,10 @@ class HomesController extends AppController
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
         $downloadResults = Array();
         $downloadResults =  $this->Download->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-	//	print "<pre>";
-	//	print_r($downloadResults);exit;
 		$this->set('downloadResults',$downloadResults);
     }
-    
+
+	
     /*
      Function Name : removeWishlistSong
      Desc : For removing a song from wishlist page
@@ -925,15 +962,15 @@ class HomesController extends AppController
         $id = $_REQUEST['id'];       
         $prodId = $_REQUEST['prodId'];
         //get details for this song
-        $trackDetails = $this->Song->getdownloaddata($prodId);        
+        $trackDetails = $this->Physicalproduct->getdownloaddata($prodId);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
         $insertArr['ProdID'] = $prodId;     
-        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['Title'];
-        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+        $insertArr['artist'] = $trackDetails['0']['Metadata']['Artist'];
+        $insertArr['track_title'] = $trackDetails['0']['Metadata']['Title'];
+        $insertArr['ProductID'] = $trackDetails['0']['Physicalproduct']['ProductID'];
+        $insertArr['ISRC'] = $trackDetails['0']['Metadata']['ISRC'];
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
             $insertArr['user_login_type'] = 'referral_url';
         }
@@ -973,11 +1010,12 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
         //get no of downloads for this week
-		$this->Download->recursive = -1;
+	$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));        
         echo $downloadsUsed;
 	exit;
     }
+
     /*
      Function Name : historyDownload
      Desc : For getting download count on My History 
@@ -1002,6 +1040,7 @@ class HomesController extends AppController
      Function Name : admin_historyform
      Desc : actions used for admin history form
     */
+
     function admin_historyform() {
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
@@ -1039,6 +1078,6 @@ class HomesController extends AppController
 	    $this->set('getData',$arr);
 	}
 	$this->layout = 'admin';
-    }
+    }	
 }
 ?>
