@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 	parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -919,7 +919,7 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
         $downloadResults = Array();
-        $downloadResults =  $this->Download->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
+        $downloadResults =  $this->Download->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate))));
 		$this->set('downloadResults',$downloadResults);
     }
 
@@ -1023,17 +1023,22 @@ class HomesController extends AppController
     function historyDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-        $id = $_REQUEST['id'];		
+        $id = $_REQUEST['id'];
+		$libid = $_REQUEST['libid'];
+		$wk = date('W')-1;
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 		$this->Download->recursive = -1;
-        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('id' => $id),'fields' => array('history')));
+        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libid,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
 		$downloadCount =  $downloadsUsed[0]['Download']['history'];
 		//check for download availability
-		if($downloadCount == 2){
-            echo "error";
-            exit;
-        }
-        $sql = "UPDATE `downloads` SET history=history+1 Where id='".$id."'";	
-		$this->Download->query($sql);       
+		if($downloadCount < 2){
+			$sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND history < 2 AND created BETWEEN '".$startDate."' AND '".$endDate."'";
+			$this->Download->query($sql);
+            echo "success";			
+        } else {
+			echo "error";
+		}
 		exit;
     }
 	/*
