@@ -11,7 +11,7 @@ Class UsersController extends AppController
    var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page');
    var $layout = 'admin';
    var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2');
-   var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download');
+   var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable');
    
    /*
     Function Name : beforeFilter
@@ -900,7 +900,7 @@ Class UsersController extends AppController
 				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin'),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_authentication_variable','Library.library_authentication_response','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -919,9 +919,28 @@ Class UsersController extends AppController
 					$retPos = strpos($retCardArr['1'],"<br/>");
 					$retCard = substr($retCardArr['1'],1,$retPos-1);
 					if($card == $retCard){
-						$retStatusArr = explode($existingLibraries['0']['Library']['library_authentication_variable'],$retStr);
-						$retStatus = substr($retStatusArr['1'],1,1);
-						if($retStatus == ''){
+						$this->Variable->recursive = -1;
+						$allVariables = $this->Variable->find('all',array(
+															'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
+															'fields' => array('authentication_variable','authentication_response','error_msg',)
+															)
+														 );
+						foreach($allVariables as $k=>$v){
+							$retStatusArr = explode($v['Variable']['authentication_variable'],$retStr);
+							$retStatus = substr($retStatusArr['1'],1,1);
+							if($retStatus == ''){
+								$status = '';
+							}elseif($retStatus == $v['Variable']['authentication_response']){
+								$status = 1;		
+							}else{
+								$status = 'error';
+							}
+							if(!$status || $status == 'error'){
+								$msg = $v['Variable']['error_msg'];
+								break;
+							}
+						}						
+						if($status == ''){
 							$errMsgArr =  explode("ERRNUM=",$retStr);
 							@$errMsgCount = substr($errMsgArr['1'],0,1);
 							if($errMsgCount == '1'){
@@ -933,7 +952,7 @@ Class UsersController extends AppController
 								$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 							}                  
 						}
-						elseif($retStatus == $existingLibraries['0']['Library']['library_authentication_response']){
+						elseif($status == 1){
 							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 							if(count($currentPatron) > 0){
 								$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
@@ -994,9 +1013,9 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 						}
 						else{
-							$errStrArr = explode('ERRMSG=',$retStr);
-							$errMsg = $errStrArr['1'];
-							$this->Session->setFlash("Access Denied - Please contact your Library.");
+							//$errStrArr = explode('ERRMSG=',$retStr);
+							//$errMsg = $errStrArr['1'];
+							$this->Session->setFlash($msg);
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}
 					}
@@ -1402,9 +1421,9 @@ Class UsersController extends AppController
 				$this->Library->Behaviors->attach('Containable');
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var'),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_authentication_variable','Library.library_authentication_response','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
-												 );							 
+												 );
 				if(count($existingLibraries) == 0){
 					$this -> Session -> setFlash("This is not a valid credential.");
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
@@ -1453,7 +1472,22 @@ Class UsersController extends AppController
 										  
 											$in = $mysip->msgPatronInformation('none');
 											$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );
-											$status = strpos($existingLibraries['0']['Library']['library_authentication_response'],$info_status['variable'][$existingLibraries['0']['Library']['library_authentication_variable']][0]);
+											$this->Variable->recursive = -1;
+											//$this->Library->Behaviors->attach('Containable');											
+											$allVariables = $this->Variable->find('all',array(
+																				'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
+																				'fields' => array('authentication_variable','authentication_response','error_msg',)
+																				)
+																			 );
+											foreach($allVariables as $k=>$v){
+												$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);	
+												if($status === false){
+													$msg = $v['Variable']['error_msg'];											
+												}
+												if(isset($msg)){
+													break;
+												}
+											}
 											if(!($status === false)){
 												$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 												if(count($currentPatron) > 0){
@@ -1516,7 +1550,7 @@ Class UsersController extends AppController
 											} 
 											else {
 												$this->Session->destroy('user');
-												$this->Session->setFlash("Access Denied - Please contact your Library.");
+												$this->Session->setFlash($msg);
 												$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 											}											  
 										}
