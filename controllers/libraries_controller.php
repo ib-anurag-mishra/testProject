@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable');
     
     /*
      Function Name : beforeFilter
@@ -99,6 +99,8 @@ Class LibrariesController extends AppController
                 $this->LibraryPurchase->recursive = -1;
                 $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId)));
                 $this->set('allPurchases', $allPurchases);
+                $allVariables = $this->Variable->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
+                $this->set('allVariables', $allVariables);				
             }
         }
         else
@@ -277,10 +279,10 @@ Class LibrariesController extends AppController
                                                 $this->User->id = $getData['Library']['library_admin_id'];
                                             }
                                             $this->data['User']['type_id'] = 4;
-					    if(trim($this->data['User']['password']) == ""){
-						// do not update the password
-						$this->data['User']['password'] = $getData['User']['password'];
-					    }
+											if(trim($this->data['User']['password']) == ""){
+											// do not update the password
+											$this->data['User']['password'] = $getData['User']['password'];
+											}
                                             if($this->User->save($this->data['User'])) {
                                                 if(trim($libraryId) != '' && is_numeric($libraryId)) {
                                                     $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
@@ -295,9 +297,20 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 if($this->Library->save($this->data['Library'])) {
+														foreach($this->data['Variable'] as $k=>$v){
+															if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
+																$data[$k] = $v;
+															}
+														}
+														$this->Variable->deleteAll(array('library_id' => $this->Library->id));
+														foreach($data as $k=>$v){
+															$data[$k]['library_id'] = $this->Library->id;
+														}
+														$this->Variable->saveAll($data);												
                                                     if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
                                                         $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
 														$this->data['Library']['id'] = $this->Library->id;
+
                                                         if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
                                                             $message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
