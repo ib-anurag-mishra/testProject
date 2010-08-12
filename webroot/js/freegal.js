@@ -176,6 +176,34 @@ function wishlistDownloadIE(prodId,id)
 	return false; 
 }
 
+function historyDownload(id,event)
+{
+	document.getElementById('download_loader_'+id).style.display = 'block';
+	var data = "id="+id;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/historyDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {			
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your have already downloaded this song twice.");
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				event.returnValue=false;
+				return false;
+			}
+			else
+			{
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				event.returnValue=true;
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
+}
+
 function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 {
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
