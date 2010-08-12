@@ -389,6 +389,7 @@ $(function() {
 		return s;
 	}	
 });
+
 function addVariable(fields) {
 		var newTable = document.createElement('table');
 		newTable.setAttribute('id','table'+fields);
