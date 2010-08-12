@@ -176,32 +176,61 @@ function wishlistDownloadIE(prodId,id)
 	return false; 
 }
 
-function historyDownload(id,event)
+function historyDownload(id,libid)
 {
 	document.getElementById('download_loader_'+id).style.display = 'block';
-	var data = "id="+id;	
+	var data = "libid="+libid+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/historyDownload", // URL to request
 		data: data,  // post data
-		success: function(response) {			
+		success: function(response) {
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
 				alert("Your have already downloaded this song twice.");
-				document.getElementById('download_loader_'+id).style.display = 'none';
-				event.returnValue=false;
+				location.reload();
 				return false;
 			}
 			else
 			{
 				document.getElementById('download_loader_'+id).style.display = 'none';
-				event.returnValue=true;
-				return true;
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
+	return false;
+}
+
+function historyDownloadOthers(id,libid,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	document.getElementById('download_loader_'+id).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "libid="+libid+"&id="+id;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/historyDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				location.reload();
+				return false;
+			}
+			else
+			{
+				document.getElementById('download_loader_'+id).style.display = 'none';
+				location.href = unescape(finalURL);
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
 }
 
 function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
