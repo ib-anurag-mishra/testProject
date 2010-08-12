@@ -12,6 +12,7 @@
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
 		$getData['Library']['library_authentication_response'] = "";
+		$getData['Library']['error_msg'] = "";		
 		$getData['Library']['library_host_name'] = "";
 		$getData['Library']['library_port_no'] = "";
 		$getData['Library']['library_sip_login'] = "";
@@ -170,14 +171,53 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Password');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_password',array('label' => false, 'value' => $getData['Library']['library_sip_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr><td colspan="2">
+					<div id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<?php
+					if(empty($allVariables))
+					{
+					?>
+					<table id="table0" cellspacing="8" cellpadding="0" border="0">
+					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
-						<td aligh="left"><?php echo $this->Form->input('library_authentication_variable',array('label' => false, 'value' => $getData['Library']['library_authentication_variable'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+						<td aligh="left"><input type="text" name="data[Variable][0][authentication_variable]" class="form_fields" size="50"></td>
 					</tr>
-					<tr id="innovative_var_pin" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-						<td aligh="left"><?php echo $this->Form->input('library_authentication_response',array('label' => false, 'value' => $getData['Library']['library_authentication_response'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
-					</tr>					
+						<td aligh="left"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50"></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
+						<td aligh="left"><input type="text" name="data[Variable][0][error_msg]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addVariable(1);"></td>
+					</tr>
+					</table>
+					<?php
+					}else{
+						$count = count($allVariables)+1;
+						foreach($allVariables as $k=>$v){
+							$j = $k+1;
+					?>	
+							<table id="table<?php echo $k; ?>" cellspacing="8" cellpadding="0" border="0">
+							<tr>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
+								<td aligh="left"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_variable']; ?>"></td>
+							</tr>
+							<tr>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
+								<td aligh="left"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
+							</tr>
+							<tr>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
+								<td aligh="left"><input type="text" name="data[Variable][<?php echo $k; ?>][error_msg]" class="form_fields" size="50" value="<?php echo $v['Variable']['error_msg']; ?>"><?php if($k==0){ ?><input type="button" value="+" class="form_fields" onClick="addVariable(<?php echo $count; ?>);"><?php }else{ ?><input type="button" value="Remove" class="form_fields" onClick="removeVariable(<?php echo $k; ?>);"><?php } ?></td>
+							</tr>
+							</table>
+					<?php
+							$j++;
+						}
+					}
+					?>
+					</div>
+					</td></tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
 					<tr>
@@ -474,8 +514,9 @@
 						$("#referral_url").show();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
-						$("#innovative_var").hide();
-						$("#innovative_var_pin").hide();						
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
@@ -486,8 +527,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
-						$("#innovative_var").hide();
-						$("#innovative_var_pin").hide();								
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
@@ -498,8 +540,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
-						$("#innovative_var").hide();
-						$("#innovative_var_pin").hide();								
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
@@ -510,8 +553,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
-						$("#innovative_var").hide();
-						$("#innovative_var_pin").hide();								
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
 						$("#sip_host").show();
 						$("#sip_port").show();
 						$("#sip_pin").show();
@@ -522,8 +566,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
-						$("#innovative_var").hide();
-						$("#innovative_var_pin").hide();								
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
 						$("#sip_host").show();
 						$("#sip_port").show();
 						$("#sip_pin").show();
@@ -534,8 +579,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
-						$("#innovative_var").show();
-						$("#innovative_var_pin").show();
+						$("#innv_var").show();
+						//$("#innovative_var_pin").show();
+						//$("#variable").show();						
 						$("#sip_host").show();
 						$("#sip_port").show();
 						$("#sip_pin").show();
@@ -546,8 +592,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
-						$("#innovative_var").show();
-						$("#innovative_var_pin").show();
+						$("#innv_var").show();
+						//$("#innovative_var_pin").show();
+						//$("#variable").show();						
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
@@ -558,8 +605,9 @@
 						$("#referral_url").hide();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
-						$("#innovative_var").hide();
-						$("#innovative_var_pin").hide();						
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
 						$("#sip_host").hide();
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
@@ -568,6 +616,8 @@
 					}
 				});
 			});
+
+
 		</script>
 <?php
 	}
