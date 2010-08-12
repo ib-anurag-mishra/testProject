@@ -390,7 +390,7 @@ div.actions ul li a:hover {
 	text-decoration: none;
 }
 
-input[type=submit],
+input[type=submit],input[type=button],
 div.actions ul li a,
 td.actions a {
 	font-size: 14px;
