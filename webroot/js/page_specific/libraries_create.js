@@ -387,5 +387,18 @@ $(function() {
 		}
 		s = s.join('');
 		return s;
-	}
+	}	
 });
+function addVariable(fields) {
+		var newTable = document.createElement('table');
+		newTable.setAttribute('id','table'+fields);
+		newTable.setAttribute('cellspacing',9);
+		newTable.setAttribute('cellpadding',0);
+		newTable.setAttribute('border',0);
+		newTable.innerHTML += "<tr id='var"+fields+"'><td align='right' width='250'><label>Library Authentication Variable</label></td><td aligh='left'><input type='text' name='data[Variable]["+fields+"][authentication_variable]' class='form_fields' size='50'></td></tr><tr id='response"+fields+"'><td align='right' width='250'><label>Library Authentication Response</label></td><td aligh='left'><input type='text' name='data[Variable]["+fields+"][authentication_response]' class='form_fields' size='50'></td></tr><tr id='error"+fields+"'><td align='right' width='250'><label>Library Error Message</label></td><td aligh='left'><input type='text' name='data[Variable]["+fields+"][error_msg]' class='form_fields' size='50'><input type='button' value='Remove' class='form_fields' onClick='removeVariable("+fields+");'></td></tr>";
+		document.getElementById("innv_var").appendChild(newTable);
+		fields++;
+}
+function removeVariable(val){
+	$("#table"+val).html('');
+}
