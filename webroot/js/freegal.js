@@ -197,11 +197,11 @@ function historyDownload(id,event)
 			{
 				document.getElementById('download_loader_'+id).style.display = 'none';
 				event.returnValue=true;
+				return true;
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
-	return false; 
 }
 
 function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
