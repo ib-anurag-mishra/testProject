@@ -12,10 +12,10 @@
 	<P>Track</p>
 </div>
 <div id="genreTrack" style="width:200px;">
-	Download
+	Date
 </div>
 <div id="genreTrack" style="width:200px;">
-	Date
+	Download
 </div>
 <br class="clr">
 <div id="genreResults">
@@ -54,6 +54,11 @@
 					 	}
 					?>
 				</td>
+				<td width="200" valign="top" align="center">
+					<?php 
+						echo date("Y-m-d",strtotime($downloadResult['Download']['created']));							
+					?>
+				</td>
 				<td width="200" align="center">
 					<?php										
 						$productInfo = $physicalproduct->getDownloadData($downloadResult['Download']['ProdID']);
@@ -72,11 +77,6 @@
 							</span>
 							<span id="download_loader_<?php echo $downloadResult['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 						</p>
-				</td>
-				<td width="200" valign="top" align="center">
-					<?php 
-						echo date("Y-m-d",strtotime($downloadResult['Download']['created']));							
-					?>
 				</td>				
 			</tr>
 	<?php
