@@ -1036,7 +1036,9 @@ class HomesController extends AppController
 		if($downloadCount < 2){
 			$sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".$startDate."' AND '".$endDate."'";
 			$this->Download->query($sql);
-            echo "success";			
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+			$downloadCount =  $downloadsUsed[0]['Download']['history'];
+            echo $downloadCount;			
         } else {
 			echo "error";
 		}
