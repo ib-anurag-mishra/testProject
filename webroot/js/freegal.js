@@ -176,10 +176,10 @@ function wishlistDownloadIE(prodId,id)
 	return false; 
 }
 
-function historyDownload(id,libid)
+function historyDownload(id,libID,patronID)
 {
 	document.getElementById('download_loader_'+id).style.display = 'block';
-	var data = "libid="+libid+"&id="+id;
+	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/historyDownload", // URL to request
@@ -202,13 +202,13 @@ function historyDownload(id,libid)
 	return false;
 }
 
-function historyDownloadOthers(id,libid,downloadUrl1,downloadUrl2,downloadUrl3)
+function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downloadUrl3)
 {
 	document.getElementById('download_loader_'+id).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
 	finalURL += downloadUrl3;
-	var data = "libid="+libid+"&id="+id;	
+	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/historyDownload", // URL to request
