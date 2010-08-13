@@ -82,7 +82,7 @@
 	<?php
 		endforeach;
 	}else{
-		echo 	'<tr><td width="280" valign="top"><p>No downloaded songs from this week or last week.</p></td></tr>';
+		echo 	'<tr><td valign="top"><p>No downloaded songs from this week or last week.</p></td></tr>';
 	}
 	
 	?>
