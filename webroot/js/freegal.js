@@ -194,6 +194,10 @@ function historyDownload(id,libID,patronID)
 			}
 			else
 			{
+				var count = response.substring(0,1);
+					if(count == 2){
+						document.getElementById('download_song_'+id).innerHTML = 'Limit Exceeded';
+					}
 				document.getElementById('download_loader_'+id).style.display = 'none';
 			}
 		},
@@ -224,6 +228,10 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 			}
 			else
 			{
+				var count = response.substring(0,1);
+					if(count == 2){
+						document.getElementById('download_song_'+id).innerHTML = 'Limit Exceeded';
+					}
 				document.getElementById('download_loader_'+id).style.display = 'none';
 				location.href = unescape(finalURL);
 			}
