@@ -68,7 +68,7 @@
 				<table cellspacing="10" cellpadding="0" border="0">
 					<tr><td id="formError1" class="formError" colspan="2"></td></tr>
 					<tr>
-						<td align="right" width="255"><?php echo $this->Form->label('Library Name');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label('Library Name');?></td>
 						<td align="left"><?php echo $this->Form->input('library_name',array('label' => false ,'value' => $getData['Library']['library_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr>
@@ -82,7 +82,7 @@
 								}
 								echo $this->Form->checkbox('show_library_name', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked)); ?>
 						</td>
-						<td>
+						<td align="left">
 							<?php echo $this->Form->label('Do not show library name on site');?>
 						</td>
 					</tr>					
@@ -123,7 +123,7 @@
 					else {
 					?>
 					<tr>
-						<td align="right" width="255"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Method');?></td>
 						<td align="left">
 							<?php
 								echo $this->Form->input('library_authentication_method', array('options' => array(
@@ -171,25 +171,24 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Password');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_password',array('label' => false, 'value' => $getData['Library']['library_sip_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr><td colspan="2">
-					<div id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 					<?php
 					if(empty($allVariables))
 					{
 					?>
-					<table id="table0" cellspacing="8" cellpadding="0" border="0">
-					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
-						<td aligh="left"><input type="text" name="data[Variable][0][authentication_variable]" class="form_fields" size="50"></td>
-					</tr>
-					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-						<td aligh="left"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50"></td>
-					</tr>
-					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
-						<td aligh="left"><input type="text" name="data[Variable][0][error_msg]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addVariable(1);"></td>
-					</tr>
+					<table id="table0"  cellspacing="6" cellpadding="0" border="0">
+						<tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable]" class="form_fields" size="50"></td>
+						</tr>
+						<tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50"></td>
+						</tr>
+						<tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][error_msg]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addVariable(1);"></td>
+						</tr>
 					</table>
 					<?php
 					}else{
@@ -197,18 +196,18 @@
 						foreach($allVariables as $k=>$v){
 							$j = $k+1;
 					?>	
-							<table id="table<?php echo $k; ?>" cellspacing="8" cellpadding="0" border="0">
+							<table id="table<?php echo $k; ?>"  cellspacing="6" cellpadding="0" border="0">
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable');?></td>
-								<td aligh="left"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_variable']; ?>"></td>
+								<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_variable']; ?>"></td>
 							</tr>
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-								<td aligh="left"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
+								<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
-								<td aligh="left"><input type="text" name="data[Variable][<?php echo $k; ?>][error_msg]" class="form_fields" size="50" value="<?php echo $v['Variable']['error_msg']; ?>"><?php if($k==0){ ?><input type="button" value="+" class="form_fields" onClick="addVariable(<?php echo $count; ?>);"><?php }else{ ?><input type="button" value="Remove" class="form_fields" onClick="removeVariable(<?php echo $k; ?>);"><?php } ?></td>
+								<td aligh="left"  class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][error_msg]" class="form_fields" size="50" value="<?php echo $v['Variable']['error_msg']; ?>"><?php if($k==0){ ?><input type="button" value="+" class="form_fields" onClick="addVariable(<?php echo $count; ?>);"><?php }else{ ?><input type="button" value="Remove" class="form_fields" onClick="removeVariable(<?php echo $k; ?>);"><?php } ?></td>
 							</tr>
 							</table>
 					<?php
@@ -216,7 +215,6 @@
 						}
 					}
 					?>
-					</div>
 					</td></tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Template Settings');?></td></tr>
