@@ -186,6 +186,17 @@
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50"></td>
 						</tr>
 						<tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
+							<td align="left" style="padding-left:20px" class="libselect">
+								<select name="data[Variable][0][authentication_response]">
+									<option value="">Select a Operator</option>
+									<option value="=">=</option>
+									<option value=">">></option>
+									<option value="<"><</option>
+								</select>							
+							</td>
+						</tr>						
+						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][error_msg]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addVariable(1);"></td>
 						</tr>
@@ -205,6 +216,18 @@
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 								<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>
+							<tr>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
+								<td align="left" style="padding-left:20px" class="libselect">
+									<?php $var = $v['Variable']['comparison_operator']; ?>
+									<select name="data[Variable][<?php echo $k; ?>][comparison_operator]">
+										<option value="">Select a Operator</option>
+										<option <?php if($var == '='){ ?> selected = "selected" <?php } ?> value = "=" >=</option>
+										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
+										<option <?php if($var == '<'){ ?> selected = "selected" <?php } ?> value="<"> < </option>
+									</select>							
+								</td>
+							</tr>							
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
 								<td aligh="left"  class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][error_msg]" class="form_fields" size="50" value="<?php echo $v['Variable']['error_msg']; ?>"><?php if($k==0){ ?><input type="button" value="+" class="form_fields" onClick="addVariable(<?php echo $count; ?>);"><?php }else{ ?><input type="button" value="Remove" class="form_fields" onClick="removeVariable(<?php echo $k; ?>);"><?php } ?></td>
