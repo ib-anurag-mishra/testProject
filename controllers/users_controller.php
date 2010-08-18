@@ -922,16 +922,33 @@ Class UsersController extends AppController
 						$this->Variable->recursive = -1;
 						$allVariables = $this->Variable->find('all',array(
 															'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
-															'fields' => array('authentication_variable','authentication_response','error_msg',)
+															'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
 															)
 														 );
 						foreach($allVariables as $k=>$v){
 							$retStatusArr = explode($v['Variable']['authentication_variable'],$retStr);
-							$retStatus = substr($retStatusArr['1'],1,1);
+							$pos = strpos($retStatusArr['1'],"<br/>");
+							$retStatus = substr($retStatusArr['1'],1,$pos-1);
 							if($retStatus == ''){
 								$status = '';
-							}elseif($retStatus == $v['Variable']['authentication_response']){
-								$status = 1;		
+							}elseif($v['Variable']['comparison_operator'] == '='){
+								if($retStatus == $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}
+							}elseif($v['Variable']['comparison_operator'] == '<'){
+								if($retStatus < $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}
+							}elseif($v['Variable']['comparison_operator'] == '>'){
+								if($retStatus > $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}
 							}else{
 								$status = 'error';
 							}
@@ -1476,11 +1493,32 @@ Class UsersController extends AppController
 											//$this->Library->Behaviors->attach('Containable');											
 											$allVariables = $this->Variable->find('all',array(
 																				'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
-																				'fields' => array('authentication_variable','authentication_response','error_msg',)
+																				'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
 																				)
 																			 );
 											foreach($allVariables as $k=>$v){
-												$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);	
+												$response = explode(",",$v['Variable']['authentication_response']);
+												if($v['Variable']['comparison_operator'] == '='){
+													$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);
+												}elseif($v['Variable']['comparison_operator'] == '<'){
+													foreach($response as $key => $val){
+														if($info_status['variable'][$v['Variable']['authentication_variable']][0] < $val){
+															$status = 1;
+															break;
+														}else{
+															$status = false;
+														}
+													}
+												}elseif($v['Variable']['comparison_operator'] == '>'){
+													foreach($response as $key => $val){
+														if($info_status['variable'][$v['Variable']['authentication_variable']][0] > $val){
+															$status = 1;
+															break;
+														}else{
+															$status = false;
+														}
+													}
+												}
 												if($status === false){
 													$msg = $v['Variable']['error_msg'];											
 												}
