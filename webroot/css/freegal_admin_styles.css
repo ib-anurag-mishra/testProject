@@ -628,5 +628,8 @@ td.actions a:hover {
 	height:11px;
 }
 .libalign {
-	#padding-left: 60px;
+	#padding-left: 60px !important;
+}
+.libselect {
+	#padding-left: 80px !important;
 }
