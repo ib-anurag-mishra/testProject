@@ -188,7 +188,7 @@
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
-								<select name="data[Variable][0][authentication_response]">
+								<select name="data[Variable][0][comparison_operator]">
 									<option value="">Select a Operator</option>
 									<option value="=">=</option>
 									<option value=">">></option>
