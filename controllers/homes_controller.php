@@ -410,9 +410,10 @@ class HomesController extends AppController
 		$insertArr['email'] = $this->Session->read('Auth.User.email');
 		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-        $this->Download->save($insertArr);
-        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
-        $this->Library->query($sql);
+        if($this->Download->save($insertArr)){
+			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
+			$this->Library->query($sql);
+		}
         $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 		$this->Download->recursive = -1;
@@ -999,10 +1000,11 @@ class HomesController extends AppController
 		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];		
         //save to downloads table
-        $this->Download->save($insertArr);
+        if($this->Download->save($insertArr)){
         //update library table
-        $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;	
-        $this->Library->query($sql);
+			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;	
+			$this->Library->query($sql);
+		}
         //delete from wishlist table
         $deleteSongId = $id;     
         $this->Wishlist->delete($deleteSongId);
