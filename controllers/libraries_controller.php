@@ -297,16 +297,18 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 if($this->Library->save($this->data['Library'])) {
-														foreach($this->data['Variable'] as $k=>$v){
-															if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
-																$data[$k] = $v;
+													if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' && $this->data['Library']['library_authentication_method'] == 'sip2_var'){
+															foreach($this->data['Variable'] as $k=>$v){
+																if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
+																	$data[$k] = $v;
+																}
 															}
-														}
-														$this->Variable->deleteAll(array('library_id' => $this->Library->id));
-														foreach($data as $k=>$v){
-															$data[$k]['library_id'] = $this->Library->id;
-														}
-														$this->Variable->saveAll($data);												
+															$this->Variable->deleteAll(array('library_id' => $this->Library->id));
+															foreach($data as $k=>$v){
+																$data[$k]['library_id'] = $this->Library->id;
+															}
+															$this->Variable->saveAll($data);
+													}
                                                     if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
                                                         $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
 														$this->data['Library']['id'] = $this->Library->id;
