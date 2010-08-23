@@ -143,6 +143,36 @@
 					<?php
 					}
 					?>
+					<tr>
+						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var"){?>style="display:none;"<?php } ?>>					
+						<?php
+						if(empty($allUrls))
+						{
+						?>	
+							<table id="tab0" cellspacing="6" cellpadding="0" border="0">
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Referral URL');?></td>
+								<td align="left"><input type="text" name="data[Libraryurl][0][domain_name]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addUrl(1);"></td>
+							</table>
+						<?php
+						}else{
+							$count = count($allUrls)+1;
+							foreach($allUrls as $k=>$v){
+								$j = $k+1;
+						?>	
+								<table id="tab<?php echo $k; ?>" cellspacing="6" cellpadding="0" border="0">
+								<tr>
+									<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Referral URL');?></td>
+									<td aligh="left"><input type="text" name="data[Libraryurl][<?php echo $k; ?>][domain_name]" class="form_fields" size="50" value="<?php echo $v['Url']['domain_name']; ?>"><?php if($k==0){ ?><input type="button" value="+" class="form_fields" onClick="addUrl(<?php echo $count; ?>);"><?php }else{ ?><input type="button" value="Remove" class="form_fields" onClick="removeUrl(<?php echo $k; ?>);"><?php } ?></td>
+								</tr>
+								</table>
+						<?php
+								$j++;
+							}
+						}
+						?>
+						</td>
+					</tr>
+					
 					<tr id="referral_url" <?php if($getData['Library']['library_authentication_method'] != "referral_url"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
@@ -533,6 +563,7 @@
 				$("#LibraryLibraryAuthenticationMethod").change(function() {
 					if($(this).val() == 'referral_url') {
 						$("#referral_url").show();
+						$("#allurl").hide();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
 						$("#innv_var").hide();
@@ -545,6 +576,7 @@
 						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'innovative') {
+						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
@@ -558,6 +590,7 @@
 						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'innovative_wo_pin') {
+						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
@@ -571,6 +604,7 @@
 						$("#sip_password").hide();
 					}
 					else if ($(this).val() == 'sip2') {
+						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
@@ -584,6 +618,7 @@
 						$("#sip_password").show();	
 					}
 					else if ($(this).val() == 'sip2_wo_pin') {
+						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
@@ -597,6 +632,7 @@
 						$("#sip_password").show();	
 					}
 					else if ($(this).val() == 'sip2_var') {
+						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").hide();
@@ -610,6 +646,7 @@
 						$("#sip_password").show();
 					}						
 					else if ($(this).val() == 'innovative_var_wo_pin') {
+						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
@@ -623,6 +660,7 @@
 						$("#sip_password").hide();
 					}										
 					else {
+						$("#allurl").hide();
 						$("#referral_url").hide();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
