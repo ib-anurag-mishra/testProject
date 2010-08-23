@@ -31,10 +31,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                     'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                     'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                               ),
+     // 'library_authentication_num' => array(
+     //                                'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+     //                                'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+     //                          ),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -48,11 +48,11 @@ class Library extends AppModel
      'library_step1' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
-      'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+      'library_domain_name[]' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -62,10 +62,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  false, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -75,10 +75,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -88,10 +88,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -101,10 +101,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
 //	  'library_authentication_variable' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Variable.'),
 //	  'library_authentication_response' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Response.'),
@@ -116,10 +116,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
 	  'library_port_no' => array('rule' => array('custom', '/\S+/'),  'message' => 'Please provide a Library Port No.'),
 	  'library_sip_login' => array('allowEmpty' => true),
@@ -132,10 +132,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
 	  'library_port_no' => array('rule' => array('custom', '/\S+/'),  'message' => 'Please provide a Library Port No.'),
 	  'library_sip_login' => array('allowEmpty' => true),
@@ -148,10 +148,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
-      'library_authentication_num' => array(
-                                            'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
-                                            'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
-                                      ),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
 //	  'library_authentication_variable' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Variable.'),
 //	  'library_authentication_response' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Response.'),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
