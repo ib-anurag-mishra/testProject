@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url');
     
     /*
      Function Name : beforeFilter
@@ -101,7 +101,9 @@ Class LibrariesController extends AppController
                 $this->set('allPurchases', $allPurchases);
                 $allVariables = $this->Variable->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
                 $this->set('allVariables', $allVariables);				
-            }
+                $allUrls = $this->Url->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
+                $this->set('allUrls', $allUrls);
+			}
         }
         else
         {
@@ -297,7 +299,7 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 if($this->Library->save($this->data['Library'])) {
-													if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var'){
+														if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var'){
 															foreach($this->data['Variable'] as $k=>$v){
 																if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
 																	$data[$k] = $v;
@@ -308,8 +310,22 @@ Class LibrariesController extends AppController
 																$data[$k]['library_id'] = $this->Library->id;
 															}
 															$this->Variable->saveAll($data);
-													}
-                                                    if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
+														}
+														if($this->data['Libraryurl'][0]['domain_name']){
+															if($this->data['Library']['library_authentication_method'] != 'referral_url' || $this->data['Library']['library_authentication_method'] != 'user_account'){														
+																foreach($this->data['Libraryurl'] as $k=>$v){
+																	if($this->data['Libraryurl'][$k]['domain_name'] !=''){
+																		$url[$k] = $v;
+																	}
+																}
+																$this->Url->deleteAll(array('library_id' => $this->Library->id));
+																foreach($url as $k=>$v){
+																	$url[$k]['library_id'] = $this->Library->id;
+																}
+																$this->Url->saveAll($url);
+															}
+														}
+														if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
                                                         $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
 														$this->data['Library']['id'] = $this->Library->id;
 
