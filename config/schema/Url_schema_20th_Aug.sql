@@ -1,0 +1,1 @@
+INSERT INTO urls(library_id) SELECT id FROM libraries WHERE library_authentication_method NOT IN ('referral_url','user_account')
