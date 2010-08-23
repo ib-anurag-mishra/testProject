@@ -390,16 +390,29 @@ $(function() {
 	}	
 });
 var counter = 0;
+var incr = 0;
 var fields;
 function addVariable(val) {
 		if(counter < 1){
 			fields = val;
 		}
-		var textData =  "<table id='table"+fields+"' cellspacing='6' cellpadding='0' border='0'><tr id='var"+fields+"'><td align='right' width='250'><label>Library Authentication Variable</label></td><td aligh='left' class='libalign'><input type='text' name='data[Variable]["+fields+"][authentication_variable]' class='form_fields' size='50'></td></tr><tr id='response"+fields+"'><td align='right' width='250'><label>Library Authentication Response</label></td><td aligh='left' class='libalign'><input type='text' name='data[Variable]["+fields+"][authentication_response]' class='form_fields' size='50'></td></tr><tr><td align='right' width='250'><label>Library Comparison Operator</label></td><td align='left' style='padding-left:20px' class='libselect'><select name='data[Variable]["+fields+"][comparison_operator]'><option value=''>Select a Operator</option><option value='='>=</option><option value='>'>></option><option value='<'><</option></select></td></tr><tr id='error"+fields+"'><td align='right' width='250'><label>Library Error Message</label></td><td aligh='left' class='libalign'><input type='text' name='data[Variable]["+fields+"][error_msg]' class='form_fields' size='50'><input type='button' value='Remove' class='form_fields' onClick='removeVariable("+fields+");'></td></tr></table>";
+		var textData =  "<table id='table"+fields+"' cellspacing='6' cellpadding='0' border='0'><tr id='var"+fields+"'><td align='right' width='250' class='libalign'><label>Library Authentication Variable</label></td><td aligh='left'><input type='text' name='data[Variable]["+fields+"][authentication_variable]' class='form_fields' size='50'></td></tr><tr id='response"+fields+"'><td align='right' width='250' class='libalign'><label>Library Authentication Response</label></td><td aligh='left'><input type='text' name='data[Variable]["+fields+"][authentication_response]' class='form_fields' size='50'></td></tr><tr><td align='right' width='250'><label>Library Comparison Operator</label></td><td align='left' style='padding-left:20px' class='libselect'><select name='data[Variable]["+fields+"][comparison_operator]'><option value=''>Select a Operator</option><option value='='>=</option><option value='>'>></option><option value='<'><</option></select></td></tr><tr id='error"+fields+"'><td align='right' width='250' class='libalign'><label>Library Error Message</label></td><td aligh='left'><input type='text' name='data[Variable]["+fields+"][error_msg]' class='form_fields' size='50'><input type='button' value='Remove' class='form_fields' onClick='removeVariable("+fields+");'></td></tr></table>";
 		$("#innv_var").append(textData);
 		fields++;
 		counter++;
 }
 function removeVariable(val){
 	$("#table"+val).html('');
+}
+function addUrl(fieldVal) {
+	if(incr < 1){
+		fields = fieldVal;
+	}
+	var data = "<table id='tab"+fields+"' cellspacing='6' cellpadding='0' border='0'><tr><td align='right' width='250'><label>Library Referral URL</label></td><td aligh='left'><input type='text' name='data[Libraryurl]["+fields+"][domain_name]' class='form_fields' size='50'><input type='button' value='Remove' class='form_fields' onClick='removeUrl("+fields+");'></td></tr></table>";
+	$("#allurl").append(data);
+	fields++;
+	incr++;
+}
+function removeUrl(val){
+	$("#tab"+val).html('');
 }
