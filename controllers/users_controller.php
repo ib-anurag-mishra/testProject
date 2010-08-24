@@ -197,34 +197,65 @@ Class UsersController extends AppController
 			$this->redirect($redirect_url, null, true);
          }
          elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
-			$redirect_url = $this->Session->read('referral');
-			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true); 
+			if($this->Session->read('referral')){
+				$redirect_url = $this->Session->read('referral');
+				$this->Session->destroy();
+				$this->redirect($redirect_url, null, true);
+			} else {
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));				
+			}
          }
          elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
-			$redirect_url = $this->Session->read('referral');
-			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true); 
+			if($this->Session->read('referral')){
+				$redirect_url = $this->Session->read('referral');
+				$this->Session->destroy();
+				$this->redirect($redirect_url, null, true);
+			} else {
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));				
+			}
 		 }
          elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
-			$redirect_url = $this->Session->read('referral');
-			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true);  
+			if($this->Session->read('referral')){
+				$redirect_url = $this->Session->read('referral');
+				$this->Session->destroy();
+				$this->redirect($redirect_url, null, true);
+			} else {
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));				
+			}
          }		 
          elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
-			$redirect_url = $this->Session->read('referral');
-			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true); 
+			if($this->Session->read('referral')){
+				$redirect_url = $this->Session->read('referral');
+				$this->Session->destroy();
+				$this->redirect($redirect_url, null, true);
+			} else {
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users', 'action' => 'slogin'));				
+			}
          }
 		 elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
-			$redirect_url = $this->Session->read('referral');
-			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true); 
+			if($this->Session->read('referral')){
+				$redirect_url = $this->Session->read('referral');
+				$this->Session->destroy();
+				$this->redirect($redirect_url, null, true);
+			} else {
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));				
+			}
          }
 		 elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
-			$redirect_url = $this->Session->read('referral');
-			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true);  
+			if($this->Session->read('referral')){
+				$redirect_url = $this->Session->read('referral');
+				$this->Session->destroy();
+				$this->redirect($redirect_url, null, true);
+			} else {
+				$this->Session->destroy();
+				$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));				
+			}
+ 
 		}
         else{            
             $this->Session->destroy();
@@ -607,20 +638,16 @@ Class UsersController extends AppController
    */
    
    function ilogin(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
-			$this -> Session -> setFlash("This is not have a valid referral Url.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));	
-		}
-		if($this->Session->read('referral') ==''){
-			$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-			$url = $this->Url->find('all', array('conditions' => array('domain_name' => $this->Session->read('referral'))));
-			if(count($url) == 0){
-				$this -> Session -> setFlash("This is not a valid Referral Url.");
-				$redirect_url = $this->Session->read('referral');
-				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+					}
+				}
 			}
-			$this->Session->write("lId",$url[0]['Url']['library_id']);
 		}
       $this->layout = 'login';
       if ($this->Session->read('Auth.User')){
@@ -658,8 +685,13 @@ Class UsersController extends AppController
             $cardNo = substr($card,0,5);
             $this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');
+			if($this->Session->read('referral')){
+				$library_cond = array('id' => $this->Session->read('lId'));
+			} else {
+				$library_cond = '';
+			}		
             $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative','id' => $this->Session->read('lId')),
+                                                'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative',$library_cond),
 												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
                                                 )
                                              );
@@ -766,20 +798,16 @@ Class UsersController extends AppController
    */
    
 	function inlogin(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
-			$this -> Session -> setFlash("This is not have a valid referral Url.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));	
-		}
-		if($this->Session->read('referral') ==''){
-			$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-			$url = $this->Url->find('all', array('conditions' => array('domain_name' => $this->Session->read('referral'))));
-			if(count($url) == 0){
-				$this -> Session -> setFlash("This is not a valid Referral Url.");
-				$redirect_url = $this->Session->read('referral');
-				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+					}
+				}
 			}
-			$this->Session->write("lId",$url[0]['Url']['library_id']);
 		}
 		$this->layout = 'login';     
 		if ($this->Session->read('Auth.User')){
@@ -800,8 +828,14 @@ Class UsersController extends AppController
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
+				if($this->Session->read('referral')){
+					$library_cond = array('id' => $this->Session->read('lId'));
+				} else {
+					$library_cond = '';
+				}				
+				
 				$existingLibraries = $this->Library->find('all',array(
-												'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin','id' => $this->Session->read('lId')),
+												'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin',$library_cond),
 												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
 												)
 											 );            
@@ -914,21 +948,16 @@ Class UsersController extends AppController
    */
    
    function indlogin(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
-			$this -> Session -> setFlash("This is not have a valid referral Url.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));	
-		}
-		//$this->Session->write("referral",'');
-		if($this->Session->read('referral') ==''){
-			$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-			$url = $this->Url->find('all', array('conditions' => array('domain_name' => $this->Session->read('referral'))));
-			if(count($url) == 0){
-				$this -> Session -> setFlash("This is not a valid Referral Url.");
-				$redirect_url = $this->Session->read('referral');
-				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+					}
+				}
 			}
-			$this->Session->write("lId",$url[0]['Url']['library_id']);
 		}
 		$this->layout = 'login';
 		if ($this->Session->read('Auth.User')){
@@ -949,8 +978,13 @@ Class UsersController extends AppController
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
+				if($this->Session->read('referral')){
+					$library_cond = array('id' => $this->Session->read('lId'));
+				} else {
+					$library_cond = '';
+				}
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin','id' => $this->Session->read('lId')),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin',$library_cond),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
@@ -1103,20 +1137,16 @@ Class UsersController extends AppController
 	   
 	   
 	function slogin(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
-			$this -> Session -> setFlash("This is not have a valid referral Url.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));	
-		}
-		if($this->Session->read('referral') ==''){
-			$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-			$url = $this->Url->find('all', array('conditions' => array('domain_name' => $this->Session->read('referral'))));
-			if(count($url) == 0){
-				$this -> Session -> setFlash("This is not a valid Referral Url.");
-				$redirect_url = $this->Session->read('referral');
-				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+					}
+				}
 			}
-			$this->Session->write("lId",$url[0]['Url']['library_id']);
 		}
 		$this->layout = 'login';     
 		if ($this->Session->read('Auth.User')){
@@ -1153,8 +1183,13 @@ Class UsersController extends AppController
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
+				if($this->Session->read('referral')){
+					$library_cond = array('id' => $this->Session->read('lId'));
+				} else {
+					$library_cond = '';
+				}				
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2','id' => $this->Session->read('lId')),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2',$library_cond),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
@@ -1304,20 +1339,16 @@ Class UsersController extends AppController
 	   
 	   
 	function snlogin(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
-			$this -> Session -> setFlash("This is not have a valid referral Url.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));	
-		}
-		if($this->Session->read('referral') ==''){
-			$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-			$url = $this->Url->find('all', array('conditions' => array('domain_name' => $this->Session->read('referral'))));
-			if(count($url) == 0){
-				$this -> Session -> setFlash("This is not a valid Referral Url.");
-				$redirect_url = $this->Session->read('referral');
-				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+					}
+				}
 			}
-			$this->Session->write("lId",$url[0]['Url']['library_id']);
 		}
 		$this->layout = 'login';     
 		if ($this->Session->read('Auth.User')){
@@ -1337,8 +1368,13 @@ Class UsersController extends AppController
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
+				if($this->Session->read('referral')){
+					$library_cond = array('id' => $this->Session->read('lId'));
+				} else {
+					$library_cond = '';
+				}
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin','id' => $this->Session->read('lId')),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin',$library_cond),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
@@ -1482,20 +1518,16 @@ Class UsersController extends AppController
 	*/ 	   
 	   
 	function sdlogin(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
-			$this -> Session -> setFlash("This is not have a valid referral Url.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));	
-		}
-		if($this->Session->read('referral') ==''){
-			$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-			$url = $this->Url->find('all', array('conditions' => array('domain_name' => $this->Session->read('referral'))));
-			if(count($url) == 0){
-				$this -> Session -> setFlash("This is not a valid Referral Url.");
-				$redirect_url = $this->Session->read('referral');
-				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+					}
+				}
 			}
-			$this->Session->write("lId",$url[0]['Url']['library_id']);
 		}
 		$this->layout = 'login';     
 		if ($this->Session->read('Auth.User')){
@@ -1532,8 +1564,13 @@ Class UsersController extends AppController
 				$cardNo = substr($card,0,5);
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
+				if($this->Session->read('referral')){
+					$library_cond = array('id' => $this->Session->read('lId'));
+				} else {
+					$library_cond = '';
+				}				
 				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var','id' => $this->Session->read('lId')),
+													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
 													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
