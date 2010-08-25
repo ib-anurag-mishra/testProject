@@ -1023,13 +1023,25 @@ Class UsersController extends AppController
 									$status = 'error';
 								}
 							}elseif($v['Variable']['comparison_operator'] == '<'){
-								if($retStatus < $v['Variable']['authentication_response']){
+								$res = explode("$",$v['Variable']['authentication_response']);
+								if(isset($res[1])){
+									$cmp = $res[1];
+								} else {
+									$cmp = $res[0];
+								}							
+								if($retStatus < $cmp){
 									$status = 1;
 								}else{
 									$status = 'error';
 								}
 							}elseif($v['Variable']['comparison_operator'] == '>'){
-								if($retStatus > $v['Variable']['authentication_response']){
+								$res = explode("$",$v['Variable']['authentication_response']);
+								if(isset($res[1])){
+									$cmp = $res[1];
+								} else {
+									$cmp = $res[0];
+								}
+								if($retStatus > $cmp){
 									$status = 1;
 								}else{
 									$status = 'error';
@@ -1622,8 +1634,7 @@ Class UsersController extends AppController
 										  
 											$in = $mysip->msgPatronInformation('none');
 											$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );
-											$this->Variable->recursive = -1;
-											//$this->Library->Behaviors->attach('Containable');											
+											$this->Variable->recursive = -1;										
 											$allVariables = $this->Variable->find('all',array(
 																				'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
 																				'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
@@ -1635,7 +1646,13 @@ Class UsersController extends AppController
 													$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 												}elseif($v['Variable']['comparison_operator'] == '<'){
 													foreach($response as $key => $val){
-														if($info_status['variable'][$v['Variable']['authentication_variable']][0] < $val){
+														$res = explode("$",$val);
+														if(isset($res[1])){
+															$cmp = $res[1];
+														} else {
+															$cmp = $res[0];
+														}
+														if($info_status['variable'][$v['Variable']['authentication_variable']][0] < $cmp){
 															$status = 1;
 															break;
 														}else{
@@ -1643,8 +1660,14 @@ Class UsersController extends AppController
 														}
 													}
 												}elseif($v['Variable']['comparison_operator'] == '>'){
-													foreach($response as $key => $val){
-														if($info_status['variable'][$v['Variable']['authentication_variable']][0] > $val){
+														foreach($response as $key => $val){
+														$res = explode("$",$val);
+														if(isset($res[1])){
+															$cmp = $res[1];
+														} else {
+															$cmp = $res[0];
+														}
+														if($info_status['variable'][$v['Variable']['authentication_variable']][0] > $cmp){
 															$status = 1;
 															break;
 														}else{
