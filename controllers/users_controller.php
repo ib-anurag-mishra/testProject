@@ -1023,25 +1023,25 @@ Class UsersController extends AppController
 									$status = 'error';
 								}
 							}elseif($v['Variable']['comparison_operator'] == '<'){
-								$res = explode("$",$v['Variable']['authentication_response']);
+								$res = explode("$",$retStatus);
 								if(isset($res[1])){
 									$cmp = $res[1];
 								} else {
 									$cmp = $res[0];
 								}							
-								if($retStatus < $cmp){
+								if($cmp < $v['Variable']['authentication_response']){
 									$status = 1;
 								}else{
 									$status = 'error';
 								}
 							}elseif($v['Variable']['comparison_operator'] == '>'){
-								$res = explode("$",$v['Variable']['authentication_response']);
+								$res = explode("$",$retStatus);
 								if(isset($res[1])){
 									$cmp = $res[1];
 								} else {
 									$cmp = $res[0];
-								}
-								if($retStatus > $cmp){
+								}							
+								if($cmp > $v['Variable']['authentication_response']){
 									$status = 1;
 								}else{
 									$status = 'error';
@@ -1646,13 +1646,13 @@ Class UsersController extends AppController
 													$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 												}elseif($v['Variable']['comparison_operator'] == '<'){
 													foreach($response as $key => $val){
-														$res = explode("$",$val);
+														$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 														if(isset($res[1])){
 															$cmp = $res[1];
 														} else {
 															$cmp = $res[0];
 														}
-														if($info_status['variable'][$v['Variable']['authentication_variable']][0] < $cmp){
+														if($cmp < $val){
 															$status = 1;
 															break;
 														}else{
@@ -1661,13 +1661,13 @@ Class UsersController extends AppController
 													}
 												}elseif($v['Variable']['comparison_operator'] == '>'){
 														foreach($response as $key => $val){
-														$res = explode("$",$val);
+														$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 														if(isset($res[1])){
 															$cmp = $res[1];
 														} else {
 															$cmp = $res[0];
 														}
-														if($info_status['variable'][$v['Variable']['authentication_variable']][0] > $cmp){
+														if($cmp > $val){
 															$status = 1;
 															break;
 														}else{
