@@ -1202,7 +1202,7 @@ Class UsersController extends AppController
 				}				
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1216,10 +1216,11 @@ Class UsersController extends AppController
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 						$mysip->sip_login = $existingLibraries['0']['Library']['library_sip_login'];
 						$mysip->sip_password = $existingLibraries['0']['Library']['library_sip_password'];
+						$mysip->sip_location = $existingLibraries['0']['Library']['library_sip_location'];
 						if($mysip->connect()) {
 							
 							if(!empty($mysip->sip_login)){
-								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password);
+								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);
 								$mysip->parseLoginResponse($mysip->get_message($sc_login));
 							}
 							
@@ -1387,7 +1388,7 @@ Class UsersController extends AppController
 				}
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1401,11 +1402,11 @@ Class UsersController extends AppController
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 						$mysip->sip_login = $existingLibraries['0']['Library']['library_sip_login'];
 						$mysip->sip_password = $existingLibraries['0']['Library']['library_sip_password'];
-
+						$mysip->sip_location = $existingLibraries['0']['Library']['library_sip_location'];
 						if($mysip->connect()) {
 							
 							if(!empty($mysip->sip_login)){
-								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password);
+								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);
 								$mysip->parseLoginResponse($mysip->get_message($sc_login));
 							}
 							
@@ -1583,7 +1584,7 @@ Class UsersController extends AppController
 				}				
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1597,17 +1598,18 @@ Class UsersController extends AppController
 						$mysip->port = $existingLibraries['0']['Library']['library_port_no'];
 						$mysip->sip_login = $existingLibraries['0']['Library']['library_sip_login'];
 						$mysip->sip_password = $existingLibraries['0']['Library']['library_sip_password'];
+						$mysip->sip_location = $existingLibraries['0']['Library']['library_sip_location'];
 						if($mysip->connect()) {
 						
 							if(!empty($mysip->sip_login)){
-								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password);
+								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);
 								$mysip->parseLoginResponse($mysip->get_message($sc_login));
 							}
 							
 							//send selfcheck status message
 							$in = $mysip->msgSCStatus();
 							$msg_result = $mysip->get_message($in);
-							
+
 							// Make sure the response is 98 as expected
 							if (preg_match("/^98/", $msg_result)) {
 
