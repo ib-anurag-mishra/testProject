@@ -153,7 +153,7 @@ class sip2Component extends Object {
         return $this->_returnMessage(false);
     }
 
-    function msgLogin($sipLogin, $sipPassword) 
+    function msgLogin($sipLogin, $sipPassword, $sipLocation) 
     {
         /* Login (93) - untested */
         $this->_newMessage('93');
@@ -161,8 +161,9 @@ class sip2Component extends Object {
         $this->_addFixedOption($this->PWDalgorithm, 1);
         $this->_addVarOption('CN',$sipLogin);
         $this->_addVarOption('CO',$sipPassword);
-        $this->_addVarOption('CP',$this->scLocation, true);
-        return $this->_returnMessage();
+	//	$this->_addVarOption('CP',$this->scLocation, true);
+        $this->_addVarOption('CP', $sipLocation);
+		return $this->_returnMessage();
 
     }
 
