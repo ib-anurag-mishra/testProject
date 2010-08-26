@@ -17,6 +17,7 @@
 		$getData['Library']['library_port_no'] = "";
 		$getData['Library']['library_sip_login'] = "";
 		$getData['Library']['library_sip_password'] = "";
+		$getData['Library']['library_sip_location'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
@@ -201,6 +202,10 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Password');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_password',array('label' => false, 'value' => $getData['Library']['library_sip_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
+					<tr id="sip_location" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Location');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_sip_location',array('label' => false, 'value' => $getData['Library']['library_sip_location'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>					
 					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 					<?php
 					if(empty($allVariables))
@@ -602,6 +607,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_password").hide();
+						$("#sip_location").hide();
 					}
 					else if ($(this).val() == 'sip2') {
 						$("#allurl").show();
@@ -615,7 +621,8 @@
 						$("#sip_port").show();
 						$("#sip_pin").show();
 						$("#sip_login").show();
-						$("#sip_password").show();	
+						$("#sip_password").show();
+						$("#sip_location").show();	
 					}
 					else if ($(this).val() == 'sip2_wo_pin') {
 						$("#allurl").show();
@@ -629,7 +636,8 @@
 						$("#sip_port").show();
 						$("#sip_pin").show();
 						$("#sip_login").show();
-						$("#sip_password").show();	
+						$("#sip_password").show();
+						$("#sip_location").show();	
 					}
 					else if ($(this).val() == 'sip2_var') {
 						$("#allurl").show();
@@ -644,6 +652,7 @@
 						$("#sip_pin").show();
 						$("#sip_login").show();
 						$("#sip_password").show();
+						$("#sip_location").show();
 					}						
 					else if ($(this).val() == 'innovative_var_wo_pin') {
 						$("#allurl").show();
@@ -658,6 +667,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_password").hide();
+						$("#sip_location").hide();
 					}										
 					else {
 						$("#allurl").hide();
@@ -671,7 +681,8 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
-						$("#sip_password").hide();	
+						$("#sip_password").hide();
+						$("#sip_location").hide();
 					}
 				});
 			});
