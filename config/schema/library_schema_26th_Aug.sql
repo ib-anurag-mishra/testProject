@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` ADD `library_sip_location` VARCHAR( 100 ) NOT NULL AFTER `library_sip_password` 
