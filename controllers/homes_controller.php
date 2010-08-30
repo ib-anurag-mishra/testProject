@@ -403,7 +403,10 @@ class HomesController extends AppController
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$insertArr['user_login_type'] = 'sip2_var';  
-		}		
+		}
+		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
+			$insertArr['user_login_type'] = 'ezproxy';  
+		}			
         else{            
 			$insertArr['user_login_type'] = 'user_account';   
          }         		
@@ -720,7 +723,10 @@ class HomesController extends AppController
         }
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$url = $this->webroot.'users/sdlogin';
-        }			
+        }
+		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
+			$url = $this->webroot.'users/sso';
+        }		
 	    else {
 	       $url = $this->webroot.'users/login';
 	    }
@@ -992,6 +998,9 @@ class HomesController extends AppController
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$insertArr['user_login_type'] = 'sip2_var';  
+		}
+		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
+			$insertArr['user_login_type'] = 'ezproxy';  
 		}		
         else{            
 			$insertArr['user_login_type'] = 'user_account';   
