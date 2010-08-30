@@ -60,6 +60,8 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_login',
 																				'Library.library_sip_password',
 																				'Library.library_sip_location',
+																				'Library.library_ezproxy_secret',
+																				'Library.library_ezproxy_referral',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -148,6 +150,8 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_login',
 																				'Library.library_sip_password',
 																				'Library.library_sip_location',
+																				'Library.library_ezproxy_secret',
+																				'Library.library_ezproxy_referral',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -247,6 +251,9 @@ Class LibrariesController extends AppController
                     }
 					elseif($this->data['Library']['library_authentication_method'] == 'sip2_var') {
                         $this->Library->setValidation('library_step1_sip2_var');
+                    }					
+					elseif($this->data['Library']['library_authentication_method'] == 'ezproxy') {
+                        $this->Library->setValidation('library_step1_ezproxy');
                     }					
 					else {
                         $this->Library->setValidation('library_step1');
@@ -435,6 +442,9 @@ Class LibrariesController extends AppController
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'sip2_var') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_sip2_var');
                     }
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'ezproxy') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_ezproxy');
+                    }					
 					else {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
                     }
