@@ -161,7 +161,22 @@ class Library extends AppModel
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
+     ),
+     'library_step1_ezproxy' => array(
+      'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+      'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
+      'library_ezproxy_referral' => array('rule' => 'url', 'allowEmpty' =>  false, 'message' => 'Please provide a valid EZProxy Referral URL.'),
+    //  'library_authentication_num' => array(
+    //                                        'library_authentication_num-1' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Number.', 'last' => true),
+    //                                        'library_authentication_num-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Authentication Number already exists in our database.')
+    //                                  ),
+	  'library_ezproxy_secret' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a EZProxy Secret.'),
+//	  'library_authentication_response' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication Response.'),
+      'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
+      'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
+      'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
      ),	 
+	 
      'library_step3' => array(
        'library_download_limit' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Limit.'),
        'library_download_type' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Download Type.')
