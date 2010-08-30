@@ -13,30 +13,30 @@
 ?>
 		<div id="album">
 			<div class="lgAlbumArtwork">
-				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Graphic']['Files']['CdnPath']."/".$album['Graphic']['Files']['SourceURL']); ?>
+				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<img src="http://music.freegalmusic.com<?php echo $albumArtwork; ?>" width="250" height="250" border="0">
 			</div>
 			<div class="albumData">
 				<div class="albumBox">
 					<?php
-					if(strlen($album['Physicalproduct']['Title']) >= 50){
-						$album['Physicalproduct']['Title'] = substr($album['Physicalproduct']['Title'], 0, 50). '...';
+					if(strlen($album['Album']['Title']) >= 50){
+						$album['Album']['Title'] = substr($album['Album']['Title'], 0, 50). '...';
 					}
 					?>
-					<?php echo $album['Physicalproduct']['Title'];?>				</div>
+					<?php echo $album['Album']['Title'];?>				</div>
 				<div class="artistInfo">
 					<?php
 						echo $html->link(__('Genre: ').$album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
-						if ($album['Metadata']['ArtistURL'] != '') {
-							echo $html->link('http://' . $album['Metadata']['ArtistURL'], 'http://' . $album['Metadata']['ArtistURL'], array('target' => 'blank'));
+						if ($album['Album']['ArtistURL'] != '') {
+							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
 						}
-						if ($album['Metadata']['Label'] != '') {
-							echo 'Label: ' . $album['Metadata']['Label'];
+						if ($album['Album']['Label'] != '') {
+							echo 'Label: ' . $album['Album']['Label'];
 							echo '<br />';
 						}
-						if ($album['Metadata']['Copyright'] != '' && $album['Metadata']['Copyright'] != 'Unknown') {
-							echo $album['Metadata']['Copyright'];
+						if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
+							echo $album['Album']['Copyright'];
 						}
 					?>
 				</div>
@@ -49,7 +49,7 @@
 				<div id="songResults">
 					<?php
 					$i = 1;
-					foreach($albumSongs[$album['Physicalproduct']['ReferenceID']] as  $key => $albumSong):			
+					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):			
 						$class = null;
 						if ($i++ % 2 == 0) {
 							$class = ' class="altrow"';
@@ -60,11 +60,11 @@
 								<td width="20" valign="top" align="center">
 									<p>
 									<?php
-										if($albumSong['Physicalproduct']['SalesDate'] <= date('Y-m-d')) {
-											$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio'][0]['Files']['CdnPath']."/".$albumSong['Audio'][0]['Files']['SaveAsName']);
+										if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
+											$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Sample_Files']['CdnPath']."/".$albumSong['Sample_Files']['SaveAsName']);
 											$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 											$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$albumSong["Physicalproduct"]["ProdID"].', "'.$this->webroot.'");'));
+											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$albumSong["Song"]["ProdID"].', "'.$this->webroot.'");'));
 											echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
 											echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
 										}
@@ -73,12 +73,12 @@
 								</td>
 								<td width="340" valign="top" align="left">
 									<?php
-										if (strlen($albumSong['Metadata']['Title']) >= 40) {
-											echo '<span title="'.htmlentities($albumSong['Metadata']['Title']).'">'  . substr($albumSong['Metadata']['Title'], 0, 40) . '...</span>';
+										if (strlen($albumSong['Song']['SongTitle']) >= 40) {
+											echo '<span title="'.htmlentities($albumSong['Song']['SongTitle']).'">'  . substr($albumSong['Song']['SongTitle'], 0, 40) . '...</span>';
 										} else {
-											echo '<p>' . $albumSong['Metadata']['Title'];
+											echo '<p>' . $albumSong['Song']['SongTitle'];
 										}
-										if ($albumSong['Metadata']['Advisory'] == 'T') {
+										if ($albumSong['Song']['Advisory'] == 'T') {
 											echo '<span class="explicit"> (Explicit)</span>';
 										}
 									?>
@@ -86,37 +86,37 @@
 								</td>
 								<td width="125" valighn="top" align="left">
 									<?php
-										if (strlen($albumSong['Metadata']['Artist']) >= 11) {
-											if(strlen($albumSong['Metadata']['Artist']) >= 60){
-												$albumSong['Metadata']['Artist'] = substr($albumSong['Metadata']['Artist'], 0, 60). '...';
+										if (strlen($albumSong['Song']['Artist']) >= 11) {
+											if(strlen($albumSong['Song']['Artist']) >= 60){
+												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60). '...';
 											}
-											echo '<span title="'.htmlentities($albumSong['Metadata']['Artist']).'">' . substr($albumSong['Metadata']['Artist'], 0, 11) . '...</span>';
+											echo '<span title="'.htmlentities($albumSong['Song']['Artist']).'">' . substr($albumSong['Song']['Artist'], 0, 11) . '...</span>';
 										} else {
-											echo '<p>' . $albumSong['Metadata']['Artist'] . '</p>';
+											echo '<p>' . $albumSong['Song']['Artist'] . '</p>';
 										}
 									?>
 								<td>
 								<td width="50" valign="top" align="center">
-									<p><?php echo $albumSong['Audio']['1']['Duration']?></p>
+									<p><?php echo $albumSong['Song']['FullLength_Duration']?></p>
 								</td>
 								<td width="150" valign="top" align="center">
 									<?php
-										if($albumSong['Physicalproduct']['SalesDate'] <= date('Y-m-d'))
+										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
-												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Audio']['1']['Files']['CdnPath']."/".$albumSong['Audio']['1']['Files']['SaveAsName']);
+												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
 												$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 												$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 									?>
 												<p>
 													<![if !IE]>
-														<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+														<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
 													<![endif]>
 													<!--[if IE]>
-														<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+														<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 													<![endif]-->
-													<span id="download_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+													<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 												</p>
 									<?php		}											
 											else{
@@ -127,12 +127,12 @@
 														?> <p>Limit Exceeded</p> <?php
 													}
 													else{
-														$wishlistInfo = $wishlist->getWishlistData($albumSong["Physicalproduct"]["ProdID"]);
+														$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 														if($wishlistInfo == 'Added to Wishlist'){
 															?> <p>Added to Wishlist</p>
 														<?php }
 														else{ ?>
-															<p><span id="wishlist<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $albumSong["Physicalproduct"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+															<p><span id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 														<?php	
 														}
 													}
@@ -146,7 +146,7 @@
 										}else{
 									?>
 											<span title='Coming Soon ( <?php echo 
-												date("F d Y", strtotime($albumSong['Physicalproduct']['SalesDate'])); ?> )'>Coming Soon</span>
+												date("F d Y", strtotime($albumSong['Song']['SalesDate'])); ?> )'>Coming Soon</span>
 									<?php
 										}
 									?>	

@@ -37,6 +37,7 @@
 		$getData['Library']['library_download_limit'] = "";
 	    $getData['Library']['library_user_download_limit'] = "";
 	    $getData['Library']['library_download_type'] = "daily";
+		$getData['Library']['library_territory'] = "";
 		$getData['Library']['library_image_name'] = "";
 		$getData['Library']['library_block_explicit_content'] = 0;
 		$getData['Library']['show_library_name'] = 0;
@@ -348,6 +349,19 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Email Address');?></td>
 						<td align="left"><?php echo $this->Form->input('library_contact_email',array('label' => false ,'value' => $getData['Library']['library_contact_email'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
+					<tr><td colspan="2">&nbsp;</td></tr>
+					<tr>
+						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Territory');?></td>
+						<td align="left">
+							<?php
+								echo $this->Form->input('library_territory', array('options' => array(
+									'US' => 'US',
+									'US,CA' => 'US,CA',
+									'CA' => 'CA'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_territory'])
+								);
+							?>
+						</td>
+					</tr>					
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Logo Upload ( Image height should not exceed 60 pixels )');?></td></tr>
 					<tr>

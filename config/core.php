@@ -284,7 +284,7 @@
  *
  *   Memcache (http://www.danga.com/memcached/)
  */
-
+/*
   	Cache::config('default', array(
  		'engine' => 'Memcache', //[required]
  		'duration'=> '+1 hours', //[optional]
@@ -306,8 +306,8 @@
   		), //[optional]
   		'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
  	));     
- 
-	//Cache::config('default', array('engine' => 'File'));
+*/
+	Cache::config('default', array('engine' => 'File'));
 
 /**
  * The classname and database used in CakePHP's

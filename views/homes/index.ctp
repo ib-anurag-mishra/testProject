@@ -27,7 +27,7 @@
 	<ul id="marquee" class="marquee">
 		<?php 
 		foreach($upcoming as $newreleases):
-			echo '<li>Coming ' . date("F d", strtotime($newreleases['Physicalproduct']['SalesDate'])) . ' ' . $newreleases['Physicalproduct']['ArtistText'] . ' - ' . $newreleases['Physicalproduct']['Title'] . '</li>';
+			echo '<li>Coming ' . date("F d", strtotime($newreleases['Album']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
 		endforeach;
 		?>
 	</ul>
@@ -163,10 +163,10 @@
                                 <td class='artist_line'>
                                     <p>
                                         <?php
-                                            echo $html->link($allArtists['Physicalproduct']['ArtistText'], array(
+                                            echo $html->link($allArtists['Song']['ArtistText'], array(
                                                     'controller' => 'artists',
                                                     'action' => 'view',
-                                                    base64_encode($allArtists['Physicalproduct']['ArtistText']))
+                                                    base64_encode($allArtists['Song']['ArtistText']))
                                             );
                                         ?>
                                     </p>

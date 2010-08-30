@@ -11,13 +11,13 @@ class Participant extends AppModel
   var $useTable = 'Participant';
   var $primaryKey = 'ProdID';
   var $actsAs = array('Containable');
-  var $uses = array('Physicalproduct','Featuredartist','Artist','Productoffer');
+  var $uses = array('Featuredartist','Artist','Song');
 
  var $belongsTo = array(
-		'Physicalproduct' => array(
-			'className' => 'Physicalproduct',
+		'Song' => array(
+			'className' => 'Song',
 			'foreignKey' => 'ProdID'			
-		)
+		)		
 	); 
 }
 ?>

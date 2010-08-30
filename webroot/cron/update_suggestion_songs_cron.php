@@ -24,15 +24,10 @@ $doc->formatOutput = true;
 $root = $doc->createElement('suggestionsongs');
 $root = $doc->appendChild($root);
 
-$suggestionSongsQuery = "SELECT  `Physicalproduct`.`ProdID`, `Physicalproduct`.`Title`, `Physicalproduct`.`ReferenceID`,
-                            `Physicalproduct`.`ArtistText`, `Physicalproduct`.`DownloadStatus`, `Physicalproduct`.`SalesDate`,
-                            `Metadata`.`Title` as Songtitle, `Metadata`.`Artist`, `Metadata`.`Advisory` FROM `PhysicalProduct` AS `Physicalproduct`
-                            LEFT JOIN `METADATA` AS `Metadata` ON (`Metadata`.`ProdID` = `Physicalproduct`.`ProdID`)
-                            WHERE `Physicalproduct`.`ReferenceID` <> `Physicalproduct`.`ProdID` AND
-                            `Physicalproduct`.`DownloadStatus` = '1' AND `Physicalproduct`.`TrackBundleCount` = '0' AND
-                            `Metadata`.`Advisory` = 'F' ORDER BY rand() ASC LIMIT ".$suggestionCounter['svalue'];
+$suggestionSongsQuery = "SELECT  * FROM Songs
+                         WHERE DownloadStatus = '1' AND TrackBundleCount = '0' AND
+                         Advisory = 'F' ORDER BY rand() ASC LIMIT ".$suggestionCounter['svalue'];
 $songsresult = mysql_query($suggestionSongsQuery) or die('Query failed: ' . mysql_error());
-
 while ($line = mysql_fetch_array($songsresult, MYSQL_ASSOC)) {
     $child = $doc->createElement("songdetails");
     $child = $root->appendChild($child);

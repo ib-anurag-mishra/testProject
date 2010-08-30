@@ -153,6 +153,7 @@ Class UsersController extends AppController
             }
             $this->Session->write("library", $libraryId);
             $this->Session->write("patron", $patronId);
+			$this->Session->write("territory", $libraryArr['Library']['library_territory']);
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
@@ -703,7 +704,7 @@ Class UsersController extends AppController
 			}		
             $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative',$library_cond),
-												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
+												'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
                                                 )
                                              );
             if(count($existingLibraries) == 0){
@@ -775,7 +776,8 @@ Class UsersController extends AppController
                   }
                   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
                   $this->Session->write("patron", $patronId);
-                  $this->Session->write("innovative","innovative");
+                  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+				  $this->Session->write("innovative","innovative");
                   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
                   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
                   $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
@@ -847,7 +849,7 @@ Class UsersController extends AppController
 				
 				$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin',$library_cond),
-												'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
+												'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 												)
 											 );            
 				if(count($existingLibraries) == 0){
@@ -926,6 +928,7 @@ Class UsersController extends AppController
 							}
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
+							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_wo_pin","innovative_wo_pin");
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 							$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
@@ -996,7 +999,7 @@ Class UsersController extends AppController
 				}
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1120,6 +1123,7 @@ Class UsersController extends AppController
 							}
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
+							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var_wo_pin","innovative_var_wo_pin");
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 							$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
@@ -1213,7 +1217,7 @@ Class UsersController extends AppController
 				}				
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1304,6 +1308,7 @@ Class UsersController extends AppController
 											  }
 											  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 											  $this->Session->write("patron", $patronId);
+											  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 											  $this->Session->write("sip2","sip2");
 											  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 											  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
@@ -1399,7 +1404,7 @@ Class UsersController extends AppController
 				}
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1489,6 +1494,7 @@ Class UsersController extends AppController
 										  }
 										  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 										  $this->Session->write("patron", $patronId);
+										  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 										  $this->Session->write("sip","sip");
 										  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 										  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
@@ -1595,7 +1601,7 @@ Class UsersController extends AppController
 				}				
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-													'fields' => array('Library.id','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1738,6 +1744,7 @@ Class UsersController extends AppController
 												}
 												$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 												$this->Session->write("patron", $patronId);
+												$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 												$this->Session->write("sip2_var","sip2_var");
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 												$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
@@ -1845,7 +1852,7 @@ Class UsersController extends AppController
 				}				
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'ezproxy',$library_cond),
-													'fields' => array('Library.id','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 				if(count($existingLibraries) == 0){
@@ -1906,6 +1913,7 @@ Class UsersController extends AppController
 					}
 					$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					$this->Session->write("patron", $user);
+					$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 					$this->Session->write("ezproxy","ezproxy");
 					$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $user)));            
 					$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);

@@ -50,17 +50,17 @@
 			if($counter < count($genres)) {
 				
 				echo "<td width='308'><p>";
-				if (strlen($genres[$counter]['Physicalproduct']['ArtistText']) >= 38) {
-					$ArtistName = substr($genres[$counter]['Physicalproduct']['ArtistText'], 0, 38) . '...';
-					echo '<span title="'.$genres[$counter]['Physicalproduct']['ArtistText'].'">' . $html->link(
+				if (strlen($genres[$counter]['Song']['ArtistText']) >= 38) {
+					$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 38) . '...';
+					echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
 						$ArtistName, 
-						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Physicalproduct']['ArtistText']))) . '</span>'; ?>
+						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Song']['ArtistText']))) . '</span>'; ?>
 				<?php
 				} else {
-					$ArtistName = $genres[$counter]['Physicalproduct']['ArtistText'];
+					$ArtistName = $genres[$counter]['Song']['ArtistText'];
 					echo $html->link(
 						$ArtistName, 
-						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Physicalproduct']['ArtistText'])));
+						array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Song']['ArtistText'])));
 				}
 				echo '</p></td>';
 			}

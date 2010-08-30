@@ -8,7 +8,7 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
@@ -71,7 +71,7 @@ Class ArtistsController extends AppController
 			$artistName = '';
 		}
 		
-		$getArtistDataObj = new Physicalproduct();
+		$getArtistDataObj = new Song();
 		$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
 	}
@@ -236,7 +236,7 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
-		$getArtistDataObj = new Physicalproduct();
+		$getArtistDataObj = new Song();
 		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
 	}
@@ -342,7 +342,7 @@ Class ArtistsController extends AppController
 				}
 			}
 		}		
-		$getArtistDataObj = new Physicalproduct();
+		$getArtistDataObj = new Song();
 		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
 		$this -> set( 'getArtistData', $getArtistData );
 	}
@@ -377,7 +377,8 @@ Class ArtistsController extends AppController
 	 Function Name : view
 	 Desc : For artist view page
 	*/
-	function view($id=null,$album=null) {	  	  
+	function view($id=null,$album=null) {
+		
 		if(count($this -> params['pass']) > 1) {
 			$count = count($this -> params['pass']);	      
 			$id = $this -> params['pass'][0];
@@ -394,7 +395,7 @@ Class ArtistsController extends AppController
 			}
 		}
 		if($album != '') {
-			$condition = array("Physicalproduct.ReferenceID" => $album);
+			$condition = array("Album.ProdID" => $album);
 		}
 		else{
 			$condition = "";
@@ -403,12 +404,18 @@ Class ArtistsController extends AppController
 		$this->set('artistName',base64_decode($id));
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
+		$country = $this->Session->read('territory');
+		if($country == 'US,CA'){
+			$country = "'US','CA'";
+		}else{
+			$country = "'".$country."'";
+		}
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		if($this->Session->read('block') == 'yes') {
-			$cond = array('Metadata.Advisory' => 'F');
+			$cond = array('Album.Advisory' => 'F');
 		}
 		else{
 			$cond = "";
@@ -416,99 +423,103 @@ Class ArtistsController extends AppController
 		$this -> paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Physicalproduct.ArtistText' => base64_decode($id)),
-						    array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
-						    array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1' and `ProdID` <> `ReferenceID`)"),
+						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 0,'Country.Territory IN ('.$country.')'),
 						    $condition
 						)
 					),
 					'fields' => array(
-						'Physicalproduct.ProdID',
-						'Physicalproduct.Title',
-						'Physicalproduct.ArtistText',
-						'Physicalproduct.ReferenceID'							
+						'DISTINCT Album.ProdID',
+						'Album.Title',
+						'Album.ArtistText',
+						'Album.AlbumTitle',
+						'Album.Artist',
+						'Album.ArtistURL',
+						'Album.Label',
+						'Album.Copyright',						
 						),
 					'contain' => array(
 					'Genre' => array(
 						'fields' => array(
 							'Genre.Genre'								
 							)
-						),						
-					'Metadata' => array(
+						),
+					'Country' => array(
 						'fields' => array(
-							'Metadata.Title',
-							'Metadata.Artist',
-							'Metadata.ArtistURL',
-							'Metadata.Label',
-							'Metadata.Copyright',								
+							'Country.Territory'								
 							)
-						),
-					'Graphic' => array(
-						'fields' => array(
-						'Graphic.ProdID',
-						'Graphic.FileID'
-						),
-						'Files' => array(
+						),												
+					'Files' => array(
 						'fields' => array(
 							'Files.CdnPath' ,
 							'Files.SaveAsName',
 							'Files.SourceURL'
-							)
-						)
+						),
 						)			                                
-					),'order' => 'Physicalproduct.SalesDate DESC','limit' => '3','cache' => 'yes'
+					),'order' => 'Country.SalesDate DESC','limit' => '3','cache' => 'yes'
 				);
-		$this->Physicalproduct->recursive = 2;
-		$albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
+		if($this->Session->read('block') == 'yes') {
+			$cond = array('Song.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}
+		$this->Album->recursive = 2;
+		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 		$albumSongs = array();
 		foreach($albumData as $album) {
-			$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+			$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
 					'conditions' =>
 						array('and' =>
 							array(
-								array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
-								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
-								array('Physicalproduct.DownloadStatus' => 1),$cond
+								array('Song.ReferenceID' => $album['Album']['ProdID']),							
+								array("Song.ReferenceID <> Song.ProdID"),							
+								array('Song.DownloadStatus' => 1),
+								array('Country.Territory IN ('.$country.')'),$cond
 							)
 						),
 					'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.DownloadStatus',
-							'Physicalproduct.SalesDate'
+							'DISTINCT Song.ProdID',
+							'Song.Title',
+							'Song.ArtistText',
+							'Song.DownloadStatus',
+							'Song.SongTitle',
+							'Song.Artist',
+							'Song.Advisory',
+							'Song.Sample_Duration',
+							'Song.FullLength_Duration',
+
 						    ),
 					'contain' => array(
 						'Genre' => array(
 								'fields' => array(
 										'Genre.Genre'								
 									)
-								),						
-						'Metadata' => array(
+								),
+						'Country' => array(
 								'fields' => array(
-										'Metadata.Title',
-										'Metadata.Artist',
-										'Metadata.Advisory'
+										'Country.Territory',
+										'Country.SalesDate'
+									)
+								),								
+						'Sample_Files' => array(
+								'fields' => array(
+											'Sample_Files.CdnPath' ,
+											'Sample_Files.SaveAsName'
 									)
 								),
-						'Audio' => array(
+						'Full_Files' => array(
 								'fields' => array(
-										'Audio.FileID',
-										'Audio.Duration'                                                    
-									),
-								'Files' => array(
-										'fields' => array(
-											'Files.CdnPath' ,
-											'Files.SaveAsName'
-										)
+											'Full_Files.CdnPath' ,
+											'Full_Files.SaveAsName'
 									)
-								)
-					),'order' => 'Physicalproduct.ReferenceID'
+								),
+								
+					),'order' => 'Song.ReferenceID'
 				      ));
 	    }
 	    $this->set('albumData', $albumData);
-	    if(isset($albumData[0]['Metadata']['ArtistURL'])) {
-	       $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
+	    if(isset($albumData[0]['Song']['ArtistURL'])) {
+	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
 	    }else {
 	       $this->set('artistUrl', "N/A");
 	    }

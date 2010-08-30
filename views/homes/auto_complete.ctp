@@ -2,17 +2,17 @@
  $finalResults = Array();
  if(count($albumResults) > 0){ 
    foreach($albumResults as $albumResult):
-       $finalResults[$albumResult['Physicalproduct']['Title']] = $albumResult['Physicalproduct']['Title'];
+       $finalResults[$albumResult['Album']['AlbumTitle']] = $albumResult['Album']['AlbumTitle'];
    endforeach;
  }
  if(count($artistResults) > 0){
    foreach($artistResults as $artistResult):
-       $finalResults[$artistResult['Physicalproduct']['ArtistText']] = $artistResult['Physicalproduct']['ArtistText'];
+       $finalResults[$artistResult['Song']['ArtistText']] = $artistResult['Song']['ArtistText'];
    endforeach;
  }
  if(count($songResults) > 0){
    foreach($songResults as $songResult):
-       $finalResults[$songResult['Metadata']['Title']] = $songResult['Metadata']['Title'];
+       $finalResults[$songResult['Song']['SongTitle']] = $songResult['Song']['SongTitle'];
    endforeach;
  }
  if($finalResults != '')
