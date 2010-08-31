@@ -46,8 +46,7 @@ class HomesController extends AppController
 							    ),
 							    'fields' => array(
 									'Album.Title',
-									'Album.ArtistText',
-									'Album.SalesDate'
+									'Album.ArtistText'
 							    ),
 								'contain' => array(
 									'Country' => array(
