@@ -71,7 +71,7 @@ class HomesController extends AppController
      Desc : actions that is needed for auto-completeing the search
     */
     function autoComplete() {
-	Configure::write('debug', 0);
+		Configure::write('debug', 0);
         $this->Album->recursive = -1;
         $albumResults = $this->Album->find('all', array(
 								'conditions'=>array('Album.AlbumTitle LIKE'=>$_GET['q'].'%','Album.DownloadStatus' => 1,'Album.TrackBundleCount' => 0						
@@ -80,13 +80,14 @@ class HomesController extends AppController
 							    'group' => array('AlbumTitle',),
 							    'limit' => '6'));
 		$this->set('albumResults', $albumResults);
-        $artistResults = $this->Song->find('all', array(
+		$this->Song->recursive = -1;
+		$artistResults = $this->Song->find('all', array(
 								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%','Song.DownloadStatus' => 1),
 								'fields' => array('ArtistText'), 
 								'group' => array('ArtistText',),
 								'limit' => '6'));
 		$this->set('artistResults', $artistResults);
-        $this->Metadata->recursive=2;
+        $this->Song->recursive = -1;
         $songResults = $this->Song->find('all', array(
 							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%','Song.DownloadStatus' => 1),
 							'fields' => array('SongTitle'), 
