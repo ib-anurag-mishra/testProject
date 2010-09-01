@@ -43,7 +43,7 @@ Class SiteSettingsController extends AppController
     function admin_generateXML() {
         $suggestionCounter = $this->Siteconfig->find('all', array('fields' => array('Siteconfig.svalue'), 'conditions' => array('Siteconfig.soption' => 'suggestion_counter')));
         $this->Song->Behaviors->attach('Containable');
-		$suggestionSongs_ids = $this->Song->find('list', array('fields' => 'ProdID'));
+		$suggestionSongs_ids = $this->Song->find('list', array('fields' => 'ProdID','limit' => $suggestionCounter[0]['Siteconfig']['svalue']));
 		$rand_keys = array_rand($suggestionSongs_ids, $suggestionCounter[0]['Siteconfig']['svalue']);
 		$rand_val = implode(",", $rand_keys);
         $suggestionSongs = $this->Song->find('all',
@@ -55,23 +55,28 @@ Class SiteSettingsController extends AppController
                                     'Song.ReferenceID',
                                     'Song.ArtistText',
                                     'Song.DownloadStatus',
-                                    'Song.SalesDate',
 									'Song.SongTitle',
 									'Song.Artist',
 									'Song.Advisory'
                                     ),
                 'contain' => array(
+				'Country' => array(
+						'fields' => array(
+								'Country.Territory',
+								'Country.SalesDate'
+								)
+						),					
 				'Sample_Files' => array(
 							'fields' => array(
-								'Files.CdnPath',
-								'Files.SaveAsName'
+								'Sample_Files.CdnPath',
+								'Sample_Files.SaveAsName'
 							),
 				
 						),
  				'Full_Files' => array(
 							'fields' => array(
-								'Files.CdnPath',
-								'Files.SaveAsName'
+								'Full_Files.CdnPath',
+								'Full_Files.SaveAsName'
 							),
 				
 						),            
