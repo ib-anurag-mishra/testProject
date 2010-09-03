@@ -1825,8 +1825,11 @@ Class UsersController extends AppController
 				$this->Auth->autoRedirect = false;     
 			}
 		}
-		if($this->data){  
+		if($this->data || $this->Session->read('card') != ''){  
 			$card = $this->data['User']['card'];
+			if($this->Session->read('card') != ''){
+				$card = $this->Session->read('card');
+			}
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide Card No.");            
 		
@@ -1854,6 +1857,7 @@ Class UsersController extends AppController
 				}        
 				else{
 					//Start
+					$this->Session->write("card", $card);
 					$EZproxySSO = new EZproxySSOComponent($existingLibraries['0']['Library']['library_ezproxy_secret'], $existingLibraries['0']['Library']['library_ezproxy_referral']);
 					if (! $EZproxySSO->valid()) {
 						if ($EZproxySSO->expired()) {
