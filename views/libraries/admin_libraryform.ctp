@@ -8,6 +8,7 @@
 	    $getData['Library']['library_name'] = "";
 		$getData['Library']['library_authentication_method'] = "";
 	    $getData['Library']['library_domain_name'] = "";
+		$getData['Library']['library_home_url'] = "";
 		$getData['Library']['library_authentication_num'] = "";
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
@@ -146,10 +147,14 @@
 								);
 							?>
 						</td>
-					</tr>
+					</tr>					
 					<?php
 					}
 					?>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Libraries HomePage URL');?></td>
+						<td align="left"><?php echo $this->Form->input('library_home_url',array( 'label' => false ,'value' => $getData['Library']['library_home_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>					
 					<tr>
 						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>					
 						<?php
