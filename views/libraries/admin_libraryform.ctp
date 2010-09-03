@@ -152,7 +152,7 @@
 					}
 					?>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Libraries HomePage URL');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library HomePage URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_home_url',array( 'label' => false ,'value' => $getData['Library']['library_home_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
 					<tr>
