@@ -21,11 +21,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	if($libraryInfo['Library']['library_image_name'] != "") {
 	?>
 		<div id="lib_image">
+			<?php
 			if($libraryInfo['Library']['library_home_url'] != "") {
+			?>
 				<a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img src="<?php echo $this->webroot; ?>img/libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>"></a>
+			<?php
 			}else{
+			?>
 				<img src="<?php echo $this->webroot; ?>img/libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
+			<?php
 			}
+			?>
 		</div>
 	<?php
 	}
