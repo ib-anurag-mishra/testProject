@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` ADD `library_home_url` VARCHAR( 255 ) NULL AFTER `library_domain_name` 
