@@ -405,11 +405,6 @@ Class ArtistsController extends AppController
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
-		if($country == 'US,CA'){
-			$country = "'US','CA'";
-		}else{
-			$country = "'".$country."'";
-		}
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
