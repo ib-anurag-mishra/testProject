@@ -404,6 +404,9 @@ class HomesController extends AppController
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$insertArr['user_login_type'] = 'sip2_var';  
 		}
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+		}
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
 			$insertArr['user_login_type'] = 'ezproxy';  
 		}			
@@ -574,29 +577,29 @@ class HomesController extends AppController
     function admin_loginform() {
 	if(isset($this->data)) {
 	    if($this->data['Home']['id'] != "") {
-		$this->Page->id = $this->data['Home']['id'];
-		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
-		$this->Page->set($pageData['Page']);
-		if($this->Page->save()){
-		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-		}
+			$this->Page->id = $this->data['Home']['id'];
+			$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+			$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+			$this->Page->set($pageData['Page']);
+			if($this->Page->save()){
+			  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+			}
 	    }
 	    else {
-		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
-		$this->Page->set($pageData['Page']);
-		if($this->Page->save()) {
-		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-		}
-		else {
-		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-		}
+			$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+			$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+			$this->Page->set($pageData['Page']);
+			if($this->Page->save()) {
+				$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+			}
+			else {
+				$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+			}
 	    }
 	}
-        $this -> set( 'formAction', 'admin_loginform');
-        $this -> set( 'formHeader', 'Manage Login Page Text' );
-        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login')));
+	$this -> set( 'formAction', 'admin_loginform');
+	$this -> set( 'formHeader', 'Manage Login Page Text' );
+	$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login')));
 	if(count($getPageData) != 0) {
 	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
 	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
@@ -724,6 +727,9 @@ class HomesController extends AppController
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$url = $this->webroot.'users/sdlogin';
         }
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			$url = $this->webroot.'users/sndlogin';
+        }		
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
 			$url = $this->webroot.'users/sso';
         }		
@@ -753,16 +759,16 @@ class HomesController extends AppController
  Desc : actions used for Admin end checking for cookie and javascript enable
 */	
     function admin_aboutus() {
-	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
-	    $url = $this->webroot.'admin/users/login';
-	    $this->Session->destroy();
-	    $this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
-	}
-	if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
-	    $this->Session->destroy();
-	    $this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
-	}
-	$this->layout = 'admin';
+		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
+			$url = $this->webroot.'admin/users/login';
+			$this->Session->destroy();
+			$this -> Session -> setFlash("Javascript is required to use this website. For the best experience, please enable javascript and <a href='".$url."'>Click Here</a> to try again. <a href='https://www.google.com/adsense/support/bin/answer.py?hl=en&answer=12654' target='_blank'>Click Here</a> for the steps to enable javascript in different type of browsers.");
+		}
+		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
+			$this->Session->destroy();
+			$this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
+		}
+		$this->layout = 'admin';
     }
         
     /*
@@ -770,7 +776,7 @@ class HomesController extends AppController
      Desc : actions used for terms page
     */
     function terms(){
-	$this->layout = 'home';
+		$this->layout = 'home';
     }
     
     /*
@@ -778,7 +784,7 @@ class HomesController extends AppController
      Desc : actions used for limits page
     */
     function limits() {
-            $this->layout = 'home';
+        $this->layout = 'home';
     }
     
     /*
@@ -999,6 +1005,9 @@ class HomesController extends AppController
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$insertArr['user_login_type'] = 'sip2_var';  
 		}
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+		}		
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
 			$insertArr['user_login_type'] = 'ezproxy';  
 		}		
