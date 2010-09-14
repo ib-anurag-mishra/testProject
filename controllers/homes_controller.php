@@ -57,9 +57,31 @@ class HomesController extends AppController
 								)
 							)
 						);
+						
         $this->set('upcoming', $upcoming);
-        $this->set('distinctArtists', $this->Song->selectArtist());
-		$arr = $this->Song->selectArtist();
+		$country = $this->Session->read('territory');
+		$this->Song->recursive = 2;
+		$artist = $this->Song->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										array('ArtistText LIKE' => 'A%'),
+										array('Country.Territory' => $country)
+									)
+								),
+							'fields' => array(
+									'DISTINCT Song.ArtistText',
+									),
+							'contain' => array(
+									'Country' => array(
+											'fields' => array(
+												'Country.Territory'								
+											)
+										),
+								),
+							'order' => 'Song.ArtistText'
+						));
+        $this->set('distinctArtists', $artist);
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
         $this->set('artists', $this->Artist->getallartists());
@@ -102,9 +124,37 @@ class HomesController extends AppController
      Desc : actions that is needed for auto-completeing the search
     */
     function artistSearch(){
+		$country = $this->Session->read('territory');
+		$this->Song->recursive = 2;
 		$search = $_POST['search'];
-		$this->Song->recursive = -1;
-		$this->set('distinctArtists', $this->Song->searchArtist($search));  	
+		if($search == 'special'){
+			$cond = array("ArtistText REGEXP '^[^A-Za-z]'");
+		}else{
+			$cond = array('ArtistText LIKE' => $search.'%');
+		}		
+		$artist = $this->Song->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										$cond,
+										array('Country.Territory' => $country)
+									)
+								),
+							'fields' => array(
+									'DISTINCT Song.ArtistText',
+									),
+							'contain' => array(
+									'Country' => array(
+											'fields' => array(
+												'Country.Territory'								
+											)
+										),
+								),
+							'order' => 'Song.ArtistText'
+						));
+	
+		//$this->Song->recursive = -1;
+		$this->set('distinctArtists', $artist);  	
     }
     
     /*
