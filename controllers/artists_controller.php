@@ -405,7 +405,7 @@ Class ArtistsController extends AppController
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
-		$country = "'".$country."'";
+		//$country = "'".$country."'";
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
