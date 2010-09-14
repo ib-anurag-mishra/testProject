@@ -37,7 +37,11 @@
     <div id="suggestionsBox">
         <table cellspacing="0" cellpadding="0">
             <?php
-	    for($i = 0; $i < 8; $i++) {
+			$j =0;
+	    for($i = 0; $i < count($songs); $i++) {
+		if($j==8){
+			break;
+		}
 		if($songs[$i]['Territory'] == $this->Session->read('territory')){
 	?>
 		<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
@@ -76,7 +80,7 @@
                         </p>
                     </td>
                 </tr>
-	<?php } } ?>
+	<?php $j++;} } ?>
         </table>
     </div>
 </div>
