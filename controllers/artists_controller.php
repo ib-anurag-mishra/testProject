@@ -526,10 +526,13 @@ Class ArtistsController extends AppController
 	       $this->set('artistUrl', "N/A");
 	    }
 		$array = array();
+		$pre = '';
 		foreach ($albumSongs as $key=>$val) {
 			foreach($val as $k1 => $v1){
-				if (!in_array($array, $v1)) { 
-					$array[$k1] = $v1; 
+				
+				if ($pre != $v1['Song']['ProdID']) { 
+					$array[$k1] = $v1;
+					$pre = $v1['Song']['ProdID'];	
 				}
 			}
 			$res[$key] = $array;
