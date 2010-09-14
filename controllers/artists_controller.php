@@ -468,7 +468,6 @@ Class ArtistsController extends AppController
 						array('and' =>
 							array(
 								array('Song.ReferenceID' => $album['Album']['ProdID']),							
-								array("Song.ReferenceID <> Song.ProdID"),							
 								array('Song.DownloadStatus' => 1),
 								array('Country.Territory' => $country),$cond
 							)
