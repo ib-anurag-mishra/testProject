@@ -419,7 +419,7 @@ Class ArtistsController extends AppController
 		$this -> paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory IN ('.$country.')'),
+						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory' => $country),
 						    $condition
 						)
 					),
@@ -470,7 +470,7 @@ Class ArtistsController extends AppController
 								array('Song.ReferenceID' => $album['Album']['ProdID']),							
 								array("Song.ReferenceID <> Song.ProdID"),							
 								array('Song.DownloadStatus' => 1),
-								array('Country.Territory IN ('.$country.')'),$cond
+								array('Country.Territory' => $country),$cond
 							)
 						),
 					'fields' => array(
