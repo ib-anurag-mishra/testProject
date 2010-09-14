@@ -39,7 +39,7 @@
             <?php
 			$j =0;
 	    for($i = 0; $i < count($songs); $i++) {
-		if($j==9){
+		if($j==8){
 			break;
 		}
 		if($songs[$i]['Territory'] == $this->Session->read('territory')){
