@@ -113,11 +113,7 @@ class HomesController extends AppController
     */
     function search(){
 		$country = $this->Session->read('territory');
-		if($country == 'US,CA'){
-			$country = "'US','CA'";
-		}else{
-			$country = "'".$country."'";
-		}		
+		$country = "'".$country."'";
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
@@ -136,7 +132,7 @@ class HomesController extends AppController
 				$condition = "and";
 				$preCondition1 = array('Song.DownloadStatus' => 1);
 				$preCondition2 = array('Song.TrackBundleCount' => 0);
-				$preCondition3 = array('Country.Territory IN ('.$country.')');
+				$preCondition3 = array('Country.Territory' => $country);
 				
 			}
 			 else {
@@ -156,7 +152,7 @@ class HomesController extends AppController
                     $condition = "and";
                     $preCondition1 = array('Song.DownloadStatus' => 1);
 					$preCondition2 = array('Song.TrackBundleCount' => 0);
-					$preCondition3 = array('Country.Territory IN ('.$country.')');
+					$preCondition3 = array('Country.Territory' => $country);
                 }
                 else {
                     $condition = "or";
@@ -213,7 +209,7 @@ class HomesController extends AppController
 							array(
 									array('Song.TrackBundleCount' => 0),
 									array('Song.DownloadStatus' => 1),
-									array('Country.Territory IN ('.$country.')'),
+									array('Country.Territory' => $country),
 									$cond
 									),
 									$condition => array(
@@ -288,7 +284,7 @@ class HomesController extends AppController
 					    array(
                                                 array('Song.DownloadStatus' => 1),
                                                 array('Song.TrackBundleCount' => 0),
-												array('Country.Territory IN ('.$country.')'),$cond
+												array('Country.Territory' => $country),$cond
                                             ),
 					'or' =>
                                                 array(
