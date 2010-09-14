@@ -480,7 +480,7 @@ Class ArtistsController extends AppController
 							)
 						),
 					'fields' => array(
-							'DISTINCT Song.ProdID',
+							'Song.ProdID',
 							'Song.Title',
 							'Song.ArtistText',
 							'Song.DownloadStatus',
