@@ -41,11 +41,7 @@ Class GenresController extends AppController
         */
 	function index() {
 		$country = $this->Session->read('territory');
-		if($country == 'US,CA'){
-			$country = "'US','CA'";
-		}else{
-			$country = "'".$country."'";
-		}		
+		$country = "'".$country."'";		
 		$this->layout = 'home';
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
@@ -80,8 +76,8 @@ Class GenresController extends AppController
 													array("Song.ReferenceID <> Song.ProdID"),
 													array('Song.DownloadStatus' => 1),
 													array('Song.TrackBundleCount' => 0),
-													array('Country.Territory IN ('.$country.')'),
-												//	array("Song.modified >" => date('Y-m-d', strtotime("-3 week"))),$cond
+													array('Country.Territory' => $country),
+													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
 												)
 											),
 											'fields' => array(
