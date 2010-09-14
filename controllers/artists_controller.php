@@ -424,7 +424,7 @@ Class ArtistsController extends AppController
 						)
 					),
 					'fields' => array(
-						'DISTINCT Album.ProdID',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -461,6 +461,7 @@ Class ArtistsController extends AppController
 		}
 		$this->Album->recursive = 2;
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
+		$albumData = array_unique($albumData);
 		$albumSongs = array();
 		foreach($albumData as $album) {
 			$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
@@ -518,6 +519,7 @@ Class ArtistsController extends AppController
 	    }else {
 	       $this->set('artistUrl', "N/A");
 	    }
+		$albumSongs = array_unique($albumSongs);
 	    $this->set('albumSongs',$albumSongs);
 	}
   }
