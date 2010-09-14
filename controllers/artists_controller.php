@@ -527,11 +527,14 @@ Class ArtistsController extends AppController
 	    }
 		$array = array();
 		foreach ($albumSongs as $key=>$val) {
-			if (!in_array($array, $val)) { 
-				$array[$key] = $val; 
+			foreach($val as $k1 => $v1){
+				if (!in_array($array, $v1)) { 
+					$array[$k1] = $v1; 
+				}
 			}
+			$res[$val] = $array;
 		}
-	    $this->set('albumSongs',$array);
+	    $this->set('albumSongs',$res);
 	}
   }
 ?>
