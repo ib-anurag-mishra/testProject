@@ -527,9 +527,9 @@ Class ArtistsController extends AppController
 	    }
 		$array = array();
 		$pre = '';
+		$res = array();
 		foreach ($albumSongs as $key=>$val) {
-			foreach($val as $k1 => $v1){
-				
+			foreach($val as $k1 => $v1){				
 				if ($pre != $v1['Song']['ProdID']) { 
 					$array[$k1] = $v1;
 					$pre = $v1['Song']['ProdID'];	
