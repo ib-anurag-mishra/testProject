@@ -2045,6 +2045,13 @@ Class UsersController extends AppController
 	   
 	   
 	function sso(){
+		if(!$this->Session->read('referral')){
+			if(isset($_SERVER['HTTP_REFERER'])){
+				if($this->Session->read('referral') == ''){
+					$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+				}
+			}
+		}
 		$this->layout = 'login';
 		$EZproxySSO = new EZproxySSOComponent("120605110811071302229394","http://www2.fairfieldpubliclibrary.org:2048/sso/freegalmusic");
 		if (! $EZproxySSO->valid()) {
