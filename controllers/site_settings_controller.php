@@ -113,6 +113,11 @@ Class SiteSettingsController extends AppController
                 $value = $doc->createTextNode($suggestionSong['Song']['ReferenceID']);
                 $value = $sub_child->appendChild($value);
                 
+                $sub_child = $doc->createElement("Territory");
+                $sub_child = $child->appendChild($sub_child);
+                $value = $doc->createTextNode($suggestionSong['Country']['Territory']);
+                $value = $sub_child->appendChild($value);
+
                 $sub_child = $doc->createElement("Artist");
                 $sub_child = $child->appendChild($sub_child);
                 $value = $doc->createTextNode($suggestionSong['Song']['Artist']);
