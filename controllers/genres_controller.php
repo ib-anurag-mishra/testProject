@@ -41,7 +41,7 @@ Class GenresController extends AppController
         */
 	function index() {
 		$country = $this->Session->read('territory');
-		$country = "'".$country."'";		
+		//$country = "'".$country."'";		
 		$this->layout = 'home';
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
