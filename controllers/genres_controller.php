@@ -74,7 +74,7 @@ Class GenresController extends AppController
 													array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
 													array('Physicalproduct.DownloadStatus' => 1),
 													array('Physicalproduct.TrackBundleCount' => 0),
-													array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
+													array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-7 week"))),$cond
 												)
 											),
 											'fields' => array(
