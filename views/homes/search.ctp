@@ -29,6 +29,7 @@
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';
 			}
+			if($searchResult['Country']['Territory'] == $this->Session->read('territory')){
 	?>
 			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
@@ -155,6 +156,7 @@
 				</td>
 			</tr>
 	<?php
+		}
 		endforeach;
 	}
 	else {
