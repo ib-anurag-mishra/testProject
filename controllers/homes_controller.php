@@ -182,8 +182,7 @@ class HomesController extends AppController
 				$condition = "and";
 				$preCondition1 = array('Song.DownloadStatus' => 1);
 				$preCondition2 = array('Song.TrackBundleCount' => 0);
-				//$preCondition3 = array('Country.Territory' => $country);
-				$preCondition3 = "";
+				$preCondition3 = array('Country.Territory' => $country);
 				
 			}
 			 else {
@@ -203,8 +202,7 @@ class HomesController extends AppController
                     $condition = "and";
                     $preCondition1 = array('Song.DownloadStatus' => 1);
 					$preCondition2 = array('Song.TrackBundleCount' => 0);
-					//$preCondition3 = array('Country.Territory' => $country);
-					$preCondition3 = "";
+					$preCondition3 = array('Country.Territory' => $country);
                 }
                 else {
                     $condition = "or";
@@ -261,7 +259,7 @@ class HomesController extends AppController
 							array(
 									array('Song.TrackBundleCount' => 0),
 									array('Song.DownloadStatus' => 1),
-									//array('Country.Territory' => $country),
+									array('Country.Territory' => $country),
 									$cond
 									),
 									$condition => array(
@@ -336,7 +334,7 @@ class HomesController extends AppController
 					    array(
                                                 array('Song.DownloadStatus' => 1),
                                                 array('Song.TrackBundleCount' => 0),
-												//array('Country.Territory' => $country),$cond
+												array('Country.Territory' => $country),$cond
                                             ),
 					'or' =>
                                                 array(
