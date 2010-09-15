@@ -30,7 +30,7 @@
 			if($newreleases['Album']['SalesDate']){
 				echo '<li>Coming ' . date("F d", strtotime($newreleases['Album']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
 			} else {
-				echo '<li>Coming Soon</li>';
+				echo '<li>Coming ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
 			}
 		endforeach;
 		?>
