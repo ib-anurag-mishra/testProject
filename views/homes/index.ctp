@@ -27,7 +27,7 @@
 	<ul id="marquee" class="marquee">
 		<?php 
 		foreach($upcoming as $newreleases):
-			if($newreleases['Album']['SalesDate']){
+			if($newreleases['Country']['SalesDate']){
 				echo '<li>Coming ' . date("F d", strtotime($newreleases['Album']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
 			} else {
 				echo '<li>Coming ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
