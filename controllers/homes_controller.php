@@ -94,24 +94,51 @@ class HomesController extends AppController
     */
     function autoComplete() {
 		Configure::write('debug', 0);
-        $this->Album->recursive = -1;
+        $this->Album->recursive = 2;
+		$country = $this->Session->read('territory');		
         $albumResults = $this->Album->find('all', array(
-								'conditions'=>array('Album.AlbumTitle LIKE'=>$_GET['q'].'%','Album.DownloadStatus' => 1,'Album.TrackBundleCount' => 0						
+								'conditions'=>array('Album.AlbumTitle LIKE'=>$_GET['q'].'%',
+													'Album.DownloadStatus' => 1,
+													'Album.TrackBundleCount' => 0,
+													'Country.Territory' => $country						
 							    ),
+								'contain' => array(
+								'Country' => array(
+									'fields' => array(
+										'Country.Territory'								
+										)
+									)),
 							    'fields' => array('AlbumTitle'), 
 							    'group' => array('AlbumTitle',),
 							    'limit' => '6'));
 		$this->set('albumResults', $albumResults);
-		$this->Song->recursive = -1;
+		$this->Song->recursive = 2;
 		$artistResults = $this->Song->find('all', array(
-								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%','Song.DownloadStatus' => 1),
-								'fields' => array('ArtistText'), 
+								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%',
+								'Song.DownloadStatus' => 1,
+								'Country.Territory' => $country),
+								'fields' => array('ArtistText'),
+								'contain' => array(
+								'Country' => array(
+									'fields' => array(
+										'Country.Territory'								
+										)
+									)),								
 								'group' => array('ArtistText',),
 								'limit' => '6'));
 		$this->set('artistResults', $artistResults);
-        $this->Song->recursive = -1;
+        $this->Song->recursive = 2;
         $songResults = $this->Song->find('all', array(
-							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%','Song.DownloadStatus' => 1),
+							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%',
+												'Song.DownloadStatus' => 1,
+												'Country.Territory' => $country
+												),
+							'contain' => array(
+							'Country' => array(
+								'fields' => array(
+									'Country.Territory'								
+									)
+								)),												
 							'fields' => array('SongTitle'), 
 							'group' => array('SongTitle',),
 							'limit' => '6'));
