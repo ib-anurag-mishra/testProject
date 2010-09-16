@@ -424,7 +424,7 @@ Class ArtistsController extends AppController
 						)
 					),
 					'fields' => array(
-						'DISTINCT Album.ProdID',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -451,7 +451,7 @@ Class ArtistsController extends AppController
 							'Files.SourceURL'
 						),
 						)			                                
-					),'order' => 'Country.SalesDate DESC','limit' => '3','cache' => 'yes'
+					),'order' => 'Country.SalesDate DESC','group' => 'Album.ProdID','limit' => '3','cache' => 'yes'
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
@@ -461,13 +461,6 @@ Class ArtistsController extends AppController
 		}
 		$this->Album->recursive = 2;
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
-		$arr = array();
-		foreach ($albumData as $k=>$v) {
-			if (!in_array($arr, $v)) { 
-				$arr[$k] = $v; 
-			}
-		}
-		$albumData = $arr;
 		$albumSongs = array();
 		foreach($albumData as $album) {
 			$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
@@ -516,7 +509,7 @@ Class ArtistsController extends AppController
 									)
 								),
 								
-					),'order' => 'Song.ReferenceID'
+					),'order' => 'Song.ReferenceID','group' => 'Song.ProdID'
 				      ));
 	    }
 	    $this->set('albumData', $albumData);
@@ -528,16 +521,7 @@ Class ArtistsController extends AppController
 		$array = array();
 		$pre = '';
 		$res = array();
-		foreach ($albumSongs as $key=>$val) {
-			foreach($val as $k1 => $v1){				
-				if ($pre != $v1['Song']['ProdID']) { 
-					$array[$k1] = $v1;
-					$pre = $v1['Song']['ProdID'];	
-				}
-			}
-			$res[$key] = $array;
-		}
-	    $this->set('albumSongs',$res);
+	    $this->set('albumSongs',$albumSongs);
 	}
   }
 ?>
