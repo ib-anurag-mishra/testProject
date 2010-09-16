@@ -49,8 +49,26 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		$this->Genre->recursive = -1;
-		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
+		$this->Genre->recursive = 2;
+		$genreAll = $this->Genre->find('all',array(
+					'conditions' =>
+						array('and' =>
+							array(
+								array('Country.Territory' => $country)
+							)
+						),
+					'fields' => array(
+							'Genre.Genre'
+						    ),
+					'contain' => array(
+						'Country' => array(
+								'fields' => array(
+										'Country.Territory'								
+									)
+								),
+					),'group' => 'Genre.Genre'
+				));
+		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('fields' => 'id'));
 		$rand_keys = array_rand($category_ids, 4);
 		$rand_val = implode(",", $rand_keys);
