@@ -201,6 +201,7 @@ Class GenresController extends AppController
 		}
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
+		$country = $this->Session->read('territory');
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
@@ -226,9 +227,19 @@ Class GenresController extends AppController
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
-		      'conditions' => array("Genre.Genre = '$genre'",$condition,'1 = 1 GROUP BY Song.ArtistText'),
-		      'fields' => array('ArtistText'),
-		      'order' => 'ArtistText ASC',		      
+		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		      'fields' => array('Song.ArtistText'),
+			  'contain' => array(
+				'Country' => array(
+					'fields' => array(
+						'Country.Territory'								
+						)),
+				'Genre' => array(
+					'fields' => array(
+							'Genre.Genre'								
+						)),
+			  ),												
+		      'order' => 'Song.ArtistText ASC',		      
 		      'limit' => '60', 'cache' => 'yes'
 		      ); 
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
