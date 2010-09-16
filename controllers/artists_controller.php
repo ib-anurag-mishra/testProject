@@ -451,7 +451,7 @@ Class ArtistsController extends AppController
 							'Files.SourceURL'
 						),
 						)			                                
-					),'order' => 'Country.SalesDate DESC','group' => 'Album.ProdID','limit' => '3','cache' => 'yes'
+					),'group' => 'Album.ProdID','order' => 'Country.SalesDate DESC','limit' => '3','cache' => 'yes'
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
@@ -509,7 +509,7 @@ Class ArtistsController extends AppController
 									)
 								),
 								
-					),'order' => 'Song.ReferenceID','group' => 'Song.ProdID'
+					),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
 				      ));
 	    }
 	    $this->set('albumData', $albumData);
