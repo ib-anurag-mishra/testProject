@@ -227,7 +227,7 @@ Class GenresController extends AppController
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
-		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,$condition,'1 = 1 GROUP BY Song.ArtistText'),
 		      'fields' => array('Song.ArtistText'),
 			  'contain' => array(
 				'Country' => array(
