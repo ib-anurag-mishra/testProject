@@ -106,6 +106,9 @@
 								elseif($getData['Library']['library_authentication_method'] == "innovative") {
 									echo "<label>Innovative</label>";
 								}
+								elseif($getData['Library']['library_authentication_method'] == "innovative_wo_pin") {
+									echo "<label>Innovative w/o Pin</label>";
+								}								
 								elseif($getData['Library']['library_authentication_method'] == "sip2") {
 									echo "<label>SIP2</label>";
 								}
