@@ -5,7 +5,7 @@
  Author : maycreate
  */
 
-ini_set('memory_limit', '1024M');
+ini_set('memory_limit', '2048M');
 Class GenresController extends AppController
 {
 	var $uses = array('Category','Files','Album','Song');
