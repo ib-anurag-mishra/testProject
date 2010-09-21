@@ -27,6 +27,7 @@
 							<td align="left">
 										<?php
 											echo $this->Form->input('Territory', array('options' => array(
+																			'' => 'Select Territory',
 																			'CA' => 'CA',
 																			'US' => 'US',
 																			), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
@@ -64,6 +65,7 @@
 							<td align="left">
 								<?php
 									echo $this->Form->input('Territory', array('options' => array(
+																	'' => 'Select Territory',
 																	'CA' => 'CA',
 																	'US' => 'US',
 																	), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
