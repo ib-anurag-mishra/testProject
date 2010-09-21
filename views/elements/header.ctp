@@ -53,7 +53,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 				&nbsp;|&nbsp;
 				<?php echo $html->link('My Wishlist', array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
-				<?php //echo $html->link('Recent Downloads', array('controller' => 'homes', 'action' => 'my_history')); ?>
+				<?php echo $html->link('Recent Downloads', array('controller' => 'homes', 'action' => 'my_history')); ?>
 				<?php if ($this->Session->read('Auth.User')) { ?>
 					&nbsp;|&nbsp;					
 					<?php echo $html->link('My Account', array('controller' => 'users', 'action' => 'my_account'));					
