@@ -33,6 +33,7 @@ Class ReportsController extends AppController
 			$this->set('libraryID', "");
         }
         if(isset($this->data)) {
+			$all_Ids = '';
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
 				$library_id = $_REQUEST['library_id'];
@@ -51,10 +52,10 @@ Class ReportsController extends AppController
 				$sql = "SELECT id from libraries where library_territory = '".$territory."'";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_assoc($result)) {
-					$all_Ids = $row["id"].",'";
+					$all_Ids = $all_Ids.$row["id"].",";
 				}		  
 				$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",'").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 			}
 			else{
 				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
@@ -109,6 +110,7 @@ Class ReportsController extends AppController
         Configure::write('debug', 0);
         $this->layout = false;
         if(isset($this->data)) {
+			$all_Ids = '';		
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
 				$library_id = $_REQUEST['library_id'];
@@ -127,9 +129,9 @@ Class ReportsController extends AppController
 				$sql = "SELECT id from libraries where library_territory = '".$territory."'";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_assoc($result)) {
-					$all_Ids = $row["id"].",'";
+					$all_Ids = $all_Ids.$row["id"].",";
 				}		  
-				$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
+				$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
 				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",'").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 			}
 			else{
@@ -173,6 +175,7 @@ Class ReportsController extends AppController
     function admin_downloadAsPdf() {
         Configure::write('debug',0); // Otherwise we cannot use this method while developing 
         if(isset($this->data)) {
+			$all_Ids = '';
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
 				$library_id = $_REQUEST['library_id'];
@@ -191,9 +194,9 @@ Class ReportsController extends AppController
 				$sql = "SELECT id from libraries where library_territory = '".$territory."'";
 				$result = mysql_query($sql);
 				while ($row = mysql_fetch_assoc($result)) {
-					$all_Ids = $row["id"].",'";
+					$all_Ids = $all_Ids.$row["id"].",";
 				}		  
-				$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
+				$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
 				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",'").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 			}
 			else{
