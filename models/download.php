@@ -21,9 +21,14 @@ class Download extends AppModel
    Function Name : getDaysDownloadInformation
    Desc : lists all the downloads for for the selected day
   */
-  function getDaysDownloadInformation($libraryID, $date) {
+  function getDaysDownloadInformation($libraryID, $date, $territory) {
       if($libraryID == "all") {
-          $lib_condition = "";
+		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  $result = mysql_query($sql);
+		  while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $row["id"].",'";
+			}		  
+          $lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
       }
       else {
           $lib_condition = "and library_id = ".$libraryID;
@@ -41,9 +46,14 @@ class Download extends AppModel
    Function Name : getWeeksDownloadInformation
    Desc : lists all the downloads for for the selected week
   */
-  function getWeeksDownloadInformation($libraryID, $date) {
+  function getWeeksDownloadInformation($libraryID, $date, $territory) {
       if($libraryID == "all") {
-          $lib_condition = "";
+		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  $result = mysql_query($sql);
+		  while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $row["id"].",'";
+			}		  
+          $lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
       }
       else {
           $lib_condition = "and library_id = ".$libraryID;
@@ -61,9 +71,14 @@ class Download extends AppModel
    Function Name : getMonthsDownloadInformation
    Desc : lists all the downloads for for the selected month
   */
-  function getMonthsDownloadInformation($libraryID, $date) {
+  function getMonthsDownloadInformation($libraryID, $date, $territory) {
       if($libraryID == "all") {
-          $lib_condition = "";
+		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  $result = mysql_query($sql);
+		  while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $row["id"].",'";
+			}		  
+          $lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
       }
       else {
           $lib_condition = "and library_id = ".$libraryID;
@@ -81,13 +96,18 @@ class Download extends AppModel
    Function Name : getYearsDownloadInformation
    Desc : lists all the downloads for for the selected year
   */
-  function getYearsDownloadInformation($libraryID, $date) {
+  function getYearsDownloadInformation($libraryID, $date, $territory) {
       if($libraryID == "all") {
-          $lib_condition = "";
+		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  $result = mysql_query($sql);
+		  while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $row["id"].",'";
+			}		  
+          $lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
       }
       else {
           $lib_condition = "and library_id = ".$libraryID;
-      }
+      }	  
       $date_arr = explode("/", $date);
       $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]))." 00:00:00";
       $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]))." 23:59:59";
@@ -101,9 +121,14 @@ class Download extends AppModel
    Function Name : getYearsDownloadInformation
    Desc : lists all the downloads for for the selected date range
   */
-  function getManualDownloadInformation($libraryID, $date_from, $date_to) {
+  function getManualDownloadInformation($libraryID, $date_from, $date_to, $territory) {
       if($libraryID == "all") {
-          $lib_condition = "";
+		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
+		  $result = mysql_query($sql);
+		  while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $row["id"].",'";
+			}		  
+          $lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
       }
       else {
           $lib_condition = "and library_id = ".$libraryID;
