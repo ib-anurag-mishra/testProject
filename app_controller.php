@@ -336,6 +336,7 @@ class AppController extends Controller
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_patronform' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_managepatron' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_index' );
+		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_getLibraryIds' );		
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsCsv' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsPdf' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_librarywishlistreport' );
