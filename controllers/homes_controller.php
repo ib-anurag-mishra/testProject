@@ -468,6 +468,12 @@ class HomesController extends AppController
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$insertArr['user_login_type'] = 'sip2_var';  
+		}
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+		}
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
 		}		
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
 			$insertArr['user_login_type'] = 'ezproxy';  
@@ -788,6 +794,9 @@ class HomesController extends AppController
 			}
 			elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 				$url = $this->webroot.'users/sdlogin';
+			}
+			elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+				$url = $this->webroot.'users/sndlogin';
 			}			
 			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
 				$url = $this->webroot.'users/sso';
@@ -1063,6 +1072,9 @@ class HomesController extends AppController
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			$insertArr['user_login_type'] = 'sip2_var';  
 		}
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+		}		
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
 			$insertArr['user_login_type'] = 'ezproxy';  
 		}		
