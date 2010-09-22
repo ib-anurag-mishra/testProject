@@ -238,7 +238,8 @@ Class GenresController extends AppController
 					'fields' => array(
 							'Genre.Genre'								
 						)),
-			  ),												
+			  ),
+			  'extra' => array('chk' => 1),
 		      'order' => 'Song.ArtistText ASC',		      
 		      'limit' => '60', 'cache' => 'yes'
 		      ); 
