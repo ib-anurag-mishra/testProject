@@ -255,6 +255,9 @@ Class LibrariesController extends AppController
                     }
 					elseif($this->data['Library']['library_authentication_method'] == 'sip2_var') {
                         $this->Library->setValidation('library_step1_sip2_var');
+                    }
+					elseif($this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin') {
+                        $this->Library->setValidation('library_step1_sip2_var_wo_pin');
                     }					
 					elseif($this->data['Library']['library_authentication_method'] == 'ezproxy') {
                         $this->Library->setValidation('library_step1_ezproxy');
@@ -312,7 +315,7 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 if($this->Library->save($this->data['Library'])) {
-														if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var'){
+														if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin'){
 															foreach($this->data['Variable'] as $k=>$v){
 																if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
 																	$data[$k] = $v;
@@ -446,6 +449,9 @@ Class LibrariesController extends AppController
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'sip2_var') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_sip2_var');
                     }
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_sip2_var_wo_pin');
+                    }					
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'ezproxy') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_ezproxy');
                     }					
