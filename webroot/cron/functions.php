@@ -8,8 +8,8 @@ include 'config.php';
 include 'dbconnect.php';
 
 /*
-Function Name : sendReportFileftp
-Description : Function for sending report through FTP
+Function Name : sendReportFileftp_US
+Description : Function for sending report through FTP for US Libraies
 */
 
 function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
@@ -35,6 +35,49 @@ function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 				ftp_mkdir($con,REPORTS_SFTP_PATH.$typeReport."/");
 			}
 			if(!ftp_put($con,REPORTS_SFTP_PATH.$typeReport."/".$dst,$src, FTP_BINARY)){
+				echo "error sending " . $typeReport . " report to Sony server\n";
+				fwrite($logFileWrite, "error sending " . $typeReport . " report to Sony server\n");
+				return false;
+			}
+			else
+			{
+				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+				sendReportEmail($typeReport);
+				return true;
+			}
+		}
+	}
+}
+
+/*
+Function Name : sendReportFileftp_CA
+Description : Function for sending report through FTP for Canadian Libraies
+*/
+
+function sendReportFileftp_CA($src,$dst,$logFileWrite,$typeReport)
+{
+
+	if(!($con = ftp_connect(REPORTS_SFTP_HOST_CA,REPORTS_SFTP_PORT_CA)))
+	{
+		echo "Not Able to Establish Connection\n";
+		return false;
+	}
+	else
+	{
+		if(!ftp_login($con,REPORTS_SFTP_USER_CA,REPORTS_SFTP_PASS_CA))
+		{
+			echo "fail: unable to authenticate\n";
+			return false;
+		}
+		else
+		{
+			ftp_pasv($con, true);
+			if(!is_dir("ftp.".REPORTS_SFTP_PATH_CA.$typeReport."/"))
+			{
+				ftp_mkdir($con,REPORTS_SFTP_PATH_CA.$typeReport."/");
+			}
+			if(!ftp_put($con,REPORTS_SFTP_PATH_CA.$typeReport."/".$dst,$src, FTP_BINARY)){
 				echo "error sending " . $typeReport . " report to Sony server\n";
 				fwrite($logFileWrite, "error sending " . $typeReport . " report to Sony server\n");
 				return false;
