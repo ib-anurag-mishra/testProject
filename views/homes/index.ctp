@@ -4,6 +4,7 @@
 	<div id="slideshow">
 	<?php
 		foreach($artists as $key => $artist):
+				if($artist['Artist']['territory'] == $this->Session->read('territory')){
                     if($key == 0) {
                         echo $html->link(
                             $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'])),
@@ -18,6 +19,7 @@
                             array('escape'=>false)
                         );
                     }
+				}
 		endforeach; 
 	?>					
 	</div>
@@ -90,42 +92,46 @@
 </div>
 <div id="artist_container">
     <div id="featured_artist">
-            <?php 
+            <?php
             foreach($featuredArtists as $key => $featuredArtist):
-                if($key == 0) {
-                    echo $html->link(
-                        $html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
-                        array('class'=>'first','escape'=>false)
-                    );
-                }
-                else {
-                    echo $html->link(
-                        $html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
-                        array('escape'=>false)
-                    );
-                }
+				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory')){
+					if($key == 0) {
+						echo $html->link(
+							$html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
+							array('class'=>'first','escape'=>false)
+						);
+					}
+					else {
+						echo $html->link(
+							$html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
+							array('escape'=>false)
+						);
+					}
+				}
             endforeach;
             ?>
     </div>
     <div id="newly_added">
-            <?php 
+            <?php
             foreach($newArtists as $key => $newArtist):
-                if($key == 0) {
-                    echo $html->link(
-                        $html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
-                        array('class'=>'first','escape'=>false)
-                    );
-                }
-                else {
-                    echo $html->link(
-                        $html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
-                        array('escape'=>false)
-                    );
-                }
+				if($newArtist['Newartist']['territory'] == $this->Session->read('territory')){			
+					if($key == 0) {
+						echo $html->link(
+							$html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
+							array('class'=>'first','escape'=>false)
+						);
+					}
+					else {
+						echo $html->link(
+							$html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
+							array('escape'=>false)
+						);
+					}
+				}
             endforeach;
             ?>
     </div>
