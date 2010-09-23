@@ -1102,5 +1102,77 @@ class HomesController extends AppController
         echo $downloadsUsed;
 		exit;
     }
+    /*
+     Function Name : historyDownload
+     Desc : For getting download count on My History 
+    */
+    function historyDownload() {
+        Configure::write('debug', 0);
+        $this->layout = false;
+        $id = $_REQUEST['id'];
+		$libId = $_REQUEST['libid'];
+		$patId = $_REQUEST['patronid'];
+		$wk = date('W')-1;
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		$this->Download->recursive = -1;
+        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+		$downloadCount =  $downloadsUsed[0]['Download']['history'];
+		//check for download availability
+		if($downloadCount < 2){
+			$sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".$startDate."' AND '".$endDate."'";
+			$this->Download->query($sql);
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+			$downloadCount =  $downloadsUsed[0]['Download']['history'];
+            echo $downloadCount;			
+        } else {
+			echo "error";
+		}
+		exit;
+    }
+	/*
+     Function Name : admin_historyform
+     Desc : actions used for admin history form
+    */
+
+    function admin_historyform() {
+	if(isset($this->data)) {
+	    if($this->data['Home']['id'] != "") {
+		$this->Page->id = $this->data['Home']['id'];
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()){
+		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+	    }
+	    else {
+		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$this->Page->set($pageData['Page']);
+		if($this->Page->save()) {
+		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		}
+		else {
+		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		}
+	    }
+	}
+        $this -> set( 'formAction', 'admin_historyform');
+        $this -> set( 'formHeader', 'Manage History Page Text' );
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history')));
+	if(count($getPageData) != 0) {
+	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
+	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+	    $this -> set( 'getData', $getData );
+	}
+	else {
+	    $arr = array();
+	    $this->set('getData',$arr);
+	}
+	$this->layout = 'admin';
+    }	
+	
 }
 ?>
