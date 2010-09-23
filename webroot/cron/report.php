@@ -135,14 +135,14 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 //			}
 		}
 		//for canadian libraries
-		$report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt";
+		$report_name = $reports_dir."/PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt";
 		$file = fopen($report_name, "w");
 	
 		if ($file == false) {
 			die ("Unable to open/create file");
 		}
 
-		$header = "A#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#2";
+		$header = "A#*#PV96#*#" . $showStartDate . "#*#" . $showEndDate . "#*#2";
 		fwrite($file, $header . "\n");
 
 		$all_Ids = '';		
@@ -155,7 +155,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$result = mysql_query($query) or die('Query failed: ' . mysql_error());
 		$numSales = 0;
 		while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			$sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*##*##*#US#*#SA#*##*##*#";
+			$sales = "N#*#PV96#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*##*##*#US#*#SA#*##*##*#";
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
@@ -182,7 +182,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			fwrite($file, $sales . "\n");
 			$numSales++;
 		}
-		$market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
+		$market = "M#*#PV96#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$market .= "#*#";									// Vendor/Retailer Name was Library Ideas#*#
 		$market .= "#*#";									// Vendor Key was PM43#*#
 		$market .= "US#*#10#*#100";
@@ -192,7 +192,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 		$row = mysql_fetch_array($result2, MYSQL_ASSOC);
 		
-		$trailer = "Z#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
+		$trailer = "Z#*#PV96#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$trailer .= $numSales . "#*#";						// Number of Standard Sales Records (total number of N records)
 		$trailer .= "1#*#";									// Number of Market Share Records (total number of M records)
 		//$trailer .= $row['Count'] . "#*#";					// Total Quantity
@@ -204,17 +204,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		
 		fclose($file);
 		
-		$sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt'";
+		$sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt'";
 		$result3 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 		$row2 = mysql_fetch_array($result3, MYSQL_ASSOC);
 		if($row2['ReportCount'] > 0) {
 			$sql = "UPDATE sony_reports SET created = now(), modified = now(), is_uploaded = 'no' WHERE id = ".$row2['id'];
 			$result4 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			FOR SENDING REPORT TO SONY SERVER USING SFTP 
-//			if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {			
+//			if(sendReportFilesftp($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {			
 
 //			FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//			if(sendReportFileftp_CA($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
+//			if(sendReportFileftp_CA($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".$row2['id'];
 				$result5 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			}
@@ -223,10 +223,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 			$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			FOR SENDING REPORT TO SONY SERVER USING SFTP 
-//			if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
+//			if(sendReportFilesftp($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 
 //			FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//			if(sendReportFileftp_CA($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
+//			if(sendReportFileftp_CA($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			}
@@ -338,15 +338,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			}
 		}
-		$report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt";
+		
+		//For Canadian Libraries
+		$report_name = $reports_dir."/PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt";
 		
 		$file = fopen($report_name, "w");
 	
 		if ($file == false) {
 			die ("Unable to open/create file");
 		}
-		//For Canadian Libraries
-		$header = "A#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#2";
+		
+		$header = "A#*#PV96#*#" . $showStartDate . "#*#" . $showEndDate . "#*#2";
 		fwrite($file, $header . "\n");
 		
 		$all_Ids = '';
@@ -360,7 +362,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$result = mysql_query($query) or die('Query failed: ' . mysql_error());
 		$numSales = 0;
 		while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
-			$sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*##*##*#US#*#SA#*##*##*#";
+			$sales = "N#*#PV96#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*##*##*#US#*#SA#*##*##*#";
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
@@ -388,7 +390,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$numSales++;
 		}
 		
-		$market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
+		$market = "M#*#PV96#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$market .= "#*#";									// Vendor/Retailer Name was Library Ideas#*#
 		$market .= "#*#";									// Vendor Key was PM43#*#
 		$market .= "US#*#10#*#100";
@@ -398,7 +400,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 		$row = mysql_fetch_array($result2, MYSQL_ASSOC);
 		
-		$trailer = "Z#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
+		$trailer = "Z#*#PV96#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$trailer .= $numSales . "#*#";						// Number of Standard Sales Records (total number of N records)
 		$trailer .= "1#*#";									// Number of Market Share Records (total number of M records)
 		//$trailer .= $row['Count'] . "#*#";					// Total Quantity
@@ -410,17 +412,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		
 		fclose($file);
 		
-		$sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt'";
+		$sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt'";
 		$result3 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 		$row2 = mysql_fetch_array($result3, MYSQL_ASSOC);
 		if($row2['ReportCount'] > 0) {
 			$sql = "UPDATE sony_reports SET created = now(), modified = now(), is_uploaded = 'no' WHERE id = ".$row2['id'];
 			$result4 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			FOR SENDING REPORT TO SONY SERVER USING SFTP 
-//			if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
+//			if(sendReportFilesftp($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 
 //			FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//			if(sendReportFileftp_CA($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
+//			if(sendReportFileftp_CA($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".$row2['id'];
 				$result5 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			}
@@ -429,10 +431,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 			$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			FOR SENDING REPORT TO SONY SERVER USING SFTP 
-//			if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
+//			if(sendReportFilesftp($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 
 //			FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//			if(sendReportFileftp_CA($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
+//			if(sendReportFileftp_CA($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 				$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 				$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			}
