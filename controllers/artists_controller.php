@@ -60,6 +60,10 @@ Class ArtistsController extends AppController
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
 				$artistName = $getData[ 'Featuredartist' ][ 'artist_name' ];
+				$country = $getData[ 'Featuredartist' ][ 'territory' ];
+				$getArtistDataObj = new Song();
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -69,11 +73,7 @@ Class ArtistsController extends AppController
 			$featuredtData = $getFeaturedDataObj -> getallartists();
 			$condition = 'add';
 			$artistName = '';
-		}
-		
-		$getArtistDataObj = new Song();
-		$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName );
-		$this -> set( 'getArtistData', $getArtistData );
+		}		
 	}
 	
 	/*
@@ -87,16 +87,27 @@ Class ArtistsController extends AppController
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
+		$artist = '';
+		if(isset($_REQUEST[ 'artistName' ])){
+			$artist = $_REQUEST[ 'artistName' ];
+		} else{
+			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+		}				
 		
-		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
 		}
 		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 			$errorMsg .= 'Please upload an image.<br/>';
 		}
+		if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+			$errorMsg .= 'Please Choose a Territory<br/>';
+		}
+		
 		$insertArr = array();
-		$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+		$insertArr[ 'artist_name' ] = $artist;
 		$insertArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
@@ -122,12 +133,27 @@ Class ArtistsController extends AppController
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
-		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+		$artistName = '';
+		if(isset($_REQUEST[ 'artistName' ])){
+			$artistName = $_REQUEST[ 'artistName' ];
+		}
+		$artist = '';
+		if(isset($_REQUEST[ 'artistName' ])){
+			$artist = $_REQUEST[ 'artistName' ];
+		} else{
+			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+		}				
+
+		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
 		}
+		if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+			$errorMsg .= 'Please Choose a Territory';
+		}		
 		$updateArr = array();
 		$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-		$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+		$updateArr[ 'artist_name' ] = $artist;
+		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 			$updateArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		}
@@ -176,15 +202,30 @@ Class ArtistsController extends AppController
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
-				$artistName = $getData[ 'Artist' ][ 'artist_name' ];
+				$artistName = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artistName = $_REQUEST[ 'artistName' ];
+				} else{
+					$artistName = $getData[ 'Artist' ][ 'artist_name' ];
+				}
+				$artist = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artist = $_REQUEST[ 'artistName' ];
+				} else{
+					$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+				}
 				if( isset( $this -> data ) ) {
 					$updateObj = new Artist();
 					$updateArr = array();
-					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+					if( $artist == '' ) {
 						$errorMsg .= 'Please select Artist Name';
 					}
+					if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+						$errorMsg .= 'Please Choose a Territory';
+					}					
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+					$updateArr[ 'artist_name' ] = $artist;
+					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/artistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
@@ -202,6 +243,10 @@ Class ArtistsController extends AppController
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 					}
 				}
+				$country = $getData[ 'Artist' ][ 'territory' ];
+				$getArtistDataObj = new Song();
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );				
+				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -209,20 +254,29 @@ Class ArtistsController extends AppController
 			$this -> set( 'formHeader', 'Add  Artist' );
 			$condition = 'add';
 			$artistName = '';
+			if(isset($_REQUEST[ 'artistName' ])){
+				$artist = $_REQUEST[ 'artistName' ];
+			} else{
+				$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+			}			
 			if( isset( $this -> data ) ) {
 				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
-				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ) {
+				if( $artist == '' ) {
 					$errorMsg .= 'Please select an artist name<br/>';
 				}
+				if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+					$errorMsg .= 'Please Choose a Territory<br/>';
+				}				
 				$newPath = '../webroot/img/artistimg/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
-				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
+				$insertArr[ 'artist_name' ] = $artist;;
 				$insertArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$insertObj = new Artist();
 				if( empty( $errorMsg ) ) {
@@ -236,9 +290,6 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
-		$getArtistDataObj = new Song();
-		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
-		$this -> set( 'getArtistData', $getArtistData );
 	}
 	
 	/*
@@ -282,15 +333,30 @@ Class ArtistsController extends AppController
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
-				$artistName = $getData[ 'Newartist' ][ 'artist_name' ];
+				$artistName = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artistName = $_REQUEST[ 'artistName' ];
+				} else{
+					$artistName = $getData[ 'Newartist' ][ 'artist_name' ];
+				}
+				$artist = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artist = $_REQUEST[ 'artistName' ];
+				} else{
+					$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+				}				
 				if( isset( $this -> data ) ) {
 					$updateObj = new Newartist();
 					$updateArr = array();
-					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+					if( $artist == '' ) {
 						$errorMsg .= 'Please select Artist Name';
 					}
+					if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+						$errorMsg .= 'Please Choose a Territory';
+					}					
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+					$updateArr[ 'artist_name' ] = $artist;
+					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/newartistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
@@ -308,6 +374,10 @@ Class ArtistsController extends AppController
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 					}
 				}
+				$country = $getData[ 'Newartist' ][ 'territory' ];
+				$getArtistDataObj = new Song();
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );				
+				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -315,21 +385,32 @@ Class ArtistsController extends AppController
 			$this -> set( 'formHeader', 'Add New Artist' );
 			$condition = 'add';
 			$artistName = '';
+			$artist = '';
+			if(isset($_REQUEST[ 'artistName' ])){
+				$artist = $_REQUEST[ 'artistName' ];
+			} else{
+				$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+			}				
+			
 			if( isset( $this -> data ) ){
 				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
-				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ) {
-					$errorMsg .= 'Please select an artist name<br/>';
+				if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+					$errorMsg .= 'Please Choose a Territory<br/>';
 				}
+				if( trim( $artist ) == '' ) {
+					$errorMsg .= 'Please select an artist name<br/>';
+				}				
 				$newPath = '../webroot/img/newartistimg/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
-				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 				$insertArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+				$insertArr[ 'artist_name' ] = $artist;
 				$insertObj = new Newartist();
 				if( empty( $errorMsg ) ) {
 					if( $insertObj -> insert( $insertArr ) ) {
@@ -341,10 +422,7 @@ Class ArtistsController extends AppController
 					$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 				}
 			}
-		}		
-		$getArtistDataObj = new Song();
-		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
-		$this -> set( 'getArtistData', $getArtistData );
+		}
 	}
 	
 	/*
@@ -419,7 +497,7 @@ Class ArtistsController extends AppController
 		$this -> paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory' => $country),
+						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 0,'Country.Territory' => $country),
 						    $condition
 						)
 					),
@@ -522,6 +600,39 @@ Class ArtistsController extends AppController
 		$pre = '';
 		$res = array();
 	    $this->set('albumSongs',$albumSongs);
+	}
+	/*
+	 Function Name : view
+	 Desc : For artist view page
+	*/
+	function admin_getArtists(){
+        Configure::write('debug', 0);	
+		$this->Song->recursive = 2;	
+		$artist = $this->Song->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										array('Country.Territory' => $_REQUEST['Territory'])
+									)
+								),
+							'fields' => array(
+									'DISTINCT Song.ArtistText',
+									),
+							'contain' => array(
+									'Country' => array(
+											'fields' => array(
+												'Country.Territory'								
+											)
+										),
+								),
+							'order' => 'Song.ArtistText'
+						));
+		$data = "<option value=''>SELECT</option>";				
+		foreach($artist as $k=>$v){
+			$data = $data."<option value='".$v['Song']['ArtistText']."'>".$v['Song']['ArtistText']."</option>";
+		}
+		print "<select class='select_fields' name='artistName'>".$data."</select>";exit;
+						
 	}
   }
 ?>
