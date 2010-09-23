@@ -42,7 +42,7 @@
     Suggestions
     <div id="suggestionsBox">
         <table cellspacing="0" cellpadding="0">
-            <?php
+        <?php
 			$j =0;
 	    for($i = 0; $i < count($songs); $i++) {
 		if($j==8){
