@@ -10,7 +10,7 @@
 </div>
 <?php } ?>
 <div id="genreAlbum" class="links" >
-	<?php echo $paginator->sort('Album ', 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Physicalproduct.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort('Album ', 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?>>
 	<?php echo $paginator->sort('Track ', 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
