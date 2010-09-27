@@ -1000,7 +1000,7 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
         $downloadResults = Array();
-        $downloadResults =  $this->Download->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate))));
+        $downloadResults =  $this->Download->find('all',array('group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate))));
 		$this->set('downloadResults',$downloadResults);
     }
     
