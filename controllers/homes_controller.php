@@ -70,7 +70,7 @@ class HomesController extends AppController
 									)
 								),
 							'fields' => array(
-									'DISTINCT Song.ArtistText',
+									'Song.ArtistText',
 									),
 							'contain' => array(
 									'Country' => array(
@@ -78,8 +78,9 @@ class HomesController extends AppController
 												'Country.Territory'								
 											)
 										),
-								),
-							'order' => 'Song.ArtistText'
+								),	
+							'order' => 'Song.ArtistText',
+							'group' => 'Song.ArtistText'
 						));
         $this->set('distinctArtists', $artist);
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
@@ -168,7 +169,7 @@ class HomesController extends AppController
 									)
 								),
 							'fields' => array(
-									'DISTINCT Song.ArtistText',
+									'Song.ArtistText',
 									),
 							'contain' => array(
 									'Country' => array(
@@ -177,7 +178,8 @@ class HomesController extends AppController
 											)
 										),
 								),
-							'order' => 'Song.ArtistText'
+							'order' => 'Song.ArtistText',
+							'group' => 'Song.ArtistText'
 						));
 	
 		//$this->Song->recursive = -1;
