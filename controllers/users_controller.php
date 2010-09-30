@@ -2054,125 +2054,95 @@ Class UsersController extends AppController
 	function sso(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
-				if(count($url) > 0){
-					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
-						$this->Session->write("lId",$url[0]['Url']['library_id']);
-					}
+				if($this->Session->read('referral') == ''){
+					$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
 				}
 			}
 		}
-		$this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
-				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
-			}
-		}
-		if($this->data){  
-			$card = $this->data['User']['card'];
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide Card No.");            
-		
-				if($card != ''){
-				   $this->set('card',$card);
-				}
-			}
-			else{
-				$cardNo = substr($card,0,5);
-				$this->Library->recursive = -1;
-				$this->Library->Behaviors->attach('Containable');
-				if($this->Session->read('referral')){
-					$library_cond = array('id' => $this->Session->read('lId'));
+		$this->layout = 'login';
+		$this->Library->recursive = -1;
+		$this->Library->Behaviors->attach('Containable');	
+		$existingLibraries = $this->Library->find('all',array(
+											'conditions' => array('library_ezproxy_referral' => $this->Session->read('referral'),'library_status' => 'active','library_authentication_method' => 'ezproxy'),
+											'fields' => array('Library.id','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
+											)
+										 );
+		if(count($existingLibraries) == 0){
+			$this -> Session -> setFlash("This is not a valid credential.");
+			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+		}        
+		else{	
+			$EZproxySSO = new EZproxySSOComponent($existingLibraries['0']['Library']['library_ezproxy_secret'],$existingLibraries['0']['Library']['library_ezproxy_referral']);
+			if (! $EZproxySSO->valid()) {
+				if ($EZproxySSO->expired()) {
+					echo("This URL has expired\n");
 				} else {
-					$library_cond = '';
-				}				
-				$existingLibraries = $this->Library->find('all',array(
-													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'ezproxy',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
-													)
-												 );
-				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
-					$this->redirect(array('controller' => 'users', 'action' => 'sso'));
-				}        
-				else{
-					//Start
-					$EZproxySSO = new EZproxySSOComponent($existingLibraries['0']['Library']['library_ezproxy_secret'], $existingLibraries['0']['Library']['library_ezproxy_referral']);
-					if (! $EZproxySSO->valid()) {
-						if ($EZproxySSO->expired()) {
-							echo("This URL has expired\n");
-						} else {
-							echo("Invalid access attempt\n");
-						}
-						exit();
-					}
-					$user = $EZproxySSO->user();						
-					$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $user)));
-					if(count($currentPatron) > 0){
-						$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-						$date = strtotime(date('Y-m-d H:i:s'));              
-						if(!$this->Session->read('patron')){               
-							if(($date-$modifiedTime) > 60){
-							  $updateArr = array();
-							  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-							  $updateArr['session_id'] = session_id();
-							  $this->Currentpatron->save($updateArr);
-							}
-							else{
-						//    $this->Session->destroy('user');
-							  $this -> Session -> setFlash("This account is already active.");                              
-							  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-							}
-						}
-						else{
-							$sessionId = session_id();                    
-							if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-								if(($date-$modifiedTime) > 60){                            
-								  $updateArr = array();
-								  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-								  $updateArr['session_id'] = session_id();
-								  $this->Currentpatron->save($updateArr);
-								}
-								else{
-							//    $this->Session->destroy('user');   
-								  $this -> Session -> setFlash("This account is already active.");                                  
-								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-								}                  
-							}                    
-						}
-					}
-					else{                
-						$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-						$insertArr['patronid'] = $user;
-						$insertArr['session_id'] = session_id();
-						$this->Currentpatron->save($insertArr);
-					}
-					$this->Session->write("library", $existingLibraries['0']['Library']['id']);
-					$this->Session->write("patron", $user);
-					$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-					$this->Session->write("ezproxy","ezproxy");
-					$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $user)));            
-					$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-					$startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
-					$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";           
-					$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-					$this->Download->recursive = -1;
-					$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $user,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-					$this ->Session->write("downloadsUsed", $results);
-					if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-						$this ->Session->write("block", 'yes');
+					echo("Invalid access attempt\n");
+				}
+				exit();
+			}
+			$user = $EZproxySSO->user();
+			$card = $user;	
+			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $user)));
+			if(count($currentPatron) > 0){
+				$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
+				$date = strtotime(date('Y-m-d H:i:s'));              
+				if(!$this->Session->read('patron')){               
+					if(($date-$modifiedTime) > 60){
+					  $updateArr = array();
+					  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+					  $updateArr['session_id'] = session_id();
+					  $this->Currentpatron->save($updateArr);
 					}
 					else{
-						$this ->Session->write("block", 'no');
+					  $this->Session->destroy('user');
+					  $this -> Session -> setFlash("This account is already active.");                              
+					  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 					}
-					$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+				}
+				else{
+					$sessionId = session_id();                    
+					if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
+						if(($date-$modifiedTime) > 60){                            
+						  $updateArr = array();
+						  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+						  $updateArr['session_id'] = session_id();
+						  $this->Currentpatron->save($updateArr);
+						}
+						else{
+						  $this->Session->destroy('user');   
+						  $this -> Session -> setFlash("This account is already active.");                                  
+						  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+						}                  
+					}                    
 				}
 			}
-		}	  
-		
-	}		
+			else{                
+				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+				$insertArr['patronid'] = $user;
+				$insertArr['session_id'] = session_id();
+				$this->Currentpatron->save($insertArr);
+			}
+			$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+			$this->Session->write("patron", $user);
+			$this->Session->write("ezproxy","ezproxy");
+			$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+			$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $user)));            
+			$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+			$startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+			$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";           
+			$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+			$this->Download->recursive = -1;
+			$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $user,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
+			$this ->Session->write("downloadsUsed", $results);
+			if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
+				$this ->Session->write("block", 'yes');
+			}
+			else{
+				$this ->Session->write("block", 'no');
+			}
+			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+		}
+	}
 }
 ?>
