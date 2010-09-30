@@ -2046,19 +2046,15 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
-		print "<pre>";
-		print_r($_SERVER);
 		$referral = strtolower($_SERVER['HTTP_REFERER']);
-		print $referral;
-		print "++".$this->Session->read('referral');
+		$ref = explode("url=",$referral);
 		$this->Library->recursive = -1;
 		$this->Library->Behaviors->attach('Containable');	
 		$existingLibraries = $this->Library->find('all',array(
-											'conditions' => array('library_ezproxy_referral' => $referral,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
+											'conditions' => array('library_ezproxy_referral' => $ref[1],'library_status' => 'active','library_authentication_method' => 'ezproxy'),
 											'fields' => array('Library.id','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
 											)
 										 );
-		print_r($existingLibraries);exit;
 		if(count($existingLibraries) == 0){
 			$this -> Session -> setFlash("This is not a valid credential.");
 			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
