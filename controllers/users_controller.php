@@ -2046,30 +2046,29 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
-		$EZproxySSO = new EZproxySSOComponent("120605110811071302229394","http://www2.fairfieldpubliclibrary.org:2048/sso/freegalmusic");
-		if (! $EZproxySSO->valid()) {
-			if ($EZproxySSO->expired()) {
-				echo("This URL has expired\n");
-			} else {
-				echo("Invalid access attempt\n");
-			}
-			exit();
-		}
-		$user = $EZproxySSO->user();
-		$card = $user;
-		$cardNo = substr($card,0,5);
 		$this->Library->recursive = -1;
-		$this->Library->Behaviors->attach('Containable');
+		$this->Library->Behaviors->attach('Containable');	
 		$existingLibraries = $this->Library->find('all',array(
-											'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'ezproxy'),
+											'conditions' => array('library_ezproxy_referral' => $this->Session->read('referral'),'library_status' => 'active','library_authentication_method' => 'ezproxy'),
 											'fields' => array('Library.id','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
 											)
 										 );
 		if(count($existingLibraries) == 0){
 			$this -> Session -> setFlash("This is not a valid credential.");
-			$this->redirect(array('controller' => 'users', 'action' => 'sso'));
+			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 		}        
-		else{			
+		else{	
+			$EZproxySSO = new EZproxySSOComponent($existingLibraries['0']['Library']['library_ezproxy_secret'],$existingLibraries['0']['Library']['library_ezproxy_referral']);
+			if (! $EZproxySSO->valid()) {
+				if ($EZproxySSO->expired()) {
+					echo("This URL has expired\n");
+				} else {
+					echo("Invalid access attempt\n");
+				}
+				exit();
+			}
+			$user = $EZproxySSO->user();
+			$card = $user;	
 			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $user)));
 			if(count($currentPatron) > 0){
 				$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
@@ -2130,6 +2129,5 @@ Class UsersController extends AppController
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
 	}
-
 }
 ?>
