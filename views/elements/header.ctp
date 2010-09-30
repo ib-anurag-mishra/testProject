@@ -15,10 +15,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
-	if($this->Session->read('referral') && $this->Session->read('referral') != '')
-	{
-		print $this->Session->read('referral');
-	}
 ?>
 <div id="header">
 	<?php
