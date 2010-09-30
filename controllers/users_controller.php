@@ -2047,7 +2047,7 @@ Class UsersController extends AppController
 		}
 		$this->layout = 'login';
 		$referral = strtolower($_SERVER['HTTP_REFERER']);
-		print $referral;
+		print $this->Session->read('referral')."++".$referral;
 		$ref = explode("url=",$referral);
 		print "<pre>";
 		print_r($_SERVER);
