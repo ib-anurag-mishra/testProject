@@ -5,11 +5,9 @@ class AppController extends Controller
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download' );
 	var $uses = array('Genre','Featuredartist','Newartist','Category');
 	
-	function beforeFilter()
-	{
-		if (Configure::read('SiteSettings.site_status') == 'Offline'
-			&& $this->here != Configure::read('SiteSettings.site_offline_url')) {
-			$this->redirect(Configure::read('SiteSettings.site_offline_url'));
+	function beforeFilter() {
+		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
+				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}	
 		$this->Auth->authorize = 'actions';
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
@@ -25,15 +23,11 @@ class AppController extends Controller
 		header('Pragma: no-cache');
 	}
 	
-	
-	
-	function isAuthorized()
-	{
+	function isAuthorized() {
 		return true;
 	}	
 	
-	function build_acl()
-	{
+	function build_acl() {
 		
 		if( !Configure :: read( 'debug' ) )
 		{
