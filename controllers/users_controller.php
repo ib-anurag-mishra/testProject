@@ -2046,8 +2046,11 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		print $_SERVER['HTTP_REFERER']."++".$this->Session->read('referral');
+		print "<pre>";print_r($_SERVER);
 		$referral = $this->Session->read('referral');
 		$ref = explode("url=",$referral);
+		print_r($ref);exit;
 		$this->Library->recursive = -1;
 		$this->Library->Behaviors->attach('Containable');	
 		$existingLibraries = $this->Library->find('all',array(
