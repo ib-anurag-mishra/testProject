@@ -1,4 +1,10 @@
 <?php echo $session->flash(); ?>
+<?php
+if($this->Session->read('referral') && $this->Session->read('referral') != '')
+{
+	print $this->Session->read('referral');
+}
+?>
 <div id="aboutBox">
 	About Freegal Music&trade;
 </div>
