@@ -12,12 +12,12 @@ class Genre extends AppModel {
 	var $uses = array('Featuredartist','Artist');
 	var $primaryKey = 'ProdId';
   
-//	var $belongsTo = array(
-//		'Download' => array(
-//		    'className'    => 'Download',
-//		    'foreignKey' => 'Genre.ProdID'
-//		)
-//	);
+	var $belongsTo = array(
+		'Download' => array(
+		    'className'    => 'Download',
+		    'foreignKey' => 'Genre.ProdID'
+		)
+	);
 	
 	var $hasMany = array(
 	  'Genre' => array(
