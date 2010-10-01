@@ -7,6 +7,7 @@
  
 class Genre extends AppModel {
 	var $name = 'Genre';
+	var $useDbConfig = 'freegal';	
 	var $useTable = 'Genre';
 	var $uses = array('Featuredartist','Artist');
 	var $primaryKey = 'ProdId';
