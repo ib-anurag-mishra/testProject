@@ -8,6 +8,7 @@
 class Files extends AppModel
 {
   var $name = 'Files';
+  var $useDbConfig = 'freegal';  
   var $useTable = 'File';
   var $primaryKey = 'FileID';
 }
