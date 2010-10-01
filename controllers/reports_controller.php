@@ -346,7 +346,7 @@ Class ReportsController extends AppController
 	function admin_getLibraryIds(){
         Configure::write('debug', 0);
         if($this->Session->read("Auth.User.type_id") == 4) {
-            $var = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'), 'recursive' => -1));
         }
         else {
 			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'recursive' => -1));
