@@ -33,6 +33,7 @@ Class ReportsController extends AppController
 			$this->set('libraryID', "");
         }
         if(isset($this->data)) {
+			Configure::write('debug',0); // Otherwise we cannot use this method while developing 
 			$all_Ids = '';
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
