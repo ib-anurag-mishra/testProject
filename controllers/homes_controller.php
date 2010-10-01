@@ -36,6 +36,7 @@ class HomesController extends AppController
      Desc : actions that is invoked when the user comes to the homes controller
     */
     function index() {
+		$this->Song->recursive = 2;
         $this->Song->Behaviors->attach('Containable');
 		$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
 		$this->set('songs',$songDetails);
