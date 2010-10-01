@@ -85,7 +85,7 @@
                                 <?php
                                     echo $this->Form->label('Range');
                                     echo $this->Form->hidden('library_id', array('value' => $libraryID));
-                                    echo $this->Form->input('Territory', array('options' => array(
+                                    echo $this->Form->input('reports_daterange', array('options' => array(
                                                                     'day' => 'Day',
                                                                     'week' => 'Week',
                                                                     'month' => 'Month',
