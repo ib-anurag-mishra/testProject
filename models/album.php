@@ -36,7 +36,7 @@ class Album extends AppModel
 		)
 	);
 	function paginate($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
-		$recursive = 0;
+		$recursive = -1;
 		$group = array('Album.ProdID');
 		return $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group'));
 	}	
