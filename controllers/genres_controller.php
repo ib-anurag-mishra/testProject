@@ -49,6 +49,7 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
+		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
 		$genreAll = $this->Genre->find('all',array(
 					'conditions' =>
