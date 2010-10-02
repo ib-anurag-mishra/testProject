@@ -8,7 +8,7 @@
 class Album extends AppModel
 {
 	var $name = 'Albums';
-	var $useDbConfig = 'freegal';
+//	var $useDbConfig = 'freegal';
 	var $useTable = 'Albums';
 	var $primaryKey = 'ProdID';
 	var $actsAs = array('Containable');
