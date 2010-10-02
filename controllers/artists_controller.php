@@ -502,7 +502,7 @@ Class ArtistsController extends AppController
 						)
 					),
 					'fields' => array(
-						'DISTINCT Album.ProdID',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -529,7 +529,7 @@ Class ArtistsController extends AppController
 							'Files.SourceURL'
 						),
 						)			                                
-					),'order' => 'Country.SalesDate DESC','limit' => '3','cache' => 'yes'
+					),'group' => 'Album.ProdID','order' => 'Country.SalesDate DESC','limit' => '3','cache' => 'yes'
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
