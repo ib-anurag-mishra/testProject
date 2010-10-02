@@ -60,27 +60,7 @@
                         <?php
                             }
                             else {
-                        ?>
-							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>		 
-							<td align="left">
-								<?php
-									echo $this->Form->input('Territory', array('options' => array(
-																	'' => 'Select Territory',
-																	'CA' => 'CA',
-																	'US' => 'US',
-																	), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
-															);
-                                ?>	
-                            </td>
-                            <td align="left">
-							<div id="allLibrary">
-                        <?php    
-                                    $libraries['all'] = "All Libraries";
-                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
-                        ?>
-                            </div>
-							</td>
-							
+                        ?>							
                             <td align="center" colspan="4">
                                 <?php
                                     echo $this->Form->label('Range');

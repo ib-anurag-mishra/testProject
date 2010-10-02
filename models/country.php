@@ -8,7 +8,7 @@
 class Country extends AppModel
 {
   var $name = 'Country';
-  var $useDbConfig = 'freegal';
+//  var $useDbConfig = 'freegal';
   var $usetable = 'countries';
   
 }

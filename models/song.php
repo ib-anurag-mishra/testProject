@@ -8,7 +8,7 @@
 class Song extends AppModel
 {
 	var $name = 'Song';
-	var $useDbConfig = 'freegal';	
+//	var $useDbConfig = 'freegal';	
 	var $useTable = 'Songs';
 	var $primaryKey = 'ProdID';
 	var $actsAs = array('Containable');

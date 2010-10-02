@@ -19,7 +19,7 @@ Class ReportsController extends AppController
     */
     function admin_index() {
         if($this->Session->read("Auth.User.type_id") == 4) {
-            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         }
@@ -33,7 +33,7 @@ Class ReportsController extends AppController
 			$this->set('libraryID', "");
         }
         if(isset($this->data)) {
-			Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+			//Configure::write('debug',0); // Otherwise we cannot use this method while developing 
 			$all_Ids = '';
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
@@ -42,7 +42,11 @@ Class ReportsController extends AppController
 				$library_id = $this->data['Report']['library_id'];
 			}
 			$this->set('library_id', $library_id);
-			$territory = $this->data['Report']['Territory'];
+			if($this->Session->read("Auth.User.type_id") == 4){
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];				
+			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
@@ -65,19 +69,19 @@ Class ReportsController extends AppController
 			}
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
                 
                 $this->set('downloads', $downloads);
@@ -121,7 +125,12 @@ Class ReportsController extends AppController
 				$library_id = $this->data['Report']['library_id'];
 			}
 			$this->set('library_id', $library_id);
-			$territory = $this->data['Report']['Territory'];
+			if($this->Session->read("Auth.User.type_id") == 4) {
+				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];
+			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
@@ -144,19 +153,19 @@ Class ReportsController extends AppController
 			}			
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
@@ -188,7 +197,12 @@ Class ReportsController extends AppController
 				$library_id = $this->data['Report']['library_id'];
 			}
 			$this->set('library_id', $library_id);
-			$territory = $this->data['Report']['Territory'];
+			if($this->Session->read("Auth.User.type_id") == 4) {
+				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];
+			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
@@ -211,19 +225,19 @@ Class ReportsController extends AppController
 			}		
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $this->data['Report']['Territory']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
