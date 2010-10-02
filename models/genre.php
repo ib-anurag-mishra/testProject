@@ -15,7 +15,7 @@ class Genre extends AppModel {
 	var $belongsTo = array(
 		'Download' => array(
 		    'className'    => 'Download',
-		    'foreignKey' => 'Genre.ProdID'
+		    'foreignKey' => 'ProdID'
 		)
 	);
 	
