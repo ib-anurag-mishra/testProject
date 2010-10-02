@@ -127,7 +127,7 @@ Class ReportsController extends AppController
 			$this->set('library_id', $library_id);
 			if($this->Session->read("Auth.User.type_id") == 4) {
 				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
-				$territory = $libraryAdminID["Library"]["library_territory"];        }
+				$territory = $libraryAdminID["Library"]["library_territory"];
 			} else {
 				$territory = $this->data['Report']['Territory'];
 			}
@@ -199,7 +199,7 @@ Class ReportsController extends AppController
 			$this->set('library_id', $library_id);
 			if($this->Session->read("Auth.User.type_id") == 4) {
 				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
-				$territory = $libraryAdminID["Library"]["library_territory"];        }
+				$territory = $libraryAdminID["Library"]["library_territory"];
 			} else {
 				$territory = $this->data['Report']['Territory'];
 			}
