@@ -62,7 +62,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
-			$sales .= "10#*#";										// Product Type Key
+			$sales .= "11#*#";										// Product Type Key
 			$sales .= $line['TrkCount'] . "#*#";					// Quantity
 			$sales .= "0#*#";										// Quantity Returned
 			$sales .= ".65#*#";										// WPU
@@ -83,7 +83,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= "#*#";										// Album Title
 			$sales .= $line['track_title'];							// Track Title (METADATA.Title)
 			fwrite($file, $sales . "\n");
-			$numSales++;
+			$numSales = $numSales + $line['TrkCount'];
 		}
 		$market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$market .= "#*#";									// Vendor/Retailer Name was Library Ideas#*#
@@ -159,7 +159,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
-			$sales .= "10#*#";										// Product Type Key
+			$sales .= "11#*#";										// Product Type Key
 			$sales .= $line['TrkCount'] . "#*#";					// Quantity
 			$sales .= "0#*#";										// Quantity Returned
 			$sales .= ".65#*#";										// WPU
@@ -180,7 +180,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= "#*#";										// Album Title
 			$sales .= $line['track_title'];							// Track Title (METADATA.Title)
 			fwrite($file, $sales . "\n");
-			$numSales++;
+			$numSales = $numSales + $line['TrkCount'];
 		}
 		$market = "M#*#PV96#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
 		$market .= "#*#";									// Vendor/Retailer Name was Library Ideas#*#
@@ -265,7 +265,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
-			$sales .= "10#*#";										// Product Type Key
+			$sales .= "11#*#";										// Product Type Key
 			$sales .= $line['TrkCount'] . "#*#";					// Quantity
 			$sales .= "0#*#";										// Quantity Returned
 			$sales .= ".65#*#";										// WPU
@@ -286,7 +286,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= "#*#";										// Album Title
 			$sales .= $line['track_title'];							// Track Title (METADATA.Title)
 			fwrite($file, $sales . "\n");
-			$numSales++;
+			$numSales = $numSales + $line['TrkCount'];
 		}
 		
 		$market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
@@ -366,7 +366,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= $line['productcode'] . '#*#'; 				// UPC/Official Product Number (PhysicalProduct.ProductID)
 			$sales .= $line['TrkID'] . "#*#";						// ISRC/Official Track Number (METADATA.ISRC)
 			$sales .= "#*#";										// GRID/Official Digital Identifier
-			$sales .= "10#*#";										// Product Type Key
+			$sales .= "11#*#";										// Product Type Key
 			$sales .= $line['TrkCount'] . "#*#";					// Quantity
 			$sales .= "0#*#";										// Quantity Returned
 			$sales .= ".65#*#";										// WPU
@@ -387,7 +387,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			$sales .= "#*#";										// Album Title
 			$sales .= $line['track_title'];							// Track Title (METADATA.Title)
 			fwrite($file, $sales . "\n");
-			$numSales++;
+			$numSales = $numSales + $line['TrkCount'];
 		}
 		
 		$market = "M#*#PV96#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
