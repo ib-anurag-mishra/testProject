@@ -4,7 +4,8 @@ jQuery(document).ready(function() {
 		sync: 0,
 		speed: 'slow',
 		delay: -8000,
-		timeout: 12000
+		timeout: 12000,
+		random: 1
 	});
 });
 
@@ -14,7 +15,8 @@ jQuery(document).ready(function() {
 		sync: 0,
 		speed: 'slow',
 		delay: -4000,
-		timeout: 12000
+		timeout: 12000,
+		random: 1
 	});
 });
 
@@ -24,7 +26,8 @@ jQuery(document).ready(function() {
 		sync: 0,
 		speed: 'slow',
 		delay: -2000,
-		timeout: 12000
+		timeout: 12000,
+		random: 1
 	});
 });
 
