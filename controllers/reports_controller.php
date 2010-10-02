@@ -159,7 +159,7 @@ Class ReportsController extends AppController
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory;
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
