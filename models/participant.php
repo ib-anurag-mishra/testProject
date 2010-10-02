@@ -8,7 +8,7 @@
 class Participant extends AppModel
 {
   var $name = 'Participant';
-  var $useDbConfig = 'freegal';  
+//  var $useDbConfig = 'freegal';  
   var $useTable = 'Participant';
   var $primaryKey = 'ProdID';
   var $actsAs = array('Containable');
