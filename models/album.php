@@ -35,6 +35,11 @@ class Album extends AppModel
 			'foreignKey' => 'FileID'
 		)
 	);
+	function paginate($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
+		$recursive = 0;
+		$group = array('Album.ProdID');
+		return $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group'));
+	}	
 	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 		$group = array('Album.ProdID');
 	    $results = $this->find('count', compact('conditions','recursive', 'group'));
