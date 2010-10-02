@@ -230,6 +230,7 @@ class Song extends AppModel
 		));
 		return $allArtists;
 	}
+	
 	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 		if(isset($extra['extra']['chk'])){
 			$group = array('Song.ArtistText');

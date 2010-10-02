@@ -494,15 +494,15 @@ Class ArtistsController extends AppController
 		else{
 			$cond = "";
 		}	
-		$this -> paginate =  array('conditions' =>
+		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
 						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory' => $country),
 						    $condition
-						)
+						), "1 = 1 GROUP BY Album.ProdID"
 					),
 					'fields' => array(
-						'DISTINCT Album.ProdID',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -512,24 +512,24 @@ Class ArtistsController extends AppController
 						'Album.Copyright',						
 						),
 					'contain' => array(
-					'Genre' => array(
-						'fields' => array(
-							'Genre.Genre'								
-							)
-						),
-					'Country' => array(
-						'fields' => array(
-							'Country.Territory'								
-							)
-						),												
-					'Files' => array(
-						'fields' => array(
-							'Files.CdnPath' ,
-							'Files.SaveAsName',
-							'Files.SourceURL'
-						),
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'								
+								)
+							),
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory'								
+								)
+							),												
+						'Files' => array(
+							'fields' => array(
+								'Files.CdnPath' ,
+								'Files.SaveAsName',
+								'Files.SourceURL'
+							),
 						)			                                
-					),'order' => 'Country.SalesDate DESC','limit' => '3','cache' => 'yes'
+					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3','cache' => 'yes'
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');

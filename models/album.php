@@ -1,6 +1,6 @@
 <?
 /*
- File Name : song.php
+ File Name : album.php
  File Description : Models page for the  Songs table.
  Author : maycreate
  */
@@ -38,10 +38,10 @@ class Album extends AppModel
 		)
 	);
 	
-	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
+	/*function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 		$group = array('Album.ProdID');
 	    $results = $this->find('count', compact('conditions','recursive', 'group'));
 	    return $results;
-	}	
+	}*/
 }
 ?>
