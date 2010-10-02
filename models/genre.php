@@ -20,15 +20,16 @@ class Genre extends AppModel {
 	);
 	
 	var $hasMany = array(
-	  'Genre' => array(
-	  'className' => 'Genre',
-	  'foreignKey' => 'ProdID'
-	  )
+		'Genre' => array(
+			'className' => 'Genre',
+			'foreignKey' => 'ProdID'
+		)
 	);
+	
 	var $hasOne = array(
 		'Country' => array(
-					'className' => 'Country',
-					'foreignKey' => 'ProdID'
+			'className' => 'Country',
+			'foreignKey' => 'ProdID'
 		),		
 	);
 	

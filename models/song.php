@@ -28,6 +28,7 @@ class Song extends AppModel
 					'foreignKey' => 'ProdID'
 		),		
 	);
+	
 	var $belongsTo = array(
 		'Sample_Files' => array(
 			'className' => 'Files',

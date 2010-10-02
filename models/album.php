@@ -23,18 +23,21 @@ class Album extends AppModel
 					'foreignKey' => 'ProdID'
 		),							
 	);
+	
 	var $hasMany = array(
 			'Song' => array(
 				'className' => 'Song',
 				'foreignKey' => 'ReferenceID'
 			),
-	);	
+	);
+	
 	var $belongsTo = array(
 		'Files' => array(
 			'className' => 'Files',
 			'foreignKey' => 'FileID'
 		)
 	);
+	
 	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 		$group = array('Album.ProdID');
 	    $results = $this->find('count', compact('conditions','recursive', 'group'));
