@@ -10,12 +10,12 @@ class Download extends AppModel
   var $name = 'Download';
   //var $usetable = 'downloads';
   
-  /*var $belongsTo = array(
+  var $belongsTo = array(
     'Genre' => array(
     'className' => 'Genre',
     'foreignKey' => 'ProdID'
     )
-  );*/
+  );
   
   /*
    Function Name : getDaysDownloadInformation
