@@ -87,6 +87,7 @@ Class GenresController extends AppController
 				$cond = "";
 			}
 			if (($genres = Cache::read($genreName)) === false) {
+				$this->Song->recursive = 2;
 				$this->Song->Behaviors->attach('Containable');			
 				$genreDetails = $this->Song->find('all',array('conditions' =>
 											array('and' =>
