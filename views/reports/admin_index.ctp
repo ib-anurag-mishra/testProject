@@ -38,8 +38,8 @@
                             <td align="left">
 							<div id="allLibrary">
                         <?php    
-                                    $librariesSelect['all'] = "All Libraries";
-                                    echo $this->Form->input('library_id', array('options' => $librariesSelect, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
+                                    $libraries['all'] = "All Libraries";
+                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
                         ?>
                             </div>
 							</td>
