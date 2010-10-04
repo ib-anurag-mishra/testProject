@@ -208,223 +208,227 @@ class HomesController extends AppController
         else {
             $cond = "";
         }
-        if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
-            if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
-			 if($_REQUEST['match'] == 'All') {			 
-				$condition = "and";
-				$preCondition1 = array('Song.DownloadStatus' => 1);
-				$preCondition2 = array('Song.TrackBundleCount' => 0);
-				$preCondition3 = array('Country.Territory' => $country);
-				$preCondition3 = "";
-				
-			}
-			 else {
-				$condition = "or";
-				$preCondition1 =  "";
-				$preCondition2 = "";
-				$preCondition3 = "";
-			}
-			$artist =  $_REQUEST['artist'];
-			$composer =  $_REQUEST['composer'];
-			$song =  $_REQUEST['song'];
-			$album =  $_REQUEST['album'];
-			$genre =  $_REQUEST['genre_id'];
-            }
-            if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
-				if($this->data['Home']['Match'] == 'All') {
-                    $condition = "and";
-                    $preCondition1 = array('Song.DownloadStatus' => 1);
+		if((isset($_REQUEST['artist']) && $_REQUEST['artist']!= '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) &&  $_REQUEST['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) &&  $this->data['Home']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')){
+			if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
+				if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
+				 if($_REQUEST['match'] == 'All') {			 
+					$condition = "and";
+					$preCondition1 = array('Song.DownloadStatus' => 1);
 					$preCondition2 = array('Song.TrackBundleCount' => 0);
 					$preCondition3 = array('Country.Territory' => $country);
 					$preCondition3 = "";
-                }
-                else {
-                    $condition = "or";
-                    $preCondition1 =  "";
-                    $preCondition2 = "";
+					
+				}
+				 else {
+					$condition = "or";
+					$preCondition1 =  "";
+					$preCondition2 = "";
 					$preCondition3 = "";
-                }
-                $artist =  $this->data['Home']['artist'];
-				$composer = $this->data['Home']['composer'];
-                $song =  $this->data['Home']['song'];
-                $album =  $this->data['Home']['album'];
-                $genre =  $this->data['Home']['genre_id'];
-            }            
-            if($artist != '') {
-                $artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');    
-            }
-            else {
-                $artistSearch = '';
-            }
-            if($composer != '') {
-                $composerSearch = array('match(Participant.Name) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
-				$this->set('composer', $composer);
-				$preCondition4 = array('Participant.Role' => 'Composer'); 
-			}
-            else {
-                $composerSearch = '';
-				$preCondition4 = "";
-            }
-            if($song != '') {
-                $songSearch = array('match(Song.Title) against ("+'.$song.'*" in boolean mode)');    
-            }
-            else {
-                $songSearch = '';
-            }
-            if($album != '') {
-                $albumSearch = array('match(Song.SongTitle) against ("+'.$album.'*" in boolean mode)');    
-            }
-            else {
-                $albumSearch = '';
-            }
-            if($genre != '') {
-                $genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)');    
-            }
-            else {
-                $genreSearch = '';
-            }
-            $this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-			if($composer == '') {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
-			}
-			$this->Song->Behaviors->attach('Containable');
-            $this -> paginate = array('conditions' =>
-				    array('and' =>
-							array(
-									array('Song.TrackBundleCount' => 0),
-									array('Song.DownloadStatus' => 1),
-									array('Country.Territory' => $country),
-									$cond
-									),
-									$condition => array(
-									$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
-                                                ),"1 = 1 GROUP BY Song.ProdID"
-                                    ),
-                                    'fields' => array(
-                                                    'DISTINCT Song.ProdID',
-                                                    'Song.Title',
-                                                    'Song.ArtistText',
-													'Song.ReferenceID',
-                                                    'Song.DownloadStatus',
-													'Song.SongTitle',
-													'Song.Artist',
-													'Song.Advisory',
-                                                ),
-                                    'contain' => array(
-									'Participant' => array(
-										'fields' => array(
-												'Participant.Name'                                                   
-												)
+				}
+				$artist =  $_REQUEST['artist'];
+				$composer =  $_REQUEST['composer'];
+				$song =  $_REQUEST['song'];
+				$album =  $_REQUEST['album'];
+				$genre =  $_REQUEST['genre_id'];
+				}
+				if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
+					if($this->data['Home']['Match'] == 'All') {
+						$condition = "and";
+						$preCondition1 = array('Song.DownloadStatus' => 1);
+						$preCondition2 = array('Song.TrackBundleCount' => 0);
+						$preCondition3 = array('Country.Territory' => $country);
+						$preCondition3 = "";
+					}
+					else {
+						$condition = "or";
+						$preCondition1 =  "";
+						$preCondition2 = "";
+						$preCondition3 = "";
+					}
+					$artist =  $this->data['Home']['artist'];
+					$composer = $this->data['Home']['composer'];
+					$song =  $this->data['Home']['song'];
+					$album =  $this->data['Home']['album'];
+					$genre =  $this->data['Home']['genre_id'];
+				}            
+				if($artist != '') {
+					$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');    
+				}
+				else {
+					$artistSearch = '';
+				}
+				if($composer != '') {
+					$composerSearch = array('match(Participant.Name) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
+					$this->set('composer', $composer);
+					$preCondition4 = array('Participant.Role' => 'Composer'); 
+				}
+				else {
+					$composerSearch = '';
+					$preCondition4 = "";
+				}
+				if($song != '') {
+					$songSearch = array('match(Song.Title) against ("+'.$song.'*" in boolean mode)');    
+				}
+				else {
+					$songSearch = '';
+				}
+				if($album != '') {
+					$albumSearch = array('match(Song.SongTitle) against ("+'.$album.'*" in boolean mode)');    
+				}
+				else {
+					$albumSearch = '';
+				}
+				if($genre != '') {
+					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)');    
+				}
+				else {
+					$genreSearch = '';
+				}
+				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				if($composer == '') {
+					$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				}
+				$this->Song->Behaviors->attach('Containable');
+				$this -> paginate = array('conditions' =>
+						array('and' =>
+								array(
+										array('Song.TrackBundleCount' => 0),
+										array('Song.DownloadStatus' => 1),
+										array('Country.Territory' => $country),
+										$cond
 										),
-                                    'Genre' => array(
-                                            'fields' => array(
-                                                    'Genre.Genre'                                                   
-                                                    )
-                                            ),
-                                    'Country' => array(
-                                            'fields' => array(
-                                                    'Country.Territory',
-													'Country.SalesDate'
-                                                    )
-                                            ),									
-                                    'Sample_Files' => array(
-                                            'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'                                                   
-                                                    ),
-                                        ),
-                                    'Full_Files' => array(
-                                            'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'                                                   
-                                                    ),
-                                        )										
-									 ),'cache' => 'yes'
-                                );
-            $this->Song->recursive = 2;
-			if($composer == '') {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
-			}				
-            $searchResults = $this->paginate('Song');
-            $this->set('searchResults', $searchResults);
-        }
-        else {
-            $searchKey = '';      
-            if(isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
-                $searchKey = $_REQUEST['search'];
-            }
-            if($searchKey == '') {
-                $searchKey = $this->data['Home']['search'];
-            }
-			$searchText = $searchKey;
-			$searchKey = '"'.addslashes($searchKey).'"';
-            $this->set('searchKey','search='.urlencode($searchText));
-			if(!isset($_REQUEST['composer'])) {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
-			}			
-            $this->Song->Behaviors->attach('Containable');
-            $this -> paginate = array('conditions' =>
-                                array(	'and' =>
-					    array(
-                                                array('Song.DownloadStatus' => 1),
-                                                array('Song.TrackBundleCount' => 0),
-												array('Country.Territory' => $country),$cond
-                                            ),
-					'or' =>
-                                                array(
-                                                        array("match(Song.ArtistText) against ('".$searchKey."' in boolean mode)"),
-														array("match(Song.Title) against ('".$searchKey."' in boolean mode)"),
-                                                        array("match(Song.SongTitle) against ('".$searchKey."' in boolean mode)")
-                                                    ),"1 = 1 GROUP BY Song.ProdID"
-                                        ),
-                                    'fields' => array(
-                                                    'Song.ProdID',
-                                                    'Song.Title',
-                                                    'Song.ArtistText',
-                                                    'Song.ReferenceID',
-                                                    'Song.DownloadStatus',
-													'Song.SongTitle',
-													'Song.Artist',
-													'Song.Advisory',
-                                                    ),
-                                    'contain' => array(
-									'Participant' => array(
+										$condition => array(
+										$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
+													),"1 = 1 GROUP BY Song.ProdID"
+										),
 										'fields' => array(
-												'Participant.Name'                                                   
-												)
-									),
-                                    'Genre' => array(
-                                            'fields' => array(
-                                                    'Genre.Genre'                                                   
-                                                    )
-                                            ),
-                                    'Country' => array(
-                                            'fields' => array(
-                                                    'Country.Territory',
-													'Country.SalesDate'
-                                                    )
-                                            ),
-									'Sample_Files' => array(
-                                            'fields' => array(
-                                                    'Sample_Files.CdnPath',
-													'Sample_Files.SaveAsName'
-                                                    ),
+														'DISTINCT Song.ProdID',
+														'Song.Title',
+														'Song.ArtistText',
+														'Song.ReferenceID',
+														'Song.DownloadStatus',
+														'Song.SongTitle',
+														'Song.Artist',
+														'Song.Advisory',
+													),
+										'contain' => array(
+										'Participant' => array(
+											'fields' => array(
+													'Participant.Name'                                                   
+													)
 											),
-                                    'Full_Files' => array(
-                                            'fields' => array(
-                                                    'Full_Files.CdnPath',
-													'Full_Files.SaveAsName'
-                                                    ),
-											)  											
-                                    ), 'cache' => 'yes'
-                                );
-            $this->Song->recursive = 2;
-			if(!isset($_REQUEST['composer'])) {
-				$this->Song->unbindModel(array('hasOne' => array('Participant')));
-			}				
-            $searchResults = $this->paginate('Song');
-            $this->set('searchResults', $searchResults);
-        }
+										'Genre' => array(
+												'fields' => array(
+														'Genre.Genre'                                                   
+														)
+												),
+										'Country' => array(
+												'fields' => array(
+														'Country.Territory',
+														'Country.SalesDate'
+														)
+												),									
+										'Sample_Files' => array(
+												'fields' => array(
+													'Sample_Files.CdnPath' ,
+													'Sample_Files.SaveAsName'                                                   
+														),
+											),
+										'Full_Files' => array(
+												'fields' => array(
+													'Full_Files.CdnPath' ,
+													'Full_Files.SaveAsName'                                                   
+														),
+											)										
+										 ),'cache' => 'yes'
+									);
+				$this->Song->recursive = 2;
+				if($composer == '') {
+					$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				}				
+				$searchResults = $this->paginate('Song');
+				$this->set('searchResults', $searchResults);
+			}
+			else {
+				$searchKey = '';      
+				if(isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
+					$searchKey = $_REQUEST['search'];
+				}
+				if($searchKey == '') {
+					$searchKey = $this->data['Home']['search'];
+				}
+				$searchText = $searchKey;
+				$searchKey = '"'.addslashes($searchKey).'"';
+				$this->set('searchKey','search='.urlencode($searchText));
+				if(!isset($_REQUEST['composer'])) {
+					$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				}			
+				$this->Song->Behaviors->attach('Containable');
+				$this -> paginate = array('conditions' =>
+									array(	'and' =>
+							array(
+													array('Song.DownloadStatus' => 1),
+													array('Song.TrackBundleCount' => 0),
+													array('Country.Territory' => $country),$cond
+												),
+						'or' =>
+													array(
+															array("match(Song.ArtistText) against ('".$searchKey."' in boolean mode)"),
+															array("match(Song.Title) against ('".$searchKey."' in boolean mode)"),
+															array("match(Song.SongTitle) against ('".$searchKey."' in boolean mode)")
+														),"1 = 1 GROUP BY Song.ProdID"
+											),
+										'fields' => array(
+														'Song.ProdID',
+														'Song.Title',
+														'Song.ArtistText',
+														'Song.ReferenceID',
+														'Song.DownloadStatus',
+														'Song.SongTitle',
+														'Song.Artist',
+														'Song.Advisory',
+														),
+										'contain' => array(
+										'Participant' => array(
+											'fields' => array(
+													'Participant.Name'                                                   
+													)
+										),
+										'Genre' => array(
+												'fields' => array(
+														'Genre.Genre'                                                   
+														)
+												),
+										'Country' => array(
+												'fields' => array(
+														'Country.Territory',
+														'Country.SalesDate'
+														)
+												),
+										'Sample_Files' => array(
+												'fields' => array(
+														'Sample_Files.CdnPath',
+														'Sample_Files.SaveAsName'
+														),
+												),
+										'Full_Files' => array(
+												'fields' => array(
+														'Full_Files.CdnPath',
+														'Full_Files.SaveAsName'
+														),
+												)  											
+										), 'cache' => 'yes'
+									);
+				$this->Song->recursive = 2;
+				if(!isset($_REQUEST['composer'])) {
+					$this->Song->unbindModel(array('hasOne' => array('Participant')));
+				}				
+				$searchResults = $this->paginate('Song');
+				$this->set('searchResults', $searchResults);
+			}
+		} else {
+			$this->set('searchResults', array());
+		}
         $this->layout = 'home';
     }
     
