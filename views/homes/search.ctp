@@ -1,6 +1,9 @@
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
 <div id="genre">Search Results</div>
 <div style="float:left;width:955px;">
+<?php
+if(count($searchResults) != 0){
+?>
 <div id="genreArtist" class="links">
 	<?php echo $paginator->sort('Artist ', 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
@@ -177,3 +180,9 @@
 		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
 	?>
 </div>
+<?php
+	}
+	else {
+		echo '<table><tr><td width="180" valign="top"><p><div class="paging">No records found</div><br class="clr"></td></tr></table>';
+	}
+?>
