@@ -26,7 +26,7 @@ $root = $doc->appendChild($root);
 
 $suggestionSongsQuery = "SELECT  * FROM Songs
                          WHERE DownloadStatus = '1' AND TrackBundleCount = '0' AND
-                         Advisory = 'F' ORDER BY rand() ASC LIMIT ".$suggestionCounter['svalue'];
+                         Advisory = 'F' ORDER BY rand() ASC LIMIT ".$suggestionCounter['svalue'];				 
 $songsresult = mysql_query($suggestionSongsQuery) or die('Query failed: ' . mysql_error());
 while ($line = mysql_fetch_array($songsresult, MYSQL_ASSOC)) {
     $child = $doc->createElement("songdetails");
@@ -39,7 +39,7 @@ while ($line = mysql_fetch_array($songsresult, MYSQL_ASSOC)) {
     
     $sub_child = $doc->createElement("Title");
     $sub_child = $child->appendChild($sub_child);
-    $value = $doc->createTextNode($line['Songtitle']);
+    $value = $doc->createTextNode($line['SongTitle']);
     $value = $sub_child->appendChild($value);
     
     $sub_child = $doc->createElement("ReferenceID");
@@ -57,11 +57,7 @@ while ($line = mysql_fetch_array($songsresult, MYSQL_ASSOC)) {
     $value = $doc->createTextNode($line['ArtistText']);
     $value = $sub_child->appendChild($value);
     
-    $audioQuery = "SELECT `Audio`.`FileID`, `Audio`.`TrkID` FROM `Audio` AS `Audio` WHERE `Audio`.`TrkID` = ".$line['ProdID'];
-    $audioResult = mysql_query($audioQuery) or die('Query failed: ' . mysql_error());
-    $audioResults = mysql_fetch_array($audioResult, MYSQL_ASSOC);
-    
-    $fileQuery = "SELECT `Files`.`CdnPath`, `Files`.`SaveAsName` FROM `File` AS `Files` WHERE `Files`.`FileID` = ".$audioResults['FileID'];
+    $fileQuery = "SELECT `Files`.`CdnPath`, `Files`.`SaveAsName` FROM `File` AS `Files` WHERE `Files`.`FileID` = ".$line['Sample_FileID'];
     $fileResult = mysql_query($fileQuery) or die('Query failed: ' . mysql_error());
     $fileResults = mysql_fetch_array($fileResult, MYSQL_ASSOC);
     
@@ -74,6 +70,16 @@ while ($line = mysql_fetch_array($songsresult, MYSQL_ASSOC)) {
     $sub_child = $child->appendChild($sub_child);
     $value = $doc->createTextNode($fileResults['SaveAsName']);
     $value = $sub_child->appendChild($value);
+
+    $countryQuery = "SELECT * FROM `countries` WHERE `ProdID` =".$line['ProdID']." LIMIT 1";
+    $countryResult = mysql_query($countryQuery) or die('Query failed: ' . mysql_error());
+    $countryResults = mysql_fetch_array($countryResult, MYSQL_ASSOC);
+    
+    $sub_child = $doc->createElement("Territory");
+    $sub_child = $child->appendChild($sub_child);
+    $value = $doc->createTextNode($countryResults['Territory']);
+    $value = $sub_child->appendChild($value);
+	
 }
 
 if($doc->save("../suggestion_xml/suggestion_songs.xml")) {
