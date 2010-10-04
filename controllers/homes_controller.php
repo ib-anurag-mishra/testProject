@@ -296,7 +296,7 @@ class HomesController extends AppController
 									),
 									$condition => array(
 									$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
-                                                )
+                                                ),"1 = 1 GROUP BY Song.ProdID"
                                     ),
                                     'fields' => array(
                                                     'DISTINCT Song.ProdID',
@@ -373,10 +373,10 @@ class HomesController extends AppController
                                                         array("match(Song.ArtistText) against ('".$searchKey."' in boolean mode)"),
 														array("match(Song.Title) against ('".$searchKey."' in boolean mode)"),
                                                         array("match(Song.SongTitle) against ('".$searchKey."' in boolean mode)")
-                                                    )
+                                                    ),"1 = 1 GROUP BY Song.ProdID"
                                         ),
                                     'fields' => array(
-                                                    'DISTINCT Song.ProdID',
+                                                    'Song.ProdID',
                                                     'Song.Title',
                                                     'Song.ArtistText',
                                                     'Song.ReferenceID',
