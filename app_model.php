@@ -68,7 +68,14 @@ class AppModel extends Model {
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
-                }
+                    if($v == "1 = 1 GROUP BY Song.ProdID"){
+                        //$fields = array('fields' => 'ProdID');
+                        $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                        $paginationcount = count($paginationcount);
+                        $group = "yes";
+                    }
+
+				}
                 if($group != "yes"){
                     $paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
                 }
