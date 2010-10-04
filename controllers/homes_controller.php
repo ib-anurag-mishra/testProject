@@ -67,11 +67,12 @@ class HomesController extends AppController
 								array('and' =>
 									array(
 										array('ArtistText LIKE' => 'A%'),
-										array('Country.Territory' => $country)
+										array('Country.Territory' => $country),
+										array('DownloadStatus' => 1)
 									)
 								),
 							'fields' => array(
-									'Song.ArtistText',
+									'Song.ArtistText','Song.DownloadStatus',
 									),
 							'contain' => array(
 									'Country' => array(
@@ -166,11 +167,12 @@ class HomesController extends AppController
 								array('and' =>
 									array(
 										$cond,
-										array('Country.Territory' => $country)
+										array('Country.Territory' => $country),
+										array('DownloadStatus' => 1)
 									)
 								),
 							'fields' => array(
-									'Song.ArtistText',
+									'Song.ArtistText','Song.DownloadStatus',
 									),
 							'contain' => array(
 									'Country' => array(
