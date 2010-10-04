@@ -69,9 +69,9 @@
 				</td>
 				<td width="150" align="center">
 					<?php										
-						$productInfo = $physicalproduct->getDownloadData($wishlistResult['Wishlist']['ProdID']);
+						$productInfo = $song->getDownloadData($wishlistResult['Wishlist']['ProdID']);
 						if($libraryDownload == '1' && $patronDownload == '1'){
-							$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Audio']['1']['Files']['CdnPath']."/".$productInfo[0]['Audio']['1']['Files']['SaveAsName']);                                                
+							$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 					?>
