@@ -454,7 +454,7 @@ class HomesController extends AppController
         $insertArr['patron_id'] = $patId;	
         $insertArr['ProdID'] = $prodId;     
         $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['Title'];
+        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
@@ -1057,7 +1057,7 @@ class HomesController extends AppController
         $insertArr['patron_id'] = $patId;
         $insertArr['ProdID'] = $prodId;     
         $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['Title'];
+        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
