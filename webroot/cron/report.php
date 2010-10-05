@@ -220,7 +220,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			}
 		}
 		else {
-			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 			$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			FOR SENDING REPORT TO SONY SERVER USING SFTP 
 //			if(sendReportFilesftp($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
@@ -428,7 +428,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			}
 		}
 		else {
-			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+			$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 			$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //			FOR SENDING REPORT TO SONY SERVER USING SFTP 
 //			if(sendReportFilesftp($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
