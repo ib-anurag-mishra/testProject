@@ -89,6 +89,7 @@ class AppModel extends Model {
         }
         return $paginationcount;
     }
+/*	
     function save($data = null, $validate = true, $fieldList = array()) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -140,5 +141,6 @@ class AppModel extends Model {
 
         return $result;
     }
+*/
 }
 ?>
