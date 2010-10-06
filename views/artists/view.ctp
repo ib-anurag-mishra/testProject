@@ -19,11 +19,11 @@
 			<div class="albumData">
 				<div class="albumBox">
 					<?php
-					if(strlen($album['Album']['Title']) >= 50){
-						$album['Album']['Title'] = substr($album['Album']['Title'], 0, 50). '...';
+					if(strlen($album['Album']['AlbumTitle']) >= 50){
+						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
 					}
 					?>
-					<?php echo $album['Album']['Title'];?>				</div>
+					<?php echo $album['Album']['AlbumTitle'];?>				</div>
 				<div class="artistInfo">
 					<?php
 						echo $html->link(__('Genre: ').$album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
