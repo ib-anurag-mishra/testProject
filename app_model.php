@@ -88,59 +88,6 @@ class AppModel extends Model {
                 Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
         }
         return $paginationcount;
-    }
-/*	
-    function save($data = null, $validate = true, $fieldList = array()) {
-        $oldDb = $this->useDbConfig;
-        $this->setDataSource('master');
-        $return = parent::save($data, $validate, $fieldList);
-        $this->useDbConfig = $oldDb;
-        return $return;
-    }
-	function saveAll($data = null, $options = array()){
-        $oldDb = $this->useDbConfig;
-        $this->setDataSource('master');
-        $return = parent::saveAll($data , $options);
-        $this->useDbConfig = $oldDb;
-        return $return;	
-	}
-	function delete($id = null, $cascade = true) {	
-        $oldDb = $this->useDbConfig;
-        $this->setDataSource('master');
-        $return = parent::delete($id, $cascade);
-        $this->useDbConfig = $oldDb;
-        return $return;
-	}
-	function deleteAll($conditions, $cascade = true, $callbacks = false) {
-        $oldDb = $this->useDbConfig;
-        $this->setDataSource('master');
-        $return = parent::deleteAll($conditions, $cascade , $callbacks);
-        $this->useDbConfig = $oldDb;
-        return $return;
-	}
-   function query() {
-        $params = func_get_args();
-
-        if (!empty($params) && is_string($params[0])) {
-            $updates = array( 
-                'CREATE', 'DELETE', 'DROP', 
-                'INSERT', 'UPDATE'
-            );
-            if (preg_match('/^(' . implode('|', $updates) .')/i', trim($params[0]))) {
-                $this->useDbConfig = 'master';
-            }
-        }
-
-        if (!empty($params)) {
-            $result =& call_user_func_array(array($this, 'parent::query'), $params);
-        }
-
-        if ($this->useDbConfig == 'master') {
-            $this->useDbConfig = 'default';
-        }
-
-        return $result;
-    }
-*/
+    }	
 }
 ?>
