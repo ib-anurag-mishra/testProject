@@ -227,7 +227,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		if ($file == false) {
 			die ("Unable to open/create file");
 		}
-		$sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt'";
+		$sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt'";
 		$result3 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 		$row2 = mysql_fetch_array($result3, MYSQL_ASSOC);
 		if($row2['ReportCount'] > 0) {
@@ -392,7 +392,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 		
 		fclose($file);
 		
-		$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+		$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
 		$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 //		FOR SENDING REPORT TO SONY SERVER USING SFTP 
 //		if(sendReportFilesftp($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
