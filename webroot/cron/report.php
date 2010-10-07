@@ -13,7 +13,7 @@ include 'functions.php';
 $currentDate = date('Y-m-d');
 list($year, $month, $day) = explode('-', $currentDate);
 $weekFirstDay = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"));
-$monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 7, $year));
+$monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
 
 if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 	$reports_dir = SONY_REPORTFILES;
@@ -120,10 +120,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 //		if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 
 //		FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//		if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
+		if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 			$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 			$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-//		}
+		}
 		
 		//for canadian libraries
 		$report_name = $reports_dir."/PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt";
@@ -208,10 +208,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 //		if(sendReportFilesftp($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 
 //		FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//		if(sendReportFileftp_CA($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
+		if(sendReportFileftp_CA($report_name, "PV96_W_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "weekly")) {
 			$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 			$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-//		}
+		}
 	}
 	if($currentDate == $monthFirstDate) {
 		$showStartDate = date("Ymd", strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')));
@@ -305,10 +305,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 //		if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 
 //		FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//		if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
+		if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 			$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 			$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-//		}
+		}
 		
 		//For Canadian Libraries
 		$report_name = $reports_dir."/PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt";
@@ -398,10 +398,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 //		if(sendReportFilesftp($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 
 //		FOR SENDING REPORT TO SONY SERVER USING FTP 			
-//		if(sendReportFileftp_CA($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
+		if(sendReportFileftp_CA($report_name, "PV96_M_" . $showStartDate . "_" . $showEndDate . ".txt", $logFileWrite, "monthly")) {
 			$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
 			$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-//		}
+		}
 	}
 }
 else {
