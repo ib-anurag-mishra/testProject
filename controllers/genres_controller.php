@@ -136,7 +136,7 @@ Class GenresController extends AppController
 														'Full_Files.SourceURL'
 													),
 												),												
-											),'limit' => '50'));
+											),'limit' => '20'));
 			Cache::write($genreName, $genreDetails);
 			}
 			$genreDetails = Cache::read($genreName);
