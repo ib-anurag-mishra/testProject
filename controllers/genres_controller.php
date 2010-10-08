@@ -142,15 +142,7 @@ Class GenresController extends AppController
 			$genreDetails = Cache::read($genreName);
 			$finalArr = Array();
 			$songArr = Array();
-			if(count($genreDetails) > 3) {
-			  $rand_keys = array_rand($genreDetails,3);
-			  $songArr[0] = $genreDetails[$rand_keys[0]];
-			  $songArr[1] = $genreDetails[$rand_keys[1]];
-			  $songArr[2] = $genreDetails[$rand_keys[2]];				
-			}
-			else {
-			  $songArr = $genreDetails;
-			}
+			$songArr = $genreDetails;
 			foreach($songArr as $genre) {
 				$this->Song->recursive = 2;
 				$this->Song->Behaviors->attach('Containable');
@@ -174,23 +166,34 @@ Class GenresController extends AppController
 								),                             
 						)
 				)));
-				$albumArtwork = shell_exec('perl files/tokengen ' . $downloadData[0]['Files']['CdnPath']."/".$downloadData[0]['Files']['SourceURL']);
-				$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Sample_Files']['CdnPath']."/".$genre['Sample_Files']['SaveAsName']);
-				$songUrl = shell_exec('perl files/tokengen ' . $genre['Full_Files']['CdnPath']."/".$genre['Full_Files']['SaveAsName']);
-				$finalArr[$i]['Album'] = $genre['Song']['Title'];
-				$finalArr[$i]['Song'] = $genre['Song']['Title'];
-				$finalArr[$i]['Artist'] = $genre['Song']['Artist'];
-				$finalArr[$i]['ProdArtist'] = $genre['Song']['ArtistText'];
-				$finalArr[$i]['Advisory'] = $genre['Song']['Advisory'];
-				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
-				$finalArr[$i]['SongUrl'] = $songUrl;
-				$finalArr[$i]['ProdId'] = $genre['Song']['ProdID'];
-				$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
-				$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
-				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
-				$i++;
+				if(count($downloadData) > 0){
+					$albumArtwork = shell_exec('perl files/tokengen ' . $downloadData[0]['Files']['CdnPath']."/".$downloadData[0]['Files']['SourceURL']);
+					$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Sample_Files']['CdnPath']."/".$genre['Sample_Files']['SaveAsName']);
+					$songUrl = shell_exec('perl files/tokengen ' . $genre['Full_Files']['CdnPath']."/".$genre['Full_Files']['SaveAsName']);
+					$finalArr[$i]['Album'] = $genre['Song']['Title'];
+					$finalArr[$i]['Song'] = $genre['Song']['Title'];
+					$finalArr[$i]['Artist'] = $genre['Song']['Artist'];
+					$finalArr[$i]['ProdArtist'] = $genre['Song']['ArtistText'];
+					$finalArr[$i]['Advisory'] = $genre['Song']['Advisory'];
+					$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
+					$finalArr[$i]['SongUrl'] = $songUrl;
+					$finalArr[$i]['ProdId'] = $genre['Song']['ProdID'];
+					$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
+					$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
+					$finalArr[$i]['SampleSong'] = $sampleSongUrl;
+					$i++;
+				}
 			}
-			$finalArray[$j] = $finalArr;
+			if(count($finalArr) > 3) {
+			  $rand_keys = array_rand($genreDetails,3);
+			  $songArr[0] = $genreDetails[$rand_keys[0]];
+			  $songArr[1] = $genreDetails[$rand_keys[1]];
+			  $songArr[2] = $genreDetails[$rand_keys[2]];				
+			}
+			else {
+			  $songArr = $finalArr;
+			}			
+			$finalArray[$j] = $songArr;
 			$finalArray[$j]['Genre'] = $genreName;
 			$j++;
 		}
