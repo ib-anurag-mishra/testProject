@@ -185,10 +185,10 @@ Class GenresController extends AppController
 				}
 			}
 			if(count($finalArr) > 3) {
-			  $rand_keys = array_rand($genreDetails,3);
-			  $songArr[0] = $genreDetails[$rand_keys[0]];
-			  $songArr[1] = $genreDetails[$rand_keys[1]];
-			  $songArr[2] = $genreDetails[$rand_keys[2]];				
+			  $rand_keys = array_rand($finalArr,3);
+			  $songArr[0] = $finalArr[$rand_keys[0]];
+			  $songArr[1] = $finalArr[$rand_keys[1]];
+			  $songArr[2] = $finalArr[$rand_keys[2]];				
 			}
 			else {
 			  $songArr = $finalArr;
