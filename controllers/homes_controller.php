@@ -347,7 +347,11 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);
+				if(count($searchResults) > 0) {
+					$this->set('searchResults', $searchResults);					
+				} else {
+					$this->set('searchResults', array());				
+				}				
 			}
 			else {
 				$searchKey = '';      
@@ -422,9 +426,12 @@ class HomesController extends AppController
 				$this->Song->recursive = 2;
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}				
-				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);
+				}
+				if(count($searchResults) > 0) {
+					$this->set('searchResults', $searchResults);					
+				} else {
+					$this->set('searchResults', array());				
+				}
 			}
 		} else {
 			$this->set('searchResults', array());
