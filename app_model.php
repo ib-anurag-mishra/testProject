@@ -89,6 +89,7 @@ class AppModel extends Model {
         }
         return $paginationcount;
     }
+	/*
     function save($data = null, $validate = true, $fieldList = array()) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -96,6 +97,7 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;
     }
+	
 	function saveAll($data = null, $options = array()){
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -103,6 +105,7 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;	
 	}
+	
 	function delete($id = null, $cascade = true) {	
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -110,6 +113,7 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;
 	}
+	
 	function deleteAll($conditions, $cascade = true, $callbacks = false) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -117,7 +121,8 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;
 	}
-   function query() {
+	
+	function query() {
         $params = func_get_args();
 
         if (!empty($params) && is_string($params[0])) {
@@ -139,6 +144,6 @@ class AppModel extends Model {
         }
 
         return $result;
-    }	
+    }*/
 }
 ?>
