@@ -145,8 +145,8 @@
 											}
 										}else{
 									?>
-											<span title='Coming Soon ( <?php if(isset($albumSong['Song']['SalesDate'])){ echo 
-												date("F d Y", strtotime($albumSong['Song']['SalesDate']));} ?> )'>Coming Soon</span>
+											<span title='Coming Soon ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
+												date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span>
 									<?php
 										}
 									?>	
