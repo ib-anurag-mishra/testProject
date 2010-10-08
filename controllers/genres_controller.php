@@ -68,7 +68,7 @@ Class GenresController extends AppController
 									)
 								),
 					),'group' => 'Genre.Genre'
-				));
+				));print_r($genreAll);exit;
 		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('fields' => 'id'));
 		$rand_keys = array_rand($category_ids, 4);
@@ -155,11 +155,17 @@ Class GenresController extends AppController
 				$this->Song->recursive = 2;
 				$this->Song->Behaviors->attach('Containable');
 				$downloadData = $this->Album->find('all', array(
-					'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID']),
+					'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID'],'Album.DownloadStatus' => 1,'Country.Territory' => $country),
 					'fields' => array(
 						'Album.ProdID',
 					),
-					'contain' => array(										
+					'contain' => array(	
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory',
+								'Country.SalesDate',														
+							)
+						),					
 						'Files' => array(
 							'fields' => array(
 								'Files.CdnPath',
