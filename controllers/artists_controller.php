@@ -497,7 +497,7 @@ Class ArtistsController extends AppController
 		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Album.ArtistText' => base64_decode($id),),
+						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory' => $country),
 						    $condition
 						), "1 = 1 GROUP BY Album.ProdID"
 					),
@@ -540,8 +540,8 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 		$albumSongs = array();
-		foreach($albumData as $album) {  
-			$detail = $this->Song->find('all',array(
+		foreach($albumData as $album) {
+			$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
 					'conditions' =>
 						array('and' =>
 							array(
@@ -588,14 +588,9 @@ Class ArtistsController extends AppController
 								),
 								
 					),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
-				));
-			if(count($detail) > 0){
-				$albumSongs[$album['Album']['ProdID']] = $detail;
-			}
+				      ));
 	    }
-		if(count($albumSongs) > 0){
-			$this->set('albumData', $albumData);
-		}
+	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
 	    }else {

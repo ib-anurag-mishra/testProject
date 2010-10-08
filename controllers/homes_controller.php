@@ -216,7 +216,6 @@ class HomesController extends AppController
 					$preCondition1 = array('Song.DownloadStatus' => 1);
 					$preCondition2 = array('Song.TrackBundleCount' => 0);
 					$preCondition3 = array('Country.Territory' => $country);
-					$preCondition3 = "";
 					
 				}
 				 else {
@@ -237,7 +236,6 @@ class HomesController extends AppController
 						$preCondition1 = array('Song.DownloadStatus' => 1);
 						$preCondition2 = array('Song.TrackBundleCount' => 0);
 						$preCondition3 = array('Country.Territory' => $country);
-						$preCondition3 = "";
 					}
 					else {
 						$condition = "or";
@@ -347,11 +345,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}				
 				$searchResults = $this->paginate('Song');
-				if(count($searchResults) > 0) {
-					$this->set('searchResults', $searchResults);					
-				} else {
-					$this->set('searchResults', array());				
-				}				
+				$this->set('searchResults', $searchResults);
 			}
 			else {
 				$searchKey = '';      
@@ -426,12 +420,9 @@ class HomesController extends AppController
 				$this->Song->recursive = 2;
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}
-				if(count($searchResults) > 0) {
-					$this->set('searchResults', $searchResults);					
-				} else {
-					$this->set('searchResults', array());				
-				}
+				}				
+				$searchResults = $this->paginate('Song');
+				$this->set('searchResults', $searchResults);
 			}
 		} else {
 			$this->set('searchResults', array());
