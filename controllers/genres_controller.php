@@ -136,7 +136,7 @@ Class GenresController extends AppController
 														'Full_Files.SourceURL'
 													),
 												),												
-											),'limit' => '20'));
+											),'limit' => '50'));
 			Cache::write($genreName, $genreDetails);
 			}
 			$genreDetails = Cache::read($genreName);
@@ -144,44 +144,46 @@ Class GenresController extends AppController
 			$songArr = Array();
 			$songArr = $genreDetails;
 			foreach($songArr as $genre) {
-				$this->Song->recursive = 2;
-				$this->Song->Behaviors->attach('Containable');
-				$downloadData = $this->Album->find('all', array(
-					'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID'],'Album.DownloadStatus' => 1,'Country.Territory' => $country),
-					'fields' => array(
-						'Album.ProdID',
-					),
-					'contain' => array(	
-						'Country' => array(
-							'fields' => array(
-								'Country.Territory',
-								'Country.SalesDate',														
+				if($i < 3){
+					$this->Song->recursive = 2;
+					$this->Song->Behaviors->attach('Containable');
+					$downloadData = $this->Album->find('all', array(
+						'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID'],'Album.DownloadStatus' => 1,'Country.Territory' => $country),
+						'fields' => array(
+							'Album.ProdID',
+						),
+						'contain' => array(	
+							'Country' => array(
+								'fields' => array(
+									'Country.Territory',
+									'Country.SalesDate',														
+								)
+							),					
+							'Files' => array(
+								'fields' => array(
+									'Files.CdnPath',
+									'Files.SaveAsName',
+									'Files.SourceURL',
+									),                             
 							)
-						),					
-						'Files' => array(
-							'fields' => array(
-								'Files.CdnPath',
-								'Files.SaveAsName',
-								'Files.SourceURL',
-								),                             
-						)
-				)));
-				if(count($downloadData) > 0){
-					$albumArtwork = shell_exec('perl files/tokengen ' . $downloadData[0]['Files']['CdnPath']."/".$downloadData[0]['Files']['SourceURL']);
-					$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Sample_Files']['CdnPath']."/".$genre['Sample_Files']['SaveAsName']);
-					$songUrl = shell_exec('perl files/tokengen ' . $genre['Full_Files']['CdnPath']."/".$genre['Full_Files']['SaveAsName']);
-					$finalArr[$i]['Album'] = $genre['Song']['Title'];
-					$finalArr[$i]['Song'] = $genre['Song']['Title'];
-					$finalArr[$i]['Artist'] = $genre['Song']['Artist'];
-					$finalArr[$i]['ProdArtist'] = $genre['Song']['ArtistText'];
-					$finalArr[$i]['Advisory'] = $genre['Song']['Advisory'];
-					$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
-					$finalArr[$i]['SongUrl'] = $songUrl;
-					$finalArr[$i]['ProdId'] = $genre['Song']['ProdID'];
-					$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
-					$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
-					$finalArr[$i]['SampleSong'] = $sampleSongUrl;
-					$i++;
+					)));
+					if(count($downloadData) > 0){
+						$albumArtwork = shell_exec('perl files/tokengen ' . $downloadData[0]['Files']['CdnPath']."/".$downloadData[0]['Files']['SourceURL']);
+						$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Sample_Files']['CdnPath']."/".$genre['Sample_Files']['SaveAsName']);
+						$songUrl = shell_exec('perl files/tokengen ' . $genre['Full_Files']['CdnPath']."/".$genre['Full_Files']['SaveAsName']);
+						$finalArr[$i]['Album'] = $genre['Song']['Title'];
+						$finalArr[$i]['Song'] = $genre['Song']['Title'];
+						$finalArr[$i]['Artist'] = $genre['Song']['Artist'];
+						$finalArr[$i]['ProdArtist'] = $genre['Song']['ArtistText'];
+						$finalArr[$i]['Advisory'] = $genre['Song']['Advisory'];
+						$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
+						$finalArr[$i]['SongUrl'] = $songUrl;
+						$finalArr[$i]['ProdId'] = $genre['Song']['ProdID'];
+						$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
+						$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
+						$finalArr[$i]['SampleSong'] = $sampleSongUrl;
+						$i++;
+					}
 				}
 			}
 			if(count($finalArr) > 3) {
