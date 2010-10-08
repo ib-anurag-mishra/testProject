@@ -68,7 +68,7 @@ Class GenresController extends AppController
 									)
 								),
 					),'group' => 'Genre.Genre'
-				));print_r($genreAll);exit;
+				));
 		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('fields' => 'id'));
 		$rand_keys = array_rand($category_ids, 4);
