@@ -302,7 +302,7 @@ class HomesController extends AppController
 													),"1 = 1 GROUP BY Song.ProdID"
 										),
 										'fields' => array(
-														'DISTINCT Song.ProdID',
+														'Song.ProdID',
 														'Song.Title',
 														'Song.ArtistText',
 														'Song.ReferenceID',
