@@ -472,17 +472,25 @@ Class ArtistsController extends AppController
 				$album = "";
 			}
 		}
+		$country = $this->Session->read('territory');
 		if($album != '') {
 			$condition = array("Album.ProdID" => $album);
 		}
 		else{
-			$condition = "";
+			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
+			$val = '';
+			foreach($allAlbum as $k => $v){
+				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'Country.Territory' => $country), 'recursive' => 0,'limit' => 2));
+				if(count($recordCount) > 1){
+					$val = $val.$v['Album']['ProdID'].",";
+				}
+			}
+			$condition = array("Album.ProdID IN (".rtrim($val,",").")");
 		}
 		$this->layout = 'home';
 		$this->set('artistName',base64_decode($id));
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
-		$country = $this->Session->read('territory');
 		//$country = "'".$country."'";
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -497,7 +505,7 @@ Class ArtistsController extends AppController
 		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory' => $country),
+						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 0,'Country.Territory' => $country),
 						    $condition
 						), "1 = 1 GROUP BY Album.ProdID"
 					),
