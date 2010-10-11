@@ -505,7 +505,7 @@ Class ArtistsController extends AppController
 		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 0,'Country.Territory' => $country),
+						    array('Album.ArtistText' => base64_decode($id),'Album.DownloadStatus' => 1,'Country.Territory' => $country),
 						    $condition
 						), "1 = 1 GROUP BY Album.ProdID"
 					),
