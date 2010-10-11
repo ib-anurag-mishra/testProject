@@ -479,8 +479,9 @@ Class ArtistsController extends AppController
 		else{
 			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
 			$val = '';
+			$this->Song->Behaviors->attach('Containable');
 			foreach($allAlbum as $k => $v){
-				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'Country.Territory' => $country), 'recursive' => 0,'limit' => 2));
+				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'Country.Territory' => $country), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 2));
 				if(count($recordCount) > 1){
 					$val = $val.$v['Album']['ProdID'].",";
 				}
