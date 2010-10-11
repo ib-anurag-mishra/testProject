@@ -265,13 +265,13 @@ class HomesController extends AppController
 					$preCondition4 = "";
 				}
 				if($song != '') {
-					$songSearch = array('match(Song.Title) against ("+'.$song.'*" in boolean mode)');    
+					$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');    
 				}
 				else {
 					$songSearch = '';
 				}
 				if($album != '') {
-					$albumSearch = array('match(Song.SongTitle) against ("+'.$album.'*" in boolean mode)');    
+					$albumSearch = array('match(Song.Title) against ("+'.$album.'*" in boolean mode)');    
 				}
 				else {
 					$albumSearch = '';
