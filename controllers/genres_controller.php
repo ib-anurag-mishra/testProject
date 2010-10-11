@@ -67,7 +67,7 @@ Class GenresController extends AppController
 										'Country.Territory'								
 									)
 								),
-					),'group' => 'Genre.Genre'
+					),'group' => 'Genre.Genre','cache' => 'yes'
 				));
 		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('fields' => 'id'));
