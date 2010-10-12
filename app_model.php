@@ -89,7 +89,6 @@ class AppModel extends Model {
         }
         return $paginationcount;
     }
-/*
     function save($data = null, $validate = true, $fieldList = array()) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -121,29 +120,19 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;
 	}
-	
-	function query() {
-        $params = func_get_args();
-
-        if (!empty($params) && is_string($params[0])) {
-            $updates = array( 
-                'CREATE', 'DELETE', 'DROP', 
-                'INSERT', 'UPDATE'
-            );
-            if (preg_match('/^(' . implode('|', $updates) .')/i', trim($params[0]))) {
-                $this->useDbConfig = 'master';
-            }
-        }
-
-        if (!empty($params)) {
-            $result =& call_user_func_array(array($this, 'parent::query'), $params);
-        }
-
-        if ($this->useDbConfig == 'master') {
-            $this->useDbConfig = 'default';
-        }
-
-        return $result;
-    }*/
+	function saveField($name, $value, $validate = false) {
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::saveField($name, $value, $validate);
+        $this->useDbConfig = $oldDb;
+        return $return;
+	}	
+	function create($data = array(), $filterKey = false) {
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::create($data, $filterKey);
+        $this->useDbConfig = $oldDb;
+        return $return;
+	}
 }
 ?>

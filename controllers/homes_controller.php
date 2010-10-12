@@ -492,8 +492,10 @@ class HomesController extends AppController
 		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
         if($this->Download->save($insertArr)){
+			$this->Library->setDataSource('master');
 			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
 			$this->Library->query($sql);
+			$this->Library->setDataSource('default');
 		}
         $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
@@ -969,8 +971,10 @@ class HomesController extends AppController
             //insert into wishlist table
             $this->Wishlist->save($insertArr);
             //update the libraries table
+			$this->Library->setDataSource('master');
             $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-1 Where id=".$libraryId;
             $this->Library->query($sql);
+			$this->Library->setDataSource('default');
             echo "Success";
             exit;
         }
@@ -1019,8 +1023,10 @@ class HomesController extends AppController
         $deleteSongId = $this->params['named']['id'];
         $libraryId = $this->Session->read('library');
         if($this->Wishlist->delete($deleteSongId)) {
+			$this->Library->setDataSource('master');
             $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
-            $this->Library->query($sql);  
+            $this->Library->query($sql);
+			$this->Library->setDataSource('default');
             $this->Session->setFlash('Data deleted successfully!');
             $this->redirect('my_wishlist');
         }
@@ -1094,8 +1100,10 @@ class HomesController extends AppController
         //save to downloads table
         if($this->Download->save($insertArr)){
         //update library table
+			$this->Library->setDataSource('master');
 			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;	
 			$this->Library->query($sql);
+			$this->Library->setDataSource('default');
 		}
         //delete from wishlist table
         $deleteSongId = $id;     
@@ -1127,8 +1135,10 @@ class HomesController extends AppController
 		$downloadCount =  $downloadsUsed[0]['Download']['history'];
 		//check for download availability
 		if($downloadCount < 2){
+			$this->Library->setDataSource('master');
 			$sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".$startDate."' AND '".$endDate."'";
 			$this->Download->query($sql);
+			$this->Library->setDataSource('default');
 			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
 			$downloadCount =  $downloadsUsed[0]['Download']['history'];
             echo $downloadCount;			
