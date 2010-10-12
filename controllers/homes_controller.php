@@ -509,17 +509,18 @@ class HomesController extends AppController
      Function Name : advance_search
      Desc : actions used for showing advanced search form
     */
-    function advance_search() {
-        $this->layout = 'home';           
+	function advance_search() {
+        $this->layout = 'home';
+		$country = $this->Session->read('territory');
         $this->Genre->recursive = -1;
-        $genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre','cache' => 'Genre'));
-        $resultArr = array();
+		$this->Genre->Behaviors->attach('Containable');
+        $genres = $this->Genre->find('all', array('fields' => 'DISTINCT Genre','conditions' => array('Country.Territory' => $country),'contain' => array('Country' => array('fields' => array('Country.Territory'))),'order' => 'Genre','cache' => 'Genre'));
+		$resultArr = array();
         foreach($genres as $genre) {
             $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
         }
         $this->set('genres',$resultArr);
-    }
-    
+    }    
     /*
      Function Name : checkPatron
      Desc : actions used for validating patron access
