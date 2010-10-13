@@ -477,7 +477,7 @@ Class ArtistsController extends AppController
 			$condition = array("Album.ProdID" => $album);
 		}
 		else{
-			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
+			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1,'cache' => 'yes'));
 			$val = '';
 			$this->Song->Behaviors->attach('Containable');
 			foreach($allAlbum as $k => $v){
