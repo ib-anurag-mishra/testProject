@@ -477,11 +477,11 @@ Class ArtistsController extends AppController
 			$condition = array("Album.ProdID" => $album);
 		}
 		else{
-			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
+			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1,'cache' => 'yes'));
 			$val = '';
 			$this->Song->Behaviors->attach('Containable');
 			foreach($allAlbum as $k => $v){
-				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'Country.Territory' => $country), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 2));
+				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'Country.Territory' => $country), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 2,'cache' => 'yes'));
 				if(count($recordCount) > 0){
 					$val = $val.$v['Album']['ProdID'].",";
 				}
