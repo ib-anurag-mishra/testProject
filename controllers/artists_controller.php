@@ -507,7 +507,7 @@ Class ArtistsController extends AppController
 					array('and' =>
 						array(
 						    array('Album.ArtistText' => base64_decode($id)),
-						    $condition
+						    $condition,$cond
 						), "1 = 1 GROUP BY Album.ProdID"
 					),
 					'fields' => array(
