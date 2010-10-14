@@ -7,14 +7,14 @@
 				if($artist['Artist']['territory'] == $this->Session->read('territory')){
                     if($key == 0) {
                         echo $html->link(
-                            $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'])),
+                            $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
                             array('controller'=>'artists', 'action'=>'view', base64_encode($artist['Artist']['artist_name'])),
                             array('class'=>'first','escape'=>false)
                         );
                     }
                     else {
                         echo $html->link(
-                            $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'])),
+                            $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
                             array('controller'=>'artists', 'action'=>'view', base64_encode($artist['Artist']['artist_name'])),
                             array('escape'=>false)
                         );
@@ -97,14 +97,14 @@
 				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory')){
 					if($key == 0) {
 						echo $html->link(
-							$html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
+							$html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
 							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
 							array('class'=>'first','escape'=>false)
 						);
 					}
 					else {
 						echo $html->link(
-							$html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
+							$html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
 							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
 							array('escape'=>false)
 						);
@@ -119,14 +119,14 @@
 				if($newArtist['Newartist']['territory'] == $this->Session->read('territory')){			
 					if($key == 0) {
 						echo $html->link(
-							$html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
+							$html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),
 							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
 							array('class'=>'first','escape'=>false)
 						);
 					}
 					else {
 						echo $html->link(
-							$html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
+							$html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),
 							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
 							array('escape'=>false)
 						);
