@@ -82,7 +82,8 @@ class HomesController extends AppController
 										),
 								),	
 							'order' => 'Song.ArtistText',
-							'group' => 'Song.ArtistText'
+							'group' => 'Song.ArtistText',
+							'cache' => 'yes'
 						));
         $this->set('distinctArtists', $artist);
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
