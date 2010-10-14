@@ -55,7 +55,7 @@ class HomesController extends AppController
 											'Country.SalesDate'								
 										)
 									),
-								)
+								),'cache' => 'yes'
 							)
 						);
 						
