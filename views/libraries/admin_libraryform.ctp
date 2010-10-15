@@ -255,6 +255,7 @@
 									<option value="=">=</option>
 									<option value=">">></option>
 									<option value="<"><</option>
+									<option value="<>"><></option>
 								</select>							
 							</td>
 						</tr>						
@@ -287,6 +288,7 @@
 										<option <?php if($var == '='){ ?> selected = "selected" <?php } ?> value = "=" >=</option>
 										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
 										<option <?php if($var == '<'){ ?> selected = "selected" <?php } ?> value="<"> < </option>
+										<option <?php if($var == '<>'){ ?> selected = "selected" <?php } ?> value="<>"> <> </option>
 									</select>							
 								</td>
 							</tr>							
