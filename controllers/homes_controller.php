@@ -515,7 +515,7 @@ class HomesController extends AppController
 		$country = $this->Session->read('territory');
         $this->Genre->recursive = -1;
 		$this->Genre->Behaviors->attach('Containable');
-        $genres = $this->Genre->find('all', array('fields' => 'Genre','conditions' => array('Country.Territory' => $country),'contain' => array('Country' => array('fields' => array())),'order' => 'Genre','group' => 'Genre','cache' => 'yes'));
+        $genres = $this->Genre->find('all', array('fields' => 'Genre','conditions' => array('Country.Territory' => $country),'contain' => array('Country' => array('fields' => array())),'order' => 'Genre','group' => 'Genre','cache' => 'no'));
 		$resultArr = array();
         foreach($genres as $genre) {
             $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
