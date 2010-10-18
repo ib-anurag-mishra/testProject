@@ -513,36 +513,16 @@ class HomesController extends AppController
 	function advance_search() {
         $this->layout = 'home';
 		$country = $this->Session->read('territory');
-        $this->Song->recursive = -1;
-		$this->Song->Behaviors->attach('Containable');
-        $genres = $this->Song->find('all',array('conditions' =>
-											array('and' =>
-												array(						
-													array('Song.DownloadStatus' => 1),
-													array('Song.TrackBundleCount' => 0),
-													array('Country.Territory' => $country),
-												)
-											),
-											'fields' => array(
-												'Song.ProdID',
-											),
-											'contain' => array(
-												'Genre' => array(
-													'fields' => array(
-														'Genre.Genre'								
-													)
-												),
-												'Country' => array(
-													'fields' => array(
-													)
-												),												
-											),'group' => 'Genre.Genre','cache' => 'yes'));
+        $this->Genre->recursive = -1;
+		$this->Genre->Behaviors->attach('Containable');
+        $genres = $this->Genre->find('all', array('fields' => 'Genre','conditions' => array('Country.Territory' => $country),'contain' => array('Country' => array('fields' => array())),'order' => 'Genre','group' => 'Genre','cache' => 'yes'));
 		$resultArr = array();
         foreach($genres as $genre) {
             $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
         }
         $this->set('genres',$resultArr);
-    }    
+    } 
+
     /*
      Function Name : checkPatron
      Desc : actions used for validating patron access
