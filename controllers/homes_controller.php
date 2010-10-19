@@ -46,7 +46,7 @@ class HomesController extends AppController
 								'Country.SalesDate >' => date('Y-m-d')
 							    ),
 							    'fields' => array(
-									'Album.Title',
+									'Album.AlbumTitle',
 									'Album.ArtistText'
 							    ),
 								'contain' => array(
