@@ -51,24 +51,28 @@ Class GenresController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
-		$genreAll = $this->Genre->find('all',array(
-					'conditions' =>
-						array('and' =>
-							array(
-								array('Country.Territory' => $country)
-							)
-						),
-					'fields' => array(
-							'Genre.Genre'
-						    ),
-					'contain' => array(
-						'Country' => array(
-								'fields' => array(
-										'Country.Territory'								
-									)
+		if (($genreAll = Cache::read($genres.$country)) === false) {
+			$genreAll = $this->Genre->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Country.Territory' => $country)
+								)
+							),
+						'fields' => array(
+								'Genre.Genre'
 								),
-					),'group' => 'Genre.Genre','cache' => 'yes'
-				));
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory'								
+										)
+									),
+						),'group' => 'Genre.Genre'
+					));
+			Cache::write($genres.$country, $genreAll);
+		}
+		$genreAll = Cache::read($genres.$country);
 		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('fields' => 'id'));
 		$rand_keys = array_rand($category_ids, 4);
