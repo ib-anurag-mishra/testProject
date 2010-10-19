@@ -62,29 +62,32 @@ class HomesController extends AppController
         $this->set('upcoming', $upcoming);
 		$country = $this->Session->read('territory');
 		$this->Song->recursive = 2;
-		$artist = $this->Song->find('all',array(
-							'conditions' =>
-								array('and' =>
-									array(
-										array('ArtistText LIKE' => 'A%'),
-										array('Country.Territory' => $country),
-										array('DownloadStatus' => 1)
-									)
-								),
-							'fields' => array(
-									'Song.ArtistText','Song.DownloadStatus',
+		if (($artists = Cache::read("artist".$country)) === false) {		
+			$artist = $this->Song->find('all',array(
+								'conditions' =>
+									array('and' =>
+										array(
+											array('ArtistText LIKE' => 'A%'),
+											array('Country.Territory' => $country),
+											array('DownloadStatus' => 1)
+										)
 									),
-							'contain' => array(
-									'Country' => array(
-											'fields' => array(
-												'Country.Territory'								
-											)
+								'fields' => array(
+										'Song.ArtistText','Song.DownloadStatus',
 										),
-								),	
-							'order' => 'Song.ArtistText',
-							'group' => 'Song.ArtistText',
-							'cache' => 'yes'
-						));
+								'contain' => array(
+										'Country' => array(
+												'fields' => array(
+													'Country.Territory'								
+												)
+											),
+									),	
+								'order' => 'Song.ArtistText',
+								'group' => 'Song.ArtistText',
+							));
+			Cache::write("artist".$country, $artist);
+		}
+		$artist = Cache::read("artist".$country);						
         $this->set('distinctArtists', $artist);
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
