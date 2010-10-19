@@ -30,9 +30,9 @@
 		<?php 
 		foreach($upcoming as $newreleases):
 			if($newreleases['Country']['SalesDate']){
-				echo '<li>Coming ' . date("F d", strtotime($newreleases['Country']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
+				echo '<li>Coming ' . date("F d", strtotime($newreleases['Country']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['AlbumTitle'] . '</li>';
 			} else {
-				echo '<li>Coming ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['Title'] . '</li>';
+				echo '<li>Coming ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['AlbumTitle'] . '</li>';
 			}
 		endforeach;
 		?>
