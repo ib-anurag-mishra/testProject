@@ -513,11 +513,32 @@ class HomesController extends AppController
 	function advance_search() {
         $this->layout = 'home';
 		$country = $this->Session->read('territory');
-        $this->Genre->recursive = -1;
 		$this->Genre->Behaviors->attach('Containable');
-        $genres = $this->Genre->find('all', array('fields' => 'Genre','conditions' => array('Country.Territory' => $country),'contain' => array('Country' => array('fields' => array())),'order' => 'Genre','group' => 'Genre','cache' => 'yes'));
+		$this->Genre->recursive = 2;
+		if (($genre = Cache::read("genre".$country)) === false) {
+			$genreAll = $this->Genre->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Country.Territory' => $country)
+								)
+							),
+						'fields' => array(
+								'Genre.Genre'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory'								
+										)
+									),
+						),'group' => 'Genre.Genre'
+					));
+			Cache::write("genre".$country, $genreAll);
+		}
+		$genreAll = Cache::read("genre".$country);
 		$resultArr = array();
-        foreach($genres as $genre) {
+        foreach($genreAll as $genre) {
             $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
         }
         $this->set('genres',$resultArr);
@@ -549,9 +570,9 @@ class HomesController extends AppController
     */
     function approvePatron() {
 		Configure::write('debug', 0);
-			$this->layout = false;
+		$this->layout = false;
 		$libid = $_REQUEST['libid'];       
-			$patronid = $_REQUEST['patronid'];
+		$patronid = $_REQUEST['patronid'];
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
 		if(count($currentPatron) > 0){
 			  $updateArr = array();
