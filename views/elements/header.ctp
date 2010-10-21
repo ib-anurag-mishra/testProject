@@ -24,11 +24,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<?php
 			if($libraryInfo['Library']['library_home_url'] != "") {
 			?>
-				<a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img src="<?php echo $this->webroot; ?>img/libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>"></a>
+				<a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img src="<?php echo "http://music.freegalmusic.com/freegalmusic/"; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>"></a>
 			<?php
 			}else{
 			?>
-				<img src="<?php echo $this->webroot; ?>img/libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
+				<img src="<?php echo "http://music.freegalmusic.com/freegalmusic/"; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
 			<?php
 			}
 			?>
