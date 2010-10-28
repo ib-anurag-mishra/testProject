@@ -970,6 +970,10 @@ class HomesController extends AppController
     function addToWishlist(){
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
+		//check library download
+		$libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+		//check patron download
+		$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->Library->recursive = -1;
         $libraryDetails = $this->Library->find('all',array('conditions' => array('Library.id' => $libraryId),'fields' => 'library_user_download_limit'));
         //get patron limit per week
@@ -978,9 +982,9 @@ class HomesController extends AppController
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
         //get no of downloads for this week
         $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-        if($wishlistCount >= $patronLimit) {            
+        if($wishlistCount >= $patronLimit && $libraryDownload != '1' && $patronDownload != '0') {            
             echo "error";
-            exit;        
+            exit;
         }
         else {
             $prodId = $_REQUEST['prodId'];
