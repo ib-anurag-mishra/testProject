@@ -2103,7 +2103,7 @@ Class UsersController extends AppController
 		$this->Library->recursive = -1;
 		$this->Library->Behaviors->attach('Containable');	
 		$existingLibraries = $this->Library->find('all',array(
-											'conditions' => array('library_ezproxy_referral' => $ref[1],'library_status' => 'active','library_authentication_method' => 'ezproxy'),
+											'conditions' => array('library_ezproxy_referral' => $referral,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
 											'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content')
 											)
 										 );
