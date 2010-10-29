@@ -504,7 +504,7 @@ Class LibrariesController extends AppController
                         mkdir($upload_dir);
                     }
                     move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
-					src = WWW_ROOT.'img/libraryimg/'.$fileName;
+					$src = WWW_ROOT.'img/libraryimg/'.$fileName;
 					$dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
 					$error = $this->CdnUpload->sendFile($src, $dst);
                     $this->Library->id = $_REQUEST['LibraryID'];
