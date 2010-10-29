@@ -10,7 +10,7 @@ Class LibrariesController extends AppController
     var $name = 'Libraries';
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
-    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
+    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url');
     
     /*
@@ -503,7 +503,10 @@ Class LibrariesController extends AppController
                     if(!file_exists($upload_dir)) {
                         mkdir($upload_dir);
                     }
-                    $test = move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
+                    move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
+					src = WWW_ROOT.'img/libraryimg/'.$fileName;
+					$dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
+					$error = $this->CdnUpload->sendFile($src, $dst);
                     $this->Library->id = $_REQUEST['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
                 }

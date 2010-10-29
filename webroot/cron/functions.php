@@ -43,6 +43,7 @@ function sendReportFileftp($src,$dst,$logFileWrite,$typeReport)
 			{
 				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
 				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+				sendFile($src, $dst);
 				sendReportEmail("US ".$typeReport);
 				return true;
 			}
@@ -86,6 +87,7 @@ function sendReportFileftp_CA($src,$dst,$logFileWrite,$typeReport)
 			{
 				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
 				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+				sendFile($src, $dst);
 				sendReportEmail("Canadian ".$typeReport);
 				return true;
 			}
@@ -207,5 +209,41 @@ function sendReportEmail($typereport){
 	$subject = $typereport.REPORT_SUBJECT;
 	$success = mail(REPORT_TO,$subject,REPORT_BODY,REPORT_HEADERS);
 	return $success;
+}
+
+/*
+ Function Name : sendFile
+ Desc : function used for uploading the file to CDN
+*/
+function sendFile($src,$dst)
+{
+	$SFTP_HOST = SFTP_HOST;
+	$SFTP_PORT = SFTP_PORT;
+	$SFTP_USER = SFTP_USER;
+	$SFTP_PASS = SFTP_PASS;
+	
+	if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
+	{
+		echo "Not Able to Establish Connection\n";
+	}
+	else
+	{
+		if(!ssh2_auth_password($con,$SFTP_USER,$SFTP_PASS))
+		{
+			echo "fail: unable to authenticate\n";
+		}
+		else
+		{
+			$sftp = ssh2_sftp($con);
+			if(!ssh2_scp_send($con, $src, $dst, 0644)){
+				echo "error\n";
+			}
+			else
+			{
+				//echo "FILE Sucessfully sent\n";
+			}
+
+		}
+	}
 }
 ?>
