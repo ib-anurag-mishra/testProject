@@ -11,7 +11,7 @@ Class ArtistsController extends AppController
 	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
-	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
+	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	
 	/*
 	 Function Name : beforeFilter
@@ -86,9 +86,6 @@ Class ArtistsController extends AppController
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-		src = WWW_ROOT.'img/featuredimg/'.$fileName;
-		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
-		$error = $this->CdnUpload->sendFile($src, $dst);		
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 		$artist = '';
 		if(isset($_REQUEST[ 'artistName' ])){
@@ -135,9 +132,6 @@ Class ArtistsController extends AppController
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-		src = WWW_ROOT.'img/featuredimg/'.$fileName;
-		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
-		$error = $this->CdnUpload->sendFile($src, $dst);
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 		$artistName = '';
 		if(isset($_REQUEST[ 'artistName' ])){
@@ -237,9 +231,6 @@ Class ArtistsController extends AppController
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-						src = WWW_ROOT.'img/artistimg/'.$fileName;
-						$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
-						$error = $this->CdnUpload->sendFile($src, $dst);
 						$updateArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
 					if( empty( $errorMsg ) ) {
@@ -282,9 +273,6 @@ Class ArtistsController extends AppController
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-				src = WWW_ROOT.'img/artistimg/'.$fileName;
-				$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
-				$error = $this->CdnUpload->sendFile($src, $dst);
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
@@ -373,10 +361,6 @@ Class ArtistsController extends AppController
 						$newPath = '../webroot/img/newartistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
-						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-						src = WWW_ROOT.'img/newartistimg/'.$fileName;
-						$dst = Configure::read('App.CDN_PATH').'newartistimg/'.$fileName;
-						$error = $this->CdnUpload->sendFile($src, $dst);
 						$updateArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
 					if( empty( $errorMsg ) ) {
@@ -421,9 +405,6 @@ Class ArtistsController extends AppController
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-				src = WWW_ROOT.'img/newartistimg/'.$fileName;
-				$dst = Configure::read('App.CDN_PATH').'newartistimg/'.$fileName;
-				$error = $this->CdnUpload->sendFile($src, $dst);
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
