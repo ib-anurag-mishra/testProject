@@ -574,6 +574,7 @@ Class ArtistsController extends AppController
 							array(
 								array('Song.ReferenceID' => $album['Album']['ProdID']),							
 								array('Song.DownloadStatus' => 1),
+								array('Song.TrackBundleCount' => 0),
 								array('Country.Territory' => $country),$cond
 							)
 						),
