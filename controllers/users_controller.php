@@ -2290,6 +2290,7 @@ Class UsersController extends AppController
 					}                  
                }
                elseif($retStatus == 0){
+					$status =1;
 					$this->Variable->recursive = -1;
 					$allVariables = $this->Variable->find('all',array(
 														'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
@@ -2353,7 +2354,7 @@ Class UsersController extends AppController
 						}
 					}						
 					if($status == ''){
-						$errMsgArr =  explode("ERRNUM=",$retStr);
+						$errMsgArr =  explode("ERRNUM=",$response);
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
 						if($errMsgCount == '1'){
 							$this -> Session -> setFlash("Requested record not found.");
@@ -2430,11 +2431,15 @@ Class UsersController extends AppController
 						  $errMsg = $errStrArr['1'];
 						  $this -> Session -> setFlash($errMsg);
 						  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
-					}
+						}
+					}	
+					else{
+						$this -> Session -> setFlash("Requested record not found.");
+						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));			
+					}				
 				}
-            }
-         }         
-      }
+			}         
+		}
    }
 	
 }
