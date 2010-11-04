@@ -2297,62 +2297,64 @@ Class UsersController extends AppController
 														'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
 														)
 													 );
-					foreach($allVariables as $k=>$v){
-						$retStatusArr = explode($v['Variable']['authentication_variable'],$response);
-						$pos = strpos($retStatusArr['1'],"<br/>");
-						$retStatus = substr($retStatusArr['1'],1,$pos-1);
-						if($retStatus == ''){
-							$status = '';
-						}elseif($v['Variable']['comparison_operator'] == '='){
-							if($retStatus == $v['Variable']['authentication_response']){
-								$status = 1;
+					if(count($allVariables) > 0){
+						foreach($allVariables as $k=>$v){
+							$retStatusArr = explode($v['Variable']['authentication_variable'],$response);
+							$pos = strpos($retStatusArr['1'],"<br/>");
+							$retStatus = substr($retStatusArr['1'],1,$pos-1);
+							if($retStatus == ''){
+								$status = '';
+							}elseif($v['Variable']['comparison_operator'] == '='){
+								if($retStatus == $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}
+							}elseif($v['Variable']['comparison_operator'] == '<'){
+								$res = explode("$",$retStatus);
+								if(isset($res[1])){
+									$cmp = $res[1];
+								} else {
+									$cmp = $res[0];
+								}							
+								if($cmp < $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}
+							}elseif($v['Variable']['comparison_operator'] == '>'){
+								$res = explode("$",$retStatus);
+								if(isset($res[1])){
+									$cmp = $res[1];
+								} else {
+									$cmp = $res[0];
+								}							
+								if($cmp > $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}
+							}elseif($v['Variable']['comparison_operator'] == '<>'){
+								$res = explode("$",$retStatus);
+								if(isset($res[1])){
+									$cmp = $res[1];
+								} else {
+									$cmp = $res[0];
+								}							
+								if($cmp != $v['Variable']['authentication_response']){
+									$status = 1;
+								}else{
+									$status = 'error';
+								}	
 							}else{
 								$status = 'error';
 							}
-						}elseif($v['Variable']['comparison_operator'] == '<'){
-							$res = explode("$",$retStatus);
-							if(isset($res[1])){
-								$cmp = $res[1];
-							} else {
-								$cmp = $res[0];
-							}							
-							if($cmp < $v['Variable']['authentication_response']){
-								$status = 1;
-							}else{
-								$status = 'error';
+							if(!$status || $status == 'error'){
+								$msg = $v['Variable']['error_msg'];
+								break;
 							}
-						}elseif($v['Variable']['comparison_operator'] == '>'){
-							$res = explode("$",$retStatus);
-							if(isset($res[1])){
-								$cmp = $res[1];
-							} else {
-								$cmp = $res[0];
-							}							
-							if($cmp > $v['Variable']['authentication_response']){
-								$status = 1;
-							}else{
-								$status = 'error';
-							}
-						}elseif($v['Variable']['comparison_operator'] == '<>'){
-							$res = explode("$",$retStatus);
-							if(isset($res[1])){
-								$cmp = $res[1];
-							} else {
-								$cmp = $res[0];
-							}							
-							if($cmp != $v['Variable']['authentication_response']){
-								$status = 1;
-							}else{
-								$status = 'error';
-							}	
-						}else{
-							$status = 'error';
 						}
-						if(!$status || $status == 'error'){
-							$msg = $v['Variable']['error_msg'];
-							break;
-						}
-					}						
+					}
 					if($status == ''){
 						$errMsgArr =  explode("ERRNUM=",$response);
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
