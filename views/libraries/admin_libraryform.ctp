@@ -237,7 +237,7 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Referral URL');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_referral',array('label' => false, 'value' => $getData['Library']['library_ezproxy_referral'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
-					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
 					<?php
 					if(empty($allVariables))
 					{
@@ -648,7 +648,7 @@
 						$("#referral_url").hide();
 						$("#innovative1").show();
 						$("#innovative2").show();
-						$("#innv_var").hide();
+						$("#innv_var").show();
 						//$("#innovative_var_pin").hide();
 						//$("#variable").hide();						
 						$("#sip_host").hide();

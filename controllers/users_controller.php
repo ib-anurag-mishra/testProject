@@ -2290,72 +2290,148 @@ Class UsersController extends AppController
 					}                  
                }
                elseif($retStatus == 0){
-                  $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-                  if(count($currentPatron) > 0){
-                      $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-                      $date = strtotime(date('Y-m-d H:i:s'));              
-                      if(!($this->Session->read('patron'))){               
-                          if(($date-$modifiedTime) > 60){
-                              $updateArr = array();
-                              $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                              $updateArr['session_id'] = session_id();
-                              $this->Currentpatron->save($updateArr);
-                          }
-                          else{
-                              $this->Session->destroy('user');
-                              $this -> Session -> setFlash("This account is already active.");                              
-                              $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-                          }
-                     }
-                      else{
-                          $sessionId = session_id();                    
-                          if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-                              if(($date-$modifiedTime) > 60){                            
-                                  $updateArr = array();
-                                  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-                                  $updateArr['session_id'] = session_id();
-                                  $this->Currentpatron->save($updateArr);
-                              }
-                              else{
-                                  $this->Session->destroy('user'); 
-                                  $this -> Session -> setFlash("This account is already active.");                                  
-                                  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-                              }                  
-                           }                    
-                     }
-                  }
-                  else{
-                     $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-                     $insertArr['patronid'] = $patronId;
-                     $insertArr['session_id'] = session_id();
-                     $this->Currentpatron->save($insertArr);
-                  }
-                  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
-                  $this->Session->write("patron", $patronId);
-                  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-				  $this->Session->write("innovative_https","innovative_https");
-                  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-                  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-                  $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
-                  $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				  $this->Download->recursive = -1;
-                  $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-                  $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-                  $this ->Session->write("downloadsUsed", $results);
-                  if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-                      $this ->Session->write("block", 'yes');
-                  }
-                  else{
-                      $this ->Session->write("block", 'no');
-                  }
-                  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-               }
-               else{
-                  $errStrArr = explode('ERRMSG=',$response);
-                  $errMsg = $errStrArr['1'];
-                  $this -> Session -> setFlash($errMsg);
-                  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
-               }
+					$this->Variable->recursive = -1;
+					$allVariables = $this->Variable->find('all',array(
+														'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
+														'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
+														)
+													 );
+					foreach($allVariables as $k=>$v){
+						$retStatusArr = explode($v['Variable']['authentication_variable'],$response);
+						$pos = strpos($retStatusArr['1'],"<br/>");
+						$retStatus = substr($retStatusArr['1'],1,$pos-1);
+						if($retStatus == ''){
+							$status = '';
+						}elseif($v['Variable']['comparison_operator'] == '='){
+							if($retStatus == $v['Variable']['authentication_response']){
+								$status = 1;
+							}else{
+								$status = 'error';
+							}
+						}elseif($v['Variable']['comparison_operator'] == '<'){
+							$res = explode("$",$retStatus);
+							if(isset($res[1])){
+								$cmp = $res[1];
+							} else {
+								$cmp = $res[0];
+							}							
+							if($cmp < $v['Variable']['authentication_response']){
+								$status = 1;
+							}else{
+								$status = 'error';
+							}
+						}elseif($v['Variable']['comparison_operator'] == '>'){
+							$res = explode("$",$retStatus);
+							if(isset($res[1])){
+								$cmp = $res[1];
+							} else {
+								$cmp = $res[0];
+							}							
+							if($cmp > $v['Variable']['authentication_response']){
+								$status = 1;
+							}else{
+								$status = 'error';
+							}
+						}elseif($v['Variable']['comparison_operator'] == '<>'){
+							$res = explode("$",$retStatus);
+							if(isset($res[1])){
+								$cmp = $res[1];
+							} else {
+								$cmp = $res[0];
+							}							
+							if($cmp != $v['Variable']['authentication_response']){
+								$status = 1;
+							}else{
+								$status = 'error';
+							}	
+						}else{
+							$status = 'error';
+						}
+						if(!$status || $status == 'error'){
+							$msg = $v['Variable']['error_msg'];
+							break;
+						}
+					}						
+					if($status == ''){
+						$errMsgArr =  explode("ERRNUM=",$retStr);
+						@$errMsgCount = substr($errMsgArr['1'],0,1);
+						if($errMsgCount == '1'){
+							$this -> Session -> setFlash("Requested record not found.");
+							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
+						}
+						else{
+							$this -> Session -> setFlash("Authentication server down.");
+							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
+						}                  
+					}
+					elseif($status == 1){
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+						if(count($currentPatron) > 0){
+						  $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
+						  $date = strtotime(date('Y-m-d H:i:s'));              
+						  if(!($this->Session->read('patron'))){               
+							  if(($date-$modifiedTime) > 60){
+								  $updateArr = array();
+								  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+								  $updateArr['session_id'] = session_id();
+								  $this->Currentpatron->save($updateArr);
+							  }
+							  else{
+								  $this->Session->destroy('user');
+								  $this -> Session -> setFlash("This account is already active.");                              
+								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+							  }
+						 }
+						  else{
+							  $sessionId = session_id();                    
+							  if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
+								  if(($date-$modifiedTime) > 60){                            
+									  $updateArr = array();
+									  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
+									  $updateArr['session_id'] = session_id();
+									  $this->Currentpatron->save($updateArr);
+								  }
+								  else{
+									  $this->Session->destroy('user'); 
+									  $this -> Session -> setFlash("This account is already active.");                                  
+									  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+								  }                  
+							   }                    
+						    }
+						}
+						else{
+							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+							$insertArr['patronid'] = $patronId;
+							$insertArr['session_id'] = session_id();
+							$this->Currentpatron->save($insertArr);
+						}
+						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+						$this->Session->write("patron", $patronId);
+						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+						$this->Session->write("innovative_https","innovative_https");
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+						$startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+						$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+						$this->Download->recursive = -1;
+						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
+						$this ->Session->write("downloadsUsed", $results);
+						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
+						  $this ->Session->write("block", 'yes');
+						}
+						else{
+						  $this ->Session->write("block", 'no');
+						}
+						$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+					   }
+					   else{
+						  $errStrArr = explode('ERRMSG=',$response);
+						  $errMsg = $errStrArr['1'];
+						  $this -> Session -> setFlash($errMsg);
+						  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+					}
+				}
             }
          }         
       }
