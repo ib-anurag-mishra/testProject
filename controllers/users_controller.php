@@ -2278,7 +2278,7 @@ Class UsersController extends AppController
                 $retMsgArr = explode("RETCOD=",$response);               
                 @$retStatus = $retMsgArr['1']; 
 				if($retStatus == ''){
-					$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
+					$errMsgArr =  explode("ERRNUM=",$response);
 					@$errMsgCount = substr($errMsgArr['1'],0,1);
 					if($errMsgCount == '1'){
 					 $this -> Session -> setFlash("Requested record not found.");
@@ -2351,7 +2351,7 @@ Class UsersController extends AppController
                   $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                }
                else{
-                  $errStrArr = explode('ERRMSG=',$retMsgArr['0']);
+                  $errStrArr = explode('ERRMSG=',$response);
                   $errMsg = $errStrArr['1'];
                   $this -> Session -> setFlash($errMsg);
                   $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
