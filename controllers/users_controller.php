@@ -2262,20 +2262,20 @@ Class UsersController extends AppController
                 $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
             }        
             else{
-               $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-               $url = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-			   $session = curl_init($url);
-			   curl_setopt ($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-			   curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-			   $response = curl_exec($session);
-			   curl_close ($session);
-               $dom= new DOMDocument();
-               @$dom->loadHtmlFile($url);
-               $xpath = new DOMXPath($dom);
-               $body = $xpath->query('/html/body');
-               $retStr = $dom->saveXml($body->item(0));               
-               $retMsgArr = explode("RETCOD=",$retStr);               
-               @$retStatus = $retMsgArr['1'];               
+				$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+				$url = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
+				$session = curl_init($url);
+				curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
+				curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt ($session, CURLOPT_FOLLOWLOCATION, true);
+				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($session, CURLOPT_HEADER, true);
+				if(!$response = curl_exec ($session))  {
+					throw new Exception(curl_error($session));
+				}
+				curl_close($session);
+				preg_match("/RETCOD=0/i", htmlentities($response), $matches);
+				print_r($matches);exit;
 	       if($retStatus == ''){
                   $errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
                   @$errMsgCount = substr($errMsgArr['1'],0,1);
