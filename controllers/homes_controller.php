@@ -465,6 +465,9 @@ class HomesController extends AppController
         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
 			$insertArr['user_login_type'] = 'innovative';
 		}
+        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+			$insertArr['user_login_type'] = 'innovative_https';
+		}		
 		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
 			$insertArr['user_login_type'] = 'innovative_wo_pin';  
 		}
@@ -816,6 +819,9 @@ class HomesController extends AppController
 			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')) {
 				$url = $this->webroot.'users/ilogin';
 			}
+			elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+				$url = $this->webroot.'users/inhlogin';
+			}
 			elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
 				$url = $this->webroot.'users/inlogin';
 			}
@@ -1101,6 +1107,9 @@ class HomesController extends AppController
         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
 			$insertArr['user_login_type'] = 'innovative';
 		}
+        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+			$insertArr['user_login_type'] = 'innovative_https';
+		}		
 		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
 			$insertArr['user_login_type'] = 'innovative_wo_pin';  
 		}
