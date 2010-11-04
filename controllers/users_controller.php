@@ -2262,6 +2262,7 @@ Class UsersController extends AppController
                 $this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
             }        
             else{
+				$matches = array();
 				$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 				$url = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 				$session = curl_init($url);
@@ -2274,8 +2275,9 @@ Class UsersController extends AppController
 					throw new Exception(curl_error($session));
 				}
 				curl_close($session);
-				@preg_match("/RETCOD=0/i", htmlentities($response), $matches);
-				if(isset($matches[0]) && $matches[0] != 'RETCOD=0'){
+                $retMsgArr = explode("RETCOD=",$response);               
+                @$retStatus = $retMsgArr['1']; 
+				if($retStatus == ''){
 					$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
 					@$errMsgCount = substr($errMsgArr['1'],0,1);
 					if($errMsgCount == '1'){
@@ -2287,7 +2289,7 @@ Class UsersController extends AppController
 					 $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
 					}                  
                }
-               elseif($matches[0] == 'RETCOD=0'){
+               elseif($retStatus == 0){
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
                   if(count($currentPatron) > 0){
                       $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
