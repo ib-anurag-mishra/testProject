@@ -2434,9 +2434,7 @@ Class UsersController extends AppController
 						}
 					}	
 					else{
-					  $errStrArr = explode('ERRMSG=',$response);
-					  $errMsg = $errStrArr['1'];
-					  $this -> Session -> setFlash($errMsg);
+					  $this -> Session -> setFlash($msg);
 					  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));		
 					}				
 				}
