@@ -2275,20 +2275,19 @@ Class UsersController extends AppController
 				}
 				curl_close($session);
 				preg_match("/RETCOD=0/i", htmlentities($response), $matches);
-				print_r($matches);exit;
-	       if($retStatus == ''){
-                  $errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
-                  @$errMsgCount = substr($errMsgArr['1'],0,1);
-                  if($errMsgCount == '1'){
-                     $this -> Session -> setFlash("Requested record not found.");
-                     $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
-                  }
-                  else{
-                     $this -> Session -> setFlash("Authentication server down.");
-                     $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
-                  }                  
+				if($matches[0] != 'RETCOD=0'){
+					$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
+					@$errMsgCount = substr($errMsgArr['1'],0,1);
+					if($errMsgCount == '1'){
+					 $this -> Session -> setFlash("Requested record not found.");
+					 $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+					}
+					else{
+					 $this -> Session -> setFlash("Authentication server down.");
+					 $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+					}                  
                }
-               elseif($retStatus == 0){
+               elseif($matches[0] == 'RETCOD=0'){
                   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
                   if(count($currentPatron) > 0){
                       $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
