@@ -2351,7 +2351,7 @@ Class UsersController extends AppController
                   $this->redirect(array('controller' => 'homes', 'action' => 'index'));
                }
                else{
-                  $errStrArr = explode('ERRMSG=',$retStr);
+                  $errStrArr = explode('ERRMSG=',$retMsgArr['0']);
                   $errMsg = $errStrArr['1'];
                   $this -> Session -> setFlash($errMsg);
                   $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
