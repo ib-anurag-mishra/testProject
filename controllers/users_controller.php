@@ -1640,7 +1640,7 @@ Class UsersController extends AppController
 							$msg_result = $mysip->get_message($in);
 
 							// Make sure the response is 98 as expected
-							if (preg_match("/^98/", $msg_result)) {
+							if (preg_match("/98/", $msg_result)) {
 
 									
 								  $result = $mysip->parseACSStatusResponse($msg_result);
@@ -1654,7 +1654,7 @@ Class UsersController extends AppController
 								  $in = $mysip->msgPatronStatusRequest();
 								  $msg_result = $mysip->get_message($in);
 								  // Make sure the response is 24 as expected
-								  if (preg_match("/^24/", $msg_result)) {
+								  if (preg_match("/24/", $msg_result)) {
 									  $result = $mysip->parsePatronStatusResponse( $msg_result );
 									  
 									  if ($result['variable']['BL'][0] == 'Y') {
