@@ -2274,8 +2274,8 @@ Class UsersController extends AppController
 					throw new Exception(curl_error($session));
 				}
 				curl_close($session);
-				preg_match("/RETCOD=0/i", htmlentities($response), $matches);
-				if($matches[0] != 'RETCOD=0'){
+				@preg_match("/RETCOD=0/i", htmlentities($response), $matches);
+				if(isset($matches[0]) && $matches[0] != 'RETCOD=0'){
 					$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
 					@$errMsgCount = substr($errMsgArr['1'],0,1);
 					if($errMsgCount == '1'){
@@ -2331,7 +2331,7 @@ Class UsersController extends AppController
                   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
                   $this->Session->write("patron", $patronId);
                   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-				  $this->Session->write("innovative","innovative");
+				  $this->Session->write("innovative_https","innovative_https");
                   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
                   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
                   $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
