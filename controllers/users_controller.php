@@ -1033,6 +1033,7 @@ Class UsersController extends AppController
 														'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
 														)
 													 );
+					$status = 1;
 					foreach($allVariables as $k=>$v){
 						$retStatusArr = explode($v['Variable']['authentication_variable'],$retStr);
 						$pos = strpos($retStatusArr['1'],"<br/>");
