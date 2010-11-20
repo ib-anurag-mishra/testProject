@@ -17,7 +17,7 @@ class QuestionsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		if(($this->action != 'admin_index') && ($this->action != 'admin_view') && ($this->action != 'admin_add') && ($this->action != 'admin_edit') && ($this->action != 'admin_delete')) {
+		if(($this->action != 'admin_reorder') && ($this->action != 'admin_index') && ($this->action != 'admin_view') && ($this->action != 'admin_add') && ($this->action != 'admin_edit') && ($this->action != 'admin_delete')) {
 			$validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
