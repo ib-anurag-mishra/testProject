@@ -447,13 +447,24 @@ class HomesController extends AppController
         $this->layout = false;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
+        $prodId = $_REQUEST['prodId'];
+		$downloadsDetail = array();
+		$wk = date('W')-1;
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		$this->Download->recursive = -1;
+        $downloadsDetail =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate),'history < 2'),'limit' => '1'));
+		//check for download availability
+		if(count($downloadsDetail) > 0){
+			echo "avail";
+			exit;
+        }
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         if($libraryDownload != '1' || $patronDownload != '1') {
             echo "error";
             exit;
         }
-        $prodId = $_REQUEST['prodId'];
         $trackDetails = $this->Song->getdownloaddata($prodId);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
@@ -998,6 +1009,17 @@ class HomesController extends AppController
         }
         else {
             $prodId = $_REQUEST['prodId'];
+			$downloadsDetail = array();
+			$wk = date('W')-1;
+			$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+			$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+			$this->Download->recursive = -1;
+			$downloadsDetail =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate),'history < 2'),'limit' => '1'));
+			//check for download availability
+			if(count($downloadsDetail) > 0){
+				echo "avail";
+				exit;
+			}			
             //get song details
             $trackDetails = $this->Song->getdownloaddata($prodId);
             $insertArr = Array();
@@ -1086,6 +1108,19 @@ class HomesController extends AppController
         $this->layout = false;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
+		$prodId = $_REQUEST['prodId'];
+		$downloadsDetail = array();
+		$wk = date('W')-1;
+		$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+		$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		$this->Download->recursive = -1;
+		$downloadsDetail =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate),'history < 2'),'limit' => '1'));
+		//check for download availability
+		if(count($downloadsDetail) > 0){
+			echo "avail";
+			exit;
+		}			
+		
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         //check for download availability
@@ -1093,8 +1128,7 @@ class HomesController extends AppController
             echo "error";
             exit;
         }
-        $id = $_REQUEST['id'];       
-        $prodId = $_REQUEST['prodId'];
+        $id = $_REQUEST['id'];
         //get details for this song
         $trackDetails = $this->Song->getdownloaddata($prodId);        
         $insertArr = Array();
