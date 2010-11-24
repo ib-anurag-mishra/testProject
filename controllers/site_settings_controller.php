@@ -11,7 +11,7 @@ Class SiteSettingsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Siteconfig', 'Physicalproduct', 'Metadata' );
+    var $uses = array( 'Siteconfig','Album','Song' );
     
     /*
      Function Name : admin_index
@@ -42,27 +42,44 @@ Class SiteSettingsController extends AppController
     */
     function admin_generateXML() {
         $suggestionCounter = $this->Siteconfig->find('all', array('fields' => array('Siteconfig.svalue'), 'conditions' => array('Siteconfig.soption' => 'suggestion_counter')));
-        $this->Physicalproduct->Behaviors->attach('Containable');
-		$suggestionSongs_ids = $this->Physicalproduct->find('list', array('fields' => 'ProdID'));
+        $this->Song->Behaviors->attach('Containable');
+		$suggestionSongs_ids = $this->Song->find('list', array('fields' => 'ProdID','limit' => $suggestionCounter[0]['Siteconfig']['svalue']));
 		$rand_keys = array_rand($suggestionSongs_ids, $suggestionCounter[0]['Siteconfig']['svalue']);
 		$rand_val = implode(",", $rand_keys);
-        $suggestionSongs = $this->Physicalproduct->find('all',
+        $suggestionSongs = $this->Song->find('all',
             array('conditions' => 
-                array('Physicalproduct.ReferenceID <> Physicalproduct.ProdID','Physicalproduct.DownloadStatus' => 1,'Physicalproduct.TrackBundleCount' => 0, 'Metadata.Advisory' => 'F','Physicalproduct.ProdID IN ('.$rand_val.')'),
+                array('Song.DownloadStatus' => 1,'Song.TrackBundleCount' => 0, 'Song.Advisory' => 'F','Song.ProdID IN ('.$rand_val.')'),
                 'fields' => array(
-                                    'Physicalproduct.ProdID',
-                                    'Physicalproduct.Title',
-                                    'Physicalproduct.ReferenceID',
-                                    'Physicalproduct.ArtistText',
-                                    'Physicalproduct.DownloadStatus',
-                                    'Physicalproduct.SalesDate'
+                                    'Song.ProdID',
+                                    'Song.Title',
+                                    'Song.ReferenceID',
+                                    'Song.ArtistText',
+                                    'Song.DownloadStatus',
+									'Song.SongTitle',
+									'Song.Artist',
+									'Song.Advisory'
                                     ),
-                'contain' => 
-                array('Audio' => array('fields' => 
-													array('Audio.FileID'),
-													'Files' => array('fields' => array('Files.CdnPath', 'Files.SaveAsName'))
-											),
-                        'Metadata' => array('fields' => array('Metadata.Title', 'Metadata.Artist','Metadata.Advisory'))
+                'contain' => array(
+				'Country' => array(
+						'fields' => array(
+								'Country.Territory',
+								'Country.SalesDate'
+								)
+						),					
+				'Sample_Files' => array(
+							'fields' => array(
+								'Sample_Files.CdnPath',
+								'Sample_Files.SaveAsName'
+							),
+				
+						),
+ 				'Full_Files' => array(
+							'fields' => array(
+								'Full_Files.CdnPath',
+								'Full_Files.SaveAsName'
+							),
+				
+						),            
                 )
             )
         );
@@ -83,37 +100,42 @@ Class SiteSettingsController extends AppController
                 
                 $sub_child = $doc->createElement("ProdID");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Physicalproduct']['ProdID']);
+                $value = $doc->createTextNode($suggestionSong['Song']['ProdID']);
                 $value = $sub_child->appendChild($value);
                 
                 $sub_child = $doc->createElement("Title");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Metadata']['Title']);
+                $value = $doc->createTextNode($suggestionSong['Song']['SongTitle']);
                 $value = $sub_child->appendChild($value);
                 
                 $sub_child = $doc->createElement("ReferenceID");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Physicalproduct']['ReferenceID']);
+                $value = $doc->createTextNode($suggestionSong['Song']['ReferenceID']);
                 $value = $sub_child->appendChild($value);
                 
+                $sub_child = $doc->createElement("Territory");
+                $sub_child = $child->appendChild($sub_child);
+                $value = $doc->createTextNode($suggestionSong['Country']['Territory']);
+                $value = $sub_child->appendChild($value);
+
                 $sub_child = $doc->createElement("Artist");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Metadata']['Artist']);
+                $value = $doc->createTextNode($suggestionSong['Song']['Artist']);
                 $value = $sub_child->appendChild($value);
                 
                 $sub_child = $doc->createElement("ArtistText");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Physicalproduct']['ArtistText']);
+                $value = $doc->createTextNode($suggestionSong['Song']['ArtistText']);
                 $value = $sub_child->appendChild($value);
                 
                 $sub_child = $doc->createElement("CdnPath");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Audio'][0]['Files']['CdnPath']);
+                $value = $doc->createTextNode($suggestionSong['Sample_Files']['CdnPath']);
                 $value = $sub_child->appendChild($value);
                 
                 $sub_child = $doc->createElement("SaveAsName");
                 $sub_child = $child->appendChild($sub_child);
-                $value = $doc->createTextNode($suggestionSong['Audio'][0]['Files']['SaveAsName']);
+                $value = $doc->createTextNode($suggestionSong['Sample_Files']['SaveAsName']);
                 $value = $sub_child->appendChild($value);
             }
         }
@@ -125,5 +147,6 @@ Class SiteSettingsController extends AppController
             $this->Session -> setFlash( 'There is some occurred while creating/updating the suggestion songs XML !', 'modal', array( 'class' => 'modal success' ) );
         }
         $this->redirect('index');
-    }								}
+    }								
+}
 ?>

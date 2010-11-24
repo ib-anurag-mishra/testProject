@@ -8,10 +8,10 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Physicalproduct', 'Artist', 'Newartist','Files' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
-	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
+	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
 	
 	/*
 	 Function Name : beforeFilter
@@ -60,6 +60,10 @@ Class ArtistsController extends AppController
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
 				$artistName = $getData[ 'Featuredartist' ][ 'artist_name' ];
+				$country = $getData[ 'Featuredartist' ][ 'territory' ];
+				$getArtistDataObj = new Song();
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -69,11 +73,7 @@ Class ArtistsController extends AppController
 			$featuredtData = $getFeaturedDataObj -> getallartists();
 			$condition = 'add';
 			$artistName = '';
-		}
-		
-		$getArtistDataObj = new Physicalproduct();
-		$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName );
-		$this -> set( 'getArtistData', $getArtistData );
+		}		
 	}
 	
 	/*
@@ -86,17 +86,31 @@ Class ArtistsController extends AppController
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
+		$src = WWW_ROOT.'img/featuredimg/'.$fileName;
+		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
+		$error = $this->CdnUpload->sendFile($src, $dst);		
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
+		$artist = '';
+		if(isset($_REQUEST[ 'artistName' ])){
+			$artist = $_REQUEST[ 'artistName' ];
+		} else{
+			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+		}				
 		
-		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
 		}
 		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 			$errorMsg .= 'Please upload an image.<br/>';
 		}
+		if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+			$errorMsg .= 'Please Choose a Territory<br/>';
+		}
+		
 		$insertArr = array();
-		$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+		$insertArr[ 'artist_name' ] = $artist;
 		$insertArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
@@ -121,13 +135,31 @@ Class ArtistsController extends AppController
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
+		$src = WWW_ROOT.'img/featuredimg/'.$fileName;
+		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
+		$error = $this->CdnUpload->sendFile($src, $dst);
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
-		if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+		$artistName = '';
+		if(isset($_REQUEST[ 'artistName' ])){
+			$artistName = $_REQUEST[ 'artistName' ];
+		}
+		$artist = '';
+		if(isset($_REQUEST[ 'artistName' ])){
+			$artist = $_REQUEST[ 'artistName' ];
+		} else{
+			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+		}				
+
+		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
 		}
+		if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+			$errorMsg .= 'Please Choose a Territory';
+		}		
 		$updateArr = array();
 		$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-		$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+		$updateArr[ 'artist_name' ] = $artist;
+		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 			$updateArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		}
@@ -176,20 +208,38 @@ Class ArtistsController extends AppController
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
-				$artistName = $getData[ 'Artist' ][ 'artist_name' ];
+				$artistName = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artistName = $_REQUEST[ 'artistName' ];
+				} else{
+					$artistName = $getData[ 'Artist' ][ 'artist_name' ];
+				}
+				$artist = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artist = $_REQUEST[ 'artistName' ];
+				} else{
+					$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+				}
 				if( isset( $this -> data ) ) {
 					$updateObj = new Artist();
 					$updateArr = array();
-					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+					if( $artist == '' ) {
 						$errorMsg .= 'Please select Artist Name';
 					}
+					if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+						$errorMsg .= 'Please Choose a Territory';
+					}					
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+					$updateArr[ 'artist_name' ] = $artist;
+					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/artistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
+						$src = WWW_ROOT.'img/artistimg/'.$fileName;
+						$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
+						$error = $this->CdnUpload->sendFile($src, $dst);
 						$updateArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
 					if( empty( $errorMsg ) ) {
@@ -202,6 +252,10 @@ Class ArtistsController extends AppController
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 					}
 				}
+				$country = $getData[ 'Artist' ][ 'territory' ];
+				$getArtistDataObj = new Song();
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );				
+				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -209,20 +263,32 @@ Class ArtistsController extends AppController
 			$this -> set( 'formHeader', 'Add  Artist' );
 			$condition = 'add';
 			$artistName = '';
+			if(isset($_REQUEST[ 'artistName' ])){
+				$artist = $_REQUEST[ 'artistName' ];
+			} else{
+				$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+			}			
 			if( isset( $this -> data ) ) {
 				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
-				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ) {
+				if( $artist == '' ) {
 					$errorMsg .= 'Please select an artist name<br/>';
 				}
+				if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+					$errorMsg .= 'Please Choose a Territory<br/>';
+				}				
 				$newPath = '../webroot/img/artistimg/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
+				$src = WWW_ROOT.'img/artistimg/'.$fileName;
+				$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
+				$error = $this->CdnUpload->sendFile($src, $dst);
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
-				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
+				$insertArr[ 'artist_name' ] = $artist;;
 				$insertArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$insertObj = new Artist();
 				if( empty( $errorMsg ) ) {
@@ -236,9 +302,6 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
-		$getArtistDataObj = new Physicalproduct();
-		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
-		$this -> set( 'getArtistData', $getArtistData );
 	}
 	
 	/*
@@ -282,20 +345,38 @@ Class ArtistsController extends AppController
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
 				$this -> set( 'getData', $getData );
 				$condition = 'edit';
-				$artistName = $getData[ 'Newartist' ][ 'artist_name' ];
+				$artistName = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artistName = $_REQUEST[ 'artistName' ];
+				} else{
+					$artistName = $getData[ 'Newartist' ][ 'artist_name' ];
+				}
+				$artist = '';
+				if(isset($_REQUEST[ 'artistName' ])){
+					$artist = $_REQUEST[ 'artistName' ];
+				} else{
+					$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+				}				
 				if( isset( $this -> data ) ) {
 					$updateObj = new Newartist();
 					$updateArr = array();
-					if( $this -> data[ 'Artist' ][ 'artist_name' ] == '' ) {
+					if( $artist == '' ) {
 						$errorMsg .= 'Please select Artist Name';
 					}
+					if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+						$errorMsg .= 'Please Choose a Territory';
+					}					
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
-					$updateArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+					$updateArr[ 'artist_name' ] = $artist;
+					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/newartistimg/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
+						$src = WWW_ROOT.'img/newartistimg/'.$fileName;
+						$dst = Configure::read('App.CDN_PATH').'newartistimg/'.$fileName;
+						$error = $this->CdnUpload->sendFile($src, $dst);
 						$updateArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
 					if( empty( $errorMsg ) ) {
@@ -308,6 +389,10 @@ Class ArtistsController extends AppController
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 					}
 				}
+				$country = $getData[ 'Newartist' ][ 'territory' ];
+				$getArtistDataObj = new Song();
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );				
+				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -315,21 +400,35 @@ Class ArtistsController extends AppController
 			$this -> set( 'formHeader', 'Add New Artist' );
 			$condition = 'add';
 			$artistName = '';
+			$artist = '';
+			if(isset($_REQUEST[ 'artistName' ])){
+				$artist = $_REQUEST[ 'artistName' ];
+			} else{
+				$artist = $this->data[ 'Artist' ][ 'artist_name' ];
+			}				
+			
 			if( isset( $this -> data ) ){
 				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
-				if( trim( $this -> data[ 'Artist' ][ 'artist_name' ] ) == '' ) {
-					$errorMsg .= 'Please select an artist name<br/>';
+				if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
+					$errorMsg .= 'Please Choose a Territory<br/>';
 				}
+				if( trim( $artist ) == '' ) {
+					$errorMsg .= 'Please select an artist name<br/>';
+				}				
 				$newPath = '../webroot/img/newartistimg/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
+				$src = WWW_ROOT.'img/newartistimg/'.$fileName;
+				$dst = Configure::read('App.CDN_PATH').'newartistimg/'.$fileName;
+				$error = $this->CdnUpload->sendFile($src, $dst);
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
-				$insertArr[ 'artist_name' ] = $this -> data[ 'Artist' ][ 'artist_name' ];
+				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 				$insertArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+				$insertArr[ 'artist_name' ] = $artist;
 				$insertObj = new Newartist();
 				if( empty( $errorMsg ) ) {
 					if( $insertObj -> insert( $insertArr ) ) {
@@ -341,10 +440,7 @@ Class ArtistsController extends AppController
 					$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 				}
 			}
-		}		
-		$getArtistDataObj = new Physicalproduct();
-		$getArtistData = $getArtistDataObj -> allartistname( $condition, $artistName );
-		$this -> set( 'getArtistData', $getArtistData );
+		}
 	}
 	
 	/*
@@ -377,7 +473,8 @@ Class ArtistsController extends AppController
 	 Function Name : view
 	 Desc : For artist view page
 	*/
-	function view($id=null,$album=null) {	  	  
+	function view($id=null,$album=null) {
+		
 		if(count($this -> params['pass']) > 1) {
 			$count = count($this -> params['pass']);	      
 			$id = $this -> params['pass'][0];
@@ -393,126 +490,177 @@ Class ArtistsController extends AppController
 				$album = "";
 			}
 		}
+		$country = $this->Session->read('territory');
 		if($album != '') {
-			$condition = array("Physicalproduct.ReferenceID" => $album);
+			$condition = array("Album.ProdID" => $album);
 		}
 		else{
-			$condition = "";
+			$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
+			$val = '';
+			$this->Song->Behaviors->attach('Containable');
+			foreach($allAlbum as $k => $v){
+				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'Song.TrackBundleCount' => 0,'Country.Territory' => $country), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
+				if(count($recordCount) > 0){
+					$val = $val.$v['Album']['ProdID'].",";
+				}
+			}
+			$condition = array("Album.ProdID IN (".rtrim($val,",").")");
 		}
 		$this->layout = 'home';
 		$this->set('artistName',base64_decode($id));
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
+		//$country = "'".$country."'";
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		if($this->Session->read('block') == 'yes') {
-			$cond = array('Metadata.Advisory' => 'F');
+			$cond = array('Album.Advisory' => 'F');
 		}
 		else{
 			$cond = "";
 		}	
-		$this -> paginate =  array('conditions' =>
+		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
-						    array('Physicalproduct.ArtistText' => base64_decode($id)),
-						    array("Physicalproduct.ProdID = Physicalproduct.ReferenceID"),
-						    array("Physicalproduct.ReferenceID IN(SELECT Distinct ReferenceID  FROM `PhysicalProduct` WHERE `DownloadStatus` = '1' and `ProdID` <> `ReferenceID`)"),
-						    $cond,$condition
-						)
+						    array('Album.ArtistText' => base64_decode($id)),
+						    $condition,$cond
+						), "1 = 1 GROUP BY Album.ProdID"
 					),
 					'fields' => array(
-						'Physicalproduct.ProdID',
-						'Physicalproduct.Title',
-						'Physicalproduct.ArtistText',
-						'Physicalproduct.ReferenceID'							
+						'Album.ProdID',
+						'Album.Title',
+						'Album.ArtistText',
+						'Album.AlbumTitle',
+						'Album.Artist',
+						'Album.ArtistURL',
+						'Album.Label',
+						'Album.Copyright',						
 						),
 					'contain' => array(
-					'Genre' => array(
-						'fields' => array(
-							'Genre.Genre'								
-							)
-						),						
-					'Metadata' => array(
-						'fields' => array(
-							'Metadata.Title',
-							'Metadata.Artist',
-							'Metadata.ArtistURL',
-							'Metadata.Label',
-							'Metadata.Copyright',								
-							)
-						),
-					'Graphic' => array(
-						'fields' => array(
-						'Graphic.ProdID',
-						'Graphic.FileID'
-						),
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'								
+								)
+							),
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory'								
+								)
+							),												
 						'Files' => array(
-						'fields' => array(
-							'Files.CdnPath' ,
-							'Files.SaveAsName',
-							'Files.SourceURL'
-							)
-						)
+							'fields' => array(
+								'Files.CdnPath' ,
+								'Files.SaveAsName',
+								'Files.SourceURL'
+							),
 						)			                                
-					),'order' => 'Physicalproduct.SalesDate DESC','limit' => '3','cache' => 'yes'
+					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3','cache' => 'yes'
 				);
-		$this->Physicalproduct->recursive = 2;
-		$albumData = $this->paginate('Physicalproduct'); //getting the Albums for the artist
+		if($this->Session->read('block') == 'yes') {
+			$cond = array('Song.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}
+		$this->Album->recursive = 2;
+		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 		$albumSongs = array();
 		foreach($albumData as $album) {
-			$albumSongs[$album['Physicalproduct']['ReferenceID']] =  $this->Physicalproduct->find('all',array(
+			$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
 					'conditions' =>
 						array('and' =>
 							array(
-								array( 'Physicalproduct.ReferenceID' => $album['Physicalproduct']['ReferenceID']),							
-								array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),							
-								array('Physicalproduct.DownloadStatus' => 1),$cond
+								array('Song.ReferenceID' => $album['Album']['ProdID']),							
+								array('Song.DownloadStatus' => 1),
+								array('Song.TrackBundleCount' => 0),
+								array('Country.Territory' => $country),$cond
 							)
 						),
 					'fields' => array(
-							'Physicalproduct.ProdID',
-							'Physicalproduct.Title',
-							'Physicalproduct.ArtistText',
-							'Physicalproduct.DownloadStatus',
-							'Physicalproduct.SalesDate'
+							'Song.ProdID',
+							'Song.Title',
+							'Song.ArtistText',
+							'Song.DownloadStatus',
+							'Song.SongTitle',
+							'Song.Artist',
+							'Song.Advisory',
+							'Song.Sample_Duration',
+							'Song.FullLength_Duration',
+
 						    ),
 					'contain' => array(
 						'Genre' => array(
 								'fields' => array(
 										'Genre.Genre'								
 									)
-								),						
-						'Metadata' => array(
+								),
+						'Country' => array(
 								'fields' => array(
-										'Metadata.Title',
-										'Metadata.Artist',
-										'Metadata.Advisory'
+										'Country.Territory',
+										'Country.SalesDate'
+									)
+								),								
+						'Sample_Files' => array(
+								'fields' => array(
+											'Sample_Files.CdnPath' ,
+											'Sample_Files.SaveAsName'
 									)
 								),
-						'Audio' => array(
+						'Full_Files' => array(
 								'fields' => array(
-										'Audio.FileID',
-										'Audio.Duration'                                                    
-									),
-								'Files' => array(
-										'fields' => array(
-											'Files.CdnPath' ,
-											'Files.SaveAsName'
-										)
+											'Full_Files.CdnPath' ,
+											'Full_Files.SaveAsName'
 									)
-								)
-					),'order' => 'Physicalproduct.ReferenceID'
+								),
+								
+					),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
 				      ));
 	    }
 	    $this->set('albumData', $albumData);
-	    if(isset($albumData[0]['Metadata']['ArtistURL'])) {
-	       $this->set('artistUrl',$albumData[0]['Metadata']['ArtistURL']);
+	    if(isset($albumData[0]['Song']['ArtistURL'])) {
+	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
 	    }else {
 	       $this->set('artistUrl', "N/A");
 	    }
+		$array = array();
+		$pre = '';
+		$res = array();
 	    $this->set('albumSongs',$albumSongs);
+	}
+	/*
+	 Function Name : view
+	 Desc : For artist view page
+	*/
+	function admin_getArtists(){
+        Configure::write('debug', 0);	
+		$this->Song->recursive = 2;	
+		$artist = $this->Song->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										array('Country.Territory' => $_REQUEST['Territory'])
+									)
+								),
+							'fields' => array(
+									'DISTINCT Song.ArtistText',
+									),
+							'contain' => array(
+									'Country' => array(
+											'fields' => array(
+												'Country.Territory'								
+											)
+										),
+								),
+							'order' => 'Song.ArtistText'
+						));
+		$data = "<option value=''>SELECT</option>";				
+		foreach($artist as $k=>$v){
+			$data = $data."<option value='".$v['Song']['ArtistText']."'>".$v['Song']['ArtistText']."</option>";
+		}
+		print "<select class='select_fields' name='artistName'>".$data."</select>";exit;
+						
 	}
   }
 ?>

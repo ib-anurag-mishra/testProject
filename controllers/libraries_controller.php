@@ -10,7 +10,7 @@ Class LibrariesController extends AppController
     var $name = 'Libraries';
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
-    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads');
+    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url');
     
     /*
@@ -85,6 +85,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
 																				'Library.show_library_name',
+																				'Library.library_territory',
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date'
                                                                                 ),
@@ -178,6 +179,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
 																				'Library.show_library_name',
+																				'Library.library_territory',
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date'
                                                                                 ),
@@ -235,6 +237,9 @@ Class LibrariesController extends AppController
                     elseif($this->data['Library']['library_authentication_method'] == 'innovative') {
                         $this->Library->setValidation('library_step1_innovative');
                     }
+                    elseif($this->data['Library']['library_authentication_method'] == 'innovative_https') {
+                        $this->Library->setValidation('library_step1_innovative_https');
+                    }					
 					elseif($this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
                         $this->Library->setValidation('library_step1_innovative');
                     }
@@ -313,7 +318,7 @@ Class LibrariesController extends AppController
                                                     $this->data['Library']['library_status'] = 'inactive';
                                                 }
                                                 if($this->Library->save($this->data['Library'])) {
-														if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin'){
+														if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https'){
 															foreach($this->data['Variable'] as $k=>$v){
 																if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
 																	$data[$k] = $v;
@@ -429,6 +434,9 @@ Class LibrariesController extends AppController
                     elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
                     }
+                    elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_https') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative_https');
+                    }					
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_wo_pin') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative');
                     }
@@ -501,7 +509,10 @@ Class LibrariesController extends AppController
                     if(!file_exists($upload_dir)) {
                         mkdir($upload_dir);
                     }
-                    $test = move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
+                    move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
+					$src = WWW_ROOT.'img/libraryimg/'.$fileName;
+					$dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
+					$error = $this->CdnUpload->sendFile($src, $dst);
                     $this->Library->id = $_REQUEST['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
                 }
@@ -628,7 +639,8 @@ Class LibrariesController extends AppController
             }
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
-            $this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
+            $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+			$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";

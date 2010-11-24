@@ -5,10 +5,10 @@
  Author : maycreate
  */
 
-ini_set('memory_limit', '1024M');
+ini_set('memory_limit', '2048M');
 Class GenresController extends AppController
 {
-	var $uses = array('Metadata','Product','Category','Files','Physicalproduct');
+	var $uses = array('Category','Files','Album','Song');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	var $helpers = array('Cache','Library','Page','Wishlist');
 	
@@ -40,6 +40,8 @@ Class GenresController extends AppController
 	 Desc : actions on landing page
         */
 	function index() {
+		$country = $this->Session->read('territory');
+		//$country = "'".$country."'";		
 		$this->layout = 'home';
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
@@ -47,8 +49,31 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		$this->Genre->recursive = -1;
-		$this->set('genresAll', $this->Genre->find('all', array('fields' => 'DISTINCT Genre','order' => 'Genre')));
+		$this->Genre->Behaviors->attach('Containable');
+		$this->Genre->recursive = 2;
+		if (($genre = Cache::read("genre".$country)) === false) {
+			$genreAll = $this->Genre->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Country.Territory' => $country)
+								)
+							),
+						'fields' => array(
+								'Genre.Genre'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory'								
+										)
+									),
+						),'group' => 'Genre.Genre'
+					));
+			Cache::write("genre".$country, $genreAll);
+		}
+		$genreAll = Cache::read("genre".$country);
+		$this->set('genresAll', $genreAll);
 		$category_ids = $this->Category->find('list', array('fields' => 'id'));
 		$rand_keys = array_rand($category_ids, 4);
 		$rand_val = implode(",", $rand_keys);
@@ -60,30 +85,34 @@ Class GenresController extends AppController
 		foreach ($categories as $category) {
 			$genreName = $category['Category']['Genre'];
 			if($this->Session->read('block') == 'yes') {
-				$cond = array('Metadata.Advisory' => 'F');
+				$cond = array('Song.Advisory' => 'F');
 			}
 			else {
 				$cond = "";
 			}
 			if (($genres = Cache::read($genreName)) === false) {
-				$this->Physicalproduct->Behaviors->attach('Containable');			
-				$genreDetails = $this->Physicalproduct->find('all',array('conditions' =>
+				$this->Song->recursive = 2;
+				$this->Song->Behaviors->attach('Containable');			
+				$genreDetails = $this->Song->find('all',array('conditions' =>
 											array('and' =>
 												array(
 													array('Genre.Genre' => $genreName),							
-													array("Physicalproduct.ReferenceID <> Physicalproduct.ProdID"),
-													array('Physicalproduct.DownloadStatus' => 1),
-													array('Physicalproduct.TrackBundleCount' => 0),
-													array("Physicalproduct.UpdateOn >" => date('Y-m-d', strtotime("-7 week"))),$cond
+													array("Song.ReferenceID <> Song.ProdID"),
+													array('Song.DownloadStatus' => 1),
+													array('Song.TrackBundleCount' => 0),
+													array('Country.Territory' => $country),
+													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
 												)
 											),
 											'fields' => array(
-												'Physicalproduct.ProdID',
-												'Physicalproduct.ReferenceID',
-												'Physicalproduct.Title',
-												'Physicalproduct.ArtistText',
-												'Physicalproduct.DownloadStatus',
-												'Physicalproduct.SalesDate'
+												'Song.ProdID',
+												'Song.ReferenceID',
+												'Song.Title',
+												'Song.ArtistText',
+												'Song.DownloadStatus',
+												'Song.SongTitle',
+												'Song.Artist',
+												'Song.Advisory'
 											),
 											'contain' => array(
 												'Genre' => array(
@@ -91,39 +120,28 @@ Class GenresController extends AppController
 														'Genre.Genre'								
 													)
 												),
-												'Graphic' => array(
+												'Country' => array(
 													'fields' => array(
-														'Graphic.ProdID',
-														'Graphic.FileID'
+														'Country.Territory',
+														'Country.SalesDate',														
+													)
+												),												
+												'Sample_Files' => array(
+													'fields' => array(
+														'Sample_Files.CdnPath',
+														'Sample_Files.SaveAsName',
+														'Sample_Files.SourceURL'
 													),
-													'Files' => array(
-														'fields' => array(
-															'Files.CdnPath' ,
-															'Files.SaveAsName',
-															'Files.SourceURL'
-														)
-													)
-												),						
-												'Metadata' => array(
-													'fields' => array(
-														'Metadata.Title',
-														'Metadata.Artist',
-														'Metadata.Advisory'
-													)
 												),
-												'Audio' => array(
+												'Full_Files' => array(
 													'fields' => array(
-														'Audio.FileID',                                                    
+														'Full_Files.CdnPath',
+														'Full_Files.SaveAsName',
+														'Full_Files.SourceURL'
 													),
-													'Files' => array(
-														'fields' => array(
-															'Files.CdnPath' ,
-															'Files.SaveAsName'
-														)
-													)
-												)
+												),												
 											),'limit' => '50'));
-				Cache::write($genreName, $genreDetails);
+			Cache::write($genreName, $genreDetails);
 			}
 			$genreDetails = Cache::read($genreName);
 			$finalArr = Array();
@@ -138,19 +156,35 @@ Class GenresController extends AppController
 			  $songArr = $genreDetails;
 			}
 			foreach($songArr as $genre) {
-				$albumArtwork = shell_exec('perl files/tokengen ' . $genre['Graphic']['Files']['CdnPath']."/".$genre['Graphic']['Files']['SourceURL']);
-				$songUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['1']['Files']['CdnPath']."/".$genre['Audio']['1']['Files']['SaveAsName']);
-				$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Audio']['0']['Files']['CdnPath']."/".$genre['Audio']['0']['Files']['SaveAsName']);
-				$finalArr[$i]['Album'] = $genre['Physicalproduct']['Title'];
-				$finalArr[$i]['Song'] = $genre['Metadata']['Title'];
-				$finalArr[$i]['Artist'] = $genre['Metadata']['Artist'];
-				$finalArr[$i]['ProdArtist'] = $genre['Physicalproduct']['ArtistText'];
-				$finalArr[$i]['Advisory'] = $genre['Metadata']['Advisory'];
+				$this->Song->recursive = 2;
+				$this->Song->Behaviors->attach('Containable');
+				$downloadData = $this->Album->find('all', array(
+					'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID']),
+					'fields' => array(
+						'Album.ProdID',
+					),
+					'contain' => array(										
+						'Files' => array(
+							'fields' => array(
+								'Files.CdnPath',
+								'Files.SaveAsName',
+								'Files.SourceURL',
+								),                             
+						)
+				)));
+				$albumArtwork = shell_exec('perl files/tokengen ' . $downloadData[0]['Files']['CdnPath']."/".$downloadData[0]['Files']['SourceURL']);
+				$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Sample_Files']['CdnPath']."/".$genre['Sample_Files']['SaveAsName']);
+				$songUrl = shell_exec('perl files/tokengen ' . $genre['Full_Files']['CdnPath']."/".$genre['Full_Files']['SaveAsName']);
+				$finalArr[$i]['Album'] = $genre['Song']['Title'];
+				$finalArr[$i]['Song'] = $genre['Song']['Title'];
+				$finalArr[$i]['Artist'] = $genre['Song']['Artist'];
+				$finalArr[$i]['ProdArtist'] = $genre['Song']['ArtistText'];
+				$finalArr[$i]['Advisory'] = $genre['Song']['Advisory'];
 				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 				$finalArr[$i]['SongUrl'] = $songUrl;
-				$finalArr[$i]['ProdId'] = $genre['Physicalproduct']['ProdID'];
-				$finalArr[$i]['ReferenceId'] = $genre['Physicalproduct']['ReferenceID'];
-				$finalArr[$i]['SalesDate'] = $genre['Physicalproduct']['SalesDate'];
+				$finalArr[$i]['ProdId'] = $genre['Song']['ProdID'];
+				$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
+				$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
 				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
 				$i++;
 			}
@@ -173,38 +207,50 @@ Class GenresController extends AppController
 		}
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
+		$country = $this->Session->read('territory');
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		if($this->Session->read('block') == 'yes') {
-		      $cond = array('Metadata.Advisory' => 'F');
+		      $cond = array('Song.Advisory' => 'F');
 		}
 		else {
 		      $cond = "";
 		}
 		if($Artist == '#') {
-			$condition = array("Physicalproduct.ArtistText REGEXP '^[^A-Za-z]'");			
+			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");			
 		}
 		elseif($Artist != '') {
-			$condition = array('Physicalproduct.ArtistText LIKE' => $Artist.'%');
+			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
 		}
 		else {
 			$condition = "";
 		}
-		$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));		
-		$this->Physicalproduct->Behaviors->attach('Containable');
-		$this->Physicalproduct->recursive = 0;
+		$this->Song->unbindModel(array('hasOne' => array('Participant')));		
+		$this->Song->Behaviors->attach('Containable');
+		$this->Song->recursive = 0;
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
-		      'conditions' => array("Genre.Genre = '$genre'",$condition,'1 = 1 GROUP BY Physicalproduct.ArtistText'),
-		      'fields' => array('ArtistText'),
-		      'order' => 'ArtistText ASC',		      
+		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,'Song.TrackBundleCount' => 0,$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		      'fields' => array('Song.ArtistText'),
+			  'contain' => array(
+				'Country' => array(
+					'fields' => array(
+						'Country.Territory'								
+						)),
+				'Genre' => array(
+					'fields' => array(
+							'Genre.Genre'								
+						)),
+			  ),
+			  'extra' => array('chk' => 1),
+		      'order' => 'Song.ArtistText ASC',		      
 		      'limit' => '60', 'cache' => 'yes'
 		      ); 
-		$this->Physicalproduct->unbindModel(array('hasOne' => array('Participant')));
-		$allArtists = $this->paginate('Physicalproduct');		
+		$this->Song->unbindModel(array('hasOne' => array('Participant')));
+		$allArtists = $this->paginate('Song');
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}

@@ -60,9 +60,9 @@
 					?>
 				</td>
 				<td width="200" align="center">
-					<?php										
-						$productInfo = $physicalproduct->getDownloadData($downloadResult['Download']['ProdID']);
-							$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Audio']['1']['Files']['CdnPath']."/".$productInfo[0]['Audio']['1']['Files']['SaveAsName']);                                                
+					<?php
+						$productInfo = $song->getDownloadData($downloadResult['Download']['ProdID']);
+						$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
 							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 					?>

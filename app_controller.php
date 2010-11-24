@@ -5,7 +5,8 @@ class AppController extends Controller
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download' );
 	var $uses = array('Genre','Featuredartist','Newartist','Category');
 	
-	function beforeFilter() {
+	function beforeFilter()
+	{
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}	
@@ -23,11 +24,15 @@ class AppController extends Controller
 		header('Pragma: no-cache');
 	}
 	
-	function isAuthorized() {
+	
+	
+	function isAuthorized()
+	{
 		return true;
 	}	
 	
-	function build_acl() {
+	function build_acl()
+	{
 		
 		if( !Configure :: read( 'debug' ) )
 		{
@@ -334,6 +339,7 @@ class AppController extends Controller
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_patronform' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_managepatron' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_index' );
+		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_getLibraryIds' );		
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsCsv' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsPdf' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_librarywishlistreport' );

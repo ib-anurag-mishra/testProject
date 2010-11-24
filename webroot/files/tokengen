@@ -66,4 +66,3 @@ sub ComputeHash
 
 	return sprintf "%1.1s%20.20s", $gen, $hmac;
 }
-

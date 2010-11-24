@@ -8,6 +8,7 @@
         $getData['Report']['date'] = "";
         $getData['Report']['date_from'] = "";
         $getData['Report']['date_to'] = "";
+		$getData['Report']['Territory'] = "";
     }
 ?>
 <fieldset>
@@ -22,13 +23,26 @@
                         <?php
                             if($libraryID == "") {
                         ?>
+							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>   
+							<td align="left">
+										<?php
+											echo $this->Form->input('Territory', array('options' => array(
+																			'' => 'Select Territory',
+																			'CA' => 'CA',
+																			'US' => 'US',
+																			), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
+																	);
+                                ?>
+                            </td>						
                             <td align="right"><?php echo $this->Form->label('Select Library');?></td>
                             <td align="left">
+							<div id="allLibrary">
                         <?php    
                                     $libraries['all'] = "All Libraries";
-                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
+                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
                         ?>
-                            </td>
+                            </div>
+							</td>
                             <td align="right"><?php echo $this->Form->label('Range');?></td>
                             <td align="left">
                                 <?php
@@ -42,10 +56,11 @@
                                                             );
                                 ?>
                             </td>
+       							
                         <?php
                             }
                             else {
-                        ?>
+                        ?>							
                             <td align="center" colspan="4">
                                 <?php
                                     echo $this->Form->label('Range');
@@ -59,15 +74,15 @@
                                                                     ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
                                                             );
                                 ?>
-                            </td>
+                            </td>							
                         <?php
                             }
                         ?>
                         
                     </tr>
-                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><td colspan="6">&nbsp;</td></tr>
                     <tr id="initial_date_range" <?php if($getData['Report']['reports_daterange'] == "manual") {?>style="display:none;"<?php } ?>>
-                        <td align="center" colspan="4">
+                        <td align="center" colspan="6">
                             <?php
                                 echo $this->Form->label('Select Date');
                                 echo $this->Form->input('date',array('label' => false ,'value' => $getData['Report']['date'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly'));
@@ -88,30 +103,30 @@
                             ?>
                         </td>
                     </tr>
-                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><td colspan="6">&nbsp;</td></tr>
                     <tr>
-                        <td colspan="4" align="center"><?php echo $this->Form->submit('Generate Report', array('id' => 'generateReportSubmit'));?></td>
+                        <td colspan="6" align="center"><?php echo $this->Form->submit('Generate Report', array('id' => 'generateReportSubmit'));?></td>
                     </tr>
-                    <tr><td colspan="4">&nbsp;</td></tr>
+                    <tr><td colspan="6">&nbsp;</td></tr>
                     <?php
                     if(!empty($downloads)) {
                     ?>
                     <tr>
-                        <td colspan="2" align="center">
+                        <td colspan="3" align="center">
                             <?php
                                 echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadCVSOne'));
                             ?>
                         </td>
-                        <td colspan="2" align="center">
+                        <td colspan="3" align="center">
                             <?php
                                 echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadPDFOne'));
                             ?>
                         </td>
                     </tr>
-                    <tr><td colspan="4">&nbsp;</td></tr>
-                    <tr><th colspan="4" align="center">Library Remaining Downloads</th></tr>
+                    <tr><td colspan="6">&nbsp;</td></tr>
+                    <tr><th colspan="6" align="center">Library Remaining Downloads</th></tr>
                     <tr>
-                        <td colspan="4" align="center">
+                        <td colspan="6" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 									<th>&nbsp;</th>
@@ -134,10 +149,10 @@
                             </table>
                         </td>
                     </tr>
-					<tr><td colspan="4">&nbsp;</td></tr>
-                    <tr><th colspan="4" align="center">Library Downloads Report</th></tr>
+					<tr><td colspan="6">&nbsp;</td></tr>
+                    <tr><th colspan="6" align="center">Library Downloads Report</th></tr>
                     <tr>
-                        <td colspan="4" align="center">
+                        <td colspan="6" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 				    <th>&nbsp;</th>
@@ -172,10 +187,10 @@
                             </table>
                         </td>
                     </tr>
-                    <tr><td colspan="4">&nbsp;</td></tr>
-                    <tr><th colspan="4" align="center">Patron Downloads Report</th></tr>
+                    <tr><td colspan="6">&nbsp;</td></tr>
+                    <tr><th colspan="6" align="center">Patron Downloads Report</th></tr>
                     <tr>
-                        <td colspan="4" align="center">
+                        <td colspan="6" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 				    <th>&nbsp;</th>
@@ -206,10 +221,10 @@
                             </table>
                         </td>
                     </tr>
-                    <tr><td colspan="4">&nbsp;</td></tr>
-                    <tr><th colspan="4" align="center">Genres Downloads Report</th></tr>
+                    <tr><td colspan="6">&nbsp;</td></tr>
+                    <tr><th colspan="6" align="center">Genres Downloads Report</th></tr>
                     <tr>
-                        <td colspan="4" align="center">
+                        <td colspan="6" align="center">
                             <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
                                 <tr>
 				    <th>&nbsp;</th>
@@ -237,7 +252,7 @@
                     elseif(empty($downloads) && empty($errors) && isset($this->data)) {
                     ?>
                     <tr>
-                        <td colspan="4" align="center"><label>There are not downloads found for the selected criteria.</label></td>
+                        <td colspan="6" align="center"><label>There are not downloads found for the selected criteria.</label></td>
                     </tr>
                     <?php
                     }
@@ -278,6 +293,21 @@
                 $("#date_range").hide();
             }
         });
+        $("#ReportTerritory").change(function() {
+			var data = "Territory="+$("#ReportTerritory").val();
+			jQuery.ajax({
+				type: "post",  // Request method: post, get
+				url: webroot+"admin/reports/getLibraryIds", // URL to request
+				data: data,  // post data
+				success: function(response) {
+						$('#allLibrary').text('');
+						$('#allLibrary').html(response);
+				},
+				error:function (XMLHttpRequest, textStatus, errorThrown) {}
+			});
+			return false;
+		});
+		
     });
     <?php
         if(!empty($downloads)) {

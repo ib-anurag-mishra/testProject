@@ -18,44 +18,71 @@ Class ReportsController extends AppController
      Desc : actions for library reports page
     */
     function admin_index() {
+	//	print_r($this->data);exit;
         if($this->Session->read("Auth.User.type_id") == 4) {
-            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         }
         else {
-            $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-            $this->set('libraryID', "");
+			if($this->data['Report']['Territory'] == ''){
+				//$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				$this->set('libraries', array());	
+            } else {
+				$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'),'conditions' => array('Library.library_territory= "'.$this->data['Report']['Territory'].'"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+			}
+			$this->set('libraryID', "");
         }
         if(isset($this->data)) {
+			//Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+			$all_Ids = '';
             $this->Report->set($this->data);
+			if(isset($_REQUEST['library_id'])){
+				$library_id = $_REQUEST['library_id'];
+			}else{
+				$library_id = $this->data['Report']['library_id'];
+			}
+			$this->set('library_id', $library_id);
+			if($this->Session->read("Auth.User.type_id") == 4){
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];				
+			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
             else {
                 $this->Report->setValidation('reports_manual');
             }
-			if($this->data['Report']['library_id'] == 'all'){
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+			if($territory != ''){
+				if($library_id == 'all'){
+					$sql = "SELECT id from libraries where library_territory = '".$territory."'";
+					$result = mysql_query($sql);
+					while ($row = mysql_fetch_assoc($result)) {
+						$all_Ids = $all_Ids.$row["id"].",";
+					}		  
+					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
+					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				}
+				else{
+					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+				}
 			}
-			else{
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$this->data['Report']['library_id']),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
-			}			
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
                 
                 $this->set('downloads', $downloads);
@@ -75,6 +102,7 @@ Class ReportsController extends AppController
         }
         else {
             $this -> set( 'formAction', 'admin_index' );
+			$this->set('library_id', '');
             $arr = array();
             $this->set('getData', $arr);
             $this->set('downloads', $arr);
@@ -90,36 +118,56 @@ Class ReportsController extends AppController
         Configure::write('debug', 0);
         $this->layout = false;
         if(isset($this->data)) {
+			$all_Ids = '';		
             $this->Report->set($this->data);
+			if(isset($_REQUEST['library_id'])){
+				$library_id = $_REQUEST['library_id'];
+			}else{
+				$library_id = $this->data['Report']['library_id'];
+			}
+			$this->set('library_id', $library_id);
+			if($this->Session->read("Auth.User.type_id") == 4) {
+				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];
+			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
             else {
                 $this->Report->setValidation('reports_manual');
             }
-			if($this->data['Report']['library_id'] == 'all'){
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-			}
-			else{
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$this->data['Report']['library_id']),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+			if($territory != ''){
+				if($library_id == 'all'){
+					$sql = "SELECT id from libraries where library_territory = '".$territory."'";
+					$result = mysql_query($sql);
+					while ($row = mysql_fetch_assoc($result)) {
+						$all_Ids = $all_Ids.$row["id"].",";
+					}		  
+					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
+					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				}
+				else{
+					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+				}
 			}			
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
-                
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
                 $this->set('genreDownloads', $genreDownloads);
@@ -142,36 +190,56 @@ Class ReportsController extends AppController
     function admin_downloadAsPdf() {
         Configure::write('debug',0); // Otherwise we cannot use this method while developing 
         if(isset($this->data)) {
+			$all_Ids = '';
             $this->Report->set($this->data);
+			if(isset($_REQUEST['library_id'])){
+				$library_id = $_REQUEST['library_id'];
+			}else{
+				$library_id = $this->data['Report']['library_id'];
+			}
+			$this->set('library_id', $library_id);
+			if($this->Session->read("Auth.User.type_id") == 4) {
+				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];
+			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
             }
             else {
                 $this->Report->setValidation('reports_manual');
             }
-			if($this->data['Report']['library_id'] == 'all'){
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-			}
-			else{
-				$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$this->data['Report']['library_id']),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
-			}			
+			if($territory != ''){
+				if($library_id == 'all'){
+					$sql = "SELECT id from libraries where library_territory = '".$territory."'";
+					$result = mysql_query($sql);
+					while ($row = mysql_fetch_assoc($result)) {
+						$all_Ids = $all_Ids.$row["id"].",";
+					}		  
+					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
+					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				}
+				else{
+					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+				}
+			}		
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($this->data['Report']['library_id'], $this->data['Report']['date_from'], $this->data['Report']['date_to']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
-                
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
                 $this->set('genreDownloads', $genreDownloads);
@@ -273,7 +341,7 @@ Class ReportsController extends AppController
         {
             Configure::write('debug',0); // Otherwise we cannot use this method while developing 
             $sonyReport = $this->SonyReport->find("first", array('conditions' => array('id' => base64_decode($this->params['named']['id']))));
-            $path = $sonyReport['SonyReport']['report_location']; // change the path to fit your websites document structure
+            $path = "http://music.freegalmusic.com/freegalmusic/sony_reports"; // change the path to fit your websites document structure
             $fullPath = $path."/".$sonyReport['SonyReport']['report_name'];
             if ($fd = fopen ($fullPath, "r")) {
                 $fsize = filesize($fullPath);
@@ -291,5 +359,19 @@ Class ReportsController extends AppController
         }
         $this->set("sonyReports", $this->paginate('SonyReport'));
     }
+	function admin_getLibraryIds(){
+        Configure::write('debug', 0);
+        if($this->Session->read("Auth.User.type_id") == 4) {
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
+        }
+        else {
+			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC','recursive' => -1));
+        }		
+		$data = "<option value='all'>All Libraries</option>";
+		foreach($var as $k=>$v){
+			$data = $data."<option value=".$k.">".$v."</option>";
+		}
+		print "<select class='select_fields' name='library_id'>".$data."</select>";exit;
+	}
 }
 ?>

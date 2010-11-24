@@ -34,17 +34,19 @@
 		</li>
 		<li class="item3"><a href="#"><span>Featured Artist</span></a>
 			<ul>
-				<?php				
-				foreach($featuredArtistMenu as $featuredArtistM) {
-				?>
-					<li class="parent item">
-						<?php echo $html->link($featuredArtistM['Featuredartist']['artist_name'], array(
-							'controller' => 'artists', 
-							'action'=> 'view', 
-							base64_encode($featuredArtistM['Featuredartist']['artist_name'])));
-						?>
-					</li>
 				<?php
+				foreach($featuredArtistMenu as $featuredArtistM) {
+					if($featuredArtistM['Featuredartist']['territory'] == $this->Session->read('territory')){				
+					?>
+						<li class="parent item">
+							<?php echo $html->link($featuredArtistM['Featuredartist']['artist_name'], array(
+								'controller' => 'artists', 
+								'action'=> 'view', 
+								base64_encode($featuredArtistM['Featuredartist']['artist_name'])));
+							?>
+						</li>
+					<?php
+					}
 				}
 				?>
 			</ul>
@@ -53,15 +55,17 @@
 			<ul>
 				<?php
 				foreach($newArtistMenu as $newArtistM) {
-				?>
-					<li class="parent item">
-						<?php echo $html->link($newArtistM['Newartist']['artist_name'], array(
-							'controller' => 'artists',
-							'action' => 'view',
-							base64_encode($newArtistM['Newartist']['artist_name']))); 
-						?>
-					</li>
-				<?php
+					if($newArtistM['Newartist']['territory'] == $this->Session->read('territory')){
+					?>
+						<li class="parent item">
+							<?php echo $html->link($newArtistM['Newartist']['artist_name'], array(
+								'controller' => 'artists',
+								'action' => 'view',
+								base64_encode($newArtistM['Newartist']['artist_name']))); 
+							?>
+						</li>
+					<?php
+					}
 				}
 				?>
 			</ul>

@@ -28,10 +28,10 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 		}
 		$sql = "UPDATE libraries SET library_status='$status' WHERE id=".$line['id'];
 		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
-		echo "Library satus updated successfully for Library ID ".$line['id']." to $status !!\n";
+		echo date("Y-m-d H:i:s")." - Library satus updated successfully for Library ID ".$line['id']." to $status !!\n";
 	}
 	else {
-		echo "Library ID ".$line['id']." status not changed as it has been modified by the admin!!\n";
+		echo date("Y-m-d H:i:s")." - Library ID ".$line['id']." status not changed as it has been modified by the admin!!\n";
 	}
 }
 //Reseting library download limit for all the libraries so the download can be available and checked for patrons

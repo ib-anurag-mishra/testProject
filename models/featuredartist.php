@@ -26,7 +26,7 @@ class Featuredartist extends AppModel
     Desc : gets all the artists
     */
     function getallartists() {
-        $getArtists = $this->find('all');
+        $getArtists = $this->find('all',array('cache' => 'yes'));
         return $getArtists;
     }
     

@@ -59,22 +59,80 @@ class AppModel extends Model {
         }
     
         $paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-        if (empty($paginationcount)) {                
+        if (empty($paginationcount)) {
                 $group = "";
-                foreach($conditions as $k => $v){                    
-                    if($v == "1 = 1 GROUP BY Physicalproduct.ArtistText"){
-                        $fields = array('fields' => 'ProdID');
+                foreach($conditions as $k => $v){
+                    if($v == "1 = 1 GROUP BY Album.ProdID"){
+                        //$fields = array('fields' => 'ProdID');
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
-                }               
+                    if($v == "1 = 1 GROUP BY Song.ProdID"){
+                        //$fields = array('fields' => 'ProdID');
+                        $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                        $paginationcount = count($paginationcount);
+                        $group = "yes";
+                    }
+                    if($v == "1 = 1 GROUP BY Song.ArtistText"){
+                        //$fields = array('fields' => 'ProdID');
+                        $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                        $paginationcount = count($paginationcount);
+                        $group = "yes";
+                    }					
+
+				}
                 if($group != "yes"){
-                    $paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));                    
-                }                
+                    $paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
+                }
                 Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
         }
         return $paginationcount;
-    } 
+    }
+    function save($data = null, $validate = true, $fieldList = array()) {
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::save($data, $validate, $fieldList);
+        $this->useDbConfig = $oldDb;
+        return $return;
+    }
+	
+	function saveAll($data = null, $options = array()){
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::saveAll($data , $options);
+        $this->useDbConfig = $oldDb;
+        return $return;	
+	}
+	
+	function delete($id = null, $cascade = true) {	
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::delete($id, $cascade);
+        $this->useDbConfig = $oldDb;
+        return $return;
+	}
+	
+	function deleteAll($conditions, $cascade = true, $callbacks = false) {
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::deleteAll($conditions, $cascade , $callbacks);
+        $this->useDbConfig = $oldDb;
+        return $return;
+	}
+	function saveField($name, $value, $validate = false) {
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::saveField($name, $value, $validate);
+        $this->useDbConfig = $oldDb;
+        return $return;
+	}	
+	function create($data = array(), $filterKey = false) {
+        $oldDb = $this->useDbConfig;
+        $this->setDataSource('master');
+        $return = parent::create($data, $filterKey);
+        $this->useDbConfig = $oldDb;
+        return $return;
+	}
 }
 ?>

@@ -4,20 +4,22 @@
 	<div id="slideshow">
 	<?php
 		foreach($artists as $key => $artist):
+				if($artist['Artist']['territory'] == $this->Session->read('territory')){
                     if($key == 0) {
                         echo $html->link(
-                            $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'])),
+                            $html->image("http://music.freegalmusic.com/freegalmusic/prod/".substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
                             array('controller'=>'artists', 'action'=>'view', base64_encode($artist['Artist']['artist_name'])),
                             array('class'=>'first','escape'=>false)
                         );
                     }
                     else {
                         echo $html->link(
-                            $html->image(substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'])),
+                            $html->image("http://music.freegalmusic.com/freegalmusic/prod/".substr($artist['Artist']['artist_image'], 4), array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
                             array('controller'=>'artists', 'action'=>'view', base64_encode($artist['Artist']['artist_name'])),
                             array('escape'=>false)
                         );
                     }
+				}
 		endforeach; 
 	?>					
 	</div>
@@ -27,7 +29,11 @@
 	<ul id="marquee" class="marquee">
 		<?php 
 		foreach($upcoming as $newreleases):
-			echo '<li>Coming ' . date("F d", strtotime($newreleases['Physicalproduct']['SalesDate'])) . ' ' . $newreleases['Physicalproduct']['ArtistText'] . ' - ' . $newreleases['Physicalproduct']['Title'] . '</li>';
+			if($newreleases['Country']['SalesDate']){
+				echo '<li>Coming ' . date("F d", strtotime($newreleases['Country']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['AlbumTitle'] . '</li>';
+			} else {
+				echo '<li>Coming ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['AlbumTitle'] . '</li>';
+			}
 		endforeach;
 		?>
 	</ul>
@@ -36,8 +42,13 @@
     Suggestions
     <div id="suggestionsBox">
         <table cellspacing="0" cellpadding="0">
-            <?php
-	    for($i = 0; $i < 8; $i++) {
+        <?php
+			$j =0;
+	    for($i = 0; $i < count($songs); $i++) {
+		if($j==8){
+			break;
+		}
+		if($songs[$i]['Territory'] == $this->Session->read('territory')){
 	?>
 		<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
                     <td>
@@ -75,48 +86,52 @@
                         </p>
                     </td>
                 </tr>
-	<?php } ?>
+	<?php $j++;} } ?>
         </table>
     </div>
 </div>
 <div id="artist_container">
     <div id="featured_artist">
-            <?php 
+            <?php
             foreach($featuredArtists as $key => $featuredArtist):
-                if($key == 0) {
-                    echo $html->link(
-                        $html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
-                        array('class'=>'first','escape'=>false)
-                    );
-                }
-                else {
-                    echo $html->link(
-                        $html->image(substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
-                        array('escape'=>false)
-                    );
-                }
+				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory')){
+					if($key == 0) {
+						echo $html->link(
+							$html->image("http://music.freegalmusic.com/freegalmusic/prod/".substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
+							array('class'=>'first','escape'=>false)
+						);
+					}
+					else {
+						echo $html->link(
+							$html->image("http://music.freegalmusic.com/freegalmusic/prod/".substr($featuredArtist['Featuredartist']['artist_image'], 4), array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
+							array('escape'=>false)
+						);
+					}
+				}
             endforeach;
             ?>
     </div>
     <div id="newly_added">
-            <?php 
+            <?php
             foreach($newArtists as $key => $newArtist):
-                if($key == 0) {
-                    echo $html->link(
-                        $html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
-                        array('class'=>'first','escape'=>false)
-                    );
-                }
-                else {
-                    echo $html->link(
-                        $html->image(substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist")),
-                        array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
-                        array('escape'=>false)
-                    );
-                }
+				if($newArtist['Newartist']['territory'] == $this->Session->read('territory')){			
+					if($key == 0) {
+						echo $html->link(
+							$html->image("http://music.freegalmusic.com/freegalmusic/prod/".substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
+							array('class'=>'first','escape'=>false)
+						);
+					}
+					else {
+						echo $html->link(
+							$html->image("http://music.freegalmusic.com/freegalmusic/prod/".substr($newArtist['Newartist']['artist_image'], 4), array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),
+							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
+							array('escape'=>false)
+						);
+					}
+				}
             endforeach;
             ?>
     </div>
@@ -163,10 +178,10 @@
                                 <td class='artist_line'>
                                     <p>
                                         <?php
-                                            echo $html->link($allArtists['Physicalproduct']['ArtistText'], array(
+                                            echo $html->link($allArtists['Song']['ArtistText'], array(
                                                     'controller' => 'artists',
                                                     'action' => 'view',
-                                                    base64_encode($allArtists['Physicalproduct']['ArtistText']))
+                                                    base64_encode($allArtists['Song']['ArtistText']))
                                             );
                                         ?>
                                     </p>

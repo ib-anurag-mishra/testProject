@@ -888,7 +888,7 @@ ul.marquee li {
 
 .songData {
 	float:left;
-	width:249px;
+	width:235px;
 	margin:10px 0 0 5px;
 }
 

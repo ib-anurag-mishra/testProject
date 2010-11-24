@@ -5,8 +5,8 @@
 				        <tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 							<td class='artist_line'>
 								<p>
-									<a href='<?php echo $this->webroot; ?>artists/view/<?php echo base64_encode($allArtists['Physicalproduct']['ArtistText']); ?>'>
-										<?php echo $allArtists['Physicalproduct']['ArtistText'] ?>
+									<a href='<?php echo $this->webroot; ?>artists/view/<?php echo base64_encode($allArtists['Song']['ArtistText']); ?>'>
+										<?php echo $allArtists['Song']['ArtistText'] ?>
 									</a>
 								</p>
 							</td>

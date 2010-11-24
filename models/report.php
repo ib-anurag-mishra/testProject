@@ -13,6 +13,7 @@ class Report extends AppModel
 
     var $validationSets = array(
         'reports_date' => array(
+			'Territory' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Territory.'),
             'library_id' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select a Library.'),
             'reports_daterange' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select the date range.'),
             'date' => array(
@@ -21,7 +22,8 @@ class Report extends AppModel
                            )
         ),
         'reports_manual' => array(
-            'library_id' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select a Library.'),
+			'Territory' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Territory.'),
+			'library_id' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select a Library.'),
             'reports_daterange' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select the date range.'),
             'date_from' => array(
                             'date_fromRule-1' => array('rule' => array('minLength', 1), 'allowEmpty' =>  false, 'message' => 'Please select a From Date.', 'last' => true),
