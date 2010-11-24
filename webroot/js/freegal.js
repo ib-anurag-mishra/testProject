@@ -81,7 +81,8 @@ function userDownloadIE(prodId)
 				if(con == true){
 					var url = "/homes/my_history";
 					window.location = url;
-					e.returnValue = false;
+					e.stopPropagation();
+					return false;
 				}else{
 					document.getElementById('download_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -203,6 +204,7 @@ function addToWishlist(prodId)
 function wishlistDownloadIE(prodId,id)
 {
 		var e = window.event;
+		e.cancelBubble = true;
 		document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 		document.getElementById('downloading_'+prodId).style.display = 'block';
 		document.getElementById('wishlist_song_'+prodId).style.display = 'none';
@@ -219,7 +221,8 @@ function wishlistDownloadIE(prodId,id)
 					if(con == true){
 						var url = "/homes/my_history";
 						window.location = url;
-						e.returnValue = false;
+						e.stopPropagation();
+						return false;
 					}else{
 						document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 						document.getElementById('downloading_'+prodId).style.display = 'none';
