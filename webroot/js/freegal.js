@@ -105,7 +105,7 @@ function userDownloadIE(prodId)
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
-	e.returnValue = false;
+	return false;
 }
 
 function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
@@ -246,7 +246,7 @@ function wishlistDownloadIE(prodId,id)
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
-	e.returnValue = false; 
+	return false; 
 }
 
 function historyDownload(id,libID,patronID)
