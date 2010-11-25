@@ -93,7 +93,9 @@ function userDownloadIE(prodId)
 				}else{
 					document.getElementById('download_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
-					document.getElementById('song_'+prodId).style.display = 'block';					
+					document.getElementById('song_'+prodId).style.display = 'block';
+					$('.beforeClick').show();
+					$('.afterClick').hide();					
 					return false;
 				}
 			}
@@ -138,7 +140,9 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				}else{
 					document.getElementById('download_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
-					document.getElementById('song_'+prodId).style.display = 'block';					
+					document.getElementById('song_'+prodId).style.display = 'block';
+					$('.beforeClick').show();
+					$('.afterClick').hide();					
 					return false;
 				}
 			}				
@@ -235,6 +239,8 @@ function wishlistDownloadIE(prodId,id)
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
 					document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+					$('.beforeClick').show();
+					$('.afterClick').hide();					
 					return false;
 				}
 			}				
@@ -353,6 +359,8 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 						document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 						document.getElementById('downloading_'+prodId).style.display = 'none';
 						document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+						$('.beforeClick').show();
+						$('.afterClick').hide();						
 						return false;
 					}
 				}				
