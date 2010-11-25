@@ -678,9 +678,9 @@ Class UsersController extends AppController
 			}
 		}
       $this->layout = 'login';
-      if ($this->Session->read('Auth.User')){
-         $userType = $this->Session->read('Auth.User.type_id');
-         if($userType == '5'){
+	  if ($this->Session->read('patron')){
+         $userType = $this->Session->read('patron');
+         if($userType != ''){
             $this->redirect('/homes/index');
             $this->Auth->autoRedirect = false;     
          }
@@ -839,13 +839,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+		$this->layout = 'login';
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
-		}      
+		}     
 		$this->set('card',"");      
 		if($this->data){         
 			$card = $this->data['User']['card'];         
@@ -984,13 +985,13 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
-		}
+		} 
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
@@ -1193,9 +1194,9 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
@@ -1397,9 +1398,9 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
@@ -1577,13 +1578,13 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
-		}	            
+		}            
 		if($this->data){  
 			$card = $this->data['User']['card'];
 			$pin = $this->data['User']['pin'];
@@ -1857,13 +1858,13 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';     
-		if ($this->Session->read('Auth.User')){
-			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
-		}	            
+		}            
 		if($this->data){  
 			$card = $this->data['User']['card'];
 			$patronId = $card;        
@@ -2207,13 +2208,13 @@ Class UsersController extends AppController
 			}
 		}
       $this->layout = 'login';
-      if ($this->Session->read('Auth.User')){
-         $userType = $this->Session->read('Auth.User.type_id');
-         if($userType == '5'){
-            $this->redirect('/homes/index');
-            $this->Auth->autoRedirect = false;     
-         }
-      }
+	  if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
+				$this->redirect('/homes/index');
+				$this->Auth->autoRedirect = false;     
+			}
+	  }	
       $this->set('pin',"");
       $this->set('card',"");
       if($this->data){         
