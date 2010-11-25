@@ -75,25 +75,25 @@ function userDownloadIE(prodId)
 		data: data,  // post data
 		success: function(response) {
 			var msg = response.substring(0,5);
-			if(msg == 'avail')
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;			
+			}				
+			else if(msg == 'avail')
 			{
 				var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
 				if(con == true){
 					var url = "/homes/my_history";
 					window.location = url;
-					e.returnValue = false;
+					return false;
 				}else{
 					document.getElementById('download_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
 					document.getElementById('song_'+prodId).style.display = 'block';					
 					return false;
 				}
-			}				
-			else if(msg == 'error')
-			{
-				alert("Your download limit has exceeded.");
-				location.reload();
-				return false;
 			}
 			else
 			{
@@ -202,49 +202,51 @@ function addToWishlist(prodId)
 
 function wishlistDownloadIE(prodId,id)
 {
-		var e = window.event;
-		document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
-		document.getElementById('downloading_'+prodId).style.display = 'block';
-		document.getElementById('wishlist_song_'+prodId).style.display = 'none';
-		var data = "prodId="+prodId+"&id="+id;
-		jQuery.ajax({
-			type: "post",  // Request method: post, get
-			url: webroot+"homes/wishlistDownload", // URL to request
-			data: data,  // post data
-			success: function(response) {
-				var msg = response.substring(0,5);
-				if(msg == 'avail')
-				{
-					var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
-					if(con == true){
-						var url = "/homes/my_history";
-						window.location = url;
-						e.returnValue = false;
-					}else{
-						document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-						document.getElementById('downloading_'+prodId).style.display = 'none';
-						document.getElementById('wishlist_song_'+prodId).style.display = 'block';
-						return false;
-					}
-				}				
-				else if(msg == 'error')
-				{
-					alert("Your download limit has exceeded.");
-					location.reload();
+	var e = window.event;
+	e.cancelBubble = true;
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
+	var data = "prodId="+prodId+"&id="+id;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/wishlistDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'avail')
+			{
+				var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
+				if(con == true){
+					var url = "/homes/my_history";
+					window.location = url;
+					e.stopPropagation();
 					return false;
-				}
-				else
-				{
-					document.getElementById('downloads_used').innerHTML = response;
-					document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				}else{
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
 					document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+					return false;
 				}
-			},
-			error:function (XMLHttpRequest, textStatus, errorThrown) {}
-		});
-		return false; 
+			}				
+			else if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false; 
 }
 
 function historyDownload(id,libID,patronID)
