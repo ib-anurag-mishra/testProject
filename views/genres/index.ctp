@@ -103,7 +103,7 @@
 										<div class="download_links"><a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></div>
 									<![endif]-->
 								</span>
-								<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left">Downloading...</span>
+								<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left">Please Wait...</span>
 								<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 							</p>
 						<?php
