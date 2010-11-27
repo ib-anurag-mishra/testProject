@@ -103,7 +103,6 @@ function userDownloadIE(prodId,obj)
 				document.getElementById('song_'+prodId).style.display = 'block';
 				$('.afterClick').hide();
 				$('.beforeClick').show();
-				location.href = unescape(link);
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -129,19 +128,14 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
-				var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
-				if(con == true){
-					var url = "/homes/my_history";
-					window.location = url;
-					return false;
-				}else{
-					document.getElementById('download_loader_'+prodId).style.display = 'none';
-					document.getElementById('downloading_'+prodId).style.display = 'none';
-					document.getElementById('song_'+prodId).style.display = 'block';
-					$('.afterClick').hide();
-					$('.beforeClick').show();
-					return false;
-				}
+				var url = "/homes/my_history";
+				window.location = url;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).style.display = 'block';
+				$('.afterClick').hide();
+				$('.beforeClick').show();
+				return false;
 			}				
 			else if(msg == 'error')
 			{
@@ -178,15 +172,9 @@ function addToWishlist(prodId)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
-				var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
-				if(con == true){
-					var url = "/homes/my_history";
-					window.location = url;
-					return false;
-				}else{
-					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';			
-					return false;
-				}
+				var url = "/homes/my_history";
+				window.location = url;
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';			
 			}				
 			else if(msg == 'error')
 			{
@@ -212,8 +200,6 @@ function wishlistDownloadIE(prodId,id)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	var e = window.event;
-	e.cancelBubble = true;
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
@@ -226,20 +212,14 @@ function wishlistDownloadIE(prodId,id)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
-				var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
-				if(con == true){
-					var url = "/homes/my_history";
-					window.location = url;
-					e.stopPropagation();
-					return false;
-				}else{
-					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-					document.getElementById('downloading_'+prodId).style.display = 'none';
-					document.getElementById('wishlist_song_'+prodId).style.display = 'block';
-					$('.afterClick').hide();
-					$('.beforeClick').show();
-					return false;
-				}
+				var url = "/homes/my_history";
+				window.location = url;
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+				$('.afterClick').hide();
+				$('.beforeClick').show();
+				return false;
 			}				
 			else if(msg == 'error')
 			{
@@ -347,19 +327,14 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				var msg = response.substring(0,5);
 				if(msg == 'avail')
 				{
-					var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
-					if(con == true){
-						var url = "/homes/my_history";
-						window.location = url;
-						return false;
-					}else{
-						document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-						document.getElementById('downloading_'+prodId).style.display = 'none';
-						document.getElementById('wishlist_song_'+prodId).style.display = 'block';
-						$('.afterClick').hide();
-						$('.beforeClick').show();
-						return false;
-					}
+					var url = "/homes/my_history";
+					window.location = url;
+					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+					document.getElementById('downloading_'+prodId).style.display = 'none';
+					document.getElementById('wishlist_song_'+prodId).style.display = 'block';
+					$('.afterClick').hide();
+					$('.beforeClick').show();
+					return false;
 				}				
 				else if(msg == 'error')
 				{
