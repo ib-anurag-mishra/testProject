@@ -128,6 +128,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
+				alert('You have it in your recent downloads page...Redirecting you to that page');
 				var url = "/homes/my_history";
 				window.location = url;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
@@ -172,6 +173,7 @@ function addToWishlist(prodId)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
+				alert('You have it in your recent downloads page...Redirecting you to that page');
 				var url = "/homes/my_history";
 				window.location = url;
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';			
@@ -212,6 +214,7 @@ function wishlistDownloadIE(prodId,id)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
+				alert('You have it in your recent downloads page...Redirecting you to that page');
 				var url = "/homes/my_history";
 				window.location = url;
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
@@ -327,6 +330,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				var msg = response.substring(0,5);
 				if(msg == 'avail')
 				{
+					alert('You have it in your recent downloads page...Redirecting you to that page');
 					var url = "/homes/my_history";
 					window.location = url;
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
