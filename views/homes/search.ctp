@@ -119,7 +119,7 @@ if(count($searchResults) != 0){
 											<a href='#' title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
 										<![endif]>
 										<!--[if IE]>
-											<a title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+											<a title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 										<![endif]-->
 									</span>
 									<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left">Please Wait...</span>
@@ -142,7 +142,7 @@ if(count($searchResults) != 0){
 											<p>Added to Wishlist</p>
 								<?php 	}
 										else { ?>
-											<p><span id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+											<p><span id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 								<?php
 										}
                                     }

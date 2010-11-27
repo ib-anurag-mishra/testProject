@@ -85,14 +85,10 @@ function userDownloadIE(prodId,obj)
 			}				
 			else if(msg == 'avail')
 			{
+					obj.href = '#';
 					alert('You have it in your recent downloads page...Redirecting you to that page');
 					var url = "/homes/my_history";
 					window.location = url;
-					$('.afterClick').hide();
-					$('.beforeClick').show();					
-					document.getElementById('download_loader_'+prodId).style.display = 'none';
-					document.getElementById('downloading_'+prodId).style.display = 'none';
-					document.getElementById('song_'+prodId).style.display = 'block';
 					e.returnValue = false;
 					return false;
 			}
@@ -164,7 +160,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 }
 
 
-function addToWishlist(prodId)
+function addToWishlist(prodId,obj)
 {
 	var e = window.event;
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
@@ -177,6 +173,7 @@ function addToWishlist(prodId)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
+				obj.href = '#';
 				alert('You have it in your recent downloads page...Redirecting you to that page');
 				var url = "/homes/my_history";
 				window.location = url;
@@ -204,7 +201,7 @@ function addToWishlist(prodId)
 	return false; 
 }
 
-function wishlistDownloadIE(prodId,id)
+function wishlistDownloadIE(prodId,id,obj)
 {
 	var e = window.event;
 	$('.beforeClick').hide();
@@ -221,6 +218,7 @@ function wishlistDownloadIE(prodId,id)
 			var msg = response.substring(0,5);
 			if(msg == 'avail')
 			{
+				obj.href = '#';
 				alert('You have it in your recent downloads page...Redirecting you to that page');
 				var url = "/homes/my_history";
 				window.location = url;

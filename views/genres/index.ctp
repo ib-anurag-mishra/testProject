@@ -100,7 +100,7 @@
 										<div class="download_links"><a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></div>
 									<![endif]>
 									<!--[if IE]>
-										<div class="download_links"><a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></div>
+										<div class="download_links"><a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>",this);' href='<?php echo $finalSongUrl; ?>'>Download Now</a></div>
 									<![endif]-->
 								</span>
 								<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left">Please Wait...</span>
@@ -121,7 +121,7 @@
 										?> <p>Added to Wishlist</p>
 									<?php }
 									else{ ?>
-										<p><span id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>");'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+										<p><span id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
 									<?php	
 									}
 								}
