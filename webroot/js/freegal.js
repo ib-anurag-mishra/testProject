@@ -64,8 +64,6 @@ document.oncontextmenu=new Function("return false");
 var id;
 function userDownloadIE(prodId,obj)
 {
-	var link = obj.href;
-	obj.href = '#';
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	var e = window.event;
@@ -87,19 +85,15 @@ function userDownloadIE(prodId,obj)
 			}				
 			else if(msg == 'avail')
 			{
-				var con = confirm("You have this in your recent downloads page and Do you want to download it from recent downloads.");
-				if(con == true){
+					alert('You have it in your recent downloads page...Redirecting you to that page');
 					var url = "/homes/my_history";
 					window.location = url;
-					return false;
-				}else{
+					$('.afterClick').hide();
+					$('.beforeClick').show();					
 					document.getElementById('download_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
 					document.getElementById('song_'+prodId).style.display = 'block';
-					$('.afterClick').hide();
-					$('.beforeClick').show();
 					return false;
-				}
 			}
 			else
 			{
