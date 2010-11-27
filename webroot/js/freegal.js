@@ -93,6 +93,7 @@ function userDownloadIE(prodId,obj)
 					document.getElementById('download_loader_'+prodId).style.display = 'none';
 					document.getElementById('downloading_'+prodId).style.display = 'none';
 					document.getElementById('song_'+prodId).style.display = 'block';
+					e.returnValue = false;
 					return false;
 			}
 			else
@@ -112,6 +113,7 @@ function userDownloadIE(prodId,obj)
 
 function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 {
+	var e = window.event;
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('song_'+prodId).style.display = 'none';
@@ -136,6 +138,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				document.getElementById('song_'+prodId).style.display = 'block';
 				$('.afterClick').hide();
 				$('.beforeClick').show();
+				e.returnValue = false;
 				return false;
 			}				
 			else if(msg == 'error')
@@ -163,6 +166,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 
 function addToWishlist(prodId)
 {
+	var e = window.event;
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
 	var data = "prodId="+prodId;	
 	jQuery.ajax({
@@ -176,7 +180,9 @@ function addToWishlist(prodId)
 				alert('You have it in your recent downloads page...Redirecting you to that page');
 				var url = "/homes/my_history";
 				window.location = url;
-				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';			
+				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				e.returnValue = false;
+				return false;
 			}				
 			else if(msg == 'error')
 			{
@@ -200,6 +206,7 @@ function addToWishlist(prodId)
 
 function wishlistDownloadIE(prodId,id)
 {
+	var e = window.event;
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
@@ -222,6 +229,7 @@ function wishlistDownloadIE(prodId,id)
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 				$('.afterClick').hide();
 				$('.beforeClick').show();
+				e.returnValue = false;
 				return false;
 			}				
 			else if(msg == 'error')
@@ -248,6 +256,7 @@ function wishlistDownloadIE(prodId,id)
 
 function historyDownload(id,libID,patronID)
 {
+	var e = window.event;
 	document.getElementById('download_loader_'+id).style.display = 'block';
 	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
@@ -278,6 +287,7 @@ function historyDownload(id,libID,patronID)
 
 function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downloadUrl3)
 {
+	var e = window.event;
 	document.getElementById('download_loader_'+id).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
@@ -313,6 +323,7 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 
 function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 {
+		var e = window.event;
 		$('.beforeClick').hide();
 		$('.afterClick').show();
 		document.getElementById('downloading_'+prodId).style.display = 'block';
@@ -338,6 +349,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 					document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 					$('.afterClick').hide();
 					$('.beforeClick').show();
+					e.returnValue = false;
 					return false;
 				}				
 				else if(msg == 'error')
