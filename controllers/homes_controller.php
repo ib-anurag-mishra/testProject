@@ -467,43 +467,54 @@ class HomesController extends AppController
         $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-        if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
+        if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
+			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';
         }
-        elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
+        elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative';
 		}
-        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_https';
 		}		
-		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
+		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_wo_pin';  
 		}
-		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
+		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2';  
 		}
-		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
+		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
+			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'sip';   
         }
-		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){            
+		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_wo_pin';  
 		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2_var';  
 		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
 		}
-		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
 		}		
-		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
+		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'ezproxy';  
 		}
-        else{            
+        else{
+			$insertArr['email'] = $this->Session->read('Auth.User.email');
 			$insertArr['user_login_type'] = 'user_account';   
-         }         		
-		$insertArr['email'] = $this->Session->read('Auth.User.email');
+         }
 		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
         if($this->Download->save($insertArr)){
@@ -1118,40 +1129,54 @@ class HomesController extends AppController
         $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-        if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
+        if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
+			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';
         }
-        elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
+        elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative';
 		}
-        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_https';
 		}		
-		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
+		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_wo_pin';  
 		}
-		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
+		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2';  
 		}
-		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
+		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
+			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'sip';   
         }
-		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){            
+		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_wo_pin';  
 		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2_var';  
 		}
-		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+		}
+		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
 		}		
-		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
+		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
+			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'ezproxy';  
-		}		
-        else{            
+		}
+        else{
+			$insertArr['email'] = $this->Session->read('Auth.User.email');
 			$insertArr['user_login_type'] = 'user_account';   
-         }         		
-		$insertArr['email'] = $this->Session->read('Auth.User.email');
+        }
 		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];		
         //save to downloads table
