@@ -137,7 +137,7 @@ Class ArtistsController extends AppController
 		$newPath = '../webroot/img/';
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
-		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);		
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$getData[ 'Newartist' ]['artist_image']);		
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 		$src = WWW_ROOT.'img/'.$fileName;
 		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
@@ -190,7 +190,7 @@ Class ArtistsController extends AppController
 		$deleteObj = new Featuredartist();
 		$data = $this->Featuredartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
 		$fileName = $data[0]['Featuredartist']['artist_image'];
-		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'featuredimg/'.$fileName);
 		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managefeaturedartist' );
@@ -245,7 +245,7 @@ Class ArtistsController extends AppController
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-						$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
+						$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$getData[ 'Artist' ][ 'artist_image' ]);
 						$src = WWW_ROOT.'img/'.$fileName;
 						$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
 						$error = $this->CdnUpload->sendFile($src, $dst);
@@ -386,7 +386,7 @@ Class ArtistsController extends AppController
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
-						$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'newartistimg/'.$fileName);
+						$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'newartistimg/'.$getData[ 'Newartist' ][ 'artist_image' ]);
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
 						$src = WWW_ROOT.'img/'.$fileName;
@@ -478,7 +478,7 @@ Class ArtistsController extends AppController
 		$deleteObj = new Newartist();
 		$data = $this->Newartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
 		$fileName = $data[0]['Newartist']['artist_image'];
-		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);		
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'newartistimg/'.$fileName);		
 		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managenewartist' );
