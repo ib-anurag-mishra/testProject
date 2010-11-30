@@ -19,7 +19,7 @@
 	<tr>
 		<td class="left"><?php echo $artist['Newartist']['artist_name'];?></td>
 		<td class="left"><?php echo $artist['Newartist']['territory'];?></td>                
-		<td><a href="../../<?php echo $artist['Newartist']['artist_image'];?>" rel="image" onclick="javascript: show_uploaded_images('../../<?php echo $artist['Newartist']['artist_image'];?>')"><?php echo $artistImage;?></a></td>                
+		<td><a href="<?php echo $cdnPath.'newartistimg/'.$artist['Newartist']['artist_image'];?>" rel="image" onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'newartistimg/'.$artist['Newartist']['artist_image'];?>')"><?php echo $artistImage;?></a></td>                
 		<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'addnewartist','id'=>$artist['Newartist']['id']));?></td>
 		<td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'deletenewartists','id'=>$artist['Newartist']['id']));?></td>
 	</tr>

@@ -82,13 +82,14 @@ Class ArtistsController extends AppController
         */
 	function admin_insertfeaturedartist() {
 		$errorMsg = '';
-		$newPath = '../webroot/img/featuredimg/';
+		$newPath = '../webroot/img/';
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-		$src = WWW_ROOT.'img/featuredimg/'.$fileName;
+		$src = WWW_ROOT.'img/'.$fileName;
 		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
-		$error = $this->CdnUpload->sendFile($src, $dst);		
+		$error = $this->CdnUpload->sendFile($src, $dst);
+		unlink($newPath);
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 		$artist = '';
 		if(isset($_REQUEST[ 'artistName' ])){
@@ -109,7 +110,7 @@ Class ArtistsController extends AppController
 		
 		$insertArr = array();
 		$insertArr[ 'artist_name' ] = $artist;
-		$insertArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+		$insertArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		$insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
@@ -130,14 +131,18 @@ Class ArtistsController extends AppController
         */
 	function admin_updatefeaturedartist() {
 		$errorMsg = '';
-		$this -> Featuredartist -> id = $this -> data[ 'Artist' ][ 'id' ];
-		$newPath = '../webroot/img/featuredimg/';
+		$this->Featuredartist->id = $this->data[ 'Artist' ][ 'id' ];
+		$getArtistrDataObj = new Featuredartist();
+		$getData = $getArtistrDataObj -> getartistdata($this->Featuredartist->id );
+		$newPath = '../webroot/img/';
 		$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$newPath = $newPath . $fileName;
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);		
 		move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-		$src = WWW_ROOT.'img/featuredimg/'.$fileName;
+		$src = WWW_ROOT.'img/'.$fileName;
 		$dst = Configure::read('App.CDN_PATH').'featuredimg/'.$fileName;
 		$error = $this->CdnUpload->sendFile($src, $dst);
+		unlink($newPath);
 		$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 		$artistName = '';
 		if(isset($_REQUEST[ 'artistName' ])){
@@ -161,7 +166,7 @@ Class ArtistsController extends AppController
 		$updateArr[ 'artist_name' ] = $artist;
 		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
-			$updateArr[ 'artist_image' ] = 'img/featuredimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+			$updateArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		}
 		$updateObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
@@ -379,14 +384,16 @@ Class ArtistsController extends AppController
 					$updateArr[ 'artist_name' ] = $artist;
 					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
-						$newPath = '../webroot/img/newartistimg/';
+						$newPath = '../webroot/img/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+						$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'newartistimg/'.$fileName);
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-						$src = WWW_ROOT.'img/newartistimg/'.$fileName;
+						$src = WWW_ROOT.'img/'.$fileName;
 						$dst = Configure::read('App.CDN_PATH').'newartistimg/'.$fileName;
 						$error = $this->CdnUpload->sendFile($src, $dst);
-						$updateArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+						unlink($newPath);
+						$updateArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
 					if( empty( $errorMsg ) ) {
 						if( $updateObj -> insert( $updateArr ) ) {
@@ -426,13 +433,14 @@ Class ArtistsController extends AppController
 				if( trim( $artist ) == '' ) {
 					$errorMsg .= 'Please select an artist name<br/>';
 				}				
-				$newPath = '../webroot/img/newartistimg/';
+				$newPath = '../webroot/img/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-				$src = WWW_ROOT.'img/newartistimg/'.$fileName;
+				$src = WWW_ROOT.'img/'.$fileName;
 				$dst = Configure::read('App.CDN_PATH').'newartistimg/'.$fileName;
 				$error = $this->CdnUpload->sendFile($src, $dst);
+				unlink($newPath);
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
