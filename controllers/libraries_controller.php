@@ -514,21 +514,22 @@ Class LibrariesController extends AppController
 		      $data = $this->Library->find('all', array('conditions' => array('id' => $_REQUEST['LibraryID'])));
 		      $deleteFileName = $data[0]['Library']['library_image_name'];
 		      if($deleteFileName != null){
-			  $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'libraryimg/'.$deleteFileName);
+				$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'libraryimg/'.$deleteFileName);
 		      }
 		      $src = WWW_ROOT.'img/'.$fileName;
 		      $dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
-		      $error = $this->CdnUpload->sendFile($src, $dst);
+		      $success = $this->CdnUpload->sendFile($src, $dst);
 		      unlink($upload_Path);
                     $this->Library->id = $_REQUEST['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
                 }
             }
 	}
-	echo "{";
-	echo				"error: '" . $error . "',\n";
-	echo				"msg: '" . $msg . "'\n";
-	echo "}";
+		echo "{";
+		echo "success: '" . $success . "',\n";
+		echo "error: '" . $error . "',\n";
+		echo "msg: '" . $msg . "'\n";
+		echo "}";
     }
     
     /*
