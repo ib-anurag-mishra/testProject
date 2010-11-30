@@ -85,12 +85,12 @@ function userDownloadIE(prodId)
 			}
 			else
 			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).style.display = 'block';
-				$('.afterClick').hide();
-				$('.beforeClick').show();				
+				document.getElementById('song_'+prodId).style.display = 'block';				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -192,13 +192,13 @@ function wishlistDownloadIE(prodId,id)
 			}
 			else
 			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();			
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
-				$('.afterClick').hide();
-				$('.beforeClick').show();
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
