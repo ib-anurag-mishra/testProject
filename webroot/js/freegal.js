@@ -141,8 +141,6 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 
 function addToWishlist(prodId)
 {
-	$('.beforeClick').hide();
-	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
 	var data = "prodId="+prodId;	
 	jQuery.ajax({
@@ -162,8 +160,6 @@ function addToWishlist(prodId)
 				if(msg == 'Success'){
 					document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-					$('.afterClick').hide();
-					$('.beforeClick').show();					
 				}				
 			}			
 		},
