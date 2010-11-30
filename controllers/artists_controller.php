@@ -236,14 +236,16 @@ Class ArtistsController extends AppController
 					$updateArr[ 'artist_name' ] = $artist;
 					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
-						$newPath = '../webroot/img/artistimg/';
+						$newPath = '../webroot/img/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 						$newPath = $newPath . $fileName;
 						move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-						$src = WWW_ROOT.'img/artistimg/'.$fileName;
+						$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
+						$src = WWW_ROOT.'img/'.$fileName;
 						$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
 						$error = $this->CdnUpload->sendFile($src, $dst);
-						$updateArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+						unlink($newPath);
+						$updateArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 					}
 					if( empty( $errorMsg ) ) {
 						if( $updateObj -> insert( $updateArr ) ) {
@@ -281,18 +283,19 @@ Class ArtistsController extends AppController
 				if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
 					$errorMsg .= 'Please Choose a Territory<br/>';
 				}				
-				$newPath = '../webroot/img/artistimg/';
+				$newPath = '../webroot/img/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
 				move_uploaded_file( $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ], $newPath );
-				$src = WWW_ROOT.'img/artistimg/'.$fileName;
+				$src = WWW_ROOT.'img/'.$fileName;
 				$dst = Configure::read('App.CDN_PATH').'artistimg/'.$fileName;
 				$error = $this->CdnUpload->sendFile($src, $dst);
+				unlink($newPath);
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 				$insertArr[ 'artist_name' ] = $artist;;
-				$insertArr[ 'artist_image' ] = 'img/artistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+				$insertArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$insertObj = new Artist();
 				if( empty( $errorMsg ) ) {
 					if( $insertObj -> insert( $insertArr ) ) {
