@@ -43,5 +43,41 @@ Class CdnUploadComponent extends Object
             }
         }
     }
+    /*
+     Function Name : deleteFile
+     Desc : function used for deleting the file from CDN
+    */
+
+    function deleteFile($file){
+        $SFTP_HOST = Configure::read('App.SFTP_HOST');
+        $SFTP_PORT = Configure::read('App.SFTP_PORT');
+        $SFTP_USER = Configure::read('App.SFTP_USER');
+        $SFTP_PASS = Configure::read('App.SFTP_PASS');
+        
+        if(!($con = ssh2_connect($SFTP_HOST,$SFTP_PORT)))
+        {
+            echo "Not Able to Establish Connection\n";
+        }
+        else
+        {
+            if(!ssh2_auth_password($con,$SFTP_USER,$SFTP_PASS))
+            {
+                echo "fail: unable to authenticate\n";
+            }
+            else
+            {
+                $sftp = ssh2_sftp($con);
+                if(!ssh2_sftp_unlink($sftp, $file)){
+                    echo "error\n";
+                }
+                else
+                {
+                    //echo "FILE Sucessfully sent\n";
+                }
+
+            }
+        }	
+   }
+	
 }
 ?>
