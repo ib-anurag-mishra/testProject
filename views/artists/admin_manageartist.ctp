@@ -12,9 +12,8 @@
 		</tr>
 		<?php
 		foreach($artists as $artist)
-		{   
-		$imgArr = explode('/',$artist['Artist']['artist_image']);
-		$artistImage = $imgArr[2];	   
+		{
+			$artistImage = $artist['Artist']['artist_image'];	   
 		?>
 		<tr>
 			<td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
