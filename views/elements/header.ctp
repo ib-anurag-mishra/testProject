@@ -28,7 +28,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<?php
 			}else{
 			?>
-				<img src="<?php echo cdnPath; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
+				<img src="<?php echo $cdnPath; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
 			<?php
 			}
 			?>
