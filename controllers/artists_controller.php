@@ -444,7 +444,7 @@ Class ArtistsController extends AppController
 				$filePath = $this -> data[ 'Artist' ][ 'artist_image' ][ 'tmp_name' ];
 				$insertArr = array();
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
-				$insertArr[ 'artist_image' ] = 'img/newartistimg/' . $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+				$insertArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$insertArr[ 'artist_name' ] = $artist;
 				$insertObj = new Newartist();
 				if( empty( $errorMsg ) ) {
