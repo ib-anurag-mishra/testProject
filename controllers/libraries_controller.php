@@ -503,16 +503,23 @@ Class LibrariesController extends AppController
             
             if($error == "") {
                 if($_REQUEST['LibraryStepNum'] == "5" && $_REQUEST['LibraryID'] != "") {
-                    $upload_dir = '../webroot/img/libraryimg/';
+                    $upload_dir = '../webroot/img/';
                     $fileName = $_REQUEST['LibraryID'].".".$ph;
                     $upload_Path = $upload_dir . $fileName;
                     if(!file_exists($upload_dir)) {
                         mkdir($upload_dir);
                     }
                     move_uploaded_file($_FILES[$fileElementName]["tmp_name"], $upload_Path);
-					$src = WWW_ROOT.'img/libraryimg/'.$fileName;
-					$dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
-					$error = $this->CdnUpload->sendFile($src, $dst);
+		      $this->Library->recursive = -1;
+		      $data = $this->Library->find('all', array('conditions' => array('id' => $_REQUEST['LibraryID'])));
+		      $deleteFileName = $data[0]['Library']['library_image_name'];
+		      if($deleteFileName != null){
+			  $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'libraryimg/'.$deleteFileName);
+		      }
+		      $src = WWW_ROOT.'img/'.$fileName;
+		      $dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
+		      $error = $this->CdnUpload->sendFile($src, $dst);
+		      unlink($upload_Path);
                     $this->Library->id = $_REQUEST['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
                 }

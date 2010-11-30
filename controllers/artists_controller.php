@@ -183,6 +183,9 @@ Class ArtistsController extends AppController
 	function admin_delete() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Featuredartist();
+		$data = $this->Featuredartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
+		$fileName = $data[0]['Featuredartist']['artist_image'];
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
 		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managefeaturedartist' );
@@ -320,6 +323,9 @@ Class ArtistsController extends AppController
 	function admin_deleteartists() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
 		$deleteObj = new Artist();
+		$data = $this->Artist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
+		$fileName = $data[0]['Artist']['artist_image'];
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
 		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'manageartist' );
@@ -458,7 +464,10 @@ Class ArtistsController extends AppController
 	*/
 	function admin_deletenewartists() {
 		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
-		$deleteObj = new Newartist();		
+		$deleteObj = new Newartist();
+		$data = $this->Newartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
+		$fileName = $data[0]['Newartist']['artist_image'];
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);		
 		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managenewartist' );

@@ -391,7 +391,7 @@
 						<tr>
 							<td align="right" width="250" valign="top"><?php echo $this->Form->label('Preview');?></td>
 							<td align="left">
-								<?php echo $html->image('libraryimg/'.$getData['Library']['library_image_name'], array('alt' => 'Library Image', 'class' => 'form_fields'))?>
+								<?php echo $html->image($cdnPath.'libraryimg/'.$getData['Library']['library_image_name'], array('alt' => 'Library Image', 'class' => 'form_fields'))?>
 							</td>
 						</tr>
 					<?php } ?>
