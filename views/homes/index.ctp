@@ -4,7 +4,7 @@
 	<div id="slideshow">
 	<?php
 		foreach($artists as $key => $artist):
-				if($artist['Artist']['territory'] == $this->Session->read('territory')){
+				if($artist['Artist']['territory'] == $this->Session->read('territory') && $artist['Artist']['language'] == Configure::read('App.LANGUAGE')){
                     if($key == 0) {
                         echo $html->link(
                             $html->image($cdnPath.'artistimg/'.$artist['Artist']['artist_image'], array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
@@ -94,7 +94,7 @@
     <div id="featured_artist">
             <?php
             foreach($featuredArtists as $key => $featuredArtist):
-				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory')){
+				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory') && $artist['Featuredartist']['language'] == Configure::read('App.LANGUAGE')){
 					if($key == 0) {
 						echo $html->link(
 							$html->image($cdnPath.'featuredimg/'.$featuredArtist['Featuredartist']['artist_image'], array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
@@ -116,7 +116,7 @@
     <div id="newly_added">
             <?php
             foreach($newArtists as $key => $newArtist):
-				if($newArtist['Newartist']['territory'] == $this->Session->read('territory')){			
+				if($newArtist['Newartist']['territory'] == $this->Session->read('territory') && $artist['Featuredartist']['language'] == Configure::read('App.LANGUAGE')){			
 					if($key == 0) {
 						echo $html->link(
 							$html->image($cdnPath.'newartistimg/'.$newArtist['Newartist']['artist_image'], array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),

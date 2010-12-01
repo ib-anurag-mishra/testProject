@@ -41,7 +41,7 @@ Class ArtistsController extends AppController
 	 Desc : action for listing all the featured artists
         */
 	function admin_managefeaturedartist() {
-		$artists = $this->paginate('Featuredartist');
+		$artists = $this->paginate('Featuredartist',array('language' => Configure::read('App.LANGUAGE')));		
 		$this -> set( 'artists', $artists );
 	}
 	
@@ -112,6 +112,7 @@ Class ArtistsController extends AppController
 		$insertArr[ 'artist_name' ] = $artist;
 		$insertArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
+		$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
 		$insertObj = new Featuredartist();
 		if( empty( $errorMsg ) ) {
 			if( $insertObj -> insert( $insertArr ) ) {
@@ -165,6 +166,7 @@ Class ArtistsController extends AppController
 		$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
 		$updateArr[ 'artist_name' ] = $artist;
 		$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
+		$updateArr[ 'language' ] = Configure::read('App.LANGUAGE');
 		if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 			$updateArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 		}
@@ -240,6 +242,7 @@ Class ArtistsController extends AppController
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
 					$updateArr[ 'artist_name' ] = $artist;
 					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
+					$updateArr[ 'language' ] = Configure::read('App.LANGUAGE');
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
@@ -301,6 +304,7 @@ Class ArtistsController extends AppController
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 				$insertArr[ 'artist_name' ] = $artist;;
 				$insertArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
+				$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
 				$insertObj = new Artist();
 				if( empty( $errorMsg ) ) {
 					if( $insertObj -> insert( $insertArr ) ) {
@@ -320,7 +324,7 @@ Class ArtistsController extends AppController
 	 Desc : manages new artists with images
         */
 	function admin_manageartist() {
-		$artists = $this->paginate('Artist');
+		$artists = $this->paginate('Artist',array('language' => Configure::read('App.LANGUAGE')));	
 		$this -> set( 'artists', $artists );
 	}
 	
@@ -383,6 +387,7 @@ Class ArtistsController extends AppController
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
 					$updateArr[ 'artist_name' ] = $artist;
 					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
+					$updateArr[ 'language' ] = Configure::read('App.LANGUAGE');
 					if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] != '' ) {
 						$newPath = '../webroot/img/';
 						$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
@@ -446,6 +451,7 @@ Class ArtistsController extends AppController
 				$insertArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
 				$insertArr[ 'artist_image' ] = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$insertArr[ 'artist_name' ] = $artist;
+				$insertArr[ 'language' ] = Configure::read('App.LANGUAGE');
 				$insertObj = new Newartist();
 				if( empty( $errorMsg ) ) {
 					if( $insertObj -> insert( $insertArr ) ) {
@@ -465,7 +471,7 @@ Class ArtistsController extends AppController
 	 Desc : manages artists with images
         */
 	function admin_managenewartist() {
-		$artists = $this->paginate('Newartist');
+		$artists = $this->paginate('Newartist',array('language' => Configure::read('App.LANGUAGE')));
 		$this -> set( 'artists', $artists );
 	}
 	
