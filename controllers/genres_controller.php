@@ -261,6 +261,7 @@ Class GenresController extends AppController
     */
 	function admin_managegenre() {
 		if($this->data) {
+			$this->Category->deleteAll(array('Language' => Configure::read('App.LANGUAGE')), false);
 			$selectedGenres = Array();
 			$i = 0;
 			foreach ($this->data['Genre']['Genre'] as $k => $v) {
