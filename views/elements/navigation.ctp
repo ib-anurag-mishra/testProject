@@ -22,51 +22,53 @@
 
 				<li class="parent item8"><?php echo $html->link('See All', array('controller' => 'genres','action'=>'index'));?></li>
 				<?php
-				foreach($genresMenu as $genreM)
-				{
-					$searchFor = "view/" . base64_encode($genreM['Category']['Genre']);
-					?>
-					<li class="parent item"><?php echo $html->link($genreM['Category']['Genre'], array('controller' => 'genres','action'=>$searchFor));?></li>
-					<?php
-				}
+					foreach($genresMenu as $genreM)
+					{
+						if($genreM['Category']['Language'] == Configure::read('App.LANGUAGE')){
+							$searchFor = "view/" . base64_encode($genreM['Category']['Genre']);
+							?>
+							<li class="parent item"><?php echo $html->link($genreM['Category']['Genre'], array('controller' => 'genres','action'=>$searchFor));?></li>
+							<?php
+						}
+					}
 				?>
 			</ul>
 		</li>
 		<li class="item3"><a href="#"><span>Featured Artist</span></a>
 			<ul>
 				<?php
-				foreach($featuredArtistMenu as $featuredArtistM) {
-					if($featuredArtistM['Featuredartist']['territory'] == $this->Session->read('territory')){				
-					?>
-						<li class="parent item">
-							<?php echo $html->link($featuredArtistM['Featuredartist']['artist_name'], array(
-								'controller' => 'artists', 
-								'action'=> 'view', 
-								base64_encode($featuredArtistM['Featuredartist']['artist_name'])));
-							?>
-						</li>
-					<?php
+					foreach($featuredArtistMenu as $featuredArtistM) {
+						if($featuredArtistM['Featuredartist']['territory'] == $this->Session->read('territory') && $featuredArtistM['Featuredartist']['language'] == Configure::read('App.LANGUAGE')){				
+						?>
+							<li class="parent item">
+								<?php echo $html->link($featuredArtistM['Featuredartist']['artist_name'], array(
+									'controller' => 'artists', 
+									'action'=> 'view', 
+									base64_encode($featuredArtistM['Featuredartist']['artist_name'])));
+								?>
+							</li>
+						<?php
+						}
 					}
-				}
 				?>
 			</ul>
 		</li>
 		<li class="item4"><a href="#"><span>Newly Added</span></a>
 			<ul>
 				<?php
-				foreach($newArtistMenu as $newArtistM) {
-					if($newArtistM['Newartist']['territory'] == $this->Session->read('territory')){
-					?>
-						<li class="parent item">
-							<?php echo $html->link($newArtistM['Newartist']['artist_name'], array(
-								'controller' => 'artists',
-								'action' => 'view',
-								base64_encode($newArtistM['Newartist']['artist_name']))); 
-							?>
-						</li>
-					<?php
+					foreach($newArtistMenu as $newArtistM) {
+						if($newArtistM['Newartist']['territory'] == $this->Session->read('territory') && $newArtistM['Newartist']['language'] == Configure::read('App.LANGUAGE')){
+						?>
+							<li class="parent item">
+								<?php echo $html->link($newArtistM['Newartist']['artist_name'], array(
+									'controller' => 'artists',
+									'action' => 'view',
+									base64_encode($newArtistM['Newartist']['artist_name']))); 
+								?>
+							</li>
+						<?php
+						}
 					}
-				}
 				?>
 			</ul>
 		</li>
