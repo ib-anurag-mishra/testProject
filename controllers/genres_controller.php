@@ -267,7 +267,8 @@ Class GenresController extends AppController
 			foreach ($this->data['Genre']['Genre'] as $k => $v) {
 				if($i < '8') {
 				      if($v != '0') {
-					    $selectedGenres['Genre'] = $v;			      
+					    $selectedGenres['Genre'] = $v;
+					    $selectedGenres['Language'] = Configure::read('App.LANGUAGE');
 					    $this->Category->save($selectedGenres);
 					    $this->Category->id = false ;
 					    $i++;
@@ -283,7 +284,7 @@ Class GenresController extends AppController
 						);
 		$this->set('allGenres', $allGenres);
 		$this->Category->recursive = -1;
-		$selectedGenres = $this->Category->find('all',array('fields' => 'Genre'));
+		$selectedGenres = $this->Category->find('all',array('fields' => array('Genre'),'conditions' => arrary('Language' => Configure::read('App.LANGUAGE'))));
 		foreach ($selectedGenres as $selectedGenre){
 			$selArray[] = $selectedGenre['Category']['Genre'];
 		}
