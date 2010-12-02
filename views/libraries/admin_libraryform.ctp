@@ -107,6 +107,9 @@
 								elseif($getData['Library']['library_authentication_method'] == "innovative") {
 									echo "<label>Innovative</label>";
 								}
+								elseif($getData['Library']['library_authentication_method'] == "innovative_var") {
+									echo "<label>Innovative Var</label>";
+								}
 								elseif($getData['Library']['library_authentication_method'] == "innovative_https") {
 									echo "<label>Innovative HTTPS</label>";
 								}								
@@ -153,6 +156,7 @@
 									'ezproxy' => 'EZProxy',
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
+									'innovative_var' => 'Innovative Var',
 									'innovative_wo_pin' => 'Innovative w/o PIN',
 									'innovative_https' => 'Innovative HTTPS',
 									'innovative_var_wo_pin' => 'Innovative Var w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
@@ -633,6 +637,22 @@
 						$("#innovative1").show();
 						$("#innovative2").show();
 						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_password").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();							
+					}
+					else if ($(this).val() == 'innovative_var') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").show();
+						$("#innv_var").show();
 						//$("#innovative_var_pin").hide();
 						//$("#variable").hide();						
 						$("#sip_host").hide();
