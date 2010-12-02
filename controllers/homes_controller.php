@@ -295,8 +295,10 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 	
-				$ops['filter']=array('ProdID'=>2671862);
-				$results=SphinxComponent::search($ops);
+				//$ops['filter']=array('ProdID'=>2671862);
+				//$results=SphinxComponent::search($ops);
+				$sphinx = array('matchMode' => SPH_MATCH_ALL);
+				$results = $this->Song->find('all', array('search' => 'test', 'sphinx' => $sphinx)); 
 				print_r($results);exit();
 				
 				$this->Song->Behaviors->attach('Containable');
