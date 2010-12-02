@@ -219,24 +219,24 @@ class HomesController extends AppController
 		if((isset($_REQUEST['artist']) && $_REQUEST['artist']!= '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) &&  $_REQUEST['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) &&  $this->data['Home']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')){
 			if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
 				if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
-				 if($_REQUEST['match'] == 'All') {			 
-					$condition = "and";
-					$preCondition1 = array('Song.DownloadStatus' => 1);
-					$preCondition2 = array('Song.TrackBundleCount' => 0);
-					$preCondition3 = array('Country.Territory' => $country);
-					
-				}
-				 else {
-					$condition = "or";
-					$preCondition1 =  "";
-					$preCondition2 = "";
-					$preCondition3 = "";
-				}
-				$artist =  $_REQUEST['artist'];
-				$composer =  $_REQUEST['composer'];
-				$song =  $_REQUEST['song'];
-				$album =  $_REQUEST['album'];
-				$genre =  $_REQUEST['genre_id'];
+					 if($_REQUEST['match'] == 'All') {			 
+						$condition = "and";
+						$preCondition1 = array('Song.DownloadStatus' => 1);
+						$preCondition2 = array('Song.TrackBundleCount' => 0);
+						$preCondition3 = array('Country.Territory' => $country);
+						
+					}
+					 else {
+						$condition = "or";
+						$preCondition1 =  "";
+						$preCondition2 = "";
+						$preCondition3 = "";
+					}
+					$artist =  $_REQUEST['artist'];
+					$composer =  $_REQUEST['composer'];
+					$song =  $_REQUEST['song'];
+					$album =  $_REQUEST['album'];
+					$genre =  $_REQUEST['genre_id'];
 				}
 				if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
 					if($this->data['Home']['Match'] == 'All') {
@@ -294,6 +294,11 @@ class HomesController extends AppController
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
+	
+				$ops['filter']=array('ProdID'=>2671862);
+				$results=SphinxComponent::search($ops);
+				print_r($results);exit();
+				
 				$this->Song->Behaviors->attach('Containable');
 				$this -> paginate = array('conditions' =>
 						array('and' =>
