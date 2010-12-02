@@ -7,7 +7,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong', 'Sphinx');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song' );
     
     /*
@@ -296,7 +296,7 @@ class HomesController extends AppController
 				}
 	
 				$ops['filter']=array('ProdID'=>2671862);
-				$results=$this->Sphinx->search($ops);
+				$results=SphinxComponent::search($ops);
 				print_r($results);exit();
 				
 				$this->Song->Behaviors->attach('Containable');
