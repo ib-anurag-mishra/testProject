@@ -296,9 +296,14 @@ class HomesController extends AppController
 				}
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php')); 
-				$sphinx = array('matchMode' => SPH_MATCH_ALL);
-				$results = $this->Song->find('all', array('search' => 'test', 'sphinx' => $sphinx));
-				print_r($results);
+				$cl = new SphinxClient ();
+				$cl->SetServer ( 'localhost', 9312 );
+				$cl->SetConnectTimeout ( 1 );
+				$cl->SetArrayResult ( true );
+				$cl->SetWeights ( array ( 100, 1 ) );
+				$cl->SetMatchMode ( SPH_MATCH_ALL );
+				$res = $cl->Query ( 'test', '*' );
+				print_r($res);
 				exit();
 				
 				$this->Song->Behaviors->attach('Containable');
