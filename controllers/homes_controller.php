@@ -295,9 +295,11 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				
-				/*App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php')); 
+				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php')); 
 				$sphinx = array('matchMode' => SPH_MATCH_ALL);
-				$results = $this->Song->find('all', array('search' => 'test', 'sphinx' => $sphinx));*/
+				$results = $this->Song->find('all', array('search' => 'test', 'sphinx' => $sphinx));
+				print_r($results);
+				exit();
 				
 				$this->Song->Behaviors->attach('Containable');
 				$this -> paginate = array('conditions' =>
