@@ -11,7 +11,7 @@ class Song extends AppModel
 //	var $useDbConfig = 'freegal';	
 	var $useTable = 'Songs';
 	var $primaryKey = 'ProdID';
-	var $actsAs = array('Containable','Sphinx');
+	var $actsAs = array('Containable');
 	var $uses = array('Featuredartist','Country');
 
 	var $hasOne = array(
