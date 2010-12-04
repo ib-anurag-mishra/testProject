@@ -2176,7 +2176,8 @@ Class UsersController extends AppController
 									  // Successful Card!!!
 									$in = $mysip->msgPatronInformation('none');
 									$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );
-									$this->Variable->recursive = -1;										
+									$this->Variable->recursive = -1;
+									$status = 1;
 									$allVariables = $this->Variable->find('all',array(
 																		'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
 																		'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
@@ -2235,7 +2236,7 @@ Class UsersController extends AppController
 												}
 											}
 										}
-										if($status === false){
+										if($status != '1' || $status != '0'){
 											$msg = $v['Variable']['error_msg'];											
 										}
 										if(isset($msg)){
