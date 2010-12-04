@@ -2196,7 +2196,6 @@ Class UsersController extends AppController
 												}
 												if($cmp < $val){
 													$status = 1;
-													break;
 												}else{
 													$status = false;
 													break;
@@ -2212,7 +2211,6 @@ Class UsersController extends AppController
 												}
 												if($cmp > $val){
 													$status = 1;
-													break;
 												}else{
 													$status = false;
 													break;
@@ -2228,7 +2226,6 @@ Class UsersController extends AppController
 												}
 												if($cmp != $val){
 													$status = 1;
-													break;
 												}else{
 													$status = false;
 													break;
