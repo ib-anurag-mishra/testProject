@@ -16,6 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 	parent::beforeFilter();
+		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
@@ -308,11 +309,12 @@ class HomesController extends AppController
 				$sphinxTempCondition = $sphinxArtistSearch."".$sphinxComposerSearch."".$sphinxSongSearch."".$sphinxAlbumSearch."".$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				
-				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php')); 
+				
 				$sphinx = array('matchMode' => SPH_MATCH_ALL);
 				$results = $this->Song->find('all', array('search' =>  'test', 'limit' =>10, 'sphinx' => $sphinx));
 				print_r($results);
 				exit();
+				
 				
 				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
