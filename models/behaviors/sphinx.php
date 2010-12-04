@@ -101,6 +101,7 @@ class SphinxBehavior extends ModelBehavior
         if ($result === false)
         {
             trigger_error("Search query failed: " . $this->runtime[$model->alias]['sphinx']->GetLastError());
+			$this->runtime[$model->alias]['sphinx']->Close();
             return false;
         }
         else if(isset($result['matches']))
@@ -108,6 +109,7 @@ class SphinxBehavior extends ModelBehavior
             if ($this->runtime[$model->alias]['sphinx']->GetLastWarning())
             {
                 trigger_error("Search query warning: " . $this->runtime[$model->alias]['sphinx']->GetLastWarning());
+				$this->runtime[$model->alias]['sphinx']->Close();
             }
         }
 
@@ -131,7 +133,7 @@ class SphinxBehavior extends ModelBehavior
             $query['order'] = 'FIND_IN_SET('.$model->alias.'.'.$model->primaryKey.', \'' . implode(',', $ids) . '\')';
 
         }
-		$this->runtime[$model->alias]['sphinx']->__destruct();
+		$this->runtime[$model->alias]['sphinx']->Close();
         return $query;
     }
 }
