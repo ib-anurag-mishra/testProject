@@ -2199,7 +2199,6 @@ Class UsersController extends AppController
 													break;
 												}else{
 													$status = false;
-													$msg = $v['Variable']['error_msg'];
 													break;
 												}
 											}
@@ -2216,7 +2215,6 @@ Class UsersController extends AppController
 													break;
 												}else{
 													$status = false;
-													$msg = $v['Variable']['error_msg'];
 													break;
 												}
 											}
@@ -2233,10 +2231,12 @@ Class UsersController extends AppController
 													break;
 												}else{
 													$status = false;
-													$msg = $v['Variable']['error_msg'];
 													break;
 												}
 											}
+										}
+										if($status === false){
+											$msg = $v['Variable']['error_msg'];											
 										}
 										if(isset($msg)){
 											break;
