@@ -16,7 +16,6 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 	parent::beforeFilter();
-		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
@@ -309,14 +308,14 @@ class HomesController extends AppController
 				$sphinxTempCondition = $sphinxArtistSearch."".$sphinxComposerSearch."".$sphinxSongSearch."".$sphinxAlbumSearch."".$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				
-				
+				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_ALL);
-				$results = $this->Song->find('all', array('search' =>  'test', 'limit' =>10, 'sphinx' => $sphinx));
+				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>10, 'sphinx' => $sphinx));
+				//$this->set('searchResults', $results);
 				print_r($results);
-				exit();
+				exit;
 				
-				
-				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
@@ -379,9 +378,10 @@ class HomesController extends AppController
 				$this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}				
+				}
+				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);*/
+				$this->set('searchResults', $searchResults);
 			}
 			else {
 				$searchKey = '';      
