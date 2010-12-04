@@ -2199,6 +2199,7 @@ Class UsersController extends AppController
 													break;
 												}else{
 													$status = false;
+													break;
 												}
 											}
 										}elseif($v['Variable']['comparison_operator'] == '>'){
@@ -2214,6 +2215,7 @@ Class UsersController extends AppController
 													break;
 												}else{
 													$status = false;
+													break;
 												}
 											}
 										}elseif($v['Variable']['comparison_operator'] == '<>'){
@@ -2229,6 +2231,7 @@ Class UsersController extends AppController
 													break;
 												}else{
 													$status = false;
+													break;
 												}
 											}
 										}
