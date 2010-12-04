@@ -131,7 +131,7 @@ class SphinxBehavior extends ModelBehavior
             $query['order'] = 'FIND_IN_SET('.$model->alias.'.'.$model->primaryKey.', \'' . implode(',', $ids) . '\')';
 
         }
-
+		$this->runtime[$model->alias]['sphinx']->__destruct();
         return $query;
     }
 }
