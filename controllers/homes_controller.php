@@ -309,8 +309,8 @@ class HomesController extends AppController
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				$sphinx = array('matchMode' => SPH_MATCH_ALL, 'group' => array('ProdID'));
-				$results = $this->Song->find('all', array('search' =>  'test', 'limit' =>10, 'sphinx' => $sphinx));
+				$sphinx = array('matchMode' => SPH_MATCH_ALL);
+				$results = $this->Song->find('all', array('search' =>  'test', 'limit' =>10, 'recursive' => -1, 'sphinx' => $sphinx));
 				$this->set('searchResults', $results);
 				print_r($results);
 				exit;
