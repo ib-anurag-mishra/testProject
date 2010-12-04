@@ -310,7 +310,7 @@ class HomesController extends AppController
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				$results = $this->Song->find('all', array('search' =>  '@songtitle The Ghosts That Haunt Me', 'limit' =>10, 'recursive' => -1, 'sphinx' => $sphinx));
+				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>10, 'recursive' => -1, 'sphinx' => $sphinx));
 				$this->set('searchResults', $results);
 				print_r($results);
 				exit;
