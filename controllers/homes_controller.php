@@ -309,13 +309,21 @@ class HomesController extends AppController
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				$sphinx = array('matchMode' => SPH_SORT_EXTENDED);
+				$search = "SELECT * FROM Songs";
+				$this->paginate['sphinx']=array(
+				   'setMatchMode'=>SPH_MATCH_EXTENDED,
+				   'sortMode'=>array(SPH_SORT_EXTENDED => '@geodist ASC')
+				 ); 
+				 $this->paginate['sphinx']['search'] = $search; 
+				 print_r($this->paginate);
+				
+				/*$sphinx = array('matchMode' => SPH_SORT_EXTENDED);
 				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>10, 'sphinx' => $sphinx));
-				//$this->set('searchResults', $results);
-				print_r($results);
+				$this->set('searchResults', $results);
+				print_r($results);*/
 				exit;
 				
-				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
@@ -381,7 +389,7 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);
+				$this->set('searchResults', $searchResults);*/
 			}
 			else {
 				$searchKey = '';      
