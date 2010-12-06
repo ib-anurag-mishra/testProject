@@ -372,7 +372,7 @@ class HomesController extends AppController
 													'Full_Files.SaveAsName'                                                   
 														),
 											)										
-										 )
+										 ),'cache' => 'yes'
 									);
 				$this->Song->recursive = 2;
 				if($composer == '') {
