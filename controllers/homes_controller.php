@@ -374,7 +374,7 @@ class HomesController extends AppController
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
-				$searchResults = $this->Song->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'), array('search' =>  $sphinxFinalCondition, 'sphinx' => $sphinx));    
+				$searchResults = $this->Song->find('all', compact('conditions', 'fields', 'order', '20', 'page', 'recursive', 'group', 'contain'), array('search' =>  $sphinxFinalCondition, 'sphinx' => $sphinx));    
 			
 				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
