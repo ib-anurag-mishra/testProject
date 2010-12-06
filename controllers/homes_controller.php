@@ -316,9 +316,9 @@ class HomesController extends AppController
 				echo "<br/>";
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-				if($composer == '') {
+				/* if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}
+				} */
 				
 				
 				//$this->Song->Behaviors->attach('Containable');
@@ -370,15 +370,15 @@ class HomesController extends AppController
 													'Full_Files.SaveAsName'                                                   
 														),
 											)										
-										 ),'cache' => 'yes'
+										 )
 									));
-				$this->Song->recursive = 2;
+				/* $this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}
+				} */
 				
 				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED; 
-				$pagination['Song']['search'] = $sphinxFinalCondition; 
+				$pagination['Song']['search'] = 'A R Rahman'; 
 				$this->paginate = $pagination; 
 				$songs = $this->paginate();
 				print_r($songs);
