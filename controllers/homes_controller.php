@@ -316,7 +316,7 @@ class HomesController extends AppController
 				$this->paginate = $results;
 				$films = $this->paginate(); 
 				print_r($films);
-				exit();
+				echo "<BR/>";
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
@@ -332,7 +332,11 @@ class HomesController extends AppController
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
-									)
+									),
+										$condition => array(
+										$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
+													),"1 = 1 GROUP BY Song.ProdID"
+										
 										),
 										'fields' => array(
 														'Song.ProdID',
@@ -381,10 +385,10 @@ class HomesController extends AppController
 				}
 				
 				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED; 
-				$pagination['Song']['search'] = 'A R Rahman'; 
 				$this->paginate = $pagination; 
 				$songs = $this->paginate();
-
+				print_r($songs);
+				exit;
 				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
 			}
