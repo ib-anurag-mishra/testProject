@@ -379,12 +379,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				
-				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED; 
-				$this->paginate = $pagination; 
-				$searchResults = $this->paginate();
-				print_r($searchResults);
-				//$searchResults = $this->paginate('Song');
-				
+				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
 			}
 			else {
