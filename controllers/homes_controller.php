@@ -320,7 +320,7 @@ class HomesController extends AppController
 				
 				
 				$this->Song->Behaviors->attach('Containable');
-				$this -> paginate = array('conditions' =>
+				$this->paginate = array('conditions' =>
 						array('and' =>
 								array(
 									array('Song.TrackBundleCount' => 0),
