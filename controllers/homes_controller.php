@@ -309,13 +309,10 @@ class HomesController extends AppController
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				//$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'recursive' => -1, 'sphinx' => $sphinx));
-				//$this->paginate($results);
-				$result = $this->paging($country, $sphinxFinalCondition);
-				print_r($result);
+				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
+				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'recursive' => -1, 'sphinx' => $sphinx));
+				print_r($results);
 				exit();
-				
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
@@ -382,7 +379,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 			
-				//$searchResults = $this->paginate('Song');
+				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
 			}
 			else {
@@ -1302,6 +1299,64 @@ class HomesController extends AppController
 	}
 	$this->layout = 'admin';
     }	
+	
+		function paging($country, $sphinxFinalCondition) {
+			$paginate = array('Song' => array('conditions' =>
+						array('and' =>
+							array(
+								array('Song.TrackBundleCount' => 0),
+								array('Song.DownloadStatus' => 1),
+								array('Country.Territory' => $country)
+							),"1 = 1 GROUP BY Song.ProdID"
+						),
+						'fields' => array(
+							'Song.ProdID',
+							'Song.Title',
+							'Song.ArtistText',
+							'Song.ReferenceID',
+							'Song.DownloadStatus',
+							'Song.SongTitle',
+							'Song.Artist',
+							'Song.Advisory',
+						),
+						'contain' => array(
+							'Participant' => array(
+								'fields' => array(
+									'Participant.Name'                                                   
+								)
+							),
+							'Genre' => array(
+								'fields' => array(
+									'Genre.Genre'                                                   
+								)
+							),
+							'Country' => array(
+								'fields' => array(
+									'Country.Territory',
+									'Country.SalesDate'
+								)
+							),									
+							'Sample_Files' => array(
+								'fields' => array(
+									'Sample_Files.CdnPath' ,
+									'Sample_Files.SaveAsName'                                                   
+								),
+							),
+							'Full_Files' => array(
+								'fields' => array(
+									'Full_Files.CdnPath' ,
+									'Full_Files.SaveAsName'                                                   
+								),
+							)										
+						),'cache' => 'yes'
+					), 'limit' => 20
+				);
+			$pagination['Song']['sphinx']['matchMode'] = SPH_SORT_EXTENDED;
+
+			$pagination['Song']['search'] = $sphinxFinalCondition; 
+			$this->paginate = $pagination; 
+			$songs = $this->paginate(); 
+	} 
 	
 }
 ?>
