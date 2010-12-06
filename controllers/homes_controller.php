@@ -383,8 +383,6 @@ class HomesController extends AppController
 				$pagination['Song']['search'] = 'A R Rahman'; 
 				$this->paginate = $pagination; 
 				$songs = $this->paginate();
-				print_r($songs);
-				exit();
 
 				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
