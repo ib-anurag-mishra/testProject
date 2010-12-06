@@ -313,14 +313,14 @@ class HomesController extends AppController
 				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'recursive' => -1, 'sphinx' => $sphinx));
 				print_r($results);
 				
-				/* $this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				
 				
 				$this->Song->Behaviors->attach('Containable');
-				$this->paginate = array('conditions' =>
+				$pagination = array('Song' => array('conditions' =>
 						array('and' =>
 								array(
 									array('Song.TrackBundleCount' => 0),
@@ -373,7 +373,7 @@ class HomesController extends AppController
 														),
 											)										
 										 )
-									);
+									));
 				$this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -381,9 +381,9 @@ class HomesController extends AppController
 				
 				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED; 
 				$this->paginate = $pagination; 
-				$songs = $this->paginate();
-				$searchResults = $this->paginate('Song'); */
-				$this->set('searchResults', $results);
+				$searchResults = $this->paginate();
+				//$searchResults = $this->paginate('Song');
+				$this->set('searchResults', $searchResults);
 			}
 			else {
 				$searchKey = '';      
