@@ -134,7 +134,7 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;
 	}
-	function paging($country, $sphinxFinalCondition) { 
+	function paging($country, $sphinxFinalCondition) {
 			$paginate = array('Song' => array('conditions' =>
 						array('and' =>
 							array(
