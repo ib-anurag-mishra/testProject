@@ -382,7 +382,6 @@ class HomesController extends AppController
 				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED; 
 				$this->paginate = $pagination; 
 				$songs = $this->paginate();
-
 				$searchResults = $this->paginate('Song'); */
 				$this->set('searchResults', $results);
 			}
