@@ -325,11 +325,12 @@ class HomesController extends AppController
 				$pagination = array('Song' => array('conditions' =>
 						array('and' =>
 								array(
-										array('Song.TrackBundleCount' => 0),
-										array('Song.DownloadStatus' => 1),
-										array('Country.Territory' => $country),
-										$cond
-										)),
+									array('Song.TrackBundleCount' => 0),
+									array('Song.DownloadStatus' => 1),
+									array('Country.Territory' => $country),
+									$cond
+									)
+										),
 										'fields' => array(
 														'Song.ProdID',
 														'Song.Title',
