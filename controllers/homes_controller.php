@@ -309,13 +309,10 @@ class HomesController extends AppController
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				//$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'recursive' => -1, 'sphinx' => $sphinx));
-				//$this->paginate($results);
-				$result = $this->paging($country, $sphinxFinalCondition);
-				print_r($result);
+				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
+				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'recursive' => -1, 'sphinx' => $sphinx));
+				print_r($results);
 				exit();
-				
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
@@ -381,8 +378,7 @@ class HomesController extends AppController
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
-			
-				//$searchResults = $this->paginate('Song');
+				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
 			}
 			else {
