@@ -376,7 +376,7 @@ class HomesController extends AppController
 				}
 				$searchResults = $this->Song->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'), array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'sphinx' => $sphinx));  
 			
-				$searchResults = $this->paginate('Song');
+				//$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
 			}
 			else {
