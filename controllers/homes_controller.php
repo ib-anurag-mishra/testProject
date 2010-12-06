@@ -310,13 +310,7 @@ class HomesController extends AppController
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>10, 'recursive' => -1, 'sphinx' => $sphinx));
-				$this->set('searchResults', $results);
-				print_r($results);
-				$this->paginate = $results;
-				$films = $this->paginate(); 
-				print_r($films);
-				exit();
+				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>20, 'recursive' => -1, 'sphinx' => $sphinx));
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
@@ -332,7 +326,11 @@ class HomesController extends AppController
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
-									)
+									),
+										$condition => array(
+										$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
+													),"1 = 1 GROUP BY Song.ProdID"
+										
 										),
 										'fields' => array(
 														'Song.ProdID',
@@ -381,12 +379,11 @@ class HomesController extends AppController
 				}
 				
 				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED; 
-				$pagination['Song']['search'] = 'A R Rahman'; 
 				$this->paginate = $pagination; 
 				$songs = $this->paginate();
 
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);
+				$this->set('searchResults', $results);
 			}
 			else {
 				$searchKey = '';      
