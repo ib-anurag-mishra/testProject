@@ -316,14 +316,15 @@ class HomesController extends AppController
 				$this->paginate = $results;
 				$films = $this->paginate(); 
 				print_r($films);
+				exit();
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-				/* if($composer == '') {
+				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				} */
+				}
 				
 				
-				//$this->Song->Behaviors->attach('Containable');
+				$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('conditions' =>
 						array('and' =>
 								array(
