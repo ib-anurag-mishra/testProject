@@ -370,7 +370,7 @@ class HomesController extends AppController
 													'Full_Files.SaveAsName'                                                   
 														),
 											)										
-										 ),'cache' => 'yes'
+										 )
 									));
 				/* $this->Song->recursive = 2;
 				if($composer == '') {
@@ -384,7 +384,6 @@ class HomesController extends AppController
 				print_r($songs);
 				exit();
 
-				
 				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
 			}
