@@ -329,8 +329,7 @@ class HomesController extends AppController
 										array('Song.DownloadStatus' => 1),
 										array('Country.Territory' => $country),
 										$cond
-										)
-										),
+										)),
 										'fields' => array(
 														'Song.ProdID',
 														'Song.Title',
