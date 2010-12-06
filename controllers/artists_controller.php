@@ -8,7 +8,7 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
@@ -644,6 +644,20 @@ Class ArtistsController extends AppController
 					),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
 				      ));
 	    }
+		$wk = date('W')-1;
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		$this->Download->recursive = -1;
+		foreach($albumSongs as $k => $albumSong){
+			foreach($albumSong as $key => $value){
+					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+					if(count($downloadsUsed) > 0){
+						$albumSongs[$k][$key]['Song']['status'] = 'avail';
+					} else{
+						$albumSongs[$k][$key]['Song']['status'] = 'not';
+					}
+			}
+		}
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
 	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);

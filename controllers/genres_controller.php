@@ -8,7 +8,7 @@
 ini_set('memory_limit', '2048M');
 Class GenresController extends AppController
 {
-	var $uses = array('Category','Files','Album','Song');
+	var $uses = array('Category','Files','Album','Song','Download');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	var $helpers = array('Cache','Library','Page','Wishlist');
 	
@@ -101,7 +101,7 @@ Class GenresController extends AppController
 													array('Song.DownloadStatus' => 1),
 													array('Song.TrackBundleCount' => 0),
 													array('Country.Territory' => $country),
-													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
+									//				array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
 												)
 											),
 											'fields' => array(
@@ -192,6 +192,20 @@ Class GenresController extends AppController
 			$finalArray[$j]['Genre'] = $genreName;
 			$j++;
 		}
+		$wk = date('W')-1;
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		$this->Download->recursive = -1;
+		foreach($finalArray as $k => $genreSong){
+			foreach($genreSong as $key => $value){
+					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['ProdId'],'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+					if(count($downloadsUsed) > 0){
+						$finalArray[$k][$key]['status'] = 'avail';
+					} else{
+						$finalArray[$k][$key]['status'] = 'not';
+					}
+			}
+		}		
 		$this->set('categories',$finalArray);
 	}
 	
