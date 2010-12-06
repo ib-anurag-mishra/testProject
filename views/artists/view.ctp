@@ -124,7 +124,7 @@
 													</p>													
 									<?php	
 												} else {
-													?><a href='/homes/my_history' title='You Have alreadt downloaded this song.Get it from your recnt downloads'>Downloaded</a><?php
+													?><a href='/homes/my_history' title='You have already downloaded this song.Get it from your recent downloads'>Downloaded</a><?php
 												}
 											}											
 											else{

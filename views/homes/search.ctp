@@ -127,7 +127,7 @@ if(count($searchResults) != 0){
 										<span id="download_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 									</p>
 					<?php		} else {
-									?><a href='/homes/my_history' title='You Have alreadt downloaded this song.Get it from your recnt downloads'>Downloaded</a><?php
+									?><a href='/homes/my_history' title='You Have already downloaded this song.Get it from your recent downloads'>Downloaded</a><?php
 						
 								}
 							}
