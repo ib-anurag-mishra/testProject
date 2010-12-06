@@ -313,7 +313,9 @@ class HomesController extends AppController
 				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' =>10, 'recursive' => -1, 'sphinx' => $sphinx));
 				$this->set('searchResults', $results);
 				print_r($results);
-				echo "<br/>";
+				$searchResults = $this->paginate('Song');
+				print_r($searchResults);
+				exit();
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				/* if($composer == '') {
@@ -381,8 +383,6 @@ class HomesController extends AppController
 				$pagination['Song']['search'] = 'A R Rahman'; 
 				$this->paginate = $pagination; 
 				$songs = $this->paginate();
-				print_r($songs);
-				exit();
 
 				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $searchResults);
