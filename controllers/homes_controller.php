@@ -320,7 +320,7 @@ class HomesController extends AppController
 				
 				
 				$this->Song->Behaviors->attach('Containable');
-				$pagination = array('Song' => array('conditions' =>
+				$this->paginate = array('conditions' =>
 						array('and' =>
 								array(
 									array('Song.TrackBundleCount' => 0),
@@ -373,7 +373,7 @@ class HomesController extends AppController
 														),
 											)										
 										 )
-									));
+									);
 				$this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
