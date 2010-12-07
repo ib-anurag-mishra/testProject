@@ -368,6 +368,7 @@ class HomesController extends AppController
 											),'limit' => 20										
 										 ),'cache' => 'yes'
 									);
+									
 				/* $this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
