@@ -310,18 +310,15 @@ class HomesController extends AppController
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' => 20, 'recursive' => -1, 'sphinx' => $sphinx));
-				$pagination = $this->Song->find('all',  array('search' =>  $sphinxFinalCondition, 'limit' => 20, 'recursive' => -1, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', '20', '1', 'recursive', 'group', 'contain'));
-				print_r($pagination);
-				exit();
+				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' => 20, 'recursive' => -1, 'sphinx' => $sphinx));
 				
 				
-				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-				if($composer == '') {
+				//$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				/* if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}
+				} */
 				
-				$this->Song->Behaviors->attach('Containable');
+				//$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('conditions' =>
 						array('and' =>
 								array(
@@ -329,10 +326,7 @@ class HomesController extends AppController
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
-									),
-									$condition => array(
-									$artistSearch,$composerSearch,$songSearch,$albumSearch,$genreSearch,$preCondition1,$preCondition2,$preCondition3,$preCondition4,$cond
-												),"1 = 1 GROUP BY Song.ProdID"	
+									),"1 = 1 GROUP BY Song.ProdID"	
 										),
 										'fields' => array(
 														'Song.ProdID',
@@ -373,17 +367,18 @@ class HomesController extends AppController
 													'Full_Files.SaveAsName'                                                   
 														),
 											)						
-										 ),'cache' => 'yes'
+										 ),'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
-				$this->Song->recursive = 2;
+				/* $this->Song->recursive = 2;
 					
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}*/
+				} */
 				
 				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $results);
+				print_r($searchResults);exit;
+				$this->set('searchResults', $searchResults);
 			}
 			else {
 				$searchKey = '';      
