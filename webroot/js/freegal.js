@@ -90,7 +90,7 @@ function userDownloadIE(prodId)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Recent Downloads</a>";
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip(prodId);
 
@@ -145,7 +145,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 
 function addQtip(prodId){
    $('#song_'+prodId).qtip({
-      content : "You have already downloaded this song.Get it from your recent downloads.",
+      content : "You have already downloaded this song. Get it from your recent downloads.",
       position: {
          corner: {
 	    target: 'leftBottom',
