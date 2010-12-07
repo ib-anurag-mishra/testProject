@@ -104,7 +104,7 @@ if(count($searchResults) != 0){
 					?>
 					</p>
 				</td>
-				<td width="130" align="center" style="padding-left:30px" valign="top">
+				<td width="130" align="left" style="padding-left:30px" valign="top">
 					<?php
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d'))
 						{
@@ -127,7 +127,7 @@ if(count($searchResults) != 0){
 										<span id="download_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 									</p>
 					<?php		} else {
-									?><a href='/homes/my_history' title='You Have already downloaded this song.Get it from your recent downloads'>Downloaded</a><?php
+									?><a href='/homes/my_history' title='You Have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php
 						
 								}
 							}
