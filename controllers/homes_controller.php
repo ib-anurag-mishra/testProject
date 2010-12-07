@@ -310,8 +310,8 @@ class HomesController extends AppController
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'recursive' => -1, 'sphinx' => $sphinx));
-				$data = $this->paging($country, $cond, $sphinxFinalCondition);
+				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'recursive' => -1, 'sphinx' => $sphinx));
+				$data = $this->paging($this->Song->find('all', array('search' => $sphinxFinalCondition, 'sphinx' => $sphinx, 'country' => $country, 'cond' => $cond)));
 				print_r($data);
 				exit();
 				
@@ -1303,7 +1303,7 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }	 
 	
-	function paging($country, $cond, $search) {
+	function paging() {
 		   $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
 		   $pagination = array('Song' => array('conditions' =>
 							array('and' =>
@@ -1324,7 +1324,7 @@ class HomesController extends AppController
 											'Song.Artist',
 											'Song.Advisory'
 										),'limit' => 20
-									), 'sphinx' => $sphinx
+									)
 							);
 
 			$this->params['named']['search'] = $search;
@@ -1339,7 +1339,6 @@ class HomesController extends AppController
 			$this->paginate = $pagination;
 			$songs = $this->paginate();
 			return $songs;
-
 	}
 	
 }
