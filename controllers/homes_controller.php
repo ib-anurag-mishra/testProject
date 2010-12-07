@@ -326,10 +326,10 @@ class HomesController extends AppController
 									array('Country.Territory' => $country),
 									$cond
 									),"1 = 1 GROUP BY Song.ProdID"	
-										),
-										'fields' => 'DISTINCT Song.ProdID',
-										'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-									);
+								),
+								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
+								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+							);
 									
 				$this->Song->recursive = -1;
 				if($composer == '') {
