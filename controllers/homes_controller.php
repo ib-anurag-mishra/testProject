@@ -326,10 +326,40 @@ class HomesController extends AppController
 									array('Country.Territory' => $country),
 									$cond
 									),"1 = 1 GROUP BY Song.ProdID"	
+								),
+								'contain' => array(
+									'Participant' => array(
+										'fields' => array(
+												'Participant.Name'                                                   
+												)
 										),
-										'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
-										'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-									);
+									'Genre' => array(
+											'fields' => array(
+													'Genre.Genre'                                                   
+													)
+											),
+									'Country' => array(
+											'fields' => array(
+													'Country.Territory',
+													'Country.SalesDate'
+													)
+											),									
+									'Sample_Files' => array(
+											'fields' => array(
+												'Sample_Files.CdnPath' ,
+												'Sample_Files.SaveAsName'                                                   
+													),
+										),
+									'Full_Files' => array(
+											'fields' => array(
+												'Full_Files.CdnPath' ,
+												'Full_Files.SaveAsName'                                                   
+													),
+										)						
+								 ),
+								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
+								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+							);
 									
 				$this->Song->recursive = -1;
 				if($composer == '') {
