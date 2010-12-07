@@ -327,11 +327,11 @@ class HomesController extends AppController
 									$cond
 									),"1 = 1 GROUP BY Song.ProdID"	
 										),
-										'fields' => 'DISTINCT Song.ProdID',
+										'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 										'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
 									
-				//$this->Song->recursive = 2;
+				$this->Song->recursive = -1;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
