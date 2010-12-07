@@ -313,9 +313,9 @@ class HomesController extends AppController
 				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' => 20, 'recursive' => -1, 'sphinx' => $sphinx));
 				
 				//$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-				/* if($composer == '') {
+				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				} */
+				}
 				
 				//$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('conditions' =>
@@ -327,13 +327,13 @@ class HomesController extends AppController
 									$cond
 									),"1 = 1 GROUP BY Song.ProdID"	
 										),
-										'fields' => array('DISTINCT Song.ProdID'),
+										'fields' => 'DISTINCT Song.ProdID',
 										'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
-				//$this->Song->recursive = 2;
-				/*if($composer == '') {
+				$this->Song->recursive = 2;
+				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				} */
+				}
 				
 				$searchResults = $this->paginate('Song');
 				print_r($searchResults);
