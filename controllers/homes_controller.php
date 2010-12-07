@@ -337,37 +337,7 @@ class HomesController extends AppController
 														'Song.SongTitle',
 														'Song.Artist',
 														'Song.Advisory',
-													),
-										'contain' => array(
-										'Participant' => array(
-											'fields' => array(
-													'Participant.Name'                                                   
-													)
-											),
-										'Genre' => array(
-												'fields' => array(
-														'Genre.Genre'                                                   
-														)
-												),
-										'Country' => array(
-												'fields' => array(
-														'Country.Territory',
-														'Country.SalesDate'
-														)
-												),									
-										'Sample_Files' => array(
-												'fields' => array(
-													'Sample_Files.CdnPath' ,
-													'Sample_Files.SaveAsName'                                                   
-														),
-											),
-										'Full_Files' => array(
-												'fields' => array(
-													'Full_Files.CdnPath' ,
-													'Full_Files.SaveAsName'                                                   
-														),
-											)						
-										 ),'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+													),'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
 				/* $this->Song->recursive = 2;
 					
