@@ -90,8 +90,10 @@ function userDownloadIE(prodId)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history' title='You Have alreadt downloaded this song.Get it from your recnt downloads'>Recent Downloads</a>";
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Recent Downloads</a>";
 				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip(prodId);
+
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -128,8 +130,9 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history' title='You Have already downloaded this song.Get it from your recent downloads'>Downloaded</a>";				
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip(prodId);
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
@@ -140,7 +143,31 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	return false;
 }
 
-
+function addQtip(prodId){
+   $('#song_'+prodId).qtip({
+      content : "You have already downloaded this song.Get it from your recent downloads.",
+      position: {
+         corner: {
+	    target: 'leftBottom',
+            tooltip: 'rightTop'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '2px 5px',
+         width: {
+            max: 500,
+            min: 0
+         },
+         border: {
+               width: 1,
+               radius: 8,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   });
+}
 function addToWishlist(prodId)
 {
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
