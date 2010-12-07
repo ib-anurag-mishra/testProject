@@ -326,7 +326,7 @@ class HomesController extends AppController
 									array('Country.Territory' => $country),
 									$cond
 									),"1 = 1 GROUP BY Song.ProdID"	
-								),
+								),'limit' => 20,
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							);
