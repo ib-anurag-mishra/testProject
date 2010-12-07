@@ -315,7 +315,6 @@ class HomesController extends AppController
 				print_r($data);
 				exit();
 				
-				
 				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
