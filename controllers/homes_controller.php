@@ -315,9 +315,9 @@ class HomesController extends AppController
 				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}	
+				}*/	
 				
-				$this->Song->Behaviors->attach('Containable');*/
+				$this->Song->Behaviors->attach('Sphinx');
 				$this->paginate = array('conditions' =>
 						array('and' =>
 								array(
@@ -372,6 +372,10 @@ class HomesController extends AppController
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				} */
+				
+				$this->paginate['sphinx']['matchMode'] = SPH_MATCH_EXTENDED;
+
+				$this->paginate['search'] = $sphinxFinalCondition; 
 				$searchResults = $this->paginate('Song');
 				print_r($searchResults);exit;
 				$this->set('searchResults', $searchResults);
