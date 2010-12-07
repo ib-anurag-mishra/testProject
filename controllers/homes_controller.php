@@ -326,17 +326,7 @@ class HomesController extends AppController
 									array('Country.Territory' => $country),
 									$cond
 									),"1 = 1 GROUP BY Song.ProdID"	
-										),
-										'fields' => array(
-														'Song.ProdID',
-														'Song.Title',
-														'Song.ArtistText',
-														'Song.ReferenceID',
-														'Song.DownloadStatus',
-														'Song.SongTitle',
-														'Song.Artist',
-														'Song.Advisory',
-													),'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+										),'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
 				/* $this->Song->recursive = 2;
 					
