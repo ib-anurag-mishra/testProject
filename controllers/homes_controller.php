@@ -345,6 +345,7 @@ class HomesController extends AppController
 				} */
 				
 				$searchResults = $this->paginate('Song');
+				print_r($searchResults);
 				$this->set('searchResults', $searchResults);
 			}
 			else {
