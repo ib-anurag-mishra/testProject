@@ -311,9 +311,9 @@ class HomesController extends AppController
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
 				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'recursive' => -1, 'sphinx' => $sphinx));
-				$data = $this->paging();
+				$data = $this->paging($country, $cond);
 				print_r($data);
-				
+				exit;
 				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -1323,7 +1323,7 @@ class HomesController extends AppController
 	$this->layout = 'admin';
     }	 
 	
-	function paging() {
+	function paging($country, $cond) {
 		   $pagination = array('Song' => array('conditions' =>
 							array('and' =>
 								array(
