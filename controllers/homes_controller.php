@@ -378,6 +378,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}*/
 				
+				
 				$searchResults = $this->paginate('Song');
 				$this->set('searchResults', $data);
 			}
