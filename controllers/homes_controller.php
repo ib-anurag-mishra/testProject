@@ -372,6 +372,7 @@ class HomesController extends AppController
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				} */
+				
 				$this->paginate['sphinx']['matchMode'] = SPH_MATCH_EXTENDED;
 
 				$this->paginate['search'] = $sphinxFinalCondition; 
