@@ -38,7 +38,7 @@ class AppModel extends Model {
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           if (empty($pagination)) {
 				  if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
+					  $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
 						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'limit' => 20, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', '20', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
