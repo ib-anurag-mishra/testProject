@@ -317,7 +317,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}*/	
 				
-				$this->Song->Behaviors->attach('Sphinx');
+				//$this->Song->Behaviors->attach('Sphinx');
 				$this->paginate = array('conditions' =>
 						array('and' =>
 								array(
@@ -378,6 +378,7 @@ class HomesController extends AppController
 				$this->paginate['search'] = $sphinxFinalCondition; 
 				$searchResults = $this->paginate('Song');
 				print_r($searchResults);exit;
+				
 				$this->set('searchResults', $searchResults);
 			}
 			else {
