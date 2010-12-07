@@ -330,7 +330,8 @@ class HomesController extends AppController
 										'fields' => 'DISTINCT Song.ProdID',
 										'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
-				$this->Song->recursive = 2;
+									
+				//$this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
