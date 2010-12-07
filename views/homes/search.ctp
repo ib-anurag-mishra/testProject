@@ -167,7 +167,7 @@ if(count($searchResults) != 0){
 				</td>
 			</tr>
 	<?php
-		//}
+		}
 		endforeach;
 	}
 	else {
