@@ -312,7 +312,7 @@ class HomesController extends AppController
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
 				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' => 20, 'recursive' => -1, 'sphinx' => $sphinx));
 				
-				//$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
