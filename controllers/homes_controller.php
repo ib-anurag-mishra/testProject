@@ -427,7 +427,7 @@ class HomesController extends AppController
 				$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 				$this->Download->recursive = -1;
 				foreach($searchResults as $key => $value){
-						$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+						$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
 						if(count($downloadsUsed) > 0){
 							$searchResults[$key]['Song']['status'] = 'avail';
 						} else{

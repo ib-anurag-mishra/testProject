@@ -198,7 +198,7 @@ Class GenresController extends AppController
 		$this->Download->recursive = -1;
 		foreach($finalArray as $k => $genreSong){
 			foreach($genreSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['ProdId'],'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['ProdId'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
 					if(count($downloadsUsed) > 0){
 						$finalArray[$k][$key]['status'] = 'avail';
 					} else{
