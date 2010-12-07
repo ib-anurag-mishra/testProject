@@ -331,7 +331,6 @@ class HomesController extends AppController
 										'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 									);
 				//$this->Song->recursive = 2;
-					
 				/*if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				} */
