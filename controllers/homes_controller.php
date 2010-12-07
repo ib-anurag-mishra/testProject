@@ -1347,7 +1347,7 @@ class HomesController extends AppController
 											'Song.Artist',
 											'Song.Advisory'
 										),'limit' => 20
-									), 'sphinx' => $sphinx;
+									), 'sphinx' => $sphinx
 							);
 
 			$this->params['named']['search'] = $search;
@@ -1362,7 +1362,6 @@ class HomesController extends AppController
 			$this->paginate = $pagination;
 			$songs = $this->paginate();
 			return $songs;
-
 	}
 	
 }
