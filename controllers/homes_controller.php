@@ -1324,7 +1324,7 @@ class HomesController extends AppController
 									)
 							);
 
-
+			$this->params['named']['search'] = $search;
 			if (!empty($this->params['named']['search']))
 			{
 				$search = trim($this->params['named']['search']);
