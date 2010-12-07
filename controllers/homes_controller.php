@@ -378,8 +378,9 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}*/
 				
+				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);
+				$this->set('searchResults', $data);
 			}
 			else {
 				$searchKey = '';      
@@ -1340,15 +1341,7 @@ class HomesController extends AppController
 											'Song.DownloadStatus',
 											'Song.SongTitle',
 											'Song.Artist',
-											'Song.Advisory',
-											'Song.Name',
-											'Song.Genre',
-											'Song.Territory',
-											'Song.SalesDate',
-											'Song.CdnPath',
-											'Song.SaveAsName',
-											'Song.FCdnPath',
-											'Song.FSaveAsName',
+											'Song.Advisory'
 										),'limit' => 20
 									)
 							);
