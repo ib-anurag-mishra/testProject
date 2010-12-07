@@ -313,6 +313,8 @@ class HomesController extends AppController
 				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'recursive' => -1, 'sphinx' => $sphinx));
 				$data = $this->paging($country, $cond, $sphinxFinalCondition);
 				print_r($data);
+				exit();
+				
 				
 				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
@@ -1325,6 +1327,7 @@ class HomesController extends AppController
     }	 
 	
 	function paging($country, $cond, $search) {
+		   $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
 		   $pagination = array('Song' => array('conditions' =>
 							array('and' =>
 								array(
@@ -1344,7 +1347,7 @@ class HomesController extends AppController
 											'Song.Artist',
 											'Song.Advisory'
 										),'limit' => 20
-									)
+									), 'sphinx' => $sphinx;
 							);
 
 			$this->params['named']['search'] = $search;
