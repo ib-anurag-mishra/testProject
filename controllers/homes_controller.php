@@ -1339,7 +1339,6 @@ class HomesController extends AppController
 			$this->paginate = $pagination;
 			$songs = $this->paginate();
 			return $songs;
-
 	}
 	
 }
