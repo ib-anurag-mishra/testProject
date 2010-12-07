@@ -110,10 +110,9 @@ if(count($searchResults) != 0){
 						{
 							if($libraryDownload == '1' && $patronDownload == '1') {
 								$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Full_Files']['CdnPath']."/".$searchResult['Full_Files']['SaveAsName']);
-								echo 'perl files/tokengen ' . $searchResult['Full_Files']['CdnPath']."/".$searchResult['Full_Files']['SaveAsName']; 
 								$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-					?>
+					 ?>
 								<p>
 									<span class="beforeClick" id="song_<?php echo $searchResult["Song"]["ProdID"]; ?>">
 										<![if !IE]>
