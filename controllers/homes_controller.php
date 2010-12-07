@@ -298,7 +298,7 @@ class HomesController extends AppController
 				}
 				if($genre != '') {
 					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$sphinxGenreSearch = "@Genre ".$genre." ".$sphinxCheckCondition." ";					
+					$sphinxGenreSearch = "@Genre ".mysql_real_escape_string($genre)." ".$sphinxCheckCondition." ";					
 				}
 				else {
 					$genreSearch = '';
