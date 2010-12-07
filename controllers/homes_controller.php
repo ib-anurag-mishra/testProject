@@ -313,7 +313,6 @@ class HomesController extends AppController
 				$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'recursive' => -1, 'sphinx' => $sphinx));
 				$data = $this->paging($country, $cond);
 				print_r($data);
-				exit;
 				/*$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -380,7 +379,7 @@ class HomesController extends AppController
 				}*/
 				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', $searchResults);
+				$this->set('searchResults', $data);
 			}
 			else {
 				$searchKey = '';      
@@ -1318,15 +1317,7 @@ class HomesController extends AppController
 											'Song.DownloadStatus',
 											'Song.SongTitle',
 											'Song.Artist',
-											'Song.Advisory',
-											'Song.Name',
-											'Song.Genre',
-											'Song.Territory',
-											'Song.SalesDate',
-											'Song.CdnPath',
-											'Song.SaveAsName',
-											'Song.FCdnPath',
-											'Song.FSaveAsName',
+											'Song.Advisory'
 										),'limit' => 20
 									)
 							);
