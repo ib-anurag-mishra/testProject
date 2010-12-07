@@ -365,9 +365,10 @@ class HomesController extends AppController
 													'Full_Files.CdnPath' ,
 													'Full_Files.SaveAsName'                                                   
 														),
-											)										
+											),'limit' => 20										
 										 ),'cache' => 'yes'
 									);
+									
 				/* $this->Song->recursive = 2;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
