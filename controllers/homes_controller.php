@@ -336,7 +336,8 @@ class HomesController extends AppController
 							));
 							
 				//$this->Song->recursive = 0;
-				$pagination['Song']['sphinx']['filter'][] = array('Song.ProdID', 5555555); 
+				
+				$this->paginate['Song']['sphinx']['filter'][] = array('Song.ProdID', 5555555); 
 				
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
