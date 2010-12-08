@@ -2935,7 +2935,7 @@ Class UsersController extends AppController
 						   }
 						   else{
 							   $this -> Session -> setFlash($msg);
-							   $this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+							   $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 						   }
 					}
 				}         
