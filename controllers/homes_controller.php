@@ -318,7 +318,7 @@ class HomesController extends AppController
 				}
 				
 				//$this->Song->Behaviors->attach('Containable');
-				$this->paginate = array('conditions' =>
+				/*$this->paginate = array('conditions' =>
 						 array('and' =>
 								array(
 									array('Song.TrackBundleCount' => 0),
@@ -332,7 +332,12 @@ class HomesController extends AppController
 								'limit' => 10,
 								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-							);
+							);*/
+							
+				 $this->paginate['sphinx']=array(
+				   'setMatchMode'=>SPH_MATCH_EXTENDED,
+				   'groupdistinct'=>'Song.ProdID'
+				 ); 
 									
 				//$this->Song->recursive = -1;
 				
