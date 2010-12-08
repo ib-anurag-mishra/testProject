@@ -336,6 +336,7 @@ class HomesController extends AppController
 							));
 							
 				//$this->Song->recursive = 0;
+				
 				$this->paginate['Song']['sphinx']['filter'][] = array('Song.ProdID', 5555555); 
 				
 				if($composer == '') {
