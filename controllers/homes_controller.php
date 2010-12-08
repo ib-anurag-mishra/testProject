@@ -1257,44 +1257,5 @@ class HomesController extends AppController
 	}
 	$this->layout = 'admin';
     }	 
-	
-	function paging() {
-		   $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-		   $pagination = array('Song' => array('conditions' =>
-							array('and' =>
-								array(
-									array('Song.TrackBundleCount' => 0),
-									array('Song.DownloadStatus' => 1),
-									array('Country.Territory' => $country),
-									$cond
-									),"1 = 1 GROUP BY Song.ProdID"	
-										),
-										'fields' => array(
-											'Song.ProdID',
-											'Song.Title',
-											'Song.ArtistText',
-											'Song.ReferenceID',
-											'Song.DownloadStatus',
-											'Song.SongTitle',
-											'Song.Artist',
-											'Song.Advisory'
-										),'limit' => 20
-									)
-							);
-
-			$this->params['named']['search'] = $search;
-			if (!empty($this->params['named']['search']))
-			{
-				$search = trim($this->params['named']['search']);
-
-				$pagination['Song']['sphinx']['matchMode'] = SPH_MATCH_EXTENDED;
-
-				$pagination['Song']['search'] = $search;
-			}
-			$this->paginate = $pagination;
-			$songs = $this->paginate();
-			return $songs;
-	}
-	
 }
 ?>

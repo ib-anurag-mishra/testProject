@@ -39,7 +39,7 @@ class AppModel extends Model {
           if (empty($pagination)) {
 				  if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					    $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', '20', 'page', 'recursive', 'group', 'contain'));
+						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				 }
@@ -74,6 +74,7 @@ class AppModel extends Model {
                         $group = "yes";
                     }
                     if($v == "1 = 1 GROUP BY Song.ProdID"){
+						echo "Hello";
                         //$fields = array('fields' => 'ProdID');
 						if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
