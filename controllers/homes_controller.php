@@ -325,12 +325,13 @@ class HomesController extends AppController
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
-									),"GROUP BY Song.ProdID"	
+									),	
 								),
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID'),
 								'limit' => 10,
-								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+								'group' => 'Song.ProdID',
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							);
 									
 				//$this->Song->recursive = -1;
@@ -340,7 +341,6 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
-				print_r($searchResults);exit;
 				$this->set('searchResults', $searchResults);
 			}
 			else {

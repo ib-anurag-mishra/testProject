@@ -47,7 +47,12 @@ class AppModel extends Model {
           }
         }
         else{
-          $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));            
+			if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
+					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+			  } else {
+					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+			}          
         }
         return $pagination;
     }
