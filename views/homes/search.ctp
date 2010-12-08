@@ -109,7 +109,6 @@ if(count($searchResults) != 0){
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d'))
 						{
 							if($libraryDownload == '1' && $patronDownload == '1') {
-<<<<<<< HEAD:views/homes/search.ctp
 								if($searchResult['Song']['status'] != 'avail'){
 									$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Full_Files']['CdnPath']."/".$searchResult['Full_Files']['SaveAsName']);
 									$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
