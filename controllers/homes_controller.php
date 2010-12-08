@@ -307,6 +307,7 @@ class HomesController extends AppController
 				
 				$sphinxTempCondition = $sphinxArtistSearch."".$sphinxComposerSearch."".$sphinxSongSearch."".$sphinxAlbumSearch."".$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
+				$sphinxFinalCondition = $sphinxFinalCondition." @DownloadStatus 11";
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
@@ -321,7 +322,6 @@ class HomesController extends AppController
 				$this->paginate = array('Song' => array('conditions' =>
 						 array('and' =>
 								array(
-									array('Song.ProdID' => 5555555),
 									array('Song.TrackBundleCount' => 0),
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
@@ -337,7 +337,6 @@ class HomesController extends AppController
 							
 				//$this->Song->recursive = 0;
 				
-				$this->paginate['Song']['sphinx']['filter'][] = array('Song.ProdID', 5555555); 
 				
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
