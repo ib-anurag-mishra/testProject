@@ -318,7 +318,7 @@ class HomesController extends AppController
 				}
 				
 				//$this->Song->Behaviors->attach('Containable');
-				/*$this->paginate = array('conditions' =>
+				$this->paginate = array('conditions' =>
 						 array('and' =>
 								array(
 									array('Song.TrackBundleCount' => 0),
@@ -326,18 +326,13 @@ class HomesController extends AppController
 									array('Country.Territory' => $country),
 									$cond
 									),	
-								), 'sphinx' =>array( 'setMatchMode'=>SPH_MATCH_EXTENDED, 'groupdistinct' => 'Song.ProdID'), 
+								),
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID'),
 								'limit' => 10,
 								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-							);*/
-							
-				 $this->paginate['sphinx']=array(
-				   'setMatchMode'=>SPH_MATCH_EXTENDED,
-				   'groupdistinct'=>'Song.ProdID'
-				 ); 
+							);
 									
 				//$this->Song->recursive = -1;
 				
@@ -346,6 +341,7 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
+				print_r($searchResults);exit;
 				$this->set('searchResults', $searchResults);
 			}
 			else {
