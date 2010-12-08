@@ -99,29 +99,34 @@
 								<td width="50" valign="top" align="center">
 									<p><?php echo $albumSong['Song']['FullLength_Duration']?></p>
 								</td>
-								<td width="120" valign="top" align="center" style="padding-left:30px">
+								<td width="130" valign="top" align="left" style="padding-left:30px">
 									<?php
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
-												$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
-												$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
-												$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-									?>
-												<p>
-													<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-														<![if !IE]>
-															<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
-														<![endif]>
-														<!--[if IE]>
-															<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
-														<![endif]-->
-													</span>
-													<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left;">Plese Wait...</span>
-													<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-												</p>
-									<?php		}											
+												if($albumSong['Song']['status'] != 'avail'){
+													$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
+													$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+													$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+										?>
+													<p>
+														<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+															<![if !IE]>
+																<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+															<![endif]>
+															<!--[if IE]>
+																<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+															<![endif]-->
+														</span>
+														<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left;">Plese Wait...</span>
+														<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+													</p>													
+									<?php	
+												} else {
+													?><a href='/homes/my_history' title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php
+												}
+											}											
 											else{
 												if($libraryDownload != '1'){
 													$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
