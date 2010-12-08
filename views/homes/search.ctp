@@ -206,9 +206,3 @@ if(count($searchResults) != 0){
 		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
 	?>
 </div>
-<?php
-	}
-	else {
-		echo '<table><tr><td width="180" valign="top"><p><div class="paging">No records found</div><br class="clr"></td></tr></table>';
-	}
-?>
