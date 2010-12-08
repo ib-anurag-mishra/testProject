@@ -321,9 +321,9 @@ class HomesController extends AppController
 				//$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('Song' => array(
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
-								'order' => array('Song.ProdID'),
+								'order' => array('Song.ProdID DESC'),
 								'limit' => 20,
-								'group' => 'Song.ProdID',
+								'group' => 'id',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							));
 							
