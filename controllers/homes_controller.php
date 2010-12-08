@@ -318,18 +318,20 @@ class HomesController extends AppController
 				}
 				
 				//$this->Song->Behaviors->attach('Containable');
-				$this->paginate = array('Song' => array('conditions' =>
+				$this->paginate = array('conditions' =>
 						 array('and' =>
 								array(
 									array('Song.TrackBundleCount' => 0),
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
-									),"1 = 1 GROUP BY Song.ProdID"	
-								),'limit' => 20,
+									),"GROUP BY Song.ProdID"	
+								),
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
+								'order' => array('Song.ProdID'),
+								'limit' => 10,
 								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-							));
+							);
 									
 				//$this->Song->recursive = -1;
 				
