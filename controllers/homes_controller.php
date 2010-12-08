@@ -334,7 +334,6 @@ class HomesController extends AppController
 								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							));
-									
 				//$this->Song->recursive = 0;
 				
 				if($composer == '') {
