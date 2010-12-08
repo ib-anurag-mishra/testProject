@@ -326,7 +326,7 @@ class HomesController extends AppController
 									array('Country.Territory' => $country),
 									$cond
 									),	
-								),
+								), 'sphinx' =>array( 'setMatchMode'=>SPH_MATCH_EXTENDED, 'groupdistinct' => 'Song.ProdID'), 
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID'),
 								'limit' => 10,
