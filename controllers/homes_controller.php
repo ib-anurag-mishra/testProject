@@ -307,7 +307,7 @@ class HomesController extends AppController
 				
 				$sphinxTempCondition = $sphinxArtistSearch."".$sphinxComposerSearch."".$sphinxSongSearch."".$sphinxAlbumSearch."".$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition." @DownloadStatus 11";
+				$sphinxFinalCondition = $sphinxFinalCondition." @TrackBundleCount 0 @DownloadStatus 1 @Territory ".$country;
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
@@ -322,8 +322,6 @@ class HomesController extends AppController
 				$this->paginate = array('Song' => array('conditions' =>
 						 array('and' =>
 								array(
-									array('Song.TrackBundleCount' => 0),
-									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
 									),	
