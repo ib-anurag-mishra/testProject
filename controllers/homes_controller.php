@@ -317,7 +317,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				
-				$this->Song->Behaviors->attach('Containable');
+				//$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('conditions' =>
 						 array('and' =>
 								array(
@@ -329,7 +329,7 @@ class HomesController extends AppController
 								),
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID'),
-								'limit' => 10,
+								'limit' => 20,
 								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							);
