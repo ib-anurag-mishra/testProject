@@ -74,14 +74,8 @@ class AppModel extends Model {
                         $group = "yes";
                     }
                     if($v == "1 = 1 GROUP BY Song.ProdID"){
-						echo "Hello";
                         //$fields = array('fields' => 'ProdID');
-						if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-							$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
-						} else {
-							$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
-						}
+						$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
@@ -94,12 +88,7 @@ class AppModel extends Model {
 
 				}
                 if($group != "yes"){
-					if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-						$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
-					} else {
-						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
-					}
+					$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
                 }
                 Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
         }
