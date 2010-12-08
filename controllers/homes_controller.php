@@ -286,6 +286,8 @@ class HomesController extends AppController
 				}
 				if($genre != '') {
 					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)');    
+					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)'); 
+					$sphinxGenreSearch = "@Genre ".mysql_real_escape_string($genre)." ".$sphinxCheckCondition." ";
 				}
 				else {
 					$genreSearch = '';
@@ -349,6 +351,18 @@ class HomesController extends AppController
 										 ),'cache' => 'yes'
 									);
 				$this->Song->recursive = 2;
+									array('Song.TrackBundleCount' => 0),
+									array('Song.DownloadStatus' => 1),
+									array('Country.Territory' => $country),
+									$cond
+									),"1 = 1 GROUP BY Song.ProdID"	
+								),'limit' => 20,
+								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
+								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+							);
+									
+				//$this->Song->recursive = -1;
+				
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}				
