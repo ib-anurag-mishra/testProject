@@ -319,15 +319,7 @@ class HomesController extends AppController
 				}
 				
 				//$this->Song->Behaviors->attach('Containable');
-				$this->paginate = array('Song' => array('conditions' =>
-						 array('and' =>
-								array(
-									array('Song.TrackBundleCount' => 0),
-									array('Song.DownloadStatus' => 1),
-									array('Country.Territory' => $country),
-									$cond
-									),	
-								),
+				$this->paginate = array('Song' => array(
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID'),
 								'limit' => 20,
