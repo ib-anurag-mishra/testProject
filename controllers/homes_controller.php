@@ -321,6 +321,7 @@ class HomesController extends AppController
 				$this->paginate = array('conditions' =>
 						 array('and' =>
 								array(
+									array('Song.ProdID' => 5555555),
 									array('Song.TrackBundleCount' => 0),
 									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
