@@ -317,7 +317,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				
-				//$this->Song->Behaviors->attach('Containable');
+				$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('conditions' =>
 						 array('and' =>
 								array(
@@ -334,7 +334,7 @@ class HomesController extends AppController
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							);
 									
-				$this->Song->recursive = 0;
+				//$this->Song->recursive = 0;
 				
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
