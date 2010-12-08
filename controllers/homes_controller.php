@@ -334,6 +334,7 @@ class HomesController extends AppController
 								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							));
+							
 				//$this->Song->recursive = 0;
 				$pagination['Song']['sphinx']['filter'][] = array('Song.ProdID', 5555555); 
 				
