@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
    function beforeFilter(){
 	parent::beforeFilter();
-        $this->Auth->allow('logout','ilogin','inlogin','idlogin','indlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso');
+        $this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','indlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso');
    }
    
    /*
