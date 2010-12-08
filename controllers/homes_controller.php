@@ -337,7 +337,6 @@ class HomesController extends AppController
 							
 				//$this->Song->recursive = 0;
 				
-				
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
