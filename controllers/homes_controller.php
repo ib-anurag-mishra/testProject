@@ -341,7 +341,8 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
-				$this->set('searchResults', array_unique($searchResults));
+				print_r($searchResults);exit;
+				$this->set('searchResults', $searchResults);
 			}
 			else {
 				$searchKey = '';      
