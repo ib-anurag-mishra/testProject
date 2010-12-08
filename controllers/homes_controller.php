@@ -322,6 +322,8 @@ class HomesController extends AppController
 				$this->paginate = array('Song' => array('conditions' =>
 						 array('and' =>
 								array(
+									array('Song.TrackBundleCount' => 0),
+									array('Song.DownloadStatus' => 1),
 									array('Country.Territory' => $country),
 									$cond
 									),	
@@ -340,6 +342,7 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
+				print_r($searchResults);exit;
 				$this->set('searchResults', $searchResults);
 			}
 			else {
