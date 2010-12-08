@@ -318,7 +318,7 @@ class HomesController extends AppController
 				}
 				
 				//$this->Song->Behaviors->attach('Containable');
-				$this->paginate = array('conditions' =>
+				$this->paginate = array('Song' => array('conditions' =>
 						 array('and' =>
 								array(
 									array('Song.ProdID' => 5555555),
@@ -333,8 +333,7 @@ class HomesController extends AppController
 								'limit' => 20,
 								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-							);
-									
+							));
 				//$this->Song->recursive = 0;
 				
 				if($composer == '') {
