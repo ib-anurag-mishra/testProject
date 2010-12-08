@@ -319,7 +319,7 @@ class HomesController extends AppController
 				}
 				
 				//$this->Song->Behaviors->attach('Containable');
-				$this->paginate = array('Song' => array('conditions' =>
+				$this->paginate = array('Song' => array(
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID'),
 								'limit' => 20,
@@ -328,7 +328,6 @@ class HomesController extends AppController
 							));
 							
 				//$this->Song->recursive = 0;
-				
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
