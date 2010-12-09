@@ -319,9 +319,9 @@ class HomesController extends AppController
 				}
 				
 				$this->paginate = array('Song' => array(
-								'fields' => array('Country.Territory'),
-								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
-							));
+							'fields' => array('Country.Territory'),
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+						));
 							
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
