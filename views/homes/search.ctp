@@ -104,7 +104,7 @@ if(count($searchResults) != 0){
 					?>
 					</p>
 				</td>
-				<td width="130" align="center" style="padding-left:30px" valign="top">
+				<td width="130" align="center" style="padding-left:10px" valign="top">
 					<?php
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d'))
 						{
