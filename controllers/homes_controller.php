@@ -343,8 +343,13 @@ class HomesController extends AppController
 				$this->set('searchKey','search='.urlencode($searchText));
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}			
-				$this->Song->Behaviors->attach('Containable');
+				}		
+				$sphinxFinalCondition = "@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey." | "." @TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
+				$this->paginate = array('Song' => array(
+								'fields' => array('Country.Territory'),
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+							));
+				/*$this->Song->Behaviors->attach('Containable');
 				$this -> paginate = array('conditions' =>
 									array(	'and' =>
 							array(
@@ -400,7 +405,7 @@ class HomesController extends AppController
 												)  											
 										), 'cache' => 'yes'
 									);
-				$this->Song->recursive = 2;
+				$this->Song->recursive = 2;*/
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}				
