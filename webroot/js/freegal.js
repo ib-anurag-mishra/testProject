@@ -130,6 +130,7 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
+				$('.download_links').html('');
 				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip(prodId);
