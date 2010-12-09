@@ -94,14 +94,14 @@ class AppModel extends Model {
 				}
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-					$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
+					$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
 					$paginationcount = count($paginationcount);
 					$group = "yes";
 				}
                 if($group != "yes"){
 					if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-						$paginationcount = $this->find('count', array('search' =>  $extra['sphinxcheck'], 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
+						$paginationcount = $this->find('count', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
 					} else {
 						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
 					}
