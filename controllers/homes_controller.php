@@ -333,6 +333,7 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
+				print_r($searchResults);exit;
 				$this->set('searchResults', $searchResults);
 			}
 			else {
