@@ -344,6 +344,7 @@ class HomesController extends AppController
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}		
+				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinxFinalCondition = "@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey." | "." @TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
 				$this->paginate = array('Song' => array(
 								'fields' => array('Country.Territory'),
