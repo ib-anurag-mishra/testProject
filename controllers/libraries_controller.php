@@ -324,12 +324,10 @@ Class LibrariesController extends AppController
 															foreach($this->data['Variable'] as $k=>$v){
 																if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
 																	$data[$k] = $v;
+																	$data[$k]['library_id'] = $this->Library->id;
 																}
 															}
 															$this->Variable->deleteAll(array('library_id' => $this->Library->id));
-															foreach($data as $k=>$v){
-																$data[$k]['library_id'] = $this->Library->id;
-															}
 															$this->Variable->saveAll($data);
 														}
 														if($this->data['Libraryurl'][0]['domain_name']){

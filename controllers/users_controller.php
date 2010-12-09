@@ -945,6 +945,7 @@ Class UsersController extends AppController
 							     'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
 							     )
 							   );
+						   $status = 1;
 						   foreach($allVariables as $k=>$v){
 							   $retStatusArr = explode($v['Variable']['authentication_variable'],$retStrDump);
 							   $pos = strpos($retStatusArr['1'],"<br/>");
@@ -2764,7 +2765,7 @@ Class UsersController extends AppController
 													 );
 				if(count($existingLibraries) == 0){
 				   $this -> Session -> setFlash("This is not a valid credential.");
-				   $this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+				   $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 				}        
 				else{
 					$matches = array();
