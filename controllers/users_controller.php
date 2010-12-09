@@ -2796,21 +2796,15 @@ Class UsersController extends AppController
 						}                  
 				    } 
 					elseif($retStatus == 0){
-						$authUrlDump = $existingLibraries['0']['Library']['library_authentication_url'];               
-						$urlDump = $authUrlDump."/PATRONAPI/".$card."/dump";               
-						$domDump= new DOMDocument();
-						@$domDump->loadHtmlFile($urlDump);
-						$xpathDump = new DOMXPath($domDump);
-						$bodyDump = $xpathDump->query('/html/body');
-						$retStrDump = $domDump->saveXml($bodyDump->item(0));
 						   $this->Variable->recursive = -1;
 						   $allVariables = $this->Variable->find('all',array(
 							     'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
 							     'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
 							     )
 							   );
-						   foreach($allVariables as $k=>$v){
-							   $retStatusArr = explode($v['Variable']['authentication_variable'],$retStrDump);
+							$status = 1;
+						    foreach($allVariables as $k=>$v){
+							   $retStatusArr = explode($v['Variable']['authentication_variable'],$response);
 							   $pos = strpos($retStatusArr['1'],"<br/>");
 							   $retStatus = substr($retStatusArr['1'],1,$pos-1);
 							   if($retStatus == ''){
@@ -2862,7 +2856,7 @@ Class UsersController extends AppController
 							   }
 						   }						
 						   if($status == ''){
-							   $errMsgArr =  explode("ERRNUM=",$retStr);
+							   $errMsgArr =  explode("ERRNUM=",$response);
 							   @$errMsgCount = substr($errMsgArr['1'],0,1);
 							   if($errMsgCount == '1'){
 								   $this -> Session -> setFlash("Requested record not found.");
