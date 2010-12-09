@@ -324,7 +324,7 @@ class HomesController extends AppController
 								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
 								'order' => array('Song.ProdID DESC'),
 								'limit' => 20,
-								'group' => 'id',
+								'group' => 'Song.ProdID',
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							));
 							
