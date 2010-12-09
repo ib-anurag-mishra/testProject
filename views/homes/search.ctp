@@ -126,7 +126,9 @@ if(count($searchResults) != 0){
 										<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left">Please Wait...</span>
 										<span id="download_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 									</p>
-					<?php		}
+					<?php		}else {
+									?><a href='/homes/my_history' title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php
+								}
 							}
                             else {
 								if($libraryDownload != '1'){
