@@ -101,7 +101,7 @@ Class GenresController extends AppController
 													array('Song.DownloadStatus' => 1),
 													array('Song.TrackBundleCount' => 0),
 													array('Country.Territory' => $country),
-									//				array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
+													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
 												)
 											),
 											'fields' => array(
