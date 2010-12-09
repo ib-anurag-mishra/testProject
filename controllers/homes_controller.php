@@ -309,7 +309,7 @@ class HomesController extends AppController
 				
 				$sphinxTempCondition = $sphinxArtistSearch."".$sphinxComposerSearch."".$sphinxSongSearch."".$sphinxAlbumSearch."".$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition." @TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
+				$sphinxFinalCondition = $sphinxFinalCondition." & TrackBundleCount=0 & DownloadStatus=1 & Territory=".$country." & ".$condSphinx;
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
@@ -339,7 +339,7 @@ class HomesController extends AppController
 					$searchKey = $this->data['Home']['search'];
 				}
 				$searchText = $searchKey;
-				$searchKey = '"'.addslashes($searchKey).'"';
+				//$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText));
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
