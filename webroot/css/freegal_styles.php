@@ -969,6 +969,8 @@ ul.marquee li {
 #songResults {
         text-align: left;
         margin-left:10px;
+		float:left;
+		width:695px;
 }
 
 #songResults a {
