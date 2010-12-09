@@ -156,7 +156,7 @@ function addQtip(prodId){
 	 name:'cream',
          padding: '2px 5px',
          width: {
-            max: 500,
+            max: 350,
             min: 0
          },
          border: {
