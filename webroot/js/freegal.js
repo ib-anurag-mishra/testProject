@@ -148,8 +148,8 @@ function addQtip(prodId){
       content : "You have already downloaded this song. Get it from your recent downloads.",
       position: {
          corner: {
-	    target: 'leftBottom',
-            tooltip: 'rightTop'
+            target: 'topLeft',
+            tooltip: 'bottomRight'
          }
       },
       style: {
