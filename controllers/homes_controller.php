@@ -212,9 +212,11 @@ class HomesController extends AppController
         $this->set('patronDownload',$patronDownload);
         if($this->Session->read('block') == 'yes') {
             $cond = array('Song.Advisory' => 'F');
+			$condSphinx = "@Advisory F";
         }
         else {
             $cond = "";
+			$condSphinx = "";
         }
 		if((isset($_REQUEST['artist']) && $_REQUEST['artist']!= '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) &&  $_REQUEST['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) &&  $this->data['Home']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')){
 			if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
@@ -307,28 +309,20 @@ class HomesController extends AppController
 				
 				$sphinxTempCondition = $sphinxArtistSearch."".$sphinxComposerSearch."".$sphinxSongSearch."".$sphinxAlbumSearch."".$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition." @TrackBundleCount 0 @DownloadStatus 1 @Territory ".$country;
+				$sphinxFinalCondition = $sphinxFinalCondition." @TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-				//$results = $this->Song->find('all', array('search' =>  $sphinxFinalCondition, 'limit' => 20, 'recursive' => -1, 'sphinx' => $sphinx));
-				//print_r($results);exit;
 				
 				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				
-				//$this->Song->Behaviors->attach('Containable');
 				$this->paginate = array('Song' => array(
-								'fields' => array('DISTINCT Song.ProdID', 'Country.Territory'),
-								'order' => array('Song.ProdID DESC'),
-								'limit' => 20,
-								'group' => 'Song.ProdID',
+								'fields' => array('Country.Territory'),
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
 							));
 							
-				//$this->Song->recursive = 0;
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
