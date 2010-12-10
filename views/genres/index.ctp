@@ -91,7 +91,6 @@
 					{
 						if($libraryDownload == '1' && $patronDownload == '1')
 						{
-							if($catG["status"] != 'avail'){
 								$finalSongUrl = "http://music.freegalmusic.com".$catG['SongUrl'];
 								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
@@ -108,9 +107,6 @@
 									<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 								</p>
 							<?php
-							} else {
-								?><a href='/homes/my_history' title='You Have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php							
-							}
 						}
 						else{
 							if($libraryDownload != '1'){
