@@ -169,13 +169,16 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 			}
 			else
 			{			
+				$('.afterClick').hide();
+				$('.beforeClick').show();
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).style.display = 'block';
+				$('.download_links_'+prodId).html(''); 
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+				document.getElementById('song_'+prodId).style.display = 'block';return false;
 				location.href = unescape(finalURL);
-				$('.afterClick').hide();
-				$('.beforeClick').show();				
+			
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
