@@ -53,7 +53,6 @@ class AppModel extends Model {
 						} 
 					 
 					    $sphinx = array('matchMode' => SPH_MATCH_EXTENDED, 'sortMode' => array($modeSphinx => $fieldSphinx." ".$sortSphinx));
-						
 						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'order' => 'Song.ProdID DESC', 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
@@ -78,7 +77,6 @@ class AppModel extends Model {
 					} 
 					
 					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED, 'sortMode' => array($modeSphinx => $fieldSphinx." ".$sortSphinx));
-					
 					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'order' => 'Song.ProdID DESC', 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
 					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
