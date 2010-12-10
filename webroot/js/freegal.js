@@ -176,7 +176,7 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				$('.download_links_'+prodId).html(''); 
 				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-				document.getElementById('song_'+prodId).style.display = 'block';return false;
+				document.getElementById('song_'+prodId).style.display = 'block';
 				location.href = unescape(finalURL);
 			
 			}
