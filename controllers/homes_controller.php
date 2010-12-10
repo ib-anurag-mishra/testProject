@@ -317,10 +317,20 @@ class HomesController extends AppController
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
+				if (isset($this->passedArgs['sort'])){
+					$sphinxSort = $this->passedArgs['sort'];
+				} else {
+					$sphinxSort = "";
+				}
+				if (isset($this->passedArgs['direction'])){
+					$sphinxDirection = $this->passedArgs['direction'];
+				} else {
+					$sphinxDirection = "";
+				}
 				
 				$this->paginate = array('Song' => array(
 							'fields' => array('Country.Territory'),
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 						));
 							
 				if($composer == '') {
@@ -346,9 +356,20 @@ class HomesController extends AppController
 				}		
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				$sphinxFinalCondition = "@Artist ".$searchKey." | "."@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey." | "." @TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
+				
+				if (isset($this->passedArgs['sort'])){
+					$sphinxSort = $this->passedArgs['sort'];
+				} else {
+					$sphinxSort = "";
+				}
+				if (isset($this->passedArgs['direction'])){
+					$sphinxDirection = $this->passedArgs['direction'];
+				} else {
+					$sphinxDirection = "";
+				}
 				$this->paginate = array('Song' => array(
 								'fields' => array('Country.Territory'),
-								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 							));
 				/*$this->Song->Behaviors->attach('Containable');
 				$this -> paginate = array('conditions' =>
