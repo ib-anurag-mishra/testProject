@@ -371,63 +371,7 @@ class HomesController extends AppController
 								'fields' => array('Country.Territory'),
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 							));
-				/*$this->Song->Behaviors->attach('Containable');
-				$this -> paginate = array('conditions' =>
-									array(	'and' =>
-							array(
-													array('Song.DownloadStatus' => 1),
-													array('Song.TrackBundleCount' => 0),
-													array('Country.Territory' => $country),$cond
-												),
-						'or' =>
-													array(
-															array("match(Song.ArtistText) against ('".$searchKey."' in boolean mode)"),
-															array("match(Song.Title) against ('".$searchKey."' in boolean mode)"),
-															array("match(Song.SongTitle) against ('".$searchKey."' in boolean mode)")
-														),"1 = 1 GROUP BY Song.ProdID"
-											),
-										'fields' => array(
-														'Song.ProdID',
-														'Song.Title',
-														'Song.ArtistText',
-														'Song.ReferenceID',
-														'Song.DownloadStatus',
-														'Song.SongTitle',
-														'Song.Artist',
-														'Song.Advisory',
-														),
-										'contain' => array(
-										'Participant' => array(
-											'fields' => array(
-													'Participant.Name'                                                   
-													)
-										),
-										'Genre' => array(
-												'fields' => array(
-														'Genre.Genre'                                                   
-														)
-												),
-										'Country' => array(
-												'fields' => array(
-														'Country.Territory',
-														'Country.SalesDate'
-														)
-												),
-										'Sample_Files' => array(
-												'fields' => array(
-														'Sample_Files.CdnPath',
-														'Sample_Files.SaveAsName'
-														),
-												),
-										'Full_Files' => array(
-												'fields' => array(
-														'Full_Files.CdnPath',
-														'Full_Files.SaveAsName'
-														),
-												)  											
-										), 'cache' => 'yes'
-									);
-				$this->Song->recursive = 2;*/
+			
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}				
