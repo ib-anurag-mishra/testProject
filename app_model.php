@@ -51,9 +51,8 @@ class AppModel extends Model {
 							$modeSphinx = SPH_SORT_EXTENDED;
 							$sortSphinx = "DESC";
 						} 
-					    $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-						}
-					    $sphinx = array('matchMode' => SPH_MATCH_EXTENDED, 'sortMode' => array($modeSphinx => $fieldSphinx $sortSphinx));
+					 
+					    $sphinx = array('matchMode' => SPH_MATCH_EXTENDED, 'sortMode' => array($modeSphinx => $fieldSphinx." ".$sortSphinx));
 						
 						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'order' => 'Song.ProdID DESC', 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
@@ -77,9 +76,8 @@ class AppModel extends Model {
 						$modeSphinx = SPH_SORT_EXTENDED;
 						$sortSphinx = "DESC";
 					} 
-					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-					}
-					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED, 'sortMode' => array($modeSphinx => $fieldSphinx $sortSphinx));
+					
+					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED, 'sortMode' => array($modeSphinx => $fieldSphinx." ".$sortSphinx));
 					
 					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'order' => 'Song.ProdID DESC', 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
