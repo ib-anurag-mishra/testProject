@@ -78,7 +78,7 @@ Class GenresController extends AppController
 		$rand_keys = array_rand($category_ids, 4);
 		$rand_val = implode(",", $rand_keys);
 		$categories = $this->Category->find('all', array(
-								'conditions' => array('id IN ('.$rand_val.')'),
+								'conditions' => array('id IN ('.$rand_val.')','Language' => Configure::read('App.LANGUAGE')),
 								'fields' => 'Genre'));
 		$i = 0;
 		$j = 0;
@@ -101,7 +101,7 @@ Class GenresController extends AppController
 													array('Song.DownloadStatus' => 1),
 													array('Song.TrackBundleCount' => 0),
 													array('Country.Territory' => $country),
-													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-3 week"))),$cond
+													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-7 week"))),$cond
 												)
 											),
 											'fields' => array(
