@@ -28,6 +28,7 @@ Class LibrariesController extends AppController
     */
     function admin_managelibrary() {
         $this->Library->recursive = -1;
+		$this->paginate = array('order' => 'id');
 		$this->paginate = array('cache' => 'no');
         $this->set('libraries', $this->paginate('Library'));
     }
