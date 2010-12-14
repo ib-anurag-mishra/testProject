@@ -702,6 +702,21 @@ class SphinxClient
 	{
 		$urlString = $_SERVER['QUERY_STRING'];
 		$expString = explode("?", $urlString);
+		$expExpString = explode("/", $expString[0]);
+		foreach ($expExpString as $value) {
+			$pageParam   = 'page:';
+			$pos = strpos($value, $pageParam);
+			if ($pos === false) {
+				$page = 0;
+				$offset = 0;
+			} else {
+				$pageIntegerPos = ($pos + 5);
+				$page = substr($expString[0], $pageIntegerPos);
+				$offset = (20 * ($page - 1));
+			}
+		}
+		/* 
+		
 		$pageParam   = 'page:';
 		$pos = strpos($expString[0], $pageParam);
 		if ($pos === false) {
@@ -711,7 +726,7 @@ class SphinxClient
 			$pageIntegerPos = ($pos + 5);
 			$page = substr($expString[0], $pageIntegerPos);
 			$offset = (20 * ($page - 1));
-		}
+		} */
 		
 		assert ( is_int($offset) );
 		assert ( is_int($limit) );
