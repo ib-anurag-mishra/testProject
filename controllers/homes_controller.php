@@ -318,9 +318,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
 				if (isset($this->passedArgs['sort'])){
-					$sphinxSortUrl = $this->passedArgs['sort'];
-					$expSphinxSort = explode(".", $sphinxSortUrl);
-					$sphinxSort = "Sort".$expSphinxSort[1];
+					$sphinxSort = $this->passedArgs['sort'];
 				} else {
 					$sphinxSort = "";
 				}
@@ -360,9 +358,7 @@ class HomesController extends AppController
 				$sphinxFinalCondition = "@Artist ".$searchKey." | "."@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey." | "." @TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
 				
 				if (isset($this->passedArgs['sort'])){
-					$sphinxSortUrl = $this->passedArgs['sort'];
-					$expSphinxSort = explode(".", $sphinxSortUrl);
-					$sphinxSort = "Sort".$expSphinxSort[1];
+					$sphinxSort = $this->passedArgs['sort'];
 				} else {
 					$sphinxSort = "";
 				}
