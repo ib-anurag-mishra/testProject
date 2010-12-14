@@ -193,15 +193,15 @@ Class UsersController extends AppController
          $this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
          $this->Currentpatron->saveField('modified',$updateTime, false);         
          if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
-			$redirect_url = $this->Session->read('referral_url');
+			$redirectUrl = $this->Session->read('referral_url');
 			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true);
+			$this->redirect($redirectUrl, null, true);
          }
          elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));				
@@ -209,9 +209,9 @@ Class UsersController extends AppController
          }
 		 elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));				
@@ -219,9 +219,9 @@ Class UsersController extends AppController
          }
 		 elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));				
@@ -229,9 +229,9 @@ Class UsersController extends AppController
          }		 
          elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));				
@@ -239,9 +239,9 @@ Class UsersController extends AppController
          }		 
          elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));				
@@ -249,9 +249,9 @@ Class UsersController extends AppController
 		 }
          elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));				
@@ -259,9 +259,9 @@ Class UsersController extends AppController
          }		 
          elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'slogin'));				
@@ -269,9 +269,9 @@ Class UsersController extends AppController
          }
 		 elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));				
@@ -279,9 +279,9 @@ Class UsersController extends AppController
          }
 		 elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));				
@@ -290,9 +290,9 @@ Class UsersController extends AppController
 		}
 		 elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
 			if($this->Session->read('referral')){
-				$redirect_url = $this->Session->read('referral');
+				$redirectUrl = $this->Session->read('referral');
 				$this->Session->destroy();
-				$this->redirect($redirect_url, null, true);
+				$this->redirect($redirectUrl, null, true);
 			} else {
 				$this->Session->destroy();
 				$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));				
@@ -300,10 +300,10 @@ Class UsersController extends AppController
  
 		}		
 		 elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){		
-			$redirect_url = $this->Session->read('referral');
-			$redirect_url = str_replace('login', 'logout',$redirect_url);
+			$redirectUrl = $this->Session->read('referral');
+			$redirectUrl = str_replace('login', 'logout',$redirectUrl);
 			$this->Session->destroy();
-			$this->redirect($redirect_url, null, true);				
+			$this->redirect($redirectUrl, null, true);				
 		}		
          else{            
             $this->Session->destroy();
@@ -688,10 +688,10 @@ Class UsersController extends AppController
    function ilogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -849,10 +849,10 @@ Class UsersController extends AppController
    function idlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -1089,10 +1089,10 @@ Class UsersController extends AppController
 	function inlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -1235,10 +1235,10 @@ Class UsersController extends AppController
    function indlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -1444,10 +1444,10 @@ Class UsersController extends AppController
 	function slogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -1648,10 +1648,10 @@ Class UsersController extends AppController
 	function snlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -1828,10 +1828,10 @@ Class UsersController extends AppController
 	function sdlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -2108,10 +2108,10 @@ Class UsersController extends AppController
 	function sndlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -2359,7 +2359,7 @@ Class UsersController extends AppController
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				if($this->Session->read('referral') == ''){
-					$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+					$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 				}
 			}
 		}
@@ -2458,10 +2458,10 @@ Class UsersController extends AppController
    function inhlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
@@ -2707,10 +2707,10 @@ Class UsersController extends AppController
    function ihdlogin(){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => strtolower($_SERVER['HTTP_REFERER']))));
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",strtolower($_SERVER['HTTP_REFERER']));
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
