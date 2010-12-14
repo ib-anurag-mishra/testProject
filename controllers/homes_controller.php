@@ -349,13 +349,25 @@ class HomesController extends AppController
 					$searchKey = $this->data['Home']['search'];
 				}
 				$searchText = $searchKey;
-				$searchKey = '"'.addslashes($searchKey).'"';
+				//$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText));
+				
+				$searchParam = "";
+				$expSearchKeys = explode(" ", $searchKey);
+				foreach ($expSearchKeys as $value) {
+					$value = '"'.addslashes($value).'"';
+					if ($searchParam == "") {
+						$searchParam = "@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+					} else {
+						$searchParam = $searchParam." | "."@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+					}
+				}
+				
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}		
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				$sphinxFinalCondition = "@Artist ".$searchKey." | "."@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
+				$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
 				
 				if (isset($this->passedArgs['sort'])){
 					$sphinxSort = $this->passedArgs['sort'];
