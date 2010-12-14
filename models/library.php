@@ -298,5 +298,14 @@ class Library extends AppModel
         }
        return $arr;
     }
+	
+    /*
+    Function Name : paginateCount
+    Desc : To Fix the issue with pagination cache
+    */	
+	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
+	    $results = $this->find('count', compact('conditions','recursive', 'group'));
+	    return $results;
+	}	
 }
 ?>
