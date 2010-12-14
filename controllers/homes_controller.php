@@ -309,7 +309,9 @@ class HomesController extends AppController
 				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory '.$country.' & '.$condSphinx;
-				$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
+				if ($condSphinx == "") {
+					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
+				}
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
