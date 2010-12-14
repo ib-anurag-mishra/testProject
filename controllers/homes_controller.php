@@ -203,7 +203,6 @@ class HomesController extends AppController
     */
     function search(){
 		$country = $this->Session->read('territory');
-	//	$country = "'".$country."'";
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
