@@ -35,8 +35,7 @@ class AppModel extends Model {
                   $contain = $extra['contain']; 
           }
           $uniqueCacheId = md5($uniqueCacheId);
-          //$pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-		  $pagination = "";
+          $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           if (empty($pagination)) {
 				  if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 						if (isset($extra['sphinxsort']) && ($extra['sphinxsort'] != '')) {
@@ -58,7 +57,7 @@ class AppModel extends Model {
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				 }
-                  //Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
+                  Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
           }
         } else {
 			if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
@@ -96,11 +95,11 @@ class AppModel extends Model {
                 $contain = $extra['contain'];	
         }
 		
-		/* if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 			$paginationcount = "";
 		} else {
 			$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-		} */
+		}
 		$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
         if (empty($paginationcount)) {
                 $group = "";
@@ -136,12 +135,11 @@ class AppModel extends Model {
 						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
 					}
                 }
-				/* if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					$paginationcount = $paginationcount;
 				} else {
 					Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
-				} */
-				Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
+				}
         }
         return $paginationcount;
     }
