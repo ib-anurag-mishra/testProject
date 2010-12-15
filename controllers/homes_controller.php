@@ -332,7 +332,7 @@ class HomesController extends AppController
 				
 				$this->paginate = array('Song' => array(
 							'fields' => array('Country.Territory'),
-							'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 						));
 							
 				if($composer == '') {
@@ -383,7 +383,7 @@ class HomesController extends AppController
 				}
 				$this->paginate = array('Song' => array(
 								'fields' => array('Country.Territory'),
-								'cache' => 'yes', 'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 							));
 			
 				if(!isset($_REQUEST['composer'])) {
