@@ -709,7 +709,7 @@ class SphinxClient
 			} else {
 				$keyValue = $key;
 			}
-		}
+		} 
 		if (isset($keyValue) && ($keyValue != '')) {
 			$page = substr($expString[$keyValue], 5);
 			if ($page != 1)
