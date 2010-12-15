@@ -701,24 +701,28 @@ class SphinxClient
 	function SetLimits ( $offset, $limit, $max=0, $cutoff=0 )
 	{
 		$urlString = $_SERVER['QUERY_STRING'];
-		$expString = explode("/", $urlString);
-		foreach ($expString as $key=>$value) {
-			$pageParam   = 'page:';
-			$pos = strpos($value, $pageParam);
-			if ($pos === false) {
-			} else {
-				$keyValue = $key;
+		$checkForCountText = "sort:";
+		$posPaginationCountValid = strpos($urlString, $checkForCountText);
+		if ($posPaginationCountValid === false) {
+			$expString = explode("/", $urlString);
+			foreach ($expString as $key=>$value) {
+				$pageParam   = 'page:';
+				$pos = strpos($value, $pageParam);
+				if ($pos === false) {
+				} else {
+					$keyValue = $key;
+				}
 			}
-		}
-		if (isset($keyValue) && ($keyValue != '')) {
-			$page = substr($expString[$keyValue], 5);
-			if ($page != 1)
-				$offset = (20 * ($page - 1));
-			else 
-				$offset = 20;
-		} else {
-			$page = 0;
-			$offset = 0;
+			if (isset($keyValue) && ($keyValue != '')) {
+				$page = substr($expString[$keyValue], 5);
+				if ($page != 1)
+					$offset = (20 * ($page - 1));
+				else 
+					$offset = 20;
+			} else {
+				$page = 0;
+				$offset = 0;
+			}
 		}
 		
 		assert ( is_int($offset) );
