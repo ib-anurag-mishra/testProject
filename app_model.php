@@ -27,7 +27,7 @@ class AppModel extends Model {
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
 	global $callType;
 	$callType = "paginate";
-        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
+       if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';
           foreach ($args as $arg) {
@@ -87,8 +87,8 @@ class AppModel extends Model {
     }
 
     function paginateCount ($conditions = null, $recursive = 0, $extra = array()) {
-	global $callType;
-	$callType = "paginatecount";
+		global $callType;
+		$callType = "paginateCount";
         $args = func_get_args();
         $uniqueCacheId = '';
         foreach ($args as $arg) {
