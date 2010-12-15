@@ -94,8 +94,12 @@ class AppModel extends Model {
         if (!empty($extra['contain'])) {
                 $contain = $extra['contain'];	
         }
-    
-        $paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		
+		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+			$paginationcount = "";
+		} else {
+			$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		}
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
@@ -130,7 +134,11 @@ class AppModel extends Model {
 						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
 					}
                 }
-                Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
+				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					$paginationcount = $paginationcount;
+				} else {
+					Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
+				}
         }
         return $paginationcount;
     }
