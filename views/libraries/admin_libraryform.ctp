@@ -268,6 +268,7 @@
 									<option value=">">></option>
 									<option value="<"><</option>
 									<option value="<>"><></option>
+									<option value="Date">Expired</option>
 								</select>							
 							</td>
 						</tr>						
@@ -301,6 +302,7 @@
 										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
 										<option <?php if($var == '<'){ ?> selected = "selected" <?php } ?> value="<"> < </option>
 										<option <?php if($var == '<>'){ ?> selected = "selected" <?php } ?> value="<>"> <> </option>
+										<option <?php if($var == 'date'){ ?> selected = "selected" <?php } ?> value="date"> Expired </option>
 									</select>							
 								</td>
 							</tr>							
