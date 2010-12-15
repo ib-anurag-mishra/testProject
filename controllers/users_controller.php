@@ -1013,7 +1013,7 @@ Class UsersController extends AppController
 								   else {
 									   $cmp = $res[0];
 								   }							
-								   if($cmp > $v['Variable']['authentication_response']){
+								   if($cmp < $v['Variable']['authentication_response']){
 									   $status = 1;
 								   }
 								   else{
@@ -1382,7 +1382,7 @@ Class UsersController extends AppController
 						   else {
 							   $cmp = $res[0];
 						   }							
-						   if($cmp > $v['Variable']['authentication_response']){
+						   if($cmp < $v['Variable']['authentication_response']){
 							   $status = 1;
 						   }
 						   else{
@@ -2659,7 +2659,7 @@ Class UsersController extends AppController
 							   else {
 								   $cmp = $res[0];
 							   }							
-							   if($cmp > $v['Variable']['authentication_response']){
+							   if($cmp < $v['Variable']['authentication_response']){
 								   $status = 1;
 							   }
 							   else{
@@ -2932,7 +2932,7 @@ Class UsersController extends AppController
 								   else {
 									   $cmp = $res[0];
 								   }							
-								   if($cmp > $v['Variable']['authentication_response']){
+								   if($cmp < $v['Variable']['authentication_response']){
 									   $status = 1;
 								   }
 								   else{
