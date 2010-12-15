@@ -35,7 +35,8 @@ class AppModel extends Model {
                   $contain = $extra['contain']; 
           }
           $uniqueCacheId = md5($uniqueCacheId);
-          $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+          //$pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		  $pagination = "";
           if (empty($pagination)) {
 				  if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 						if (isset($extra['sphinxsort']) && ($extra['sphinxsort'] != '')) {
@@ -57,7 +58,7 @@ class AppModel extends Model {
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				 }
-                  Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
+                  //Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
           }
         } else {
 			if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
