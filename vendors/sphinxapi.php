@@ -723,7 +723,7 @@ class SphinxClient
 				$page = 0;
 				$offset = 0;
 			}
-		}
+		} 
 		
 		assert ( is_int($offset) );
 		assert ( is_int($limit) );
