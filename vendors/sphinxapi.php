@@ -703,6 +703,7 @@ class SphinxClient
 		global $callType;
 		if ($callType == 'paginate') {
 			$urlString = $_SERVER['QUERY_STRING'];
+			$urlString = str_replace("&", "/", $urlString);
 			$expString = explode("/", $urlString);
 			foreach ($expString as $key=>$value) {
 				$pageParam   = 'page:';
