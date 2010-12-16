@@ -700,6 +700,7 @@ class SphinxClient
 	/// and optionally set max-matches and cutoff limits
 	function SetLimits ( $offset, $limit, $max=0, $cutoff=0 )
 	{
+		
 		global $callType;
 		if ($callType == 'paginate') {
 			$urlString = $_SERVER['QUERY_STRING'];
