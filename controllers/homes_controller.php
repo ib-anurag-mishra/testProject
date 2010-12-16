@@ -97,7 +97,6 @@ class HomesController extends AppController
 		$this->Song->recursive = 2;
         $this->Song->Behaviors->attach('Containable');
 		$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
-		//$this->set('songs',$songDetails);
         $this->Album->recursive = 2;
         $upcoming = $this->Album->find('all', array(
 							    'conditions' => array(
