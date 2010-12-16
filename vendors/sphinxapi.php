@@ -703,6 +703,7 @@ class SphinxClient
 		global $callType;
 		if ($callType == 'paginate') {
 			$urlString = $_SERVER['QUERY_STRING'];
+			$urlString = str_replace("&", "/", $urlString);
 			$expString = explode("/", $urlString);
 			foreach ($expString as $key=>$value) {
 				$pageParam   = 'page:';
@@ -717,7 +718,7 @@ class SphinxClient
 				if ($page != 1)
 					$offset = (20 * ($page - 1));
 				else 
-					$offset = 20;
+					$offset = 0;
 			} else {
 				$page = 0;
 				$offset = 0;
