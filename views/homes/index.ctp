@@ -39,54 +39,61 @@
 	</ul>
 </div>
 <div id="suggestions">
-    Suggestions
+	<div class="download_links"><a href="javascript:getMusicBox('top')"><?php echo (__('Top Downloads', true));?></a> | <a href="javascript:getMusicBox('freegalmusic')"><?php echo (__('FreegalMusic', true));?></a></div>
+	<div id="loaderDivMusicBox" style="display:none;position:absolute;width:100%;text-align:center;top:107px;bottom:0;left:0;right:0;z-index:10000;">
+		<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+	</div>
     <div id="suggestionsBox">
-        <table cellspacing="0" cellpadding="0">
+        <table cellspacing="0" cellpadding="0" id="musicbox">
         <?php
 			$j =0;
-	    for($i = 0; $i < count($songs); $i++) {
-		if($j==8){
-			break;
-		}
-		if($songs[$i]['Territory'] == $this->Session->read('territory')){
-	?>
-		<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
-                    <td>
-                        <p class='suggest_text'>
-                            <?php
-                                if (strlen($songs[$i]['Title']) >= 28 ) {
-                                        echo '<span title="'.$songs[$i]['Title'].'">' . substr($songs[$i]['Title'], 0, 28) . "..." . "</span>";
-                                } else {
-                                        echo $songs[$i]['Title'];
-                                }
-                            ?>
-                            <br />
-                            by&nbsp;
-                            <?php
-                                if (strlen($songs[$i]['Artist']) >= 24 ) {
-                                        echo '<span title="'.$songs[$i]['Artist'].'">' . $html->link(substr($songs[$i]['Artist'], 0, 24) . "...", array(
-                                                'controller' => 'artists',
-                                                'action' => 'view',base64_encode($songs[$i]['ArtistText']),$songs[$i]['ReferenceID']
-                                                )
-                                        ) . "</span>";
-                                } else {
-                                        echo $html->link($songs[$i]['Artist'], array(
-                                                'controller' => 'artists',
-                                                'action' => 'view',base64_encode($songs[$i]['ArtistText']),$songs[$i]['ReferenceID']
-                                                )
-                                        );
-                                }
-                                $songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['CdnPath']."/".$songs[$i]['SaveAsName']);
-                                $finalSongUrl = "http://music.freegalmusic.com".$songUrl;
-                                $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-                            ?>
-                            <?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['ProdID'].', "'.$this->webroot.'");')); ?>
-                            <?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
-                            <?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
-                        </p>
-                    </td>
-                </tr>
-	<?php $j++;} } ?>
+			for($i = 0; $i < count($songs); $i++) {
+			if($j==8){
+				break;
+			}
+			if($songs[$i]['Song']['Territory'] == $this->Session->read('territory')){
+		?>
+			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
+				<td>
+					<p class='suggest_text'>
+						<?php
+						if (strlen($songs[$i]['Song']['Title']) >= 28 ) {
+							echo '<span title="'.$songs[$i]['Song']['Title'].'">' . substr($songs[$i]['Song']['Title'], 0, 28) . "..." . "</span>";
+						} else {
+							echo $songs[$i]['Song']['Title'];
+						}
+						?>
+						<br />
+						by&nbsp;
+						<?php
+						if (strlen($songs[$i]['Song']['Artist']) >= 24 ) {
+								echo '<span title="'.$songs[$i]['Song']['Artist'].'">' . $html->link(substr($songs[$i]['Song']['Artist'], 0, 24) . "...", array(
+								'controller' => 'artists',
+								'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
+								)
+							) . "</span>";
+						} else {
+							echo $html->link($songs[$i]['Song']['Artist'], array(
+								'controller' => 'artists',
+								'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
+								)
+							);
+						}
+						$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
+						$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+						$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+						?>
+						<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
+						<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
+						<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
+					</p>
+				</td>
+			</tr>
+		<?php 
+			$j++;
+			} 
+		} 
+		?>
         </table>
     </div>
 </div>
