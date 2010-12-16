@@ -1344,7 +1344,6 @@ class HomesController extends AppController
 						'Song.SongTitle',
 						'Song.Artist',
 						'Song.Advisory',
-						'Song.Territory',
 						'Song.Sample_Duration',
 						'Song.FullLength_Duration',
 					),
