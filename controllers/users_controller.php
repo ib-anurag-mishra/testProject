@@ -1014,10 +1014,9 @@ Class UsersController extends AppController
 									   $cmp = $res[0];
 								   }							
 								   $resDateArr = explode("-",$cmp);
-								   $libDateArr = explode("-",$v['Variable']['authentication_response']);
 								   $resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
-								   $libDate = mktime(0,0,0,$libDateArr[0],$libDateArr[1],$libDateArr[2]);
-								   if($resDate < $libDate){
+								   $libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+								   if($resDate > $libDate){
 									   $status = 1;
 								   }
 								   else{
@@ -1387,10 +1386,9 @@ Class UsersController extends AppController
 							   $cmp = $res[0];
 						   }							
 						   $resDateArr = explode("-",$cmp);
-						   $libDateArr = explode("-",$v['Variable']['authentication_response']);
 						   $resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
-						   $libDate = mktime(0,0,0,$libDateArr[0],$libDateArr[1],$libDateArr[2]);
-						   if($resDate < $libDate){
+						   $libDate = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+						   if($resDate > $libDate){
 							   $status = 1;
 						   }
 						   else{
@@ -2668,10 +2666,9 @@ Class UsersController extends AppController
 								   $cmp = $res[0];
 							   }							
 							   $resDateArr = explode("-",$cmp);
-							   $libDateArr = explode("-",$v['Variable']['authentication_response']);
 							   $resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
-							   $libDate = mktime(0,0,0,$libDateArr[0],$libDateArr[1],$libDateArr[2]);
-							   if($resDate < $libDate){
+							   $libDate = mktime(0, 0, 0, date("m"), date("d"), date("Y"));
+							   if($resDate > $libDate){
 								   $status = 1;
 							   }
 							   else{
@@ -2945,10 +2942,9 @@ Class UsersController extends AppController
 									   $cmp = $res[0];
 								   }							
 								   $resDateArr = explode("-",$cmp);
-								   $libDateArr = explode("-",$v['Variable']['authentication_response']);
 								   $resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
-								   $libDate = mktime(0,0,0,$libDateArr[0],$libDateArr[1],$libDateArr[2]);
-								   if($resDate < $libDate){
+								   $libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+								   if($resDate > $libDate){
 									   $status = 1;
 								   }
 								   else{
