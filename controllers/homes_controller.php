@@ -226,6 +226,7 @@ class HomesController extends AppController
 						$preCondition2 = array('Song.TrackBundleCount' => 0);
 						$preCondition3 = array('Country.Territory' => $country);
 						$sphinxCheckCondition = "&";
+						$matchType = "All";
 						
 					}
 					 else {
@@ -234,6 +235,7 @@ class HomesController extends AppController
 						$preCondition2 = "";
 						$preCondition3 = "";
 						$sphinxCheckCondition = "|";
+						$matchType = "Any";
 					}
 					$artist =  $_REQUEST['artist'];
 					$composer =  $_REQUEST['composer'];
@@ -248,6 +250,7 @@ class HomesController extends AppController
 						$preCondition2 = array('Song.TrackBundleCount' => 0);
 						$preCondition3 = array('Country.Territory' => $country);
 						$sphinxCheckCondition = "&";
+						$matchType = "All";
 					}
 					else {
 						$condition = "or";
@@ -255,6 +258,7 @@ class HomesController extends AppController
 						$preCondition2 = "";
 						$preCondition3 = "";
 						$sphinxCheckCondition = "|";
+						$matchType = "Any";
 					}
 					$artist =  $this->data['Home']['artist'];
 					$composer = $this->data['Home']['composer'];
@@ -315,7 +319,7 @@ class HomesController extends AppController
 				
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
-				$this->set('searchKey','match=All&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				$this->set('searchKey','match='.$matchType.'&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
 				if($composer == '') {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}
