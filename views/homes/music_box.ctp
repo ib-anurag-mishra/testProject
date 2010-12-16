@@ -4,7 +4,7 @@
 	if($j==8){
 		break;
 	}
-	if($songs[$i]['Song']['Territory'] == $this->Session->read('territory')){
+	//if($songs[$i]['Song']['Territory'] == $this->Session->read('territory')) {
 ?>
 	<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 		<td>
@@ -44,6 +44,6 @@
 	</tr>
 <?php 
 	$j++;
-	} 
+	//} 
 } 
 ?>
