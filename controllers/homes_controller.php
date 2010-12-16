@@ -36,10 +36,69 @@ class HomesController extends AppController
      Desc : actions that is invoked when the user comes to the homes controller
     */
     function index() {
+		// Top Downloads functionality
+		$libId = $this->Session->read('library');
+		$this->Download->recursive = -1;
+		$wk = date('W')-10;
+		$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+		$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
+		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
+		$prodIds = '';
+		foreach($topDownloaded as $k => $v){
+			$prodIds .= $v['Download']['ProdID']."','"; 
+		}
+
+		if($prodIds != ''){
+			$this->Song->recursive = 2;
+			$topDownload =  $this->Song->find('all',array('conditions' =>
+					array('and' =>
+						array(
+							array("Song.ProdID IN ('".rtrim($prodIds,",'")."')" ),
+						), "1 = 1 GROUP BY Song.ProdID"
+					),
+					'fields' => array(
+						'Song.ProdID',
+						'Song.ReferenceID',
+						'Song.Title',
+						'Song.ArtistText',
+						'Song.DownloadStatus',
+						'Song.SongTitle',
+						'Song.Artist',
+						'Song.Advisory',
+						'Song.Territory',
+						'Song.Sample_Duration',
+						'Song.FullLength_Duration',
+					),
+					'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'        
+							)
+						),
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory',
+								'Country.SalesDate'
+							)
+						),            
+						'Sample_Files' => array(
+							'fields' => array(
+										'Sample_Files.CdnPath' ,
+										'Sample_Files.SaveAsName'
+								)
+							),                              
+					), 'order' => array('Country.SalesDate' => 'desc')
+					)
+			);
+		} else {
+			$topDownload = array();
+		}
+		$this->set('songs',$topDownload);
+		
 		$this->Song->recursive = 2;
         $this->Song->Behaviors->attach('Containable');
 		$songDetails = $this->SuggestionSong->readSuggestionSongsXML();
-		$this->set('songs',$songDetails);
+		//$this->set('songs',$songDetails);
         $this->Album->recursive = 2;
         $upcoming = $this->Album->find('all', array(
 							    'conditions' => array(
@@ -1235,6 +1294,87 @@ class HomesController extends AppController
 	    $this->set('getData',$arr);
 	}
 	$this->layout = 'admin';
-    }	 
+    }
+
+	/*
+     Function Name : music_box
+     Desc : For getting Top Downloads and FreegalMusic records for home page
+    */
+    function music_box() {
+        Configure::write('debug', 0);
+        $this->layout = false;
+        $callType = $_POST['type'];
+		if ($callType == 'top') {
+			// Top Downloads functionality
+			$libId = $this->Session->read('library');
+			$this->Download->recursive = -1;
+			$wk = date('W')-10;
+			$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+			$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
+			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
+			$prodIds = '';
+			foreach($topDownloaded as $k => $v){
+				$prodIds .= $v['Download']['ProdID']."','"; 
+			}
+		} else {
+			// FreegalMusic Downloads functionality
+			$this->Download->recursive = -1;
+			$wk = date('W')-10;
+			$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+			$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
+			$topDownloaded = $this->Download->find('all', array('conditions' => array('created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
+			$prodIds = '';
+			foreach($topDownloaded as $k => $v){
+				$prodIds .= $v['Download']['ProdID']."','"; 
+			}
+		}
+		
+		if($prodIds != ''){
+			$this->Song->recursive = 2;
+			$topDownload =  $this->Song->find('all',array('conditions' =>
+					array('and' =>
+						array(
+							array("Song.ProdID IN ('".rtrim($prodIds,",'")."')" ),
+						), "1 = 1 GROUP BY Song.ProdID"
+					),
+					'fields' => array(
+						'Song.ProdID',
+						'Song.ReferenceID',
+						'Song.Title',
+						'Song.ArtistText',
+						'Song.DownloadStatus',
+						'Song.SongTitle',
+						'Song.Artist',
+						'Song.Advisory',
+						'Song.Territory',
+						'Song.Sample_Duration',
+						'Song.FullLength_Duration',
+					),
+					'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'        
+							)
+						),
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory',
+								'Country.SalesDate'
+							)
+						),            
+						'Sample_Files' => array(
+							'fields' => array(
+										'Sample_Files.CdnPath' ,
+										'Sample_Files.SaveAsName'
+								)
+							),                              
+					), 'order' => array('Country.SalesDate' => 'desc')
+					)
+			);
+		} else {
+			$topDownload = array();
+		}
+		$this->set('songs',$topDownload);
+    }
 }
 ?>
