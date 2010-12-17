@@ -187,6 +187,11 @@ ul.marquee li {
         line-height:19px;
 }
 
+#suggestions a{
+	text-decoration: none;
+	color:<?php echo $library_links_color; ?>;
+}
+
 #suggestionsBox {
     width:305px;
         height:288px;
