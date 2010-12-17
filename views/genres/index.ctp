@@ -125,7 +125,10 @@
 										?> <p>Added to Wishlist</p>
 									<?php }
 									else{ ?>
-										<p><span id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span></p>
+										<p>
+										<span class="beforeClick" id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+										<span class="afterClick" style="display:none;float:left">Please Wait...</span>
+										</p>
 									<?php	
 									}
 								}

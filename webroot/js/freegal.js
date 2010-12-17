@@ -214,6 +214,8 @@ function addQtip(prodId){
 }
 function addToWishlist(prodId)
 {
+	$('.beforeClick').hide();
+	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
 	var data = "prodId="+prodId;	
 	jQuery.ajax({
@@ -231,6 +233,8 @@ function addToWishlist(prodId)
 			else
 			{	var msg = response.substring(0,7);
 				if(msg == 'Success'){
+					$('.beforeClick').show();
+					$('.afterClick').hide();				
 					document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}				
