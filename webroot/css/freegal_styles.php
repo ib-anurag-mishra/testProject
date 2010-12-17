@@ -189,7 +189,7 @@ ul.marquee li {
 
 #suggestions a{
 	text-decoration: none;
-	color:<?php echo $library_links_color; ?>;
+	color:<?php echo $library_box_header_color; ?>;
 }
 
 #suggestionsBox {
