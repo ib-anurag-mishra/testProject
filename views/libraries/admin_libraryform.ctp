@@ -257,18 +257,18 @@
 						</tr>
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50"></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
 						</tr>
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
-								<select name="data[Variable][0][comparison_operator]">
+								<select name="data[Variable][0][comparison_operator]" id="oprDrop0" onchange="getResponse('0');">
 									<option value="">Select a Operator</option>
 									<option value="=">=</option>
 									<option value=">">></option>
 									<option value="<"><</option>
 									<option value="<>"><></option>
-									<option value="Date">Expired</option>
+									<option value="date">Expired</option>
 								</select>							
 							</td>
 						</tr>						
@@ -290,13 +290,13 @@
 							</tr>
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-								<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
+								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 								<td align="left" style="padding-left:20px" class="libselect">
 									<?php $var = $v['Variable']['comparison_operator']; ?>
-									<select name="data[Variable][<?php echo $k; ?>][comparison_operator]">
+									<select name="data[Variable][<?php echo $k; ?>][comparison_operator]" id="oprDrop<?php echo $k; ?>" onchange="getResponse(<?php echo $k; ?>);">
 										<option value="">Select a Operator</option>
 										<option <?php if($var == '='){ ?> selected = "selected" <?php } ?> value = "=" >=</option>
 										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
