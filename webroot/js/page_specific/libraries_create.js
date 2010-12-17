@@ -418,12 +418,9 @@ function removeUrl(val){
 }
 function getResponse(v){
 	var val = $("#oprDrop"+v).val();
-	var currentTime = new Date();
-	var month = currentTime.getMonth()+1;
-	var day = currentTime.getDate();
-	var year = currentTime.getFullYear();
-	var dt = month+"-"+day+"-"+year;
 	if(val == 'date'){
-		$("#responseField"+v).val(dt);
+		$("#responseField"+v).val('Current Date');
+	} else {
+		$("#responseField"+v).val('');
 	}
 }
