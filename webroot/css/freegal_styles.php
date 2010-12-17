@@ -187,7 +187,7 @@ ul.marquee li {
         line-height:19px;
 }
 
-#suggestions a{
+#suggestions .top a{
 	text-decoration: none;
 	color:<?php echo $library_box_header_color; ?>;
 }
