@@ -39,7 +39,7 @@
 	</ul>
 </div>
 <div id="suggestions">
-	<div class="top"><a href="javascript:getMusicBox('top')"><?php echo (__('Top Downloads', true));?></a> | <a href="javascript:getMusicBox('freegalmusic')"><?php echo (__('FreegalMusic', true));?></a></div>
+	<div class="top"><a href="javascript:getMusicBox('top')"><?php echo (__('Local Top 10', true));?></a>&nbsp;&nbsp;<a href="javascript:getMusicBox('freegalmusic')"><?php echo (__('National Top 10', true));?></a></div>
 	<div id="loaderDivMusicBox" style="display:none;position:absolute;width:100%;text-align:center;top:107px;bottom:0;left:0;right:0;z-index:10000;">
 		<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
 	</div>
