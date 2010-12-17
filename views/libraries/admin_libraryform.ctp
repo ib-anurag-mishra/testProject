@@ -256,10 +256,6 @@
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable]" class="form_fields" size="50"></td>
 						</tr>
 						<tr>
-							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
-						</tr>
-						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
 								<select name="data[Variable][0][comparison_operator]" id="oprDrop0" onchange="getResponse('0');">
@@ -272,6 +268,10 @@
 								</select>							
 							</td>
 						</tr>						
+						<tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
+						</tr>
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][error_msg]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addVariable(1);"></td>
@@ -289,10 +289,6 @@
 								<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_variable']; ?>"></td>
 							</tr>
 							<tr>
-								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
-								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
-							</tr>
-							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 								<td align="left" style="padding-left:20px" class="libselect">
 									<?php $var = $v['Variable']['comparison_operator']; ?>
@@ -305,6 +301,10 @@
 										<option <?php if($var == 'date'){ ?> selected = "selected" <?php } ?> value="date"> Expired </option>
 									</select>							
 								</td>
+							</tr>
+							<tr>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
+								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>							
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
