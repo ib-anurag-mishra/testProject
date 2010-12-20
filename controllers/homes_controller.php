@@ -114,8 +114,7 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC',
-												'limit'=> '10' )
+												'order' => 'countProduct DESC' )
 											);
 		$natprodIds = '';
 		foreach($natTopDownloaded as $k => $v){
@@ -160,7 +159,7 @@ class HomesController extends AppController
 										'Sample_Files.SaveAsName'
 								)
 							),                              
-					), 'order' => array('Country.SalesDate' => 'desc')
+					), 'order' => array('Country.SalesDate' => 'desc'), 'limit'=> '10'
 					)
 			);
 		} else {
