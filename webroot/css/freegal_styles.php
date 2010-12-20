@@ -1458,4 +1458,3 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 .tab_content {
 	padding: 5px;
 }
-
