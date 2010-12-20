@@ -1424,7 +1424,6 @@ ul.tabs li.active a {
 	padding: 0 20px;
 	outline: none;
 }
-
 ul.tabs li a:hover {
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
