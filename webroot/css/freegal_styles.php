@@ -1417,6 +1417,14 @@ ul.tabs li a {
 	padding: 0 20px;
 	outline: none;
 }
+ul.tabs li.active a {
+	text-decoration: none;
+	color:<?php echo $library_box_header_color; ?>;
+	display: block;
+	padding: 0 20px;
+	outline: none;
+}
+
 ul.tabs li a:hover {
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
