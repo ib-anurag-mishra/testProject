@@ -86,7 +86,7 @@ class HomesController extends AppController
 										'Sample_Files.SaveAsName'
 								)
 							),                              
-					), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10'
+					), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10' 
 					)
 			);
 		} else {
