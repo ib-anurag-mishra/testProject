@@ -71,7 +71,7 @@ $(document).ready(function() {
 			<?php
 				$j =0;
 				for($i = 0; $i < count($songs); $i++) {
-				if($j==8){
+				if($j==10){
 					break;
 				}
 			?>
@@ -122,7 +122,7 @@ $(document).ready(function() {
 			<?php
 				$j =0;
 				for($i = 0; $i < count($nationalTopDownload); $i++) {
-				if($j==8){
+				if($j==10){
 					break;
 				}
 			?>
