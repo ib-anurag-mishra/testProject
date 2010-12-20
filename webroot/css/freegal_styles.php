@@ -1373,7 +1373,6 @@ div.message {
         text-decoration: none;
         color:<?php echo $library_links_color; ?> !important;
 }
-
 .suggestions {
 	clear:both;
 	float:left;
@@ -1426,7 +1425,7 @@ ul.tabs li.active a {
 }
 ul.tabs li a:hover {
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
-	color:<?php echo $library_boxheader_text_color; ?>;
+	color:<?php echo $library_box_hover_color; ?>;
 	-moz-border-radius-topright: 15px;
 	-khtml-border-radius-topright: 15px;
 	-webkit-border-top-right-radius: 15px;
