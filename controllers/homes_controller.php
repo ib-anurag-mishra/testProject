@@ -42,7 +42,7 @@ class HomesController extends AppController
 		$wk = date('W')-10;
 		$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 		$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
-		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '10' ));
+		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC'));
 		$prodIds = '';
 		foreach($topDownloaded as $k => $v){
 			$prodIds .= $v['Download']['ProdID']."','"; 
@@ -86,7 +86,7 @@ class HomesController extends AppController
 										'Sample_Files.SaveAsName'
 								)
 							),                              
-					), 'order' => array('Country.SalesDate' => 'desc')
+					), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10'
 					)
 			);
 		} else {
