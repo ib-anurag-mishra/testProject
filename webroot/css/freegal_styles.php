@@ -1431,6 +1431,12 @@ ul.tabs li a:hover {
 	-khtml-border-radius-topright: 15px;
 	-webkit-border-top-right-radius: 15px;
 }	
+ul.tabs li.active a:hover {
+	color:#000;
+	-moz-border-radius-topright: 15px;
+	-khtml-border-radius-topright: 15px;
+	-webkit-border-top-right-radius: 15px;
+}
 html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	background: #fff;
 	border-bottom: 1px solid #fff;
