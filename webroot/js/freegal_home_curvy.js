@@ -34,8 +34,8 @@ function initCorners() {
     .rounded
   */
   
-  curvyCorners(settings, "#suggestionsBox");
-  curvyCorners(settings, "#suggestions");
+  /*curvyCorners(settings, "#suggestionsBox");
+  curvyCorners(settings, "#suggestions");*/
   curvyCorners(settings, "#artist_searchBox");
   curvyCorners(settings, "#artist_search");
   curvyCorners(settings, "#featured_artist");

@@ -222,7 +222,7 @@ ul.marquee li {
 .suggest_text img {
         position:absolute;
         top:9px;
-        left:240px;
+        left:230px;
 }
 
 .suggest_text a {
@@ -359,13 +359,13 @@ ul.marquee li {
     border: 1px solid #999;
     text-align:left;
     width:618px;
-    height:79px;
+    height:197px;
 }
 
 .scrollarea {
         overflow:scroll;
         overflow-x:hidden;
-        height:79px;
+        height:195px;
         margin: 0px 0 0 30px;
 }
 
@@ -1373,3 +1373,76 @@ div.message {
         text-decoration: none;
         color:<?php echo $library_links_color; ?> !important;
 }
+
+.suggestions {
+	clear:both;
+	float:left;
+	display:block;
+	width:308px;
+	margin-left: 10px;
+	margin-top: 5px;
+	font-size:13px;
+	height:470px;
+	text-align: left;
+	line-height:19px;
+}
+ul.tabs {
+	margin: 0;
+	padding: 0;
+	float: left;
+	list-style: none;
+	height: 25px;
+	border-bottom: 1px solid #999;
+	border-left: 1px solid #999;
+	width: 100%;
+}
+ul.tabs li {
+	float: left;
+	margin: 0;
+	padding: 0;
+	height: 24px;
+	line-height: 22px;
+	border: 1px solid #999;
+	border-left: none;
+	margin-bottom: -1px;
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+	color:<?php echo $library_boxheader_text_color; ?>;
+	overflow: hidden;
+	position: relative;
+}
+ul.tabs li a {
+	text-decoration: none;
+	color: #000;
+	display: block;
+	padding: 0 20px;
+	outline: none;
+}
+ul.tabs li a:hover {
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+	color:<?php echo $library_boxheader_text_color; ?>;
+	-moz-border-radius-topright: 15px;
+	-khtml-border-radius-topright: 15px;
+	-webkit-border-top-right-radius: 15px;
+}	
+html ul.tabs li.active, html ul.tabs li.active a:hover  {
+	background: #fff;
+	border-bottom: 1px solid #fff;
+}
+.tab_container {
+	border: 1px solid #999;
+	border-top: none;
+	clear: both;
+	float: left; 
+	width: 100%;
+	background: #fff;
+	-moz-border-radius-bottomright: 5px;
+	-khtml-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+}
+.tab_content {
+	padding: 5px;
+}
+

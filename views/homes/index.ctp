@@ -1,5 +1,26 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+	//Default Action
+	$(".tab_content").hide(); //Hide all content
+	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
+	$(".tab_content:first").show(); //Show first tab content
+	
+	//On Click Event
+	$("ul.tabs li").click(function() {
+		$("ul.tabs li").removeClass("active"); //Remove any "active" class
+		$(this).addClass("active"); //Add "active" class to selected tab
+		$(".tab_content").hide(); //Hide all tab content
+		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
+		$(activeTab).fadeIn(); //Fade in the active content
+		return false;
+	});
+
+});
+</script>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
@@ -38,62 +59,116 @@
 		?>
 	</ul>
 </div>
-<div id="suggestions">
-	<div class="top"><a href="javascript:getMusicBox('top')"><?php echo (__('Local Top 10', true));?></a>&nbsp;&nbsp;<a href="javascript:getMusicBox('freegalmusic')"><?php echo (__('National Top 10', true));?></a></div>
-	<div id="loaderDivMusicBox" style="display:none;position:absolute;width:100%;text-align:center;top:107px;bottom:0;left:0;right:0;z-index:10000;">
-		<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+<div class="suggestions">
+	<ul class="tabs">
+		<li><a href="#tab1"><?php echo (__('Local Top 10', true));?></a></li>
+		<li><a href="#tab2"><?php echo (__('National Top 10', true));?></a></li>
+
+	</ul>
+	<div class="tab_container">
+		<div id="tab1" class="tab_content">
+			<table cellspacing="0" cellpadding="0" id="musicbox">
+			<?php
+				$j =0;
+				for($i = 0; $i < count($songs); $i++) {
+				if($j==8){
+					break;
+				}
+			?>
+				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
+					<td>
+						<p class='suggest_text'>
+							<?php
+							if (strlen($songs[$i]['Song']['Title']) >= 28 ) {
+								echo '<span title="'.$songs[$i]['Song']['Title'].'">' . substr($songs[$i]['Song']['Title'], 0, 28) . "..." . "</span>";
+							} else {
+								echo $songs[$i]['Song']['Title'];
+							}
+							?>
+							<br />
+							by&nbsp;
+							<?php
+							if (strlen($songs[$i]['Song']['Artist']) >= 24 ) {
+									echo '<span title="'.$songs[$i]['Song']['Artist'].'">' . $html->link(substr($songs[$i]['Song']['Artist'], 0, 24) . "...", array(
+									'controller' => 'artists',
+									'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
+									)
+								) . "</span>";
+							} else {
+								echo $html->link($songs[$i]['Song']['Artist'], array(
+									'controller' => 'artists',
+									'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
+									)
+								);
+							}
+							$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
+							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+							?>
+							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
+							<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
+							<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
+						</p>
+					</td>
+				</tr>
+			<?php 
+				$j++;
+			} 
+			?>
+			</table>
+		</div>
+		<div id="tab2" class="tab_content">
+			<table cellspacing="0" cellpadding="0" id="musicbox">
+			<?php
+				$j =0;
+				for($i = 0; $i < count($nationalTopDownload); $i++) {
+				if($j==8){
+					break;
+				}
+			?>
+				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
+					<td>
+						<p class='suggest_text'>
+							<?php
+							if (strlen($nationalTopDownload[$i]['Song']['Title']) >= 28 ) {
+								echo '<span title="'.$nationalTopDownload[$i]['Song']['Title'].'">' . substr($nationalTopDownload[$i]['Song']['Title'], 0, 28) . "..." . "</span>";
+							} else {
+								echo $nationalTopDownload[$i]['Song']['Title'];
+							}
+							?>
+							<br />
+							by&nbsp;
+							<?php
+							if (strlen($nationalTopDownload[$i]['Song']['Artist']) >= 24 ) {
+									echo '<span title="'.$nationalTopDownload[$i]['Song']['Artist'].'">' . $html->link(substr($nationalTopDownload[$i]['Song']['Artist'], 0, 24) . "...", array(
+									'controller' => 'artists',
+									'action' => 'view',base64_encode($nationalTopDownload[$i]['Song']['ArtistText']),$nationalTopDownload[$i]['Song']['ReferenceID']
+									)
+								) . "</span>";
+							} else {
+								echo $html->link($nationalTopDownload[$i]['Song']['Artist'], array(
+									'controller' => 'artists',
+									'action' => 'view',base64_encode($nationalTopDownload[$i]['Song']['ArtistText']),$nationalTopDownload[$i]['Song']['ReferenceID']
+									)
+								);
+							}
+							$songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Sample_Files']['CdnPath']."/".$nationalTopDownload[$i]['Sample_Files']['SaveAsName']);
+							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+							?>
+							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
+							<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
+							<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
+						</p>
+					</td>
+				</tr>
+			<?php 
+				$j++;
+			} 
+			?>
+			</table>
+		</div>
 	</div>
-    <div id="suggestionsBox">
-        <table cellspacing="0" cellpadding="0" id="musicbox">
-        <?php
-			$j =0;
-			for($i = 0; $i < count($songs); $i++) {
-			if($j==8){
-				break;
-			}
-		?>
-			<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
-				<td>
-					<p class='suggest_text'>
-						<?php
-						if (strlen($songs[$i]['Song']['Title']) >= 28 ) {
-							echo '<span title="'.$songs[$i]['Song']['Title'].'">' . substr($songs[$i]['Song']['Title'], 0, 28) . "..." . "</span>";
-						} else {
-							echo $songs[$i]['Song']['Title'];
-						}
-						?>
-						<br />
-						by&nbsp;
-						<?php
-						if (strlen($songs[$i]['Song']['Artist']) >= 24 ) {
-								echo '<span title="'.$songs[$i]['Song']['Artist'].'">' . $html->link(substr($songs[$i]['Song']['Artist'], 0, 24) . "...", array(
-								'controller' => 'artists',
-								'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
-								)
-							) . "</span>";
-						} else {
-							echo $html->link($songs[$i]['Song']['Artist'], array(
-								'controller' => 'artists',
-								'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
-								)
-							);
-						}
-						$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
-						$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
-						$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-						?>
-						<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
-						<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
-						<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
-					</p>
-				</td>
-			</tr>
-		<?php 
-			$j++;
-		} 
-		?>
-        </table>
-    </div>
 </div>
 <div id="artist_container">
     <div id="featured_artist">

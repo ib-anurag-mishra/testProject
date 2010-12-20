@@ -36,13 +36,13 @@ class HomesController extends AppController
      Desc : actions that is invoked when the user comes to the homes controller
     */
     function index() {
-		// Top Downloads functionality
+		// Local Top Downloads functionality
 		$libId = $this->Session->read('library');
 		$this->Download->recursive = -1;
 		$wk = date('W')-10;
 		$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 		$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
-		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
+		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '10' ));
 		$prodIds = '';
 		foreach($topDownloaded as $k => $v){
 			$prodIds .= $v['Download']['ProdID']."','"; 
@@ -93,6 +93,80 @@ class HomesController extends AppController
 			$topDownload = array();
 		}
 		$this->set('songs',$topDownload);
+		
+		// National Top Downloads functionality
+		$territory = $this->Session->read('territory');
+		$terLibrary = $this->Library->find('all', array('conditions' => array('library_territory' => $territory), 'fields' => array('id'), 'order' => 'id DESC'));
+		$libraryds = '';
+		foreach($terLibrary as $k => $v){
+			$libraryds .= $v['Library']['id']."','"; 
+		}
+		
+		
+		$this->Download->recursive = -1;
+		$wk = date('W')-10;
+		$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+		$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
+		$natTopDownloaded = $this->Download->find('all', 
+										array('conditions' 
+												=> array('created BETWEEN ? AND ?' => array($startDate, $endDate),
+														 'and' => array("Download.library_id IN ('".rtrim($libraryds,",'")."')" )
+														), 
+												'group' => array('ProdID'), 
+												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
+												'order' => 'countProduct DESC',
+												'limit'=> '10' )
+											);
+		$natprodIds = '';
+		foreach($natTopDownloaded as $k => $v){
+			$natprodIds .= $v['Download']['ProdID']."','"; 
+		}
+	
+		if($natprodIds != ''){
+			$this->Song->recursive = 2;
+			$nationalTopDownload =  $this->Song->find('all',array('conditions' =>
+					array('and' =>
+						array(
+							array("Song.ProdID IN ('".rtrim($natprodIds,",'")."')" ),
+						), "1 = 1 GROUP BY Song.ProdID"
+					),
+					'fields' => array(
+						'Song.ProdID',
+						'Song.ReferenceID',
+						'Song.Title',
+						'Song.ArtistText',
+						'Song.DownloadStatus',
+						'Song.SongTitle',
+						'Song.Artist',
+						'Song.Advisory',
+						'Song.Sample_Duration',
+						'Song.FullLength_Duration',
+					),
+					'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'        
+							)
+						),
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory',
+								'Country.SalesDate'
+							)
+						),            
+						'Sample_Files' => array(
+							'fields' => array(
+										'Sample_Files.CdnPath' ,
+										'Sample_Files.SaveAsName'
+								)
+							),                              
+					), 'order' => array('Country.SalesDate' => 'desc')
+					)
+			);
+		} else {
+			$nationalTopDownload = array();
+		}
+		$this->set('nationalTopDownload',$nationalTopDownload);
 		
 		$this->Song->recursive = 2;
         $this->Song->Behaviors->attach('Containable');
