@@ -1373,7 +1373,6 @@ div.message {
         text-decoration: none;
         color:<?php echo $library_links_color; ?> !important;
 }
-
 .suggestions {
 	clear:both;
 	float:left;
