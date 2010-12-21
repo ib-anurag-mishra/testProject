@@ -1417,7 +1417,7 @@ div.message {
 	color:<?php echo $library_boxheader_text_color; ?>;
 	border: 1px solid #999;
 }
-#tb1 .active, #tb2 .active{
+#tb1 .active, #tb2 .active {
 	background-color:#fff;
 	color:#000;
 	-moz-border-radius-topright: 5px;
