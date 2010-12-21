@@ -14,3 +14,17 @@ function getMusicBox(type) {
 		$('#loaderDivMusicBox').hide();
 	});
 }
+
+function filterTD(div) {
+	$('#tb1').css('font-weight', 'normal');
+	$('#tb2').css('font-weight', 'normal');
+	if (div == 'tab1') {
+		$('#tab2').hide();
+		$('#tab1').fadeIn();
+		$('#tb1').css('font-weight', 'bold');
+	} else {
+		$('#tab1').hide();
+		$('#tab2').fadeIn();
+		$('#tb2').css('font-weight', 'bold');
+	}
+}

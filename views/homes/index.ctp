@@ -1,25 +1,9 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
 <script type="text/javascript">
-
-$(document).ready(function() {
-
-	//Default Action
-	$(".tab_content").hide(); //Hide all content
-	$("ul.tabs li:first").addClass("active").show(); //Activate first tab
-	$(".tab_content:first").show(); //Show first tab content
-	
-	//On Click Event
-	$("ul.tabs li").click(function() {
-		$("ul.tabs li").removeClass("active"); //Remove any "active" class
-		$(this).addClass("active"); //Add "active" class to selected tab
-		$(".tab_content").hide(); //Hide all tab content
-		var activeTab = $(this).find("a").attr("href"); //Find the rel attribute value to identify the active tab + content
-		$(activeTab).fadeIn(); //Fade in the active content
-		return false;
+	$(document).ready(function() {
+		$('#tb1').css('font-weight', 'bold');
 	});
-
-});
 </script>
 <div id="artist_slideshow">
 	<div id="slideshow">
@@ -61,14 +45,12 @@ $(document).ready(function() {
 </div>
 <div id="sug" class="suggestions">
 	<div id="tabsugg">
-		<ul class="tabs">
-			<li id="tb1"><a href="#tab1"><?php echo (__('Local Top 10', true));?></a></li>
-			<li id="tb2"><a href="#tab2"><?php echo (__('National Top 10', true));?></a></li>
-
-		</ul>
+		<div id="tb1"><a href="javascript:filterTD('tab1');"><?php echo (__('Local Top 10', true));?></a></div>
+		<div id="sep" style="width:6px;background-color:#FFF;">&nbsp;</div>
+		<div id="tb2"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div>
 	</div>
 	<div id="sugtab" class="tab_container">
-		<div id="tab1" class="tab_content">
+		<div id="tab1" class="tab_content" style="display:block;">
 			<table cellspacing="0" cellpadding="0" id="musicbox">
 			<?php
 				$j =0;
@@ -81,6 +63,8 @@ $(document).ready(function() {
 					<td>
 						<p class='suggest_text'>
 							<?php
+							$slNo = ($i + 1);
+							echo $slNo." . ";
 							if (strlen($songs[$i]['Song']['SongTitle']) >= 28 ) {
 								echo '<span title="'.$songs[$i]['Song']['SongTitle'].'">' . substr($songs[$i]['Song']['SongTitle'], 0, 28) . "..." . "</span>";
 							} else {
@@ -132,6 +116,8 @@ $(document).ready(function() {
 					<td>
 						<p class='suggest_text'>
 							<?php
+							$slNo = ($i + 1);
+							echo $slNo." . ";
 							if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 28 ) {
 								echo '<span title="'.$nationalTopDownload[$i]['Song']['SongTitle'].'">' . substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 28) . "..." . "</span>";
 							} else {
