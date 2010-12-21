@@ -1,10 +1,5 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		$('#tb1').css('font-weight', 'bold');
-	});
-</script>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
@@ -45,9 +40,9 @@
 </div>
 <div id="sug" class="suggestions">
 	<div id="tabsugg">
-		<div id="tb1"><a href="javascript:filterTD('tab1');"><?php echo (__('Local Top 10', true));?></a></div>
-		<div id="sep" style="width:6px;background-color:#FFF;">&nbsp;</div>
-		<div id="tb2"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div>
+		<div id="tb1"><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('Local Top 10', true));?></a></div></div>
+		<!--<div id="sep" style="width:6px;background-color:#FFF;">&nbsp;</div>-->
+		<div id="tb2"><div id="t2" class=""><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
 	</div>
 	<div id="sugtab" class="tab_container">
 		<div id="tab1" class="tab_content" style="display:block;">

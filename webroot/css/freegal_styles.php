@@ -1415,6 +1415,17 @@ div.message {
 	width:152px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
+	border: 1px solid #999;
+}
+#tb1 .active, #tb2 .active{
+	background-color:#fff;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
 }
 #sep {
 	float:left;
