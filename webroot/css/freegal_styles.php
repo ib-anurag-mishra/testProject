@@ -1461,7 +1461,7 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	-khtml-border-radius-bottomleft: 5px;
 	-webkit-border-bottom-left-radius: 5px;
 }
-.tab_content{
+.tab_content {
 	padding: 5px;
 }
 #tabsugg {
