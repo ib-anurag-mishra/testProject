@@ -1440,7 +1440,7 @@ div.message {
 	text-decoration: none;
 	color:<?php echo $library_box_header_color; ?>;
 }
-#tb1 .active a, #tb2 .active a {
+#tb1 .active a, #tb2 .active a{
 	text-decoration: none;
 	color:#000;
 }
