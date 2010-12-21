@@ -1412,10 +1412,12 @@ div.message {
 }
 #tb1, #tb2 {
 	float:left;
-	width:152px;
+	width:152.5px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
-	border: 1px solid #999;
+	border-top: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
 }
 #tb1 .active, #tb2 .active {
 	background-color:#fff;
@@ -1433,6 +1435,10 @@ div.message {
 #tb1 a, #tb2 a {
 	text-decoration: none;
 	color:<?php echo $library_box_header_color; ?>;
+}
+#tb1 .active a, #tb2 .active a {
+	text-decoration: none;
+	color:#999;
 }
 #tb1 a:hover, #tb2 a:hover {
 	text-decoration: none;
