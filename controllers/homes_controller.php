@@ -1053,7 +1053,9 @@ class HomesController extends AppController
             $insertArr['album'] = $trackDetails['0']['Song']['Title'];
             $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
             $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];            
+            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
+			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];            
             //insert into wishlist table
             $this->Wishlist->save($insertArr);
             //update the libraries table
