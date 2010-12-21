@@ -318,6 +318,7 @@ Class UsersController extends AppController
    */
    
    function admin_manageuser(){
+		$this->paginate = array('order' => 'created');
         $this->paginate = array('conditions' => array('type_id <> 5'));
         $this->set('admins', $this->paginate('User'));
    }
@@ -393,11 +394,11 @@ Class UsersController extends AppController
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-            $this->paginate = array('conditions' => array('type_id' => 5, 'library_id' => $libraryAdminID["Library"]["id"]));
+            $this->paginate = array('conditions' => array('type_id' => 5, 'library_id' => $libraryAdminID["Library"]["id"]),'order' => array('created'));
         }
         else {
             $this->set('libraryID', "");
-            $this->paginate = array('conditions' => array('type_id' => 5));
+            $this->paginate = array('conditions' => array('type_id' => 5),'order' => array('created'));
         }
         $this->User->recursive = -1;
         $this->set('patrons', $this->paginate('User'));
