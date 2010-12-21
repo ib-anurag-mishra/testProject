@@ -1381,7 +1381,7 @@ div.message {
 	margin-left: 10px;
 	margin-top: 5px;
 	font-size:13px;
-	height:470px;
+	height:453px;
 	text-align: left;
 	line-height:19px;
 }
@@ -1390,8 +1390,7 @@ ul.tabs {
 	padding: 0;
 	float: left;
 	list-style: none;
-	height: 25px;
-	border-bottom: 1px solid #999;
+	/*height: 18px;*/
 	border-left: 1px solid #999;
 	width: 100%;
 }
@@ -1399,8 +1398,8 @@ ul.tabs li {
 	float: left;
 	margin: 0;
 	padding: 0;
-	height: 24px;
-	line-height: 22px;
+	height: 16px;
+	line-height: 16px;
 	border: 1px solid #999;
 	border-left: none;
 	margin-bottom: -1px;
@@ -1408,6 +1407,7 @@ ul.tabs li {
 	color:<?php echo $library_boxheader_text_color; ?>;
 	overflow: hidden;
 	position: relative;
+	border-bottom:0px;
 }
 ul.tabs li a {
 	text-decoration: none;
@@ -1442,11 +1442,11 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 }
 .tab_container {
 	border: 1px solid #999;
-	border-top: none;
 	clear: both;
 	float: left; 
 	width: 100%;
 	background: #fff;
+	padding-bottom: 3px;
 	-moz-border-radius-bottomright: 5px;
 	-khtml-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;

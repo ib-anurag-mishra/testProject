@@ -59,13 +59,13 @@ $(document).ready(function() {
 		?>
 	</ul>
 </div>
-<div class="suggestions">
+<div id="sug" class="suggestions">
 	<ul class="tabs">
 		<li><a href="#tab1"><?php echo (__('Local Top 10', true));?></a></li>
 		<li><a href="#tab2"><?php echo (__('National Top 10', true));?></a></li>
 
 	</ul>
-	<div class="tab_container">
+	<div id="sugtab" class="tab_container">
 		<div id="tab1" class="tab_content">
 			<table cellspacing="0" cellpadding="0" id="musicbox">
 			<?php
@@ -79,10 +79,10 @@ $(document).ready(function() {
 					<td>
 						<p class='suggest_text'>
 							<?php
-							if (strlen($songs[$i]['Song']['Title']) >= 28 ) {
-								echo '<span title="'.$songs[$i]['Song']['Title'].'">' . substr($songs[$i]['Song']['Title'], 0, 28) . "..." . "</span>";
+							if (strlen($songs[$i]['Song']['SongTitle']) >= 28 ) {
+								echo '<span title="'.$songs[$i]['Song']['SongTitle'].'">' . substr($songs[$i]['Song']['SongTitle'], 0, 28) . "..." . "</span>";
 							} else {
-								echo $songs[$i]['Song']['Title'];
+								echo $songs[$i]['Song']['SongTitle'];
 							}
 							?>
 							<br />
@@ -130,10 +130,10 @@ $(document).ready(function() {
 					<td>
 						<p class='suggest_text'>
 							<?php
-							if (strlen($nationalTopDownload[$i]['Song']['Title']) >= 28 ) {
-								echo '<span title="'.$nationalTopDownload[$i]['Song']['Title'].'">' . substr($nationalTopDownload[$i]['Song']['Title'], 0, 28) . "..." . "</span>";
+							if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 28 ) {
+								echo '<span title="'.$nationalTopDownload[$i]['Song']['SongTitle'].'">' . substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 28) . "..." . "</span>";
 							} else {
-								echo $nationalTopDownload[$i]['Song']['Title'];
+								echo $nationalTopDownload[$i]['Song']['SongTitle'];
 							}
 							?>
 							<br />

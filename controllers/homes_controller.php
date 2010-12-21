@@ -43,7 +43,7 @@ class HomesController extends AppController
 		//$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 		//$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
 		//$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC'));
-		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC'));
+		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '10'));
 		$prodIds = '';
 		foreach($topDownloaded as $k => $v){
 			$prodIds .= $v['Download']['ProdID']."','"; 
@@ -114,7 +114,7 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC' )
+												'order' => 'countProduct DESC', 'limit'=> '10' )
 											);
 		$natprodIds = '';
 		foreach($natTopDownloaded as $k => $v){
