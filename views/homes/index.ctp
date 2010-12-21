@@ -60,11 +60,13 @@ $(document).ready(function() {
 	</ul>
 </div>
 <div id="sug" class="suggestions">
-	<ul class="tabs">
-		<li><a href="#tab1"><?php echo (__('Local Top 10', true));?></a></li>
-		<li><a href="#tab2"><?php echo (__('National Top 10', true));?></a></li>
+	<div id="tabsugg">
+		<ul class="tabs">
+			<li id="tb1"><a href="#tab1"><?php echo (__('Local Top 10', true));?></a></li>
+			<li id="tb2"><a href="#tab2"><?php echo (__('National Top 10', true));?></a></li>
 
-	</ul>
+		</ul>
+	</div>
 	<div id="sugtab" class="tab_container">
 		<div id="tab1" class="tab_content">
 			<table cellspacing="0" cellpadding="0" id="musicbox">

@@ -1386,12 +1386,12 @@ div.message {
 	line-height:19px;
 }
 ul.tabs {
-	margin: 0;
+	margin-left: 9px;
 	padding: 0;
 	float: left;
 	list-style: none;
 	/*height: 18px;*/
-	border-left: 1px solid #999;
+	border-left: 0px solid #999;
 	width: 100%;
 }
 ul.tabs li {
@@ -1408,6 +1408,10 @@ ul.tabs li {
 	overflow: hidden;
 	position: relative;
 	border-bottom:0px;
+	border-right:0px;
+	border-left:0px;
+	border-top:1px solid #<?php echo $library_boxheader_bgcolor; ?>;
+	width:146px;
 }
 ul.tabs li a {
 	text-decoration: none;
@@ -1415,6 +1419,9 @@ ul.tabs li a {
 	display: block;
 	padding: 0 20px;
 	outline: none;
+	border-right:0px;
+	border-left:0px;
+	border-top:1px solid #<?php echo $library_boxheader_bgcolor; ?>;
 }
 ul.tabs li.active a {
 	text-decoration: none;
@@ -1456,4 +1463,14 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 }
 .tab_content{
 	padding: 5px;
+}
+#tabsugg {
+	font-size:13px;
+	clear:both;
+	width:310px;
+	height:16px;
+	text-align:center;
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+	color:<?php echo $library_boxheader_text_color; ?>;
+	display:block;
 }
