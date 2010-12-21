@@ -16,15 +16,19 @@ function getMusicBox(type) {
 }
 
 function filterTD(div) {
+	//$('#tb1').css('border-bottom', '0px solid #999')
+	//$('#tb2').css('border-bottom', '0px solid #999')
 	if (div == 'tab1') {
 		$('#tab2').hide();
 		$('#tab1').fadeIn();
 		$('#t2').removeClass('active');
 		$('#t1').addClass('active');
+		//$('#tb2').css('border-bottom', '1px solid #999')
 	} else {
 		$('#tab1').hide();
 		$('#tab2').fadeIn();
 		$('#t1').removeClass('active');
 		$('#t2').addClass('active');
+		//$('#tb1').css('border-bottom', '1px solid #999')
 	}
 }

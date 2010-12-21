@@ -1,5 +1,10 @@
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('#tb2').css('border-bottom', '1px solid #999')
+	});
+</script>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
