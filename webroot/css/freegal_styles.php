@@ -1385,75 +1385,13 @@ div.message {
 	text-align: left;
 	line-height:19px;
 }
-ul.tabs {
-	margin-left: 9px;
-	padding: 0;
-	float: left;
-	list-style: none;
-	/*height: 18px;*/
-	border-left: 0px solid #999;
-	width: 100%;
-}
-ul.tabs li {
-	float: left;
-	margin: 0;
-	padding: 0;
-	height: 16px;
-	line-height: 16px;
-	border: 1px solid #999;
-	border-left: none;
-	margin-bottom: -1px;
-	background-color:<?php echo $library_boxheader_bgcolor; ?>;
-	color:<?php echo $library_boxheader_text_color; ?>;
-	overflow: hidden;
-	position: relative;
-	border-bottom:0px;
-	border-right:0px;
-	border-left:0px;
-	border-top:0px;
-	width:146px;
-}
-ul.tabs li a {
-	text-decoration: none;
-	color: <?php echo $library_box_header_color; ?>;
-	display: block;
-	padding: 0 20px;
-	outline: none;
-	border-right:0px;
-	border-left:0px;
-	border-top:0px;
-}
-ul.tabs li.active a {
-	text-decoration: none;
-	color:#000;
-	display: block;
-	padding: 0 20px;
-	outline: none;
-}
-ul.tabs li a:hover {
-	background-color:<?php echo $library_boxheader_bgcolor; ?>;
-	color:<?php echo $library_box_hover_color; ?>;
-	-moz-border-radius-topright: 15px;
-	-khtml-border-radius-topright: 15px;
-	-webkit-border-top-right-radius: 15px;
-}	
-ul.tabs li.active a:hover {
-	color:#000;
-	-moz-border-radius-topright: 15px;
-	-khtml-border-radius-topright: 15px;
-	-webkit-border-top-right-radius: 15px;
-}
-html ul.tabs li.active, html ul.tabs li.active a:hover  {
-	background: #FFF;
-	border-bottom: 1px solid #FFF;
-}
 .tab_container {
 	border: 1px solid #999;
 	clear: both;
 	float: left; 
 	width: 100%;
 	background: #fff;
-	padding-bottom: 3px;
+	padding-bottom: 1px;
 	-moz-border-radius-bottomright: 5px;
 	-khtml-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;
@@ -1470,7 +1408,23 @@ html ul.tabs li.active, html ul.tabs li.active a:hover  {
 	width:310px;
 	height:16px;
 	text-align:center;
+	display:block;
+}
+#tb1, #tb2 {
+	float:left;
+	width:152px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
-	display:block;
+}
+#sep {
+	float:left;
+}
+#tb1 a, #tb2 a {
+	text-decoration: none;
+	color:<?php echo $library_box_header_color; ?>;
+}
+
+#tb1 a:hover, #tb2 a:hover {
+	text-decoration: none;
+	color:<?php echo $library_box_hover_color; ?>;
 }
