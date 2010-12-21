@@ -1386,7 +1386,9 @@ div.message {
 	line-height:19px;
 }
 .tab_container {
-	border: 1px solid #999;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
 	clear: both;
 	float: left; 
 	width: 100%;
@@ -1415,9 +1417,10 @@ div.message {
 	width:152.5px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
-	border-top: 1px solid #999;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
+	border-top: 1px solid #999;
+	border-bottom: 1px solid #999;
 }
 #tb1 .active, #tb2 .active {
 	background-color:#fff;
@@ -1428,6 +1431,7 @@ div.message {
 	-moz-border-radius-topleft: 5px;
 	-khtml-border-radius-topleft: 5px;
 	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
 }
 #sep {
 	float:left;
@@ -1438,7 +1442,7 @@ div.message {
 }
 #tb1 .active a, #tb2 .active a {
 	text-decoration: none;
-	color:#999;
+	color:#<?php echo $library_boxheader_bgcolor; ?>;
 }
 #tb1 a:hover, #tb2 a:hover{
 	text-decoration: none;
