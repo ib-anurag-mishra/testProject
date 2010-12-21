@@ -1423,7 +1423,6 @@ div.message {
 	text-decoration: none;
 	color:<?php echo $library_box_header_color; ?>;
 }
-
 #tb1 a:hover, #tb2 a:hover {
 	text-decoration: none;
 	color:<?php echo $library_box_hover_color; ?>;
