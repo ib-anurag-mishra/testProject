@@ -1440,7 +1440,7 @@ div.message {
 	text-decoration: none;
 	color:#999;
 }
-#tb1 a:hover, #tb2 a:hover {
+#tb1 a:hover, #tb2 a:hover{
 	text-decoration: none;
 	color:<?php echo $library_box_hover_color; ?>;
 }
