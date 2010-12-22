@@ -359,13 +359,13 @@ ul.marquee li {
     border: 1px solid #999;
     text-align:left;
     width:618px;
-    height:197px;
+    height:387px;
 }
 
 .scrollarea {
         overflow:scroll;
         overflow-x:hidden;
-        height:195px;
+        height:386px;
         margin: 0px 0 0 30px;
 }
 
@@ -1381,7 +1381,7 @@ div.message {
 	margin-left: 10px;
 	margin-top: 5px;
 	font-size:13px;
-	height:453px;
+	height:642px;
 	text-align: left;
 	line-height:19px;
 }
@@ -1411,16 +1411,16 @@ div.message {
 	height:16px;
 	text-align:center;
 	display:block;
+	border-bottom:0px;
 }
 #tb1, #tb2 {
 	float:left;
-	width:152.5px;
+	width:153px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:<?php echo $library_boxheader_text_color; ?>;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
 	border-top: 1px solid #999;
-	border-bottom: 1px solid #999;
 }
 #tb1 .active, #tb2 .active {
 	background-color:#fff;

@@ -43,8 +43,6 @@ function initCorners() {
   /*curvyCorners(settings, "#suggestionsBox");
   curvyCorners(settings, "#suggestions");*/
   curvyCorners(bottomsetting, "#sugtab");
-  curvyCorners(search_settings, "#tb1");
-  curvyCorners(search_settings, "#tb2");
   curvyCorners(settings, "#artist_searchBox");
   curvyCorners(settings, "#artist_search");
   curvyCorners(settings, "#featured_artist");

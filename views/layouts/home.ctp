@@ -30,6 +30,8 @@
 	?>		
                 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js,freegal.home.musicbox.js"></script>
 	<?php
+		//echo $javascript->link('jquery-1.3.2.min');
+		echo $javascript->link('jquery.corner');
 		echo $javascript->link('qtip');
 		echo $javascript->link('qtip_add');
 		echo $scripts_for_layout;
