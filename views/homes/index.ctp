@@ -142,7 +142,7 @@
 
 									} else { 
 									?>
-										<p>Limit Exceeded</p>
+										Limit Exceeded
 									<?php	
 									}												
 								}
@@ -254,7 +254,7 @@
 
 									} else { 
 									?>
-										<p>Limit Exceeded</p>
+										Limit Exceeded
 									<?php	
 									}												
 								}
