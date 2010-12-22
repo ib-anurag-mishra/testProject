@@ -17,14 +17,16 @@ function getMusicBox(type) {
 
 function filterTD(div) {
 	if (div == 'tab1') {
+		
 		$('#tab2').hide();
 		$('#tab1').fadeIn();
-		$('#t2').removeClass('active');
-		$('#t1').addClass('active');
+		$('#t2').attr('class', '');
+		$('#t1').attr('class', 'active');
 	} else {
+		
 		$('#tab1').hide();
 		$('#tab2').fadeIn();
-		$('#t1').removeClass('active');
-		$('#t2').addClass('active');
+		$('#t1').attr('class', '');
+		$('#t2').attr('class', 'active');
 	}
 }

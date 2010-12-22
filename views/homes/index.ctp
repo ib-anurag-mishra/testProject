@@ -2,8 +2,11 @@
 <?php echo $javascript->link('jquery.marquee.min'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$('#tb1').corner('top 5px');
-		$('#tb2').corner('top 5px');
+		if ($.browser.msie) {
+		} else {
+			$('#tb1').corner('top 5px');
+			$('#tb2').corner('top 5px');
+		}
 	});
 </script>
 <div id="artist_slideshow">
@@ -105,7 +108,7 @@
 										?>
 										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
 										<![if !IE]>
-										<a href='#' onclick='return userDownloadOthers("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><div id="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</div></a>
+										<a href='#' onclick='return userDownloadOthers("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><span id="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</span></a>
 										<![endif]>
 										<!--[if IE]>
 										<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
@@ -217,7 +220,7 @@
 										?>
 										<span class="beforeClick" id="song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
 										<![if !IE]>
-										<a href='#' onclick='return userDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><div id="dloadNat" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</div></a>
+										<a href='#' onclick='return userDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><span id="dloadNat" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</span></a>
 										<![endif]>
 										<!--[if IE]>
 										<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
