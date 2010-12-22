@@ -285,6 +285,8 @@ function wishlistDownloadIE(prodId,id)
 
 function historyDownload(id,libID,patronID)
 {
+	$('.beforeClick').hide();
+	$('.afterClick').show();
 	document.getElementById('download_loader_'+id).style.display = 'block';
 	var data = "libid="+libID+"&patronid="+patronID+"&id="+id;
 	jQuery.ajax({
@@ -306,6 +308,8 @@ function historyDownload(id,libID,patronID)
 						document.getElementById('download_song_'+id).innerHTML = 'Limit Exceeded';
 					}
 				document.getElementById('download_loader_'+id).style.display = 'none';
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -315,6 +319,8 @@ function historyDownload(id,libID,patronID)
 
 function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downloadUrl3)
 {
+	$('.beforeClick').hide();
+	$('.afterClick').show();
 	document.getElementById('download_loader_'+id).style.display = 'block';
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
@@ -339,6 +345,8 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 					if(count == 2){
 						document.getElementById('download_song_'+id).innerHTML = 'Limit Exceeded';
 					}
+				$('.afterClick').hide();
+				$('.beforeClick').show();					
 				document.getElementById('download_loader_'+id).style.display = 'none';
 				location.href = unescape(finalURL);
 			}

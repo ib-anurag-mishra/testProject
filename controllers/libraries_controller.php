@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     */
     function beforeFilter() {	  
         parent::beforeFilter(); 
-        $this->Auth->allowedActions = array('patron');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview');
     }
     
     /*
@@ -31,6 +31,29 @@ Class LibrariesController extends AppController
 		$this->paginate = array('order' => 'id');
 		$this->paginate = array('cache' => 'no');
         $this->set('libraries', $this->paginate('Library'));
+    }
+	
+	    /*
+     Function Name : admin_preview
+     Desc : action for showing preview of the layout in the admin end
+    */
+    function admin_ajax_preview() {
+		Configure::write('debug', 0);
+		$this->layout = false;
+		 
+		 //sets the library details which is set from the admin end
+		$this->set('libraryName', $_GET['libraryName']);
+		$this->set('imagePreview', $_GET['imagePreview']);
+		$this->set('bgColor', '#'.$_GET['bgColor']);
+		$this->set('navBgColor', '#'.$_GET['navBgColor']);
+		$this->set('boxheaderBgColor', '#'.$_GET['boxheaderBgColor']);
+		$this->set('boxheaderTextColor', '#'.$_GET['boxheaderTextColor']);
+		$this->set('boxHoverColor', '#'.$_GET['boxHoverColor']);
+		$this->set('textColor', '#'.$_GET['textColor']);
+		$this->set('linkColor', '#'.$_GET['linkColor']);
+		$this->set('linkHoverColor', '#'.$_GET['linkHoverColor']);
+		$this->set('navLinksColor', '#'.$_GET['navLinksColor']);
+		$this->set('navLinksHoverColor', '#'.$_GET['navLinksHoverColor']);
     }
 	
     /*

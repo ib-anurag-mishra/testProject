@@ -176,7 +176,7 @@
 						<td align="left"><?php echo $this->Form->input('library_home_url',array( 'label' => false ,'value' => $getData['Library']['library_home_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
 					<tr>
-						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>					
+						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] == "user_account"){?>style="display:none;"<?php } ?>>					
 						<?php
 						if(empty($allUrls))
 						{
@@ -362,7 +362,10 @@
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label('Navigation Links Hover Color');?></td>
 						<td align="left"><?php echo $this->Form->input('library_navlinks_hover_color',array('label' => false ,'value' => $getData['Library']['library_navlinks_hover_color'], 'div' => false, 'class' => 'form_fields', 'size' => 6, 'readonly' => 'readonly'));?></td>
-					</tr>				
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->button('Preview', array('type' => 'button', 'id' => 'preview'));?></td>
+					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Contact');?></td></tr>
 					<tr>
@@ -401,7 +404,7 @@
 						<tr>
 							<td align="right" width="250" valign="top"><?php echo $this->Form->label('Preview');?></td>
 							<td align="left">
-								<?php echo $html->image($cdnPath.'libraryimg/'.$getData['Library']['library_image_name'], array('alt' => 'Library Image', 'class' => 'form_fields'))?>
+								<?php echo $html->image($cdnPath.'libraryimg/'.$getData['Library']['library_image_name'], array('alt' => 'Library Image', 'class' => 'form_fields', 'id' => 'imagePreview'))?>
 							</td>
 						</tr>
 					<?php } ?>

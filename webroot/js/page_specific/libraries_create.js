@@ -208,6 +208,33 @@ $(function() {
 		});
 	});
 	
+	$('#preview').click(function() {
+		var bgColor = document.getElementById('LibraryLibraryBgcolor').value;
+		var navBgColor = document.getElementById('LibraryLibraryNavBgcolor').value;
+		var boxheaderBgColor = document.getElementById('LibraryLibraryBoxheaderBgcolor').value;
+		var boxheaderTextColor = document.getElementById('LibraryLibraryBoxheaderTextColor').value;
+		var boxHoverColor = document.getElementById('LibraryLibraryBoxHoverColor').value;
+		var textColor = document.getElementById('LibraryLibraryTextColor').value;
+		var linkColor = document.getElementById('LibraryLibraryLinksColor').value;
+		var linkHoverColor = document.getElementById('LibraryLibraryLinksHoverColor').value;
+		var navLinksColor = document.getElementById('LibraryLibraryNavlinksColor').value;
+		var navLinksHoverColor = document.getElementById('LibraryLibraryNavlinksHoverColor').value;
+		var libraryName = document.getElementById('LibraryLibraryName').value;
+		if ($('#imagePreview').length != 0){
+			var imagePreview = document.getElementById('imagePreview').src;
+		}
+		else{
+			var imagePreview = '';
+		}
+		
+		var data = "bgColor="+bgColor+"&libraryName="+libraryName+"&navBgColor="+navBgColor+"&boxheaderBgColor="+boxheaderBgColor+"&boxheaderTextColor="+boxheaderTextColor+"&boxHoverColor="+boxHoverColor+"&textColor="+textColor+"&linkColor="+linkColor+"&linkHoverColor="+linkHoverColor+"&imagePreview="+imagePreview+"&navLinksColor="+navLinksColor+"&navLinksHoverColor="+navLinksHoverColor;
+		var getURL = webroot+"admin/libraries/ajax_preview?"+data;
+		
+		newwindow=window.open(getURL,'name','top=150,left=150,height=700,width=800,scrollbars=yes');
+		return false;
+		
+	});
+	
 	$('#LibraryLibraryBgcolor, #LibraryLibraryNavBgcolor, #LibraryLibraryBoxheaderBgcolor, #LibraryLibraryBoxheaderTextColor, #LibraryLibraryTextColor, #LibraryLibraryLinksColor, #LibraryLibraryLinksHoverColor, #LibraryLibraryNavlinksColor, #LibraryLibraryNavlinksHoverColor, #LibraryLibraryBoxHeaderColor, #LibraryLibraryBoxHoverColor').ColorPicker({
 		onSubmit: function(hsb, hex, rgb, el) {
 			$(el).val(hex.toUpperCase());
