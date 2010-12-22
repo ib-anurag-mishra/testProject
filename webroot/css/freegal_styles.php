@@ -1422,7 +1422,7 @@ div.message {
 	border-right: 1px solid #999;
 	border-top: 1px solid #999;
 }
-#tb1 .active, #tb2 .active {
+#tb1 .active, #tb2 .active{
 	background-color:#fff;
 	color:#000;
 	-moz-border-radius-topright: 5px;
@@ -1432,7 +1432,7 @@ div.message {
 	-khtml-border-radius-topleft: 5px;
 	-webkit-border-top-left-radius: 5px;
 	border-bottom:0px;
-	color:<?php echo $library_boxheader_text_color; ?>;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
 }
 #sep {
 	float:left;
