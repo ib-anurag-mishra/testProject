@@ -1442,7 +1442,7 @@ div.message {
 }
 #tb1 .active a, #tb2 .active a{
 	text-decoration: none;
-	color:#000;
+	color:#<?php echo $library_boxheader_bgcolor; ?>;
 }
 #tb1 a:hover, #tb2 a:hover{
 	text-decoration: none;
