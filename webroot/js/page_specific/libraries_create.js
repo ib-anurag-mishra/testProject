@@ -219,7 +219,13 @@ $(function() {
 		var linkHoverColor = document.getElementById('LibraryLibraryLinksHoverColor').value;
 		var navLinksColor = document.getElementById('LibraryLibraryNavlinksColor').value;
 		var navLinksHoverColor = document.getElementById('LibraryLibraryNavlinksHoverColor').value;
-		var libraryName = document.getElementById('LibraryLibraryName').value;
+		if($('#LibraryShowLibraryName').attr('checked')){
+			var libraryName = '';
+		}
+		else{
+			var libraryName = document.getElementById('LibraryLibraryName').value;
+		}
+		
 		if ($('#imagePreview').length != 0){
 			var imagePreview = document.getElementById('imagePreview').src;
 		}
