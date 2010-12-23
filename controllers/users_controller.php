@@ -2887,7 +2887,7 @@ Class UsersController extends AppController
 				else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
-														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https',$library_cond),
+														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https',$library_cond),
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
