@@ -1315,11 +1315,11 @@ div.code-coverage-results span.result-good {
 		<li id="search">
 
 			<!--<form name="search_form" method="post" action="homes/search" class="search_form">-->
-			<form controller="Home" class="search_form" id="HomeSearchForm" method="get" action="/homes/search" accept-charset="utf-8"><div class="input text"><input name="search" type="text" size="24" id="autoComplete" value="" /></div>				<!-- <div style="float:left;">
+			<form controller="Home" class="search_form" id="HomeSearchForm" method="get"  accept-charset="utf-8"><div class="input text"><input name="search" type="text" size="24" id="autoComplete" value="" /></div>				<!-- <div style="float:left;">
 			<input type="submit" class="searchButton" value=""></input>
 			</div> -->
 			<!-- </form>-->
-			<div class="submit"><input type="submit" value="GO" /></div></form>			<a href="/homes/advance_search">Advanced Search</a>		</li>	
+			<div class="submit"><input type="submit" value="GO" /></div></form>			<a>Advanced Search</a>		</li>	
 	</ul>
 </div>
 <div id="artist_slideshow">
@@ -1399,41 +1399,39 @@ div.code-coverage-results span.result-good {
     <div id="artist_search">
 		<div id="artist_links">
 		Artist Search&nbsp;&nbsp;
-		<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;
-		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
-		<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;
+		<a href="#bottom">#</a>&nbsp;
+		<a href="#bottom">A</a>&nbsp;
+		<a href="#bottom">B</a>&nbsp;
+		<a href="#bottom">C</a>&nbsp;
+		<a href="#bottom">D</a>&nbsp;
 
-		<a href="#bottom" onclick="searchArtist('c')">C</a>&nbsp;
-		<a href="#bottom" onclick="searchArtist('d')">D</a>&nbsp;
+        <a href="#bottom">E</a>&nbsp;
+        <a href="#bottom">F</a>&nbsp;
+        <a href="#bottom">G</a>&nbsp;
+        <a href="#bottom">H</a>&nbsp;
 
-        <a href="#bottom" onclick="searchArtist('e')">E</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('f')">F</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('g')">G</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('h')">H</a>&nbsp;
+        <a href="#bottom">I</a>&nbsp;
+        <a href="#">J</a>&nbsp;
+        <a href="#bottom">K</a>&nbsp;
+        <a href="#bottom">L</a>&nbsp;
+        <a href="#bottom">M</a>&nbsp;
+        <a href="#bottom">N</a>&nbsp;
 
-        <a href="#bottom" onclick="searchArtist('i')">I</a>&nbsp;
-        <a href="#" onclick="searchArtist('j')">J</a>&nbsp;
+        <a href="#bottom">O</a>&nbsp;
+        <a href="#bottom">P</a>&nbsp;
 
-        <a href="#bottom" onclick="searchArtist('k')">K</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('l')">L</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('m')">M</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('n')">N</a>&nbsp;
+        <a href="#bottom">Q</a>&nbsp;
+        <a href="#bottom">R</a>&nbsp;
+        <a href="#bottom">S</a>&nbsp;
+        <a href="#bottom">T</a>&nbsp;
 
-        <a href="#bottom" onclick="searchArtist('o')">O</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('p')">P</a>&nbsp;
+        <a href="#bottom">U</a>&nbsp;
+        <a href="#bottom">V</a>&nbsp;
 
-        <a href="#bottom" onclick="searchArtist('q')">Q</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('r')">R</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('s')">S</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('t')">T</a>&nbsp;
-
-        <a href="#bottom" onclick="searchArtist('u')">U</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('v')">V</a>&nbsp;
-
-        <a href="#bottom" onclick="searchArtist('w')">W</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('x')">X</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('z')">Z</a>
+        <a href="#bottom">W</a>&nbsp;
+        <a href="#bottom">X</a>&nbsp;
+        <a href="#bottom">Y</a>&nbsp;
+        <a href="#bottom">Z</a>
 
 		</div>
         <div id="artist_searchBox">
@@ -1473,9 +1471,9 @@ div.code-coverage-results span.result-good {
 	<div id="copyright" style="float:left;">
 		&copy; 2010 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
 	</div>	
-	<a href="/homes/aboutus">About Freegal Music</a>	&nbsp;|&nbsp;
-	<a href="/homes/terms">Terms &amp; Conditions</a>	&nbsp;|&nbsp;
+	<a>About Freegal Music</a>	&nbsp;|&nbsp;
+	<a>Terms &amp; Conditions</a>	&nbsp;|&nbsp;
 
-	<a href="/questions">FAQ</a></div>
+	<a>FAQ</a></div>
 </body>
 </html>
