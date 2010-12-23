@@ -38,22 +38,59 @@ Class LibrariesController extends AppController
      Desc : action for showing preview of the layout in the admin end
     */
     function admin_ajax_preview() {
-		Configure::write('debug', 0);
+		Configure::write('debug', 0);		
 		$this->layout = false;
-		 
+		if(isset($_GET['bgColor']) &&
+		   isset($_GET['navBgColor']) && isset($_GET['boxheaderBgColor']) &&
+		   isset($_GET['boxheaderTextColor']) && isset($_GET['textColor']) &&
+		   isset($_GET['linkColor']) && isset($_GET['linkHoverColor']) &&
+		   isset($_GET['navLinksColor']) && isset($_GET['navLinksHoverColor'])) {
+			$library_bgcolor = "#".$_GET['bgColor'];
+			$library_content_bgcolor = "#FFFFFF";
+			$library_nav_bgcolor = "#".$_GET['navBgColor'];
+			$library_boxheader_bgcolor = "#".$_GET['boxheaderBgColor'];
+			$library_boxheader_text_color = "#".$_GET['boxheaderTextColor'];
+			$library_text_color = "#".$_GET['textColor'];
+			$library_links_color = "#".$_GET['linkColor'];
+			$library_links_hover_color = "#".$_GET['linkHoverColor'];
+			$library_navlinks_color = "#".$_GET['navLinksColor'];
+			$library_navlinks_hover_color = "#".$_GET['navLinksHoverColor'];
+		}
+		else {
+			$library_bgcolor = "#606060";
+			$library_content_bgcolor = "#FFFFFF";
+			$library_nav_bgcolor = "#3F3F3F";
+			$library_boxheader_bgcolor = "#CCCCCC";
+			$library_boxheader_text_color = "#666666";
+			$library_text_color = "#666666";
+			$library_links_color = "#666666";
+			$library_links_hover_color = "#000000";
+			$library_navlinks_color = "#FFFFFF";
+			$library_navlinks_hover_color = "#FFFFFF";
+		}
+		if(isset($_GET['boxheaderBgColor']) && isset($_GET['boxHoverColor'])){
+			$library_box_header_color = "#".$_GET['boxheaderBgColor'];
+			$library_box_hover_color = "#".$_GET['boxHoverColor'];
+		}
+		else{
+			$library_box_header_color = "#FFFFFF";
+			$library_box_hover_color = "#FFFFFF";
+		}
+		
 		 //sets the library details which is set from the admin end
 		$this->set('libraryName', $_GET['libraryName']);
 		$this->set('imagePreview', $_GET['imagePreview']);
-		$this->set('bgColor', '#'.$_GET['bgColor']);
-		$this->set('navBgColor', '#'.$_GET['navBgColor']);
-		$this->set('boxheaderBgColor', '#'.$_GET['boxheaderBgColor']);
-		$this->set('boxheaderTextColor', '#'.$_GET['boxheaderTextColor']);
-		$this->set('boxHoverColor', '#'.$_GET['boxHoverColor']);
-		$this->set('textColor', '#'.$_GET['textColor']);
-		$this->set('linkColor', '#'.$_GET['linkColor']);
-		$this->set('linkHoverColor', '#'.$_GET['linkHoverColor']);
-		$this->set('navLinksColor', '#'.$_GET['navLinksColor']);
-		$this->set('navLinksHoverColor', '#'.$_GET['navLinksHoverColor']);
+		$this->set('library_bgcolor', $library_bgcolor);
+		$this->set('library_content_bgcolor', $library_content_bgcolor);
+		$this->set('library_nav_bgcolor', $library_nav_bgcolor);
+		$this->set('library_boxheader_bgcolor', $library_boxheader_bgcolor);
+		$this->set('library_boxheader_text_color', $library_boxheader_text_color);
+		$this->set('library_box_hover_color', $library_box_hover_color);
+		$this->set('library_text_color', $library_text_color);
+		$this->set('library_links_color',$library_links_color);
+		$this->set('library_links_hover_color', $library_links_hover_color);
+		$this->set('library_navlinks_color', $library_navlinks_color);
+		$this->set('library_navlinks_hover_color', $library_navlinks_hover_color);
     }
 	
     /*
