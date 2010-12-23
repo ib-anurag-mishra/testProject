@@ -38,7 +38,7 @@ body  {
 
 #header {  
 	height:60px;
-	background:#333 url(../img/header.png) no-repeat;
+	background:#333 url(/img/header.png) no-repeat;
 	border-bottom: 1px solid #999;
 }
 #lib_name {
