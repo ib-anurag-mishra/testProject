@@ -20,13 +20,13 @@ function filterTD(div) {
 		
 		$('#tab2').hide();
 		$('#tab1').fadeIn();
-		$('#t2').attr('class', '');
+		$('#t2').attr('class', 'nonactive');
 		$('#t1').attr('class', 'active');
 	} else {
 		
 		$('#tab1').hide();
 		$('#tab2').fadeIn();
-		$('#t1').attr('class', '');
+		$('#t1').attr('class', 'nonactive');
 		$('#t2').attr('class', 'active');
 	}
 }

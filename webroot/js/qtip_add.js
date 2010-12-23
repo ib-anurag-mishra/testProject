@@ -67,5 +67,28 @@ $(document).ready(function()
          },
          tip: true
       }
-   });  
+   });
+   $('.dload').qtip({
+      position: {
+         corner: {
+            target: 'topRight',
+            tooltip: 'bottomLeft'
+         }
+      },
+      style: {
+         name:'cream',
+         padding: '10px 0px',
+         margin: 0,
+         width: {
+            max: 300,
+            min: 0
+         },
+         border: {
+               width: 7,
+               radius: 5,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   });   
 });

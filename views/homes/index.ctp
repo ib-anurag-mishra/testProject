@@ -3,6 +3,8 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		if ($.browser.msie) {
+			$('#t1').corner("top 5px").parent().css({'padding-left' : '1px', 'padding-right' : '1px', 'padding-top' : '1px'}).corner("top 5px")
+			$('#t2').corner("top 5px").parent().css({'padding-left' : '1px', 'padding-right' : '1px', 'padding-top' : '1px'}).corner("top 5px")
 		} else {
 			$('#tb1').corner('top 5px');
 			$('#tb2').corner('top 5px');
@@ -50,7 +52,7 @@
 <div id="sug" class="suggestions">
 	<div id="tabsugg">
 		<div id="tb1"><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('MyLib Top 10', true));?></a></div></div>
-		<div id="tb2"><div id="t2" class=""><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
+		<div id="tb2"><div id="t2" class="nonactive"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
 	</div>
 	<div id="sugtab" class="tab_container">
 		<div id="tab1" class="tab_content" style="display:block;">
@@ -108,10 +110,10 @@
 										?>
 										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
 										<![if !IE]>
-										<a href='#' onclick='return userDownloadOthers("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><span id="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</span></a>
+										<a href='#' onclick='return userDownloadOthers("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
 										<![endif]>
 										<!--[if IE]>
-										<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+										<a style="cursor:pointer;" onclick='return userDownloadIE("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
 										<![endif]-->
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
@@ -220,10 +222,10 @@
 										?>
 										<span class="beforeClick" id="song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
 										<![if !IE]>
-										<a href='#' onclick='return userDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><span id="dloadNat" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</span></a>
+										<a href='#' onclick='return userDownloadOthers("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
 										<![endif]>
 										<!--[if IE]>
-										<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+										<a style="cursor:pointer;" onclick='return userDownloadIE("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
 										<![endif]-->
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>

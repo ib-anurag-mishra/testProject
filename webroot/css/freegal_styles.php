@@ -1416,7 +1416,7 @@ div.message {
 #tb1, #tb2 {
 	float:left;
 	width:153px;
-	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+	background-color:#999;
 	color:<?php echo $library_boxheader_text_color; ?>;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
@@ -1424,6 +1424,18 @@ div.message {
 }
 #tb1 >.active, #tb2 >.active{
 	background-color:#fff;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#tb1 >.nonactive, #tb2 >.nonactive{
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
 	color:#000;
 	-moz-border-radius-topright: 5px;
 	-khtml-border-radius-topright: 5px;
