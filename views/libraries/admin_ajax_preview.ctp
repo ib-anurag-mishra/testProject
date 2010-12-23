@@ -1261,7 +1261,6 @@ div.code-coverage-results span.result-good {
 						  <img src="<?php echo $imagePreview;?>" />
 						 </div>
 						 <div id="lib_imagetext">
-						  <label><?php echo $libraryName; ?></label>
 						 </div>
 						<?php
 						}
