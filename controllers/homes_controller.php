@@ -1203,7 +1203,7 @@ class HomesController extends AppController
         $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 		$this->Download->recursive = -1;
-        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'order'=>'created DESC','limit' => '1'));
+        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'oreder'=>'created DESC','limit' => '1'));
 		$downloadCount =  $downloadsUsed[0]['Download']['history'];
 		//check for download availability
 		if($downloadCount < 2){
@@ -1211,7 +1211,7 @@ class HomesController extends AppController
 			$sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".$startDate."' AND '".$endDate."' ORDER BY created DESC";
 			$this->Download->query($sql);
 			$this->Download->setDataSource('default');
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'order'=>'created DESC','limit' => '1'));
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'oreder'=>'created DESC','limit' => '1'));
 			$downloadCount =  $downloadsUsed[0]['Download']['history'];
             echo $downloadCount;			
         } else {
