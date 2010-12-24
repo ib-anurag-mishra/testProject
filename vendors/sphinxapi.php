@@ -700,6 +700,32 @@ class SphinxClient
 	/// and optionally set max-matches and cutoff limits
 	function SetLimits ( $offset, $limit, $max=0, $cutoff=0 )
 	{
+		
+		global $callType;
+		if ($callType == 'paginate') {
+			$urlString = $_SERVER['QUERY_STRING'];
+			$urlString = str_replace("&", "/", $urlString);
+			$expString = explode("/", $urlString);
+			foreach ($expString as $key=>$value) {
+				$pageParam   = 'page:';
+				$pos = strpos($value, $pageParam);
+				if ($pos === false) {
+				} else {
+					$keyValue = $key;
+				}
+			} 
+			if (isset($keyValue) && ($keyValue != '')) {
+				$page = substr($expString[$keyValue], 5);
+				if ($page != 1)
+					$offset = (20 * ($page - 1));
+				else 
+					$offset = 0;
+			} else {
+				$page = 0;
+				$offset = 0;
+			}
+		}
+		
 		assert ( is_int($offset) );
 		assert ( is_int($limit) );
 		assert ( $offset>=0 );

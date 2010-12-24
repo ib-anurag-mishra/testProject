@@ -19,7 +19,6 @@ if(count($searchResults) != 0){
 	<?php echo $paginator->sort('Track ', 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreDownload">Download</div>
-</div>
 <br class="clr">
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0">
@@ -197,3 +196,4 @@ if(count($searchResults) != 0){
 		echo '<table><tr><td width="180" valign="top"><p><div class="paging">No records found</div><br class="clr"></td></tr></table>';
 	}
 ?>
+</div>

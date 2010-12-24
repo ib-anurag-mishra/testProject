@@ -25,7 +25,9 @@ class AppModel extends Model {
     }
     
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
-        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
+	global $callType;
+	$callType = "paginate";
+       if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';
           foreach ($args as $arg) {
@@ -38,21 +40,55 @@ class AppModel extends Model {
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           if (empty($pagination)) {
 				  if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-					  $sphinx = array('matchMode' => SPH_MATCH_EXTENDED);
-						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'limit' => 20, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', '20', 'page', 'recursive', 'group', 'contain'));
+						if (isset($extra['sphinxsort']) && ($extra['sphinxsort'] != '')) {
+							$field = $extra['sphinxsort'];
+							$expField = explode(".", $field);
+							$sortField = "Sort".$expField[1];
+							if ($extra['sphinxdirection'] == 'asc') {
+								$modeSphinx = SPH_SORT_ATTR_ASC;
+								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+							} else {
+								$modeSphinx = SPH_SORT_ATTR_DESC;
+								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+							}
+						} else {
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
+						} 
+						
+						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				 }
                   Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
           }
-        }
-        else{
-          $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));            
+        } else {
+			if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					if (isset($extra['sphinxsort']) && ($extra['sphinxsort'] != '')) {
+						$field = $extra['sphinxsort'];
+						$expField = explode(".", $field);
+						$sortField = "Sort".$expField[1];
+						if ($extra['sphinxdirection'] == 'asc') {
+							$modeSphinx = SPH_SORT_ATTR_ASC;
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+						} else {
+							$modeSphinx = SPH_SORT_ATTR_DESC;
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+						}
+					} else {
+						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
+					} 
+					
+					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+			  } else {
+					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+			}          
         }
         return $pagination;
     }
 
     function paginateCount ($conditions = null, $recursive = 0, $extra = array()) {
+		global $callType;
+		$callType = "paginateCount";
         $args = func_get_args();
         $uniqueCacheId = '';
         foreach ($args as $arg) {
@@ -62,35 +98,51 @@ class AppModel extends Model {
         if (!empty($extra['contain'])) {
                 $contain = $extra['contain'];	
         }
-    
-        $paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		
+		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+			$paginationcount = "";
+		} else {
+			$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		}
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
                     if($v == "1 = 1 GROUP BY Album.ProdID"){
-                        //$fields = array('fields' => 'ProdID');
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
                     if($v == "1 = 1 GROUP BY Song.ProdID"){
-                        //$fields = array('fields' => 'ProdID');
-                        $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+						$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
                     if($v == "1 = 1 GROUP BY Song.ArtistText"){
-                        //$fields = array('fields' => 'ProdID');
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }					
 
 				}
+				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
+					$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
+					$paginationcount = count($paginationcount);
+					$group = "yes";
+				}
                 if($group != "yes"){
-                    $paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
+					if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
+						$paginationcount = $this->find('count', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
+					} else {
+						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
+					}
                 }
-                Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
+				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					$paginationcount = $paginationcount;
+				} else {
+					Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
+				}
         }
         return $paginationcount;
     }
