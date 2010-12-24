@@ -344,6 +344,18 @@ class HomesController extends AppController
 				}
 				
 				$searchResults = $this->paginate('Song');
+				$wk = date('W')-1;
+				$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+				$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+				$this->Download->recursive = -1;
+				foreach($searchResults as $key => $value){
+						$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+						if(count($downloadsUsed) > 0){
+							$searchResults[$key]['Song']['status'] = 'avail';
+						} else{
+							$searchResults[$key]['Song']['status'] = 'not';
+						}
+				}				
 				$this->set('searchResults', $searchResults);
 			}
 			else {
@@ -394,6 +406,18 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}				
 				$searchResults = $this->paginate('Song');
+				$wk = date('W')-1;
+				$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
+				$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+				$this->Download->recursive = -1;
+				foreach($searchResults as $key => $value){
+						$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+						if(count($downloadsUsed) > 0){
+							$searchResults[$key]['Song']['status'] = 'avail';
+						} else{
+							$searchResults[$key]['Song']['status'] = 'not';
+						}
+				}				
 				$this->set('searchResults', $searchResults);
 			}
 		} else {
