@@ -64,5 +64,15 @@
 			&copy; 2010 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
 		</div>
 	</div>
+<!--[if IE 7]>	
+	<style>
+		.forgot_password a {
+			color:#666666;
+			float:right;
+			margin:2px 40px 0 57px !important;
+			text-decoration:none; 
+		}
+	</style>
+<![endif]-->	
 </body>
 </html>

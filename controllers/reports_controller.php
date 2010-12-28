@@ -341,7 +341,7 @@ Class ReportsController extends AppController
         {
             Configure::write('debug',0); // Otherwise we cannot use this method while developing 
             $sonyReport = $this->SonyReport->find("first", array('conditions' => array('id' => base64_decode($this->params['named']['id']))));
-            $path = "http://music.freegalmusic.com/freegalmusic/sony_reports"; // change the path to fit your websites document structure
+            $path = "http://music.freegalmusic.com/freegalmusic/prod/EN/sony_reports"; // change the path to fit your websites document structure
             $fullPath = $path."/".$sonyReport['SonyReport']['report_name'];
             if ($fd = fopen ($fullPath, "r")) {
                 $fsize = filesize($fullPath);

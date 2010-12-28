@@ -99,7 +99,9 @@ Class GenresController extends AppController
 													array('Genre.Genre' => $genreName),							
 													array("Song.ReferenceID <> Song.ProdID"),
 													array('Song.DownloadStatus' => 1),
-													array('Song.TrackBundleCount' => 0),
+												//	array('Song.TrackBundleCount' => 0),
+													array("Song.Sample_FileID != ''"),
+													array("Song.FullLength_FIleID != ''"),													
 													array('Country.Territory' => $country),
 													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-7 week"))),$cond
 												)
@@ -243,7 +245,7 @@ Class GenresController extends AppController
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
-		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,'Song.TrackBundleCount' => 0,$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
 		      'fields' => array('Song.ArtistText'),
 			  'contain' => array(
 				'Country' => array(
