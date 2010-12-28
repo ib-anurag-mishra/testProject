@@ -360,7 +360,7 @@ class HomesController extends AppController
 					$searchKey = $this->data['Home']['search'];
 				}
 				$searchText = $searchKey;
-				//$searchKey = '"'.addslashes($searchKey).'"';
+				$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText));
 				
 				//$spValue = "";
