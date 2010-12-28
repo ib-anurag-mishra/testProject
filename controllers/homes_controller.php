@@ -360,7 +360,7 @@ class HomesController extends AppController
 					$searchKey = $this->data['Home']['search'];
 				}
 				$searchText = $searchKey;
-				$searchKey = '"'.addslashes($searchKey).'"';
+				//$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText));
 				
 				//$spValue = "";
@@ -372,6 +372,7 @@ class HomesController extends AppController
 					} else {
 						$spValue = $spValue.''.addslashes($value).'|';
 					} */
+					$value = '"'.addslashes($value).'"';
 					if ($searchParam == "") {
 						$searchParam = "@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 					} else {
