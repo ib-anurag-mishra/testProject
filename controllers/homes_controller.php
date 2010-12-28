@@ -363,23 +363,24 @@ class HomesController extends AppController
 				//$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText));
 				
-				$spValue = "";
+				//$spValue = "";
+				$searchParam = "";
 				$expSearchKeys = explode(" ", $searchKey);
 				foreach ($expSearchKeys as $value) {
-					if ($spValue == '') {
+					/* if ($spValue == '') {
 						$spValue = ''.addslashes($value).'|';
 					} else {
 						$spValue = $spValue.''.addslashes($value).'|';
-					}
-					/* if ($searchParam == "") {
+					} */
+					if ($searchParam == "") {
 						$searchParam = "@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 					} else {
 						$searchParam = $searchParam." | "."@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
-					} */
+					}
 				}
-				$spValue = substr($spValue, 0, -1);
+				/*$spValue = substr($spValue, 0, -1);
 				$spValue = '"'.$spValue.'"';
-				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;
+				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;*/
 
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
