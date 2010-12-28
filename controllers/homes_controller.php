@@ -203,6 +203,11 @@ class HomesController extends AppController
     */
     function search(){
 		$country = $this->Session->read('territory');
+		if ($country == 'US') {
+			$nonMatchCountry = 'CA';
+		} else {
+			$nonMatchCountry = 'US';
+		}
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
@@ -312,7 +317,7 @@ class HomesController extends AppController
 				
 				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
-				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory '.$country.' & '.$condSphinx;
+				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
@@ -380,7 +385,7 @@ class HomesController extends AppController
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}		
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory ".$country." & ".$condSphinx;
+				$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory !".$nonMatchCountry." & @Territory ".$country." & ".$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
