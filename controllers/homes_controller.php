@@ -358,13 +358,13 @@ class HomesController extends AppController
 				//$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText));
 				
-				$searchParam = "";
+				$spValue = "";
 				$expSearchKeys = explode(" ", $searchKey);
 				foreach ($expSearchKeys as $value) {
 					if ($spValue == '') {
 						$spValue = ''.addslashes($value).'|';
 					} else {
-						$spValue = $spValue.''.addslashes($value);
+						$spValue = $spValue.''.addslashes($value).'|';
 					}
 					/* if ($searchParam == "") {
 						$searchParam = "@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
@@ -372,6 +372,7 @@ class HomesController extends AppController
 						$searchParam = $searchParam." | "."@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 					} */
 				}
+				$spValue = substr($spValue, 0, -1);
 				$spValue = '"'.$spValue.'"';
 				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;
 
