@@ -270,6 +270,16 @@ class HomesController extends AppController
 					$song =  $this->data['Home']['song'];
 					$album =  $this->data['Home']['album'];
 					$genre =  $this->data['Home']['genre_id'];
+					
+					$artist = str_replace("^", " ", $artist);
+					$composer = str_replace("^", " ", $composer);
+					$song = str_replace("^", " ", $song);
+					$album = str_replace("^", " ", $album);
+					
+					$artist = str_replace("$", " ", $artist);
+					$composer = str_replace("$", " ", $composer);
+					$song = str_replace("$", " ", $song);
+					$album = str_replace("$", " ", $album);
 				}            
 				if($artist != '') {
 					$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');
@@ -322,7 +332,7 @@ class HomesController extends AppController
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
-				
+			
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
 				$this->set('searchKey','match='.$matchType.'&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
@@ -373,6 +383,8 @@ class HomesController extends AppController
 					} else {
 						$spValue = $spValue.''.addslashes($value).'|';
 					} */
+					$value = str_replace("^", " ", $value);
+					$value = str_replace("$", " ", $value);
 					$value = '"'.addslashes($value).'"';
 					if ($searchParam == "") {
 						$searchParam = "@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
@@ -393,7 +405,7 @@ class HomesController extends AppController
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
-				
+
 				if (isset($this->passedArgs['sort'])){
 					$sphinxSort = $this->passedArgs['sort'];
 				} else {
