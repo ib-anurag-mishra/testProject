@@ -1118,7 +1118,7 @@ div.paging {
 	float:left;
 	font-size:13px;
 	width:500px;
-	
+	padding-bottom: 10px;	
 }
 div.paging span.disabled {
 	color: #ddd;
