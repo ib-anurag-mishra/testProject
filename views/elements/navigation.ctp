@@ -93,8 +93,8 @@
 			      echo $this->Form->input('search', array('size'=>'24', 'id'=>'autoComplete', 'label' => false, 'value' => $search));
 				  echo $this->Form->hidden('auto', array('size'=>'24', 'id'=>'auto', 'name'=>'auto', 'label' => false, 'value' => 0));?>
 				<!-- <div style="float:left;">
-									<input type="submit" class="searchButton" value=""></input>
-								</div> -->
+					<input type="submit" class="searchButton" value=""></input>
+				</div> -->
 			<!-- </form>-->
 			<?php echo $this->Form->end('GO'); ?>
 			<?php echo $html->link('Advanced Search', array('controller' => 'homes', 'action' => 'advance_search')); ?>

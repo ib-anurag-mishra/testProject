@@ -46,6 +46,7 @@
 						 $('#auto').attr('value', 0);
 					   }
 					});
+					
 					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
 					{
 						minChars: 1,
