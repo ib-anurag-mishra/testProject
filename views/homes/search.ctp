@@ -197,3 +197,4 @@ if(count($searchResults) != 0){
 		echo '<table><tr><td width="180" valign="top"><p><div class="paging">No records found</div><br class="clr"></td></tr></table>';
 	}
 ?>
+</div>
