@@ -46,6 +46,8 @@
 						minChars: 1,
 						cacheLength: 10,
 						autoFill: false
+					}).result(function(e, item) {
+						$('#auto').attr('value', 1);
 					});
 					checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					<?php
