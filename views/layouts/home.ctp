@@ -41,7 +41,7 @@
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<script type="text/javascript">
 				$().ready(function() {
-					$('#auto').keypress(function(event) {
+					$('#autoComplete').keypress(function(event) {
 					  if (event.which != '13') {
 						 $('#auto').attr('value', 0);
 					   }
