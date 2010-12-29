@@ -32,7 +32,7 @@ if(count($searchResults) != 0){
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';
 			}
-			if($searchResult['Country']['Territory'] == $this->Session->read('territory')){
+		//	if($searchResult['Country']['Territory'] == $this->Session->read('territory')){
 	?>
 			<tr <?php echo $class; ?>>
 				<td width="180" valign="top">
@@ -170,7 +170,7 @@ if(count($searchResults) != 0){
 				</td>
 			</tr>
 	<?php
-		}
+	//	}
 		endforeach;
 	}
 	else {
