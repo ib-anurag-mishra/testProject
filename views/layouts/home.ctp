@@ -41,11 +41,18 @@
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<script type="text/javascript">
 				$().ready(function() {
+					$('#autoComplete').keypress(function(event) {
+						if (event.which != '13') {
+						 $('#auto').attr('value', 0);
+						}
+					});					
 					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
 					{
 						minChars: 1,
 						cacheLength: 10,
 						autoFill: false
+					}).result(function(e, item) {
+						$('#auto').attr('value', 1);
 					});
 					checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					<?php
