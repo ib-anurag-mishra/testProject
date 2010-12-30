@@ -76,16 +76,15 @@ $(document).ready(function()
          }
       },
       style: {
-         name:'cream',
-         padding: '10px 0px',
-         margin: 0,
+	 name:'cream',
+         padding: '5px 10px',
          width: {
-            max: 300,
+            max: 350,
             min: 0
          },
          border: {
-               width: 7,
-               radius: 5,
+               width: 1,
+               radius: 8,
                color: '#FAF7AA'
          },
          tip: true
