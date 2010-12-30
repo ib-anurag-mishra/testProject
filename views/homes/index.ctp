@@ -418,6 +418,7 @@
 	-webkit-border-bottom-left-radius: 5px;
 }
 .tab_content {
+	height:600px;
 	padding: 5px;
 }
 
