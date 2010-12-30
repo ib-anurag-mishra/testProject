@@ -143,6 +143,88 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	return false;
 }
 
+function userDownloadIE_top(prodId)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();		
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('song_'+prodId).style.display = 'none';
+	var data = "prodId="+prodId;
+	id = prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/userDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
+}
+
+function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId;
+	id = prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/userDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{		
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
+				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+				location.href = unescape(finalURL);
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
+}
+
+
 function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 {
 	$('.beforeClick').hide();
@@ -212,6 +294,33 @@ function addQtip(prodId){
       }
    });
 }
+
+function addQtip_top(prodId){
+   $('#song_'+prodId).qtip({
+      content : "You have already downloaded this song. Get it from your recent downloads.",
+      position: {
+         corner: {
+            target: 'topRight',
+            tooltip: 'bottomLeft'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '2px 5px',
+         width: {
+            max: 350,
+            min: 0
+         },
+         border: {
+               width: 1,
+               radius: 8,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   });
+}
+
 function addToWishlist(prodId)
 {
 	$('.beforeClick').hide();
