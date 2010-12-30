@@ -238,7 +238,7 @@
 										<?php	
 									} else {
 									?>
-										<a href='/homes/my_history' title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</a>
+										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</label></a>
 									<?php
 									}
 								} else {
