@@ -1,5 +1,7 @@
-<?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
+<?php echo $javascript->link('freegal_home_curvy'); ?>
+<?php echo $javascript->link('jquery.corner'); ?>
+<?php echo $javascript->link('freegal.home.musicbox.js'); ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		if ($.browser.msie) {
@@ -56,6 +58,7 @@
 	</div>
 	<div id="sugtab" class="tab_container">
 		<div id="tab1" class="tab_content" style="display:block;">
+			<?php if(count($songs) > 0){ ?>
 			<table cellspacing="0" cellpadding="0" id="musicbox">
 			<?php
 				$j =0;
@@ -140,7 +143,8 @@
 											<?php 
 											} else { 
 											?>
-												<span id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>",this);'>Add to Wishlist</a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+												<span class="beforeClick" id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>",this);'>Add to Wishlist</a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+												<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
 											<?php	
 											}
 										}
@@ -165,6 +169,7 @@
 			} 
 			?>
 			</table>
+			<?php } ?>
 		</div>
 		<div id="tab2" class="tab_content" style="display:none;">
 			<table cellspacing="0" cellpadding="0" id="musicbox">
@@ -383,3 +388,85 @@
         </div>
     </div>
 </div>
+<style>
+.suggestions {
+	clear:both;
+	float:left;
+	display:block;
+	width:308px;
+	margin-left: 10px;
+	margin-top: 5px;
+	font-size:13px;
+	height:642px;
+	text-align: left;
+	line-height:19px;
+}
+.tab_container {
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	clear: both;
+	float: left; 
+	width: 100%;
+	background: #fff;
+	padding-bottom: 1px;
+	-moz-border-radius-bottomright: 5px;
+	-khtml-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+}
+.tab_content {
+	padding: 5px;
+}
+
+#tb1, #tb2 {
+	float:left;
+	width:153px;
+	background-color:#999;
+	color:<?php echo $library_boxheader_text_color; ?>;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-top: 1px solid #999;
+}
+#tb1 >.active, #tb2 >.active{
+	background-color:#fff;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#tb1 >.nonactive, #tb2 >.nonactive{
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#sep {
+	float:left;
+}
+#tb1 a, #tb2 a {
+	text-decoration: none;
+	color:<?php echo $library_box_header_color; ?>;
+}
+#tb1 >.active a, #tb2 >.active a{
+	text-decoration: none;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#tb1 a:hover, #tb2 a:hover{
+	text-decoration: none;
+	color:<?php echo $library_box_hover_color; ?>;
+}
+</style>
