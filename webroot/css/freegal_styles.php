@@ -187,6 +187,11 @@ ul.marquee li {
         line-height:19px;
 }
 
+#suggestions .top a{
+	text-decoration: none;
+	color:<?php echo $library_box_header_color; ?>;
+}
+
 #suggestionsBox {
     width:305px;
         height:288px;
@@ -217,7 +222,7 @@ ul.marquee li {
 .suggest_text img {
         position:absolute;
         top:9px;
-        left:240px;
+        left:230px;
 }
 
 .suggest_text a {
@@ -354,13 +359,13 @@ ul.marquee li {
     border: 1px solid #999;
     text-align:left;
     width:618px;
-    height:79px;
+    height:387px;
 }
 
 .scrollarea {
         overflow:scroll;
         overflow-x:hidden;
-        height:79px;
+        height:386px;
         margin: 0px 0 0 30px;
 }
 
@@ -1367,4 +1372,92 @@ div.message {
 .links_Modal{
         text-decoration: none;
         color:<?php echo $library_links_color; ?> !important;
+}
+.suggestions {
+	clear:both;
+	float:left;
+	display:block;
+	width:308px;
+	margin-left: 10px;
+	margin-top: 5px;
+	font-size:13px;
+	height:642px;
+	text-align: left;
+	line-height:19px;
+}
+.tab_container {
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-bottom: 1px solid #999;
+	clear: both;
+	float: left; 
+	width: 100%;
+	background: #fff;
+	padding-bottom: 1px;
+	-moz-border-radius-bottomright: 5px;
+	-khtml-border-radius-bottomright: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	-moz-border-radius-bottomleft: 5px;
+	-khtml-border-radius-bottomleft: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+}
+.tab_content {
+	padding: 5px;
+}
+#tabsugg {
+	font-size:13px;
+	clear:both;
+	width:310px;
+	height:16px;
+	text-align:center;
+	display:block;
+	border-bottom:0px;
+}
+#tb1, #tb2 {
+	float:left;
+	width:153px;
+	background-color:#999;
+	color:<?php echo $library_boxheader_text_color; ?>;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-top: 1px solid #999;
+}
+#tb1 >.active, #tb2 >.active{
+	background-color:#fff;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#tb1 >.nonactive, #tb2 >.nonactive{
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#sep {
+	float:left;
+}
+#tb1 a, #tb2 a {
+	text-decoration: none;
+	color:<?php echo $library_box_header_color; ?>;
+}
+#tb1 >.active a, #tb2 >.active a{
+	text-decoration: none;
+	color:<?php echo $library_boxheader_bgcolor; ?>;
+}
+#tb1 a:hover, #tb2 a:hover{
+	text-decoration: none;
+	color:<?php echo $library_box_hover_color; ?>;
 }

@@ -14,6 +14,12 @@ function initCorners() {
     tr: { radius: 5 },
     antiAlias: true
   }
+  
+  var bottomsetting = {
+    bl: { radius: 5 },
+    br: { radius: 5 },
+    antiAlias: true
+  }
 
   /*
   Usage:
@@ -34,8 +40,9 @@ function initCorners() {
     .rounded
   */
   
-  curvyCorners(settings, "#suggestionsBox");
-  curvyCorners(settings, "#suggestions");
+  /*curvyCorners(settings, "#suggestionsBox");
+  curvyCorners(settings, "#suggestions");*/
+  curvyCorners(bottomsetting, "#sugtab");
   curvyCorners(settings, "#artist_searchBox");
   curvyCorners(settings, "#artist_search");
   curvyCorners(settings, "#featured_artist");
