@@ -225,12 +225,12 @@
 										$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
-										<span class="beforeClick" id="song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
+										<span class="beforeClick" id="songtab_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
 										<![if !IE]>
-										<a href='#' onclick='return userDownloadOthers_top("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
+										<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
 										<![endif]>
 										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></label>
+										<label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'><a style="cursor:pointer;" onclick='return userDownloadIE_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></label>
 										<![endif]-->
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
@@ -257,7 +257,7 @@
 											<?php 
 											} else { 
 											?>
-												<span  class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>",this);'>Add to Wishlist</a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+												<span  class="beforeClick" id="wishlist_top<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist_top("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>",this);'>Add to Wishlist</a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
 												<span class="afterClick" style="display:none;">Please Wait...</span>
 											<?php	
 											}

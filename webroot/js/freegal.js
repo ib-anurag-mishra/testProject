@@ -228,6 +228,89 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	return false;
 }
 
+function userDownloadIE_toptab(prodId)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();		
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('songtab_'+prodId).style.display = 'none';
+	var data = "prodId="+prodId;
+	id = prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/userDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				$('.afterClick').hide();
+				$('.beforeClick').show();
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('songtab_'+prodId).innerHTML='';
+				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+				document.getElementById('songtab_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
+}
+
+function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('songtab_'+prodId).style.display = 'none';
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	var finalURL = downloadUrl1;
+	finalURL += downloadUrl2;
+	finalURL += downloadUrl3;
+	var data = "prodId="+prodId;
+	id = prodId;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/userDownload", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("Your download limit has exceeded.");
+				location.reload();
+				return false;
+			}
+			else
+			{		
+				document.getElementById('downloads_used').innerHTML = response;
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('songtab_'+prodId).innerHTML='';
+				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
+				document.getElementById('songtab_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+				location.href = unescape(finalURL);
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+	return false;
+}
+
 
 function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 {
@@ -349,6 +432,40 @@ function addToWishlist(prodId)
 					$('.beforeClick').show();
 					$('.afterClick').hide();				
 					document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
+					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				}				
+			}			
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
+		}
+	});
+	return false; 
+}
+
+function addToWishlist_top(prodId)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
+	var data = "prodId="+prodId;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/addToWishlist", // URL to request
+		data: data,  // post data
+		success: function(response) {			
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("You can not add more songs to your wishlist.");
+				location.reload();
+				return false;
+			}
+			else
+			{	var msg = response.substring(0,7);
+				if(msg == 'Success'){
+					$('.beforeClick').show();
+					$('.afterClick').hide();				
+					document.getElementById('wishlist_top'+prodId).innerHTML = 'Added to Wishlist';
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}				
 			}			
