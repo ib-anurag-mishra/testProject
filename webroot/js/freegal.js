@@ -175,6 +175,8 @@ function userDownloadIE_top(prodId)
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
 				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+				document.getElementById('songtab_'+prodId).innerHTML='';
+				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";					
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip_top(prodId);
 
@@ -215,7 +217,9 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
+				document.getElementById('songtab_'+prodId).innerHTML='';
+				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";					
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip_top(prodId);
 				location.href = unescape(finalURL);
@@ -256,6 +260,8 @@ function userDownloadIE_toptab(prodId)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).innerHTML='';
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
 				document.getElementById('songtab_'+prodId).style.display = 'block';
@@ -297,6 +303,8 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).innerHTML='';
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).style.display = 'block';
