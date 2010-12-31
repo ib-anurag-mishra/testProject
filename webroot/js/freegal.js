@@ -280,7 +280,7 @@ function userDownloadIE_toptab(prodId)
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).style.display = 'block';
-				addQtip_top(prodId);
+				addQtip_toptab(prodId);
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 				return false;
@@ -295,7 +295,7 @@ function userDownloadIE_toptab(prodId)
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
 				document.getElementById('songtab_'+prodId).style.display = 'block';
-				addQtip_top(prodId);
+				addQtip_toptab(prodId);
 
 			}
 		},
@@ -335,7 +335,7 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).style.display = 'block';
-				addQtip_top(prodId);
+				addQtip_toptab(prodId);
 				$('.afterClick').hide();
 				$('.beforeClick').show();					
 				return false;
@@ -348,7 +348,7 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).style.display = 'block';
-				addQtip_top(prodId);
+				addQtip_toptab(prodId);
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
@@ -432,6 +432,31 @@ function addQtip(prodId){
 
 function addQtip_top(prodId){
    $('#song_'+prodId).qtip({
+      content : "You have already downloaded this song. Get it from your recent downloads.",
+      position: {
+         corner: {
+            target: 'topRight',
+            tooltip: 'bottomLeft'
+         }
+      },
+      style: {
+	 name:'cream',
+         padding: '2px 5px',
+         width: {
+            max: 350,
+            min: 0
+         },
+         border: {
+               width: 1,
+               radius: 8,
+               color: '#FAF7AA'
+         },
+         tip: true
+      }
+   });
+}
+function addQtip_toptab(prodId){
+   $('#songtab_'+prodId).qtip({
       content : "You have already downloaded this song. Get it from your recent downloads.",
       position: {
          corner: {
