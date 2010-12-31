@@ -171,7 +171,7 @@
 			</table>
 			<?php } else {?>
 				No songs has been downloaded yet.
-			<?php ?>
+			<?php } ?>
 		</div>
 		<div id="tab2" class="tab_content" style="display:none;">
 			<table cellspacing="0" cellpadding="0" id="musicbox">
