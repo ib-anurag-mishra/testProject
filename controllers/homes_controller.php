@@ -664,6 +664,12 @@ class HomesController extends AppController
             echo "error";
             exit;
         }
+		$this->Download->recursive = -1;
+		$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+        if(count($downloadsUsed) > 0) {
+            echo "there";
+            exit;
+        }		
         $trackDetails = $this->Song->getdownloaddata($prodId);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;

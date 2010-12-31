@@ -175,8 +175,6 @@ function userDownloadIE_top(prodId)
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
 				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-				document.getElementById('songtab_'+prodId).innerHTML='';
-				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";					
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip_top(prodId);
 
@@ -211,15 +209,17 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				location.reload();
 				return false;
 			}
+			else if(msg == 'there'){
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				return false;
+			}
 			else
 			{		
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
-				document.getElementById('songtab_'+prodId).innerHTML='';
-				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";					
+				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip_top(prodId);
 				location.href = unescape(finalURL);
@@ -253,6 +253,10 @@ function userDownloadIE_toptab(prodId)
 				location.reload();
 				return false;
 			}
+			else if(msg == 'there'){
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				return false;
+			}			
 			else
 			{
 				$('.afterClick').hide();
@@ -260,8 +264,6 @@ function userDownloadIE_toptab(prodId)
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).innerHTML='';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
 				document.getElementById('songtab_'+prodId).style.display = 'block';
@@ -298,13 +300,15 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				location.reload();
 				return false;
 			}
+			else if(msg == 'there'){
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				return false;
+			}			
 			else
 			{		
 				document.getElementById('downloads_used').innerHTML = response;
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
-				document.getElementById('song_'+prodId).innerHTML='';
-				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).innerHTML='';
 				document.getElementById('songtab_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";				
 				document.getElementById('songtab_'+prodId).style.display = 'block';
@@ -344,6 +348,10 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				location.reload();
 				return false;
 			}
+			else if(msg == 'there'){
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				return false;
+			}			
 			else
 			{			
 				$('.afterClick').hide();
