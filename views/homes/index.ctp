@@ -170,7 +170,7 @@
 			?>
 			</table>
 			<?php } else {?>
-				No songs has been downloaded yet.
+				<span style="padding-left:30px">No songs has been downloaded yet.</span>
 			<?php } ?>
 		</div>
 		<div id="tab2" class="tab_content" style="display:none;">
