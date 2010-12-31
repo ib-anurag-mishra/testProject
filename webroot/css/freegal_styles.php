@@ -1437,5 +1437,4 @@ div.message {
 }
 #tb1 a:hover, #tb2 a:hover{
 	text-decoration: none;
-	color:#000;
 }
