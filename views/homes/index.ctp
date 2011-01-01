@@ -13,6 +13,64 @@
 		}
 	});
 </script>
+<style>
+#sug a{
+	text-decoration: none;
+	color:<?php echo isset($libraryInfo['Library']['library_links_color']) ? $libraryInfo['Library']['library_links_color'] :  "#666666"; ?>;
+}
+#sug a:hover{
+	text-decoration: none;
+	color:<?php echo isset($libraryInfo['Library']['library_links_hover_color']) ? $libraryInfo['Library']['library_links_hover_color'] :  "#000000"; ?>;
+}
+#tb1, #tb2 {
+	float:left;
+	width:153px;
+	background-color:#999;
+	color:<?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
+	border-left: 1px solid #999;
+	border-right: 1px solid #999;
+	border-top: 1px solid #999;
+}
+#tb1 >.active, #tb2 >.active{
+	background-color:#fff;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color: <?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
+
+}
+#tb1 >.nonactive, #tb2 >.nonactive{
+	background-color:<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#CCCCCC"; ?>;
+	color:#000;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
+	border-bottom:0px;
+	color: <?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
+}
+#sep {
+	float:left;
+}
+#tb1 a, #tb2 a {
+	text-decoration: none;
+	color: <?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
+}
+#tb1 >.active a, #tb2 >.active a{
+	text-decoration: none;
+	color:<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#CCCCCC"; ?>;
+}
+#tb1 a:hover, #tb2 a:hover{
+	text-decoration: none;
+}
+</style>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
