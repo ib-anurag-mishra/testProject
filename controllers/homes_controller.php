@@ -47,7 +47,7 @@ class HomesController extends AppController
 		$wk = date('W')-10;
 		//$startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 		//$endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59"; 
-		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';		
 		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC'));
 //		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '10'));
@@ -111,7 +111,7 @@ class HomesController extends AppController
 		$wk = date('W')-1;
         // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		$this->Download->recursive = -1;
 		foreach($topDownload as $key => $value){
@@ -137,7 +137,7 @@ class HomesController extends AppController
 		$wk = date('W')-10;
 		// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 		// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
-		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		$natTopDownloaded = $this->Download->find('all', 
 										array('conditions' 
@@ -207,7 +207,7 @@ class HomesController extends AppController
 		$wk = date('W')-1;
         // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		$this->Download->recursive = -1;
 		foreach($nationalTopDownload as $key => $value){
@@ -547,7 +547,7 @@ class HomesController extends AppController
 				$wk = date('W')-1;
 				// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 				// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 				$this->Download->recursive = -1;
 				foreach($searchResults as $key => $value){
@@ -637,7 +637,7 @@ class HomesController extends AppController
 				$wk = date('W')-1;
 				// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 				// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";				
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		
 				$this->Download->recursive = -1;
@@ -671,7 +671,7 @@ class HomesController extends AppController
 		$wk = date('W')-1;
         // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -1258,7 +1258,7 @@ class HomesController extends AppController
             $prodId = $_REQUEST['prodId'];
 			$downloadsDetail = array();
 			$wk = date('W')-1;
-			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
             //get song details
             $trackDetails = $this->Song->getdownloaddata($prodId);
@@ -1315,7 +1315,7 @@ class HomesController extends AppController
 		$wk = date('W')-1;
         // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
         $downloadResults = Array();
         $downloadResults =  $this->Download->find('all',array('group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate))));
@@ -1357,7 +1357,7 @@ class HomesController extends AppController
 		$wk = date('W')-1;
 		// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 		// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
@@ -1471,7 +1471,7 @@ class HomesController extends AppController
 		$wk = date('W')-1;
         // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
         // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate)),'order'=>'created DESC','limit' => '1'));
@@ -1549,7 +1549,7 @@ class HomesController extends AppController
 			$wk = date('W')-10;
 			// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
-			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
 			$prodIds = '';
@@ -1562,7 +1562,7 @@ class HomesController extends AppController
 			$wk = date('W')-10;
 			// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
 			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
-			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-$wk, date('Y'))) . ' 00:00:00';
+			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
 			$prodIds = '';
