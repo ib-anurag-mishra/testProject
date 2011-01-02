@@ -648,15 +648,10 @@ Class ArtistsController extends AppController
 					),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
 				      ));
 	    }
-		$wk = date('W')-1;
-        // $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-        // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
-				$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
 			foreach($albumSong as $key => $value){
-					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+					$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 					if(count($downloadsUsed) > 0){
 						$albumSongs[$k][$key]['Song']['status'] = 'avail';
 					} else{

@@ -78,8 +78,8 @@ if($this->data['Report']['reports_daterange'] == 'day') {
     $dateRange = "_for_".$date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
 }
 elseif($this->data['Report']['reports_daterange'] == 'week') {
-    $startDate = date('Y-m-d', strtotime($date_arr[2]."W".date('W', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."1"));
-    $endDate = date('Y-m-d', strtotime($date_arr[2]."W".date('W', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2]))."7"));
+	  $startDate = date('Y-m-d', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
+	  $endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
     $dateRange = "_for_week_of_".$startDate."_to_".$endDate;
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {

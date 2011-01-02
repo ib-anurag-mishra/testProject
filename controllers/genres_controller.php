@@ -156,13 +156,7 @@ Class GenresController extends AppController
 			}
 			else {
 			  $songArr = $genreDetails;
-			}
-			$wk = date('W')-1;
-			// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";	
-			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-6, date('Y'))) . ' 00:00:00';
-			$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
-				
+			}				
 			$this->Download->recursive = -1;
 			foreach($songArr as $genre) {
 				$this->Song->recursive = 2;
@@ -195,7 +189,7 @@ Class GenresController extends AppController
 				$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
 				$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
 				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
-				$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $genre['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array($startDate, $endDate)),'limit' => '1'));
+				$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $genre['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 				if(count($downloadsUsed) > 0){
 					$finalArr[$i]['status'] = 'avail';
 				} else{
