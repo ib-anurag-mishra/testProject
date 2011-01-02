@@ -17,10 +17,12 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 	if($line['library_status_updated_by'] == 'cron') {
 		$currDate = strtotime(date("Y-m-d"));
 		$contractDate = strtotime($line['library_contract_start_date']);
+		$diff = $currDate-$contractDate;
+		$years = floor($diff / (365*60*60*24));
 		if($contractDate > $currDate) {
 			$status = "inactive";
 		}
-		elseif((date('Y', $currDate)-date('Y', $contractDate)) > 0) {
+		elseif($years > 0) {
 			$status = "inactive";
 		}
 		else {
