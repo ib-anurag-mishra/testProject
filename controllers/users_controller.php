@@ -1123,6 +1123,11 @@ Class UsersController extends AppController
 							$this -> Session -> setFlash($msg);
 							$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 						}
+					} else {
+						$errStrArr = explode('ERRMSG=',$retStr);
+						$errMsg = $errStrArr['1'];
+						$this -> Session -> setFlash($errMsg);
+						$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 					}
 				}         
 			}
@@ -2831,15 +2836,15 @@ $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date(
 						$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 					   }
 					   else{
-						  $errStrArr = explode('ERRMSG=',$response);
-						  $errMsg = $errStrArr['1'];
-						  $this -> Session -> setFlash($errMsg);
-						  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+						  $this -> Session -> setFlash($msg);
+						  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));	
 						}
 					}	
 					else{
-					  $this -> Session -> setFlash($msg);
-					  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));		
+					  $errStrArr = explode('ERRMSG=',$response);
+					  $errMsg = $errStrArr['1'];
+					  $this -> Session -> setFlash($errMsg);
+					  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));						
 					}				
 				}
 			}         
@@ -3116,7 +3121,13 @@ $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date(
 							   $this -> Session -> setFlash($msg);
 							   $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 						   }
+					} else{
+					  $errStrArr = explode('ERRMSG=',$response);
+					  $errMsg = $errStrArr['1'];
+					  $this -> Session -> setFlash($errMsg);
+					  $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));					
 					}
+					
 				}         
 			}
 		}
