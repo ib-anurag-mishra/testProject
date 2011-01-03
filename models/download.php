@@ -47,27 +47,30 @@ class Download extends AppModel
    Function Name : getWeeksDownloadInformation
    Desc : lists all the downloads for for the selected week
   */
-  function getWeeksDownloadInformation($libraryID, $date, $territory) {
-      if($libraryID == "all") {
-		  $all_Ids = '';
-		  $sql = "SELECT id from libraries where library_territory = '".$territory."'";
-		  $result = mysql_query($sql);
-		  while ($row = mysql_fetch_assoc($result)) {
+	function getWeeksDownloadInformation($libraryID, $date, $territory) {
+		if($libraryID == "all") {
+			$all_Ids = '';
+			$sql = "SELECT id from libraries where library_territory = '".$territory."'";
+			$result = mysql_query($sql);
+			while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids = $all_Ids.$row["id"].",";
 			}		  
-          $lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
-      }
-      else {
-          $lib_condition = "and library_id = ".$libraryID;
-      }
-      $date_arr = explode("/", $date);
-	  $startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
-	  $endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
-      $conditions = array(
-          'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id"
-      );
-      return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC','recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
-  }
+			$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+		}
+		else {
+			$lib_condition = "and library_id = ".$libraryID;
+		}
+		$date_arr = explode("/", $date);
+		if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
+			$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
+			$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+		}else{	  
+			$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
+			$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+		}	  
+		$conditions = array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id");
+		return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC','recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
+	}
   
   /*
    Function Name : getMonthsDownloadInformation
