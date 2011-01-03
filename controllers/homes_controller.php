@@ -758,8 +758,10 @@ class HomesController extends AppController
 			$this->Library->query($sql);
 			$this->Library->setDataSource('default');
 		}
-        $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
-				$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";		
+     //   $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
+	//	  $endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
         echo $downloadsUsed;
@@ -1244,10 +1246,10 @@ class HomesController extends AppController
         $libraryDetails = $this->Library->find('all',array('conditions' => array('Library.id' => $libraryId),'fields' => 'library_user_download_limit'));
         //get patron limit per week
         $patronLimit = $libraryDetails[0]['Library']['library_user_download_limit'];        
-        // $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
-        // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
-		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		//		$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
+		//$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
         //get no of downloads for this week
         $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
         if($wishlistCount >= $patronLimit && $libraryDownload != '1' && $patronDownload != '0') {            
@@ -1297,8 +1299,10 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
-        $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
-		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
+		$startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+    //    $startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
+	//	$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
         $wishlistResults = Array();
         $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         $this->set('wishlistResults',$wishlistResults);
@@ -1448,10 +1452,10 @@ class HomesController extends AppController
         $deleteSongId = $id;     
         $this->Wishlist->delete($deleteSongId);
         //get start and end day of the week
-        // $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
-        // $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
-				$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
-		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
+        $startDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."1"))." 00:00:00";
+        $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
+		//$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), date('d')-date('w'), date('Y'))) . ' 00:00:00';
+		//$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
         //get no of downloads for this week
 		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));        
