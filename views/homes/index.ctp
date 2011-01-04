@@ -32,7 +32,7 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	color:<?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
-	border-top: 1px solid #<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#999"; ?>;
+	border-top: 1px solid #999;
 }
 #tb1 >.active, #tb2 >.active{
 	background-color:#fff;
