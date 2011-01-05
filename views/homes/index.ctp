@@ -29,7 +29,6 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	float:left;
 	width:153px;
 	background-color:#<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#999"; ?>;
-	color:<?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
 	border-top: 1px solid #999;
