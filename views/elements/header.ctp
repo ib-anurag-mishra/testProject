@@ -48,7 +48,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<li>
 				Weekly Downloads <span id="downloads_used"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
 				<?php 
-				echo $html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14, "id" => 'qtip')); ?>
+				echo $html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14, "id" => 'qtip', "title" => $page->getPageContent('limits'))); ?>
 				&nbsp;|&nbsp;
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 				&nbsp;|&nbsp;
