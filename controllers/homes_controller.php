@@ -815,7 +815,8 @@ class HomesController extends AppController
 			if($this->data['Home']['id'] != "") {
 				$this->Page->id = $this->data['Home']['id'];
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()){
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -823,7 +824,8 @@ class HomesController extends AppController
 			}
 			else {
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()) {
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -835,7 +837,7 @@ class HomesController extends AppController
 		}
 		$this -> set( 'formAction', 'admin_aboutusform');
 		$this -> set( 'formHeader', 'Manage About Us Page Content' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus')));
+		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus','language' => Configure::read('App.SITELANGUAGE'))));
 		if(count($getPageData) != 0) {
 			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
 			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
@@ -858,7 +860,8 @@ class HomesController extends AppController
 			if($this->data['Home']['id'] != "") {
 				$this->Page->id = $this->data['Home']['id'];
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()){
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -866,7 +869,8 @@ class HomesController extends AppController
 			}
 			else {
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()) {
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -878,7 +882,7 @@ class HomesController extends AppController
 		}
 		$this -> set( 'formAction', 'admin_termsform');
 		$this -> set( 'formHeader', 'Manage Terms & Condition Page Content' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms')));
+		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms','language' => Configure::read('App.SITELANGUAGE'))));
 		if(count($getPageData) != 0) {
 			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
 			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
@@ -901,7 +905,8 @@ class HomesController extends AppController
 			if($this->data['Home']['id'] != "") {
 				$this->Page->id = $this->data['Home']['id'];
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()){
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -909,7 +914,8 @@ class HomesController extends AppController
 			}
 			else {
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()) {
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -921,7 +927,7 @@ class HomesController extends AppController
 		}
 		$this -> set( 'formAction', 'admin_loginform');
 		$this -> set( 'formHeader', 'Manage Login Page Text' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login')));
+		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login','language' => Configure::read('App.SITELANGUAGE'))));
 		if(count($getPageData) != 0) {
 			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
 			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
@@ -944,7 +950,8 @@ class HomesController extends AppController
 			if($this->data['Home']['id'] != "") {
 				$this->Page->id = $this->data['Home']['id'];
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()){
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -952,7 +959,8 @@ class HomesController extends AppController
 			}
 			else {
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()) {
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -964,7 +972,7 @@ class HomesController extends AppController
 		}
 		$this -> set( 'formAction', 'admin_wishlistform');
 		$this -> set( 'formHeader', 'Manage Wishlist Page Text' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist')));
+		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist','language' => Configure::read('App.SITELANGUAGE'))));
 		if(count($getPageData) != 0) {
 			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
 			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
@@ -988,7 +996,8 @@ class HomesController extends AppController
 			if($this->data['Home']['id'] != "") {
 				$this->Page->id = $this->data['Home']['id'];
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()){
 				  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -996,7 +1005,8 @@ class HomesController extends AppController
 			}
 			else {
 				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()) {
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1008,7 +1018,7 @@ class HomesController extends AppController
 		}
 		$this -> set( 'formAction', 'admin_limitsform');
 		$this -> set( 'formHeader', 'Manage Download Limits Page Content' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits')));
+		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits','language' => Configure::read('App.SITELANGUAGE'))));
 		if(count($getPageData) != 0) {
 			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
 			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
@@ -1431,7 +1441,8 @@ class HomesController extends AppController
 	    if($this->data['Home']['id'] != "") {
 		$this->Page->id = $this->data['Home']['id'];
 		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 		$this->Page->set($pageData['Page']);
 		if($this->Page->save()){
 		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1439,7 +1450,8 @@ class HomesController extends AppController
 	    }
 	    else {
 		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];;
+		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
 		$this->Page->set($pageData['Page']);
 		if($this->Page->save()) {
 		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1451,7 +1463,7 @@ class HomesController extends AppController
 	}
         $this -> set( 'formAction', 'admin_historyform');
         $this -> set( 'formHeader', 'Manage History Page Text' );
-        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history')));
+        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history','language' => Configure::read('App.SITELANGUAGE'))));
 	if(count($getPageData) != 0) {
 	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
 	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
