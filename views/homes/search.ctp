@@ -85,7 +85,7 @@ if(count($searchResults) != 0){
 					<p>
 					<?php 
 						if (strlen($searchResult['Song']['SongTitle']) >= 30) {
-							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "UTF-8").'">' . htmlentities(substr($searchResult['Song']['SongTitle'], 0, 30), ENT_QUOTES, "IUTF-8") . '...</span>';
+							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "UTF-8").'">' . htmlentities(substr($searchResult['Song']['SongTitle'], 0, 30), ENT_QUOTES, "UTF-8") . '...</span>';
 						} else {
 							echo $searchResult['Song']['SongTitle']; 
 					 	}
