@@ -87,7 +87,7 @@ if(count($searchResults) != 0){
 						if (strlen($searchResult['Song']['SongTitle']) >= 25) {
 							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle']).'">' . htmlentities(substr($searchResult['Song']['SongTitle'], 0, 25)) . '...</span>';
 						} else {
-							echo htmlentities($searchResult['Song']['SongTitle']); 
+							echo $searchResult['Song']['SongTitle']; 
 					 	}
 						if ($searchResult['Song']['Advisory'] == 'T') {
 							echo '<font class="explicit"> (Explicit)</font>';
