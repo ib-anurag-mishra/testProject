@@ -84,8 +84,8 @@ if(count($searchResults) != 0){
 				<td <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?> valign="top">
 					<p>
 					<?php 
-						if (strlen($searchResult['Song']['SongTitle']) >= 25) {
-							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "ISO-8859-1").'">' . htmlentities(substr($searchResult['Song']['SongTitle'], 0, 25), ENT_QUOTES, "ISO-8859-1") . '...</span>';
+						if (strlen($searchResult['Song']['SongTitle']) >= 30) {
+							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "UTF-8").'">' . htmlentities(substr($searchResult['Song']['SongTitle'], 0, 30), ENT_QUOTES, "IUTF-8") . '...</span>';
 						} else {
 							echo $searchResult['Song']['SongTitle']; 
 					 	}
