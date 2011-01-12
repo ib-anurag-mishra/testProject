@@ -71,7 +71,7 @@
 			<?php echo $content_for_layout; ?>
 		</div>
 		<div id="footer">
-			&copy; 2010 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
+			&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
 		</div>
 	</div>
 </body>
