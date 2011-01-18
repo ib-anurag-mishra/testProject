@@ -161,6 +161,7 @@ class AppModel extends Model {
 					$group = "yes";
 				}
                 if($group != "yes"){
+					if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 						if(isset($extra['genre']) && $extra['genre'] != '') {
 							$genreFilter = array('songs_genre', $extra['genre']);
 						} else {
