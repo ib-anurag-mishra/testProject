@@ -7,7 +7,7 @@
 
 class Genreid extends AppModel
 {
-  var $name = 'GenreId';
+  var $name = 'Genreid';
   var $usetable = 'genreids';
   
 }

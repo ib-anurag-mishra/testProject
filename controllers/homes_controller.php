@@ -484,7 +484,7 @@ class HomesController extends AppController
 				if($genre != '') {
 					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)'); 
 					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';
-					$genreId = $this->GenreId->find('all', array('conditions' => array('Genre' => $genre),'fields' => array('GenreId')));					
+					$genreId = $this->Genreid->find('all', array('conditions' => array('Genre' => $genre),'fields' => array('GenreId')));					
 					$genreVal = $genreId[0]['GenreId']['GenreId'];	
 				}
 				else {
