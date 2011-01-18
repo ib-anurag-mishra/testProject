@@ -44,12 +44,12 @@ class AppModel extends Model {
 							$field = $extra['sphinxsort'];
 							$expField = explode(".", $field);
 							$sortField = "Sort".$expField[1];
-							if($extra['genre'] != '') {
+							if(isset($extra['genre']) && $extra['genre'] != '') {
 								$genreFilter = array('songs_genre', $extra['genre']);
 							} else {
 								$genreFilter = '';
 							}
-							if($extra['role'] != '') {
+							if(isset($extra['role']) && $extra['role'] != '') {
 								$roleFilter = array('songs_role', $extra['role']);
 							} else {
 								$roleFilter = '';
@@ -77,12 +77,12 @@ class AppModel extends Model {
 						$field = $extra['sphinxsort'];
 						$expField = explode(".", $field);
 						$sortField = "Sort".$expField[1];
-						if($extra['genre'] != '') {
+						if(isset($extra['genre']) && $extra['genre'] != '') {
 							$genreFilter = array('songs_genre', $extra['genre']);
 						} else {
 							$genreFilter = '';
 						}
-						if($extra['role'] != '') {
+						if(isset($extra['role']) && $extra['role'] != '') {
 							$roleFilter = array('songs_role', $extra['role']);
 						} else {
 							$roleFilter = '';
@@ -145,12 +145,12 @@ class AppModel extends Model {
 
 				}
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-					if($extra['genre'] != '') {
+					if(isset($extra['genre']) && $extra['genre'] != '') {
 						$genreFilter = array('songs_genre', $extra['genre']);
 					} else {
 						$genreFilter = '';
 					}
-					if($extra['role'] != '') {
+					if(isset($extra['role']) && $extra['role'] != '') {
 						$roleFilter = array('songs_role', $extra['role']);
 					} else {
 						$roleFilter = '';
@@ -161,13 +161,12 @@ class AppModel extends Model {
 					$group = "yes";
 				}
                 if($group != "yes"){
-						if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-							if($extra['genre'] != '') {
+						if(isset($extra['genre']) && $extra['genre'] != '') {
 							$genreFilter = array('songs_genre', $extra['genre']);
 						} else {
 							$genreFilter = '';
 						}
-						if($extra['role'] != '') {
+						if(isset($extra['role']) && $extra['role'] != '') {
 							$roleFilter = array('songs_role', $extra['role']);
 						} else {
 							$roleFilter = '';
