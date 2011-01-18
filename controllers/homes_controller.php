@@ -458,7 +458,7 @@ class HomesController extends AppController
 					$composerSearch = array('match(Participant.Name) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
-					$sphinxComposerSearch = '@Name "'.addslashes($composer).'" '.$sphinxCheckCondition.' @role "Composer" '.$sphinxCheckCondition.' ';
+					$sphinxComposerSearch = '@Name "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
 					$role = '2';
 				}
 				else {
@@ -495,11 +495,11 @@ class HomesController extends AppController
 					$genreVal = '';
 				}
 				
-				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
-				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
+				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
+				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				//$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;
-				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory '.$country.' & '.$condSphinx;
+				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & '.$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
