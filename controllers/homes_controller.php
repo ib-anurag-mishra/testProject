@@ -368,8 +368,10 @@ class HomesController extends AppController
 		$country = $this->Session->read('territory');
 		if ($country == 'US') {
 			$nonMatchCountry = 'CA';
+			$countryVal = 1;
 		} else {
 			$nonMatchCountry = 'US';
+			$countryVal = 2;
 		}
         $patId = $this->Session->read('patron');
         $libId = $this->Session->read('library');        
@@ -521,7 +523,7 @@ class HomesController extends AppController
 				
 				$this->paginate = array('Song' => array(
 							'fields' => array('Country.Territory'),
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'genre' => $genreVal, 'role' => $role
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'genre' => $genreVal, 'role' => $role, 'country' => $countryVal
 						));
 							
 				if($composer == '') {
@@ -607,7 +609,7 @@ class HomesController extends AppController
 				}
 				$this->paginate = array('Song' => array(
 								'fields' => array('Country.Territory'),
-								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'country' => $countryVal
 							));
 			
 				if(!isset($_REQUEST['composer'])) {
