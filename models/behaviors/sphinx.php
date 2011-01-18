@@ -68,8 +68,10 @@ class SphinxBehavior extends ModelBehavior
                 case 'filter':
                     foreach ($setting as $arg)
                     {
-                        $arg[2] = empty($arg[2]) ? false : $arg[2];
-                        $this->runtime[$model->alias]['sphinx']->SetFilter($arg[0], (array)$arg[1], $arg[2]);
+						if (count($arg) > 1) {
+							$arg[2] = empty($arg[2]) ? false : $arg[2];
+							$this->runtime[$model->alias]['sphinx']->SetFilter($arg[0], (array)$arg[1], $arg[2]);
+						}
                     }
                    break;
                 case 'filterRange':
