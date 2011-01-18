@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song' );
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','GenreId','Currentpatron','Page','Wishlist','Album','Song' );
     
     /*
      Function Name : beforeFilter
@@ -483,8 +483,9 @@ class HomesController extends AppController
 				}
 				if($genre != '') {
 					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
-					$genreVal = $genre;	
+					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';
+					$genreId = $this->GenreId->find('all', array('conditions' => array('Genre' => $genre)),'fields' => array('GenreId'));					
+					$genreVal = $genreId[0]['GenreId'];	
 				}
 				else {
 					$genreSearch = '';
