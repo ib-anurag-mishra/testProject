@@ -44,12 +44,22 @@ class AppModel extends Model {
 							$field = $extra['sphinxsort'];
 							$expField = explode(".", $field);
 							$sortField = "Sort".$expField[1];
+							if($extra['genre'] != '') {
+								$genreFilter = array('songs_genre', $extra['genre']);
+							} else {
+								$genreFilter = '';
+							}
+							if($extra['role'] != '') {
+								$roleFilter = array('songs_role', $extra['role']);
+							} else {
+								$roleFilter = '';
+							}
 							if ($extra['sphinxdirection'] == 'asc') {
 								$modeSphinx = SPH_SORT_ATTR_ASC;
-								$sphinx = array('filter' => array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+								$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
 							} else {
 								$modeSphinx = SPH_SORT_ATTR_DESC;
-								$sphinx = array(array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+								$sphinx = array(array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 							}
 						} else {
 							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
@@ -67,12 +77,22 @@ class AppModel extends Model {
 						$field = $extra['sphinxsort'];
 						$expField = explode(".", $field);
 						$sortField = "Sort".$expField[1];
+						if($extra['genre'] != '') {
+							$genreFilter = array('songs_genre', $extra['genre']);
+						} else {
+							$genreFilter = '';
+						}
+						if($extra['role'] != '') {
+							$roleFilter = array('songs_role', $extra['role']);
+						} else {
+							$roleFilter = '';
+						}
 						if ($extra['sphinxdirection'] == 'asc') {
 							$modeSphinx = SPH_SORT_ATTR_ASC;
-							$sphinx = array(array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+							$sphinx = array(array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
 						} else {
 							$modeSphinx = SPH_SORT_ATTR_DESC;
-							$sphinx = array(array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+							$sphinx = array(array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 						}
 					} else {
 						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
