@@ -27,7 +27,6 @@ class AppModel extends Model {
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
 	global $callType;
 	$callType = "paginate";
-	print_r($extra);exit;
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';
@@ -47,10 +46,10 @@ class AppModel extends Model {
 							$sortField = "Sort".$expField[1];
 							if ($extra['sphinxdirection'] == 'asc') {
 								$modeSphinx = SPH_SORT_ATTR_ASC;
-								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+								$sphinx = array('filter' => array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
 							} else {
 								$modeSphinx = SPH_SORT_ATTR_DESC;
-								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+								$sphinx = array(array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 							}
 						} else {
 							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
@@ -70,10 +69,10 @@ class AppModel extends Model {
 						$sortField = "Sort".$expField[1];
 						if ($extra['sphinxdirection'] == 'asc') {
 							$modeSphinx = SPH_SORT_ATTR_ASC;
-							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+							$sphinx = array(array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
 						} else {
 							$modeSphinx = SPH_SORT_ATTR_DESC;
-							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+							$sphinx = array(array(array('songs_territory', $extra['country'])),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 						}
 					} else {
 						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
