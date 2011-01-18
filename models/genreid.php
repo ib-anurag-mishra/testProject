@@ -5,7 +5,7 @@
  Author : maycreate
 */
 
-class GenreId extends AppModel
+class Genreid extends AppModel
 {
   var $name = 'GenreId';
   var $usetable = 'genreids';
