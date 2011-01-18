@@ -27,6 +27,7 @@ class AppModel extends Model {
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
 	global $callType;
 	$callType = "paginate";
+	print_r($extra);exit;
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';

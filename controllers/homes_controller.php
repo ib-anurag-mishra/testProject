@@ -457,11 +457,13 @@ class HomesController extends AppController
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
 					$sphinxComposerSearch = '@Name "'.addslashes($composer).'" '.$sphinxCheckCondition.' @role "Composer" '.$sphinxCheckCondition.' ';
+					$role = '2';
 				}
 				else {
 					$composerSearch = '';
 					$preCondition4 = "";
 					$sphinxComposerSearch = '';
+					$role = '';
 				}
 				if($song != '') {
 					$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');
@@ -481,14 +483,17 @@ class HomesController extends AppController
 				}
 				if($genre != '') {
 					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';					
+					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
+					$genreVal = $genre;	
 				}
 				else {
 					$genreSearch = '';
 					$sphinxGenreSearch = '';
+					$genreVal = '';
 				}
 				
-				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
+				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
+				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				//$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;
 				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory '.$country.' & '.$condSphinx;
@@ -515,7 +520,7 @@ class HomesController extends AppController
 				
 				$this->paginate = array('Song' => array(
 							'fields' => array('Country.Territory'),
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'genre' => $genreVal, 'role' => $role
 						));
 							
 				if($composer == '') {
