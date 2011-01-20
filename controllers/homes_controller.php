@@ -455,7 +455,7 @@ class HomesController extends AppController
 					$sphinxArtistSearch = '';
 				}
 				if($composer != '') {
-					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
+					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');    
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
 					$sphinxComposerSearch = '@Name "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
@@ -512,9 +512,6 @@ class HomesController extends AppController
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
 				$this->set('searchKey','match='.$matchType.'&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
-				if($composer == '') {
-					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}
 				if (isset($this->passedArgs['sort'])){
 					$sphinxSort = $this->passedArgs['sort'];
 				} else {
@@ -527,13 +524,8 @@ class HomesController extends AppController
 				}
 				
 				$this->paginate = array('Song' => array(
-							'fields' => array('Country.Territory'),
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'genre' => $genreVal, 'role' => $role, 'country' => $countryVal
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 						));
-							
-				if($composer == '') {
-					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}
 				
 				$searchResults = $this->paginate('Song');
 				$this->Download->recursive = -1;
@@ -613,13 +605,9 @@ class HomesController extends AppController
 					$sphinxDirection = "";
 				}
 				$this->paginate = array('Song' => array(
-								'fields' => array('Country.Territory'),
-								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'country' => $countryVal
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
 							));
 			
-				if(!isset($_REQUEST['composer'])) {
-					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}				
 				$searchResults = $this->paginate('Song');
 				$this->Download->recursive = -1;
 				foreach($searchResults as $key => $value){
