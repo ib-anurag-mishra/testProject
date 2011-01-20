@@ -589,7 +589,7 @@ class HomesController extends AppController
 				}		
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				//$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory !".$nonMatchCountry." & @Territory ".$country." & ".$condSphinx;
-				$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & ".$condSphinx;
+				$sphinxFinalCondition = $searchParam." & "."@Territory ".$country." & @TrackBundleCount 0 & @DownloadStatus 1 & ".$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
