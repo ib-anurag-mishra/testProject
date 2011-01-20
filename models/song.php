@@ -17,6 +17,7 @@ class Song extends AppModel
 	var $hasOne = array(
 		'Participant' => array(
 			'className' => 'Participant',
+			'conditions' => array('Participant.Role' => 'Composer'),
 			'foreignKey' => 'ProdID'			
 		),	
 		'Genre' => array(
