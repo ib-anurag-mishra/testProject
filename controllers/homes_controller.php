@@ -455,7 +455,7 @@ class HomesController extends AppController
 					$sphinxArtistSearch = '';
 				}
 				if($composer != '') {
-					$composerSearch = array('match(Participant.Name) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
+					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode) and Participant.role="Composer"');    
 					$this->set('composer', $composer);
 					$preCondition4 = array('Participant.Role' => 'Composer'); 
 					$sphinxComposerSearch = '@Name "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
