@@ -484,18 +484,23 @@ class HomesController extends AppController
 					$sphinxAlbumSearch = '';
 				}
 				if($genre != '') {
-					$genreSearch = array('match(Genre.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';
-					$genreId = $this->Genreid->find('all', array('conditions' => array('Genre' => $genre),'fields' => array('GenreId')));					
-					$genreVal = $genreId[0]['Genreid']['GenreId'];	
+					$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)'); 
+					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
 				}
 				else {
 					$genreSearch = '';
 					$sphinxGenreSearch = '';
-					$genreVal = '';
 				}
+				if($country != '') {
+					$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)'); 
+					$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$sphinxCheckCondition.' ';
+				}
+				else {
+					$territorySearch = '';
+					$sphinxTerritorySearch = '';
+				}				
 				
-				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
+				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.''.$sphinxTerritorySearch;
 				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				//$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;

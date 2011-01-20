@@ -40,30 +40,19 @@ class AppModel extends Model {
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           if (empty($pagination)) {
 				  if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-						if(isset($extra['genre']) && $extra['genre'] != '') {
-								$genreFilter = array('songs_genre', $extra['genre']);
-							} else {
-								$genreFilter = '';
-							}
-							if(isset($extra['role']) && $extra['role'] != '') {
-								$roleFilter = array('songs_role', $extra['role']);
-							} else {
-								$roleFilter = '';
-							}
 						if (isset($extra['sphinxsort']) && ($extra['sphinxsort'] != '')) {
 							$field = $extra['sphinxsort'];
 							$expField = explode(".", $field);
 							$sortField = "Sort".$expField[1];
-							
 							if ($extra['sphinxdirection'] == 'asc') {
 								$modeSphinx = SPH_SORT_ATTR_ASC;
-								$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
 							} else {
 								$modeSphinx = SPH_SORT_ATTR_DESC;
-								$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 							}
 						} else {
-							$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
 						} 
 						
 						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
@@ -74,30 +63,19 @@ class AppModel extends Model {
           }
         } else {
 			if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-					if(isset($extra['genre']) && $extra['genre'] != '') {
-						$genreFilter = array('songs_genre', $extra['genre']);
-					} else {
-						$genreFilter = '';
-					}
-					if(isset($extra['role']) && $extra['role'] != '') {
-						$roleFilter = array('songs_role', $extra['role']);
-					} else {
-						$roleFilter = '';
-					}
 					if (isset($extra['sphinxsort']) && ($extra['sphinxsort'] != '')) {
 						$field = $extra['sphinxsort'];
 						$expField = explode(".", $field);
 						$sortField = "Sort".$expField[1];
-						
 						if ($extra['sphinxdirection'] == 'asc') {
 							$modeSphinx = SPH_SORT_ATTR_ASC;
-							$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_ASC => $sortField));
 						} else {
 							$modeSphinx = SPH_SORT_ATTR_DESC;
-							$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 						}
 					} else {
-						$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
+						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_EXTENDED => "@id DESC"));
 					} 
 					
 					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
@@ -147,34 +125,14 @@ class AppModel extends Model {
 
 				}
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-					if(isset($extra['genre']) && $extra['genre'] != '') {
-						$genreFilter = array('songs_genre', $extra['genre']);
-					} else {
-						$genreFilter = '';
-					}
-					if(isset($extra['role']) && $extra['role'] != '') {
-						$roleFilter = array('songs_role', $extra['role']);
-					} else {
-						$roleFilter = '';
-					}
-					$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2);
+					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 					$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
 					$paginationcount = count($paginationcount);
 					$group = "yes";
 				}
                 if($group != "yes"){
 					if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-						if(isset($extra['genre']) && $extra['genre'] != '') {
-							$genreFilter = array('songs_genre', $extra['genre']);
-						} else {
-							$genreFilter = '';
-						}
-						if(isset($extra['role']) && $extra['role'] != '') {
-							$roleFilter = array('songs_role', $extra['role']);
-						} else {
-							$roleFilter = '';
-						}
-						$sphinx = array('filter' => array(array('songs_territory', $extra['country']), $genreFilter, $roleFilter),'matchMode' => SPH_MATCH_EXTENDED2);
+						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 						$paginationcount = $this->find('count', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
 					} else {
 						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
