@@ -179,7 +179,7 @@ Class GenresController extends AppController
 				$sampleSongUrl = shell_exec('perl files/tokengen ' . $genre['Sample_Files']['CdnPath']."/".$genre['Sample_Files']['SaveAsName']);
 				$songUrl = shell_exec('perl files/tokengen ' . $genre['Full_Files']['CdnPath']."/".$genre['Full_Files']['SaveAsName']);
 				$finalArr[$i]['Album'] = $genre['Song']['Title'];
-				$finalArr[$i]['Song'] = $genre['Song']['Title'];
+				$finalArr[$i]['Song'] = $genre['Song']['SongTitle'];
 				$finalArr[$i]['Artist'] = $genre['Song']['Artist'];
 				$finalArr[$i]['ProdArtist'] = $genre['Song']['ArtistText'];
 				$finalArr[$i]['Advisory'] = $genre['Song']['Advisory'];
