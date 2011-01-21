@@ -74,7 +74,7 @@ if(count($searchResults) != 0){
 					<p>
 					<?php
 						if (strlen($searchResult['Song']['Title']) >= 19) {
-							echo '<span title="'.htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8").'">' . htmlentities(substr($searchResult['Song']['Title'], 0, 19), ENT_QUOTES, "UTF-8") . '...' . '</span>'; 
+							echo '<span title="'.htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8").'">' . substr(htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8"), 0, 19) . '...' . '</span>'; 
 						} else { 
 							echo $searchResult['Song']['Title'];
 						}
@@ -86,7 +86,7 @@ if(count($searchResults) != 0){
 					<p>
 					<?php 
 						if (strlen($searchResult['Song']['SongTitle']) > 25) {
-							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "UTF-8").'">' . htmlentities(substr($searchResult['Song']['SongTitle'], 0, 25), ENT_QUOTES, "UTF-8") . '...</span>';
+							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "UTF-8").'">' . substr(htmlentities($searchResult['Song']['SongTitle']), 0, 25) . '...</span>';
 						} else {
 							echo $searchResult['Song']['SongTitle']; 
 					 	}
