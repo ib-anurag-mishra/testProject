@@ -5,7 +5,7 @@
 if(count($searchResults) != 0){
 ?>
 <div id="genreArtist" class="links">
-	<?php echo $paginator->sort('Artist ', 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort('Artist ', 'Song.ArtistText', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.ArtistText', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <?php if(isset($composer)){?>
 <div id="genreComposer" class="links">
