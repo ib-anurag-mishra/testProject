@@ -511,7 +511,7 @@ class HomesController extends AppController
 			
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				
-				$this->set('searchKey','match='.$matchType.'&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.$album.'&genre_id='.$genre);
+				$this->set('searchKey','match='.$matchType.'&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.urlencode($album).'&genre_id='.urlencode($genre));
 				if (isset($this->passedArgs['sort'])){
 					$sphinxSort = $this->passedArgs['sort'];
 				} else {
