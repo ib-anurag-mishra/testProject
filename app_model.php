@@ -52,7 +52,7 @@ class AppModel extends Model {
 								$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2, 'sortMode' => array(SPH_SORT_ATTR_DESC => $sortField));
 							}
 						} else {
-							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2));
+							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 						} 
 						
 						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
