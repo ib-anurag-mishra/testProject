@@ -569,16 +569,16 @@ class HomesController extends AppController
 						$value = str_replace("$", " ", $value);
 						$value = '"'.addslashes($value).'"';
 						if ($searchParam == "") {
-							$searchParam = "@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+							$searchParam = "@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 						} else {
-							$searchParam = $searchParam." | "."@Artist ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+							$searchParam = $searchParam." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 						}
 					}
 				} else {
 					$searchKey = str_replace("^", " ", $searchKey);
 					$searchKey = str_replace("$", " ", $searchKey);
 					$searchKey = '"'.addslashes($searchKey).'"';
-					$searchParam = "@Artist ".$searchKey." | "."@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey;
+					$searchParam = "@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey;
 				}
 				/*$spValue = substr($spValue, 0, -1);
 				$spValue = '"'.$spValue.'"';
