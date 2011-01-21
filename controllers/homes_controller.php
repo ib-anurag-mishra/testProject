@@ -266,23 +266,26 @@ class HomesController extends AppController
     function autoComplete() {
 		Configure::write('debug', 0);
         $this->Album->recursive = 2;
-		$country = $this->Session->read('territory');		
-        $albumResults = $this->Album->find('all', array(
-								'conditions'=>array('Album.AlbumTitle LIKE'=>$_GET['q'].'%',
-													'Album.DownloadStatus' => 1,
-													'Album.TrackBundleCount' => 0,
-													'Country.Territory' => $country						
-							    ),
+		$country = $this->Session->read('territory');
+		
+		$this->Song->recursive = 2;
+		$albumResults = $this->Song->find('all', array(
+								'conditions'=>array('Song.Title LIKE'=>$_GET['q'].'%',
+								'Song.DownloadStatus' => 1,
+								'Song.TrackBundleCount' => 0,
+								'Country.Territory' => $country),
+								'fields' => array('Title'),
 								'contain' => array(
 								'Country' => array(
 									'fields' => array(
 										'Country.Territory'								
 										)
-									)),
-							    'fields' => array('AlbumTitle'), 
-							    'group' => array('AlbumTitle',),
-							    'limit' => '6'));
+									)),								
+								'group' => array('Title',),
+								'limit' => '6'));
+								
 		$this->set('albumResults', $albumResults);
+		
 		$this->Song->recursive = 2;
 		$artistResults = $this->Song->find('all', array(
 								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%',
