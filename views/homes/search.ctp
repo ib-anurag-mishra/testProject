@@ -37,16 +37,16 @@ if(count($searchResults) != 0){
 				<td width="180" valign="top">
 					<p>
 						<?php
-							if (strlen($searchResult['Song']['Artist']) >= 19) {
-								$ArtistName = substr($searchResult['Song']['Artist'], 0, 22) . '..';
-								if (strlen($searchResult['Song']['Artist']) >= 60) {
-									$searchResult['Song']['Artist'] = substr($searchResult['Song']['Artist'], 0, 60) . '...';
+							if (strlen($searchResult['Song']['ArtistText']) >= 19) {
+								$ArtistName = substr($searchResult['Song']['ArtistText'], 0, 22) . '..';
+								if (strlen($searchResult['Song']['ArtistText']) >= 60) {
+									$searchResult['Song']['ArtistText'] = substr($searchResult['Song']['ArtistText'], 0, 60) . '...';
 								}
-								echo '<span title="'.htmlentities($searchResult['Song']['Artist']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Song']['ArtistText']),$searchResult['Song']['ReferenceID'])).'</span>';
+								echo '<span title="'.htmlentities($searchResult['Song']['ArtistText']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Song']['ArtistText']),$searchResult['Song']['ReferenceID'])).'</span>';
 						?>
 						<?php
 							} else {
-								$ArtistName = $searchResult['Song']['Artist'];
+								$ArtistName = $searchResult['Song']['ArtistText'];
 								echo $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($searchResult['Song']['ArtistText']),$searchResult['Song']['ReferenceID']));
 							}
 						?>
