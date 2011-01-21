@@ -2,7 +2,7 @@
  $finalResults = Array();
  if(count($albumResults) > 0){ 
    foreach($albumResults as $albumResult):
-       $finalResults[$albumResult['Album']['AlbumTitle']] = $albumResult['Album']['AlbumTitle'];
+       $finalResults[$albumResult['Song']['Title']] = $albumResult['Song']['Title'];
    endforeach;
  }
  if(count($artistResults) > 0){
