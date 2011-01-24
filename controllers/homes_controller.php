@@ -740,12 +740,31 @@ class HomesController extends AppController
 		$country = $this->Session->read('territory');
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
+		$this->Song->recursive = 2;
+		$results = $this->Song->find('all', array(
+								'conditions'=>array(
+									'Song.DownloadStatus' => 1,
+									'Song.TrackBundleCount' => 0,
+									'Country.Territory' => $country),
+								'fields' => array('ProdID'),
+								'contain' => array(
+								'Country' => array(
+									'fields' => array(
+										'Country.Territory'								
+										)
+									)),								
+								'group' => array('Genre')));
+		$data='';
+		foreach($results as $k => $v){
+			$data .= $v['Song']['ProdID'].','; 
+		}
 		if (($genre = Cache::read("genre".$country)) === false) {
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory' => $country)
+									array('Country.Territory' => $country),
+									array('Genre.ProdID IN ('.rtrim($data,',').')')
 								)
 							),
 						'fields' => array(
