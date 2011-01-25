@@ -72,7 +72,7 @@ if(count($searchResults) != 0){
 					<p>
 					<?php
 						if (strlen($searchResult['Song']['Title']) >= 19) {
-							echo '<span title="'.htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8").'">' . substr(htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8"), 0, 19) . '...' . '</span>'; 
+							echo '<span title="'.htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8").'">' . substr(htmlentities($searchResult['Song']['Title'], ENT_NOQUOTES, "UTF-8"), 0, 19) . '...' . '</span>'; 
 						} else { 
 							echo $searchResult['Song']['Title'];
 						}
