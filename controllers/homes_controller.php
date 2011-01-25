@@ -272,7 +272,8 @@ class HomesController extends AppController
 		$albumResults = $this->Song->find('all', array(
 								'conditions'=>array('Song.Title LIKE'=>$_GET['q'].'%',
 								'Song.DownloadStatus' => 1,
-								'Song.TrackBundleCount' => 0,
+								'Song.Sample_FileID != ""',
+								'Song.FullLength_FIleID != ""',
 								'Country.Territory' => $country),
 								'fields' => array('Title'),
 								'contain' => array(
@@ -290,7 +291,8 @@ class HomesController extends AppController
 		$artistResults = $this->Song->find('all', array(
 								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%',
 								'Song.DownloadStatus' => 1,
-								'Song.TrackBundleCount' => 0,
+								'Song.Sample_FileID != ""',
+								'Song.FullLength_FIleID != ""',
 								'Country.Territory' => $country),
 								'fields' => array('ArtistText'),
 								'contain' => array(
@@ -306,7 +308,8 @@ class HomesController extends AppController
         $songResults = $this->Song->find('all', array(
 							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%',
 												'Song.DownloadStatus' => 1,
-												'Song.TrackBundleCount' => 0,
+												'Song.Sample_FileID != ""',
+												'Song.FullLength_FIleID != ""',
 												'Country.Territory' => $country
 												),
 							'contain' => array(
@@ -507,7 +510,7 @@ class HomesController extends AppController
 				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				//$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;
-				$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & '.$condSphinx;
+				$sphinxFinalCondition = $sphinxFinalCondition.' & @Sample_FileID -NULL & @FullLength_FIleID -NULL & @DownloadStatus 1 & '.$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
@@ -592,7 +595,7 @@ class HomesController extends AppController
 				}		
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				//$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory !".$nonMatchCountry." & @Territory ".$country." & ".$condSphinx;
-				$sphinxFinalCondition = $searchParam." & "."@Territory ".$country." & @TrackBundleCount 0 & @DownloadStatus 1 & ".$condSphinx;
+				$sphinxFinalCondition = $searchParam." & "."@Territory ".$country." & @Sample_FileID -NULL & @FullLength_FIleID -NULL &  @DownloadStatus 1 & ".$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
@@ -741,6 +744,7 @@ class HomesController extends AppController
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
 		$this->Song->recursive = 2;
+
 		if (($genre = Cache::read("genre".$country)) === false) {
 			$results = $this->Song->find('all', array(
 									'conditions'=>array(
@@ -1574,7 +1578,7 @@ class HomesController extends AppController
 										'Sample_Files.CdnPath' ,
 										'Sample_Files.SaveAsName'
 								)
-							),                              
+							),
 					), 'order' => array('Country.SalesDate' => 'desc')
 					)
 			);
