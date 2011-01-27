@@ -1433,7 +1433,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}                  
 					}
-					elseif($status == 1){
+					elseif($status == 1 && $retPos !=''){
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
 							$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
@@ -1493,9 +1493,13 @@ Class UsersController extends AppController
 						$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 					}
 					else{
-						//$errStrArr = explode('ERRMSG=',$retStr);
-						//$errMsg = $errStrArr['1'];
-						$this->Session->setFlash($msg);
+						$errStrArr = explode('ERRMSG=',$retStr);
+						$errMsg = $errStrArr['1'];
+						if(isset($errMsg)){
+							$this->Session->setFlash($errMsg);
+						} else {
+							$this->Session->setFlash($msg);
+						}
 						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 					}
 				}         
