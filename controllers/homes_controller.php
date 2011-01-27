@@ -272,7 +272,7 @@ class HomesController extends AppController
 		$albumResults = $this->Song->find('all', array(
 								'conditions'=>array('Song.Title LIKE'=>$_GET['q'].'%',
 								'Song.DownloadStatus' => 1,
-								"Song.Sample_FileID != ''",
+								'TrackBundleCount' => 0,
 								'Country.Territory' => $country),
 								'fields' => array('Title'),
 								'contain' => array(
@@ -290,7 +290,7 @@ class HomesController extends AppController
 		$artistResults = $this->Song->find('all', array(
 								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%',
 								'Song.DownloadStatus' => 1,
-								"Song.Sample_FileID != ''",
+								'TrackBundleCount' => 0,
 								'Country.Territory' => $country),
 								'fields' => array('ArtistText'),
 								'contain' => array(
@@ -306,7 +306,7 @@ class HomesController extends AppController
         $songResults = $this->Song->find('all', array(
 							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%',
 												'Song.DownloadStatus' => 1,
-												"Song.Sample_FileID != ''",
+												'TrackBundleCount' => 0,
 												'Country.Territory' => $country
 												),
 							'contain' => array(
