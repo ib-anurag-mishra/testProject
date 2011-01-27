@@ -1500,6 +1500,7 @@ Class UsersController extends AppController
 						} else {
 							$this->Session->setFlash($msg);
 						}
+						$this->Session->destroy();
 						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 					}
 				}         
