@@ -1500,7 +1500,6 @@ Class UsersController extends AppController
 						} else {
 							$this->Session->setFlash($msg);
 						}
-						$this->Session->destroy();
 						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 					}
 				}         
@@ -2541,8 +2540,8 @@ Class UsersController extends AppController
 		}
 	}
    /*
-    Function Name : ilogin
-    Desc : For patron ilogin(Innovative) login method
+    Function Name : inhlogin
+    Desc : For patron Innovative Https login method
    */
    
    function inhlogin(){
@@ -2730,11 +2729,11 @@ Class UsersController extends AppController
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
 						if($errMsgCount == '1'){
 							$this -> Session -> setFlash("Requested record not found.");
-							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
+							$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
 						}
 						else{
 							$this -> Session -> setFlash("Authentication server down.");
-							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
+							$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
 						}                  
 					}
 					elseif($status == 1){
