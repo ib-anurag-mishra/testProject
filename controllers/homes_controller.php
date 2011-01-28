@@ -265,61 +265,56 @@ class HomesController extends AppController
     */
     function autoComplete() {
 		Configure::write('debug', 0);
-        $this->Album->recursive = 2;
 		$country = $this->Session->read('territory');
+		$searchKey = '';   
+		if(isset($_REQUEST['q']) && $_REQUEST['q'] != '') {
+			$searchKey = $_REQUEST['q'];
+		}
+		$searchText = $searchKey;
+		$this->set('searchKey','search='.urlencode($searchText));
+		$searchKey = str_replace("^", " ", $searchKey);
+		$searchKey = str_replace("$", " ", $searchKey);
+		$searchKey = "'".addslashes($searchKey)."'";				
+		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
+		$searchParam = "@Title ".$searchKey;
+		$sphinxFinalCondition = $searchParam." & "."@Territory '".$country."' & @DownloadStatus 1";
+		$condSphinx = '';
+		$sphinxSort = "";
+		$sphinxDirection = "";
+		$this->paginate = array('Song' => array(
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'limit' => 6
+					));
+	
+		$searchResults = $this->paginate('Song');
+		$output = array_slice($searchResults, 0, 6);			
+		$this->set('albumResults', $output);
 		
-		$this->Song->recursive = 2;
-		$albumResults = $this->Song->find('all', array(
-								'conditions'=>array('Song.Title LIKE'=>$_GET['q'].'%',
-								'Song.DownloadStatus' => 1,
-								'TrackBundleCount' => 0,
-								'Country.Territory' => $country),
-								'fields' => array('Title'),
-								'contain' => array(
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory'								
-										)
-									)),								
-								'group' => array('Title',),
-								'limit' => '6'));
-								
-		$this->set('albumResults', $albumResults);
-		
-		$this->Song->recursive = 2;
-		$artistResults = $this->Song->find('all', array(
-								'conditions'=>array('Song.ArtistText LIKE'=>$_GET['q'].'%',
-								'Song.DownloadStatus' => 1,
-								'TrackBundleCount' => 0,
-								'Country.Territory' => $country),
-								'fields' => array('ArtistText'),
-								'contain' => array(
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory'								
-										)
-									)),								
-								'group' => array('ArtistText',),
-								'limit' => '6'));
-		$this->set('artistResults', $artistResults);
-        $this->Song->recursive = 2;
-        $songResults = $this->Song->find('all', array(
-							'conditions'=>array('Song.SongTitle LIKE'=>$_GET['q'].'%',
-												'Song.DownloadStatus' => 1,
-												'TrackBundleCount' => 0,
-												'Country.Territory' => $country
-												),
-							'contain' => array(
-							'Country' => array(
-								'fields' => array(
-									'Country.Territory'								
-									)
-								)),												
-							'fields' => array('SongTitle'), 
-							'group' => array('SongTitle',),
-							'limit' => '6'));
-		$this->set('songResults', $songResults);
-        $this->layout = 'ajax';
+		$searchParam = "@ArtistText ".$searchKey;
+		$sphinxFinalCondition = $searchParam." & "."@Territory '".$country."' & @DownloadStatus 1";
+		$condSphinx = '';
+		$sphinxSort = "";
+		$sphinxDirection = "";
+		$this->paginate = array('Song' => array(
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'limit' => 6
+					));
+	
+		$searchResults = $this->paginate('Song');
+		$output = array_slice($searchResults, 0, 6);			
+		$this->set('artistResults', $output);
+
+		$searchParam = "@SongTitle ".$searchKey;
+		$sphinxFinalCondition = $searchParam." & "."@Territory '".$country."' & @DownloadStatus 1";
+		$condSphinx = '';
+		$sphinxSort = "";
+		$sphinxDirection = "";
+		$this->paginate = array('Song' => array(
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'limit' => 6
+					));
+	
+		$searchResults = $this->paginate('Song');
+		$output = array_slice($searchResults, 0, 6);			
+		$this->set('songResults', $output);
+		$this->layout = 'ajax';
     }
     
     /*
