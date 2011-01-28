@@ -25,8 +25,14 @@ class AppModel extends Model {
     }
     
     function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
-	global $callType;
-	$callType = "paginate";
+		global $callType;
+		$callType = "paginate";
+		if(isset($extra['extra'])){
+			$limit = 6;
+		}
+		else{
+			$limit = 20;
+		}	
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';
@@ -55,7 +61,7 @@ class AppModel extends Model {
 							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 						} 
 						
-						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $limit, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				 }
@@ -78,7 +84,7 @@ class AppModel extends Model {
 						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 					} 
 					
-					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => 20, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $limit, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
 					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			}          

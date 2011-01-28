@@ -282,7 +282,7 @@ class HomesController extends AppController
 		$sphinxSort = "";
 		$sphinxDirection = "";
 		$this->paginate = array('Song' => array(
-						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'limit' => 6
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
 					));
 	
 		$searchResults = $this->paginate('Song');
@@ -295,7 +295,7 @@ class HomesController extends AppController
 		$sphinxSort = "";
 		$sphinxDirection = "";
 		$this->paginate = array('Song' => array(
-						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'limit' => 6
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
 					));
 	
 		$searchResults = $this->paginate('Song');
@@ -308,7 +308,7 @@ class HomesController extends AppController
 		$sphinxSort = "";
 		$sphinxDirection = "";
 		$this->paginate = array('Song' => array(
-						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'limit' => 6
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
 					));
 	
 		$searchResults = $this->paginate('Song');
