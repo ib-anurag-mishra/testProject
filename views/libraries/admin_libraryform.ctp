@@ -636,6 +636,7 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
+						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();							
@@ -652,6 +653,7 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
+						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();							
@@ -668,6 +670,7 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
+						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();							
@@ -684,6 +687,7 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
+						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();							
@@ -700,6 +704,7 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
+						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();							
@@ -716,6 +721,7 @@
 						$("#sip_port").hide();
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
+						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
 						$("#ezproxy_secret").hide();
