@@ -274,7 +274,7 @@ class HomesController extends AppController
 		$this->set('searchKey','search='.urlencode($searchText));
 		$searchKey = str_replace("^", " ", $searchKey);
 		$searchKey = str_replace("$", " ", $searchKey);
-		$searchKey = "'".addslashes($searchKey)."'";				
+		$searchKey = "'^".addslashes($searchKey)."'";				
 		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 		$searchParam = "@Title ".$searchKey;
 		$sphinxFinalCondition = $searchParam." & "."@Territory '".$country."' & @DownloadStatus 1";
