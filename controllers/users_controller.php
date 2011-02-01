@@ -1339,6 +1339,8 @@ Class UsersController extends AppController
 					$retCardArr = explode("P BARCODE[pb]",$retStr);
 					$retPos = strpos($retCardArr['1'],"<br/>");
 					$retCard = substr($retCardArr['1'],1,$retPos-1);
+					$errStrArr = explode('ERRMSG=',$retStr);
+					$errMsg = $errStrArr['1'];					
 					$this->Variable->recursive = -1;
 					$allVariables = $this->Variable->find('all',array(
 														'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
@@ -1433,7 +1435,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}                  
 					}
-					elseif($status == 1 && $retPos !=''){
+					elseif($status == 1 && $errMsg == ''){
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
 							$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
