@@ -256,7 +256,7 @@ Class GenresController extends AppController
 			  ),
 			  'extra' => array('chk' => 1),
 		      'order' => 'Song.ArtistText ASC',		      
-		      'limit' => '60', 'cache' => 'yes'
+		      'limit' => '60', 'cache' => 'yes','check' => 2
 		      ); 
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
