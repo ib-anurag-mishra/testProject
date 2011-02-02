@@ -37,7 +37,7 @@ class AppModel extends Model {
 			$limit = 3;
 		}
 		if(isset($extra['check'])){
-			$limit = 50;
+			$limit = 60;
 		}		
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
