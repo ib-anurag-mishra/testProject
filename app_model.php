@@ -32,7 +32,10 @@ class AppModel extends Model {
 		}
 		else{
 			$limit = 20;
-		}	
+		}
+		if(isset($extra['chk'])){
+			$limit = 3;
+		}			
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';

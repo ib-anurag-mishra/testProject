@@ -582,7 +582,7 @@ Class ArtistsController extends AppController
 								'Files.SourceURL'
 							),
 						)			                                
-					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3','cache' => 'yes'
+					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3','cache' => 'yes', 'chk' => 2
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
