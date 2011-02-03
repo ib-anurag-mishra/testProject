@@ -90,7 +90,7 @@
 											if(strlen($albumSong['Song']['Artist']) >= 60){
 												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60). '...';
 											}
-											echo '<span title="'.$albumSong['Song']['Artist'].'">' . substr($albumSong['Song']['Artist'], 0, 17) . '...</span>';
+											echo '<span title="'.$albumSong['Song']['Artist'].'">' . substr($albumSong['Song']['Artist'], 0, 13) . '...</span>';
 										} else {
 											echo '<p>' . $albumSong['Song']['Artist'] . '</p>';
 										}
