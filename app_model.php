@@ -28,16 +28,10 @@ class AppModel extends Model {
 		global $callType;
 		$callType = "paginate";
 		if(isset($extra['extra'])){
-			$limit = 6;
+			$pageVal = 6;
 		}
 		else{
-			$limit = 20;
-		}
-		if(isset($extra['chk'])){
-			$limit = 3;
-		}
-		if(isset($extra['check'])){
-			$limit = 60;
+			$pageVal = 20;
 		}		
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
@@ -67,7 +61,7 @@ class AppModel extends Model {
 							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 						} 
 						
-						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $limit, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				 }
@@ -90,7 +84,7 @@ class AppModel extends Model {
 						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 					} 
 					
-					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $limit, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
 					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			}          
