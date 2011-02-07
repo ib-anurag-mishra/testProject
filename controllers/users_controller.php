@@ -1387,7 +1387,7 @@ Class UsersController extends AppController
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-							$this->Session->write("innovative_var","innovative_var");
+							$this->Session->write("innovative_var_name","innovative_var_name");
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 							$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
 							$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
