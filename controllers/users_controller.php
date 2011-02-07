@@ -1229,11 +1229,11 @@ Class UsersController extends AppController
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
 						if($errMsgCount == '1'){
 							$this -> Session -> setFlash("Requested record not found.");
-							$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+							$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 						}
 						else{
 							$this -> Session -> setFlash("Authentication server down.");
-							$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+							$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 						}                  
 					}
 					elseif($retStatus == $name){
@@ -1334,11 +1334,11 @@ Class UsersController extends AppController
 							@$errMsgCount = substr($errMsgArr['1'],0,1);
 							if($errMsgCount == '1'){
 								$this -> Session -> setFlash("Requested record not found.");
-								$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+								$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 							}
 							else{
 								$this -> Session -> setFlash("Authentication server down.");
-								$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+								$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 							}                  
 						}
 						elseif($status == 1){
@@ -1402,13 +1402,11 @@ Class UsersController extends AppController
 						}
 						else{
 							$this -> Session -> setFlash($msg);
-							$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+							$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 						}
 					} else {
-						$errStrArr = explode('ERRMSG=',$retStr);
-						$errMsg = $errStrArr['1'];
-						$this -> Session -> setFlash($errMsg);
-						$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
+						$this -> Session -> setFlash("This is not correct Patron Last Name.");
+						$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 					}
 				}         
 			}
