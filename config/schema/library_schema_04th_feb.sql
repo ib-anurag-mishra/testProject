@@ -1,0 +1,2 @@
+ALTER TABLE `libraries` ADD `library_ezproxy_name` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `library_ezproxy_referral`;
+ALTER TABLE `libraries` ADD `library_ezproxy_logout` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `library_ezproxy_name`; 
