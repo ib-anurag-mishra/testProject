@@ -1223,8 +1223,10 @@ Class UsersController extends AppController
 					$body = $xpath->query('/html/body');
 					$retStr = $dom->saveXml($body->item(0));               
 					$retMsgArr = explode("PATRN NAME[pn]=",$retStr);               
-					@$retStatus = $retMsgArr['1'];               
-					if($retStatus == ''){
+					$pos = strpos($retMsgArr['1'],"<br/>");
+					$retStatus = substr($retMsgArr['1'],1,$pos-1);
+					$statusVal = strpos($retStatus,$name);
+					if($statusVal == '' && $retStatus == ''){
 						$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
 						if($errMsgCount == '1'){
@@ -1236,7 +1238,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 						}                  
 					}
-					elseif($retStatus == $name){
+					elseif(!($statusVal === false)){
 						$this->Variable->recursive = -1;
 						$allVariables = $this->Variable->find('all',array(
 												'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
