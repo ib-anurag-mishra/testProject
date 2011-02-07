@@ -125,6 +125,8 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_location',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
+																				'Library.library_ezproxy_name',
+																				'Library.library_ezproxy_logout',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -217,6 +219,8 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_location',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
+																				'Library.library_ezproxy_name',
+																				'Library.library_ezproxy_logout',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -308,6 +312,9 @@ Class LibrariesController extends AppController
 					elseif($this->data['Library']['library_authentication_method'] == 'innovative_var') {
                         $this->Library->setValidation('library_step1_innovative_var');
                     }
+					elseif($this->data['Library']['library_authentication_method'] == 'innovative_var_name') {
+                        $this->Library->setValidation('library_step1_innovative_var_name');
+                    }					
 					elseif($this->data['Library']['library_authentication_method'] == 'innovative_var_https') {
                         $this->Library->setValidation('library_step1_innovative_var_https');
                     }					
@@ -518,8 +525,11 @@ Class LibrariesController extends AppController
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_sip2_var_wo_pin');
                     }
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var') {
-                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative_var');
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative_var_name');
                     }
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var_name') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative_var');
+                    }					
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'innovative_var_https') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_innovative_var_https');
                     }					

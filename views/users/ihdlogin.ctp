@@ -3,7 +3,7 @@
 	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'ihdlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
-		echo $form->input('card', array('label' => 'Card No','value' => $card));
+		echo $form->input('card', array('label' => 'Card Number','value' => $card));
 		echo '<br class="clr">';
 		echo $form->input('pin', array('label' => 'Pin','value' => $pin, 'type'=>'password'));
 	echo $form->end('Login');

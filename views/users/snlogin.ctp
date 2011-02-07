@@ -6,6 +6,6 @@
 	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'snlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
-		echo $form->input('card', array('label' => 'Card No','value' => $card));
+		echo $form->input('card', array('label' => 'Card Number','value' => $card));
 	echo $form->end('Login');  
 ?>

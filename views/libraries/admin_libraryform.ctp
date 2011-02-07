@@ -20,7 +20,9 @@
 		$getData['Library']['library_sip_password'] = "";
 		$getData['Library']['library_sip_location'] = "";
 		$getData['Library']['library_ezproxy_secret'] = "";
-		$getData['Library']['library_ezproxy_referral'] = "";		
+		$getData['Library']['library_ezproxy_referral'] = "";
+		$getData['Library']['library_ezproxy_name'] = "";
+		$getData['Library']['library_ezproxy_logout'] = "";
 		$getData['Library']['library_bgcolor'] = "606060";
 		$getData['Library']['library_nav_bgcolor'] = "3F3F3F";
 		$getData['Library']['library_boxheader_bgcolor'] = "CCCCCC";
@@ -110,6 +112,9 @@
 								elseif($getData['Library']['library_authentication_method'] == "innovative_var") {
 									echo "<label>Innovative Var</label>";
 								}
+								elseif($getData['Library']['library_authentication_method'] == "innovative_var_name") {
+									echo "<label>Innovative Var Name</label>";
+								}								
 								elseif($getData['Library']['library_authentication_method'] == "innovative_https") {
 									echo "<label>Innovative HTTPS</label>";
 								}
@@ -160,6 +165,7 @@
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
 									'innovative_var' => 'Innovative Var',
+									'innovative_var_name' => 'Innovative Var Name',
 									'innovative_wo_pin' => 'Innovative w/o PIN',
 									'innovative_https' => 'Innovative HTTPS',
 									'innovative_var_https' => 'Innovative Var HTTPS',
@@ -209,11 +215,11 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative2" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative2" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_url',array( 'label' => false ,'value' => $getData['Library']['library_authentication_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
@@ -244,8 +250,16 @@
 					<tr id="ezproxy_referral" <?php if($getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Referral URL');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_referral',array('label' => false, 'value' => $getData['Library']['library_ezproxy_referral'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="ezproxy_name" <?php if($getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Library Name');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_name',array('label' => false, 'value' => $getData['Library']['library_ezproxy_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="ezproxy_logout" <?php if($getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Library Logout URL');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_logout',array('label' => false, 'value' => $getData['Library']['library_ezproxy_logout'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
-					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https"){?>style="display:none;"<?php } ?>>
+					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
 					<?php
 					if(empty($allVariables))
 					{
@@ -639,7 +653,9 @@
 						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'innovative') {
 						$("#allurl").show();
@@ -656,7 +672,9 @@
 						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'innovative_var') {
 						$("#allurl").show();
@@ -673,7 +691,9 @@
 						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'innovative_var_https') {
 						$("#allurl").show();
@@ -690,7 +710,9 @@
 						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}					
 					else if ($(this).val() == 'innovative_https') {
 						$("#allurl").show();
@@ -707,7 +729,9 @@
 						$("#sip_location").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}					
 					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#allurl").show();
@@ -725,7 +749,9 @@
 						$("#sip_password").hide();
 						$("#sip_location").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'sip2') {
 						$("#allurl").show();
@@ -742,7 +768,9 @@
 						$("#sip_password").show();
 						$("#sip_location").show();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'sip2_wo_pin') {
 						$("#allurl").show();
@@ -759,7 +787,9 @@
 						$("#sip_password").show();
 						$("#sip_location").show();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'sip2_var') {
 						$("#allurl").show();
@@ -776,7 +806,9 @@
 						$("#sip_password").show();
 						$("#sip_location").show();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 					else if ($(this).val() == 'sip2_var_wo_pin') {
 						$("#allurl").show();
@@ -793,12 +825,14 @@
 						$("#sip_password").show();
 						$("#sip_location").show();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}					
 					else if ($(this).val() == 'ezproxy') {
 						$("#allurl").show();
 						$("#referral_url").hide();
-						$("#innovative1").show();
+						$("#innovative1").hide();
 						$("#innovative2").hide();
 						$("#innv_var").hide();
 						//$("#innovative_var_pin").hide();
@@ -810,7 +844,9 @@
 						$("#sip_password").hide();
 						$("#sip_location").hide();
 						$("#ezproxy_secret").show();
-						$("#ezproxy_referral").show();						
+						$("#ezproxy_referral").show();
+						$("#ezproxy_name").show();
+						$("#ezproxy_logout").show();
 					}					
 					else if ($(this).val() == 'innovative_var_wo_pin') {
 						$("#allurl").show();
@@ -827,8 +863,29 @@
 						$("#sip_password").hide();
 						$("#sip_location").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
-					}										
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+					}
+					else if ($(this).val() == 'innovative_var_name') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").show();
+						$("#innv_var").show();
+						//$("#innovative_var_pin").show();
+						//$("#variable").show();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_password").hide();
+						$("#sip_location").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+					}						
 					else {
 						$("#allurl").hide();
 						$("#referral_url").hide();
@@ -844,7 +901,9 @@
 						$("#sip_password").hide();
 						$("#sip_location").hide();
 						$("#ezproxy_secret").hide();
-						$("#ezproxy_referral").hide();							
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
 					}
 				});
 			});
