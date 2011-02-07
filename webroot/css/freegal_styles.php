@@ -290,7 +290,7 @@ ul.marquee li {
         font-size:13px;
         clear:both;
         width:620px;
-        height:35px;
+        height:17px;
         text-align:center;
         background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
