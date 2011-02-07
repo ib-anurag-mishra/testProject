@@ -563,6 +563,7 @@ Class LibrariesController extends AppController
     function admin_doajaxfileupload() {
     Configure::write('debug', 0);
 	$this->layout = false;
+	$success = "";
     $error = "";
 	$msg = "";
 	$fileElementName = 'fileToUpload';
