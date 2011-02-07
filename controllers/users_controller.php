@@ -1174,14 +1174,14 @@ Class UsersController extends AppController
 			$patronId = $card;        
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");
-				if($pin != ''){
+				if($name != ''){
 				   $this->set('name',$name);
 				}
 				else{
 				   $this->set('name',"");
 				}            
 			}
-			elseif($pin == ''){            
+			elseif($name == ''){            
 				$this -> Session -> setFlash("Please provide patron Last Name.");            
 				if($card != ''){
 				   $this->set('card',$card);

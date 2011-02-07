@@ -11,7 +11,7 @@
 		echo '<p class="loginbox"></p>';
 		echo $form->input('card', array('label' => 'Card Number','value' => $card));
 		echo '<br class="clr">';
-		echo $form->input('pin', array('label' => 'Name','value' => $name, 'type'=>'password'));
+		echo $form->input('name', array('label' => 'Name','value' => $name, 'type'=>'password'));
 	echo $form->end('Login');
     
 ?>
