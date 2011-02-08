@@ -830,7 +830,7 @@
 						$("#ezproxy_logout").hide();
 					}					
 					else if ($(this).val() == 'ezproxy') {
-						$("#allurl").show();
+						$("#allurl").hide();
 						$("#referral_url").hide();
 						$("#innovative1").hide();
 						$("#innovative2").hide();
