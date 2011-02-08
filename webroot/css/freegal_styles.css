@@ -1034,7 +1034,7 @@ div.code-coverage-results span.result-good {
 }
 
 .input{
-/*	float:left;*/
+	text-align:right;
 }
 
 div.message {
