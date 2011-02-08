@@ -1223,7 +1223,7 @@ Class UsersController extends AppController
 					$retStr = $dom->saveXml($body->item(0));               
 					$retMsgArr = explode("PATRN NAME[pn]=",$retStr);               
 					$pos = strpos($retMsgArr['1'],"<br/>");
-					$retStatus = substr($retMsgArr['1'],1,$pos-1);
+					$retStatus = substr($retMsgArr['1'],0,$pos-1);
 					$statusVal = strpos($retStatus,$name);
 					if($statusVal == '' && $retStatus == ''){
 						$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
@@ -1406,7 +1406,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 						}
 					} else {
-						$this -> Session -> setFlash("This is not correct Patron Last Name.");
+						$this -> Session -> setFlash("Last Name does not match Library Card.");
 						$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 					}
 				}         
