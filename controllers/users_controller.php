@@ -305,8 +305,8 @@ Class UsersController extends AppController
 				}
 			}		
 			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
-				if($this->Session->read(ezproxy_logout) != ''){
-					$redirectUrl = $this->Session->read(ezproxy_logout);
+				if($this->Session->read('ezproxy_logout') != ''){
+					$redirectUrl = $this->Session->read('ezproxy_logout');
 					$redirectUrl = str_replace('login', 'logout',$redirectUrl);
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);				
