@@ -182,7 +182,7 @@
 						<td align="left"><?php echo $this->Form->input('library_home_url',array( 'label' => false ,'value' => $getData['Library']['library_home_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
 					<tr>
-						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] == "user_account" || $getData['Library']['library_authentication_method'] == "referral_url"){?>style="display:none;"<?php } ?>>					
+						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] == "user_account" || $getData['Library']['library_authentication_method'] == "referral_url" || $getData['Library']['library_authentication_method'] == "ezproxy"){?>style="display:none;"<?php } ?>>					
 						<?php
 						if(empty($allUrls))
 						{
