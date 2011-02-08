@@ -1224,7 +1224,7 @@ Class UsersController extends AppController
 					$retMsgArr = explode("PATRN NAME[pn]=",$retStr);               
 					$pos = strpos($retMsgArr['1'],"<br/>");
 					$retStatus = substr($retMsgArr['1'],0,$pos-1);
-					$statusVal = strpos($retStatus,$name);
+					$statusVal = stripos($retStatus,$name);
 					if($statusVal == '' && $retStatus == ''){
 						$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
