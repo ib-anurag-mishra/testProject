@@ -1247,7 +1247,7 @@ Class UsersController extends AppController
 										);
 						$status = 1;
 						foreach($allVariables as $k=>$v){
-							$retStatusArr = explode($v['Variable']['authentication_variable'],$retStrDump);
+							$retStatusArr = explode($v['Variable']['authentication_variable'],$retStr);
 							$pos = strpos($retStatusArr['1'],"<br/>");
 							$retStatus = substr($retStatusArr['1'],1,$pos-1);
 							if($retStatus == ''){
