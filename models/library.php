@@ -166,8 +166,8 @@ class Library extends AppModel
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_ezproxy_referral' => array('rule' => 'url', 'allowEmpty' =>  false, 'message' => 'Please provide a valid EZProxy Referral URL.'),
       'library_ezproxy_name' => array(
-                                            'library_ezproxy_name-1' => array('rule' => array('allowEmpty' =>  false, 'message' => 'Please provide a EZProxy Library Name.', 'last' => true),
-                                            'library_ezproxy_name-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This EZProxy Library Name  already exists in our database.')
+										'library_ezproxy_name-1' => array('rule' => array('allowEmpty' =>  false, 'message' => 'Please provide a EZProxy Library Name.', 'last' => true),
+										'library_ezproxy_name-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This EZProxy Library Name  already exists in our database.'))
                                       ),
 	  'library_ezproxy_secret' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a EZProxy Secret.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
