@@ -1981,7 +1981,7 @@ Class UsersController extends AppController
 									}
 									else{
 									//	  $this->Session->destroy('user');
-										  $this -> Session -> setFlash("The Card No is Invalid.");                              
+										  $this -> Session -> setFlash("The Card Number is Invalid.");                              
 										  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 
 									}
@@ -2166,7 +2166,7 @@ Class UsersController extends AppController
 										  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
 									}else{
 									//	  $this->Session->destroy('user');
-										  $this -> Session -> setFlash("The Card No is Invalid.");                              
+										  $this -> Session -> setFlash("The Card Number is Invalid.");                              
 										  $this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 
 									}
@@ -2450,7 +2450,7 @@ Class UsersController extends AppController
 									}
 									else{
 										//  $this->Session->destroy('user');
-										  $this -> Session -> setFlash("The Card No is Invalid.");                              
+										  $this -> Session -> setFlash("The Card Number is Invalid.");                              
 										  $this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 
 									}										
@@ -2704,7 +2704,7 @@ Class UsersController extends AppController
 								}
 								else{
 									//  $this->Session->destroy('user');
-									  $this -> Session -> setFlash("The Card No is Invalid.");                              
+									  $this -> Session -> setFlash("The Card Number is Invalid.");                              
 									  $this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 
 								}										
