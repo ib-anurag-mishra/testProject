@@ -18,8 +18,6 @@ $curWeekStartDate = Configure::read('App.curWeekStartDate');
 $curWeekEndDate = Configure::read('App.curWeekEndDate');
 $monthStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
 $monthEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))))." 23:59:59";
-$yearStartDate = date("Y-m-d",strtotime('01/01/'.date('Y')))." 00:00:00";
-$yearEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 year',strtotime('01/01/'.date('Y').' 00:00:00'))))." 23:59:59";
 echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
@@ -33,9 +31,9 @@ echo $paginator->counter(array(
 		<tr>
             <th style="border-right:1px solid #E0E0E0">Start Date</th>
 			<th style="border-right:1px solid #E0E0E0">End Date</th>
-            <th style="border-right:1px solid #E0E0E0">Todays </th>
-			<th style="border-right:1px solid #E0E0E0">Weeks</th>
-            <th style="border-right:1px solid #E0E0E0">Months</th>
+            <th style="border-right:1px solid #E0E0E0">Today </th>
+			<th style="border-right:1px solid #E0E0E0">Week</th>
+            <th style="border-right:1px solid #E0E0E0">Month</th>
 			<th style="border-right:1px solid #E0E0E0">YTD</th>
 			<th style="border-right:1px solid #E0E0E0">Remaining</th>	
           </tr>
@@ -50,7 +48,7 @@ echo $paginator->counter(array(
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curStartDate, $curEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curWeekStartDate, $curWeekEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $monthStartDate, $monthEndDate);?></td>
-				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $yearStartDate, $yearEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60)." 23:59:59");?></td>
 				<td class="left"><?php echo $library['Library']['library_available_downloads'];?></td>
 				
             </tr>            

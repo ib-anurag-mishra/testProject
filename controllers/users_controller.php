@@ -39,9 +39,10 @@ Class UsersController extends AppController
 			$this->Auth->autoRedirect = false;
 		}
 		if($userType == '1'){
+			$url = $_SERVER['REQUEST_URI'];
+			header( "refresh:300;url=".$url);
 			$this->Library->recursive = -1;
 			$this->paginate = array('order' => 'library_name');
-			$this->paginate = array('cache' => 'no');
 			$this->set('libraries', $this->paginate('Library'));
 		}
 		//takes to the default admin home page
