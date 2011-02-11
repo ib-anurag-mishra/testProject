@@ -38,6 +38,12 @@ Class UsersController extends AppController
 			$this->redirect('/homes/index');
 			$this->Auth->autoRedirect = false;
 		}
+		if($userType == '1'){
+			$this->Library->recursive = -1;
+			$this->paginate = array('order' => 'id');
+			$this->paginate = array('cache' => 'no');
+			$this->set('libraries', $this->paginate('Library'));
+		}
 		//takes to the default admin home page
 		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header 
 	}
