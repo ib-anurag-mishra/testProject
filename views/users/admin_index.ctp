@@ -33,10 +33,10 @@ echo $paginator->counter(array(
 		<tr>
             <th style="border-right:1px solid #E0E0E0">Start Date</th>
 			<th style="border-right:1px solid #E0E0E0">End Date</th>
-            <th style="border-right:1px solid #E0E0E0">Today's </th>
+            <th style="border-right:1px solid #E0E0E0">Todays </th>
 			<th style="border-right:1px solid #E0E0E0">Weeks</th>
-            <th style="border-right:1px solid #E0E0E0">Month's</th>
-			<th style="border-right:1px solid #E0E0E0">Year to date</th>
+            <th style="border-right:1px solid #E0E0E0">Months</th>
+			<th style="border-right:1px solid #E0E0E0">YTD</th>
 			<th style="border-right:1px solid #E0E0E0">Remaining</th>	
           </tr>
           <?php

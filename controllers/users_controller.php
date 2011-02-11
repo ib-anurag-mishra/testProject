@@ -40,7 +40,7 @@ Class UsersController extends AppController
 		}
 		if($userType == '1'){
 			$this->Library->recursive = -1;
-			$this->paginate = array('order' => 'id');
+			$this->paginate = array('order' => 'library_name');
 			$this->paginate = array('cache' => 'no');
 			$this->set('libraries', $this->paginate('Library'));
 		}
