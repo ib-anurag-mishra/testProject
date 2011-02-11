@@ -131,7 +131,7 @@ a.logout:hover {
 }
 
 /* Form */
-#content form fieldset {margin: 0 10px 0 10px; padding:0; _padding-top:0; border:0px solid #e0e0e0;}
+#content form fieldset {margin: 0 10px 10px 10px; padding:0; _padding-top:0; border:0px solid #e0e0e0;}
 #content form fieldset legend {padding:0; _margin-bottom:10px;font-size: 24px; color: #0099FF; font-weight: normal;}
 /* #content form fieldset input, #content fieldset select {margin:0;} */
 #content form fieldset textarea {width:95%;}
