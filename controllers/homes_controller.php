@@ -329,33 +329,36 @@ class HomesController extends AppController
 			$cond = array("ArtistText REGEXP '^[^A-Za-z]'");
 		}else{
 			$cond = array('ArtistText LIKE' => $search.'%');
-		}		
-		$artist = $this->Song->find('all',array(
-							'conditions' =>
-								array('and' =>
-									array(
-										$cond,
-										array('Country.Territory' => $country),
-										array('DownloadStatus' => 1),
-										array('TrackBundleCount' => 0)
-									)
-								),
-							'fields' => array(
-									'Song.ArtistText','Song.DownloadStatus',
+		}
+		if (($artist = Cache::read("artist".$search.$country)) === false) {
+			$artistAll = $this->Song->find('all',array(
+								'conditions' =>
+									array('and' =>
+										array(
+											$cond,
+											array('Country.Territory' => $country),
+											array('DownloadStatus' => 1),
+											array('TrackBundleCount' => 0)
+										)
 									),
-							'contain' => array(
-									'Country' => array(
-											'fields' => array(
-												'Country.Territory'								
-											)
+								'fields' => array(
+										'Song.ArtistText','Song.DownloadStatus',
 										),
-								),
-							'order' => 'Song.ArtistText',
-							'group' => 'Song.ArtistText'
-						));
-	
+								'contain' => array(
+										'Country' => array(
+												'fields' => array(
+													'Country.Territory'								
+												)
+											),
+									),
+								'order' => 'Song.ArtistText',
+								'group' => 'Song.ArtistText'
+							));
+				Cache::write("artist".$search.$country, $artistAll)			
+		}
+		$artistAll = Cache::read("artist".$search.$country);
 		//$this->Song->recursive = -1;
-		$this->set('distinctArtists', $artist);  	
+		$this->set('distinctArtists', $artistAll);  	
     }
     
     /*
