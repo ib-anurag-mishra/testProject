@@ -225,7 +225,8 @@ class HomesController extends AppController
         $this->set('upcoming', $upcoming);
 		$country = $this->Session->read('territory');
 		$this->Song->recursive = 2;
-		if (($artists = Cache::read("artist".$country)) === false) {		
+		$search = 'A';
+		if (($artists = Cache::read("artist".$search.$country)) === false) {		
 			$artist = $this->Song->find('all',array(
 								'conditions' =>
 									array('and' =>
@@ -233,7 +234,7 @@ class HomesController extends AppController
 											array('ArtistText LIKE' => 'A%'),
 											array('Country.Territory' => $country),
 											array('DownloadStatus' => 1),
-											array('TrackBundleCount' => 0)
+											array("Song.Sample_FileID != ''")
 										)
 									),
 								'fields' => array(
@@ -249,9 +250,9 @@ class HomesController extends AppController
 								'order' => 'Song.ArtistText',
 								'group' => 'Song.ArtistText',
 							));
-			Cache::write("artist".$country, $artist);
+			Cache::write("artist".$search.$country, $artist);
 		}
-		$artist = Cache::read("artist".$country);						
+		$artist = Cache::read("artist".$search.$country);						
         $this->set('distinctArtists', $artist);
         $this->set('featuredArtists', $this->Featuredartist->getallartists());
         $this->set('newArtists', $this->Newartist->getallnewartists());
