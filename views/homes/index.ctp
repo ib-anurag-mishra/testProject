@@ -428,6 +428,9 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
         <a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('z')">Z</a>
 		</div>
+		<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;text-align:center;">
+			<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+		</div>		
         <div id="artist_searchBox">
             <div class="scrollarea">
                     <table cellspacing="0" cellpadding="0">

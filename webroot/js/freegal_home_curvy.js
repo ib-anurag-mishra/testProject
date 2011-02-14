@@ -56,17 +56,19 @@ $(document).ready(function (){
 });
 
 function searchArtist(searchID) {
-  var data = "search="+ searchID;
-  jQuery.ajax({
+	$("#loadingDiv").show();
+	var data = "search="+ searchID;
+	jQuery.ajax({
 	type: "post",  // Request method: post, get
 	url: webroot+"homes/artistSearch", // URL to request
 	data: data,  // post data
 	success: function(response) {
+		$("#loadingDiv").hide();
 		document.getElementById("artist_searchBox").innerHTML = response;
 	},
 	error:function (XMLHttpRequest, textStatus, errorThrown) {
 		alert(textStatus);
 	}
-  });
-  return false; 
+	});
+	return false; 
 }

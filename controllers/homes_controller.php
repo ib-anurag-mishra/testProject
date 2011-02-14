@@ -358,7 +358,8 @@ class HomesController extends AppController
 		}
 		$artistAll = Cache::read("artist".$search.$country);
 		//$this->Song->recursive = -1;
-		$this->set('distinctArtists', $artistAll);  	
+		$this->set('distinctArtists', $artistAll);
+		$this->layout = 'ajax';
     }
     
     /*
