@@ -338,7 +338,7 @@ class HomesController extends AppController
 											$cond,
 											array('Country.Territory' => $country),
 											array('DownloadStatus' => 1),
-											array('TrackBundleCount' => 0)
+											array("Song.Sample_FileID != ''")
 										)
 									),
 								'fields' => array(
