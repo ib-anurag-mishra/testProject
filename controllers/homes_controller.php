@@ -354,7 +354,7 @@ class HomesController extends AppController
 								'order' => 'Song.ArtistText',
 								'group' => 'Song.ArtistText'
 							));
-				Cache::write("artist".$search.$country, $artistAll)			
+				Cache::write("artist".$search.$country, $artistAll);			
 		}
 		$artistAll = Cache::read("artist".$search.$country);
 		//$this->Song->recursive = -1;
