@@ -85,12 +85,14 @@ Class GenresController extends AppController
 		foreach ($categories as $category) {
 			$genreName = $category['Category']['Genre'];
 			if($this->Session->read('block') == 'yes') {
+				$block = 'yes';
 				$cond = array('Song.Advisory' => 'F');
 			}
 			else {
 				$cond = "";
+				$block = 'no';
 			}
-			if (($genres = Cache::read($genreName)) === false) {
+			if (($genres = Cache::read($genreName.$block)) === false) {
 				$this->Song->recursive = 2;
 				$this->Song->Behaviors->attach('Containable');			
 				$genreDetails = $this->Song->find('all',array('conditions' =>
@@ -143,9 +145,9 @@ Class GenresController extends AppController
 													),
 												),												
 											),'limit' => '50'));
-			Cache::write($genreName, $genreDetails);
+			Cache::write($genreName.$block, $genreDetails);
 			}
-			$genreDetails = Cache::read($genreName);
+			$genreDetails = Cache::read($genreName.$block);
 			$finalArr = Array();
 			$songArr = Array();
 			if(count($genreDetails) > 3) {
