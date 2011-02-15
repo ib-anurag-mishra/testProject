@@ -16,8 +16,8 @@ $curStartDate = date("Y-m-d")." 00:00:00";
 $curEndDate = date("Y-m-d")." 23:59:59";
 $curWeekStartDate = Configure::read('App.curWeekStartDate');
 $curWeekEndDate = Configure::read('App.curWeekEndDate');
-$monthStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
-$monthEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))))." 23:59:59";
+$monthStartDate = date("Y-m-d", strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
+$monthEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))))." 23:59:59";
 echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
