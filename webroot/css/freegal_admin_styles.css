@@ -633,3 +633,22 @@ td.actions a:hover {
 .libselect {
 	#padding-left: 80px !important;
 }
+#library_search {
+	font-size:14px;
+	clear:both;
+	width:945px;
+	height:20px;
+	display:block;
+}
+#library_search a:link {
+	text-decoration: underline;
+	color:#666;
+}
+#library_search a:visited {
+	text-decoration: underline;
+	color:#666;
+}
+#library_search a:active{
+	text-decoration: underline;
+	color:#666;
+}

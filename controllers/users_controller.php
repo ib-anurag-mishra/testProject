@@ -27,7 +27,7 @@ Class UsersController extends AppController
     Desc : actions for welcome admin login
    */
    
-	function admin_index() {
+	function admin_index($library = null) {
 		$userType = $this->Session->read('Auth.User.type_id'); 
 		if($this->Session->read('Auth.User.user_status')=='inactive'){
 			$this->Session->destroy('user'); 
@@ -39,10 +39,23 @@ Class UsersController extends AppController
 			$this->Auth->autoRedirect = false;
 		}
 		if($userType == '1'){
+			if($library == 'special') {
+				$condition = array("library_name REGEXP '^[^A-Za-z]'");			
+			}
+			elseif($library != '') {
+				$condition = array('library_name LIKE' => $library.'%');
+			}
+			else {
+				$condition = "";
+			}
 			$url = $_SERVER['REQUEST_URI'];
 			header( "refresh:300;url=".$url);
 			$this->Library->recursive = -1;
-			$this->paginate = array('order' => 'library_name');
+			if($condition != ''){
+				$this->paginate = array('conditions' => $condition);
+			} else {
+				$this->paginate = array('order' => 'library_name');
+			}
 			$this->set('libraries', $this->paginate('Library'));
 		}
 		//takes to the default admin home page
