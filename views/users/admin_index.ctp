@@ -69,14 +69,13 @@ echo $paginator->counter(array(
             <th style="border-right:1px solid #E0E0E0">Month</th>
 			<th style="border-right:1px solid #E0E0E0">YTD</th>
             <th class="left"><?php echo $paginator->sort('Remaining', 'library_available_downloads')."&nbsp;".$paginator->sort('`', 'library_available_downloads', array('id' => 'sort_arrow'));?></th>
-			<th style="border-right:1px solid #E0E0E0;border-left:1px solid #E0E0E0">Edit</th>
           </tr>
           <?php
           foreach($libraries as $library)
           {
             ?>
             <tr>
-                <td class="left"><?php echo $library['Library']['library_name'];?></td>
+				<td><?php echo $html->link($library['Library']['library_name'], array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
 				<td class="left"><?php echo $library['Library']['library_contract_start_date'];?></td>
 				<td class="left"><?php echo date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curStartDate, $curEndDate);?></td>
@@ -84,7 +83,6 @@ echo $paginator->counter(array(
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $monthStartDate, $monthEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60)." 23:59:59");?></td>
 				<td class="left"><?php echo $library['Library']['library_available_downloads'];?></td>
-				<td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
             </tr>            
             <?php
           }
