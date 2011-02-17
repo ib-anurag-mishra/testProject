@@ -96,7 +96,7 @@ Class UsersController extends AppController
 			foreach($library as $k => $v){
 				$library[$k]['Library']['today'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($curStartDate, $curStartDate))));
 				
-				$library[$k]['Library']['week'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($curStartDate, $curWeekEndDate))));
+				$library[$k]['Library']['week'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($curWeekStartDate, $curWeekEndDate))));
 				
 				$library[$k]['Library']['month'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($monthStartDate, $monthEndDate))));
 				
