@@ -80,21 +80,14 @@ var gridUrl = webroot+'admin/users/data/'+sort;
 		sortname: 'library_name', 
 		sortorder: "asc",
 		viewrecords: true, 
-		height:440,
+		height:460,
 		width:895,
 		userToolbar:'<span class="grid_title">Library Management</span>',
 		imgpath: webroot+'css/themes/redmond/images/', caption: 'Library Report'
 		});
-	
-	//getUserList(gridUrl);
  });
  
- function linkFormatter(el, cellval, opts) {
-	//console.log(el+'---'+cellval+'---'+opts);
-	//console.log(cellval.rowId);
-	//console.log(el);
-	//console.log(opts);
-	
+ function linkFormatter(el, cellval, opts) {	
 	return '<a href="/admin/libraries/libraryform/id:'+cellval.rowId+'">'+el+'</a>';
  }
 </script>
