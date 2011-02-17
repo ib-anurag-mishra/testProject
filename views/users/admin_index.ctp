@@ -73,7 +73,7 @@ var gridUrl = webroot+'admin/users/data/'+sort;
 				   {name:'week', index:'week', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
 				   {name:'month', index:'month', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
 				   {name:'ytd', index:'ytd', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
-				   {name:'library_available_downloads', index:'library_available_downloads', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
+				   {name:'library_available_downloads', index:'library_available_downloads', width:100,editable:true, edittype:'text',align:"left",sorttype: "int"},
 				  ],
 		pager: jQuery('#pager'), 
 		rowList:[20,40,60,80], 
