@@ -67,8 +67,8 @@ var gridUrl = webroot+'admin/users/data/'+sort;
 		colNames:['First Name', 'Contract Start Date', 'Contract End Date', 'Today', 'Week', 'Month', 'YTD', 'Remaining'], 
 		colModel :[
 				   {name:'library_name', index:'library_name', width:145,editable:true, edittype:'text',align:"left", formatter:linkFormatter},
-				   {name:'library_contract_start_date', index:'library_contract_start_date', width:145,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
-				   {name:'library_contract_end_date', index:'library_contract_end_date', width:145,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
+				   {name:'library_contract_start_date', index:'library_contract_start_date', width:155,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
+				   {name:'library_contract_end_date', index:'library_contract_end_date', width:155,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
 				   {name:'today', index:'today', width:85,editable:true, edittype:'text',align:"left"},
 				   {name:'week', index:'week', width:85,editable:true, edittype:'text',align:"left"},
 				   {name:'month', index:'month', width:85,editable:true, edittype:'text',align:"left"},
