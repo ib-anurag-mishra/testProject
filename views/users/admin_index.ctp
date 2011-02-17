@@ -66,7 +66,7 @@ var gridUrl = webroot+'admin/users/data/'+sort;
 		rowNum: 20,
 		colNames:['First Name', 'Start Date', 'End Date', 'Today', 'Week', 'Month', 'YTD', 'Remaining'], 
 		colModel :[
-				   {name:'library_name', index:'library_name', width:145,editable:true, edittype:'text',align:"left", formatter:linkFormatter},
+				   {name:'library_name', index:'library_name', width:165,editable:true, edittype:'text',align:"left", formatter:linkFormatter},
 				   {name:'library_contract_start_date', index:'library_contract_start_date', width:135,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
 				   {name:'library_contract_end_date', index:'library_contract_end_date', width:135,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
 				   {name:'today', index:'today', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
