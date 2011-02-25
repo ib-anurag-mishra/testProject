@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Genreid','Currentpatron','Page','Wishlist','Album','Song' );
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song' );
     
     /*
      Function Name : beforeFilter
@@ -44,7 +44,7 @@ class HomesController extends AppController
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		$this->Download->recursive = -1;
-		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC'));
+		$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 		$prodIds = '';
 		foreach($topDownloaded as $k => $v){
 			$prodIds .= $v['Download']['ProdID']."','"; 
@@ -55,7 +55,7 @@ class HomesController extends AppController
 			$topDownload =  $this->Song->find('all',array('conditions' =>
 					array('and' =>
 						array(
-							array("Song.ProdID IN ('".rtrim($prodIds,",'")."')" ),
+							array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')" ),
 						), "1 = 1 GROUP BY Song.ProdID"
 					),
 					'fields' => array(
@@ -129,7 +129,7 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '10' )
+												'order' => 'countProduct DESC', 'limit'=> '15' )
 											);
 		$natprodIds = '';
 		foreach($natTopDownloaded as $k => $v){
@@ -141,7 +141,7 @@ class HomesController extends AppController
 			$nationalTopDownload =  $this->Song->find('all',array('conditions' =>
 					array('and' =>
 						array(
-							array("Song.ProdID IN ('".rtrim($natprodIds,",'")."')" ),
+							array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($natprodIds,",'")."')" ),
 						), "1 = 1 GROUP BY Song.ProdID"
 					),
 					'fields' => array(
