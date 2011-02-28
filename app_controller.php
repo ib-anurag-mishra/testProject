@@ -23,11 +23,13 @@ class AppController extends Controller
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Cache-Control: post-check=0, pre-check=0', false);
 		header('Pragma: no-cache');
-		checkOnlinePatron();
+		$this->checkOnlinePatron();
 	}
 	
 	function checkOnlinePatron()
 	{
+	 $libraryId = '';
+	 $patronId = '';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');	
 		$userCache = Cache::read("login_".$libraryId.$patronId);
@@ -44,7 +46,6 @@ class AppController extends Controller
 				Cache::delete("login_".$libid.$patronid, $values);
 			}		
 		}
-		return $var;
 	}
 	
 	function isAuthorized()
