@@ -51,7 +51,7 @@ class AppController extends Controller
 				Cache::write("login_".$libraryId.$patronId, $values);
 			}		
 		}
-		retrun $var;
+		return $var;
 	}
 	
 	function isAuthorized()
