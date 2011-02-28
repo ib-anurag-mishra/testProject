@@ -19,13 +19,6 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		parent::beforeFilter();
-		$value = parent::checkOnlinePatron();
-		if($value == 2){
-			$this->Session->destroy('user');
-			$this -> Session -> setFlash("User Sesson destroyed.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-		}
 		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
 	}
    
