@@ -34,23 +34,23 @@ class AppController extends Controller
 		$modifiedTime = $userCache[0];
 		if(!($this->Session->read('patron'))){
 			if(($date-$modifiedTime) > 60){
-				$values = array(0 => $date, 1 => session_id());	
-				Cache::write("login_".$libraryId.$patronId, $values);
+				$this->Session->destroy('user');
+				$this -> Session -> setFlash("User Sesson destroyed.");                              
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else{
-				$this->Session->destroy('user');
-				$this -> Session -> setFlash("This account is already active.");                              
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+				$values = array(0 => $date, 1 => session_id());	
+				Cache::write("login_".$libraryId.$patronId, $values);
 			}
 		} else {
 			if(($date-$modifiedTime) > 60){
-				$values = array(0 => $date, 1 => session_id());	
-				Cache::write("login_".$libraryId.$patronId, $values);
+				$this->Session->destroy('user');
+				$this -> Session -> setFlash("User Sesson destroyed.");                              
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else{
-				$this->Session->destroy('user');
-				$this -> Session -> setFlash("This account is already active.");                              
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+				$values = array(0 => $date, 1 => session_id());	
+				Cache::write("login_".$libraryId.$patronId, $values);
 			}		
 		}
 	}
