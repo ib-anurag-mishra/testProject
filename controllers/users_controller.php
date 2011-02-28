@@ -19,17 +19,6 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$libraryId = $this->Session->read('library');
-		$patronId = $this->Session->read('patron');	
-		$userCache = Cache::read("login_".$libraryId.$patronId);
-		$date = time();
-		$modifiedTime = $userCache[0];
-		if(($date-$modifiedTime) > 60){
-			$this->Session->destroy('user');
-			$this->Session->write("chkVal", 1);
-			$this->Session->setFlash("User Sesson destroyed."); 
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-		}		
 		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
 	}
    
