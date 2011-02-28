@@ -707,8 +707,13 @@ function checkPatron(libid,patronid)
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/checkPatron", // URL to request
 		data: data,  // post data
-		success: function(response) {			
-			setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg != 'Succe'){
+				location.href = unescape("/homes/aboutus");
+			}else{			
+				setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
+			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
 		}
