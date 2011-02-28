@@ -801,18 +801,13 @@ class HomesController extends AppController
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];       
 		$patronid = $_REQUEST['patronid'];
-		if (($currentPatron = Cache::read("login_".$libid.$patronid)) === true) {
+		if (($currentPatron = Cache::read("login_".$libid.$patronid)) === false) {
+			$this->Session->destroy();
+			Cache::delete("login_".$libid.$patronid, $values);
+		} else {
 			$date = time();
 			$values = array(0 => $date, 1 => session_id());			
 			Cache::write("login_".$libid.$patronid, $values);
-		}
-
-		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
-		if(count($currentPatron) > 0) {
-			  $updateArr = array();
-			  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
-			  $updateArr['session_id'] = session_id();
-			  $this->Currentpatron->save($updateArr);
 		}
 		echo "Success";
 		exit;
