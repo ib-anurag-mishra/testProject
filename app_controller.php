@@ -9,7 +9,8 @@ class AppController extends Controller
 	{
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
-		}	
+		}
+		checkOnlinePatron();
 		$this->Auth->authorize = 'actions';
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
 		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
@@ -25,7 +26,35 @@ class AppController extends Controller
 		header('Pragma: no-cache');
 	}
 	
-	
+	function checkOnlinePatron()
+	{
+        $libraryId = $this->Session->read('library');
+        $patronId = $this->Session->read('patron');	
+		$userCache = Cache::read("login_".$libraryId.$patronId);
+		$time = time();
+		$modifiedTime = $userCache[0];
+		if(!($this->Session->read('patron'))){
+			if(($date-$modifiedTime) > 60){
+				$values = array(0 => $time, 1 => session_id());	
+				Cache::write("login_".$libraryId.$patronId, $values);
+			}
+			else{
+				$this->Session->destroy('user');
+				$this -> Session -> setFlash("This account is already active.");                              
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}
+		} else {
+			if(($date-$modifiedTime) > 60){
+				$values = array(0 => $time, 1 => session_id());	
+				Cache::write("login_".$libraryId.$patronId, $values);
+			}
+			else{
+				$this->Session->destroy('user');
+				$this -> Session -> setFlash("This account is already active.");                              
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}		
+		}
+	}
 	
 	function isAuthorized()
 	{
