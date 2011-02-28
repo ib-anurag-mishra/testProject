@@ -23,6 +23,7 @@ class AppController extends Controller
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Cache-Control: post-check=0, pre-check=0', false);
 		header('Pragma: no-cache');
+		checkOnlinePatron();
 	}
 	
 	function checkOnlinePatron()
@@ -33,22 +34,14 @@ class AppController extends Controller
 		$date = time();
 		$modifiedTime = $userCache[0];
 		if(!($this->Session->read('patron'))){
-			if(($date-$modifiedTime) > 60){
-				$var = 2;
-			}
-			else{
-				$var = 0;
-				$values = array(0 => $date, 1 => session_id());	
-				Cache::write("login_".$libraryId.$patronId, $values);
+			if((($date-$modifiedTime) > 60) && $modifiedTime){
+				$this->Session->destroy();
+				Cache::delete("login_".$libid.$patronid, $values);			
 			}
 		} else {
-			if(($date-$modifiedTime) > 60){
-				$var = 2;
-			}
-			else{
-				$var = 0;
-				$values = array(0 => $date, 1 => session_id());	
-				Cache::write("login_".$libraryId.$patronId, $values);
+			if((($date-$modifiedTime) > 60) && $modifiedTime){
+				$this->Session->destroy();
+				Cache::delete("login_".$libid.$patronid, $values);
 			}		
 		}
 		return $var;
