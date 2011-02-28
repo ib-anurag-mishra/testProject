@@ -18,13 +18,6 @@ Class GenresController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		parent::beforeFilter();
-		$value = parent::checkOnlinePatron();
-		if($value == 2){
-			$this->Session->destroy('user');
-			$this -> Session -> setFlash("User Sesson destroyed.");                              
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-		}
 		$this->Auth->allowedActions = array('view','index');
 		$libraryCheckArr = array("view","index");
 		if(in_array($this->action,$libraryCheckArr)) {
