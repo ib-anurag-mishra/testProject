@@ -202,45 +202,36 @@ Class UsersController extends AppController
 									);         
 			$authMethod = $libraryArr['Library']['library_authentication_method'];        
 			if($authMethod == 'user_account'){
-				$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libraryId, 'patronid' => $patronId)));           
-				if(count($currentPatron) > 0){
-					$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-					$date = strtotime(date('Y-m-d H:i:s'));              
-					if(!($this->Session->read('patron'))){               
+				if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+					$date = time();
+					$values = array(0 => $date, 1 => session_id());			
+					Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+				} else {
+					$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+					$date = time();
+					$modifiedTime = $userCache[0];
+					if(!($this->Session->read('patron'))){
 						if(($date-$modifiedTime) > 60){
-							$updateArr = array();
-							$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                        
-							$updateArr['session_id'] = session_id();
-							$this->Currentpatron->save($updateArr);
+							$values = array(0 => $date, 1 => session_id());	
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						}
 						else{
-							$this->Session->destroy('user'); 
-							$this -> Session -> setFlash("This account is already active.");
+							$this->Session->destroy('user');
+							$this -> Session -> setFlash("This account is already active.");                              
 							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 						}
+					} else {
+						if(($date-$modifiedTime) > 60){
+							$values = array(0 => $date, 1 => session_id());	
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+						}
+						else{
+							$this->Session->destroy('user');
+							$this -> Session -> setFlash("This account is already active.");                              
+							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+						}		
 					}
-					else{
-					$sessionId = session_id();                    
-						if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-							if(($date-$modifiedTime) > 60){                            
-								$updateArr = array();
-								$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                                           
-								$updateArr['session_id'] = session_id();
-								$this->Currentpatron->save($updateArr);
-							}
-							else{
-								$this->Session->destroy('user');
-								$this -> Session -> setFlash("This account is already active.");                            
-								$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-							}                  
-						}                    
-					}
-				}
-				else{                
-					$insertArr['libid'] = $libraryId;
-					$insertArr['patronid'] = $patronId;
-					$insertArr['session_id'] = session_id();                 
-					$this->Currentpatron->save($insertArr);
+					
 				}
 				$this->Session->write("library", $libraryId);
 				$this->Session->write("patron", $patronId);
@@ -1150,45 +1141,35 @@ Class UsersController extends AppController
 							}                  
 						}
 						elseif($status == 1){
-							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-							if(count($currentPatron) > 0){
-								$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-								$date = strtotime(date('Y-m-d H:i:s'));              
-								if(!($this->Session->read('patron'))){               
+							if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+								$date = time();
+								$values = array(0 => $date, 1 => session_id());			
+								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+							} else {
+								$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+								$date = time();
+								$modifiedTime = $userCache[0];
+								if(!($this->Session->read('patron'))){
 									if(($date-$modifiedTime) > 60){
-										$updateArr = array();
-										$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-										$updateArr['session_id'] = session_id();
-										$this->Currentpatron->save($updateArr);
+										$values = array(0 => $date, 1 => session_id());	
+										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 									}
 									else{
-									   $this->Session->destroy('user');
-									   $this -> Session -> setFlash("This account is already active.");                              
-									   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+										$this->Session->destroy('user');
+										$this -> Session -> setFlash("This account is already active.");                              
+										$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 									}
+								} else {
+									if(($date-$modifiedTime) > 60){
+										$values = array(0 => $date, 1 => session_id());	
+										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									}
+									else{
+										$this->Session->destroy('user');
+										$this -> Session -> setFlash("This account is already active.");                              
+										$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+									}		
 								}
-								else{
-									$sessionId = session_id();                    
-									if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-										if(($date-$modifiedTime) > 60){                            
-										   $updateArr = array();
-										   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-										   $updateArr['session_id'] = session_id();
-										   $this->Currentpatron->save($updateArr);
-										}
-										else{
-										   $this->Session->destroy('user'); 
-										   $this -> Session -> setFlash("This account is already active.");                                  
-										   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-										}                  
-									}                    
-								}
-							}
-							else{
-								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-								$insertArr['patronid'] = $patronId;
-								$insertArr['session_id'] = session_id();
-								$this->Currentpatron->save($insertArr);
 							}
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
@@ -1427,45 +1408,36 @@ Class UsersController extends AppController
 							}                  
 						}
 						elseif($status == 1){
-							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-							if(count($currentPatron) > 0){
-								$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-								$date = strtotime(date('Y-m-d H:i:s'));              
-								if(!($this->Session->read('patron'))){               
+							if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+								$date = time();
+								$values = array(0 => $date, 1 => session_id());			
+								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+							} else {
+								$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+								$date = time();
+								$modifiedTime = $userCache[0];
+								if(!($this->Session->read('patron'))){
 									if(($date-$modifiedTime) > 60){
-										$updateArr = array();
-										$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-										$updateArr['session_id'] = session_id();
-										$this->Currentpatron->save($updateArr);
+										$values = array(0 => $date, 1 => session_id());	
+										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 									}
 									else{
-									   $this->Session->destroy('user');
-									   $this -> Session -> setFlash("This account is already active.");                              
-									   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+										$this->Session->destroy('user');
+										$this -> Session -> setFlash("This account is already active.");                              
+										$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 									}
+								} else {
+									if(($date-$modifiedTime) > 60){
+										$values = array(0 => $date, 1 => session_id());	
+										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									}
+									else{
+										$this->Session->destroy('user');
+										$this -> Session -> setFlash("This account is already active.");                              
+										$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+									}		
 								}
-								else{
-									$sessionId = session_id();                    
-									if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-										if(($date-$modifiedTime) > 60){                            
-										   $updateArr = array();
-										   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-										   $updateArr['session_id'] = session_id();
-										   $this->Currentpatron->save($updateArr);
-										}
-										else{
-										   $this->Session->destroy('user'); 
-										   $this -> Session -> setFlash("This account is already active.");                                  
-										   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-										}                  
-									}                    
-								}
-							}
-							else{
-								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-								$insertArr['patronid'] = $patronId;
-								$insertArr['session_id'] = session_id();
-								$this->Currentpatron->save($insertArr);
+								
 							}
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
@@ -1586,45 +1558,36 @@ Class UsersController extends AppController
 						}
 					}
 					else{                  
-						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-						if(count($currentPatron) > 0){
-							$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-							$date = strtotime(date('Y-m-d H:i:s'));              
-							if(!$this->Session->read('patron')){               
+						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+							$date = time();
+							$values = array(0 => $date, 1 => session_id());			
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+						} else {
+							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+							$date = time();
+							$modifiedTime = $userCache[0];
+							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$updateArr = array();
-									$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-									$updateArr['session_id'] = session_id();
-									$this->Currentpatron->save($updateArr);
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
-									//  $this->Session->destroy('user');
+									$this->Session->destroy('user');
 									$this -> Session -> setFlash("This account is already active.");                              
 									$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 								}
+							} else {
+								if(($date-$modifiedTime) > 60){
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								}
+								else{
+									$this->Session->destroy('user');
+									$this -> Session -> setFlash("This account is already active.");                              
+									$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+								}		
 							}
-							else{
-								$sessionId = session_id();                    
-								if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-									if(($date-$modifiedTime) > 60){                            
-										$updateArr = array();
-										$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-										$updateArr['session_id'] = session_id();
-										$this->Currentpatron->save($updateArr);
-									}
-									else{
-										// $this->Session->destroy('user');   
-										$this -> Session -> setFlash("This account is already active.");                                  
-										$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-									}                  
-								}                    
-							}
-						}
-						else{                
-							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-							$insertArr['patronid'] = $patronId;
-							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);
+							
 						}
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -1812,45 +1775,36 @@ Class UsersController extends AppController
 						}                  
 					}
 					elseif($status == 1 && $errMsg == ''){
-						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-						if(count($currentPatron) > 0){
-							$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-							$date = strtotime(date('Y-m-d H:i:s'));              
-							if(!($this->Session->read('patron'))){               
+						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+							$date = time();
+							$values = array(0 => $date, 1 => session_id());			
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+						} else {
+							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+							$date = time();
+							$modifiedTime = $userCache[0];
+							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-								  $updateArr = array();
-								  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-								  $updateArr['session_id'] = session_id();
-								  $this->Currentpatron->save($updateArr);
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
-								  $this->Session->destroy('user');
-								  $this -> Session -> setFlash("This account is already active.");                              
-								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+									$this->Session->destroy('user');
+									$this -> Session -> setFlash("This account is already active.");                              
+									$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 								}
+							} else {
+								if(($date-$modifiedTime) > 60){
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								}
+								else{
+									$this->Session->destroy('user');
+									$this -> Session -> setFlash("This account is already active.");                              
+									$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+								}		
 							}
-							else{
-								$sessionId = session_id();                    
-								if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-									if(($date-$modifiedTime) > 60){                            
-									  $updateArr = array();
-									  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-									  $updateArr['session_id'] = session_id();
-									  $this->Currentpatron->save($updateArr);
-									}
-									else{
-									  $this->Session->destroy('user'); 
-									  $this -> Session -> setFlash("This account is already active.");                                  
-									  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-									}                  
-								}                    
-							}
-						}
-						else{
-							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-							$insertArr['patronid'] = $patronId;
-							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);
+							
 						}
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -1999,45 +1953,36 @@ Class UsersController extends AppController
 										 if ($result['variable']['CQ'][0] == 'Y') {
 											// Successful PIN !!!
 										  
-												$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-												if(count($currentPatron) > 0){
-													$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-													$date = strtotime(date('Y-m-d H:i:s'));              
-													if(!$this->Session->read('patron')){               
+												if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+													$date = time();
+													$values = array(0 => $date, 1 => session_id());			
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+												} else {
+													$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+													$date = time();
+													$modifiedTime = $userCache[0];
+													if(!($this->Session->read('patron'))){
 														if(($date-$modifiedTime) > 60){
-														  $updateArr = array();
-														  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-														  $updateArr['session_id'] = session_id();
-														  $this->Currentpatron->save($updateArr);
+															$values = array(0 => $date, 1 => session_id());	
+															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 														}
 														else{
-														//  $this->Session->destroy('user');
-														  $this -> Session -> setFlash("This account is already active.");                              
-														  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+															$this->Session->destroy('user');
+															$this -> Session -> setFlash("This account is already active.");                              
+															$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 														}
+													} else {
+														if(($date-$modifiedTime) > 60){
+															$values = array(0 => $date, 1 => session_id());	
+															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+														}
+														else{
+															$this->Session->destroy('user');
+															$this -> Session -> setFlash("This account is already active.");                              
+															$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+														}		
 													}
-													else{
-														$sessionId = session_id();                    
-														if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-															if(($date-$modifiedTime) > 60){                            
-																$updateArr = array();
-																$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-																$updateArr['session_id'] = session_id();
-																$this->Currentpatron->save($updateArr);
-															}
-															else{
-																//  $this->Session->destroy('user');   
-																$this -> Session -> setFlash("This account is already active.");                                  
-																$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-															}                  
-														}                    
-													}
-												}
-												else{                
-												 $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-												 $insertArr['patronid'] = $patronId;
-												 $insertArr['session_id'] = session_id();
-												 $this->Currentpatron->save($insertArr);
+													
 												}
 												$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 												$this->Session->write("patron", $patronId);
@@ -2191,45 +2136,36 @@ Class UsersController extends AppController
 										  // Success!!!
 										  
 										  
-											$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-											if(count($currentPatron) > 0){
-											  $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-											  $date = strtotime(date('Y-m-d H:i:s'));              
-											  if($this->Session->read('patron')){               
-												  if(($date-$modifiedTime) > 60){
-													  $updateArr = array();
-													  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-													  $updateArr['session_id'] = session_id();
-													  $this->Currentpatron->save($updateArr);
-												  }
-												  else{
-													//  $this->Session->destroy('user');
-													  $this -> Session -> setFlash("This account is already active.");                              
-													  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-												  }
-											 }
-											  else{
-												  $sessionId = session_id();                    
-												  if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-													  if(($date-$modifiedTime) > 60){                            
-														  $updateArr = array();
-														  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-														  $updateArr['session_id'] = session_id();
-														  $this->Currentpatron->save($updateArr);
-													  }
-													  else{
-														//  $this->Session->destroy('user');   
-														  $this -> Session -> setFlash("This account is already active.");                                  
-														  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-													  }                  
-												  }                    
-											 }
-										  }
-										  else{                
-											 $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-											 $insertArr['patronid'] = $patronId;
-											 $insertArr['session_id'] = session_id();
-											 $this->Currentpatron->save($insertArr);
+										if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+											$date = time();
+											$values = array(0 => $date, 1 => session_id());			
+											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										} else {
+											$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+											$date = time();
+											$modifiedTime = $userCache[0];
+											if(!($this->Session->read('patron'))){
+												if(($date-$modifiedTime) > 60){
+													$values = array(0 => $date, 1 => session_id());	
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+												}
+												else{
+													$this->Session->destroy('user');
+													$this -> Session -> setFlash("This account is already active.");                              
+													$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+												}
+											} else {
+												if(($date-$modifiedTime) > 60){
+													$values = array(0 => $date, 1 => session_id());	
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+												}
+												else{
+													$this->Session->destroy('user');
+													$this -> Session -> setFlash("This account is already active.");                              
+													$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+												}		
+											}
+											
 										  }
 										  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 										  $this->Session->write("patron", $patronId);
@@ -2461,45 +2397,36 @@ Class UsersController extends AppController
 												}
 											}
 											if(!($status === false)){
-												$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-												if(count($currentPatron) > 0){
-													$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-													$date = strtotime(date('Y-m-d H:i:s'));              
-													if(!$this->Session->read('patron')){               
+												if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+													$date = time();
+													$values = array(0 => $date, 1 => session_id());			
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+												} else {
+													$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+													$date = time();
+													$modifiedTime = $userCache[0];
+													if(!($this->Session->read('patron'))){
 														if(($date-$modifiedTime) > 60){
-														  $updateArr = array();
-														  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-														  $updateArr['session_id'] = session_id();
-														  $this->Currentpatron->save($updateArr);
+															$values = array(0 => $date, 1 => session_id());	
+															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 														}
 														else{
-														  $this->Session->destroy('user');
-														  $this -> Session -> setFlash("This account is already active.");                              
-														  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+															$this->Session->destroy('user');
+															$this -> Session -> setFlash("This account is already active.");                              
+															$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 														}
+													} else {
+														if(($date-$modifiedTime) > 60){
+															$values = array(0 => $date, 1 => session_id());	
+															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+														}
+														else{
+															$this->Session->destroy('user');
+															$this -> Session -> setFlash("This account is already active.");                              
+															$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+														}		
 													}
-													else{
-														$sessionId = session_id();                    
-														if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-															if(($date-$modifiedTime) > 60){                            
-															  $updateArr = array();
-															  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-															  $updateArr['session_id'] = session_id();
-															  $this->Currentpatron->save($updateArr);
-															}
-															else{
-														//	  $this->Session->destroy('user');   
-															  $this -> Session -> setFlash("This account is already active.");                                  
-															  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-															}                  
-														}                    
-													}
-												}
-												else{                
-													$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-													$insertArr['patronid'] = $patronId;
-													$insertArr['session_id'] = session_id();
-													$this->Currentpatron->save($insertArr);
+													
 												}
 												$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 												$this->Session->write("patron", $patronId);
@@ -2722,45 +2649,36 @@ Class UsersController extends AppController
 										}
 									}
 									if(!($status === false)){
-										$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-										if(count($currentPatron) > 0){
-											$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-											$date = strtotime(date('Y-m-d H:i:s'));              
-											if(!$this->Session->read('patron')){               
+										if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+											$date = time();
+											$values = array(0 => $date, 1 => session_id());			
+											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										} else {
+											$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+											$date = time();
+											$modifiedTime = $userCache[0];
+											if(!($this->Session->read('patron'))){
 												if(($date-$modifiedTime) > 60){
-												  $updateArr = array();
-												  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-												  $updateArr['session_id'] = session_id();
-												  $this->Currentpatron->save($updateArr);
+													$values = array(0 => $date, 1 => session_id());	
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 												}
 												else{
-												  $this->Session->destroy('user');
-												  $this -> Session -> setFlash("This account is already active.");                              
-												  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+													$this->Session->destroy('user');
+													$this -> Session -> setFlash("This account is already active.");                              
+													$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 												}
+											} else {
+												if(($date-$modifiedTime) > 60){
+													$values = array(0 => $date, 1 => session_id());	
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+												}
+												else{
+													$this->Session->destroy('user');
+													$this -> Session -> setFlash("This account is already active.");                              
+													$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+												}		
 											}
-											else{
-												$sessionId = session_id();                    
-												if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-													if(($date-$modifiedTime) > 60){                            
-													  $updateArr = array();
-													  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-													  $updateArr['session_id'] = session_id();
-													  $this->Currentpatron->save($updateArr);
-													}
-													else{
-												//	  $this->Session->destroy('user');   
-													  $this -> Session -> setFlash("This account is already active.");                                  
-													  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-													}                  
-												}                    
-											}
-										}
-										else{                
-											$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-											$insertArr['patronid'] = $patronId;
-											$insertArr['session_id'] = session_id();
-											$this->Currentpatron->save($insertArr);
+											
 										}
 										$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 										$this->Session->write("patron", $patronId);
@@ -2871,45 +2789,36 @@ Class UsersController extends AppController
 			}
 			$user = $EZproxySSO->user();
 			$card = $user;	
-			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $user)));
-			if(count($currentPatron) > 0){
-				$modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-				$date = strtotime(date('Y-m-d H:i:s'));              
-				if(!$this->Session->read('patron')){               
+			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card)) === false) {
+				$date = time();
+				$values = array(0 => $date, 1 => session_id());			
+				Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
+			} else {
+				$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card);
+				$date = time();
+				$modifiedTime = $userCache[0];
+				if(!($this->Session->read('patron'))){
 					if(($date-$modifiedTime) > 60){
-					  $updateArr = array();
-					  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-					  $updateArr['session_id'] = session_id();
-					  $this->Currentpatron->save($updateArr);
+						$values = array(0 => $date, 1 => session_id());	
+						Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
 					}
 					else{
-					  $this->Session->destroy('user');
-					  $this -> Session -> setFlash("This account is already active.");                              
-					  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+						$this->Session->destroy('user');
+						$this -> Session -> setFlash("This account is already active.");                              
+						$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 					}
+				} else {
+					if(($date-$modifiedTime) > 60){
+						$values = array(0 => $date, 1 => session_id());	
+						Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
+					}
+					else{
+						$this->Session->destroy('user');
+						$this -> Session -> setFlash("This account is already active.");                              
+						$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+					}		
 				}
-				else{
-					$sessionId = session_id();                    
-					if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-						if(($date-$modifiedTime) > 60){                            
-						  $updateArr = array();
-						  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-						  $updateArr['session_id'] = session_id();
-						  $this->Currentpatron->save($updateArr);
-						}
-						else{
-						  $this->Session->destroy('user');   
-						  $this -> Session -> setFlash("This account is already active.");                                  
-						  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-						}                  
-					}                    
-				}
-			}
-			else{                
-				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-				$insertArr['patronid'] = $user;
-				$insertArr['session_id'] = session_id();
-				$this->Currentpatron->save($insertArr);
+				
 			}
 			$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 			$this->Session->write("patron", $user);
@@ -3128,45 +3037,36 @@ Class UsersController extends AppController
 						}                  
 					}
 					elseif($status == 1){
-						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-						if(count($currentPatron) > 0){
-						  $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-						  $date = strtotime(date('Y-m-d H:i:s'));              
-						  if(!($this->Session->read('patron'))){               
-							  if(($date-$modifiedTime) > 60){
-								  $updateArr = array();
-								  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-								  $updateArr['session_id'] = session_id();
-								  $this->Currentpatron->save($updateArr);
-							  }
-							  else{
-								  $this->Session->destroy('user');
-								  $this -> Session -> setFlash("This account is already active.");                              
-								  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-							  }
-						 }
-						  else{
-							  $sessionId = session_id();                    
-							  if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-								  if(($date-$modifiedTime) > 60){                            
-									  $updateArr = array();
-									  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-									  $updateArr['session_id'] = session_id();
-									  $this->Currentpatron->save($updateArr);
-								  }
-								  else{
-									  $this->Session->destroy('user'); 
-									  $this -> Session -> setFlash("This account is already active.");                                  
-									  $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-								  }                  
-							   }                    
-						    }
-						}
-						else{
-							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-							$insertArr['patronid'] = $patronId;
-							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);
+						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+							$date = time();
+							$values = array(0 => $date, 1 => session_id());			
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+						} else {
+							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+							$date = time();
+							$modifiedTime = $userCache[0];
+							if(!($this->Session->read('patron'))){
+								if(($date-$modifiedTime) > 60){
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								}
+								else{
+									$this->Session->destroy('user');
+									$this -> Session -> setFlash("This account is already active.");                              
+									$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+								}
+							} else {
+								if(($date-$modifiedTime) > 60){
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								}
+								else{
+									$this->Session->destroy('user');
+									$this -> Session -> setFlash("This account is already active.");                              
+									$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+								}		
+							}
+							
 						}
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -3406,46 +3306,37 @@ Class UsersController extends AppController
 							   }                  
 						   }
 						   elseif($status == 1){
-							   $currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-							   if(count($currentPatron) > 0){
-								   $modifiedTime = strtotime($currentPatron[0]['Currentpatron']['modified']);                           
-								   $date = strtotime(date('Y-m-d H:i:s'));              
-								   if(!($this->Session->read('patron'))){               
-									   if(($date-$modifiedTime) > 60){
-										   $updateArr = array();
-										   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-										   $updateArr['session_id'] = session_id();
-										   $this->Currentpatron->save($updateArr);
-									   }
-									   else{
-										   $this->Session->destroy('user');
-										   $this -> Session -> setFlash("This account is already active.");                              
-										   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-									   }
-								   }
-								   else{
-									   $sessionId = session_id();                    
-									   if($currentPatron[0]['Currentpatron']['session_id'] != $sessionId){                        
-										   if(($date-$modifiedTime) > 60){                            
-											   $updateArr = array();
-											   $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];                
-											   $updateArr['session_id'] = session_id();
-											   $this->Currentpatron->save($updateArr);
-										   }
-										   else{
-											   $this->Session->destroy('user'); 
-											   $this -> Session -> setFlash("This account is already active.");                                  
-											   $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-										   }                  
-									   }                    
-								   }
-							   }
-							   else{
-								   $insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-								   $insertArr['patronid'] = $patronId;
-								   $insertArr['session_id'] = session_id();
-								   $this->Currentpatron->save($insertArr);
-							   }
+								if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+									$date = time();
+									$values = array(0 => $date, 1 => session_id());			
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								} else {
+									$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+									$date = time();
+									$modifiedTime = $userCache[0];
+									if(!($this->Session->read('patron'))){
+										if(($date-$modifiedTime) > 60){
+											$values = array(0 => $date, 1 => session_id());	
+											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										}
+										else{
+											$this->Session->destroy('user');
+											$this -> Session -> setFlash("This account is already active.");                              
+											$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+										}
+									} else {
+										if(($date-$modifiedTime) > 60){
+											$values = array(0 => $date, 1 => session_id());	
+											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										}
+										else{
+											$this->Session->destroy('user');
+											$this -> Session -> setFlash("This account is already active.");                              
+											$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+										}		
+									}
+									
+								}
 							   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							   $this->Session->write("patron", $patronId);
 							   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
