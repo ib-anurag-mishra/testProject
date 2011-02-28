@@ -33,17 +33,6 @@ Class GenresController extends AppController
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}
 		}
-		$libraryId = $this->Session->read('library');
-		$patronId = $this->Session->read('patron');	
-		$userCache = Cache::read("login_".$libraryId.$patronId);
-		$date = time();
-		$modifiedTime = $userCache[0];
-		if(($date-$modifiedTime) > 60){
-		//	$this->Session->destroy('user');
-			$this->Session->write("chkVal", 1);
-			$this->Session->setFlash("User Sesson destroyed."); 
-			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-		}		
 	}
 	
 	/*
