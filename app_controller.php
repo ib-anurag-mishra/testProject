@@ -30,7 +30,7 @@ class AppController extends Controller
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');	
 		$userCache = Cache::read("login_".$libraryId.$patronId);
-		$time = time();
+		$date = time();
 		$modifiedTime = $userCache[0];
 		if(!($this->Session->read('patron'))){
 			if(($date-$modifiedTime) > 60){
