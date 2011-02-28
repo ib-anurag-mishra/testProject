@@ -10,6 +10,37 @@ class AppController extends Controller
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
+		if(!$this->Session->read('chkVal') || ($this->Session->read('chkVal') == '')){
+			$libraryId = $this->Session->read('library');
+			$patronId = $this->Session->read('patron');	
+			$userCache = Cache::read("login_".$libraryId.$patronId);
+			$date = time();
+			$modifiedTime = $userCache[0];
+			if(!($this->Session->read('patron'))){
+				if(($date-$modifiedTime) > 60){
+					$this->Session->destroy('user');
+					$this->Session->setFlash("User Sesson destroyed."); 
+					$this->Session->write("chkVal", 1);				
+					$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+				}
+				else{
+					$var = 0;
+					$values = array(0 => $date, 1 => session_id());	
+					Cache::write("login_".$libraryId.$patronId, $values);
+				}
+			} else {
+				if(($date-$modifiedTime) > 60){
+					$this->Session->destroy('user');
+					$this->Session->write("chkVal", 1);
+					$this->Session->setFlash("User Sesson destroyed.");                              
+					$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+				}
+				else{
+					$values = array(0 => $date, 1 => session_id());	
+					Cache::write("login_".$libraryId.$patronId, $values);
+				}		
+			}
+		}
 		$this->Auth->authorize = 'actions';
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
 		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
