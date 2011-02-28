@@ -34,7 +34,7 @@ class AppController extends Controller
 		$modifiedTime = $userCache[0];
 		if(!($this->Session->read('patron'))){
 			if(($date-$modifiedTime) > 60){
-				$values = array(0 => $time, 1 => session_id());	
+				$values = array(0 => $date, 1 => session_id());	
 				Cache::write("login_".$libraryId.$patronId, $values);
 			}
 			else{
@@ -44,7 +44,7 @@ class AppController extends Controller
 			}
 		} else {
 			if(($date-$modifiedTime) > 60){
-				$values = array(0 => $time, 1 => session_id());	
+				$values = array(0 => $date, 1 => session_id());	
 				Cache::write("login_".$libraryId.$patronId, $values);
 			}
 			else{
