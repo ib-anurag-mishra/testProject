@@ -10,7 +10,6 @@ class AppController extends Controller
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
-		checkOnlinePatron();
 		$this->Auth->authorize = 'actions';
 		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
 		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
