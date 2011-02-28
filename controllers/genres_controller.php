@@ -18,6 +18,7 @@ Class GenresController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
+		parent::checkOnlinePatron();
 		$this->Auth->allowedActions = array('view','index');
 		$libraryCheckArr = array("view","index");
 		if(in_array($this->action,$libraryCheckArr)) {
