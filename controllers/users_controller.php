@@ -889,7 +889,7 @@ Class UsersController extends AppController
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
-							$time = time();
+							$date = time();
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
