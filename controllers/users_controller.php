@@ -882,18 +882,18 @@ Class UsersController extends AppController
 						}                  
 					}
 					elseif($retStatus == 0){
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronid)) === false) {
+						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
-							Cache::write("login_".$libid.$patronid, $values);
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
-							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronid);
+							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 							$time = time();
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $time, 1 => session_id());	
-									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronid, $values);
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
 									$this->Session->destroy('user');
@@ -903,7 +903,7 @@ Class UsersController extends AppController
 							} else {
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $time, 1 => session_id());	
-									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronid, $values);
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
 									$this->Session->destroy('user');
