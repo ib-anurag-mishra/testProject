@@ -15,8 +15,13 @@ class HomesController extends AppController
      Desc : actions that needed before other functions are getting called
     */
     function beforeFilter() {
-	parent::beforeFilter();
-	parent::checkOnlinePatron();
+		parent::beforeFilter();
+		$value = parent::checkOnlinePatron();
+		if($value == 2){
+			$this->Session->destroy('user');
+			$this -> Session -> setFlash("User Sesson destroyed.");                              
+			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+		}
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
