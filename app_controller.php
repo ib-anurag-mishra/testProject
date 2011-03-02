@@ -40,10 +40,11 @@ class AppController extends Controller
 				$this->Session->destroy();
 				Cache::delete("login_".$libraryId.$patronId, $values);
 				$host = $_SERVER['HTTP_HOST'];
-				if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
-					$otherHost = str_replace('99', '101', $host);
+				$name = $_SERVER['SERVER_NAME'];
+				if($name == '173.203.136.99'){
+					$otherHost = Configure::read('101host');
 				} else {
-					$otherHost = str_replace('101', '99', $host);
+					$otherHost = Configure::read('99host');
 				}
 				$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libraryId.'&patronid='.$patronId);
 				curl_setopt($session, CURLOPT_HEADER, false);
@@ -56,10 +57,11 @@ class AppController extends Controller
 				$this->Session->destroy();
 				Cache::delete("login_".$libraryId.$patronId, $values);
 				$host = $_SERVER['HTTP_HOST'];
-				if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
-					$otherHost = str_replace('99', '101', $host);
+				$name = $_SERVER['SERVER_NAME'];
+				if($name == '173.203.136.99'){
+					$otherHost = Configure::read('101host');
 				} else {
-					$otherHost = str_replace('101', '99', $host);
+					$otherHost = Configure::read('99host');
 				}
 				$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libraryId.'&patronid='.$patronId);
 				curl_setopt($session, CURLOPT_HEADER, false);
