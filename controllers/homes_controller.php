@@ -807,12 +807,34 @@ class HomesController extends AppController
 		if(($date-$modifiedTime) > 60){		
 			$this->Session->destroy();
 			Cache::delete("login_".$libid.$patronid, $values);
+			$host = $_SERVER['HTTP_HOST'];
+			if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+				$otherHost = str_replcae('99', '101', $host);
+			} else {
+				$otherHost = str_replcae('101', '99', $host);
+			}
+			$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libid.'&patronid='.$patronid);
+			curl_setopt($session, CURLOPT_HEADER, false);
+			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+			curl_exec($session);
+			curl_close($session);			
 			echo "Error";
 			exit;
 		} else {
 			$date = time();
 			$values = array(0 => $date, 1 => session_id());			
 			Cache::write("login_".$libid.$patronid, $values);
+			$host = $_SERVER['HTTP_HOST'];
+			if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+				$otherHost = str_replcae('99', '101', $host);
+			} else {
+				$otherHost = str_replcae('101', '99', $host);
+			}
+			$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$libid.'&patronid='.$patronid);
+			curl_setopt($session, CURLOPT_HEADER, false);
+			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+			curl_exec($session);
+			curl_close($session);			
 			echo "Success";
 			exit;
 		}
