@@ -1,10 +1,3 @@
-<?php
-echo $this->Html->css('jquery-ui-1.8.2.custom.css');
-echo $this->Html->css('ui.jqgrid.css'); 
-echo $javascript->link('grid.locale-en');	
-echo $javascript->link('jquery.jqGrid.min');
-echo $javascript->link('jquery-ui-1.8.6.custom.min');
-?>
 <?php $this->pageTitle = 'Admin'; ?>
 <form>
 <fieldset>
@@ -21,6 +14,7 @@ Welcome to the Administrative Section of <b><i>Freegal Music</i></b>
 <div id="library_search">
  <a name="bottom">Library Search&nbsp;</a>&nbsp;
  <?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_index'));?>&nbsp;
+ <?php echo $html->link('#',array('controller' => 'users', 'action' => 'admin_index', 'special'));?>&nbsp;
  <?php echo $html->link('A',array('controller' => 'users', 'action' => 'admin_index', 'A'));?>&nbsp;
  <?php echo $html->link('B',array('controller' => 'users', 'action' => 'admin_index', 'B'));?>&nbsp;
  <?php echo $html->link('C',array('controller' => 'users', 'action' => 'admin_index', 'C'));?>&nbsp;
@@ -50,51 +44,57 @@ Welcome to the Administrative Section of <b><i>Freegal Music</i></b>
 </div>
 <br class="clr">
 <p>
-<script type="text/javascript">
-var sort;
-<?php if($sortBy != ''){ ?> 
-	var sort = '<?php echo $sortBy;?>';
-<?php } else {?>
-	var sort = '';
-<?php } ?>
-var gridUrl = webroot+'admin/users/data/'+sort;
- $(document).ready(function() {
-	jQuery("#reportList").jqGrid({ url:gridUrl, 
-		datatype: 'xml', 
-		mtype: 'POST',
-		loadonce:true,
-		rowNum: 20,
-		colNames:['First Name', 'Start Date', 'End Date', 'Today', 'Week', 'Month', 'YTD', 'Remaining'], 
-		colModel :[
-				   {name:'library_name', index:'library_name', width:165,editable:true, edittype:'text',align:"left", formatter:linkFormatter},
-				   {name:'library_contract_start_date', index:'library_contract_start_date', width:135,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
-				   {name:'library_contract_end_date', index:'library_contract_end_date', width:135,editable:true, edittype:'text',align:"left",sorttype: "date", datefmt: "Y-m-d"},
-				   {name:'today', index:'today', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
-				   {name:'week', index:'week', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
-				   {name:'month', index:'month', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
-				   {name:'ytd', index:'ytd', width:85,editable:true, edittype:'text',align:"left",sorttype: "int"},
-				   {name:'library_available_downloads', index:'library_available_downloads', width:100,editable:true, edittype:'text',align:"left",sorttype: "int"},
-				  ],
-		pager: jQuery('#pager'), 
-		rowList:[20,40,60,80], 
-		sortname: 'library_name', 
-		sortorder: "asc",
-		viewrecords: true, 
-		height:460,
-		width:895,
-		userToolbar:'<span class="grid_title">Library Management</span>',
-		imgpath: webroot+'css/themes/redmond/images/', caption: 'Library Report'
-		});
- });
- 
- function linkFormatter(el, cellval, opts) {	
-	return '<a href="/admin/libraries/libraryform/id:'+cellval.rowId+'">'+el+'</a>';
- }
-</script>
-
-	<table id="reportList"></table>
-	<div id="pager" class="scroll"></div>
- </fieldset>
+<?php
+$curStartDate = date("Y-m-d")." 00:00:00";
+$curEndDate = date("Y-m-d")." 23:59:59";
+$curWeekStartDate = Configure::read('App.curWeekStartDate');
+$curWeekEndDate = Configure::read('App.curWeekEndDate');
+$monthStartDate = date("Y-m-d", strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
+$monthEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))))." 23:59:59";
+echo $paginator->counter(array(
+'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+));
+?></p>
+  <table id="list">
+          <tr>            
+            <th class="left" style="border-right:1px solid #E0E0E0" rowspan="2">Name</th>
+			<th class="left" style="border-right:1px solid #E0E0E0;text-align:center" colspan="2">Contract</th>
+			<th class="left" style="border-right:1px solid #E0E0E0;text-align:center" colspan="6">Downloads</th>
+		</tr>
+		<tr>
+            <th style="border-right:1px solid #E0E0E0">Start Date</th>
+            <th class="left"><?php echo $paginator->sort('End Date', 'library_contract_start_date')."&nbsp;".$paginator->sort('`', 'library_contract_start_date', array('id' => 'sort_arrow'));?></th>
+            <th style="border-right:1px solid #E0E0E0">Today </th>
+			<th style="border-right:1px solid #E0E0E0">Week</th>
+            <th style="border-right:1px solid #E0E0E0">Month</th>
+			<th style="border-right:1px solid #E0E0E0">YTD</th>
+            <th class="left"><?php echo $paginator->sort('Remaining', 'library_available_downloads')."&nbsp;".$paginator->sort('`', 'library_available_downloads', array('id' => 'sort_arrow'));?></th>
+          </tr>
+          <?php
+          foreach($libraries as $library)
+          {
+            ?>
+            <tr>
+				<td><?php echo $html->link($library['Library']['library_name'], array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
+				<td class="left"><?php echo $library['Library']['library_contract_start_date'];?></td>
+				<td class="left"><?php echo date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curStartDate, $curEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curWeekStartDate, $curWeekEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $monthStartDate, $monthEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60)." 23:59:59");?></td>
+				<td class="left"><?php echo $library['Library']['library_available_downloads'];?></td>
+            </tr>            
+            <?php
+          }
+          ?>
+        </table>
+	<br class="clr" />
+	<div class="paging">
+	      <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+	| 	<?php echo $paginator->numbers();?>
+	      <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	</div>
+</fieldset>
 <?php 
  echo $session->flash();
 ?>
