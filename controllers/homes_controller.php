@@ -804,9 +804,12 @@ class HomesController extends AppController
 		$userCache = Cache::read("login_".$libid.$patronid);
 		$date = time();
 		$modifiedTime = $userCache[0];
-		if(($date-$modifiedTime) > 60){		
+		$sql = mysql_query("SELECT id FROM `sessions` Where id='".session_id()."'");
+		$count = mysql_num_rows($sql);
+		$values = array(0 => $date, 1 => session_id());
+		if(($date-$modifiedTime) > 60 && $count == 0){		
 			$this->Session->destroy();
-			Cache::delete("login_".$libid.$patronid, $values);
+			Cache::delete("login_".$libid.$patronid);
 			$host = $_SERVER['HTTP_HOST'];
 			$name = $_SERVER['SERVER_NAME'];
 			if($name == '173.203.136.99'){
