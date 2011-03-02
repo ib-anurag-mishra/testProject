@@ -39,10 +39,24 @@ Class UsersController extends AppController
 			$this->Auth->autoRedirect = false;
 		}
 		if($userType == '1'){
-
+			if($library == 'special') {
+				$condition = array("library_name REGEXP '^[^A-Za-z]'");			
+			}
+			elseif($library != '') {
+				$condition = array('library_name LIKE' => $library.'%');
+			}
+			else {
+				$condition = "";
+			}
 			$url = $_SERVER['REQUEST_URI'];
 			header( "refresh:300;url=".$url);
-			$this->set('sortBy', $library);
+			$this->Library->recursive = -1;
+			if($condition != ''){
+				$this->paginate = array('conditions' => $condition);
+			} else {
+				$this->paginate = array('order' => 'library_name');
+			}
+			$this->set('libraries', $this->paginate('Library'));
 		}
 		//takes to the default admin home page
 		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header 
@@ -274,6 +288,17 @@ Class UsersController extends AppController
 			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
 			$this->Currentpatron->saveField('modified',$updateTime, false);
 			Cache::delete("login_".$libraryId.$patronId);
+			$host = $_SERVER['HTTP_HOST'];
+			if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+				$otherHost = str_replcae('99', '101', $host);
+			} else {
+				$otherHost = str_replcae('101', '99', $host);
+			}
+			$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libraryId.'&patronid='.$patronId);
+			curl_setopt($session, CURLOPT_HEADER, false);
+			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+			curl_exec($session);
+			curl_close($session);			
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
 				$redirectUrl = $this->Session->read('referral_url');
 				$this->Session->destroy();
@@ -878,6 +903,17 @@ Class UsersController extends AppController
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+							$host = $_SERVER['HTTP_HOST'];
+							if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+								$otherHost = str_replcae('99', '101', $host);
+							} else {
+								$otherHost = str_replcae('101', '99', $host);
+							}
+							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+							curl_setopt($session, CURLOPT_HEADER, false);
+							curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+							curl_exec($session);
+							curl_close($session);							
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 							$date = time();
@@ -886,6 +922,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -896,6 +943,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -1146,6 +1204,17 @@ Class UsersController extends AppController
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());			
 								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								$host = $_SERVER['HTTP_HOST'];
+								if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+									$otherHost = str_replcae('99', '101', $host);
+								} else {
+									$otherHost = str_replcae('101', '99', $host);
+								}
+								$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+								curl_setopt($session, CURLOPT_HEADER, false);
+								curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+								curl_exec($session);
+								curl_close($session);								
 							} else {
 								$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 								$date = time();
@@ -1154,6 +1223,17 @@ Class UsersController extends AppController
 									if(($date-$modifiedTime) > 60){
 										$values = array(0 => $date, 1 => session_id());	
 										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										$host = $_SERVER['HTTP_HOST'];
+										if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+											$otherHost = str_replcae('99', '101', $host);
+										} else {
+											$otherHost = str_replcae('101', '99', $host);
+										}
+										$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+										curl_setopt($session, CURLOPT_HEADER, false);
+										curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+										curl_exec($session);
+										curl_close($session);										
 									}
 									else{
 										$this->Session->destroy('user');
@@ -1164,6 +1244,17 @@ Class UsersController extends AppController
 									if(($date-$modifiedTime) > 60){
 										$values = array(0 => $date, 1 => session_id());	
 										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										$host = $_SERVER['HTTP_HOST'];
+										if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+											$otherHost = str_replcae('99', '101', $host);
+										} else {
+											$otherHost = str_replcae('101', '99', $host);
+										}
+										$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+										curl_setopt($session, CURLOPT_HEADER, false);
+										curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+										curl_exec($session);
+										curl_close($session);										
 									}
 									else{
 										$this->Session->destroy('user');
@@ -1413,6 +1504,17 @@ Class UsersController extends AppController
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());			
 								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								$host = $_SERVER['HTTP_HOST'];
+								if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+									$otherHost = str_replcae('99', '101', $host);
+								} else {
+									$otherHost = str_replcae('101', '99', $host);
+								}
+								$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+								curl_setopt($session, CURLOPT_HEADER, false);
+								curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+								curl_exec($session);
+								curl_close($session);								
 							} else {
 								$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 								$date = time();
@@ -1421,6 +1523,17 @@ Class UsersController extends AppController
 									if(($date-$modifiedTime) > 60){
 										$values = array(0 => $date, 1 => session_id());	
 										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										$host = $_SERVER['HTTP_HOST'];
+										if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+											$otherHost = str_replcae('99', '101', $host);
+										} else {
+											$otherHost = str_replcae('101', '99', $host);
+										}
+										$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+										curl_setopt($session, CURLOPT_HEADER, false);
+										curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+										curl_exec($session);
+										curl_close($session);										
 									}
 									else{
 										$this->Session->destroy('user');
@@ -1431,6 +1544,17 @@ Class UsersController extends AppController
 									if(($date-$modifiedTime) > 60){
 										$values = array(0 => $date, 1 => session_id());	
 										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										$host = $_SERVER['HTTP_HOST'];
+										if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+											$otherHost = str_replcae('99', '101', $host);
+										} else {
+											$otherHost = str_replcae('101', '99', $host);
+										}
+										$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+										curl_setopt($session, CURLOPT_HEADER, false);
+										curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+										curl_exec($session);
+										curl_close($session);										
 									}
 									else{
 										$this->Session->destroy('user');
@@ -1563,6 +1687,17 @@ Class UsersController extends AppController
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+							$host = $_SERVER['HTTP_HOST'];
+							if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+								$otherHost = str_replcae('99', '101', $host);
+							} else {
+								$otherHost = str_replcae('101', '99', $host);
+							}
+							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+							curl_setopt($session, CURLOPT_HEADER, false);
+							curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+							curl_exec($session);
+							curl_close($session);							
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 							$date = time();
@@ -1571,6 +1706,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -1581,6 +1727,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -1780,6 +1937,17 @@ Class UsersController extends AppController
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+							$host = $_SERVER['HTTP_HOST'];
+							if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+								$otherHost = str_replcae('99', '101', $host);
+							} else {
+								$otherHost = str_replcae('101', '99', $host);
+							}
+							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+							curl_setopt($session, CURLOPT_HEADER, false);
+							curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+							curl_exec($session);
+							curl_close($session);							
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 							$date = time();
@@ -1788,6 +1956,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -1798,6 +1977,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -1958,6 +2148,17 @@ Class UsersController extends AppController
 													$date = time();
 													$values = array(0 => $date, 1 => session_id());			
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+													$host = $_SERVER['HTTP_HOST'];
+													if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+														$otherHost = str_replcae('99', '101', $host);
+													} else {
+														$otherHost = str_replcae('101', '99', $host);
+													}
+													$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+													curl_setopt($session, CURLOPT_HEADER, false);
+													curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+													curl_exec($session);
+													curl_close($session);													
 												} else {
 													$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 													$date = time();
@@ -1966,6 +2167,17 @@ Class UsersController extends AppController
 														if(($date-$modifiedTime) > 60){
 															$values = array(0 => $date, 1 => session_id());	
 															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+															$host = $_SERVER['HTTP_HOST'];
+															if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+																$otherHost = str_replcae('99', '101', $host);
+															} else {
+																$otherHost = str_replcae('101', '99', $host);
+															}
+															$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+															curl_setopt($session, CURLOPT_HEADER, false);
+															curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+															curl_exec($session);
+															curl_close($session);															
 														}
 														else{
 															$this->Session->destroy('user');
@@ -1976,6 +2188,17 @@ Class UsersController extends AppController
 														if(($date-$modifiedTime) > 60){
 															$values = array(0 => $date, 1 => session_id());	
 															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+															$host = $_SERVER['HTTP_HOST'];
+															if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+																$otherHost = str_replcae('99', '101', $host);
+															} else {
+																$otherHost = str_replcae('101', '99', $host);
+															}
+															$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+															curl_setopt($session, CURLOPT_HEADER, false);
+															curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+															curl_exec($session);
+															curl_close($session);															
 														}
 														else{
 															$this->Session->destroy('user');
@@ -2149,6 +2372,17 @@ Class UsersController extends AppController
 												if(($date-$modifiedTime) > 60){
 													$values = array(0 => $date, 1 => session_id());	
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+													$host = $_SERVER['HTTP_HOST'];
+													if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+														$otherHost = str_replcae('99', '101', $host);
+													} else {
+														$otherHost = str_replcae('101', '99', $host);
+													}
+													$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+													curl_setopt($session, CURLOPT_HEADER, false);
+													curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+													curl_exec($session);
+													curl_close($session);													
 												}
 												else{
 													$this->Session->destroy('user');
@@ -2159,6 +2393,17 @@ Class UsersController extends AppController
 												if(($date-$modifiedTime) > 60){
 													$values = array(0 => $date, 1 => session_id());	
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+													$host = $_SERVER['HTTP_HOST'];
+													if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+														$otherHost = str_replcae('99', '101', $host);
+													} else {
+														$otherHost = str_replcae('101', '99', $host);
+													}
+													$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+													curl_setopt($session, CURLOPT_HEADER, false);
+													curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+													curl_exec($session);
+													curl_close($session);													
 												}
 												else{
 													$this->Session->destroy('user');
@@ -2402,6 +2647,17 @@ Class UsersController extends AppController
 													$date = time();
 													$values = array(0 => $date, 1 => session_id());			
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+													$host = $_SERVER['HTTP_HOST'];
+													if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+														$otherHost = str_replcae('99', '101', $host);
+													} else {
+														$otherHost = str_replcae('101', '99', $host);
+													}
+													$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+													curl_setopt($session, CURLOPT_HEADER, false);
+													curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+													curl_exec($session);
+													curl_close($session);													
 												} else {
 													$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 													$date = time();
@@ -2410,6 +2666,17 @@ Class UsersController extends AppController
 														if(($date-$modifiedTime) > 60){
 															$values = array(0 => $date, 1 => session_id());	
 															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+															$host = $_SERVER['HTTP_HOST'];
+															if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+																$otherHost = str_replcae('99', '101', $host);
+															} else {
+																$otherHost = str_replcae('101', '99', $host);
+															}
+															$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+															curl_setopt($session, CURLOPT_HEADER, false);
+															curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+															curl_exec($session);
+															curl_close($session);															
 														}
 														else{
 															$this->Session->destroy('user');
@@ -2420,6 +2687,17 @@ Class UsersController extends AppController
 														if(($date-$modifiedTime) > 60){
 															$values = array(0 => $date, 1 => session_id());	
 															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+															$host = $_SERVER['HTTP_HOST'];
+															if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+																$otherHost = str_replcae('99', '101', $host);
+															} else {
+																$otherHost = str_replcae('101', '99', $host);
+															}
+															$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+															curl_setopt($session, CURLOPT_HEADER, false);
+															curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+															curl_exec($session);
+															curl_close($session);															
 														}
 														else{
 															$this->Session->destroy('user');
@@ -2654,6 +2932,17 @@ Class UsersController extends AppController
 											$date = time();
 											$values = array(0 => $date, 1 => session_id());			
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+											$host = $_SERVER['HTTP_HOST'];
+											if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+												$otherHost = str_replcae('99', '101', $host);
+											} else {
+												$otherHost = str_replcae('101', '99', $host);
+											}
+											$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+											curl_setopt($session, CURLOPT_HEADER, false);
+											curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+											curl_exec($session);
+											curl_close($session);											
 										} else {
 											$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 											$date = time();
@@ -2662,6 +2951,17 @@ Class UsersController extends AppController
 												if(($date-$modifiedTime) > 60){
 													$values = array(0 => $date, 1 => session_id());	
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+													$host = $_SERVER['HTTP_HOST'];
+													if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+														$otherHost = str_replcae('99', '101', $host);
+													} else {
+														$otherHost = str_replcae('101', '99', $host);
+													}
+													$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+													curl_setopt($session, CURLOPT_HEADER, false);
+													curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+													curl_exec($session);
+													curl_close($session);													
 												}
 												else{
 													$this->Session->destroy('user');
@@ -2672,6 +2972,17 @@ Class UsersController extends AppController
 												if(($date-$modifiedTime) > 60){
 													$values = array(0 => $date, 1 => session_id());	
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+													$host = $_SERVER['HTTP_HOST'];
+													if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+														$otherHost = str_replcae('99', '101', $host);
+													} else {
+														$otherHost = str_replcae('101', '99', $host);
+													}
+													$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+													curl_setopt($session, CURLOPT_HEADER, false);
+													curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+													curl_exec($session);
+													curl_close($session);													
 												}
 												else{
 													$this->Session->destroy('user');
@@ -2794,6 +3105,17 @@ Class UsersController extends AppController
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());			
 				Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
+				$host = $_SERVER['HTTP_HOST'];
+				if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+					$otherHost = str_replcae('99', '101', $host);
+				} else {
+					$otherHost = str_replcae('101', '99', $host);
+				}
+				$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$card);
+				curl_setopt($session, CURLOPT_HEADER, false);
+				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+				curl_exec($session);
+				curl_close($session);				
 			} else {
 				$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card);
 				$date = time();
@@ -2802,6 +3124,17 @@ Class UsersController extends AppController
 					if(($date-$modifiedTime) > 60){
 						$values = array(0 => $date, 1 => session_id());	
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
+						$host = $_SERVER['HTTP_HOST'];
+						if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+							$otherHost = str_replcae('99', '101', $host);
+						} else {
+							$otherHost = str_replcae('101', '99', $host);
+						}
+						$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$card);
+						curl_setopt($session, CURLOPT_HEADER, false);
+						curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+						curl_exec($session);
+						curl_close($session);						
 					}
 					else{
 						$this->Session->destroy('user');
@@ -2812,6 +3145,17 @@ Class UsersController extends AppController
 					if(($date-$modifiedTime) > 60){
 						$values = array(0 => $date, 1 => session_id());	
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
+						$host = $_SERVER['HTTP_HOST'];
+						if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+							$otherHost = str_replcae('99', '101', $host);
+						} else {
+							$otherHost = str_replcae('101', '99', $host);
+						}
+						$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$card);
+						curl_setopt($session, CURLOPT_HEADER, false);
+						curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+						curl_exec($session);
+						curl_close($session);						
 					}
 					else{
 						$this->Session->destroy('user');
@@ -3042,6 +3386,17 @@ Class UsersController extends AppController
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+							$host = $_SERVER['HTTP_HOST'];
+							if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+								$otherHost = str_replcae('99', '101', $host);
+							} else {
+								$otherHost = str_replcae('101', '99', $host);
+							}
+							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+							curl_setopt($session, CURLOPT_HEADER, false);
+							curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+							curl_exec($session);
+							curl_close($session);							
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 							$date = time();
@@ -3050,6 +3405,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -3060,6 +3426,17 @@ Class UsersController extends AppController
 								if(($date-$modifiedTime) > 60){
 									$values = array(0 => $date, 1 => session_id());	
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								}
 								else{
 									$this->Session->destroy('user');
@@ -3311,6 +3688,17 @@ Class UsersController extends AppController
 									$date = time();
 									$values = array(0 => $date, 1 => session_id());			
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+									$host = $_SERVER['HTTP_HOST'];
+									if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+										$otherHost = str_replcae('99', '101', $host);
+									} else {
+										$otherHost = str_replcae('101', '99', $host);
+									}
+									$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+									curl_setopt($session, CURLOPT_HEADER, false);
+									curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+									curl_exec($session);
+									curl_close($session);									
 								} else {
 									$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
 									$date = time();
@@ -3319,6 +3707,17 @@ Class UsersController extends AppController
 										if(($date-$modifiedTime) > 60){
 											$values = array(0 => $date, 1 => session_id());	
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+											$host = $_SERVER['HTTP_HOST'];
+											if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+												$otherHost = str_replcae('99', '101', $host);
+											} else {
+												$otherHost = str_replcae('101', '99', $host);
+											}
+											$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+											curl_setopt($session, CURLOPT_HEADER, false);
+											curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+											curl_exec($session);
+											curl_close($session);											
 										}
 										else{
 											$this->Session->destroy('user');
@@ -3329,6 +3728,17 @@ Class UsersController extends AppController
 										if(($date-$modifiedTime) > 60){
 											$values = array(0 => $date, 1 => session_id());	
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+											$host = $_SERVER['HTTP_HOST'];
+											if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
+												$otherHost = str_replcae('99', '101', $host);
+											} else {
+												$otherHost = str_replcae('101', '99', $host);
+											}
+											$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+											curl_setopt($session, CURLOPT_HEADER, false);
+											curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
+											curl_exec($session);
+											curl_close($session);											
 										}
 										else{
 											$this->Session->destroy('user');
