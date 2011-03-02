@@ -809,9 +809,9 @@ class HomesController extends AppController
 			Cache::delete("login_".$libid.$patronid, $values);
 			$host = $_SERVER['HTTP_HOST'];
 			if($_SERVER['SERVER_NAME'] == '173.203.136.99'){
-				$otherHost = str_replcae('99', '101', $host);
+				$otherHost = str_replace('99', '101', $host);
 			} else {
-				$otherHost = str_replcae('101', '99', $host);
+				$otherHost = str_replace('101', '99', $host);
 			}
 			$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libid.'&patronid='.$patronid);
 			curl_setopt($session, CURLOPT_HEADER, false);
