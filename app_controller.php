@@ -38,7 +38,7 @@ class AppController extends Controller
 		if(!($this->Session->read('patron'))){
 			if((($date-$modifiedTime) > 60) && $modifiedTime){
 				$this->Session->destroy();
-				Cache::delete("login_".$libraryId.$patronId, $values);
+				Cache::delete("login_".$libraryId.$patronId);
 				$host = $_SERVER['HTTP_HOST'];
 				$name = $_SERVER['SERVER_NAME'];
 				if($name == '173.203.136.99'){
@@ -55,7 +55,7 @@ class AppController extends Controller
 		} else {
 			if((($date-$modifiedTime) > 60) && $modifiedTime){
 				$this->Session->destroy();
-				Cache::delete("login_".$libraryId.$patronId, $values);
+				Cache::delete("login_".$libraryId.$patronId);
 				$host = $_SERVER['HTTP_HOST'];
 				$name = $_SERVER['SERVER_NAME'];
 				if($name == '173.203.136.99'){
