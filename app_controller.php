@@ -40,8 +40,8 @@ class AppController extends Controller
 				$this->Session->destroy();
 				Cache::delete("login_".$libraryId.$patronId);
 				$host = $_SERVER['HTTP_HOST'];
-				$name = $_SERVER['SERVER_NAME'];
-				if($name == '173.203.136.99'){
+				$name = $_SERVER['SERVER_ADDR'];
+				if($name == '192.168.100.99'){
 					$otherHost = Configure::read('101host');
 				} else {
 					$otherHost = Configure::read('99host');
@@ -57,8 +57,8 @@ class AppController extends Controller
 				$this->Session->destroy();
 				Cache::delete("login_".$libraryId.$patronId);
 				$host = $_SERVER['HTTP_HOST'];
-				$name = $_SERVER['SERVER_NAME'];
-				if($name == '173.203.136.99'){
+				$name = $_SERVER['SERVER_ADDR'];
+				if($name == '192.168.100.99'){
 					$otherHost = Configure::read('101host');
 				} else {
 					$otherHost = Configure::read('99host');
