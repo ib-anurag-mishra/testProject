@@ -804,13 +804,15 @@ class HomesController extends AppController
 		$userCache = Cache::read("login_".$libid.$patronid);
 		$date = time();
 		$modifiedTime = $userCache[0];
+		$sql = mysql_query("SELECT id FROM `sessions` Where id='".session_id()."'");
+		$count = mysql_num_rows($sql);
 		$values = array(0 => $date, 1 => session_id());
-		if(($date-$modifiedTime) > 60){		
+		if(($date-$modifiedTime) > 60 && $count == 0){		
 			$this->Session->destroy();
 			Cache::delete("login_".$libid.$patronid);
 			$host = $_SERVER['HTTP_HOST'];
-			$name = $_SERVER['SERVER_NAME'];
-			if($name == '173.203.136.99'){
+			$name = $_SERVER['SERVER_ADDR'];
+			if($name == '192.168.100.99'){
 				$otherHost = Configure::read('101host');
 			} else {
 				$otherHost = Configure::read('99host');
@@ -827,8 +829,8 @@ class HomesController extends AppController
 			$values = array(0 => $date, 1 => session_id());			
 			Cache::write("login_".$libid.$patronid, $values);
 			$host = $_SERVER['HTTP_HOST'];
-			$name = $_SERVER['SERVER_NAME'];
-			if($name == '173.203.136.99'){
+			$name = $_SERVER['SERVER_ADDR'];
+			if($name == '192.168.100.99'){
 				$otherHost = Configure::read('101host');
 			} else {
 				$otherHost = Configure::read('99host');
@@ -838,7 +840,7 @@ class HomesController extends AppController
 			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
 			curl_exec($session);
 			curl_close($session);			
-			echo "Success";
+			echo "Success".$name;
 			exit;
 		}
     }
