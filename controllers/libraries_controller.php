@@ -674,6 +674,15 @@ Class LibrariesController extends AppController
         }        
         else
         {
+			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+			if(count($currentPatron) > 0){
+			// do nothing
+			} else {
+				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+				$insertArr['patronid'] = $patronId;
+				$insertArr['session_id'] = session_id();
+				$this->Currentpatron->save($insertArr);						
+			}		
 			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());			
