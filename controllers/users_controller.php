@@ -216,6 +216,15 @@ Class UsersController extends AppController
 									);         
 			$authMethod = $libraryArr['Library']['library_authentication_method'];        
 			if($authMethod == 'user_account'){
+				$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libraryId, 'patronid' => $patronId)));
+				if(count($currentPatron) > 0){
+				// do nothing
+				} else {
+					$insertArr['libid'] = $libraryId;
+					$insertArr['patronid'] = $patronId;
+					$insertArr['session_id'] = session_id();
+					$this->Currentpatron->save($insertArr);						
+				}
 				if (($currentPatron = Cache::read("login_".$libraryId.$patronId)) === false) {
 					$date = time();
 					$values = array(0 => $date, 1 => session_id());			
@@ -227,7 +236,7 @@ Class UsersController extends AppController
 					} else {
 						$otherHost = Configure::read('99host');
 					}
-					$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+					$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$libraryId.'&patronid='.$patronId);
 					curl_setopt($session, CURLOPT_HEADER, false);
 					curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
 					curl_exec($session);
@@ -247,7 +256,7 @@ Class UsersController extends AppController
 							} else {
 								$otherHost = Configure::read('99host');
 							}
-							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$libraryId.'&patronid='.$patronId);
 							curl_setopt($session, CURLOPT_HEADER, false);
 							curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
 							curl_exec($session);
@@ -269,7 +278,7 @@ Class UsersController extends AppController
 							} else {
 								$otherHost = Configure::read('99host');
 							}
-							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$existingLibraries['0']['Library']['id'].'&patronid='.$patronId);
+							$session = curl_init($otherHost.'/cache/cacheLogin?libid='.$libraryId.'&patronid='.$patronId);
 							curl_setopt($session, CURLOPT_HEADER, false);
 							curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
 							curl_exec($session);
@@ -936,6 +945,15 @@ Class UsersController extends AppController
 						}                  
 					}
 					elseif($retStatus == 0){
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+						if(count($currentPatron) > 0){
+						// do nothing
+						} else {
+							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+							$insertArr['patronid'] = $patronId;
+							$insertArr['session_id'] = session_id();
+							$this->Currentpatron->save($insertArr);						
+						}					
 						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
@@ -1240,6 +1258,15 @@ Class UsersController extends AppController
 							}                  
 						}
 						elseif($status == 1){
+							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+							if(count($currentPatron) > 0){
+							// do nothing
+							} else {
+								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+								$insertArr['patronid'] = $patronId;
+								$insertArr['session_id'] = session_id();
+								$this->Currentpatron->save($insertArr);						
+							}						
 							if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());			
@@ -1543,6 +1570,15 @@ Class UsersController extends AppController
 							}                  
 						}
 						elseif($status == 1){
+							$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+							if(count($currentPatron) > 0){
+							// do nothing
+							} else {
+								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+								$insertArr['patronid'] = $patronId;
+								$insertArr['session_id'] = session_id();
+								$this->Currentpatron->save($insertArr);						
+							}						
 							if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());			
@@ -1728,7 +1764,16 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));   
 						}
 					}
-					else{                  
+					else{
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+						if(count($currentPatron) > 0){
+						// do nothing
+						} else {
+							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+							$insertArr['patronid'] = $patronId;
+							$insertArr['session_id'] = session_id();
+							$this->Currentpatron->save($insertArr);						
+						}					
 						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
@@ -1982,6 +2027,15 @@ Class UsersController extends AppController
 						}                  
 					}
 					elseif($status == 1 && $errMsg == ''){
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+						if(count($currentPatron) > 0){
+						// do nothing
+						} else {
+							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+							$insertArr['patronid'] = $patronId;
+							$insertArr['session_id'] = session_id();
+							$this->Currentpatron->save($insertArr);						
+						}					
 						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
@@ -2195,7 +2249,17 @@ Class UsersController extends AppController
 
 										 if ($result['variable']['CQ'][0] == 'Y') {
 											// Successful PIN !!!
-										  
+												
+												$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+												if(count($currentPatron) > 0){
+												// do nothing
+												} else {
+													$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+													$insertArr['patronid'] = $patronId;
+													$insertArr['session_id'] = session_id();
+													$this->Currentpatron->save($insertArr);						
+												}
+												
 												if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 													$date = time();
 													$values = array(0 => $date, 1 => session_id());			
@@ -2414,6 +2478,15 @@ Class UsersController extends AppController
 									  if (($result['variable']['BL'][0] == 'Y')) {
 										  // Success!!!
 										  
+										$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+										if(count($currentPatron) > 0){
+										// do nothing
+										} else {
+											$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+											$insertArr['patronid'] = $patronId;
+											$insertArr['session_id'] = session_id();
+											$this->Currentpatron->save($insertArr);						
+										}										  
 										  
 										if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 											$date = time();
@@ -2712,6 +2785,17 @@ Class UsersController extends AppController
 												}
 											}
 											if(!($status === false)){
+											
+												$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+												if(count($currentPatron) > 0){
+												// do nothing
+												} else {
+													$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+													$insertArr['patronid'] = $patronId;
+													$insertArr['session_id'] = session_id();
+													$this->Currentpatron->save($insertArr);						
+												}
+												
 												if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 													$date = time();
 													$values = array(0 => $date, 1 => session_id());			
@@ -3000,6 +3084,16 @@ Class UsersController extends AppController
 										}
 									}
 									if(!($status === false)){
+									
+										$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+										if(count($currentPatron) > 0){
+										// do nothing
+										} else {
+											$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+											$insertArr['patronid'] = $patronId;
+											$insertArr['session_id'] = session_id();
+											$this->Currentpatron->save($insertArr);						
+										}									
 										if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 											$date = time();
 											$values = array(0 => $date, 1 => session_id());			
@@ -3175,7 +3269,16 @@ Class UsersController extends AppController
 				exit();
 			}
 			$user = $EZproxySSO->user();
-			$card = $user;	
+			$card = $user;
+			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $card)));
+			if(count($currentPatron) > 0){
+			// do nothing
+			} else {
+				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+				$insertArr['patronid'] = $card;
+				$insertArr['session_id'] = session_id();
+				$this->Currentpatron->save($insertArr);						
+			}			
 			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card)) === false) {
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());			
@@ -3460,6 +3563,15 @@ Class UsersController extends AppController
 						}                  
 					}
 					elseif($status == 1){
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+						if(count($currentPatron) > 0){
+						// do nothing
+						} else {
+							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+							$insertArr['patronid'] = $patronId;
+							$insertArr['session_id'] = session_id();
+							$this->Currentpatron->save($insertArr);						
+						}					
 						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
@@ -3765,6 +3877,17 @@ Class UsersController extends AppController
 							   }                  
 						   }
 						   elseif($status == 1){
+						   
+								$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+								if(count($currentPatron) > 0){
+								// do nothing
+								} else {
+									$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+									$insertArr['patronid'] = $patronId;
+									$insertArr['session_id'] = session_id();
+									$this->Currentpatron->save($insertArr);						
+								}
+								
 								if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 									$date = time();
 									$values = array(0 => $date, 1 => session_id());			
