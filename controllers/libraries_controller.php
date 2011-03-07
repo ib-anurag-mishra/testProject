@@ -116,6 +116,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
 																				'Library.library_host_name',
@@ -210,6 +211,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
 																				'Library.library_host_name',
@@ -232,8 +234,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_navlinks_color',
                                                                                 'Library.library_navlinks_hover_color',
 																				'Library.library_box_header_color',
-																				'Library.library_box_hover_color',																				
-                                                                                'Library.library_contact_fname',
+																				'Library.library_box_hover_color',								'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
                                                                                 'Library.library_user_download_limit',
@@ -335,6 +336,9 @@ Class LibrariesController extends AppController
                     }					
 					elseif($this->data['Library']['library_authentication_method'] == 'ezproxy') {
                         $this->Library->setValidation('library_step1_ezproxy');
+                    }
+                    elseif($this->data['Library']['library_authentication_method'] == 'soap') {
+                        $this->Library->setValidation('library_step1_soap');
                     }					
 					else {
                         $this->Library->setValidation('library_step1');
@@ -535,6 +539,9 @@ Class LibrariesController extends AppController
                     }					
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'ezproxy') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_ezproxy');
+                    }
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'soap') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_soap');
                     }					
 					else {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
