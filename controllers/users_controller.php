@@ -459,7 +459,17 @@ Class UsersController extends AppController
 					$this->Session->destroy();
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));				
 				}
-			}		
+			}
+			elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){            
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));				
+				}
+			}			
 			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
 				if($this->Session->read('ezproxy_logout') != ''){
 					$redirectUrl = $this->Session->read('ezproxy_logout');
