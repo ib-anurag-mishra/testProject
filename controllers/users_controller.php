@@ -4080,7 +4080,7 @@ Class UsersController extends AppController
 					$retStatus = substr($retMsgArr['1'],0,$pos);
 					
 					if($retStatus == 0){
-							$this -> Session -> setFlash("Access Denied.");
+							$this -> Session -> setFlash("Access denied to freegal site.");
 							$this->redirect(array('controller' => 'users', 'action' => 'plogin'));            
 					}
 					else{
