@@ -702,7 +702,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 
 function checkPatron(libid,patronid)
 {	
-	var data = "libid="+libid+"&patronid="+patronid;
+	var data = "libid="+libid+"&patronid="+patronid.replace('+','_');
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/checkPatron", // URL to request
@@ -720,7 +720,7 @@ function approvePatron(libid,patronid)
 {
 	var _loaderDiv = $("#loaderDiv");
 	_loaderDiv.show();
-	var data = "libid="+libid+"&patronid="+patronid;
+	var data = "libid="+libid+"&patronid="+patronid.replace('+','_');
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/approvePatron", // URL to request

@@ -12,7 +12,7 @@
     }
 ?>
 <fieldset>
-<legend>Generate Library Downoads Report <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
+<legend>Generate Library Downloads Report <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
     <div class="formFieldsContainer">
         <div class="formFieldsbox">
             <div id="form_step" class="form_steps">

@@ -805,6 +805,7 @@ class HomesController extends AppController
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];       
 		$patronid = $_REQUEST['patronid'];
+		$patronid = str_replace("_","+",$_REQUEST['patronid']);
 		$userCache = Cache::read("login_".$libid.$patronid);
 		$date = time();
 		$modifiedTime = $userCache[0];
@@ -858,6 +859,7 @@ class HomesController extends AppController
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];       
 		$patronid = $_REQUEST['patronid'];
+		$patronid = str_replace("_","+",$_REQUEST['patronid']);
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
 		if(count($currentPatron) > 0){
 			  $updateArr = array();
