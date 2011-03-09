@@ -605,7 +605,7 @@
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
-						<td colspan="2" align="right"><input type="submit" value="Go"></td>
+						<td colspan="2" align="right"><?php echo $this->Form->button('Save', array('type' => 'button', 'id' => 'next_btn5'));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 				</table>
