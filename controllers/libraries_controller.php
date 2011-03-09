@@ -427,7 +427,7 @@ Class LibrariesController extends AppController
 																$this->Url->saveAll($url);
 															}
 														}
-														if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_tracks'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
+														if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
                                                         $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
 														$this->data['Library']['id'] = $this->Library->id;
 
@@ -436,7 +436,7 @@ Class LibrariesController extends AppController
 															$contract['library_contract_end_date'] = $this->data['Library']['library_contract_end_date'];
 															$contract['library_unlimited'] = $this->data['Library']['library_unlimited'];
 															$contract['id_library_purchases'] = $this->LibraryPurchase->id;
-															$this->ContractLibraryPurchase->saveAll($contract);
+															$this->ContractLibraryPurchase->save($contract);
 															$message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
                                                             $this->set('success', compact('message', 'data'));
