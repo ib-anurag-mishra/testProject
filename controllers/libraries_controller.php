@@ -365,7 +365,7 @@ Class LibrariesController extends AppController
                             if($this->Library->validates()){
                                 $this->Library->setValidation('library_step4');
                                 if($this->Library->validates()){
-                                    $this->Library->setValidation('library_step_date');
+                                //    $this->Library->setValidation('library_step_date');
                                     if($this->Library->validates()){
                                         $this->LibraryPurchase->create();
                                         $this->LibraryPurchase->set($this->data['LibraryPurchase']);
