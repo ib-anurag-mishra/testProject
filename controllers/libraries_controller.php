@@ -396,7 +396,11 @@ Class LibrariesController extends AppController
 													$this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
                                                 }
                                                 else {
-                                                    $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+													if($this->data['Library']['library_unlimited'] == 1){
+														$this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
+													} else {
+														$this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+													}												
                                                 }
                                                 $this->data['Library']['library_admin_id'] = $this->User->id;
                                                 if(strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date'])) {
