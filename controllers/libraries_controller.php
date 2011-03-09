@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase');
     
     /*
      Function Name : beforeFilter
@@ -152,7 +152,9 @@ Class LibrariesController extends AppController
 																				'Library.show_library_name',
 																				'Library.library_territory',
                                                                                 'Library.library_available_downloads',
-                                                                                'Library.library_contract_start_date'
+                                                                                'Library.library_contract_start_date',
+																				'Library.library_contract_end_date',
+																				'Library.library_unlimited'
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(
@@ -248,7 +250,9 @@ Class LibrariesController extends AppController
 																				'Library.show_library_name',
 																				'Library.library_territory',
                                                                                 'Library.library_available_downloads',
-                                                                                'Library.library_contract_start_date'
+                                                                                'Library.library_contract_start_date',
+																				'Library.library_contract_end_date',
+																				'Library.library_unlimited'			
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(
@@ -293,6 +297,7 @@ Class LibrariesController extends AppController
                     }
                 }
                 elseif($this->data['Library']['libraryStepNum'] == '5') {
+
                     $this->Library->create();
                     $this->Library->set($this->data['Library']);
                     if($this->data['Library']['library_authentication_method'] == 'referral_url') {
@@ -381,7 +386,12 @@ Class LibrariesController extends AppController
 											}
                                             if($this->User->save($this->data['User'])) {
                                                 if(trim($libraryId) != '' && is_numeric($libraryId)) {
-                                                    $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
+
+													if($this->data['Library']['library_unlimited'] == 1){
+														$this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
+													} else {
+														$this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];	
+													}
 													$this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
 													$this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
                                                 }
@@ -422,7 +432,12 @@ Class LibrariesController extends AppController
 														$this->data['Library']['id'] = $this->Library->id;
 
                                                         if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
-                                                            $message = __('You will be redirected to the next step shortly...', true);
+															$contract['library_contract_start_date'] = $this->data['Library']['library_contract_start_date'];
+															$contract['library_contract_end_date'] = $this->data['Library']['library_contract_end_date'];
+															$contract['library_unlimited'] = $this->data['Library']['library_unlimited'];
+															$contract['id_library_purchases'] = $this->LibraryPurchase->id;
+															$this->ContractLibraryPurchase->saveAll($contract);
+															$message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
                                                             $this->set('success', compact('message', 'data'));
                                                         }

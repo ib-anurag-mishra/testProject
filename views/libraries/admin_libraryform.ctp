@@ -49,9 +49,11 @@
 		$getData['User']['last_name'] = "";
 		$getData['User']['email'] = "";
 		$getData['Library']['library_contract_start_date'] = "";
+		$getData['Library']['library_contract_end_date'] = "";
 		$getData['LibraryPurchase']['purchased_order_num'] = "";
 		$getData['LibraryPurchase']['purchased_tracks'] = "";
 		$getData['LibraryPurchase']['purchased_amount'] = "";
+		$getData['Library']['library_unlimited'] = 0;
 	}
 ?>
 <fieldset>
@@ -569,24 +571,41 @@
 					<tr><td id="formError5" class="formError" colspan="2"></td></tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
+					<td align="right" width="250"><?php echo $this->Form->label('Library Download Type');?></td>
+					<td  style="font-size:12px;">
+						<input id="redio1" type="radio" name="data[Library][library_unlimited]" value="0" class="form_fields" onClick="get_purFields('0');" <?php if($getData['Library']['library_unlimited'] == 0) { ?> checked="checked" <?php } ?>>&nbsp;A la Carte&nbsp;&nbsp;
+						<input id="redio2" type="radio" name="data[Library][library_unlimited]" value="1" class="form_fields" onClick="get_purFields('1');" <?php if($getData['Library']['library_unlimited'] == 1) { ?> checked="checked" <?php } ?>>&nbsp;Unlimited
+					</td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label('Create a New Contrat');?></td>
+						<td>
+							<input type="checkbox" id="LibraryShowContract" onclick="showContract()" class="form_fields">
+						</td>
+					</tr>					
+					<tr id="contract_start" style="display:none">
 						<td align="right" width="250"><?php echo $this->Form->label('Library Contract Start Date');?></td>
 						<td align="left"><?php echo $this->Form->input('Library.library_contract_start_date',array('label' => false ,'value' => $getData['Library']['library_contract_start_date'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly', 'type' => 'text')); ?></td>
 					</tr>
-					<tr>
+					<tr id="contract_end" style="display:none">
+						<td align="right" width="250"><?php echo $this->Form->label('Library Contract End Date');?></td>
+						<td align="left"><?php echo $this->Form->input('Library.library_contract_end_date',array('label' => false ,'value' => $getData['Library']['library_contract_end_date'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly', 'type' => 'text')); ?></td>
+					</tr>					
+					<tr id="pur_order" style="display:none;">
 						<td align="right" width="250"><?php echo $this->Form->label('Purchase Order #');?></td>
 						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_order_num',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
-					<tr>
+					<tr id="pur_track" style="display:none;">
 						<td align="right" width="250"><?php echo $this->Form->label('# of Purchased Tracks');?></td>
 						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_tracks',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
-					<tr>
+					<tr id="pur_amount" style="display:none;">
 						<td align="right" width="250"><?php echo $this->Form->label('Purchased Amount in $');?></td>
 						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_amount',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
-						<td colspan="2" align="right"><?php echo $this->Form->button('Save', array('type' => 'button', 'id' => 'next_btn5'));?></td>
+						<td colspan="2" align="right"><input type="submit" value="Go"></td>
 					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 				</table>
@@ -645,7 +664,18 @@
 		<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=flick/jquery-ui-1.8.custom.css" />
 		<script type="text/javascript">
 			$(function() {
-				$("#LibraryLibraryContractStartDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd'});
+				$("#LibraryLibraryContractStartDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd',onSelect: 	  function(date) {
+						oDate = $("#LibraryLibraryContractStartDate").datepicker("getDate");
+						oDate.setDate(oDate.getDate() + 365) ;
+						var MM = oDate.getMonth()+1;
+						var DD = oDate.getDate();
+						var YY = oDate.getFullYear();
+						if(MM<10) MM="0"+MM;
+						if(DD<10) DD="0"+DD;
+						$("#LibraryLibraryContractEndDate").val(YY+"-"+MM+"-"+DD);
+					} 
+				});
+				$("#LibraryLibraryContractEndDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd'});
 				$("#LibraryLibraryAuthenticationMethod").change(function() {
 					if($(this).val() == 'referral_url') {
 						$("#referral_url").show();

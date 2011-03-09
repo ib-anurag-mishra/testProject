@@ -457,3 +457,39 @@ function getResponse(v){
 		$("#responseField"+v).val('');
 	}
 }
+function get_purFields(val){
+	if(document.getElementById("LibraryShowContract").checked==true){
+		if(val == 1){
+			$("#pur_order").show();
+			$("#pur_amount").show();
+			$("#pur_track").hide();
+		} else {
+			$("#pur_order").show();
+			$("#pur_amount").show();
+			$("#pur_track").show();	
+		}
+	}	
+}
+function showContract(){
+		if(document.getElementById("LibraryShowContract").checked==true){
+			$("#contract_start").show();
+			$("#contract_end").show();
+			if(document.getElementById("redio2").checked==true){
+				$("#pur_order").show();
+				$("#pur_amount").show();
+				$("#pur_track").hide();
+			} else {
+				$("#pur_order").show();
+				$("#pur_amount").show();
+				$("#pur_track").show();	
+			}			
+		} else {
+			$("#LibraryLibraryContractStartDate").val('');
+			$("#LibraryLibraryContractEndDate").val('');
+			$("#contract_start").hide();
+			$("#contract_end").hide();
+			$("#pur_order").hide();
+			$("#pur_amount").hide();
+			$("#pur_track").hide();			
+		}
+}
