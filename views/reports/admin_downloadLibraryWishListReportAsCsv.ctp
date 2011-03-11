@@ -3,7 +3,7 @@ if($this->data['Report']['library_id'] == "all") {
     $libraryName = "All_Libraries";
 }
 else {
-    $libraryName = "LibraryID_".$download['Report']['library_id'];
+    $libraryName = "LibraryID_".$wishlists['Wishlist']['library_id'];
 }
 $date_arr = explode("/", $this->data['Report']['date']);
 $date_arr_from = explode("/", $this->data['Report']['date_from']);
