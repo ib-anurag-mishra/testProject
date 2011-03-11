@@ -462,11 +462,13 @@ function get_purFields(val){
 		if(val == 1){
 			$("#pur_order").show();
 			$("#pur_amount").show();
-			$("#pur_track").hide();
+			$("#pur_track").show();
+			$("#LibraryPurchasePurchasedTracks").val('Unlimited');
 		} else {
 			$("#pur_order").show();
 			$("#pur_amount").show();
-			$("#pur_track").show();	
+			$("#pur_track").show();
+			$("#LibraryPurchasePurchasedTracks").val('');
 		}
 	}	
 }
@@ -477,17 +479,21 @@ function showContract(){
 			if(document.getElementById("redio2").checked==true){
 				$("#pur_order").show();
 				$("#pur_amount").show();
-				$("#pur_track").hide();
+				$("#pur_track").show();
+				$("#LibraryPurchasePurchasedTracks").val('Unlimited');
 			} else {
 				$("#pur_order").show();
 				$("#pur_amount").show();
-				$("#pur_track").show();	
-			}			
+				$("#pur_track").show();
+				$("#LibraryPurchasePurchasedTracks").val('');
+			}
+			$("#LibraryLibraryContractStartDate").val('');
+			$("#LibraryLibraryContractEndDate").val('');			
 		} else {
 			$("#LibraryLibraryContractStartDate").val('');
 			$("#LibraryLibraryContractEndDate").val('');
-			$("#contract_start").hide();
-			$("#contract_end").hide();
+			$("#contract_start").show();
+			$("#contract_end").show();
 			$("#pur_order").hide();
 			$("#pur_amount").hide();
 			$("#pur_track").hide();			

@@ -99,7 +99,12 @@
     $fill = 0;
 	$key = 1;
     foreach($libraries_download as $LibraryName => $DownloadCount) {
-        $libraries_downloads[] = array($key, $LibraryName, $DownloadCount);
+		if($DownloadCount['Library']['library_unlimited'] == 1){
+			$text = "Unlimited";
+		} else {
+			$text = $DownloadCount['Library']['library_available_downloads'];
+		}	
+        $libraries_downloads[] = array($key, $DownloadCount['Library']['library_name'], $text);
 		$key++;
     }	
     foreach($libraries_downloads as $k=>$row) {

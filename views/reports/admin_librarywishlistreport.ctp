@@ -131,7 +131,14 @@
                                             <tr>
                                                 <td><?php echo $i; ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_name']; ?></td>
-                                                <td><?php echo $libraryDetails['Library']['library_available_downloads']; ?></td>
+                                                <td><?php 
+														if($libraryDetails['Library']['library_unlimited'] == 1){
+															echo "Unlimited";
+														} else {
+															echo $libraryDetails['Library']['library_available_downloads'];
+														}
+													?>
+												</td>
                                                 <td><?php echo ucwords($libraryDetails['Library']['library_download_type']); ?></td>
                                                 <td><?php echo $libraryDetails['Library']['library_download_limit']; ?></td>
                                                 <td><?php echo $wishlist[0]['totalWishlistedSongs']; ?></td>

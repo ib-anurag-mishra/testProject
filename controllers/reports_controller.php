@@ -62,10 +62,10 @@ Class ReportsController extends AppController
 						$all_Ids = $all_Ids.$row["id"].",";
 					}		  
 					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
-					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 				else{
-					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
 				}
 			}
             if($this->Report->validates()) {
@@ -146,10 +146,10 @@ Class ReportsController extends AppController
 						$all_Ids = $all_Ids.$row["id"].",";
 					}		  
 					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
-					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 				else{
-					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
 				}
 			}			
             if($this->Report->validates()) {
@@ -218,10 +218,10 @@ Class ReportsController extends AppController
 						$all_Ids = $all_Ids.$row["id"].",";
 					}		  
 					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
-					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 				else{
-					$this->set('libraries_download', $this->Library->find('list', array('fields' => array('Library.library_name','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
 				}
 			}		
             if($this->Report->validates()) {

@@ -58,7 +58,12 @@ else {
     }
     $line = array('', '', '', '', '');
     $csv->addRow($line);
-    $line = array('Available Downloads: '.$libraryDetails['Library']['library_available_downloads'], '', 'Download Limit Type: '.ucwords($libraryDetails['Library']['library_download_type']), 'Download Limit: '.$libraryDetails['Library']['library_download_limit'], 'Total Songs WishListed: '.count($wishlists));
+	if($libraryDetails['Library']['library_unlimited'] == 1){
+		$text = "Unlimited";
+	} else {
+		$text = $libraryDetails['Library']['library_available_downloads'];
+	}	
+    $line = array('Available Downloads: '.$text, '', 'Download Limit Type: '.ucwords($libraryDetails['Library']['library_download_type']), 'Download Limit: '.$libraryDetails['Library']['library_download_limit'], 'Total Songs WishListed: '.count($wishlists));
     $csv->addRow($line);
     
     echo $csv->render('WishListsReport_'.$libraryName.$dateRange.'.csv');

@@ -82,7 +82,8 @@ echo $paginator->counter(array(
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curWeekStartDate, $curWeekEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $monthStartDate, $monthEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60)." 23:59:59");?></td>
-				<td class="left"><?php echo $library['Library']['library_available_downloads'];?></td>
+				<td class="left"><?php if($library['Library']['library_unlimited'] == 1){
+				 echo "Unlimited"; } else { echo $library['Library']['library_available_downloads']; }?></td>
             </tr>            
             <?php
           }

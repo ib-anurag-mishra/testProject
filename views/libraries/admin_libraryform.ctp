@@ -578,18 +578,18 @@
 					</td>
 					</tr>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label('Create a New Contrat');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label('Create a New Contract');?></td>
 						<td>
 							<input type="checkbox" id="LibraryShowContract" onclick="showContract()" class="form_fields">
 						</td>
 					</tr>					
-					<tr id="contract_start" style="display:none">
+					<tr id="contract_start">
 						<td align="right" width="250"><?php echo $this->Form->label('Library Contract Start Date');?></td>
-						<td align="left"><?php echo $this->Form->input('Library.library_contract_start_date',array('label' => false, 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly', 'type' => 'text')); ?></td>
+						<td align="left"><?php echo $this->Form->input('Library.library_contract_start_date',array('label' => false, 'div' => false, 'class' => 'form_fields','value' => $getData['Library']['library_contract_start_date'], 'readonly' => 'readonly', 'type' => 'text')); ?></td>
 					</tr>
-					<tr id="contract_end" style="display:none">
+					<tr id="contract_end">
 						<td align="right" width="250"><?php echo $this->Form->label('Library Contract End Date');?></td>
-						<td align="left"><?php echo $this->Form->input('Library.library_contract_end_date',array('label' => false , 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly', 'type' => 'text')); ?></td>
+						<td align="left"><?php echo $this->Form->input('Library.library_contract_end_date',array('label' => false , 'div' => false, 'class' => 'form_fields','value' => $getData['Library']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?></td>
 					</tr>					
 					<tr id="pur_order" style="display:none;">
 						<td align="right" width="250"><?php echo $this->Form->label('Purchase Order #');?></td>

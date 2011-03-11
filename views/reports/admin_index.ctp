@@ -134,13 +134,20 @@
                                     <th>Number of Remaining Downloads</th>
                                 </tr>
                                 <?php
-				$i = 1;
-                                foreach($libraries_download as $LibraryName => $DownloadCount) {
+								$i = 1;
+                                foreach($libraries_download as $LibraryName => $libraryid) {
                                 ?>
                                     <tr>
-					<td><?php echo $i; ?></td>
-                                        <td><?php echo $LibraryName; ?></td>
-                                        <td align="center"><?php echo $DownloadCount; ?></td>
+										<td><?php echo $i; ?></td>
+                                        <td><?php echo $libraryid['Library']['library_name']; ?></td>
+											<?php
+											if($libraryid['Library']['library_unlimited'] == 1){
+												$text = "Unlimited";
+											} else {
+												$text = $libraryid['Library']['library_available_downloads'];
+											}
+											?>
+                                        <td align="center"><?php echo $text; ?></td>
                                     </tr>
                                 <?php
 				    $i++;
@@ -163,11 +170,12 @@
                                     <th>Download</th>
                                 </tr>
                                 <?php
-				$i = 1;
-                                foreach($downloads as $key => $download) {
+								$i = 1;
+				//				print "<pre>";print_r($downloads);exit;
+                                foreach($downloads as $key => $download) {	
                                 ?>
                                     <tr>
-					<td><?php echo $i; ?></td>
+										<td><?php echo $i; ?></td>
                                         <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
                                         <td><?php 
 											if($download['Download']['email']!=''){

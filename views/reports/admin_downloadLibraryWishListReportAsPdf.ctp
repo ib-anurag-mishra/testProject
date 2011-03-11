@@ -190,9 +190,13 @@
         
         $tcpdf->Cell(260, 6, '', 'LR', 0, 'L', $fill, '', 3);
         $tcpdf->Ln();
-        
+		if($libraryDetails['Library']['library_unlimited'] == 1){
+			$text = "Unlimited";
+		} else {
+			$text = $libraryDetails['Library']['library_available_downloads'];
+		}       
         $tcpdf->SetFont('', 'B');
-        $tcpdf->Cell(65, 6, 'Available Downloads: '.$libraryDetails['Library']['library_available_downloads'], 'LR', 0, 'C', !$fill, '', 3);
+        $tcpdf->Cell(65, 6, 'Available Downloads: '.$text, 'LR', 0, 'C', !$fill, '', 3);
         $tcpdf->Cell(65, 6, 'Download Limit Type: '.ucwords($libraryDetails['Library']['library_download_type']), 'LR', 0, 'C', !$fill, '', 3);
         $tcpdf->Cell(65, 6, 'Download Limit: '.$libraryDetails['Library']['library_download_limit'], 'LR', 0, 'C', !$fill, '', 3);
         $tcpdf->Cell(65, 6, 'Total Songs WishListed: '.count($wishlists), 'LR', 0, 'C', !$fill, '', 3);

@@ -6,7 +6,12 @@ $line = array('', 'Library Name', 'Number of Remaining Downloads');
 $csv->addRow($line);
 $key=1;
 foreach($libraries_download as $LibraryName => $DownloadCount) {
-    $line = array($key, $LibraryName, $DownloadCount);
+	if($DownloadCount['Library']['library_unlimited'] == 1){
+		$text = "Unlimited";
+	} else {
+		$text = $DownloadCount['Library']['library_available_downloads'];
+	}
+    $line = array($key, $DownloadCount['Library']['library_name'], $text);
     $csv->addRow($line);
 	$key++;
 }
