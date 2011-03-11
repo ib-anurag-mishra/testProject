@@ -116,6 +116,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_logout_url',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -213,6 +214,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_logout_url',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -781,6 +783,9 @@ Class LibrariesController extends AppController
             $this->Session->write("patron", $patronId);
             $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 			$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
+			if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+				$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_logout_url']);
+			}
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);

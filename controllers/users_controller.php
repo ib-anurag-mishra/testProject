@@ -920,14 +920,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative',$library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 									)
 								 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative',$library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 									)
 								 );					
 				}
@@ -1043,6 +1043,9 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative","innovative");
+						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
@@ -1128,7 +1131,7 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var',$library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 															)
 													 );
 				} 
@@ -1136,7 +1139,7 @@ Class UsersController extends AppController
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var',$library_cond),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );
 				}	
@@ -1363,6 +1366,9 @@ Class UsersController extends AppController
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var","innovative_var");
+							if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+								$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+							}							
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 							$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
 							$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -1453,7 +1459,7 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 															'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_name',$library_cond),
-															'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 															)
 													 );
 				} 
@@ -1461,7 +1467,7 @@ Class UsersController extends AppController
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_name',$library_cond),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );
 				}	
@@ -1684,6 +1690,9 @@ Class UsersController extends AppController
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var_name","innovative_var_name");
+							if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+								$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+							}							
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 							$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
 							$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -1755,7 +1764,7 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_wo_pin',$library_cond),
-												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 												)
 											 );            
 
@@ -1764,7 +1773,7 @@ Class UsersController extends AppController
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin',$library_cond),
-												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 												)
 											 );            
 				}				
@@ -1887,6 +1896,9 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_wo_pin","innovative_wo_pin");
+						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -1949,14 +1961,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				}
@@ -2157,6 +2169,9 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_var_wo_pin","innovative_var_wo_pin");
+						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
@@ -2246,14 +2261,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				}
@@ -2389,6 +2404,9 @@ Class UsersController extends AppController
 												$this->Session->write("patron", $patronId);
 												$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 												$this->Session->write("sip2","sip2");
+												if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+												}					
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 												$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 												$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -2484,14 +2502,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				}
@@ -2625,6 +2643,9 @@ Class UsersController extends AppController
 										  $this->Session->write("patron", $patronId);
 										  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 										  $this->Session->write("sip","sip");
+										  if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+											  $this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+										  }										  
 										  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 										  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 										  $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -2728,7 +2749,7 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				} else {
@@ -2941,6 +2962,9 @@ Class UsersController extends AppController
 												$this->Session->write("patron", $patronId);
 												$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 												$this->Session->write("sip2_var","sip2_var");
+												if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+												}											
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 												$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 												$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -3042,14 +3066,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				}				
@@ -3247,6 +3271,9 @@ Class UsersController extends AppController
 										$this->Session->write("patron", $patronId);
 										$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 										$this->Session->write("sip2_var_wo_pin","sip2_var_wo_pin");
+										if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+											$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+										}										
 										$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 										$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 										$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -3507,14 +3534,14 @@ Class UsersController extends AppController
 				$library_cond = array('id' => $this->Session->read('lId'));
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_https',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				
 			} else {
 				$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_https'),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );
 			}		
@@ -3733,6 +3760,9 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_https","innovative_https");
+						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
@@ -3822,7 +3852,7 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https',$library_cond),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				} 
@@ -3830,7 +3860,7 @@ Class UsersController extends AppController
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https',$library_cond),
-														'fields' => array('Library.id','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				}
@@ -4057,6 +4087,9 @@ Class UsersController extends AppController
 							   $this->Session->write("patron", $patronId);
 							   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							   $this->Session->write("innovative_var_https","innovative_var_https");
+							   if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+									$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+							   }							   
 							   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 							   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 							   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -4147,14 +4180,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'soap',$library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 									)
 								 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'soap',$library_cond),
-									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
+									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content')
 									)
 								 );					
 				}
@@ -4260,6 +4293,9 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("soap","soap");
+						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;

@@ -11,6 +11,7 @@
 		$getData['Library']['library_home_url'] = "";
 		$getData['Library']['library_authentication_num'] = "";
 		$getData['Library']['library_authentication_url'] = "";
+		$getData['Library']['library_logout_url'] = "";
 		$getData['Library']['library_soap_url'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
 		$getData['Library']['library_authentication_response'] = "";
@@ -187,6 +188,10 @@
 					<tr>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library HomePage URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_home_url',array( 'label' => false ,'value' => $getData['Library']['library_home_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Logout URL');?></td>
+						<td align="left"><?php echo $this->Form->input('library_logout_url',array( 'label' => false ,'value' => $getData['Library']['library_logout_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
 					<tr>
 						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] == "user_account" || $getData['Library']['library_authentication_method'] == "referral_url" || $getData['Library']['library_authentication_method'] == "ezproxy"){?>style="display:none;"<?php } ?>>					
