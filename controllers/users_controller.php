@@ -875,6 +875,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';
@@ -929,7 +932,12 @@ Class UsersController extends AppController
 								 );					
 				}
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
 				}        
 				else{
@@ -1075,6 +1083,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';
@@ -1130,7 +1141,12 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-				   $this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 				}        
 				else{
@@ -1392,6 +1408,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';
@@ -1447,7 +1466,12 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-				   $this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 				}        
 				else{
@@ -1702,6 +1726,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';     
@@ -1743,7 +1770,12 @@ Class UsersController extends AppController
 				}				
 				
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
 				}        
 				else{
@@ -1889,6 +1921,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';
@@ -1926,7 +1961,12 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 				}        
 				else{
@@ -2162,6 +2202,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';     
@@ -2215,7 +2258,12 @@ Class UsersController extends AppController
 												 );				
 				}
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 				}        
 				else{
@@ -2409,6 +2457,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';     
@@ -2445,7 +2496,12 @@ Class UsersController extends AppController
 												 );				
 				}
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 				}        
 				else{
@@ -2628,6 +2684,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';     
@@ -2682,7 +2741,12 @@ Class UsersController extends AppController
 				}				
 
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}        
 				else{
@@ -2951,6 +3015,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';     
@@ -2988,7 +3055,12 @@ Class UsersController extends AppController
 				}				
 
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 				}        
 				else{
@@ -3390,6 +3462,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
       $this->layout = 'login';
@@ -3444,7 +3519,12 @@ Class UsersController extends AppController
 												 );
 			}		
             if(count($existingLibraries) == 0){
-                $this -> Session -> setFlash("This is not a valid credential.");
+				if(isset($wrongReferral)){
+					$this->Session->setFlash("You are not authorized to view this location.");
+				}
+				else{
+					$this->Session->setFlash("This is not a valid credential.");
+				}
                 $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
             }        
             else{
@@ -3697,6 +3777,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';
@@ -3752,7 +3835,12 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-				   $this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 				}        
 				else{
@@ -4014,6 +4102,9 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
 					}
 				}
+				else {
+					$wrongReferral = 1;
+				}	
 			}
 		}
 		$this->layout = 'login';
@@ -4068,7 +4159,12 @@ Class UsersController extends AppController
 								 );					
 				}
 				if(count($existingLibraries) == 0){
-					$this -> Session -> setFlash("This is not a valid credential.");
+					if(isset($wrongReferral)){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
 					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));
 				}        
 				else{
