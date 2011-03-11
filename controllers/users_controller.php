@@ -1043,7 +1043,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative","innovative");
-						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -1366,7 +1366,7 @@ Class UsersController extends AppController
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var","innovative_var");
-							if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 								$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							}							
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -1690,7 +1690,7 @@ Class UsersController extends AppController
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var_name","innovative_var_name");
-							if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 								$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							}							
 							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -1896,7 +1896,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_wo_pin","innovative_wo_pin");
-						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2169,7 +2169,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_var_wo_pin","innovative_var_wo_pin");
-						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2404,7 +2404,7 @@ Class UsersController extends AppController
 												$this->Session->write("patron", $patronId);
 												$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 												$this->Session->write("sip2","sip2");
-												if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+												if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 												}					
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2643,7 +2643,7 @@ Class UsersController extends AppController
 										  $this->Session->write("patron", $patronId);
 										  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 										  $this->Session->write("sip","sip");
-										  if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+										  if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 											  $this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 										  }										  
 										  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2962,7 +2962,7 @@ Class UsersController extends AppController
 												$this->Session->write("patron", $patronId);
 												$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 												$this->Session->write("sip2_var","sip2_var");
-												if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+												if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 												}											
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -3271,7 +3271,7 @@ Class UsersController extends AppController
 										$this->Session->write("patron", $patronId);
 										$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 										$this->Session->write("sip2_var_wo_pin","sip2_var_wo_pin");
-										if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+										if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 											$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 										}										
 										$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -3760,7 +3760,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_https","innovative_https");
-						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -4087,7 +4087,7 @@ Class UsersController extends AppController
 							   $this->Session->write("patron", $patronId);
 							   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							   $this->Session->write("innovative_var_https","innovative_var_https");
-							   if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+							   if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 									$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							   }							   
 							   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -4293,7 +4293,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("soap","soap");
-						if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}						
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
