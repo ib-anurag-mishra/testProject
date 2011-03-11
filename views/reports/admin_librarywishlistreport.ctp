@@ -201,7 +201,15 @@
                                             <th colspan="6">&nbsp;</th>
                                         </tr>
                                         <tr>
-                                            <th colspan="2">Available Downloads: <?php echo $libraryDetails['Library']['library_available_downloads']; ?></th>
+                                            <th colspan="2">Available Downloads: 
+											<?php 
+											if($libraryDetails['Library']['library_unlimited'] == 1){
+												echo "Unlimited";
+											} else {
+												echo $libraryDetails['Library']['library_available_downloads'];
+											}											
+											?>
+											</th>
                                             <th colspan="2">Download Limit Type: <?php echo ucwords($libraryDetails['Library']['library_download_type']); ?></th>
                                             <th>Download Limit: <?php echo $libraryDetails['Library']['library_download_limit']; ?></th>
                                             <th>Total # of Songs WishListed: <?php echo count($wishlists); ?></th>

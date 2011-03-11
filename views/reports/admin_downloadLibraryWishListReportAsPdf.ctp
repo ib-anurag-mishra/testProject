@@ -82,7 +82,12 @@
         $totalSongs = 0;
         foreach($wishlists as $key => $wishlist) {
             $libraryDetails = $library->getLibraryDetails($wishlist['Wishlist']['library_id']);
-            $data[] = array($libraryDetails['Library']['library_name'], $libraryDetails['Library']['library_available_downloads'], ucwords($libraryDetails['Library']['library_download_type']), $libraryDetails['Library']['library_download_limit'], $wishlist[0]['totalWishlistedSongs']);
+			if($libraryDetails['Library']['library_unlimited'] == 1){
+				$text = "Unlimited";
+			} else {
+				$text = $libraryDetails['Library']['library_available_downloads'];
+			}			
+            $data[] = array($libraryDetails['Library']['library_name'], $text, ucwords($libraryDetails['Library']['library_download_type']), $libraryDetails['Library']['library_download_limit'], $wishlist[0]['totalWishlistedSongs']);
             $totalSongs = $totalSongs+$wishlist[0]['totalWishlistedSongs'];
         }
         
