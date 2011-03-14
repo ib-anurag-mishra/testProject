@@ -703,6 +703,7 @@ Class LibrariesController extends AppController
         }        
         else
         {
+			//writing to memcache and writing to both the memcached servers
 			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 			if(count($currentPatron) > 0){
 			// do nothing
@@ -718,7 +719,7 @@ Class LibrariesController extends AppController
 				Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 				$host = $_SERVER['HTTP_HOST'];
 				$name = $_SERVER['SERVER_ADDR'];
-				if($name == '192.168.100.99'){
+				if($name == Configure::read('mainHost')){
 					$otherHost = Configure::read('101host');
 				} else {
 					$otherHost = Configure::read('99host');
@@ -738,7 +739,7 @@ Class LibrariesController extends AppController
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						$host = $_SERVER['HTTP_HOST'];
 						$name = $_SERVER['SERVER_ADDR'];
-						if($name == '192.168.100.99'){
+						if($name == Configure::read('mainHost')){
 							$otherHost = Configure::read('101host');
 						} else {
 							$otherHost = Configure::read('99host');
@@ -760,7 +761,7 @@ Class LibrariesController extends AppController
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						$host = $_SERVER['HTTP_HOST'];
 						$name = $_SERVER['SERVER_ADDR'];
-						if($name == '192.168.100.99'){
+						if($name == Configure::read('mainHost')){
 							$otherHost = Configure::read('101host');
 						} else {
 							$otherHost = Configure::read('99host');

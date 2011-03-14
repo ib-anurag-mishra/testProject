@@ -813,15 +813,17 @@ class HomesController extends AppController
 		$userCache = Cache::read("login_".$libid.$patronid);
 		$date = time();
 		$modifiedTime = $userCache[0];
+		//checking form db if session exists
 		$sql = mysql_query("SELECT id FROM `sessions` Where id='".session_id()."'");
 		$count = mysql_num_rows($sql);
 		$values = array(0 => $date, 1 => session_id());
-		if(($date-$modifiedTime) > 60 && $count == 0){		
+		if(($date-$modifiedTime) > 60 && $count == 0){
+			//deleting sessions and memcache key
 			$this->Session->destroy();
 			Cache::delete("login_".$libid.$patronid);
 			$host = $_SERVER['HTTP_HOST'];
 			$name = $_SERVER['SERVER_ADDR'];
-			if($name == '192.168.100.99'){
+			if($name == Configure::read('mainHost')){
 				$otherHost = Configure::read('101host');
 			} else {
 				$otherHost = Configure::read('99host');
@@ -835,11 +837,12 @@ class HomesController extends AppController
 			exit;
 		} else {
 			$date = time();
-			$values = array(0 => $date, 1 => session_id());			
+			$values = array(0 => $date, 1 => session_id());
+			//writing to memcache and writing to both the memcached servers
 			Cache::write("login_".$libid.$patronid, $values);
 			$host = $_SERVER['HTTP_HOST'];
 			$name = $_SERVER['SERVER_ADDR'];
-			if($name == '192.168.100.99'){
+			if($name == Configure::read('mainHost')){
 				$otherHost = Configure::read('101host');
 			} else {
 				$otherHost = Configure::read('99host');
