@@ -490,8 +490,10 @@ function showContract(){
 			$("#LibraryLibraryContractStartDate").val('');
 			$("#LibraryLibraryContractEndDate").val('');			
 		} else {
-			$("#LibraryLibraryContractStartDate").val('');
-			$("#LibraryLibraryContractEndDate").val('');
+			var start = $("#contractStart").val();
+			var end = $("#contractEnd").val();
+			$("#LibraryLibraryContractStartDate").val(start);
+			$("#LibraryLibraryContractEndDate").val(end);
 			$("#contract_start").show();
 			$("#contract_end").show();
 			$("#pur_order").hide();
