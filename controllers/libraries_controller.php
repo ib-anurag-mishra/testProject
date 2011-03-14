@@ -434,8 +434,12 @@ Class LibrariesController extends AppController
 															}
 														}
 														if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
-														$this->data['LibraryPurchase']['purchased_tracks'] = Configure::read('unlimited');
-                                                        $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
+														if($this->data['Library']['library_unlimited'] == 1){
+															$this->data['LibraryPurchase']['purchased_tracks'] = Configure::read('unlimited');
+														} else {
+															$this->data['LibraryPurchase']['purchased_tracks'] = $this->data['LibraryPurchase']['purchased_tracks'];
+														}
+														$this->data['LibraryPurchase']['library_id'] = $this->Library->id;
 														$this->data['Library']['id'] = $this->Library->id;
 
                                                         if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
