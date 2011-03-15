@@ -934,7 +934,7 @@ Class UsersController extends AppController
 								 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ilogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1147,7 +1147,7 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/idlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1476,7 +1476,7 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ildlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1784,7 +1784,7 @@ Class UsersController extends AppController
 				}				
 				
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/inlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1979,7 +1979,7 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/indlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2280,7 +2280,7 @@ Class UsersController extends AppController
 												 );				
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/slogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2518,7 +2518,7 @@ Class UsersController extends AppController
 												 );				
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/snlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2763,7 +2763,7 @@ Class UsersController extends AppController
 				}				
 
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/sdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -3074,7 +3074,7 @@ Class UsersController extends AppController
 				}				
 
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/sndlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -3537,7 +3537,7 @@ Class UsersController extends AppController
 												 );
 			}		
             if(count($existingLibraries) == 0){
-				if(isset($wrongReferral)){
+				if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/inhlogin"){
 					$this->Session->setFlash("You are not authorized to view this location.");
 				}
 				else{
@@ -3857,7 +3857,7 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ihdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -4184,7 +4184,7 @@ Class UsersController extends AppController
 								 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral)){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/plogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
