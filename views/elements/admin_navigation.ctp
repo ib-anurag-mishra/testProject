@@ -25,9 +25,11 @@
 					<li>
 						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
 					</li>
+					<?php if(isset($libraryLimited)){?>
 					<li>
 						<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
 					</li>
+					<?php } ?>
 				</ul>
 			</li>
 		</ul>

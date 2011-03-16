@@ -52,8 +52,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				&nbsp;|&nbsp;
 				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
 				&nbsp;|&nbsp;
-				<?php echo $html->link('My Wishlist', array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
+				<?php if($libraryInfo['Library']['library_unlimited'] != 1){?>
+					<?php echo $html->link('My Wishlist', array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
 				&nbsp;|&nbsp;
+				<?php } ?>
 				<?php echo $html->link('Recent Downloads', array('controller' => 'homes', 'action' => 'my_history')); ?>
 				<?php if ($this->Session->read('Auth.User')) { ?>
 					&nbsp;|&nbsp;					

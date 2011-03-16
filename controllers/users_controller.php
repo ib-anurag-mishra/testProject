@@ -58,6 +58,12 @@ Class UsersController extends AppController
 			}
 			$this->set('libraries', $this->paginate('Library'));
 		}
+		if($userType == '4'){
+            $libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 
+			if($libraryDetail['Library']['library_unlimited'] != '1'){													'recursive' => -1));
+				$this->set('libraryLimited', 1);
+			}
+		}
 		//takes to the default admin home page
 		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header 
 	}
