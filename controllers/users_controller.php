@@ -59,8 +59,8 @@ Class UsersController extends AppController
 			$this->set('libraries', $this->paginate('Library'));
 		}
 		if($userType == '4'){
-            $libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 
-			if($libraryDetail['Library']['library_unlimited'] != '1'){													'recursive' => -1));
+			$libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")),'recursive' => -1)); 
+			if($libraryDetail['Library']['library_unlimited'] != '1'){
 				$this->set('libraryLimited', 1);
 			}
 		}
