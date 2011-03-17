@@ -821,18 +821,6 @@ class HomesController extends AppController
 			//deleting sessions and memcache key
 			$this->Session->destroy();
 			Cache::delete("login_".$libid.$patronid);
-			$host = $_SERVER['HTTP_HOST'];
-			$name = $_SERVER['SERVER_ADDR'];
-			if($name == Configure::read('mainHost')){
-				$otherHost = Configure::read('101host');
-			} else {
-				$otherHost = Configure::read('99host');
-			}
-			$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libid.'&patronid='.$patronid);
-			curl_setopt($session, CURLOPT_HEADER, false);
-			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-			curl_exec($session);
-			curl_close($session);			
 			echo "Error";
 			exit;
 		} else {
@@ -840,18 +828,6 @@ class HomesController extends AppController
 			$values = array(0 => $date, 1 => session_id());
 			//writing to memcache and writing to both the memcached servers
 			Cache::write("login_".$libid.$patronid, $values);
-			$host = $_SERVER['HTTP_HOST'];
-			$name = $_SERVER['SERVER_ADDR'];
-			if($name == Configure::read('mainHost')){
-				$otherHost = Configure::read('101host');
-			} else {
-				$otherHost = Configure::read('99host');
-			}
-			$session = curl_init($otherHost.'/cache/cacheUpdate?libid='.$libid.'&patronid='.$patronid);
-			curl_setopt($session, CURLOPT_HEADER, false);
-			curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-			curl_exec($session);
-			curl_close($session);			
 			echo "Success".$name;
 			exit;
 		}
