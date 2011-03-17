@@ -18,10 +18,10 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 		$currDate = strtotime(date("Y-m-d"));
 		$contractEndDate = strtotime($line['library_contract_end_date']);
 		if($contractEndDate > $currDate) {
-			$status = "inactive";
+			$status = "active";
 		}
 		else {
-			$status = "active";
+			$status = "inactive";
 		}
 		$sql = "UPDATE libraries SET library_status='$status' WHERE id=".$line['id'];
 		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());
