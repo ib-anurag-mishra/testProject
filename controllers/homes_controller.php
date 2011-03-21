@@ -134,7 +134,7 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '15','cache' => 'yes' )
+												'order' => 'countProduct DESC', 'limit'=> '15' )
 											);
 			Cache::write("national".$territory, $natTopDownloaded);
 		}
