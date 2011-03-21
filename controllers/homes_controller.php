@@ -39,6 +39,7 @@ class HomesController extends AppController
 		// Local Top Downloads functionality
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
+		$nationalTopDownload = array();
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
@@ -141,12 +142,11 @@ class HomesController extends AppController
 		$natTopDownloaded = Cache::read("national".$territory);
 		$natprodIds = '';
 		foreach($natTopDownloaded as $k => $v){
-			if($natprodIds != ''){
 				$this->Song->recursive = 2;
 				$nationalTopDownload[] =  $this->Song->find('first',array('conditions' =>
 						array('and' =>
 							array(
-								array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($natprodIds,",'")."')" ),
+								array("Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID'] ),
 							), "1 = 1 GROUP BY Song.ProdID"
 						),
 						'fields' => array(
@@ -188,9 +188,6 @@ class HomesController extends AppController
 						), 'limit'=> '10'
 						)
 				);
-			} else {
-				$nationalTopDownload = array();
-			}
 		}	
 		// Checking for download status 
 		$this->Download->recursive = -1;
