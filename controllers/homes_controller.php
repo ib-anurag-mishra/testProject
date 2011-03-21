@@ -134,67 +134,64 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '15' )
+												'order' => 'countProduct DESC', 'limit'=> '10' )
 											);
 			Cache::write("national".$territory, $natTopDownloaded);
 		}
 		$natTopDownloaded = Cache::read("national".$territory);
 		$natprodIds = '';
 		foreach($natTopDownloaded as $k => $v){
-			$natprodIds .= $v['Download']['ProdID']."','"; 
-		}
-	
-		if($natprodIds != ''){
-			$this->Song->recursive = 2;
-			$nationalTopDownload =  $this->Song->find('all',array('conditions' =>
-					array('and' =>
-						array(
-							array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($natprodIds,",'")."')" ),
-						), "1 = 1 GROUP BY Song.ProdID"
-					),
-					'fields' => array(
-						'Song.ProdID',
-						'Song.ReferenceID',
-						'Song.Title',
-						'Song.ArtistText',
-						'Song.DownloadStatus',
-						'Song.SongTitle',
-						'Song.Artist',
-						'Song.Advisory',
-						'Song.Sample_Duration',
-						'Song.FullLength_Duration',
-					),
-					'contain' => array(
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'        
-							)
+			if($natprodIds != ''){
+				$this->Song->recursive = 2;
+				$nationalTopDownload[] =  $this->Song->find('first',array('conditions' =>
+						array('and' =>
+							array(
+								array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($natprodIds,",'")."')" ),
+							), "1 = 1 GROUP BY Song.ProdID"
 						),
-						'Country' => array(
-							'fields' => array(
-								'Country.Territory',
-								'Country.SalesDate'
-							)
-						),            
-						'Sample_Files' => array(
-							'fields' => array(
-										'Sample_Files.CdnPath' ,
-										'Sample_Files.SaveAsName'
-								)
-							), 
-						'Full_Files' => array(
-							'fields' => array(
-										'Full_Files.CdnPath' ,
-										'Full_Files.SaveAsName'
+						'fields' => array(
+							'Song.ProdID',
+							'Song.ReferenceID',
+							'Song.Title',
+							'Song.ArtistText',
+							'Song.DownloadStatus',
+							'Song.SongTitle',
+							'Song.Artist',
+							'Song.Advisory',
+							'Song.Sample_Duration',
+							'Song.FullLength_Duration',
+						),
+						'contain' => array(
+							'Genre' => array(
+								'fields' => array(
+									'Genre.Genre'        
 								)
 							),
-					), 'limit'=> '10'
-					)
-			);
-		} else {
-			$nationalTopDownload = array();
-		}
-		
+							'Country' => array(
+								'fields' => array(
+									'Country.Territory',
+									'Country.SalesDate'
+								)
+							),            
+							'Sample_Files' => array(
+								'fields' => array(
+											'Sample_Files.CdnPath' ,
+											'Sample_Files.SaveAsName'
+									)
+								), 
+							'Full_Files' => array(
+								'fields' => array(
+											'Full_Files.CdnPath' ,
+											'Full_Files.SaveAsName'
+									)
+								),
+						), 'limit'=> '10'
+						)
+				);
+			} else {
+				$nationalTopDownload = array();
+			}
+		}	
 		// Checking for download status 
 		$this->Download->recursive = -1;
 		foreach($nationalTopDownload as $key => $value){
