@@ -1,5 +1,17 @@
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
 <?php echo $session->flash();?>
+<?php
+function ieversion()
+{
+	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+	  if(!isset($reg[1])) {
+		return -1;
+	  } else {
+		return floatval($reg[1]);
+	  }
+}
+$ieVersion =  ieversion();
+?>
 <div id="genre">
 	Download History
 </div>
@@ -68,12 +80,13 @@
 					?>
 						<p>
 							<span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
-								<![if !IE]>
+								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
 									<a href='#' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
-								<![endif]>
+								<?php } else {?>
 								<!--[if IE]>
-									<a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+									<a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' 										
 								<![endif]-->
+								<?php } ?>
 							</span>
 							<span class="afterClick" style="display:none;float:left">Please Wait...</span>
 							<span id="download_loader_<?php echo $downloadResult['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>

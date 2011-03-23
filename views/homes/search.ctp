@@ -2,6 +2,18 @@
 <div id="genre">Search Results</div>
 <div style="float:left;width:955px;">
 <?php
+function ieversion()
+{
+	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+	  if(!isset($reg[1])) {
+		return -1;
+	  } else {
+		return floatval($reg[1]);
+	  }
+}
+$ieVersion =  ieversion();
+?>
+<?php
 if(count($searchResults) != 0){
 ?>
 <div id="genreArtist" class="links">
@@ -114,12 +126,13 @@ if(count($searchResults) != 0){
 						 ?>
 									<p>
 										<span class="beforeClick" id="song_<?php echo $searchResult["Song"]["ProdID"]; ?>">
-											<![if !IE]>
+											<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
 												<a href='#' title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
-											<![endif]>
+											<?php } else {?>
 											<!--[if IE]>
 												<a title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
 											<![endif]-->
+											<?php } ?>
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left">Please Wait...</span>
 										<span id="download_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
