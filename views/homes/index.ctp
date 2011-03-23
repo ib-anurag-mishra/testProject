@@ -28,7 +28,6 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 #tb1, #tb2 {
 	float:left;
 	width:153px;
-	#width:151px !important;
 	background-color:#<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#999"; ?>;
 	border-left: 1px solid #999;
 	border-right: 1px solid #999;
@@ -74,6 +73,18 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	text-decoration: none;
 }
 </style>
+<?php
+function ieversion()
+{
+	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+	  if(!isset($reg[1])) {
+		return -1;
+	  } else {
+		return floatval($reg[1]);
+	  }
+}
+$ieVersion =  ieversion();
+?>
 <div id="artist_slideshow">
 	<div id="slideshow">
 	<?php
@@ -114,7 +125,7 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 </div>
 <div id="sug" class="suggestions">
 	<div id="tabsugg">
-		<div id="tb1"><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('MyLib Top 10', true));?></a></div></div>
+		<div id="tb1" <?php if($ieVersion > 8){?> style="width:151px;"<?php }?>><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('MyLib Top 10', true));?></a></div></div>
 		<div id="tb2"><div id="t2" class="nonactive"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
 	</div>
 	<div id="sugtab" class="tab_container">
@@ -173,12 +184,13 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
-										<![if !IE]>
+										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
 										<a href='#' onclick='return userDownloadOthers_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
-										<![endif]>
+										<?php } else {?>
 										<!--[if IE]>
 										<label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></label>
 										<![endif]-->
+										<?php } ?>
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
 										<span id="download_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
@@ -289,12 +301,13 @@ $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 										<span class="beforeClick" id="songtab_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
-										<![if !IE]>
-										<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
-										<![endif]>
+										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
+											<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
+										<?php } else {?>
 										<!--[if IE]>
 										<label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'><a style="cursor:pointer;" onclick='return userDownloadIE_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></label>
 										<![endif]-->
+										<?php } ?>
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
 										<span id="download_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
