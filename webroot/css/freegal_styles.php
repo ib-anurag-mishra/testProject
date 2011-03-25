@@ -371,7 +371,7 @@ ul.marquee li {
 
 .artist_line {
         border-bottom: 1px solid #999;
-        width:560px;
+        min-width:560px;
 }
 	
 #footer {
