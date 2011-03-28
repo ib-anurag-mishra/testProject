@@ -77,11 +77,11 @@ echo $paginator->counter(array(
             <tr>
 				<td><?php echo $html->link($library['Library']['library_name'], array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
 				<td class="left"><?php echo $library['Library']['library_contract_start_date'];?></td>
-				<td class="left"><?php echo date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60);?></td>
+				<td class="left"><?php echo $library['Library']['library_contract_end_date'];?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curStartDate, $curEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curWeekStartDate, $curWeekEndDate);?></td>
 				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $monthStartDate, $monthEndDate);?></td>
-				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", date("Y-m-d",strtotime($library['Library']['library_contract_start_date'])+365*24*60*60)." 23:59:59");?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", $library['Library']['library_contract_end_date']." 23:59:59");?></td>
 				<td class="left"><?php if($library['Library']['library_unlimited'] == 1){
 				 echo "Unlimited"; } else { echo $library['Library']['library_available_downloads']; }?></td>
             </tr>            
