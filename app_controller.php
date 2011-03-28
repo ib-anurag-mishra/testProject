@@ -39,35 +39,11 @@ class AppController extends Controller
 			if((($date-$modifiedTime) > 60) && $modifiedTime){
 				$this->Session->destroy();
 				Cache::delete("login_".$libraryId.$patronId);
-				$host = $_SERVER['HTTP_HOST'];
-				$name = $_SERVER['SERVER_ADDR'];
-				if($name == '192.168.100.99'){
-					$otherHost = Configure::read('101host');
-				} else {
-					$otherHost = Configure::read('99host');
-				}
-				$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libraryId.'&patronid='.$patronId);
-				curl_setopt($session, CURLOPT_HEADER, false);
-				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-				curl_exec($session);
-				curl_close($session);				
 			}
 		} else {
 			if((($date-$modifiedTime) > 60) && $modifiedTime){
 				$this->Session->destroy();
 				Cache::delete("login_".$libraryId.$patronId);
-				$host = $_SERVER['HTTP_HOST'];
-				$name = $_SERVER['SERVER_ADDR'];
-				if($name == '192.168.100.99'){
-					$otherHost = Configure::read('101host');
-				} else {
-					$otherHost = Configure::read('99host');
-				}
-				$session = curl_init($otherHost.'/cache/cacheDelete?libid='.$libraryId.'&patronid='.$patronId);
-				curl_setopt($session, CURLOPT_HEADER, false);
-				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-				curl_exec($session);
-				curl_close($session);				
 			}		
 		}
 	}
