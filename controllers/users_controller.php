@@ -3715,7 +3715,7 @@ Class UsersController extends AppController
 				else{
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-					$url = $authUrl."/PATRONAPI/".$card."/pintest";
+					$url = $authUrl."/PATRONAPI/".$card."/dump";
 					$session = curl_init($url);
 					curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
 					curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
