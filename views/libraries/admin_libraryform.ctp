@@ -124,6 +124,9 @@
 								}
 								elseif($getData['Library']['library_authentication_method'] == "innovative_var_https") {
 									echo "<label>Innovative Var HTTPS</label>";
+								}
+								elseif($getData['Library']['library_authentication_method'] == "innovative_var_https_wo_pin") {
+									echo "<label>Innovative Var HTTPS w/o Pin</label>";
 								}								
 								elseif($getData['Library']['library_authentication_method'] == "innovative_wo_pin") {
 									echo "<label>Innovative w/o Pin</label>";
@@ -177,6 +180,7 @@
 									'innovative_wo_pin' => 'Innovative w/o PIN',
 									'innovative_https' => 'Innovative HTTPS',
 									'innovative_var_https' => 'Innovative Var HTTPS',
+									'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
 									'innovative_var_wo_pin' => 'Innovative Var w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
 								);
 							?>
@@ -227,11 +231,13 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" &&  $getData['Library']['library_authentication_method'] != "soap"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && 
+					$getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" &&
+					$getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" &&  $getData['Library']['library_authentication_method'] != "soap"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="innovative2" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
+					<tr id="innovative2" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_url',array( 'label' => false ,'value' => $getData['Library']['library_authentication_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
@@ -275,7 +281,7 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Library Logout URL');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_logout',array('label' => false, 'value' => $getData['Library']['library_ezproxy_logout'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
-					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
+					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
 					<?php
 					if(empty($allVariables))
 					{
@@ -746,6 +752,27 @@
 						$("#block_explicit").show();
 					}
 					else if ($(this).val() == 'innovative_var_https') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").show();
+						$("#innv_var").show();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_location").hide();
+						$("#sip_password").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+						$("#soap").hide();
+						$("#block_explicit").show();
+					}
+					else if ($(this).val() == 'innovative_var_https_wo_pin') {
 						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").show();
