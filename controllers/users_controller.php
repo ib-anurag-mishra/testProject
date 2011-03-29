@@ -3726,9 +3726,9 @@ Class UsersController extends AppController
 						throw new Exception(curl_error($session));
 					}
 					curl_close($session);
-					$retMsgArr = explode("RETCOD=",$response);               
-					@$retStatus = $retMsgArr['1']; 
-					if($retStatus == ''){
+					$errStrArr = explode('ERRMSG=',$retStr);
+					$errMsg = $errStrArr['1']; 
+					if($errMsg != ''){
 						$errMsgArr =  explode("ERRNUM=",$response);
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
 						if($errMsgCount == '1'){
@@ -3740,7 +3740,7 @@ Class UsersController extends AppController
 						 $this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
 						}                  
 				    } 
-					elseif($retStatus == 0){
+					elseif($errMsg == ''){
 						   $this->Variable->recursive = -1;
 						   $allVariables = $this->Variable->find('all',array(
 							     'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
