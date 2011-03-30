@@ -3726,7 +3726,7 @@ Class UsersController extends AppController
 						throw new Exception(curl_error($session));
 					}
 					curl_close($session);
-					$errStrArr = explode('ERRMSG=',$retStr);
+					$errStrArr = explode('ERRMSG=',$response);
 					$errMsg = $errStrArr['1']; 
 					if($errMsg != ''){
 						$errMsgArr =  explode("ERRNUM=",$response);
