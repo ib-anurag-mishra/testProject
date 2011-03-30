@@ -3551,11 +3551,11 @@ Class UsersController extends AppController
 								else{
 									$status = 'error';
 								}
-							}
-						    if(!$status || $status == 'error'){
-							   $msg = $v['Variable']['error_msg'];
-							   break;
-						    }					
+								if(!$status || $status == 'error'){
+								   $msg = $v['Variable']['error_msg'];
+								   break;
+								}								
+							}					
 						   if($status == ''){
 							   $errMsgArr =  explode("ERRNUM=",$response);
 							   @$errMsgCount = substr($errMsgArr['1'],0,1);
@@ -3649,7 +3649,7 @@ Class UsersController extends AppController
 	}
    /*
     Function Name : inhdlogin
-    Desc : For patron ihdlogin(Innovative Var with HTTPS and without PIN) login method
+    Desc : For patron inhdlogin(Innovative Var with HTTPS and without PIN) login method
    */
    
    function inhdlogin(){
@@ -3750,7 +3750,7 @@ Class UsersController extends AppController
 							$status = 1;
 						    foreach($allVariables as $k=>$v){
 								$retStatusArr = explode($v['Variable']['authentication_variable'],$response);
-								$pos = strpos($retStatusArr['1'],"<br/>");
+								$pos = strpos($retStatusArr['1'],"<");
 								$retStatus = substr($retStatusArr['1'],1,$pos-1);
 								if($retStatus == ''){
 								$status = '';
@@ -3826,11 +3826,12 @@ Class UsersController extends AppController
 								else{
 									$status = 'error';
 								}
+								if(!$status || $status == 'error'){
+								   $msg = $v['Variable']['error_msg'];
+								   break;
+								}								
 							}
-						    if(!$status || $status == 'error'){
-							   $msg = $v['Variable']['error_msg'];
-							   break;
-						    }					
+					
 						   if($status == ''){
 							   $errMsgArr =  explode("ERRNUM=",$response);
 							   @$errMsgCount = substr($errMsgArr['1'],0,1);
