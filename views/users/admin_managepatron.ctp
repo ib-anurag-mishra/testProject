@@ -3,7 +3,7 @@
 <fieldset>
 <legend>Patrons Listing <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
 <div id="library_search">
-<a name="bottom">Library Search&nbsp;</a>&nbsp;
+<a name="bottom">Patron Search&nbsp;</a>&nbsp;
 <?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_managepatron'));?>&nbsp;
 <?php echo $html->link('#',array('controller' => 'users', 'action' => 'admin_managepatron', 'special'));?>&nbsp;
 <?php echo $html->link('A',array('controller' => 'users', 'action' => 'admin_managepatron', 'A'));?>&nbsp;

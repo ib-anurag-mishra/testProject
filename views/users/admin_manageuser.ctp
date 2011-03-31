@@ -3,35 +3,35 @@
 <fieldset>
 <legend>User Listing</legend>
 <div id="library_search">
- <a name="bottom">Library Search&nbsp;</a>&nbsp;
- <?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_manageuser'));?>&nbsp;
- <?php echo $html->link('#',array('controller' => 'users', 'action' => 'admin_manageuser', 'special'));?>&nbsp;
- <?php echo $html->link('A',array('controller' => 'users', 'action' => 'admin_manageuser', 'A'));?>&nbsp;
- <?php echo $html->link('B',array('controller' => 'users', 'action' => 'admin_manageuser', 'B'));?>&nbsp;
- <?php echo $html->link('C',array('controller' => 'users', 'action' => 'admin_manageuser', 'C'));?>&nbsp;
- <?php echo $html->link('D',array('controller' => 'users', 'action' => 'admin_manageuser', 'D'));?>&nbsp;
- <?php echo $html->link('E',array('controller' => 'users', 'action' => 'admin_manageuser', 'E'));?>&nbsp;
- <?php echo $html->link('F',array('controller' => 'users', 'action' => 'admin_manageuser', 'F'));?>&nbsp;
- <?php echo $html->link('G',array('controller' => 'users', 'action' => 'admin_manageuser', 'G'));?>&nbsp;
- <?php echo $html->link('H',array('controller' => 'users', 'action' => 'admin_manageuser', 'H'));?>&nbsp;
- <?php echo $html->link('I',array('controller' => 'users', 'action' => 'admin_manageuser', 'I'));?>&nbsp;
- <?php echo $html->link('J',array('controller' => 'users', 'action' => 'admin_manageuser', 'J'));?>&nbsp;
- <?php echo $html->link('K',array('controller' => 'users', 'action' => 'admin_manageuser', 'K'));?>&nbsp;
- <?php echo $html->link('L',array('controller' => 'users', 'action' => 'admin_manageuser', 'L'));?>&nbsp;
- <?php echo $html->link('M',array('controller' => 'users', 'action' => 'admin_manageuser', 'M'));?>&nbsp;
- <?php echo $html->link('N',array('controller' => 'users', 'action' => 'admin_manageuser', 'N'));?>&nbsp;
- <?php echo $html->link('O',array('controller' => 'users', 'action' => 'admin_manageuser', 'O'));?>&nbsp;
- <?php echo $html->link('P',array('controller' => 'users', 'action' => 'admin_manageuser', 'P'));?>&nbsp;
- <?php echo $html->link('Q',array('controller' => 'users', 'action' => 'admin_manageuser', 'Q'));?>&nbsp;
- <?php echo $html->link('R',array('controller' => 'users', 'action' => 'admin_manageuser', 'R'));?>&nbsp;
- <?php echo $html->link('S',array('controller' => 'users', 'action' => 'admin_manageuser', 'S'));?>&nbsp;
- <?php echo $html->link('T',array('controller' => 'users', 'action' => 'admin_manageuser', 'T'));?>&nbsp;
- <?php echo $html->link('U',array('controller' => 'users', 'action' => 'admin_manageuser', 'U'));?>&nbsp;
- <?php echo $html->link('V',array('controller' => 'users', 'action' => 'admin_manageuser', 'V'));?>&nbsp;
- <?php echo $html->link('W',array('controller' => 'users', 'action' => 'admin_manageuser', 'W'));?>&nbsp;
- <?php echo $html->link('X',array('controller' => 'users', 'action' => 'admin_manageuser', 'X'));?>&nbsp;
- <?php echo $html->link('Y',array('controller' => 'users', 'action' => 'admin_manageuser', 'Y'));?>&nbsp;
- <?php echo $html->link('Z',array('controller' => 'users', 'action' => 'admin_manageuser', 'Z'));?>&nbsp;
+<a name="bottom">User Search&nbsp;</a>&nbsp;
+<?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_manageuser'));?>&nbsp;
+<?php echo $html->link('#',array('controller' => 'users', 'action' => 'admin_manageuser', 'special'));?>&nbsp;
+<?php echo $html->link('A',array('controller' => 'users', 'action' => 'admin_manageuser', 'A'));?>&nbsp;
+<?php echo $html->link('B',array('controller' => 'users', 'action' => 'admin_manageuser', 'B'));?>&nbsp;
+<?php echo $html->link('C',array('controller' => 'users', 'action' => 'admin_manageuser', 'C'));?>&nbsp;
+<?php echo $html->link('D',array('controller' => 'users', 'action' => 'admin_manageuser', 'D'));?>&nbsp;
+<?php echo $html->link('E',array('controller' => 'users', 'action' => 'admin_manageuser', 'E'));?>&nbsp;
+<?php echo $html->link('F',array('controller' => 'users', 'action' => 'admin_manageuser', 'F'));?>&nbsp;
+<?php echo $html->link('G',array('controller' => 'users', 'action' => 'admin_manageuser', 'G'));?>&nbsp;
+<?php echo $html->link('H',array('controller' => 'users', 'action' => 'admin_manageuser', 'H'));?>&nbsp;
+<?php echo $html->link('I',array('controller' => 'users', 'action' => 'admin_manageuser', 'I'));?>&nbsp;
+<?php echo $html->link('J',array('controller' => 'users', 'action' => 'admin_manageuser', 'J'));?>&nbsp;
+<?php echo $html->link('K',array('controller' => 'users', 'action' => 'admin_manageuser', 'K'));?>&nbsp;
+<?php echo $html->link('L',array('controller' => 'users', 'action' => 'admin_manageuser', 'L'));?>&nbsp;
+<?php echo $html->link('M',array('controller' => 'users', 'action' => 'admin_manageuser', 'M'));?>&nbsp;
+<?php echo $html->link('N',array('controller' => 'users', 'action' => 'admin_manageuser', 'N'));?>&nbsp;
+<?php echo $html->link('O',array('controller' => 'users', 'action' => 'admin_manageuser', 'O'));?>&nbsp;
+<?php echo $html->link('P',array('controller' => 'users', 'action' => 'admin_manageuser', 'P'));?>&nbsp;
+<?php echo $html->link('Q',array('controller' => 'users', 'action' => 'admin_manageuser', 'Q'));?>&nbsp;
+<?php echo $html->link('R',array('controller' => 'users', 'action' => 'admin_manageuser', 'R'));?>&nbsp;
+<?php echo $html->link('S',array('controller' => 'users', 'action' => 'admin_manageuser', 'S'));?>&nbsp;
+<?php echo $html->link('T',array('controller' => 'users', 'action' => 'admin_manageuser', 'T'));?>&nbsp;
+<?php echo $html->link('U',array('controller' => 'users', 'action' => 'admin_manageuser', 'U'));?>&nbsp;
+<?php echo $html->link('V',array('controller' => 'users', 'action' => 'admin_manageuser', 'V'));?>&nbsp;
+<?php echo $html->link('W',array('controller' => 'users', 'action' => 'admin_manageuser', 'W'));?>&nbsp;
+<?php echo $html->link('X',array('controller' => 'users', 'action' => 'admin_manageuser', 'X'));?>&nbsp;
+<?php echo $html->link('Y',array('controller' => 'users', 'action' => 'admin_manageuser', 'Y'));?>&nbsp;
+<?php echo $html->link('Z',array('controller' => 'users', 'action' => 'admin_manageuser', 'Z'));?>&nbsp;
 </div>
 <br class="clr">
 <p>
