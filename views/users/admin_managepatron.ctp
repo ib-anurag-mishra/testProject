@@ -2,6 +2,38 @@
 <form>
 <fieldset>
 <legend>Patrons Listing <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
+<div id="library_search">
+<a name="bottom">Library Search&nbsp;</a>&nbsp;
+<?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_managepatron'));?>&nbsp;
+<?php echo $html->link('#',array('controller' => 'users', 'action' => 'admin_managepatron', 'special'));?>&nbsp;
+<?php echo $html->link('A',array('controller' => 'users', 'action' => 'admin_managepatron', 'A'));?>&nbsp;
+<?php echo $html->link('B',array('controller' => 'users', 'action' => 'admin_managepatron', 'B'));?>&nbsp;
+<?php echo $html->link('C',array('controller' => 'users', 'action' => 'admin_managepatron', 'C'));?>&nbsp;
+<?php echo $html->link('D',array('controller' => 'users', 'action' => 'admin_managepatron', 'D'));?>&nbsp;
+<?php echo $html->link('E',array('controller' => 'users', 'action' => 'admin_managepatron', 'E'));?>&nbsp;
+<?php echo $html->link('F',array('controller' => 'users', 'action' => 'admin_managepatron', 'F'));?>&nbsp;
+<?php echo $html->link('G',array('controller' => 'users', 'action' => 'admin_managepatron', 'G'));?>&nbsp;
+<?php echo $html->link('H',array('controller' => 'users', 'action' => 'admin_managepatron', 'H'));?>&nbsp;
+<?php echo $html->link('I',array('controller' => 'users', 'action' => 'admin_managepatron', 'I'));?>&nbsp;
+<?php echo $html->link('J',array('controller' => 'users', 'action' => 'admin_managepatron', 'J'));?>&nbsp;
+<?php echo $html->link('K',array('controller' => 'users', 'action' => 'admin_managepatron', 'K'));?>&nbsp;
+<?php echo $html->link('L',array('controller' => 'users', 'action' => 'admin_managepatron', 'L'));?>&nbsp;
+<?php echo $html->link('M',array('controller' => 'users', 'action' => 'admin_managepatron', 'M'));?>&nbsp;
+<?php echo $html->link('N',array('controller' => 'users', 'action' => 'admin_managepatron', 'N'));?>&nbsp;
+<?php echo $html->link('O',array('controller' => 'users', 'action' => 'admin_managepatron', 'O'));?>&nbsp;
+<?php echo $html->link('P',array('controller' => 'users', 'action' => 'admin_managepatron', 'P'));?>&nbsp;
+<?php echo $html->link('Q',array('controller' => 'users', 'action' => 'admin_managepatron', 'Q'));?>&nbsp;
+<?php echo $html->link('R',array('controller' => 'users', 'action' => 'admin_managepatron', 'R'));?>&nbsp;
+<?php echo $html->link('S',array('controller' => 'users', 'action' => 'admin_managepatron', 'S'));?>&nbsp;
+<?php echo $html->link('T',array('controller' => 'users', 'action' => 'admin_managepatron', 'T'));?>&nbsp;
+<?php echo $html->link('U',array('controller' => 'users', 'action' => 'admin_managepatron', 'U'));?>&nbsp;
+<?php echo $html->link('V',array('controller' => 'users', 'action' => 'admin_managepatron', 'V'));?>&nbsp;
+<?php echo $html->link('W',array('controller' => 'users', 'action' => 'admin_managepatron', 'W'));?>&nbsp;
+<?php echo $html->link('X',array('controller' => 'users', 'action' => 'admin_managepatron', 'X'));?>&nbsp;
+<?php echo $html->link('Y',array('controller' => 'users', 'action' => 'admin_managepatron', 'Y'));?>&nbsp;
+<?php echo $html->link('Z',array('controller' => 'users', 'action' => 'admin_managepatron', 'Z'));?>&nbsp;
+</div>
+<br class="clr">
 <p>
 <?php
 echo $paginator->counter(array(

@@ -465,9 +465,19 @@ Class UsersController extends AppController
     Desc : action for listing all the admin users
    */
    
-	function admin_manageuser(){
+	function admin_manageuser($user = null){
+		if($user == 'special') {
+			$condition = "type_id <> 5 AND last_name REGEXP '^[^A-Za-z]'";			
+		}
+		elseif($user != '') {
+			$condition = "type_id <> 5 AND last_name LIKE '".$user."%'";
+		}
+		else {
+			$condition = "type_id <> 5";
+		}
+		$this->User->recursive = -1;
 		$this->paginate = array('order' => 'created');
-		$this->paginate = array('conditions' => array('type_id <> 5'));
+		$this->paginate = array('conditions' => array($condition));
 		$this->set('admins', $this->paginate('User'));
 	}
     
@@ -534,7 +544,16 @@ Class UsersController extends AppController
     Desc : action for listing all the patron users
    */
    
-	function admin_managepatron(){
+	function admin_managepatron($user = null){
+		if($user == 'special') {
+			$cond = "last_name REGEXP '^[^A-Za-z]'";			
+		}
+		elseif($user != '') {
+			$cond = "last_name LIKE '".$user."%'";
+		}
+		else {
+			$cond = "";
+		}
 		if($this->Session->read("Auth.User.type_id") == 4 && $this->Library->getAuthenticationType($this->Session->read('Auth.User.id')) == "referral_url") {
 			$this->redirect('/admin/reports/index');
 		}
@@ -542,11 +561,11 @@ Class UsersController extends AppController
 			$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
 			$this->set('libraryID', $libraryAdminID["Library"]["id"]);
 			$this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
-			$this->paginate = array('conditions' => array('type_id' => 5, 'library_id' => $libraryAdminID["Library"]["id"]),'order' => array('created'));
+			$this->paginate = array('conditions' => array('type_id' => 5, 'library_id' => $libraryAdminID["Library"]["id"],$cond),'order' => array('created'));
 		}
 		else {
 			$this->set('libraryID', "");
-			$this->paginate = array('conditions' => array('type_id' => 5),'order' => array('created'));
+			$this->paginate = array('conditions' => array('type_id' => 5,$cond),'order' => array('created'));
 		}
 		$this->User->recursive = -1;
 		$this->set('patrons', $this->paginate('User'));
