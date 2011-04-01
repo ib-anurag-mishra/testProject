@@ -2,6 +2,7 @@
 <form>
 <fieldset>
 <legend>Patrons Listing <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
+<br class="clr">
 <div id="library_search">
 <a name="bottom">Patron Search&nbsp;</a>&nbsp;
 <?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_managepatron'));?>&nbsp;

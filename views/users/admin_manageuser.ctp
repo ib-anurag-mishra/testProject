@@ -2,6 +2,7 @@
 <form>
 <fieldset>
 <legend>User Listing</legend>
+<br class="clr">
 <div id="library_search">
 <a name="bottom">User Search&nbsp;</a>&nbsp;
 <?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_manageuser'));?>&nbsp;
