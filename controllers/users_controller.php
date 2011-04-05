@@ -1683,6 +1683,15 @@ Class UsersController extends AppController
 					$retPos = strpos($retCardArr['1'],"<br/>");
 					$retCard = substr($retCardArr['1'],1,$retPos-1);
 					$pos = strpos($retStr, "CREATED");
+					if(strpos($retStr,"P BARCODE[pb]")){
+						if(strpos($retStr,$card)){
+							$pos = true;
+						} else {
+							$pos = false;
+						}
+					} else {
+						$pos = strpos($retStr, "CREATED");
+					}					
 					if ($pos == false) {                 
 						$retMsgArr = explode("ERRNUM=",$retStr);               
 						if(count($retMsgArr) > 1){                    
@@ -1842,7 +1851,16 @@ Class UsersController extends AppController
 					$retPos = strpos($retCardArr['1'],"<br/>");
 					$retCard = substr($retCardArr['1'],1,$retPos-1);
 					$errStrArr = explode('ERRMSG=',$retStr);
-					$errMsg = $errStrArr['1'];					
+					$errMsg = $errStrArr['1'];
+					if(strpos($retStr,"P BARCODE[pb]")){
+						if(strpos($retStr,$card)){
+							$pos = true;
+						} else {
+							$pos = false;
+						}
+					} else {
+						$pos = strpos($retStr, "ERRMSG=");
+					}					
 					$this->Variable->recursive = -1;
 					$allVariables = $this->Variable->find('all',array(
 														'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
@@ -1933,11 +1951,11 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}
 						else{
-							$this -> Session -> setFlash("Authentication server down.");
+							$this->Session->setFlash("Authentication server down.");
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}                  
 					}
-					elseif($status == 1 && $errMsg == ''){
+					elseif($status == 1 && $pos != false){
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -2005,8 +2023,10 @@ Class UsersController extends AppController
 						$errMsg = $errStrArr['1'];
 						if(isset($errMsg)){
 							$this->Session->setFlash($errMsg);
-						} else {
+						} elseif(isset($msg)){
 							$this->Session->setFlash($msg);
+						} else {
+							$this->Session->setFlash("Authentication server down.");
 						}
 						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 					}
