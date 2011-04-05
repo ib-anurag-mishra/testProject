@@ -1854,12 +1854,12 @@ Class UsersController extends AppController
 					$errMsg = $errStrArr['1'];
 					if(strpos($retStr,"P BARCODE[pb]")){
 						if(strpos($retStr,$card)){
-							$pos = true;
+							$posVal = true;
 						} else {
-							$pos = false;
+							$posVal = false;
 						}
 					} else {
-						$pos = strpos($retStr, "ERRMSG=");
+						$posVal = strpos($retStr, "ERRMSG=");
 					}					
 					$this->Variable->recursive = -1;
 					$allVariables = $this->Variable->find('all',array(
@@ -1955,7 +1955,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 						}                  
 					}
-					elseif($status == 1 && $pos != false){
+					elseif($status == 1 && $posVal != false){
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
