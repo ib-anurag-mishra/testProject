@@ -936,7 +936,16 @@ Class UsersController extends AppController
 					@$dom->loadHtmlFile($url);
 					$xpath = new DOMXPath($dom);
 					$body = $xpath->query('/html/body');
-					$retStr = $dom->saveXml($body->item(0));               
+					$retStr = $dom->saveXml($body->item(0));
+					if(strpos($retStr,"P BARCODE[pb]")){
+						if(strpos($retStr,$card)){
+							$posVal = true;
+						} else {
+							$posVal = false;
+						}
+					} else {
+						$posVal = true;
+					}					
 					$retMsgArr = explode("RETCOD=",$retStr);               
 					@$retStatus = $retMsgArr['1'];               
 					if($retStatus == ''){
@@ -951,7 +960,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
 						}                  
 					}
-					elseif($retStatus == 0){
+					elseif($retStatus == 0 && $posVal != false){
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -1017,7 +1026,10 @@ Class UsersController extends AppController
 					else{
 						$errStrArr = explode('ERRMSG=',$retStr);
 						$errMsg = $errStrArr['1'];
-						$this -> Session -> setFlash($errMsg);
+						$this->Session->setFlash($errMsg);
+						if($posVal == false){
+							$this->Session->setFlash("Card number does not match Library record");
+						}
 						$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
 					}
 				}
@@ -1113,7 +1125,16 @@ Class UsersController extends AppController
 					@$dom->loadHtmlFile($url);
 					$xpath = new DOMXPath($dom);
 					$body = $xpath->query('/html/body');
-					$retStr = $dom->saveXml($body->item(0));               
+					$retStr = $dom->saveXml($body->item(0));
+					if(strpos($retStr,"P BARCODE[pb]")){
+						if(strpos($retStr,$card)){
+							$posVal = true;
+						} else {
+							$posVal = false;
+						}
+					} else {
+						$posVal = true;
+					}					
 					$retMsgArr = explode("RETCOD=",$retStr);               
 					@$retStatus = $retMsgArr['1'];               
 					if($retStatus == ''){
@@ -1128,7 +1149,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 						}                  
 					}
-					elseif($retStatus == 0){
+					elseif($retStatus == 0 && $posVal != false){
 						$authUrlDump = $existingLibraries['0']['Library']['library_authentication_url'];               
 						$urlDump = $authUrlDump."/PATRONAPI/".$card."/dump";               
 						$domDump= new DOMDocument();
@@ -1309,7 +1330,10 @@ Class UsersController extends AppController
 					} else {
 						$errStrArr = explode('ERRMSG=',$retStr);
 						$errMsg = $errStrArr['1'];
-						$this -> Session -> setFlash($errMsg);
+						$this->Session->setFlash($errMsg);
+						if($posVal == false){
+							$this->Session->setFlash("Card number does not match Library record");
+						}						
 						$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 					}
 				}         
@@ -1320,7 +1344,7 @@ Class UsersController extends AppController
 
    /*
     Function Name : ildlogin
-    Desc : For patron idlogin(Innovative Var with Name) login method
+    Desc : For patron ildlogin(Innovative Var with Name) login method
    */
    
    function ildlogin(){
@@ -1688,6 +1712,7 @@ Class UsersController extends AppController
 							$pos = true;
 						} else {
 							$pos = false;
+							$posVal = false;
 						}
 					} else {
 						$pos = strpos($retStr, "CREATED");
@@ -1705,6 +1730,11 @@ Class UsersController extends AppController
 						}
 						else{                     
 							$this -> Session -> setFlash("Authentication server down.");
+							if($posVal == false){
+								$this->Session->setFlash("Card number does not match Library record.");
+							} else {
+								$this->Session->setFlash("Authentication server down.");
+							}
 							$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));   
 						}
 					}
@@ -2025,6 +2055,8 @@ Class UsersController extends AppController
 							$this->Session->setFlash($errMsg);
 						} elseif(isset($msg)){
 							$this->Session->setFlash($msg);
+						} elseif($posVal == false){
+								$this->Session->setFlash("Card number does not match Library record.");
 						} else {
 							$this->Session->setFlash("Authentication server down.");
 						}
@@ -2228,23 +2260,19 @@ Class UsersController extends AppController
 									else{
 										  $this -> Session -> setFlash("The Card Number is Invalid.");                              
 										  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-
-									}
-									
-									
+									}								
 								}
 								else{
 									  $this -> Session -> setFlash("Authentication server down.");                              
 									  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-
 								}
-						}else{
-						//	  $this->Session->destroy('user');
+						}
+						else{
 							  $this -> Session -> setFlash("Authentication server down.");                              
 							  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-
 						}
-					}else{
+					}
+					else{
 						$this -> Session -> setFlash("Authentication server down.");                              
 						$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 
@@ -2419,27 +2447,25 @@ Class UsersController extends AppController
 											  $this ->Session->write("block", 'no');
 										  }
 										  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
-									}else{
+									}
+									else{
 										  $this -> Session -> setFlash("The Card Number is Invalid.");                              
 										  $this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
-
-									}
-									
-									
-								}else{
+									}							
+								}
+								else{
 									  $this -> Session -> setFlash("Authentication server down.");                              
 									  $this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
-
 							}
-						}else{
+						}
+						else{
 							  $this -> Session -> setFlash("Authentication server down.");                              
 							  $this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
-
 						}
-					}else{
+					}
+					else{
 						$this -> Session -> setFlash("Authentication server down.");                              
 						$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
-
 					}
 				}
 			}
@@ -3206,6 +3232,15 @@ Class UsersController extends AppController
 					throw new Exception(curl_error($session));
 				}
 				curl_close($session);
+				if(strpos($retStr,"P BARCODE[pb]")){
+					if(strpos($retStr,$card)){
+						$posVal = true;
+					} else {
+						$posVal = false;
+					}
+				} else {
+					$posVal = true;
+				}				
                 $retMsgArr = explode("RETCOD=",$response);               
                 @$retStatus = $retMsgArr['1']; 
 				if($retStatus == ''){
@@ -3220,7 +3255,7 @@ Class UsersController extends AppController
 					 $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
 					}                  
                }
-               elseif($retStatus == 0){
+               elseif($retStatus == 0 && $posVal != false){
 					$status =1;
 					$this->Variable->recursive = -1;
 					$allVariables = $this->Variable->find('all',array(
@@ -3388,7 +3423,10 @@ Class UsersController extends AppController
 					else{
 					  $errStrArr = explode('ERRMSG=',$response);
 					  $errMsg = $errStrArr['1'];
-					  $this -> Session -> setFlash($errMsg);
+					  $this->Session->setFlash($errMsg);
+					  if($posVal == false){
+						  $this->Session->setFlash("Card number does not match Library record");
+					  }
 					  $this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));						
 					}				
 				}
@@ -3490,6 +3528,15 @@ Class UsersController extends AppController
 						throw new Exception(curl_error($session));
 					}
 					curl_close($session);
+					if(strpos($retStr,"P BARCODE[pb]")){
+						if(strpos($retStr,$card)){
+							$posVal = true;
+						} else {
+							$posVal = false;
+						}
+					} else {
+						$posVal = true;
+					}					
 					$retMsgArr = explode("RETCOD=",$response);               
 					@$retStatus = $retMsgArr['1']; 
 					if($retStatus == ''){
@@ -3504,7 +3551,7 @@ Class UsersController extends AppController
 						 $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 						}                  
 				    } 
-					elseif($retStatus == 0){
+					elseif($retStatus == 0 && $posVal != false){
 						   $this->Variable->recursive = -1;
 						   $allVariables = $this->Variable->find('all',array(
 							     'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
@@ -3675,10 +3722,14 @@ Class UsersController extends AppController
 							   $this -> Session -> setFlash($msg);
 							   $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 						   }
-					} else{
+					} 
+					else{
 					  $errStrArr = explode('ERRMSG=',$response);
 					  $errMsg = $errStrArr['1'];
-					  $this -> Session -> setFlash($errMsg);
+					  $this->Session->setFlash($errMsg);
+					  if($posVal == false){
+							$this->Session->setFlash("Card number does not match Library record");
+					  }
 					  $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));					
 					}
 					
