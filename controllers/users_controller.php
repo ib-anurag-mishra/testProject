@@ -457,6 +457,8 @@ Class UsersController extends AppController
 			$this->Session->destroy();
 			$this->redirect($this->Auth->logout());    
 			}         
+		}else{
+			$this->redirect($this->Auth->logout());
 		}     
 	}
    
@@ -1708,16 +1710,32 @@ Class UsersController extends AppController
 					$retCard = substr($retCardArr['1'],1,$retPos-1);
 					$pos = strpos($retStr, "CREATED");
 					if(strpos($retStr,"P BARCODE[pb]")){
+						$retCardArr = explode("P BARCODE[pb]",$retStr);
+						foreach($retCardArr as $k=>$v){
+						$retPos = strpos($v,"<br/>");
+						$retCard = substr($v,1,$retPos-1);
+						$retCard = str_replace(" ","",$retCard);
 						if(strpos($retStr,$card)){
-							$pos = true;
+							$posVal = true;
+							break;
 						} else {
-							$pos = false;
-							$posVal = false;
+							if(strcmp($card,$retCard) == 0){
+								$posVal = true;
+								break;		
+							} else {
+								$posVal = false;
+								
+							}
+						}						
 						}
 					} else {
-						$pos = strpos($retStr, "CREATED");
+						if(strpos($retStr, "ERRMSG=")){
+							$posVal = false;
+						} else {
+							$posVal = true;
+						}		
 					}					
-					if ($pos == false) {                 
+					if ($posVal == false) {                 
 						$retMsgArr = explode("ERRNUM=",$retStr);               
 						if(count($retMsgArr) > 1){                    
 							@$retStatus = $retMsgArr['1'];
@@ -1883,13 +1901,30 @@ Class UsersController extends AppController
 					$errStrArr = explode('ERRMSG=',$retStr);
 					$errMsg = $errStrArr['1'];
 					if(strpos($retStr,"P BARCODE[pb]")){
+						$retCardArr = explode("P BARCODE[pb]",$retStr);
+						foreach($retCardArr as $k=>$v){
+						$retPos = strpos($v,"<br/>");
+						$retCard = substr($v,1,$retPos-1);
+						$retCard = str_replace(" ","",$retCard);
 						if(strpos($retStr,$card)){
 							$posVal = true;
+							break;
 						} else {
-							$posVal = false;
+							if(strcmp($card,$retCard) == 0){
+								$posVal = true;
+								break;		
+							} else {
+								$posVal = false;
+								
+							}
+						}						
 						}
 					} else {
-						$posVal = strpos($retStr, "ERRMSG=");
+						if(strpos($retStr, "ERRMSG=")){
+							$posVal = false;
+						} else {
+							$posVal = true;
+						}		
 					}					
 					$this->Variable->recursive = -1;
 					$allVariables = $this->Variable->find('all',array(
@@ -2531,14 +2566,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content')
 														)
 													 );					
 				}				
@@ -2568,7 +2603,7 @@ Class UsersController extends AppController
 							}
 							
 							//send selfcheck status message
-							$in = $mysip->msgSCStatus();
+							$in = $mysip->msgSCStatus('','',$existingLibraries['0']['Library']['library_sip_version']);
 							$msg_result = $mysip->get_message($in);
 
 							// Make sure the response is 98 as expected
@@ -2588,15 +2623,15 @@ Class UsersController extends AppController
 								  // Make sure the response is 24 as expected
 								  if (preg_match("/24/", $msg_result)) {
 									  $result = $mysip->parsePatronStatusResponse( $msg_result );
-									  
-									  if ($result['variable']['BL'][0] == 'Y') {
+									  $in = $mysip->msgPatronInformation('none');
+									  $info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );						
+									  if ($result['variable']['BL'][0] == 'Y' || $info_status['variable']['BL'][0] == 'Y') {
 										  // Successful Card!!!
 										
-										 if ($result['variable']['CQ'][0] == 'Y') {
+										 if ($result['variable']['CQ'][0] == 'Y' || $info_status['variable']['CQ'][0] == 'Y') {
 											// Successful PIN !!!
 										  
-											$in = $mysip->msgPatronInformation('none');
-											$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );
+
 											$this->Variable->recursive = -1;										
 											$allVariables = $this->Variable->find('all',array(
 																				'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
@@ -2806,14 +2841,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content')
 													)
 												 );				
 				}				
@@ -2843,7 +2878,7 @@ Class UsersController extends AppController
 						}
 						
 						//send selfcheck status message
-						$in = $mysip->msgSCStatus();
+						$in = $mysip->msgSCStatus('','',$existingLibraries['0']['Library']['library_sip_version']);
 						$msg_result = $mysip->get_message($in);
 
 						// Make sure the response is 98 as expected
@@ -2861,10 +2896,11 @@ Class UsersController extends AppController
 							// Make sure the response is 24 as expected
 							if (preg_match("/^24/", $msg_result)) {
 								$result = $mysip->parsePatronStatusResponse( $msg_result );
-								if ($result['variable']['BL'][0] == 'Y') {
+								$in = $mysip->msgPatronInformation('none');
+								$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );								
+								if ($result['variable']['BL'][0] == 'Y' || $info_status['variable']['BL'][0] == 'Y') {
 									  // Successful Card!!!
-									$in = $mysip->msgPatronInformation('none');
-									$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );
+
 									$this->Variable->recursive = -1;										
 									$allVariables = $this->Variable->find('all',array(
 																		'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
@@ -3816,6 +3852,32 @@ Class UsersController extends AppController
 						throw new Exception(curl_error($session));
 					}
 					curl_close($session);
+					if(strpos($response,"P BARCODE[pb]")){
+						$retCardArr = explode("P BARCODE[pb]",$response);
+						foreach($retCardArr as $k=>$v){
+						$retPos = strpos($v,"<br/>");
+						$retCard = substr($v,1,$retPos-1);
+						$retCard = str_replace(" ","",$retCard);
+						if(strpos($response,$card)){
+							$posVal = true;
+							break;
+						} else {
+							if(strcmp($card,$retCard) == 0){
+								$posVal = true;
+								break;		
+							} else {
+								$posVal = false;
+								
+							}
+						}						
+						}
+					} else {
+						if(strpos($response, "ERRMSG=")){
+							$posVal = false;
+						} else {
+							$posVal = true;
+						}		
+					}					
 					$errStrArr = explode('ERRMSG=',$response);
 					$errMsg = $errStrArr['1']; 
 					if($errMsg != ''){
@@ -3934,7 +3996,7 @@ Class UsersController extends AppController
 								   $this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
 							   }                  
 						   }
-						   elseif($status == 1){
+						   elseif($status == 1 && $posVal != false){
 								//writing to memcache and writing to both the memcached servers
 								$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 								if(count($currentPatron) > 0){
@@ -4000,6 +4062,9 @@ Class UsersController extends AppController
 						   }
 						   else{
 							   $this -> Session -> setFlash($msg);
+							   if($posVal == false){
+								  $this->Session->setFlash("Card number does not match Library record");
+							   }
 							   $this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
 						   }
 					} else{
