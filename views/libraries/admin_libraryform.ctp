@@ -21,6 +21,7 @@
 		$getData['Library']['library_sip_login'] = "";
 		$getData['Library']['library_sip_password'] = "";
 		$getData['Library']['library_sip_location'] = "";
+		$getData['Library']['library_sip_version'] = "";
 		$getData['Library']['library_ezproxy_secret'] = "";
 		$getData['Library']['library_ezproxy_referral'] = "";
 		$getData['Library']['library_ezproxy_name'] = "";
@@ -265,6 +266,10 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Location');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_location',array('label' => false, 'value' => $getData['Library']['library_sip_location'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
+					<tr id="sip_version" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Version');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_sip_version',array('label' => false, 'value' => $getData['Library']['library_sip_version'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>					
 					<tr id="ezproxy_secret" <?php if($getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Secret');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_secret',array('label' => false, 'value' => $getData['Library']['library_ezproxy_secret'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
@@ -701,6 +706,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -722,6 +728,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -743,6 +750,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -764,6 +772,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -785,6 +794,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -806,6 +816,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -827,6 +838,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
 						$("#ezproxy_secret").hide();
@@ -850,6 +862,7 @@
 						$("#sip_login").show();
 						$("#sip_password").show();
 						$("#sip_location").show();
+						$("#sip_version").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
@@ -871,6 +884,7 @@
 						$("#sip_login").show();
 						$("#sip_password").show();
 						$("#sip_location").show();
+						$("#sip_version").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
@@ -892,6 +906,7 @@
 						$("#sip_login").show();
 						$("#sip_password").show();
 						$("#sip_location").show();
+						$("#sip_version").show();						
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
@@ -913,6 +928,7 @@
 						$("#sip_login").show();
 						$("#sip_password").show();
 						$("#sip_location").show();
+						$("#sip_version").show();						
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
@@ -934,6 +950,7 @@
 						$("#sip_login").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#ezproxy_secret").show();
 						$("#ezproxy_referral").show();
 						$("#ezproxy_name").show();
@@ -955,6 +972,7 @@
 						$("#sip_login").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
@@ -976,6 +994,7 @@
 						$("#sip_login").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
@@ -997,6 +1016,7 @@
 						$("#sip_pin").hide();
 						$("#sip_login").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -1018,6 +1038,7 @@
 						$("#sip_login").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
+						$("#sip_version").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
