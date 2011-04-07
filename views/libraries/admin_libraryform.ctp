@@ -267,8 +267,22 @@
 						<td aligh="left"><?php echo $this->Form->input('library_sip_location',array('label' => false, 'value' => $getData['Library']['library_sip_location'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr id="sip_version" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Server Version');?></td>
-						<td aligh="left"><?php echo $this->Form->input('library_sip_version',array('label' => false, 'value' => $getData['Library']['library_sip_version'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+						<td align="right" width="250">
+						<?php echo $this->Form->label(null, 'Library SIP2 Server Version');?></td>
+						<td aligh="left">
+							<?php
+								if($getData['Library']['library_sip_version'] == '2.0E'){
+									$version = '2.0E';
+								} else {
+									$version = '2.00';
+								}
+								echo $this->Form->input('library_sip_version', array('options' => array(
+									'2.00' => '2.00',
+									'2.0E' => '2.0E'
+									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $version)
+								);
+							?>						
+						</td>
 					</tr>					
 					<tr id="ezproxy_secret" <?php if($getData['Library']['library_authentication_method'] != "ezproxy"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'EZProxy Secret');?></td>
@@ -564,6 +578,10 @@
 									'2' => '2',
 									'3' => '3',
 									'5' => '5',
+									'6' => '6',
+									'7' => '7',
+									'8' => '8',
+									'9' => '9',
 									'10' => '10',
 									'15' => '15',
 									'20' => '20'
