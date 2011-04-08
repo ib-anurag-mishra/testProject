@@ -47,6 +47,7 @@
                                    <?php
                                           }
                                           else {
+												$options[5] = 'Sales';
                                    ?>
                                                  <tr>
                                                         <td align="right" width="390"><?php echo $this->Form->label('Admin Type');?></td>

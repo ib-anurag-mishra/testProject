@@ -34,7 +34,7 @@
 			</li>
 		</ul>
 <?php
-	} else {
+	} elseif ($this->Session->read('Auth.User.type_id') == 1) {
 ?>
 		<ul id="menu" class="sf-menu">
 			<li>
@@ -127,8 +127,37 @@
 					<li>
 						<?php echo $html->link('Sony Sales Reports', array('controller' => 'reports', 'action' => 'sonyreports'));?>
 					</li>
+					<li>
+						<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
+					</li>					
+				</ul>
+			</li>	
+		</ul>
+<?php	
+	} else {
+?>
+		<ul id="menu" class="sf-menu">
+			<li>
+				<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
+				<ul>
+					<li>
+						<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Library Renewal Report', array('controller' => 'reports', 'action' => 'libraryrenewalreport'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Sony Sales Reports', array('controller' => 'reports', 'action' => 'sonyreports'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
+					</li>					
 				</ul>
 			</li>	
 		</ul>
 <?php	
 	}
+?>		

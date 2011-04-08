@@ -174,14 +174,6 @@ function resetDownloads()
 			mysql_query($sql);
 			}
 		}
-		else if($downloadType == "anually")
-		{
-			if($currentDate == $yearFirstDate)
-			{
-			$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-			mysql_query($sql);
-			}
-		}
 		
 		$libraryId = $resultsArr['id'];	
 		$sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	

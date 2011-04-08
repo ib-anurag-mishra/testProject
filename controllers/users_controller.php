@@ -34,11 +34,11 @@ Class UsersController extends AppController
 			$this -> Session -> setFlash("This account has been deactivated.  Please contact your administrator for further questions.");
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));	
 		}
-		if($userType == '5'){
+		if($userType == '5' && $this->Session->read('Auth.User.sales') != 'yes'){
 			$this->redirect('/homes/index');
 			$this->Auth->autoRedirect = false;
 		}
-		if($userType == '1'){
+		if($userType == '1' || $this->Session->read('Auth.User.sales') == 'yes'){
 			if($library == 'special') {
 				$condition = array("library_name REGEXP '^[^A-Za-z]'");			
 			}
@@ -166,7 +166,7 @@ Class UsersController extends AppController
 		}
 		if ($this->Session->read('Auth.User')) {
 			$userType = $this->Session->read('Auth.User.type_id');
-			if($userType == '5'){
+			if($userType == '5' && $this->Session->read('Auth.User.sales') != 'yes'){
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
@@ -499,6 +499,10 @@ Class UsersController extends AppController
 				if(isset($this->data)){
 					$updateObj = new User();
 					$getData['User'] = $this->data['User'];
+					$this->data['User']['library_id'] = Configure::read('LibraryIdeas');
+					if($this->data['User']['type_id'] == 5){
+						$this->data['User']['sales'] = 'yes';
+					}					
 					$getData['Group']['id'] = $this->data['User']['type_id'];
 					$this->set('getData', $getData);
 					$this->User->id = $this->data['User']['id'];
@@ -522,6 +526,10 @@ Class UsersController extends AppController
 			if(isset($this->data)){
 				$insertObj = new User();                    
 				$getData['User'] = $this->data['User'];
+				$this->data['User']['library_id'] = Configure::read('LibraryIdeas');;
+				if($this->data['User']['type_id'] == 5){
+					$this->data['User']['sales'] = 'yes';
+				}
 				$getData['Group']['id'] = $this->data['User']['type_id'];
 				$this->set('getData', $getData);
 				if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){                     

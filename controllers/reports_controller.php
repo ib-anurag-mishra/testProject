@@ -373,5 +373,112 @@ Class ReportsController extends AppController
 		}
 		print "<select class='select_fields' name='library_id'>".$data."</select>";exit;
 	}
+	function admin_unlimited(){
+        if($this->Session->read("Auth.User.type_id") == 4) {
+            $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
+            $this->set('libraryID', $libraryAdminID["Library"]["id"]);
+            $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
+        }
+        else {
+			$this->set('libraryID', "");
+        }	
+		if(isset($this->data)) {
+			$all_Ids = '';
+			$sql = "SELECT id from libraries where library_unlimited = '1'";
+			$result = mysql_query($sql);
+			while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $all_Ids.$row["id"].",";
+			}
+			$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+			$date_arr = explode("/", $this->data['Report']['date']);
+			$startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
+			$endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
+			$conditions = array(
+			  'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id"
+			);
+			$downloadResult = $this->Download->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY library_id'), 'fields' => array('library_id','COUNT(id) AS totalDownloads'),'recursive' => -1));
+			foreach($downloadResult as $k =>$v){
+				$nameQuery = "SELECT library_name FROM libraries WHERE id=".$v['Download']['library_id'];
+				$row = mysql_fetch_assoc(mysql_query($nameQuery));
+				$downloadResult[$k]['Download']['library_name'] = $row['library_name'];
+				$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE 
+								  library_id='".$v['Download']['library_id']."' ORDER BY created DESC";
+				$row = mysql_fetch_assoc(mysql_query($purchaseQuery));
+				$downloadResult[$k]['Download']['library_price'] = $row['purchased_amount'];
+				$downloadResult[$k]['Download']['monthly_price'] = $row['purchased_amount']/12;
+				$downloadResult[$k]['Download']['download_price'] = ($row['purchased_amount']/12)/$v[0]['totalDownloads'];
+				$downloadResult[$k]['Download']['mechanical_royalty'] = ($v[0]['totalDownloads']* (.091/2));
+			}
+			$this->set( 'formAction', 'admin_unlimited');
+			$this->set( 'date', $this->data['Report']['date']);
+			$this->set('downloadResult', $downloadResult);
+		} else {
+			$this -> set( 'formAction', 'admin_unlimited');
+		}
+	}
+	function admin_unlimitedcsv(){
+        Configure::write('debug', 0);
+        $this->layout = false;	
+		$all_Ids = '';
+		$sql = "SELECT id from libraries where library_unlimited = '1'";
+		$result = mysql_query($sql);
+		while ($row = mysql_fetch_assoc($result)) {
+			$all_Ids = $all_Ids.$row["id"].",";
+		}
+		$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+		$date_arr = explode("/", $this->data['Report']['date']);
+		$startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
+		$endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
+		$conditions = array(
+		  'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id"
+		);
+		$downloadResult = $this->Download->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY library_id'), 'fields' => array('library_id','COUNT(id) AS totalDownloads'),'recursive' => -1));
+		foreach($downloadResult as $k =>$v){
+			$nameQuery = "SELECT library_name FROM libraries WHERE id=".$v['Download']['library_id'];
+			$row = mysql_fetch_assoc(mysql_query($nameQuery));
+			$downloadResult[$k]['Download']['library_name'] = $row['library_name'];
+			$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE 
+							  library_id='".$v['Download']['library_id']."' ORDER BY created DESC";
+			$row = mysql_fetch_assoc(mysql_query($purchaseQuery));
+			$downloadResult[$k]['Download']['library_price'] = $row['purchased_amount'];
+			$downloadResult[$k]['Download']['monthly_price'] = $row['purchased_amount']/12;
+			$downloadResult[$k]['Download']['download_price'] = ($row['purchased_amount']/12)/$v[0]['totalDownloads'];
+			$downloadResult[$k]['Download']['mechanical_royalty'] = ($v[0]['totalDownloads']* (.091/2));
+		}
+		$this->set( 'date', $this->data['Report']['date']);
+		$this->set('downloadResult', $downloadResult);
+	}
+	function admin_unlimitedpdf(){
+        Configure::write('debug', 0);
+        $this->layout = false;	
+		$all_Ids = '';
+		$sql = "SELECT id from libraries where library_unlimited = '1'";
+		$result = mysql_query($sql);
+		while ($row = mysql_fetch_assoc($result)) {
+			$all_Ids = $all_Ids.$row["id"].",";
+		}
+		$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
+		$date_arr = explode("/", $this->data['Report']['date']);
+		$startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
+		$endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
+		$conditions = array(
+		  'created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY id"
+		);
+		$downloadResult = $this->Download->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY library_id'), 'fields' => array('library_id','COUNT(id) AS totalDownloads'),'recursive' => -1));
+		foreach($downloadResult as $k =>$v){
+			$nameQuery = "SELECT library_name FROM libraries WHERE id=".$v['Download']['library_id'];
+			$row = mysql_fetch_assoc(mysql_query($nameQuery));
+			$downloadResult[$k]['Download']['library_name'] = $row['library_name'];
+			$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE 
+							  library_id='".$v['Download']['library_id']."' ORDER BY created DESC";
+			$row = mysql_fetch_assoc(mysql_query($purchaseQuery));
+			$downloadResult[$k]['Download']['library_price'] = $row['purchased_amount'];
+			$downloadResult[$k]['Download']['monthly_price'] = $row['purchased_amount']/12;
+			$downloadResult[$k]['Download']['download_price'] = ($row['purchased_amount']/12)/$v[0]['totalDownloads'];
+			$downloadResult[$k]['Download']['mechanical_royalty'] = ($v[0]['totalDownloads']* (.091/2));
+		}
+		$this->set( 'date', $this->data['Report']['date']);
+		$this->set('downloadResult', $downloadResult);
+	}
 }
 ?>
