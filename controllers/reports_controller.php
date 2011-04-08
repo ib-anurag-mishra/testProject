@@ -391,6 +391,7 @@ Class ReportsController extends AppController
 			}
 			$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
 			$date_arr = explode("/", $this->data['Report']['date']);
+			
 			$startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
 			$endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
 			$conditions = array(
@@ -412,12 +413,13 @@ Class ReportsController extends AppController
 			$this->set( 'formAction', 'admin_unlimited');
 			$this->set( 'date', $this->data['Report']['date']);
 			$this->set('downloadResult', $downloadResult);
+			$this->set('month', date("F", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))));
 		} else {
 			$this -> set( 'formAction', 'admin_unlimited');
 		}
 	}
 	function admin_unlimitedcsv(){
-        Configure::write('debug', 0);
+//        Configure::write('debug', 0);
         $this->layout = false;	
 		$all_Ids = '';
 		$sql = "SELECT id from libraries where library_unlimited = '1'";
@@ -446,6 +448,7 @@ Class ReportsController extends AppController
 			$downloadResult[$k]['Download']['mechanical_royalty'] = ($v[0]['totalDownloads']* (.091/2));
 		}
 		$this->set( 'date', $this->data['Report']['date']);
+		$this->set('month', date("F", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))));
 		$this->set('downloadResult', $downloadResult);
 	}
 	function admin_unlimitedpdf(){
@@ -478,6 +481,7 @@ Class ReportsController extends AppController
 			$downloadResult[$k]['Download']['mechanical_royalty'] = ($v[0]['totalDownloads']* (.091/2));
 		}
 		$this->set( 'date', $this->data['Report']['date']);
+		$this->set('month', date("F", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))));		
 		$this->set('downloadResult', $downloadResult);
 	}
 }

@@ -48,7 +48,7 @@
     $tcpdf->SetFont('', 'B');
     // Header
     $w = array(15, 42, 42, 42, 42, 42, 42);
-    $DownloadCount_header = array('', 'Library Name', 'Monthly Download', 'Annual Price', 'Monthly Price', 'Price per Download', 'Mechanical Royalty');	
+    $DownloadCount_header = array('', 'Library Name', $month.' Download', 'Annual Price', 'Monthly Price', 'Price per Download', 'Mechanical Royalty');	
     for($i = 0; $i < count($DownloadCount_header); $i++)
         $tcpdf->Cell($w[$i], 7, $DownloadCount_header[$i], 1, 0, 'C', 1);
         $tcpdf->Ln();
@@ -59,10 +59,20 @@
     // Data
     $fill = 0;
 	$key = 1;
-    foreach($downloadResult as $k => $v) {	
-        $libraries_downloads[] =  array($key, $v['Download']['library_name'], $v['0']['totalDownloads'], $v['Download']['library_price'], $v['Download']['monthly_price'], $v['Download']['download_price'], $v['Download']['mechanical_royalty']);;
-		$key++;
-    }	
+	$downloads = 0;
+	$libPrice = 0;
+	$monPrice = 0;
+	$dwldPrice = 0;
+	$royalty = 0;
+    foreach($downloadResult as $k => $v) {
+		$libraries_downloads[] = array($key, $v['Download']['library_name'], $v['0']['totalDownloads'], "$".number_format($v['Download']['library_price'], 2), "$".number_format($v['Download']['monthly_price'], 2), "$".number_format($v['Download']['download_price'], 2), "$".number_format($v['Download']['mechanical_royalty'], 2));
+		$downloads = $downloads + $v['0']['totalDownloads'];
+		$libPrice = $libPrice + $v['Download']['library_price'];
+		$monPrice = $monPrice + $v['Download']['monthly_price'];
+		$dwldPrice = $dwldPrice + $v['Download']['download_price'];
+		$royalty = $royalty + $v['Download']['mechanical_royalty'];		
+    }
+	$libraries_downloads[] =  array('', 'Total', $downloads, "$".number_format($libPrice, 2), "$".number_format($monPrice, 2), "$".number_format($dwldPrice, 2), "$".number_format($royalty, 2));
     foreach($libraries_downloads as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);

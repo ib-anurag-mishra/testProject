@@ -51,7 +51,7 @@
                                 <tr>
 									<th>&nbsp;</th>
                                     <th>Library Name</th>
-                                    <th>Monthly Download</th>
+                                    <th><?php echo $month;?> Download</th>
 									<th>Annual Price</th>
 									<th>Monthly Price</th>
 									<th>Price per Download</th>
@@ -59,21 +59,60 @@
                                 </tr>
                                 <?php
 								$i = 1;
+								$downloads = 0;
+								$libPrice = 0;
+								$monPrice = 0;
+								$dwldPrice = 0;
+								$royalty = 0;
                                 foreach($downloadResult as $k => $v) {
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
                                         <td><?php echo $v['Download']['library_name']; ?></td>
-										<td><?php echo $v['0']['totalDownloads']; ?></td>
-                                        <td><?php echo $v['Download']['library_price']; ?></td>
-										<td><?php echo $v['Download']['monthly_price']; ?></td>
-										<td><?php echo $v['Download']['download_price']; ?></td>
-										<td><?php echo $v['Download']['mechanical_royalty']; ?></td>
+										<td>
+											<?php 
+												echo $v['0']['totalDownloads']; 
+												$downloads = $downloads + $v['0']['totalDownloads'];
+											?>
+										</td>
+                                        <td>
+											<?php 
+												echo "$".number_format($v['Download']['library_price'], 2);
+												$libPrice = $libPrice + $v['Download']['library_price'];
+											?>
+										</td>
+										<td>
+											<?php
+												$monPrice = $monPrice + $v['Download']['monthly_price'];
+												echo "$".number_format($v['Download']['monthly_price'], 2); 
+											?>
+										</td>
+										<td>
+											<?php 
+												$dwldPrice = $dwldPrice + $v['Download']['download_price'];
+												echo "$".number_format($v['Download']['download_price'], 2); 
+											?>
+										</td>
+										<td>
+											<?php
+												$royalty = $royalty + $v['Download']['mechanical_royalty'];
+												echo "$".number_format($v['Download']['mechanical_royalty'], 2); 
+											?>
+										</td>
                                     </tr>
                                 <?php
 									$i++;
                                 }
                                 ?>
+								<tr>
+									<td>&nbsp;</td>
+									<td>Total</td>
+									<td><?php echo $downloads; ?></td>
+									<td><?php echo "$".number_format($libPrice, 2); ?></td>
+									<td><?php echo "$".number_format($monPrice, 2); ?></td>
+									<td><?php echo "$".number_format($dwldPrice, 2); ?></td>
+									<td><?php echo "$".number_format($royalty, 2); ?></td>
+								</tr>
                             </table>
                         </td>
                     </tr>
