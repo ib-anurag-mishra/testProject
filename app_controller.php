@@ -374,7 +374,13 @@ class AppController extends Controller
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsCsv' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_downloadAsPdf' );
 		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_librarywishlistreport' );
-		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_unlimited');		
+		$this -> Acl -> allow( $adminType, 'controllers/reports/admin_unlimited');
+		$this->Acl->deny( $adminType, 'controllers/libraries/admin_managelibrary');
+		$this->Acl->deny( $adminType, 'controllers/users/admin_manageuser');
+		$this->Acl->deny( $adminType, 'controllers/users/admin_managepatron');
+		$this->Acl->deny( $adminType, 'controllers/users/admin_userform');
+		$this->Acl->deny( $adminType, 'controllers/users/admin_patronform');
+		$this->Acl->deny( $adminType, 'controllers/libraries/libraryform');
 	}
 }
 ?>
