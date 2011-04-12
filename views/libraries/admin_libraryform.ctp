@@ -625,7 +625,11 @@
 					<tr id="contract_end">
 						<td align="right" width="250"><?php echo $this->Form->label('Library Contract End Date');?></td>
 						<td align="left"><?php echo $this->Form->input('Library.library_contract_end_date',array('label' => false , 'div' => false, 'class' => 'form_fields','value' => $getData['Library']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="contractEnd" value="<?php echo $getData['Library']['library_contract_end_date'];?>"></td>
-					</tr>					
+					</tr>
+					<tr <?php if($getData['Library']['library_unlimited'] == 0){?> style="display:true;" <?php }?> id="upgrd">
+						<td align="right" width="250"><?php echo $this->Form->label('Upgrade Library Contract');?></td>
+						<td  align="left" style="padding-left:20px;"><?php echo $this->Form->button('Upgrade', array('type' => 'button', 'id' => 'upgrade'));?></td
+					</tr>
 					<tr id="pur_order" style="display:none;">
 						<td align="right" width="250"><?php echo $this->Form->label('Purchase Order #');?></td>
 						<td align="left"><?php echo $this->Form->input('LibraryPurchase.purchased_order_num',array('label' => false ,'value' => '', 'div' => false, 'class' => 'form_fields'));?></td>
