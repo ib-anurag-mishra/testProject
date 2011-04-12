@@ -97,6 +97,20 @@ $(function() {
 			$('#next_btn'+currentStep).focus();
 		}
 	});
+	var upgrade = 1;
+	$('#upgrade').click(function(){
+		if(upgrade == 1){
+			$("#pur_order").show();
+			$("#pur_amount").show();
+			$("#pur_track").show();
+			upgrade = 0;	
+		} else {
+			$("#pur_order").hide();
+			$("#pur_amount").hide();
+			$("#pur_track").hide();
+			upgrade = 1;			
+		}
+	});
 	
 	$('#LibraryLibraryDownloadLimit').change(function(){
 		if($(this).val() == 'manual') {
@@ -470,6 +484,12 @@ function get_purFields(val){
 			$("#pur_track").show();
 			$("#LibraryPurchasePurchasedTracks").val('');
 		}
+	} else{
+		if(val ==1){
+			$("#upgrd").hide();
+		} else {
+			$("#upgrd").show();
+		}
 	}	
 }
 function showContract(){
@@ -488,7 +508,8 @@ function showContract(){
 				$("#LibraryPurchasePurchasedTracks").val('');
 			}
 			$("#LibraryLibraryContractStartDate").val('');
-			$("#LibraryLibraryContractEndDate").val('');			
+			$("#LibraryLibraryContractEndDate").val('');
+			$("#upgrd").hide();			
 		} else {
 			var start = $("#contractStart").val();
 			var end = $("#contractEnd").val();
@@ -498,6 +519,10 @@ function showContract(){
 			$("#contract_end").show();
 			$("#pur_order").hide();
 			$("#pur_amount").hide();
-			$("#pur_track").hide();			
+			$("#pur_track").hide();
+			$("#upgrd").hide();
+			if($("#LibraryLibraryContractStartDate").val() != ''){
+				$("#upgrd").show();
+			}			
 		}
 }
