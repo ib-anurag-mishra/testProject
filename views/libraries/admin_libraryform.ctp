@@ -626,7 +626,7 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Library Contract End Date');?></td>
 						<td align="left"><?php echo $this->Form->input('Library.library_contract_end_date',array('label' => false , 'div' => false, 'class' => 'form_fields','value' => $getData['Library']['library_contract_end_date'], 'readonly' => 'readonly', 'type' => 'text')); ?><input type="hidden" id="contractEnd" value="<?php echo $getData['Library']['library_contract_end_date'];?>"></td>
 					</tr>
-					<tr <?php if($getData['Library']['library_unlimited'] == 0){?> style="display:true;" <?php }?> id="upgrd">
+					<tr <?php if($getData['Library']['library_unlimited'] == 1 || $getData['Library']['library_contract_start_date'] == ''){?> style="display:none;" <?php }?> id="upgrd">
 						<td align="right" width="250"><?php echo $this->Form->label('Upgrade Library Contract');?></td>
 						<td  align="left" style="padding-left:20px;"><?php echo $this->Form->button('Upgrade', array('type' => 'button', 'id' => 'upgrade'));?></td
 					</tr>
