@@ -73,7 +73,7 @@
 		$royalty = $royalty + $v['Download']['mechanical_royalty'];
 		$key++;
     }
-	$libraries_downloads[] =  array('', 'Total', $downloads, "$".number_format($libPrice, 2), "$".number_format($monPrice, 2), "$".number_format($dwldPrice, 2), "$".number_format($royalty, 2));
+	$libraries_downloads[] =  array('', 'Total', $downloads, "$".number_format($libPrice, 2), "$".number_format($monPrice, 2), "$".number_format(($libPrice/$monPrice), 2), "$".number_format($royalty, 2));
     foreach($libraries_downloads as $k=>$row) {
         if($k%27 == 0 && $k != 0) {
             $tcpdf->SetTextColor(0);
