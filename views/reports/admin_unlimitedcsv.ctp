@@ -22,7 +22,7 @@ foreach($downloadResult as $k => $v) {
 }
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
-$line = array('', 'Total', $downloads, "$".number_format($libPrice, 2), "$".number_format($monPrice, 2), "$".number_format(($libPrice/$monPrice), 2), "$".number_format($royalty, 2));
+$line = array('', 'Total', $downloads, "$".number_format($libPrice, 2), "$".number_format($monPrice, 2), "$".number_format(($monPrice/$downloads), 2), "$".number_format($royalty, 2));
 $csv->addRow($line);
 echo $csv->render('MonthlyUnlimitedLibraryDownload');
 ?>
