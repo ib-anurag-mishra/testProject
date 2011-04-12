@@ -110,7 +110,7 @@
 									<td><?php echo $downloads; ?></td>
 									<td><?php echo "$".number_format($libPrice, 2); ?></td>
 									<td><?php echo "$".number_format($monPrice, 2); ?></td>
-									<td><?php echo "$".number_format($dwldPrice, 2); ?></td>
+									<td><?php echo "$".number_format(($libPrice/$monPrice), 2); ?></td>
 									<td><?php echo "$".number_format($royalty, 2); ?></td>
 								</tr>
                             </table>
