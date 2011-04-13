@@ -171,7 +171,7 @@ Class LibrariesController extends AppController
                                                                 )));
 				$this -> set( 'getData', $getData );
                 $this->LibraryPurchase->recursive = -1;
-                $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId)));
+                $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId), 'order' => array('created' => 'asc')));
                 $this->set('allPurchases', $allPurchases);
                 $allVariables = $this->Variable->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
                 $this->set('allVariables', $allVariables);				

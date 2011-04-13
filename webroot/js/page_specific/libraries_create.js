@@ -471,7 +471,7 @@ function getResponse(v){
 		$("#responseField"+v).val('');
 	}
 }
-function get_purFields(val){
+function get_purFields(val){alert(val);
 	if(document.getElementById("LibraryShowContract").checked==true){
 		if(val == 1){
 			$("#pur_order").show();
@@ -488,12 +488,14 @@ function get_purFields(val){
 		if(val ==1){
 			$("#upgrd").hide();
 		} else {
-			$("#upgrd").show();
+			if($("#LibraryLibraryContractStartDate").val() != ''){
+				$("#upgrd").show();
+			}
 		}
 	}	
 }
 function showContract(){
-		if(document.getElementById("LibraryShowContract").checked==true){
+		if(document.getElementById("LibraryShowContract").checked==true){alert(1);
 			$("#contract_start").show();
 			$("#contract_end").show();
 			if(document.getElementById("redio2").checked==true){
@@ -510,7 +512,7 @@ function showContract(){
 			$("#LibraryLibraryContractStartDate").val('');
 			$("#LibraryLibraryContractEndDate").val('');
 			$("#upgrd").hide();			
-		} else {
+		} else {alert(2);
 			var start = $("#contractStart").val();
 			var end = $("#contractEnd").val();
 			$("#LibraryLibraryContractStartDate").val(start);
@@ -521,7 +523,7 @@ function showContract(){
 			$("#pur_amount").hide();
 			$("#pur_track").hide();
 			$("#upgrd").hide();
-			if($("#LibraryLibraryContractStartDate").val() != ''){
+			if($("#LibraryLibraryContractStartDate").val() != '' && document.getElementById("redio2").checked==true){
 				$("#upgrd").show();
 			}			
 		}
