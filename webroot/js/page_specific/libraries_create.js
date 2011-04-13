@@ -471,7 +471,7 @@ function getResponse(v){
 		$("#responseField"+v).val('');
 	}
 }
-function get_purFields(val){alert(val);
+function get_purFields(val){
 	if(document.getElementById("LibraryShowContract").checked==true){
 		if(val == 1){
 			$("#pur_order").show();
@@ -495,7 +495,7 @@ function get_purFields(val){alert(val);
 	}	
 }
 function showContract(){
-		if(document.getElementById("LibraryShowContract").checked==true){alert(1);
+		if(document.getElementById("LibraryShowContract").checked==true){
 			$("#contract_start").show();
 			$("#contract_end").show();
 			if(document.getElementById("redio2").checked==true){
@@ -512,7 +512,7 @@ function showContract(){
 			$("#LibraryLibraryContractStartDate").val('');
 			$("#LibraryLibraryContractEndDate").val('');
 			$("#upgrd").hide();			
-		} else {alert(2);
+		} else {
 			var start = $("#contractStart").val();
 			var end = $("#contractEnd").val();
 			$("#LibraryLibraryContractStartDate").val(start);
