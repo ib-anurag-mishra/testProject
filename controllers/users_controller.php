@@ -601,6 +601,9 @@ Class UsersController extends AppController
 					$updateObj = new User();
 					$getData['User'] = $this->data['User'];
 					$getData['Group']['id'] = $this->data['User']['type_id'];
+					if(isset($this->data['Check']['sales'])){
+						$this->data['User']['sales'] = 'yes';
+					}					
 					$this->set('getData', $getData);
 					$this->User->id = $this->data['User']['id'];
 					$password = trim($this->data['User']['password']);
@@ -614,7 +617,7 @@ Class UsersController extends AppController
 						if($this->User->save()){
 							if($password != "48d63321789626f8844afe7fdd21174eeacb5ee5"){
 								$temp_password = $this->data['User']['original_password'];
-								$this->_sendModifyPatronMail( $this->User->id, $temp_password );
+				//				$this->_sendModifyPatronMail( $this->User->id, $temp_password );
 							}
 							$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 							$this->redirect('managepatron');
@@ -639,6 +642,10 @@ Class UsersController extends AppController
 				$insertObj = new User();
 				$getData['User'] = $this->data['User'];
 				$getData['Group']['id'] = $this->data['User']['type_id'];
+				if(isset($this->data['Check']['sales'])){
+					$this->data['User']['sales'] = 'yes';
+				}
+				
 				$this->set('getData', $getData);                  
 				$this->User->set($this->data['User']);
 				$this->User->setValidation('validate_patron_super_admin');
@@ -646,8 +653,8 @@ Class UsersController extends AppController
 					$temp_password = $this->PasswordHelper->generatePassword(8);
 					$this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);
 					$this->User->set($this->data['User']);
-					if($this->User->save()){
-						$receipt = $this->_sendNewPatronMail( $this->User->id, $temp_password );
+					if($this->User->save()){$receipt=1;
+				//		$receipt = $this->_sendNewPatronMail( $this->User->id, $temp_password );
 						if($receipt == '1'){
 							$this->Session->setFlash('Data has been saved successfully and the Email has been sent.', 'modal', array('class' => 'modal success'));
 						} else {

@@ -10,6 +10,7 @@
                      $getData['User']['username'] = "";
                      $getData['User']['id'] = "";
                      $getData['Group']['id'] = "5";
+					 $getData['User']['sales'] = "no";
               }
        ?>
        <fieldset>
@@ -44,7 +45,7 @@
                                    <tr>
                                           <td align="right" width="390"><?php echo $this->Form->label('email');?></td>
                                           <td align="left"><?php echo $this->Form->input( 'email', array( 'label' => false ,'value' => $getData['User']['email'], 'div' => false, 'class' => 'form_fields')); ?></td>
-                                   </tr>
+                                   </tr>								   
                                    <?php
                                           if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
                                           {
@@ -62,6 +63,12 @@
                                           }
                                           echo $this->Form->hidden( 'type_id', array( 'label' => false ,'value' => $getData['Group']['id']));
                                    ?>
+                                   <tr <?php if($libraryID != "" || $getData['User']['library_id'] != Configure::read('LibraryIdeas')) { ?> style="display:none" <?php }?> id="showCheckBox">
+										<td align="right" width="250"><?php echo $this->Form->label('Sales User');?></td>
+										<td style="padding-left:20px;">
+											<input type="checkbox" id="LibraryShowContract" name="data[Check][sales]" <?php if($getData['User']['sales'] == 'yes'){?> checked="checked" <?php } ?>>
+										</td>
+                                   </tr>								   
                                    <tr>
                                           <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" id="SavePatron" /></p></td>
                                    </tr>
@@ -77,6 +84,7 @@
               {
        ?>
        <script type="text/javascript">
+
               $(function() {
                       $("#SavePatron").click(function(){
                             $("#UserOriginalPassword").val($("#UserPassword").val());
@@ -84,3 +92,13 @@
               });
       </script>
        <?php } ?>
+	   <script type="text/javascript">
+				$("#UserLibraryId").change(function() {
+					if($(this).val() == '2') {
+						$("#showCheckBox").show();
+					}
+					else {
+						$("#showCheckBox").hide();
+					}
+				});
+	   </script>
