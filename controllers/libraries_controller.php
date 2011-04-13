@@ -454,6 +454,7 @@ Class LibrariesController extends AppController
 															$contract['library_contract_end_date'] = $this->data['Library']['library_contract_end_date'];
 															$contract['library_unlimited'] = $this->data['Library']['library_unlimited'];
 															$contract['id_library_purchases'] = $this->LibraryPurchase->id;
+															$contract['library_id'] = $this->Library->id;
 															$this->ContractLibraryPurchase->save($contract);
 															$message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
