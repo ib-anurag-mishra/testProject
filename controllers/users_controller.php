@@ -270,7 +270,7 @@ Class UsersController extends AppController
 				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));            
 				$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 				$this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
-				if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+				if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 					$this->Session->write('Config.language', $libraryArr['Library']['library_language']);
 				}
 				$this->Download->recursive = -1;
@@ -1026,7 +1026,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative","innovative");
-						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
 						if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
@@ -1329,7 +1329,7 @@ Class UsersController extends AppController
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var","innovative_var");
-							if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
+							if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 								$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							}
 							if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
@@ -1624,7 +1624,7 @@ Class UsersController extends AppController
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("innovative_var_name","innovative_var_name");
-							if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
+							if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 								$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							}
 							if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
@@ -1829,7 +1829,7 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_wo_pin","innovative_wo_pin");
-						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
 						if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
@@ -2099,7 +2099,7 @@ Class UsersController extends AppController
 						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
-						if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2306,7 +2306,7 @@ Class UsersController extends AppController
 												if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 												}
-												if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+												if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 													$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 												}
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2505,7 +2505,7 @@ Class UsersController extends AppController
 										  if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 											  $this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 										  }
-										  if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+										  if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 											  $this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 										  }
 										  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -2785,7 +2785,9 @@ Class UsersController extends AppController
 												if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 												}
-												$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+												if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+													$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+												}
 												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
 												$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 												$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -3054,7 +3056,7 @@ Class UsersController extends AppController
 										if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 											$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 										}
-										if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+										if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 											$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 										}
 										$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -3203,7 +3205,7 @@ Class UsersController extends AppController
 			$this->Session->write("ezproxy","ezproxy");
 			$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 			$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $user)));
-			if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+			if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 				$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 			}
 			$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
@@ -3483,7 +3485,7 @@ Class UsersController extends AppController
 						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
-						if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -3789,7 +3791,7 @@ Class UsersController extends AppController
 							   if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 									$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							   }
-								if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+								if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 									$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 								}
 							   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -4098,7 +4100,7 @@ Class UsersController extends AppController
 							   if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 									$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 							   }
-								if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+								if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 									$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 								}
 							   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
@@ -4275,7 +4277,7 @@ Class UsersController extends AppController
 						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
-						if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            

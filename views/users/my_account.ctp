@@ -1,7 +1,7 @@
 <?php
     $this->pageTitle = 'My Account';
     echo $session->flash();
-	echo '<div id=aboutBox>__('Manage Account')</div>';
+	echo '<div id=aboutBox>Manage Account</div>';
 	echo '<br class="clr">';
     echo $this->Form->create('User', array( 'controller' => 'User','action' => 'my_account'));            
 ?>
