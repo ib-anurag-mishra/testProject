@@ -46,23 +46,23 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	<div id="header_right">
 		<ul>
 			<li>
-				Weekly Downloads <span id="downloads_used"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
+				<?php __('Weekly Downloads'); ?> <span id="downloads_used"><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
 				<?php 
 				echo $html->image("question.png", array("alt" => "Download Limits", "width" => 12, "height" => 14, "id" => 'qtip', "title" => $page->getPageContent('limits'))); ?>
 				&nbsp;|&nbsp;
-				<?php echo $html->link('FAQ', array('controller' => 'questions', 'action' => 'index')); ?>
+				<?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?>
 				&nbsp;|&nbsp;
 				<?php if($libraryInfo['Library']['library_unlimited'] != 1){?>
-					<?php echo $html->link('My Wishlist', array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
+					<?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 'my_wishlist')); ?>
 				&nbsp;|&nbsp;
 				<?php } ?>
-				<?php echo $html->link('Recent Downloads', array('controller' => 'homes', 'action' => 'my_history')); ?>
+				<?php echo $html->link(__('Recent Downloads', true), array('controller' => 'homes', 'action' => 'my_history')); ?>
 				<?php if ($this->Session->read('Auth.User')) { ?>
 					&nbsp;|&nbsp;					
-					<?php echo $html->link('My Account', array('controller' => 'users', 'action' => 'my_account'));					
+					<?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account'));					
 				}?>
 				&nbsp;|&nbsp;
-				<?php echo $html->link('Logout', array('controller' => 'users', 'action' => 'logout'));?>				
+				<?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'));?>				
 			</li>
 			<li><img src="<?php echo $this->webroot; ?>img/freegal_logo.png"></li>
 		</ul>

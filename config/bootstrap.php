@@ -48,4 +48,22 @@
  * Inflector::rules('plural', array('rules' => array(), 'irregular' => array(), 'uninflected' => array()));
  *
  */
+define('DEFAULT_LANGUAGE', 'en');
+
+Configure::write('Config.languages', 
+	array(
+		'en' => array(
+			'language' => 'English',
+			'locale' => 'eng',
+			'localeFallback' => 'eng',
+			'charset' => 'utf-8'
+		),
+		'es' => array(
+			'language' => 'Spanish',
+			'locale' => 'spa',
+			'localeFallback' => 'spa',
+			'charset' => 'utf-8'
+		),
+	)
+);
 ?>

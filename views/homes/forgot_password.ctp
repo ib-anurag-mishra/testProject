@@ -1,5 +1,5 @@
 <?php
-    $this->pageTitle = 'Forgot Password';
+    $this->pageTitle = __('Forgot Password');
     echo $session->flash();
     echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'forgot_password', 'id' => 'login'));
 		echo '<p class ="loginbox"></p>';

@@ -13,5 +13,11 @@
 		echo '<br class="clr">';
 		echo $form->input('pin', array('label' => 'Pin','value' => $pin, 'type'=>'password'));
 	echo $form->end('Login');
-    
 ?>
+<div id="language">
+<?php __('Also available in');?>
+&nbsp;&nbsp;
+<a href="javascript:void(0)" id="english" onClick="english();"><?php __('English');?></a>
+|
+<a href="javascript:void(0)" id="spanish" onClick="spanish();"><?php __('Spanish');?></a>
+</div>

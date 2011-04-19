@@ -13,21 +13,21 @@ function ieversion()
 $ieVersion =  ieversion();
 ?>
 <div id="genre">
-	Download History
+	<?php __("Download History");?>
 </div>
 <br class="clr">
 <div id="wishlistText"><?php echo $page->getPageContent('history'); ?></div>
 <div id="genreArtist" style="width:200px;">
-	<P>Artist</p>
+	<P><?php __("Artist");?></p>
 </div>
 <div id="genreTrack" style="width:300px;">
-	<P>Track</p>
+	<P><?php __("Track");?></p>
 </div>
 <div id="genreTrack" style="width:200px;">
-	Date
+	<?php __("Date");?>
 </div>
 <div id="genreTrack" style="width:200px;">
-	Download
+	<?php __("Download");?>
 </div>
 <br class="clr">
 <div id="genreResults">
@@ -81,14 +81,14 @@ $ieVersion =  ieversion();
 						<p>
 							<span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
 								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-									<a href='#' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+									<a href='#' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a>
 								<?php } else {?>
 								<!--[if IE]>
-									<a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' 										
+									<a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a> 										
 								<![endif]-->
 								<?php } ?>
 							</span>
-							<span class="afterClick" style="display:none;float:left">Please Wait...</span>
+							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $downloadResult['Download']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 						</p>
 				</td>				
@@ -96,7 +96,7 @@ $ieVersion =  ieversion();
 	<?php
 		endforeach;
 	}else{
-		echo 	'<tr><td valign="top"><p>No downloaded songs from this week or last week.</p></td></tr>';
+		echo 	'<tr><td valign="top"><p><?php __('No downloaded songs from this week or last week.');?></p></td></tr>';
 	}
 	
 	?>

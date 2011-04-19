@@ -110,7 +110,7 @@ $ieVersion =  ieversion();
 	</div>
 </div>
 <div id="ticker">
-	Upcoming Releases
+	<?php __('Upcoming Releases') ?>
 	<ul id="marquee" class="marquee">
 		<?php 
 		foreach($upcoming as $newreleases):
@@ -185,19 +185,19 @@ $ieVersion =  ieversion();
 										?>
 										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
 										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-										<a href='#' onclick='return userDownloadOthers_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
+										<a href='#' onclick='return userDownloadOthers_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
 										<?php } else {?>
 										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></label>
+										<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a></label>
 										<![endif]-->
 										<?php } ?>
 										</span>
-										<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
+										<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...');?></span>
 										<span id="download_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
 										<?php	
 									} else {
 									?>
-										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</label></a>
+										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'>Downloaded</label></a>
 									<?php
 									}
 								} else {
@@ -206,31 +206,31 @@ $ieVersion =  ieversion();
 										$wishlistCount = $wishlist->getWishlistCount();
 										if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
 										?> 
-											Limit Exceeded 
+											<?php __("Limit Exceeded");?> 
 										<?php
 										} else {
 											$wishlistInfo = $wishlist->getWishlistData($songs[$i]["Song"]["ProdID"]);
 											if($wishlistInfo == 'Added to Wishlist') {
 											?> 
-												Added to Wishlist
+												<?php __("Added to Wishlist");?>
 											<?php 
 											} else { 
 											?>
-												<span class="beforeClick" id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>",this);'>Add to Wishlist</a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-												<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
+												<span class="beforeClick" id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+												<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
 											<?php	
 											}
 										}
 
 									} else { 
 									?>
-										Limit Exceeded
+										<?php __("Limit Exceeded");?>
 									<?php	
 									}												
 								}
 							} else {
 							?>
-								<span title='Coming Soon ( <?php if(isset($songs[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($songs[$i]['Country']['SalesDate']));} ?> )'>Coming Soon</span>
+								<span title='<?php __("Coming Soon");?> ( <?php if(isset($songs[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($songs[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span>
 							<?php
 							}
 							?>
@@ -243,7 +243,7 @@ $ieVersion =  ieversion();
 			?>
 			</table>
 			<?php } else {?>
-				<span style="padding-left:5px;">No songs have been downloaded yet.</span>
+				<span style="padding-left:5px;"><?php __("No songs have been downloaded yet.");?></span>
 			<?php } ?>
 		</div>
 		<div id="tab2" class="tab_content" style="display:none;">
@@ -302,19 +302,19 @@ $ieVersion =  ieversion();
 										?>
 										<span class="beforeClick" id="songtab_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
 										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-											<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'>Download Now</label></a>
+											<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>'><?php __("Download Now");?></label></a>
 										<?php } else {?>
 										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.'><a style="cursor:pointer;" onclick='return userDownloadIE_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></label>
+										<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __("Download Now");?></a></label>
 										<![endif]-->
 										<?php } ?>
 										</span>
-										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;">Please Wait...</span>
+										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
 										<span id="download_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
 										<?php	
 									} else {
 									?>
-										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</label></a>
+										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></label></a>
 									<?php
 									}
 								} else {
@@ -323,31 +323,31 @@ $ieVersion =  ieversion();
 										$wishlistCount = $wishlist->getWishlistCount();
 										if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
 										?> 
-											Limit Exceeded 
+											<?php __("Limit Exceeded");?> 
 										<?php
 										} else {
 											$wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
 											if($wishlistInfo == 'Added to Wishlist') {
 											?> 
-												Added to Wishlist
+												<?php __("Added to Wishlist");?>
 											<?php 
 											} else { 
 											?>
-												<span  class="beforeClick" id="wishlist_top<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist_top("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>",this);'>Add to Wishlist</a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-												<span class="afterClick" style="display:none;">Please Wait...</span>
+												<span  class="beforeClick" id="wishlist_top<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist_top("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+												<span class="afterClick" style="display:none;"><?php __("Please Wait...");?></span>
 											<?php	
 											}
 										}
 
 									} else { 
 									?>
-										Limit Exceeded
+										<?php __("Limit Exceeded");?>
 									<?php	
 									}												
 								}
 							} else {
 							?>
-								<span title='Coming Soon ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'>Coming Soon</span>
+								<span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span>
 							<?php
 							}
 							?>

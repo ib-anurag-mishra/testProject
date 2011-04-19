@@ -101,6 +101,52 @@ function userDownloadIE(prodId)
 	});
 	return false;
 }
+function english(){
+	var language = 'en';
+	var data = "lang="+language;
+	$.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/language", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("There was an error while saving your request.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				location.reload();
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+}
+function spanish(){
+	var language = 'es';
+	var data = "lang="+language;
+	$.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/language", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+				alert("There was an error while saving your request.");
+				location.reload();
+				return false;
+			}
+			else
+			{
+				location.reload();
+			}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});
+}	
 
 function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 {

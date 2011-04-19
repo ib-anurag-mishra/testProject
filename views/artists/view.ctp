@@ -53,10 +53,10 @@
 					?>
 				</div>
 				<div class="songBox">
-					<span class="songHeader">Tracks</span>
-					<span class="artistHeader">Artist</span>
-					<span class="timeHeader">Time</span>
-					<span class="downloadHeader">Download</span>
+					<span class="songHeader"><?php __("Tracks");?></span>
+					<span class="artistHeader"><?php __("Artist");?></span>
+					<span class="timeHeader"><?php __("Time");?></span>
+					<span class="downloadHeader"><?php __("Download");?></span>
 				</div>
 				<div id="songResults">
 					<?php
@@ -125,19 +125,19 @@
 													<p>
 														<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
 															<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-																<a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+																<a href='#' title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a>
 															<?php } else {?>
 															<!--[if IE]>
-																<a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+																<a title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a>
 															<![endif]-->
 															<?php } ?>
 														</span>
-														<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left;">Please Wait...</span>
+														<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left;"><?php __("Please Wait...");?></span>
 														<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 													</p>													
 									<?php	
 												} else {
-													?><a href='/homes/my_history' title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php
+													?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 												}
 											}											
 											else{
@@ -145,16 +145,16 @@
 													$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 													$wishlistCount = $wishlist->getWishlistCount();
 													if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
-														?> <p>Limit Exceeded</p> <?php
+														?> <p><?php __("Limit Exceeded");?></p> <?php
 													}
 													else{
 														$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 														if($wishlistInfo == 'Added to Wishlist'){
-															?> <p>Added to Wishlist</p>
+															?> <p><?php __("Added to Wishlist");?></p>
 														<?php }
 														else{ ?>
 															<p>
-																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 																<span class="afterClick" style="display:none;float:left;">Please Wait...</span>
 															</p>
 														<?php	
@@ -163,13 +163,13 @@
 													
 												}
 												else{ ?>
-													<p>Limit Exceeded</p>
+													<p><?php __("Limit Exceeded");?></p>
 												<?php	
 												}												
 											}
 										}else{
 									?>
-											<span title='Coming Soon ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
+											<span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
 												date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span>
 									<?php
 										}

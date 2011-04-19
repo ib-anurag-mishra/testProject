@@ -56,6 +56,7 @@
 		$getData['LibraryPurchase']['purchased_tracks'] = "";
 		$getData['LibraryPurchase']['purchased_amount'] = "";
 		$getData['Library']['library_unlimited'] = 0;
+		$getData['Library']['library_language'] = 'en';
 	}
 ?>
 <fieldset>
@@ -443,6 +444,17 @@
 								echo $this->Form->input('library_territory', array('options' => array(
 									'US' => 'US',
 									'CA' => 'CA'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_territory'])
+								);
+							?>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Language');?></td>
+						<td align="left">
+							<?php
+								echo $this->Form->input('library_language', array('options' => array(
+									'en' => 'English',
+									'es' => 'Spanish'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_language'])
 								);
 							?>
 						</td>

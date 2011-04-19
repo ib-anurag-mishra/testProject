@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 		parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -44,6 +44,7 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
+		$prodIds = '';
 		$this->Download->recursive = -1;
 		if (($libDownload = Cache::read("lib".$libId)) === false) {
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
@@ -1633,6 +1634,23 @@ class HomesController extends AppController
 		}
 		$this->set('songs',$topDownload);
     }
+    /*
+    Function Name : language
+    Desc : actions that is invoked when a particular language is selected
+   */
+    function language(){
+		Configure::write('debug', 0);
+		$this->layout = false;
+		$language = $_POST['lang'];
+		if($language == 'es'){
+			$this->Session->write('Config.language','es');
+		}
+		else{
+			$this->Session->write('Config.language','en');
+		}
+		echo "Success";
+		exit;
+   }	
 	
 }
 ?>

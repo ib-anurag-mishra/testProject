@@ -11,6 +11,56 @@
 		echo $this->Html->css('freegal_styles');
 		echo $scripts_for_layout;
 	?>
+<script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js"></script>	
+<script type="text/javascript">
+	var webroot = '<?php echo $this->webroot; ?>';
+	function english(){
+		var language = 'en';
+		var data = "lang="+language;
+		$.ajax({
+			type: "post",  // Request method: post, get
+			url: webroot+"homes/language", // URL to request
+			data: data,  // post data
+			success: function(response) {
+				var msg = response.substring(0,5);
+				if(msg == 'error')
+				{
+					alert("There was an error while saving your request.");
+					location.reload();
+					return false;
+				}
+				else
+				{
+					location.reload();
+				}
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {}
+		});
+	}
+	function spanish(){
+		var language = 'es';
+		var data = "lang="+language;
+		$.ajax({
+			type: "post",  // Request method: post, get
+			url: webroot+"homes/language", // URL to request
+			data: data,  // post data
+			success: function(response) {
+				var msg = response.substring(0,5);
+				if(msg == 'error')
+				{
+					alert("There was an error while saving your request.");
+					location.reload();
+					return false;
+				}
+				else
+				{
+					location.reload();
+				}
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {}
+		});
+	}	
+</script>	
 </head>
 <body>
 	<!--[if lt IE 7]>

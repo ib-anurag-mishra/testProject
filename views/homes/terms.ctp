@@ -1,5 +1,5 @@
 <div id="aboutBox">
-	Terms &amp; Conditions
+	<?php __('Terms &amp; Conditions');?>
 </div>
 <div id="terms">
     <?php echo $page->getPageContent('terms'); ?>

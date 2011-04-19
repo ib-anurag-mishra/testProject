@@ -16,11 +16,11 @@
 <div class="navigation">
 	
 	<ul class="menu" id="nav">
-		<li class="parent item1"><?php echo $html->link('Home', array('controller' => 'homes','action'=>'index'));?></li>
-		<li class="parent item2"><a href="#"><span>Genre</span></a>
+		<li class="parent item1"><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index'));?></li>
+		<li class="parent item2"><a href="#"><span><?php __('Genre') ?></span></a>
 			<ul>
 
-				<li class="parent item8"><?php echo $html->link('See All', array('controller' => 'genres','action'=>'index'));?></li>
+				<li class="parent item8"><?php echo $html->link(__('See All', true), array('controller' => 'genres','action'=>'index'));?></li>
 				<?php
 					foreach($genresMenu as $genreM)
 					{
@@ -34,7 +34,7 @@
 				?>
 			</ul>
 		</li>
-		<li class="item3"><a href="#"><span>Featured Artist</span></a>
+		<li class="item3"><a href="#"><span><?php __('Featured Artist') ?></span></a>
 			<ul>
 				<?php
 					foreach($featuredArtistMenu as $featuredArtistM) {
@@ -53,7 +53,7 @@
 				?>
 			</ul>
 		</li>
-		<li class="item4"><a href="#"><span>Newly Added</span></a>
+		<li class="item4"><a href="#"><span><?php __('Newly Added') ?></span></a>
 			<ul>
 				<?php
 					foreach($newArtistMenu as $newArtistM) {

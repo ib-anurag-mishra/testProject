@@ -1,5 +1,5 @@
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
-<div id="genre">Search Results</div>
+<div id="genre"><?php __("Search Results");?></div>
 <div style="float:left;width:955px;">
 <?php
 function ieversion()
@@ -17,18 +17,18 @@ $ieVersion =  ieversion();
 if(count($searchResults) != 0){
 ?>
 <div id="genreArtist" class="links">
-	<?php echo $paginator->sort('Artist ', 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort('__("Artist") ', 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <?php if(isset($composer)){?>
-<div id="genreComposer" class="links">Composer</div>
+<div id="genreComposer" class="links"><?php __("Composer");?></div>
 <?php } ?>
 <div id="genreAlbum" class="links" >
-	<?php echo $paginator->sort('Album ', 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort('__("Album") ', 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?>>
-	<?php echo $paginator->sort('Track ', 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort('__("Track") ', 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreDownload">Download</div>
+<div id="genreDownload"><?php __("Download");?></div>
 <br class="clr">
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0">
@@ -127,18 +127,18 @@ if(count($searchResults) != 0){
 									<p>
 										<span class="beforeClick" id="song_<?php echo $searchResult["Song"]["ProdID"]; ?>">
 											<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-												<a href='#' title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers("<?php echo $searchResult["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a>
+												<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='return userDownloadOthers("<?php echo $searchResult["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a>
 											<?php } else {?>
 											<!--[if IE]>
-												<a title='IMPORTANT: Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $searchResult["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a>
+												<a title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='return userDownloadIE("<?php echo $searchResult["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a>
 											<![endif]-->
 											<?php } ?>
 										</span>
-										<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left">Please Wait...</span>
+										<span class="afterClick" id="downloading_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
 										<span id="download_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 									</p>
 					<?php		}else {
-									?><a href='/homes/my_history' title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php
+									?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 								}
 							}
                             else {
@@ -147,19 +147,19 @@ if(count($searchResults) != 0){
                                     $wishlistCount = $wishlist->getWishlistCount();
                                     if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
                     ?>
-										<p>Limit Exceeded</p>
+										<p><?php __("Limit Exceeded");?></p>
 					<?php
 									}
                                     else{
 										$wishlistInfo = $wishlist->getWishlistData($searchResult["Song"]["ProdID"]);
 										if($wishlistInfo == 'Added to Wishlist'){
 									?>
-											<p>Added to Wishlist</p>
+											<p><?php __("Added to Wishlist");?></p>
 								<?php 	}
 										else { ?>
 											<p>
-											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-											<span class="afterClick" style="display:none;float:left">Please Wait...</span>
+											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);'>?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 
 											</p>
 								<?php
@@ -167,14 +167,14 @@ if(count($searchResults) != 0){
                                     }
 							}
 							else { ?>
-								<p>Limit Exceeded</p>
+								<p><?php __("Limit Exceeded");?></p>
 							<?php
 							}
 						}
 					}
 					else {
 					?>
-						<span title='Coming Soon ( <?php echo date("F d Y", strtotime($searchResult['Country']['SalesDate'])); ?> )'>Coming Soon</span>
+						<span title='<?php __("Coming Soon");?> ( <?php echo date("F d Y", strtotime($searchResult['Country']['SalesDate'])); ?> )'><?php __("Coming Soon");?></span>
 					<?php
 					}
 					?>
@@ -185,7 +185,7 @@ if(count($searchResults) != 0){
 		endforeach;
 	}
 	else {
-		echo '<td width="180" valign="top"><p>No records found</p></td>';
+		echo '<td width="180" valign="top"><p><?php __("No records found");?></p></td>';
 	}
 	?>
 </table>
@@ -205,7 +205,7 @@ if(count($searchResults) != 0){
 <?php
 	}
 	else {
-		echo '<table><tr><td width="180" valign="top"><p><div class="paging">No records found</div><br class="clr"></td></tr></table>';
+		echo '<table><tr><td width="180" valign="top"><p><div class="paging"><?php __("No records found");?></div><br class="clr"></td></tr></table>';
 	}
 ?>
 </div>

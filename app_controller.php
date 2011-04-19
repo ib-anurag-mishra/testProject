@@ -11,12 +11,12 @@ class AppController extends Controller
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
 		$this->Auth->authorize = 'actions';
-		$this -> Auth -> fields = array(  'username' => 'email',  'password' => 'password' );
-		$this -> Auth -> loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
+		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
+		$this->Auth->loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
 		$this->set ( 'genresMenu' ,  $this->Category->find('all',array('cache' => 'yes')));	
-		$this -> set ( 'featuredArtistMenu' ,  $this -> Featuredartist -> find('all',array('cache' => 'yes')));
-		$this -> set ( 'newArtistMenu' ,  $this -> Newartist -> find('all',array('cache' => 'yes')));
+		$this -> set ( 'featuredArtistMenu' ,  $this->Featuredartist->find('all',array('cache' => 'yes')));
+		$this -> set ( 'newArtistMenu' ,  $this->Newartist->find('all',array('cache' => 'yes')));
 		$this->set('cdnPath', Configure::read('App.CDN'));
 		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		header('Last-Modified: ' . gmdate('D, d M Y H:i:S') . ' GMT');
@@ -47,14 +47,23 @@ class AppController extends Controller
 			}		
 		}
 	}
+
+	function _setLanguage() {
+	    if ($this->Cookie->read('lang') && !$this->Session->check('Config.language')) {
+	        $this->Session->write('Config.language', $this->Cookie->read('lang'));
+	    }
+	    else if (isset($this->params['language']) && ($this->params['language']
+	             !=  $this->Session->read('Config.language'))) {
+	        $this->Session->write('Config.language', $this->params['language']);
+	        $this->Cookie->write('lang', $this->params['language'], false, '20 days');
+	    }
+	}
 	
-	function isAuthorized()
-	{
+	function isAuthorized(){
 		return true;
 	}	
 	
-	function build_acl()
-	{
+	function build_acl(){
 		
 		if( !Configure :: read( 'debug' ) )
 		{
@@ -174,8 +183,7 @@ class AppController extends Controller
 		if( count( $log )>0 )
 		{
 			debug( $log );
-		}
-		
+		}		
 	}
 	
 	

@@ -33,3 +33,5 @@
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 	
 	Router::connect('/admin', array('controller' => 'users', 'action' => 'index', 'admin' => true));
+	
+	Router::connect('/:language/:controller/:action/*', array(), array('language' => '[a-z]{2}'));	

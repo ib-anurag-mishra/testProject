@@ -110,19 +110,19 @@ $ieVersion =  ieversion();
 								<p>
 									<span class="beforeClick" id="song_<?php echo $catG["ProdId"]; ?>">
 										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-											<div class="download_links_<?php echo $catG["ProdId"]; ?>"><a href='#' title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadOthers_safari("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'>Download Now</a></div>
+											<div class="download_links_<?php echo $catG["ProdId"]; ?>"><a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='return userDownloadOthers_safari("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a></div>
 										<?php } else {?>
 										<!--[if IE]>
-											<div class="download_links_<?php echo $catG["ProdId"]; ?>"><a title='IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.' onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'>Download Now</a></div>
+											<div class="download_links_<?php echo $catG["ProdId"]; ?>"><a title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a></div>
 										<![endif]-->
 										<?php } ?>
 									</span>
-									<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left">Please Wait...</span>
+									<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left"><?php __('Please Wait...');?></span>
 									<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 								</p>
 							<?php
 							}else {
-									?><a href='/homes/my_history' title='You have already downloaded this song. Get it from your recent downloads'>Downloaded</a><?php
+									?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 							}
 						}
 						else{
@@ -130,30 +130,30 @@ $ieVersion =  ieversion();
 								$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 								$wishlistCount = $wishlist->getWishlistCount();
 								if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
-									?> <p>Limit Exceeded</p> <?php
+									?> <p><?php __('Limit Exceeded');?></p> <?php
 								}
 								else{
 									$wishlistInfo = $wishlist->getWishlistData($catG["ProdId"]);
 									if($wishlistInfo == 'Added to Wishlist'){
-										?> <p>Added to Wishlist</p>
+										?> <p><?php __('Added to Wishlist');?></p>
 									<?php }
 									else{ ?>
 										<p>
 										<span class="beforeClick" id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-										<span class="afterClick" style="display:none;float:left">Please Wait...</span>
+										<span class="afterClick" style="display:none;float:left"><?php __('Please Wait...');?></span>
 										</p>
 									<?php	
 									}
 								}
 							}
 							else{ ?>
-								<p>Limit Exceeded</p>
+								<p><?php __('Limit Exceeded');?></p>
 							<?php	
 							}												
 						}
 					}else{
 						?>
-						<span title="Coming Soon (<?php echo $catG['SalesDate']; ?>)"> Coming Soon </span>
+						<span title="<?php __('Coming Soon');?> (<?php echo $catG['SalesDate']; ?>)"> Coming Soon </span>
 						<?php
 					}
 					?>

@@ -1050,7 +1050,7 @@ div.message {
 
 #login {
 	width: 300px;
-	height: 200px;
+	height: 175px;
 	background: #F3F3F3;
 	border-top: 2px solid #CCC;
 	border-bottom: 2px solid #CCC;
@@ -1125,4 +1125,9 @@ div.message {
 #loginText a:hover {
 	text-decoration: underline;
 	color: #666;
+}
+#language {
+    font-size: 14px;
+    margin-top: 10px;
+    padding-left: 350px;
 }
