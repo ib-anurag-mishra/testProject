@@ -31,7 +31,7 @@
 				}
 				else
 				{
-					location.reload();
+					//location.reload();
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -54,7 +54,7 @@
 				}
 				else
 				{
-					location.reload();
+				//	location.reload();
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
