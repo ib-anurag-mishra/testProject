@@ -1,0 +1,560 @@
+# LANGUAGE translation of CakePHP Application
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2010-12-01 17:19-0500\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: /artists/admin_manageartist.ctp:32
+#: /artists/admin_managefeaturedartist.ctp:31
+#: /artists/admin_managenewartist.ctp:30
+#: /genres/view.ctp:171
+#: /homes/search.ctp:376
+#: /libraries/admin_managelibrary.ctp:44
+#: /questions/admin_index.ctp:44
+#: /reports/admin_sonyreports.ctp:67
+#: /sections/admin_index.ctp:35
+#: /users/admin_managepatron.ctp:54
+#: /users/admin_manageuser.ctp:55
+msgid "previous"
+msgstr ""
+
+#: /artists/admin_manageartist.ctp:34
+#: /artists/admin_managefeaturedartist.ctp:33
+#: /artists/admin_managenewartist.ctp:32
+#: /genres/view.ctp:173
+#: /homes/search.ctp:380
+#: /libraries/admin_managelibrary.ctp:46
+#: /questions/admin_index.ctp:47
+#: /reports/admin_sonyreports.ctp:69
+#: /sections/admin_index.ctp:38
+#: /users/admin_managepatron.ctp:56
+#: /users/admin_manageuser.ctp:57
+msgid "next"
+msgstr ""
+
+#: /artists/view.ctp:48
+#: /genres/index.ctp:26
+#: /genres/view.ctp:43
+#: /homes/search.ctp:46
+msgid "More Albums"
+msgstr ""
+
+#: /artists/view.ctp:71
+msgid "Tracks"
+msgstr ""
+
+#: /artists/view.ctp:72
+#: /homes/my_history.ctp:26
+#: /homes/my_wishlist.ctp:26
+#: /homes/search.ctp:93
+msgid "Download"
+msgstr ""
+
+#: /artists/view.ctp:275;278
+#: /homes/my_wishlist.ctp:89;92
+#: /homes/search.ctp:314;317
+msgid "IMPORTANT: Please note that once you press 'Download Now' you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr ""
+
+#: /artists/view.ctp:275;278
+#: /homes/my_history.ctp:80;83
+#: /homes/my_wishlist.ctp:89;92
+#: /homes/search.ctp:314;317
+msgid "Download Now"
+msgstr ""
+
+#: /artists/view.ctp:291;306
+#: /homes/my_wishlist.ctp:100
+#: /homes/search.ctp:330;346
+msgid "Limit Exceeded"
+msgstr ""
+
+#: /artists/view.ctp:296
+#: /homes/search.ctp:337
+msgid "Added to Wishlist"
+msgstr ""
+
+#: /artists/view.ctp:299
+#: /homes/search.ctp:340
+msgid "Add to wishlist"
+msgstr ""
+
+#: /artists/view.ctp:313
+#: /homes/search.ctp:353
+msgid "Coming Soon"
+msgstr ""
+
+#: /elements/footer.ctp:19
+msgid "Search"
+msgstr ""
+
+#: /elements/footer.ctp:41
+#: /homes/advance_search.ctp:2
+msgid "Advanced Search"
+msgstr ""
+
+#: /elements/footer.ctp:46
+msgid "Genres"
+msgstr ""
+
+#: /elements/footer.ctp:66
+#: /homes/aboutus.ctp:3
+msgid "About Freegal Music"
+msgstr ""
+
+#: /elements/footer.ctp:67
+#: /homes/terms.ctp:11
+msgid "Terms & Conditions"
+msgstr ""
+
+#: /elements/footer.ctp:70
+msgid "Also available in"
+msgstr ""
+
+#: /elements/footer.ctp:71
+msgid "English"
+msgstr ""
+
+#: /elements/footer.ctp:72
+msgid "Spanish"
+msgstr ""
+
+#: /elements/header.ctp:68
+msgid "Weekly Downloads"
+msgstr ""
+
+#: /elements/header.ctp:70
+msgid "FAQ"
+msgstr ""
+
+#: /elements/header.ctp:72
+msgid "My Wishlist"
+msgstr ""
+
+#: /elements/header.ctp:74
+msgid "Recent Downloads"
+msgstr ""
+
+#: /elements/header.ctp:77
+msgid "My Account"
+msgstr ""
+
+#: /elements/header.ctp:80
+msgid "Logout"
+msgstr ""
+
+#: /elements/navigation.ctp:21
+msgid "Home"
+msgstr ""
+
+#: /elements/navigation.ctp:22
+msgid "Genre"
+msgstr ""
+
+#: /elements/navigation.ctp:25
+msgid "See All"
+msgstr ""
+
+#: /elements/navigation.ctp:39
+#: /homes/index.ctp:4
+msgid "Featured Artist"
+msgstr ""
+
+#: /elements/navigation.ctp:58
+msgid "Newly Added"
+msgstr ""
+
+#: /genres/index.ctp:50
+msgid "All Genres"
+msgstr ""
+
+#: /genres/view.ctp:73
+#: /pages/home.ctp:46
+msgid "Artist Search"
+msgstr ""
+
+#: /homes/index.ctp:7
+msgid "New Additions"
+msgstr ""
+
+#: /homes/index.ctp:10
+msgid "Top Downloads"
+msgstr ""
+
+#: /homes/limits.ctp:3
+msgid "About Download Limits"
+msgstr ""
+
+#: /homes/my_history.ctp:12
+msgid "Download History"
+msgstr ""
+
+#: /homes/my_history.ctp:17
+#: /homes/my_wishlist.ctp:17
+msgid "Artist"
+msgstr ""
+
+#: /homes/my_history.ctp:20
+#: /homes/my_wishlist.ctp:23
+msgid "Track"
+msgstr ""
+
+#: /homes/my_history.ctp:23
+msgid "Date"
+msgstr ""
+
+#: /homes/my_history.ctp:94
+msgid "No downloaded songs from this week or last week."
+msgstr ""
+
+#: /homes/my_wishlist.ctp:12
+msgid "Wishlist"
+msgstr ""
+
+#: /homes/my_wishlist.ctp:20
+msgid "Album"
+msgstr ""
+
+#: /homes/my_wishlist.ctp:106
+msgid "Remove"
+msgstr ""
+
+#: /homes/my_wishlist.ctp:113
+msgid "You have no songs in your wishlist."
+msgstr ""
+
+#: /homes/search.ctp:71
+msgid "Search Results"
+msgstr ""
+
+#: /homes/search.ctp:91
+msgid "Sample Player"
+msgstr ""
+
+#: /homes/search.ctp:365;387
+msgid "No records found"
+msgstr ""
+
+#: /layouts/admin.ctp:6
+#: /layouts/login.ctp:6
+msgid "Freegal Music : The New Music Library :"
+msgstr ""
+
+#: /layouts/default.ctp:6
+msgid "Freegal Music : Your New Music Library :"
+msgstr ""
+
+#: /libraries/admin_managelibrary.ctp:8
+#: /questions/admin_index.ctp:39
+#: /sections/admin_index.ctp:30
+#: /users/admin_managepatron.ctp:8
+#: /users/admin_manageuser.ctp:8
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr ""
+
+#: /questions/admin_add.ctp:36
+msgid "Add %s"
+msgstr ""
+
+#: /questions/admin_add.ctp:36
+#: /questions/admin_edit.ctp:36
+#: /questions/admin_index.ctp:5
+#: /questions/admin_view.ctp:3
+#: /questions/index.ctp:13
+msgid "FAQs"
+msgstr ""
+
+#: /questions/admin_add.ctp:43
+#: /questions/admin_edit.ctp:44
+#: /sections/admin_add.ctp:15
+#: /sections/admin_edit.ctp:15
+msgid "Submit"
+msgstr ""
+
+#: /questions/admin_add.ctp:46
+#: /questions/admin_edit.ctp:47
+#: /questions/admin_index.ctp:10;51
+#: /questions/admin_view.ctp:33
+#: /questions/view.ctp:37
+#: /sections/admin_add.ctp:18
+#: /sections/admin_edit.ctp:18
+#: /sections/admin_index.ctp:7;42
+#: /sections/admin_view.ctp:28;47
+msgid "Actions"
+msgstr ""
+
+#: /questions/admin_add.ctp:48
+#: /questions/admin_edit.ctp:49
+#: /questions/admin_index.ctp:30
+#: /sections/admin_add.ctp:20
+#: /sections/admin_edit.ctp:20
+#: /sections/admin_index.ctp:22
+#: /sections/admin_view.ctp:64
+msgid "Delete"
+msgstr ""
+
+#: /questions/admin_add.ctp:48
+#: /questions/admin_edit.ctp:49
+#: /questions/admin_index.ctp:30
+#: /questions/admin_view.ctp:36
+#: /questions/view.ctp:40
+#: /sections/admin_add.ctp:20
+#: /sections/admin_edit.ctp:20
+#: /sections/admin_index.ctp:22
+#: /sections/admin_view.ctp:31;64
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: /questions/admin_add.ctp:49;50
+#: /questions/admin_edit.ctp:50;51
+#: /questions/admin_index.ctp:54
+#: /questions/admin_view.ctp:37;39
+#: /questions/view.ctp:41;43
+#: /sections/admin_add.ctp:21;22
+#: /sections/admin_edit.ctp:21;22
+#: /sections/admin_index.ctp:45
+#: /sections/admin_view.ctp:32;34
+msgid "List %s"
+msgstr ""
+
+#: /questions/admin_add.ctp:49
+#: /questions/admin_edit.ctp:50
+#: /questions/admin_view.ctp:37
+#: /questions/view.ctp:41
+#: /sections/admin_add.ctp:22
+#: /sections/admin_edit.ctp:22
+#: /sections/admin_index.ctp:45
+#: /sections/admin_view.ctp:34;40
+msgid "Questions"
+msgstr ""
+
+#: /questions/admin_add.ctp:50
+#: /questions/admin_edit.ctp:51
+#: /questions/admin_index.ctp:54
+#: /questions/admin_view.ctp:39
+#: /questions/view.ctp:43
+#: /sections/admin_add.ctp:21
+#: /sections/admin_edit.ctp:21
+#: /sections/admin_view.ctp:32
+msgid "Sections"
+msgstr ""
+
+#: /questions/admin_add.ctp:51
+#: /questions/admin_edit.ctp:52
+#: /questions/admin_index.ctp:53;55
+#: /questions/admin_view.ctp:38;40
+#: /questions/view.ctp:42;44
+#: /sections/admin_add.ctp:23
+#: /sections/admin_edit.ctp:23
+#: /sections/admin_index.ctp:44;46
+#: /sections/admin_view.ctp:33;35;73
+msgid "New %s"
+msgstr ""
+
+#: /questions/admin_add.ctp:51
+#: /questions/admin_edit.ctp:52
+#: /questions/admin_index.ctp:55
+#: /questions/admin_view.ctp:5;40
+#: /questions/view.ctp:9;44
+#: /sections/admin_add.ctp:5
+#: /sections/admin_edit.ctp:5
+#: /sections/admin_index.ctp:44
+#: /sections/admin_view.ctp:3;30;31;33
+msgid "Section"
+msgstr ""
+
+#: /questions/admin_edit.ctp:36
+#: /questions/admin_view.ctp:35
+#: /questions/view.ctp:39
+#: /sections/admin_view.ctp:30
+msgid "Edit %s"
+msgstr ""
+
+#: /questions/admin_index.ctp:28
+#: /sections/admin_index.ctp:20
+#: /sections/admin_view.ctp:62
+msgid "View"
+msgstr ""
+
+#: /questions/admin_index.ctp:29
+#: /sections/admin_index.ctp:21
+#: /sections/admin_view.ctp:63
+msgid "Edit"
+msgstr ""
+
+#: /questions/admin_index.ctp:53
+#: /questions/admin_view.ctp:10;35;36;38
+#: /questions/view.ctp:2;14;39;40;42
+#: /sections/admin_add.ctp:23
+#: /sections/admin_edit.ctp:23
+#: /sections/admin_index.ctp:46
+#: /sections/admin_view.ctp:35;44;73
+msgid "Question"
+msgstr ""
+
+#: /questions/admin_view.ctp:15
+#: /questions/view.ctp:19
+#: /sections/admin_view.ctp:45
+msgid "Answer"
+msgstr ""
+
+#: /questions/admin_view.ctp:20
+#: /questions/view.ctp:24
+#: /sections/admin_view.ctp:15
+msgid "Created"
+msgstr ""
+
+#: /questions/admin_view.ctp:25
+#: /sections/admin_view.ctp:46
+msgid "Last Modified"
+msgstr ""
+
+#: /questions/admin_view.ctp:36
+#: /questions/view.ctp:40
+#: /sections/admin_view.ctp:31
+msgid "Delete %s"
+msgstr ""
+
+#: /questions/view.ctp:4
+msgid "Id"
+msgstr ""
+
+#: /questions/view.ctp:29
+msgid "Modified"
+msgstr ""
+
+#: /sections/admin_add.ctp:5
+msgid "Admin Add %s"
+msgstr ""
+
+#: /sections/admin_edit.ctp:5
+msgid "Admin Edit %s"
+msgstr ""
+
+#: /sections/admin_index.ctp:3
+msgid "FAQ Sections"
+msgstr ""
+
+#: /sections/admin_view.ctp:5
+msgid "Title"
+msgstr ""
+
+#: /sections/admin_view.ctp:10
+msgid "Language"
+msgstr ""
+
+#: /sections/admin_view.ctp:20
+msgid " Last Modified"
+msgstr ""
+
+#: /sections/admin_view.ctp:40
+msgid "Related %s"
+msgstr ""
+
+#: /users/ilogin.ctp:2
+#: /users/indlogin.ctp:2
+#: /users/inlogin.ctp:2
+#: /users/login.ctp:2
+#: /users/sdlogin.ctp:2
+#: /users/slogin.ctp:2
+#: /users/sndlogin.ctp:2
+#: /users/snlogin.ctp:2
+msgid "Welcome to FreegalMúsicaGratis.com"
+msgstr ""
+
+#: /users/my_account.ctp:14
+msgid "Manage Account"
+msgstr ""
+
+#: /users/my_account.ctp:24
+msgid "First Name"
+msgstr ""
+
+#: /users/my_account.ctp:28
+msgid "Last Name"
+msgstr ""
+
+#: /users/my_account.ctp:32
+msgid "Email"
+msgstr ""
+
+#: /users/my_account.ctp:36
+msgid "Password"
+msgstr ""
+
+#: /users/my_account.ctp:40
+msgid "Save"
+msgstr ""
+
+#: /genres_controller.php:138
+msgid "Invalid Genre."
+msgstr ""
+
+#: /libraries_controller.php:217;352;364;469
+msgid "You will be redirected to the next step shortly..."
+msgstr ""
+
+#: /libraries_controller.php:222;377;412
+msgid "To proceed further please enter the data correctly.|2"
+msgstr ""
+
+#: /libraries_controller.php:357;384;391
+msgid "To proceed further please enter the data correctly.|5"
+msgstr ""
+
+#: /libraries_controller.php:370;419
+msgid "To proceed further please enter the data correctly.|1"
+msgstr ""
+
+#: /libraries_controller.php:398
+msgid "To proceed further please enter the data correctly.|4"
+msgstr ""
+
+#: /libraries_controller.php:405
+msgid "To proceed further please enter the data correctly.|3"
+msgstr ""
+
+#: /libraries_controller.php:474
+msgid "To proceed further please enter the data correctly.|"
+msgstr ""
+
+#: /questions_controller.php:55;81;113
+#: /sections_controller.php:29;59
+msgid "Invalid %s"
+msgstr ""
+
+#: /questions_controller.php:96;118
+#: /sections_controller.php:44;64
+msgid "The %s has been saved"
+msgstr ""
+
+#: /questions_controller.php:99;121
+#: /sections_controller.php:47;67
+msgid "The %s could not be saved. Please, try again."
+msgstr ""
+
+#: /questions_controller.php:138
+#: /sections_controller.php:82
+msgid "Invalid id for %s"
+msgstr ""
+
+#: /questions_controller.php:142
+#: /sections_controller.php:86
+msgid "%s deleted"
+msgstr ""
+
+#: /questions_controller.php:145
+#: /sections_controller.php:89
+msgid "%s was not deleted"
+msgstr ""
+
