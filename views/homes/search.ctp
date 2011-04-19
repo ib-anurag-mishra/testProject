@@ -17,18 +17,18 @@ $ieVersion =  ieversion();
 if(count($searchResults) != 0){
 ?>
 <div id="genreArtist" class="links">
-	<?php echo $paginator->sort('__("Artist") ', 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort(__("Artist ") , 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <?php if(isset($composer)){?>
-<div id="genreComposer" class="links"><?php __("Composer");?></div>
+<div id="genreComposer" class="links"><?php __("Composer ");?></div>
 <?php } ?>
 <div id="genreAlbum" class="links" >
-	<?php echo $paginator->sort('__("Album") ', 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort(__("Album ") , 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?>>
-	<?php echo $paginator->sort('__("Track") ', 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
+	<?php echo $paginator->sort(__("Track ") , 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreDownload"><?php __("Download");?></div>
+<div id="genreDownload"><?php __("Download ");?></div>
 <br class="clr">
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0">
