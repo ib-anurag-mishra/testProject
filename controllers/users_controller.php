@@ -1829,10 +1829,10 @@ Class UsersController extends AppController
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_wo_pin","innovative_wo_pin");
-						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
 							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 						}
-						if($this->Session->read('Config.language') && $this->Session->read('Config.language') != ''){
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
 						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
