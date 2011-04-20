@@ -31,7 +31,7 @@
 				}
 				else
 				{
-					$('#loginText').text(response);
+					$('#loginText').html(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -54,7 +54,7 @@
 				}
 				else
 				{
-					$('#loginText').text(response);
+					$('#loginText').html(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}

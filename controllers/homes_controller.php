@@ -1651,10 +1651,10 @@ class HomesController extends AppController
 		$page = $this->Session->read('Config.language');
         $pageDetails = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $page)));
         if(count($pageDetails) != 0) {
-            print $pageDetails[0]['Page']['page_content'].$page;
+            print $pageDetails[0]['Page']['page_content'];
         }
         else {
-            print "Coming Soon....".$page;
+            print "Coming Soon....";
         }
 		exit;
    }	
