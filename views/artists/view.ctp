@@ -38,13 +38,13 @@
 					<?php echo $album['Album']['AlbumTitle'];?>				</div>
 				<div class="artistInfo">
 					<?php
-						echo $html->link(__('Genre: ').$album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
+						echo $html->link(__('Genre').": ".$album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
 							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
 						}
 						if ($album['Album']['Label'] != '') {
-							echo 'Label: ' . $album['Album']['Label'];
+							echo __("Label").': ' . $album['Album']['Label'];
 							echo '<br />';
 						}
 						if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
