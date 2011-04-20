@@ -31,7 +31,7 @@
 				}
 				else
 				{
-					//location.reload();
+					$('#loginText').text(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -54,7 +54,7 @@
 				}
 				else
 				{
-				//	location.reload();
+					$('#loginText').text(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
