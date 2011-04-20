@@ -13,7 +13,7 @@
 	echo $form->end('Login');   
 ?>
 <div id="language">
-<div id="english" onClick="english();"><?php __('English');?></div>
-<div id="spanish" onClick="spanish();"><?php __('Spanish');?></div>
+<div id="english" onClick="english();">English</div>
+<div id="spanish" onClick="spanish();">Spanish</div>
 </div>
 <div class="clr"></div>

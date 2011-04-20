@@ -33,7 +33,15 @@
 				{
 					$('#loginText').html(response);
 					$('#spanish').css('background-color',' #3D3D3D');
+					$('#spanish').css('border-bottom','2px solid #3D3D3D');
+					$('#spanish').css('border-top','2px solid #3D3D3D');
+					$('#spanish').css('border-left','2px solid #3D3D3D');
+					$('#spanish').css('border-right','2px solid #3D3D3D');					
 					$('#english').css('background-color','#ccc');
+					$('#english').css('border-left','2px solid #ccc');
+					$('#english').css('border-right','2px solid #ccc');
+					$('#english').css('border-bottom','2px solid #ccc');
+					$('#english').css('border-top','2px solid #ccc');
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -58,7 +66,15 @@
 				{
 					$('#loginText').html(response);
 					$('#english').css('background-color',' #3D3D3D');
-					$('#spanish').css('background-color','#ccc');					
+					$('#english').css('border-left','2px solid #3D3D3D');
+					$('#english').css('border-right','2px solid #3D3D3D');
+					$('#english').css('border-bottom','2px solid #3D3D3D');
+					$('#english').css('border-top','2px solid #3D3D3D');
+					$('#spanish').css('background-color','#ccc');
+					$('#spanish').css('border-left','2px solid #ccc');
+					$('#spanish').css('border-right','2px solid #ccc');
+					$('#spanish').css('border-bottom','2px solid #ccc');
+					$('#spanish').css('border-top','2px solid #ccc');
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}

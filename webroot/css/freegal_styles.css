@@ -1053,7 +1053,6 @@ div.message {
 	height: 175px;
 	background: #F3F3F3;
 	border-top: 2px solid #CCC;
-	border-bottom: 2px solid #CCC;
 	margin:20px auto 0px;
 	display:block;
 }
@@ -1135,6 +1134,7 @@ div.message {
 	border-left: 2px solid #CCCCCC;
 	border-right: 2px solid #CCCCCC;
 	border-bottom: 2px solid #CCCCCC;
+	border-top: 2px solid #CCCCCC;
 	background: #fff;
 	padding-bottom: 1px;
 	width:147px;
@@ -1152,16 +1152,16 @@ div.message {
 	cursor: pointer;
 }
 #spanish {
-	border-left: 2px solid #CCCCCC;
-	border-right: 2px solid #CCCCCC;
-	border-bottom: 2px solid #CCCCCC;
-	background: #fff;
 	padding-bottom: 1px;
 	width:145px;
 	height:20px;
 	float:left;
 	text-align:center;
 	background-color: #3D3D3D;
+	border-left: 2px solid #3D3D3D;
+	border-right: 2px solid #3D3D3D;
+	border-bottom: 2px solid #3D3D3D;
+	border-top: 2px solid #3D3D3D;
 	color: #FFFFFF;	
 	-moz-border-radius-bottomright: 5px;
 	-khtml-border-radius-bottomright: 5px;
