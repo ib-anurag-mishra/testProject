@@ -1,5 +1,5 @@
 <div id="advance_search_box">
-	Advanced Search
+	<?php __('Advanced Search'); ?>
 </div>
 <br class="clr">
 <div id="advance_search">
