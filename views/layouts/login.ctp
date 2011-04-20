@@ -32,6 +32,8 @@
 				else
 				{
 					$('#loginText').html(response);
+					$('#spanish').css('background-color',' #3D3D3D');
+					$('#english').css('background-color','#ccc');
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -55,6 +57,8 @@
 				else
 				{
 					$('#loginText').html(response);
+					$('#english').css('background-color',' #3D3D3D');
+					$('#spanish').css('background-color','#ccc');					
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
