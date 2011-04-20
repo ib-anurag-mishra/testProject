@@ -768,6 +768,9 @@ Class LibrariesController extends AppController
 			if($existingLibraries['0']['Library']['library_logout_url'] != ''){
 				$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_logout_url']);
 			}
+			if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+				$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+			}
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
