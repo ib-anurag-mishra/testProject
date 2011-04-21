@@ -1053,6 +1053,7 @@ div.message {
 	height: 175px;
 	background: #F3F3F3;
 	border-top: 2px solid #CCC;
+	border-bottom: 2px solid #CCC;
 	margin:20px auto 0px;
 	display:block;
 }
@@ -1097,10 +1098,8 @@ div.message {
 }
 
 #loginText {
-    border-top: 2px solid #898989;
-    font-size: 90%;
-    margin: 10px 10px 0;
-    padding-top: 10px;
+	margin: 10px 10px 0 10px;
+	font-size: 90%;
 }
 #loginText p {
 	padding-bottom: 10px;
@@ -1130,19 +1129,19 @@ div.message {
 #language {
     font-size: 14px;
 	clear:both;
+	margin-top: 10px;
 }
 .active {
-	border-left: 2px solid #CCCCCC;
-	border-right: 2px solid #CCCCCC;
-	border-bottom: 2px solid #CCCCCC;
-	border-top: 2px solid #CCCCCC;
-	background: #fff;
+	background-color: #3D3D3D;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
 	padding-bottom: 1px;
 	width:147px;
 	height:20px;
 	float:left;
 	text-align:center;
-	background-color: #ccc;
 	color: #FFFFFF;
 	-moz-border-radius-topright: 5px;
 	-khtml-border-radius-topright: 5px;
@@ -1153,17 +1152,17 @@ div.message {
 	cursor: pointer;
 }
 .non-active {
+	background-color: #FFF;
+	border-left: 1px solid #CCCCCC;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-top: 1px solid #CCCCCC;
 	padding-bottom: 1px;
 	width:145px;
 	height:20px;
 	float:left;
 	text-align:center;
-	background-color: #3D3D3D;
-	border-left: 2px solid #3D3D3D;
-	border-right: 2px solid #3D3D3D;
-	border-bottom: 2px solid #3D3D3D;
-	border-top: 2px solid #3D3D3D;
-	color: #FFFFFF;	
+	color: #000;	
 	-moz-border-radius-topright: 5px;
 	-khtml-border-radius-topright: 5px;
 	-webkit-border-top-right-radius: 5px;

@@ -35,7 +35,7 @@ if(empty($getData))
 	<div class="formFieldsContainer">
 		<table>
 			<tr>
-				<th>Sl. No</th>
+				<th>No</th>
 				<th>Short Name</th>
 				<th>Full Name</th>
 			</tr>
