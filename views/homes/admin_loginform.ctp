@@ -3,9 +3,10 @@
 	echo $this->Form->create('Home', array( 'action' => $formAction ));
 	if(empty($getData))
 	{
-	        $getData['Home']['id'] = "";
-	        $getData['Home']['page_name'] = "login";
-	        $getData['Home']['page_content'] = "";
+		$getData['Home']['id'] = "";
+		$getData['Home']['page_name'] = "login";
+		$getData['Home']['page_content'] = "";
+		$getData['Home']['language'] = "";
 	}
 ?>
 <?php
@@ -45,21 +46,47 @@
             <?php echo $this->Form->hidden( 'id', array( 'label' => false ,'value' => $getData['Home']['id'])); ?>
             <?php echo $this->Form->hidden( 'page_name', array( 'label' => false ,'value' => $getData['Home']['page_name'])); ?>
             <div class="form_steps">
-                   <table cellspacing="10" cellpadding="0" border="0" width="100%">
-                          <tr>
-                                 <td align="right" valign="top"><?php echo $this->Form->label('Page Content:');?></td>
-                                 <td align="left">
-                                   <?php
-                                       echo $this->Form->textarea('page_content', array('cols' => '80', 'rows' => '15', 'value' => $getData['Home']['page_content']));
-                                   ?>
-                                 </td>
-                          </tr>
-			  <tr>
-				<td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
-			 </tr>
-                   </table>
+				<table cellspacing="10" cellpadding="0" border="0" width="100%">
+				<tr>
+					<td align="right" valign="top"><?php echo $this->Form->label('Page Language:');?></td>		
+					<td>
+						<select id="aboutusLanguage" name="data[Home][language]" onchange="javascript:languagechange();">
+							<?php
+							foreach($languages as $k => $v){
+							echo '<option value="'.$k.'" ';
+							if($getData['Home']['language'] == $k){
+								echo "selected='selected'";
+							}
+							echo '>'.$v.'</option>';
+							}
+							?>
+						</select>
+					</td>					
+				</tr>
+					<tr>
+						<td align="right" valign="top"><?php echo $this->Form->label('Page Content:');?></td>
+						<td align="left">
+							<?php
+								echo $this->Form->textarea('page_content', array('cols' => '80', 'rows' => '15', 'value' => $getData['Home']['page_content']));
+							?>
+						 </td>
+					</tr>
+					<tr>
+						<td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
+					</tr>
+				</table>
             </div>
         </div>
 </fieldset>
+<input type="hidden" id="HomeLanguageChange" value="0" name="data[Home][language_change]" />
 <?php echo $this->Form->end(); ?>
 <?php echo $session->flash(); ?>
+<script language="javascript" type="text/javascript">
+function languagechange(){
+	var formId = document.getElementById('HomeAdminLoginformForm');
+	var path = webroot+'admin/homes/loginform';
+	$('#HomeLanguageChange').val('1');
+	formId.setAttribute("action", path);
+	formId.submit();
+}
+</script>

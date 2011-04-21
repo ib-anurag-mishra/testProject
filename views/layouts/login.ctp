@@ -14,8 +14,8 @@
 <script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js"></script>	
 <script type="text/javascript">
 	var webroot = '<?php echo $this->webroot; ?>';
-	function english(){
-		var language = 'en';
+	function changeLang(type){
+		var language = type;
 		var data = "lang="+language;
 		$.ajax({
 			type: "post",  // Request method: post, get
@@ -32,49 +32,10 @@
 				else
 				{
 					$('#loginText').html(response);
-					$('#spanish').css('background-color',' #3D3D3D');
-					$('#spanish').css('border-bottom','2px solid #3D3D3D');
-					$('#spanish').css('border-top','2px solid #3D3D3D');
-					$('#spanish').css('border-left','2px solid #3D3D3D');
-					$('#spanish').css('border-right','2px solid #3D3D3D');					
-					$('#english').css('background-color','#ccc');
-					$('#english').css('border-left','2px solid #ccc');
-					$('#english').css('border-right','2px solid #ccc');
-					$('#english').css('border-bottom','2px solid #ccc');
-					$('#english').css('border-top','2px solid #ccc');
-				}
-			},
-			error:function (XMLHttpRequest, textStatus, errorThrown) {}
-		});
-	}
-	function spanish(){
-		var language = 'es';
-		var data = "lang="+language;
-		$.ajax({
-			type: "post",  // Request method: post, get
-			url: webroot+"homes/language", // URL to request
-			data: data,  // post data
-			success: function(response) {
-				var msg = response.substring(0,5);
-				if(msg == 'error')
-				{
-					alert("There was an error while saving your request.");
-					location.reload();
-					return false;
-				}
-				else
-				{
-					$('#loginText').html(response);
-					$('#english').css('background-color',' #3D3D3D');
-					$('#english').css('border-left','2px solid #3D3D3D');
-					$('#english').css('border-right','2px solid #3D3D3D');
-					$('#english').css('border-bottom','2px solid #3D3D3D');
-					$('#english').css('border-top','2px solid #3D3D3D');
-					$('#spanish').css('background-color','#ccc');
-					$('#spanish').css('border-left','2px solid #ccc');
-					$('#spanish').css('border-right','2px solid #ccc');
-					$('#spanish').css('border-bottom','2px solid #ccc');
-					$('#spanish').css('border-top','2px solid #ccc');
+					$('#language').find('div').removeClass('active');
+					$('#language').find('div').addClass('non-active');
+					$('#'+type).removeClass('non-active');
+					$('#'+type).addClass('active');					
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}

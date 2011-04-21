@@ -110,6 +110,9 @@
 					<li>
 						<?php echo $html->link('Site Settings', array('controller' => 'site_settings', 'action' => 'index'));?>
 					</li>
+					<li>
+						<?php echo $html->link('Add Language', array('controller' => 'homes', 'action' => 'language'));?>
+					</li>					
 				</ul>
 			</li>
 			<li>

@@ -6,9 +6,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song' );
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
     
     /*
      Function Name : beforeFilter
@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 		parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -864,44 +864,69 @@ class HomesController extends AppController
      Desc : actions used for admin about us form
     */
     function admin_aboutusform() {
-		if(isset($this->data)) {
-			if($this->data['Home']['id'] != "") {
-				$this->Page->id = $this->data['Home']['id'];
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()){
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-			}
-			else {
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()) {
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-				else {
-					$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-				}
-			}
+	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
+	    $language = $this->data['Home']['language'];
+	    $this -> set( 'formAction', 'admin_aboutusform');
+	    $this -> set( 'formHeader', 'Manage About Us Page Content' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => $this->data['Home']['language'])));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $language;
+		$this->set('getData', $getData );
+	    }
+	    else {
+		$getData['Home']['language'] = $language;
+		$getData['Home']['id'] = null;
+		$getData['Home']['page_name'] = null;
+		$getData['Home']['page_content'] = null;
+		$this->set('getData', $getData);
+	    }
+	}
+	else{
+	    if(isset($this->data)) {
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => $this->data['Home']['language'])));
+		if(count($findData) == 0) {
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()){
+		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
 		}
-		$this -> set( 'formAction', 'admin_aboutusform');
-		$this -> set( 'formHeader', 'Manage About Us Page Content' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus','language' => Configure::read('App.SITELANGUAGE'))));
-		if(count($getPageData) != 0) {
-			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$this -> set( 'getData', $getData );
+		elseif(count($findData) > 0){
+		    $this->Page->id = $this->data['Home']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()) {
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
+		    else {
+			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		    }
 		}
-		else {
-			$arr = array();
-			$this->set('getData',$arr);
-		}
-		$this->layout = 'admin';
+	    }
+	    $this->set('formAction', 'admin_aboutusform');
+	    $this->set('formHeader', 'Manage About Us Page Content' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => 'en')));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$this -> set( 'getData', $getData );
+	    }
+	    else {
+		$arr = array();
+		$this->set('getData',$arr);
+	    }
+	}
+	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
+	$this->layout = 'admin';
     }
     
     /*
@@ -909,44 +934,69 @@ class HomesController extends AppController
      Desc : actions used for admin terms form
     */
     function admin_termsform() {
-		if(isset($this->data)) {
-			if($this->data['Home']['id'] != "") {
-				$this->Page->id = $this->data['Home']['id'];
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()){
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-			}
-			else {
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()) {
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-				else {
-					$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-				}
-			}
+	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
+	    $language = $this->data['Home']['language'];
+	    $this -> set( 'formAction', 'admin_termsform');
+	    $this -> set( 'formHeader', 'Manage Terms & Condition Page Content' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => $this->data['Home']['language'])));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $language;
+		$this->set('getData', $getData );
+	    }
+	    else {
+		$getData['Home']['language'] = $language;
+		$getData['Home']['id'] = null;
+		$getData['Home']['page_name'] = null;
+		$getData['Home']['page_content'] = null;
+		$this->set('getData', $getData);
+	    }
+	}
+	else{
+	    if(isset($this->data)) {
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => $this->data['Home']['language'])));
+		if(count($findData) == 0) {
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()){
+		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
 		}
-		$this -> set( 'formAction', 'admin_termsform');
-		$this -> set( 'formHeader', 'Manage Terms & Condition Page Content' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms','language' => Configure::read('App.SITELANGUAGE'))));
-		if(count($getPageData) != 0) {
-			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$this -> set( 'getData', $getData );
+		elseif(count($findData) > 0){
+		    $this->Page->id = $this->data['Home']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()) {
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
+		    else {
+			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		    }
 		}
-		else {
-			$arr = array();
-			$this->set('getData',$arr);
-		}
-		$this->layout = 'admin';
+	    }
+	    $this->set('formAction', 'admin_termsform');
+	    $this->set('formHeader', 'Manage Terms & Condition Page Content' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => 'en')));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$this->set('getData', $getData );
+	    }
+	    else {
+		$arr = array();
+		$this->set('getData',$arr);
+	    }
+	}
+	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
+	$this->layout = 'admin';
     }
 
 	/*
@@ -954,89 +1004,139 @@ class HomesController extends AppController
      Desc : actions used for admin login form
     */
     function admin_loginform() {
-		if(isset($this->data)) {
-			if($this->data['Home']['id'] != "") {
-				$this->Page->id = $this->data['Home']['id'];
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()){
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-			}
-			else {
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()) {
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-				else {
-					$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-				}
-			}
-		}
-		$this -> set( 'formAction', 'admin_loginform');
-		$this -> set( 'formHeader', 'Manage Login Page Text' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login','language' => Configure::read('App.SITELANGUAGE'))));
-		if(count($getPageData) != 0) {
+		if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
+			$language = $this->data['Home']['language'];
+			$this -> set( 'formAction', 'admin_loginform');
+			$this -> set( 'formHeader', 'Manage Login Page Text' );
+			$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $this->data['Home']['language'])));
+			if(count($getPageData) != 0) {
 			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
 			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
 			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$this -> set( 'getData', $getData );
+			$getData['Home']['language'] = $language;
+			$this->set('getData', $getData );
+			}
+			else {
+			$getData['Home']['language'] = $language;
+			$getData['Home']['id'] = null;
+			$getData['Home']['page_name'] = null;
+			$getData['Home']['page_content'] = null;
+			$this->set('getData', $getData);
+			}
 		}
-		else {
+		else{
+			if(isset($this->data)) {
+			$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $this->data['Home']['language'])));
+			if(count($findData) == 0) {
+				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$pageData['Page']['language'] = $this->data['Home']['language'];
+				$this->Page->set($pageData['Page']);
+				if($this->Page->save()){
+				  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+				}
+			}
+			elseif(count($findData) > 0){
+				$this->Page->id = $this->data['Home']['id'];
+				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+				$pageData['Page']['language'] = $this->data['Home']['language'];
+				$this->Page->set($pageData['Page']);
+				if($this->Page->save()) {
+				$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+				}
+				else {
+				$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+				}
+			}
+			}
+			$this->set('formAction', 'admin_loginform');
+			$this->set('formHeader', 'Manage Login Page Text' );
+			$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => 'en')));
+			if(count($getPageData) != 0) {
+			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+			$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+			$this->set('getData', $getData );
+			}
+			else {
 			$arr = array();
 			$this->set('getData',$arr);
+			}
 		}
+		$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
 		$this->layout = 'admin';
-    }
+	}
 
 	/*
      Function Name : admin_wishlistform
      Desc : actions used for admin wishlist form
     */
     function admin_wishlistform() {
-		if(isset($this->data)) {
-			if($this->data['Home']['id'] != "") {
-				$this->Page->id = $this->data['Home']['id'];
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()){
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-			}
-			else {
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()) {
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-				else {
-					$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-				}
-			}
+	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
+	    $language = $this->data['Home']['language'];
+	    $this -> set( 'formAction', 'admin_wishlistform');
+	    $this -> set( 'formHeader', 'Manage Wishlist Page Content' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => $this->data['Home']['language'])));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $language;
+		$this->set('getData', $getData );
+	    }
+	    else {
+		$getData['Home']['language'] = $language;
+		$getData['Home']['id'] = null;
+		$getData['Home']['page_name'] = null;
+		$getData['Home']['page_content'] = null;
+		$this->set('getData', $getData);
+	    }
+	}
+	else{
+	    if(isset($this->data)) {
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => $this->data['Home']['language'])));
+		if(count($findData) == 0) {
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()){
+		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
 		}
-		$this -> set( 'formAction', 'admin_wishlistform');
-		$this -> set( 'formHeader', 'Manage Wishlist Page Text' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist','language' => Configure::read('App.SITELANGUAGE'))));
-		if(count($getPageData) != 0) {
-			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$this -> set( 'getData', $getData );
+		elseif(count($findData) > 0){
+		    $this->Page->id = $this->data['Home']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()) {
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
+		    else {
+			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		    }
 		}
-		else {
-			$arr = array();
-			$this->set('getData',$arr);
-		}
-		$this->layout = 'admin';
+	    }
+	    $this -> set( 'formAction', 'admin_wishlistform');
+	    $this -> set( 'formHeader', 'Manage Wishlist Page Text' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => 'en')));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$this -> set( 'getData', $getData );
+	    }
+	    else {
+		$arr = array();
+		$this->set('getData',$arr);
+	    }
+	}
+	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
+	$this->layout = 'admin';
     }
 
 
@@ -1045,44 +1145,70 @@ class HomesController extends AppController
      Desc : actions used for admin limits form
     */
     function admin_limitsform(){
-		if(isset($this->data)) {
-			if($this->data['Home']['id'] != "") {
-				$this->Page->id = $this->data['Home']['id'];
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()){
-				  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-			}
-			else {
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-				$this->Page->set($pageData['Page']);
-				if($this->Page->save()) {
-					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-				}
-				else {
-					$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-				}
-			}
+	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
+	    $language = $this->data['Home']['language'];
+	    $this -> set( 'formAction', 'admin_limitsform');
+	    $this -> set( 'formHeader', 'Manage Download Limits Page Content' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => $this->data['Home']['language'])));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $language;
+		$this->set('getData', $getData );
+	    }
+	    else {
+		$getData['Home']['language'] = $language;
+		$getData['Home']['id'] = null;
+		$getData['Home']['page_name'] = null;
+		$getData['Home']['page_content'] = null;
+		$this->set('getData', $getData);
+	    }
+	}
+	else{
+	    if(isset($this->data)) {
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => $this->data['Home']['language'])));
+		if(count($findData) == 0) {
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()){
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
 		}
-		$this -> set( 'formAction', 'admin_limitsform');
-		$this -> set( 'formHeader', 'Manage Download Limits Page Content' );
-		$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits','language' => Configure::read('App.SITELANGUAGE'))));
-		if(count($getPageData) != 0) {
-			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$this -> set( 'getData', $getData );
+		elseif(count($findData) > 0){
+		    $this->Page->id = $this->data['Home']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()) {
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
+		    else {
+			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		    }
 		}
-		else {
-			$arr = array();
-			$this->set('getData',$arr);
-		}
-		$this->layout = 'admin';
+	    }
+	    $this -> set( 'formAction', 'admin_limitsform');
+	    $this -> set( 'formHeader', 'Manage Download Limits Page Text' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => 'en')));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$this -> set( 'getData', $getData );
+	    }
+	    else {
+		$arr = array();
+		$this->set('getData',$arr);
+	    }
+	}
+	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
+	
+	$this->layout = 'admin';
     }
     
     /*
@@ -1511,43 +1637,68 @@ class HomesController extends AppController
     */
 
     function admin_historyform() {
-	if(isset($this->data)) {
-	    if($this->data['Home']['id'] != "") {
-		$this->Page->id = $this->data['Home']['id'];
-		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-		$this->Page->set($pageData['Page']);
-		if($this->Page->save()){
-		  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-		}
+	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
+	    $language = $this->data['Home']['language'];
+	    $this -> set( 'formAction', 'admin_historyform');
+	    $this -> set( 'formHeader', 'Manage History Page Text' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => $this->data['Home']['language'])));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $language;
+		$this->set('getData', $getData );
 	    }
 	    else {
-		$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		$getData['Home']['language'] = Configure::read('App.SITELANGUAGE');
-		$this->Page->set($pageData['Page']);
-		if($this->Page->save()) {
-		    $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
-		}
-		else {
-		    $this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-		}
+		$getData['Home']['language'] = $language;
+		$getData['Home']['id'] = null;
+		$getData['Home']['page_name'] = null;
+		$getData['Home']['page_content'] = null;
+		$this->set('getData', $getData);
 	    }
 	}
-        $this -> set( 'formAction', 'admin_historyform');
-        $this -> set( 'formHeader', 'Manage History Page Text' );
-        $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history','language' => Configure::read('App.SITELANGUAGE'))));
-	if(count($getPageData) != 0) {
-	    $getData['Home']['id'] = $getPageData[0]['Page']['id'];
-	    $getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-	    $getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-	    $this -> set( 'getData', $getData );
+	else{
+	    if(isset($this->data)) {
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => $this->data['Home']['language'])));
+		if(count($findData) == 0) {
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()){
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
+		}
+		elseif(count($findData) > 0){
+		    $this->Page->id = $this->data['Home']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->set($pageData['Page']);
+		    if($this->Page->save()) {
+			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+		    }
+		    else {
+			$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
+		    }
+		}
+	    }
+	    $this -> set( 'formAction', 'admin_historyform');
+	    $this -> set( 'formHeader', 'Manage History Page Text' );
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => 'en')));
+	    if(count($getPageData) != 0) {
+		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$this -> set( 'getData', $getData );
+	    }
+	    else {
+		$arr = array();
+		$this->set('getData',$arr);
+	    }
 	}
-	else {
-	    $arr = array();
-	    $this->set('getData',$arr);
-	}
+	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
 	$this->layout = 'admin';
     }	
 	
@@ -1642,12 +1793,8 @@ class HomesController extends AppController
 		Configure::write('debug', 0);
 		$this->layout = false;
 		$language = $_POST['lang'];
-		if($language == 'es'){
-			$this->Session->write('Config.language','es');
-		}
-		else{
-			$this->Session->write('Config.language','en');
-		}
+		$langDetail = $this->Language->find('first', array('conditions' => array('id_language' => $language)));
+		$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		$page = $this->Session->read('Config.language');
         $pageDetails = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $page)));
         if(count($pageDetails) != 0) {
@@ -1658,6 +1805,31 @@ class HomesController extends AppController
         }
 		exit;
    }	
-	
+    /*
+    Function Name : admin_language
+    Desc : Adding languages at admin end
+   */	
+   function admin_language(){
+		if (!empty($this->data)) {
+			$data['Language']['id_language'] = '';
+			$data['Language']['short_name'] = $this->data['Homes']['short_name'];
+			$data['Language']['full_name'] = $this->data['Homes']['full_name'];
+		    if($this->Language->save($data['Language'])){
+				$this->Session->setFlash('Your Language has been saved.', 'modal', array('class' => 'modal success'));
+				$this->redirect('/admin/homes/language');
+			}
+			else {
+				$this->Session->setFlash('Your Language has not been saved.', 'modal', array('class' => 'modal failure'));
+				$this->redirect('/admin/homes/language');
+			}
+			$this->set('languages', $this->Language->find('all'));
+		} 
+		else {
+			$this->set('languages', $this->Language->find('all'));		
+		}
+	    $this -> set( 'formAction', 'admin_language');
+	    $this -> set( 'formHeader', 'Add Languages' );		
+		$this->layout = 'admin';
+   }
 }
 ?>

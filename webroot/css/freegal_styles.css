@@ -1097,8 +1097,10 @@ div.message {
 }
 
 #loginText {
-	margin: 10px 10px 0 10px;
-	font-size: 90%;
+    border-top: 2px solid #898989;
+    font-size: 90%;
+    margin: 10px 10px 0;
+    padding-top: 10px;
 }
 #loginText p {
 	padding-bottom: 10px;
@@ -1127,10 +1129,9 @@ div.message {
 }
 #language {
     font-size: 14px;
-    padding-left: 332px;
 	clear:both;
 }
-#english {
+.active {
 	border-left: 2px solid #CCCCCC;
 	border-right: 2px solid #CCCCCC;
 	border-bottom: 2px solid #CCCCCC;
@@ -1143,15 +1144,15 @@ div.message {
 	text-align:center;
 	background-color: #ccc;
 	color: #FFFFFF;
-	-moz-border-radius-bottomright: 5px;
-	-khtml-border-radius-bottomright: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-khtml-border-radius-bottomleft: 5px;
-	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
 	cursor: pointer;
 }
-#spanish {
+.non-active {
 	padding-bottom: 1px;
 	width:145px;
 	height:20px;
@@ -1163,12 +1164,12 @@ div.message {
 	border-bottom: 2px solid #3D3D3D;
 	border-top: 2px solid #3D3D3D;
 	color: #FFFFFF;	
-	-moz-border-radius-bottomright: 5px;
-	-khtml-border-radius-bottomright: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-khtml-border-radius-bottomleft: 5px;
-	-webkit-border-bottom-left-radius: 5px;
+	-moz-border-radius-topright: 5px;
+	-khtml-border-radius-topright: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-khtml-border-radius-topleft: 5px;
+	-webkit-border-top-left-radius: 5px;
 	cursor: pointer;
 }
 #language a{
