@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 		parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -1793,7 +1793,7 @@ class HomesController extends AppController
 		Configure::write('debug', 0);
 		$this->layout = false;
 		$language = $_POST['lang'];
-		$langDetail = $this->Language->find('first', array('conditions' => array('id_language' => $language)));
+		$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 		$this->Session->write('Config.language', $langDetail['Language']['short_name']);
 		$page = $this->Session->read('Config.language');
         $pageDetails = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $page)));
@@ -1811,7 +1811,7 @@ class HomesController extends AppController
    */	
    function admin_language(){
 		if (!empty($this->data)) {
-			$data['Language']['id_language'] = '';
+			$data['Language']['id'] = '';
 			$data['Language']['short_name'] = $this->data['Homes']['short_name'];
 			$data['Language']['full_name'] = $this->data['Homes']['full_name'];
 		    if($this->Language->save($data['Language'])){
@@ -1831,5 +1831,51 @@ class HomesController extends AppController
 	    $this -> set( 'formHeader', 'Add Languages' );		
 		$this->layout = 'admin';
    }
+    /*
+     Function Name : admin_language_activate
+     Desc : For activating a Language
+    */
+	
+    function admin_language_activate() {
+        $languageID = $this->params['named']['id'];
+        if(trim($languageID) != "" && is_numeric($languageID)) {
+			$this->Language->id = $languageID;
+		    $this->Language->set(array('status' => 'active'));
+		    if($this->Language->save()) {
+				$this->Session ->setFlash( 'Language activated successfully!', 'modal', array( 'class' => 'modal success' ) );
+			}
+            $this->autoRender = false;
+            $this->redirect('/admin/homes/language');
+        }
+        else {
+            $this->Session -> setFlash( 'Error occured while activating the Langauge', 'modal', array( 'class' => 'modal problem' ) );
+            $this->autoRender = false;
+            $this->redirect('/admin/homes/language');
+        }
+    }
+	
+    /*
+     Function Name : admin_language_deactivate
+     Desc : For deactivating a Language
+    */
+	
+    function admin_language_deactivate() {
+        $languageID = $this->params['named']['id'];
+        if(trim($languageID) != "" && is_numeric($languageID)) {
+			$this->Language->id = $languageID;
+		    $this->Language->set(array('status' => 'inactive'));
+		    if($this->Language->save()) {
+				$this->Session ->setFlash( 'Language deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
+			}
+            $this->autoRender = false;
+            $this->redirect('/admin/homes/language');
+        }
+        else {
+            $this->Session->setFlash('Error occured while deactivating the Language', 'modal', array('class' => 'modal problem'));
+            $this->autoRender = false;
+            $this->redirect('/admin/homes/language');
+        }
+    }
+   
 }
 ?>

@@ -38,6 +38,7 @@ if(empty($getData))
 				<th>No</th>
 				<th>Short Name</th>
 				<th>Full Name</th>
+				<th>Status</th>
 			</tr>
 			<?php $i =1;foreach ($languages as $lang): ?>
 			<tr>
@@ -48,6 +49,15 @@ if(empty($getData))
 				<td>
 					<?php echo $lang['Language']['full_name']; ?></td>
 				</td>
+				<td>
+				<?php
+					if($lang['Language']['status']=='inactive'){
+						echo $html->link('Activate', array('controller'=>'homes','action'=>'language_activate','id'=>$lang['Language']['id']));
+					}else{
+						echo $html->link('Deactivate', array('controller'=>'homes','action'=>'language_deactivate','id'=>$lang['Language']['id']));
+					}
+				?>
+				</td>				
 			</tr>
 			<?php $i++;endforeach; ?>
 		</table>

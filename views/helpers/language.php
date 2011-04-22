@@ -6,7 +6,7 @@ class LanguageHelper extends AppHelper {
     
     function getLanguage() {
         $languageInstance = ClassRegistry::init('Language');
-        $languageDetails =  $languageInstance->find('list', array('fields' => array('id_language', 'full_name')));
+        $languageDetails =  $languageInstance->find('list', array('conditions' => array('status' => 'active'), 'fields' => array('id', 'full_name')));
         return $languageDetails;
     }
 }
