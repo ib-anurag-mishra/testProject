@@ -2,11 +2,15 @@
 <div class="sections form">
 <?php echo $this->Form->create('Section');?>
 	<fieldset>
- 		<legend><?php printf(__('Admin Edit %s', true), __('Section', true)); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('title');
-	?>
+		<legend><?php printf(__('Admin Edit %s', true), __('Section', true)); ?></legend>
+		<?php
+			echo $this->Form->input('id');
+			echo $this->Form->input('title');
+		?>	
+		<select id="SectionLanguage" name="data[Section][language]">
+			<option value="en" <?php if($this->data['Section']['language'] == 'en'){ ?> selected="selected"<?php } ?>>English</option>
+			<option value="es" <?php if($this->data['Section']['language'] == 'es'){ ?> selected="selected"<?php } ?>>Spanish</option>
+		</select>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>
 </div>

@@ -5,6 +5,7 @@
 	<tr>
 			<th><?php echo $this->Paginator->sort('title');?></th>
 			<th class="actions"><?php __('Actions');?></th>
+			<th><?php __('Language');?></th>
 	</tr>
 	<?php
 	$i = 0;
@@ -21,6 +22,7 @@
 			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $section['Section']['id'])); ?>
 			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $section['Section']['id']), null, sprintf(__('Are you sure you want to delete # %s?', true), $section['Section']['id'])); ?>
 		</td>
+		<td><?php echo $section['Section']['language']; ?>&nbsp;</td>
 	</tr>
 <?php endforeach; ?>
 	</table>

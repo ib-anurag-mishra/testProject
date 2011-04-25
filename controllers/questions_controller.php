@@ -37,13 +37,13 @@ class QuestionsController extends AppController
 	 Desc : actions index for showing faqs at user end
         */
 	function index() {
-		$this->layout = 'home';
-		$this->Question->recursive = 0;
-		$this->paginate = array('conditions' => array(),		     
-		      'order' => 'Question.section_id ASC,Question.sort_id ASC',
-		);	
-		$questions = $this->paginate('Question');				
-		$this->set('questions', $this->paginate());
+		  $this->layout = 'home';
+		  $this->Question->recursive = 0;
+		  $this->paginate = array('conditions' => array('Section.language' => $this->Session->read('Config.language')),       
+				'order' => 'Question.section_id ASC,Question.sort_id ASC',
+		  ); 
+		  $questions = $this->paginate('Question');    
+		  $this->set('questions', $this->paginate());
 	}
 	
 	/*
