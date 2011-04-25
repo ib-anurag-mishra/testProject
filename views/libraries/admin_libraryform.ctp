@@ -320,6 +320,7 @@
 									<option value=">">></option>
 									<option value="<"><</option>
 									<option value="<>"><></option>
+									<option value="contains">Contains</option>
 									<option value="date">Expired</option>
 								</select>							
 							</td>
@@ -354,6 +355,7 @@
 										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
 										<option <?php if($var == '<'){ ?> selected = "selected" <?php } ?> value="<"> < </option>
 										<option <?php if($var == '<>'){ ?> selected = "selected" <?php } ?> value="<>"> <> </option>
+										<option <?php if($var == 'contains'){ ?> selected = "selected" <?php } ?> value="contains"> Contains </option>
 										<option <?php if($var == 'date'){ ?> selected = "selected" <?php } ?> value="date"> Expired </option>
 									</select>							
 								</td>

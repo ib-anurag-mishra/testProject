@@ -26,6 +26,16 @@
 		<div id="album">
 			<div class="lgAlbumArtwork">
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+				<?php
+					$image = "http://music.freegalmusic.com".$albumArtwork;
+					if($page->isImage($image)) {
+						//Image is a correct one
+					}
+					else {
+						
+						mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is wrong",HEADERS);
+					}
+				?>
 				<img src="http://music.freegalmusic.com<?php echo $albumArtwork; ?>" width="250" height="250" border="0">
 			</div>
 			<div class="albumData">

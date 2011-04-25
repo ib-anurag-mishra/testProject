@@ -517,6 +517,12 @@ Class ArtistsController extends AppController
 			}
 		}
 		$country = $this->Session->read('territory');
+		if($this->Session->read('block') == 'yes') {
+			$cond = array('Song.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}		
 		if($album != '') {
 			$condition = array("Album.ProdID" => $album);
 		}
@@ -525,7 +531,7 @@ Class ArtistsController extends AppController
 			$val = '';
 			$this->Song->Behaviors->attach('Containable');
 			foreach($allAlbum as $k => $v){
-				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.Territory' => $country), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
+				$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",'Country.Territory' => $country, $cond), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
 				if(count($recordCount) > 0){
 					$val = $val.$v['Album']['ProdID'].",";
 				}
