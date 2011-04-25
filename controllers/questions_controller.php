@@ -8,7 +8,7 @@
 class QuestionsController extends AppController
 {
 	var $name = 'Questions';
-	var $helpers = array('Library', 'Page');
+	var $helpers = array('Library', 'Page', 'Language');
 	var $components = array('RequestHandler','ValidatePatron');
 	
 	/*

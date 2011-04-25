@@ -10,7 +10,7 @@ Class GenresController extends AppController
 {
 	var $uses = array('Category','Files','Album','Song','Download');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
-	var $helpers = array('Cache','Library','Page','Wishlist');
+	var $helpers = array('Cache','Library','Page','Wishlist', 'Language');
 	
 	/*
 	 Function Name : beforeFilter
