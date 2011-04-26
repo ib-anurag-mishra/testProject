@@ -2777,7 +2777,7 @@ Class UsersController extends AppController
 													}
 												}
 												elseif($v['Variable']['comparison_operator'] == 'contains'){
-													$res = explode("$",$retStatus);
+													$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 													if(isset($res[1])){
 														$cmp = $res[1];
 													} 
@@ -3077,7 +3077,7 @@ Class UsersController extends AppController
 											}
 										}
 										elseif($v['Variable']['comparison_operator'] == 'contains'){
-											$res = explode("$",$retStatus);
+											$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 											if(isset($res[1])){
 												$cmp = $res[1];
 											} 
