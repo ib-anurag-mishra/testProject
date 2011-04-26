@@ -422,11 +422,15 @@ Class LibrariesController extends AppController
 														if(count($this->data['Variable']) > 0){
 															if($this->data['Library']['library_authentication_method'] == 'innovative_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'sip2_var' || $this->data['Library']['library_authentication_method'] == 'sip2_var_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https' || $this->data['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin' || $this->data['Library']['library_authentication_method'] == 'innovative_var_name'|| $this->data['Library']['library_authentication_method'] == 'innovative_var_https_name'){
 																foreach($this->data['Variable'] as $k=>$v){
+																	if($this->data['Variable'][$k]['authentication_variable'] !='' && $this->data['Variable'][$k]['authentication_response'] != '' && $this->data['Variable'][$k]['error_msg'] != ''){
 																		$data[$k] = $v;
 																		$data[$k]['library_id'] = $this->Library->id;
+																	}
 																}
 																$this->Variable->deleteAll(array('library_id' => $this->Library->id));
-																$this->Variable->saveAll($data);
+																if(count($data) > 0){
+																	$this->Variable->saveAll($data);
+																}
 															}
 														}
 														if($this->data['Libraryurl'][0]['domain_name']){

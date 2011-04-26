@@ -342,6 +342,16 @@ Class UsersController extends AppController
 					$this->Session->destroy();
 					$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));				
 				}
+			}
+			elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){            
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'ilhdlogin'));				
+				}
 			}			
 			elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){            
 				if($this->Session->read('referral')){
@@ -4577,9 +4587,9 @@ Class UsersController extends AppController
 							$posVal = true;
 						}		
 					}					
-					$retMsgArr = explode("RETCOD=",$response);               
+					$retMsgArr = explode("ERRMSG=",$response);               
 					@$retStatus = $retMsgArr['1']; 
-					if($retStatus == ''){
+					if($retStatus != ''){
 						$errMsgArr =  explode("ERRNUM=",$retMsgArr['0']);
 						@$errMsgCount = substr($errMsgArr['1'],0,1);
 						if($errMsgCount == '1'){
@@ -4591,7 +4601,7 @@ Class UsersController extends AppController
 							$this->redirect(array('controller' => 'users', 'action' => 'ilhdlogin'));
 						}                  
 					}
-					elseif($retStatus == 0 && $posVal != false){
+					elseif($retStatus == '' && $posVal != false){
 						$this->Variable->recursive = -1;
 						$allVariables = $this->Variable->find('all',array(
 												'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
