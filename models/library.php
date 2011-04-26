@@ -112,7 +112,16 @@ class Library extends AppModel
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
       'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
-     ),	 
+     ),
+     'library_step1_innovative_var_https_name' => array(
+      'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+      'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
+      'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
+      'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
+      'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
+      'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
+      'library_contact_email' => array('rule' => 'email', 'message' => 'Please enter a valid email address for Library Contact Email.')
+     ),		 
      'library_step1_innovative_var_https' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),

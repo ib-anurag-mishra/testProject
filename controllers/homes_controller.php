@@ -679,6 +679,10 @@ class HomesController extends AppController
 		elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_name';
+		}
+		elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'innovative_var_https_name';
 		}		
 		elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
 			$insertArr['email'] = '';
@@ -1228,6 +1232,9 @@ class HomesController extends AppController
 			}
 			elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')) {
 				$url = $this->webroot.'users/ildlogin';
+			}
+			elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')) {
+				$url = $this->webroot.'users/ilhdlogin';
 			}			
 			elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')) {
 				$url = $this->webroot.'users/ihdlogin';
@@ -1532,6 +1539,10 @@ class HomesController extends AppController
 		elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_name';
+		}
+		elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'innovative_var_https_name';
 		}		
 		elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
 			$insertArr['email'] = '';
