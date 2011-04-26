@@ -2726,7 +2726,7 @@ Class UsersController extends AppController
 											$this->Variable->recursive = -1;										
 											$allVariables = $this->Variable->find('all',array(
 																				'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
-																				'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
+																				'fields' => array('authentication_variable','authentication_response','message_no','comparison_operator','error_msg',)
 																				)
 																			 );
 											$status = 1;
@@ -3026,7 +3026,7 @@ Class UsersController extends AppController
 									$this->Variable->recursive = -1;										
 									$allVariables = $this->Variable->find('all',array(
 																		'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
-																		'fields' => array('authentication_variable','authentication_response','comparison_operator','error_msg',)
+																		'fields' => array('authentication_variable','authentication_response','comparison_operator','message_no','error_msg',)
 																		)
 																	 );
 									$status = 1;
