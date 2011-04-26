@@ -2701,11 +2701,11 @@ Class UsersController extends AppController
 							if (preg_match("/98/", $msg_result)) {
 
 									
-								  $result = $mysip->parseACSStatusResponse($msg_result);
+								  $parseACSStatusResponse = $mysip->parseACSStatusResponse($msg_result);
 
 								  //  Use result to populate SIP2 setings
-								  $mysip->AO = $result['variable']['AO'][0]; /* set AO to value returned */
-								  $mysip->AN = $result['variable']['AN'][0]; /* set AN to value returned */
+								  $mysip->AO = $parseACSStatusResponse['variable']['AO'][0]; /* set AO to value returned */
+								  $mysip->AN = $parseACSStatusResponse['variable']['AN'][0]; /* set AN to value returned */
 
 								  $mysip->patron = $card;
 								  $mysip->patronpwd = $pin;
@@ -2713,13 +2713,13 @@ Class UsersController extends AppController
 								  $msg_result = $mysip->get_message($in);
 								  // Make sure the response is 24 as expected
 								  if (preg_match("/24/", $msg_result)) {
-									  $result = $mysip->parsePatronStatusResponse( $msg_result );
+									  $parsePatronStatusResponse = $mysip->parsePatronStatusResponse( $msg_result );
 									  $in = $mysip->msgPatronInformation('none');
-									  $info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );						
-									  if ($result['variable']['BL'][0] == 'Y' || $info_status['variable']['BL'][0] == 'Y') {
+									  $parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );						
+									  if ($parsePatronStatusResponse['variable']['BL'][0] == 'Y' || $parsePatronStatusResponse['variable']['BL'][0] == 'Y') {
 										  // Successful Card!!!
 										
-										 if ($result['variable']['CQ'][0] == 'Y' || $info_status['variable']['CQ'][0] == 'Y') {
+										 if ($parsePatronStatusResponse['variable']['CQ'][0] == 'Y' || $parsePatronStatusResponse['variable']['CQ'][0] == 'Y') {
 											// Successful PIN !!!
 										  
 
@@ -2732,6 +2732,15 @@ Class UsersController extends AppController
 											$status = 1;
 											foreach($allVariables as $k=>$v){
 												$response = explode(",",$v['Variable']['authentication_response']);
+												if($v['Variable']['message_no'] == 24){
+													$info_status = $parsePatronStatusResponse;
+												} 
+												elseif($v['Variable']['message_no'] == 64){
+													$info_status = $parsePatronInfoResponse;
+												}
+												elseif($v['Variable']['message_no'] == 98){
+													$info_status = $parseACSStatusResponse;
+												}
 												if($v['Variable']['comparison_operator'] == '='){
 													$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 												}
@@ -2996,11 +3005,11 @@ Class UsersController extends AppController
 
 						// Make sure the response is 98 as expected
 						if (preg_match("/^98/", $msg_result)) {
-							$result = $mysip->parseACSStatusResponse($msg_result);
+							$parseACSStatusResponse = $mysip->parseACSStatusResponse($msg_result);
 
 							//  Use result to populate SIP2 setings
-							$mysip->AO = $result['variable']['AO'][0]; /* set AO to value returned */
-							$mysip->AN = $result['variable']['AN'][0]; /* set AN to value returned */
+							$mysip->AO = $parseACSStatusResponse['variable']['AO'][0]; /* set AO to value returned */
+							$mysip->AN = $parseACSStatusResponse['variable']['AN'][0]; /* set AN to value returned */
 
 							$mysip->patron = $card;
 							//$mysip->patronpwd = $pin;
@@ -3008,10 +3017,10 @@ Class UsersController extends AppController
 							$msg_result = $mysip->get_message($in);
 							// Make sure the response is 24 as expected
 							if (preg_match("/^24/", $msg_result)) {
-								$result = $mysip->parsePatronStatusResponse( $msg_result );
+								$parsePatronStatusResponse = $mysip->parsePatronStatusResponse( $msg_result );
 								$in = $mysip->msgPatronInformation('none');
-								$info_status = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );								
-								if ($result['variable']['BL'][0] == 'Y' || $info_status['variable']['BL'][0] == 'Y') {
+								$parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );								
+								if ($parsePatronStatusResponse['variable']['BL'][0] == 'Y' || $parsePatronInfoResponse['variable']['BL'][0] == 'Y') {
 									  // Successful Card!!!
 
 									$this->Variable->recursive = -1;										
@@ -3023,6 +3032,15 @@ Class UsersController extends AppController
 									$status = 1;
 									foreach($allVariables as $k=>$v){
 										$response = explode(",",$v['Variable']['authentication_response']);
+										if($v['Variable']['message_no'] == 24){
+											$info_status = $parsePatronStatusResponse;
+										} 
+										elseif($v['Variable']['message_no'] == 64){
+											$info_status = $parsePatronInfoResponse;
+										}
+										elseif($v['Variable']['message_no'] == 98){
+											$info_status = $parseACSStatusResponse;
+										}										
 										if($v['Variable']['comparison_operator'] == '='){
 											$status = strpos($v['Variable']['authentication_response'],$info_status['variable'][$v['Variable']['authentication_variable']][0]);
 										}

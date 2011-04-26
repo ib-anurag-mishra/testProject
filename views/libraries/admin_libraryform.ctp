@@ -302,6 +302,7 @@
 						<td aligh="left"><?php echo $this->Form->input('library_ezproxy_logout',array('label' => false, 'value' => $getData['Library']['library_ezproxy_logout'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
 					<tr><td colspan="2" id="innv_var" <?php if($getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && $getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name"){?>style="display:none;"<?php } ?>>
+					<input type="hidden" id="dropDown">
 					<?php
 					if(empty($allVariables))
 					{
@@ -314,7 +315,7 @@
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
-								<select name="data[Variable][0][comparison_operator]" id="oprDrop0" onchange="getResponse('0');">
+								<select name="data[Variable][0][comparison_operator]" id="oprDrop0">
 									<option value="">Select a Operator</option>
 									<option value="=">=</option>
 									<option value=">">></option>
@@ -329,6 +330,17 @@
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
 						</tr>
+						<tr id="msgNo">
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
+							<td align="left" style="padding-left:20px" class="libselect">
+								<select name="data[Variable][0][message_no]" id="msg0" onchange="getResponse('0');">
+									<option value="">Select a Message No</option>
+									<option value="24">24</option>
+									<option value="64">64</option>
+									<option value="98">98</option>
+								</select>							
+							</td>
+						</tr>						
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][error_msg]" class="form_fields" size="50"><input type="button" value="+" class="form_fields" onClick="addVariable(1);"></td>
@@ -363,6 +375,18 @@
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
+							</tr>
+							<tr <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
+								<td align="left" style="padding-left:20px" class="libselect">
+									<?php $messageVar = $v['Variable']['message_no']; ?>
+									<select name="data[Variable][<?php echo $k; ?>][message_no]" id="msg<?php echo $k; ?>">
+										<option value="">Select a Message No</option>
+										<option <?php if($var == '24'){ ?> selected = "selected" <?php } ?> value = "24" >24</option>
+										<option <?php if($var == '64'){ ?> selected = "selected" <?php } ?> value="64">64</option>
+										<option <?php if($var == '98'){ ?> selected = "selected" <?php } ?> value="98">98</option>
+									</select>							
+								</td>
 							</tr>							
 							<tr>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Error Message');?></td>
@@ -730,6 +754,7 @@
 				});
 				$("#LibraryLibraryContractEndDate").datepicker({showWeek: true, firstDay: 1, numberOfMonths: 3, dateFormat: 'yy-mm-dd'});
 				$("#LibraryLibraryAuthenticationMethod").change(function() {
+					$("#dropDown").val($(this).val());
 					if($(this).val() == 'referral_url') {
 						$("#referral_url").show();
 						$("#allurl").hide();
@@ -795,6 +820,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_https') {
 						$("#allurl").show();
@@ -817,6 +843,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_https_wo_pin') {
 						$("#allurl").show();
@@ -839,6 +866,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").hide();						
 					}					
 					else if ($(this).val() == 'innovative_https') {
 						$("#allurl").show();
@@ -950,6 +978,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").show();						
 					}
 					else if ($(this).val() == 'sip2_var_wo_pin') {
 						$("#allurl").show();
@@ -972,6 +1001,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").show();						
 					}					
 					else if ($(this).val() == 'ezproxy') {
 						$("#allurl").hide();
@@ -1016,6 +1046,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_name') {
 						$("#allurl").show();
@@ -1038,6 +1069,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#msgNo").hide();						
 					}
 					else if ($(this).val() == 'soap') {
 						$("#allurl").show();
