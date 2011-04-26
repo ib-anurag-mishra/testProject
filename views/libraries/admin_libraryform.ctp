@@ -382,9 +382,9 @@
 									<?php $messageVar = $v['Variable']['message_no']; ?>
 									<select name="data[Variable][<?php echo $k; ?>][message_no]" id="msg<?php echo $k; ?>">
 										<option value="">Select a Message No</option>
-										<option <?php if($var == '24'){ ?> selected = "selected" <?php } ?> value = "24" >24</option>
-										<option <?php if($var == '64'){ ?> selected = "selected" <?php } ?> value="64">64</option>
-										<option <?php if($var == '98'){ ?> selected = "selected" <?php } ?> value="98">98</option>
+										<option <?php if($messageVar == '24'){ ?> selected = "selected" <?php } ?> value = "24" >24</option>
+										<option <?php if($messageVar == '64'){ ?> selected = "selected" <?php } ?> value="64">64</option>
+										<option <?php if($messageVar == '98'){ ?> selected = "selected" <?php } ?> value="98">98</option>
 									</select>							
 								</td>
 							</tr>							
