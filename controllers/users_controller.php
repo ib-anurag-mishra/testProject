@@ -4564,21 +4564,20 @@ Class UsersController extends AppController
 					if(strpos($response,"PATRN NAME[pn]=")){
 						$retCardArr = explode("PATRN NAME[pn]=",$response);
 						foreach($retCardArr as $k=>$v){
-						$retPos = strpos($v,"<br/>");
-						$retCard = substr($v,0,$retPos-1);
-						$retCard = str_replace(" ","",$retCard);
-						if(strpos($response,$card)){
-							$posVal = true;
-							break;
-						} else {
-							if(strcmp($card,$retCard) == 0){
+							$retPos = strpos($v,"<br/>");
+							$retCard = substr($v,0,$retPos-1);
+							$retCard = str_replace(" ","",$retCard);
+							if(strpos($response,$name)){
 								$posVal = true;
-								break;		
+								break;
 							} else {
-								$posVal = false;
-								
-							}
-						}						
+								if(strcmp($name,$retCard) == 0){
+									$posVal = true;
+									break;		
+								} else {
+									$posVal = false;								
+								}
+							}						
 						}
 					} else {
 						if(strpos($response, "ERRMSG=")){
