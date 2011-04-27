@@ -40,13 +40,13 @@ Class UsersController extends AppController
 		}
 		if($userType == '1' || $this->Session->read('Auth.User.sales') == 'yes'){
 			if($library == 'special') {
-				$condition = array("library_name REGEXP '^[^A-Za-z]'");			
+				$condition = array("library_name REGEXP '^[^A-Za-z]'",'library_status' => 'active');			
 			}
 			elseif($library != '') {
-				$condition = array('library_name LIKE' => $library.'%');
+				$condition = array('library_name LIKE' => $library.'%','library_status' => 'active');
 			}
 			else {
-				$condition = "";
+				$condition = array('library_status' => 'active');
 			}
 			$url = $_SERVER['REQUEST_URI'];
 			header( "refresh:300;url=".$url);
