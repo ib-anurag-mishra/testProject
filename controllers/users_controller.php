@@ -3471,7 +3471,7 @@ Class UsersController extends AppController
 				}
 				curl_close($session);
 				if(strpos($retStr,"P BARCODE[pb]")){
-					if(strpos($retStr,$card)){
+					if(strpos($response,$card)){
 						$posVal = true;
 					} else {
 						$posVal = false;
@@ -3805,7 +3805,7 @@ Class UsersController extends AppController
 						throw new Exception(curl_error($session));
 					}
 					curl_close($session);
-					if(strpos($retStr,"P BARCODE[pb]")){
+					if(strpos($response,"P BARCODE[pb]")){
 						if(strpos($retStr,$card)){
 							$posVal = true;
 						} else {
