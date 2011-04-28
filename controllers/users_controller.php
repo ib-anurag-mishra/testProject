@@ -1526,7 +1526,7 @@ Class UsersController extends AppController
 								$status = '';
 							}
 							elseif($v['Variable']['comparison_operator'] == '='){
-								$check = strpos($v['Variable']['authentication_response'],$retStr);
+								$check = strpos($v['Variable']['authentication_response'],$retStatus);
 								if(!($check === false)){
 									$status = 1;
 								}
@@ -2034,7 +2034,7 @@ Class UsersController extends AppController
 							$status = '';
 						}
 						elseif($v['Variable']['comparison_operator'] == '='){
-							$check = strpos($v['Variable']['authentication_response'],$retStr);
+							$check = strpos($v['Variable']['authentication_response'],$retStatus);
 							if(!($check === false)){
 								$status = 1;
 							}
@@ -3511,7 +3511,7 @@ Class UsersController extends AppController
 								$status = '';
 							}
 							elseif($v['Variable']['comparison_operator'] == '='){
-								$check = strpos($v['Variable']['authentication_response'],$response);
+								$check = strpos($v['Variable']['authentication_response'],$retStatus);
 								if(!($check === false)){
 									$status = 1;
 								}
@@ -3845,7 +3845,7 @@ Class UsersController extends AppController
 									$status = '';
 								}
 								elseif($v['Variable']['comparison_operator'] == '='){
-									$check = strpos($v['Variable']['authentication_response'],$response);
+									$check = strpos($v['Variable']['authentication_response'],$retStatus);
 									if(!($check === false)){
 										$status = 1;
 									}
@@ -4181,7 +4181,7 @@ Class UsersController extends AppController
 									$status = '';
 								}
 								elseif($v['Variable']['comparison_operator'] == '='){
-									$check = strpos($v['Variable']['authentication_response'],$response);
+									$check = strpos($v['Variable']['authentication_response'],$retStatus);
 									if(!($check === false)){
 										$status = 1;
 									}
@@ -4694,7 +4694,7 @@ Class UsersController extends AppController
 								$status = '';
 							}
 							elseif($v['Variable']['comparison_operator'] == '='){
-								$check = strpos($v['Variable']['authentication_response'],$response);
+								$check = strpos($v['Variable']['authentication_response'],$retStatus);
 								if(!($check === false)){
 									$status = 1;
 								}
