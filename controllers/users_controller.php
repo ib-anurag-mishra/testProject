@@ -11,7 +11,7 @@ Class UsersController extends AppController
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
 	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso');
-	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url');
+	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language');
    
    /*
     Function Name : beforeFilter
@@ -191,6 +191,14 @@ Class UsersController extends AppController
    
 	function login(){
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){

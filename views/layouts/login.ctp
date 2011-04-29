@@ -15,11 +15,12 @@
 <script type="text/javascript">
 	var webroot = '<?php echo $this->webroot; ?>';
 	function changeLang(type){
+		$("#loadingDiv").show();
 		var language = type;
 		var data = "lang="+language;
 		$.ajax({
 			type: "post",  // Request method: post, get
-			url: webroot+"homes/language", // URL to request
+			url: webroot+"users/login", // URL to request
 			data: data,  // post data
 			success: function(response) {
 				var msg = response.substring(0,5);
@@ -31,16 +32,16 @@
 				}
 				else
 				{
-					$('#loginText').html(response);
-					$('#language').find('div').removeClass('active');
-					$('#language').find('div').addClass('non-active');
-					$('#'+type).removeClass('non-active');
-					$('#'+type).addClass('active');					
+					$('#container').html('');
+					$('#container').html(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
 		});
-	}	
+	}
+jQuery(document).ready(function() {
+	$("#loadingDiv").hide();
+});	
 </script>	
 </head>
 <body>
@@ -86,7 +87,12 @@
 		<div id="content">
 			<!-- Main contents start here -->
 			<?php echo $content_for_layout; ?>
-			<div id="loginText"><?php echo $page->getPageContent('login'); ?></div>
+			<div id="loginText">
+			<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
+				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+			</div>			
+			<?php echo $page->getPageContent('login'); ?>
+			</div>
 			<!-- Main contents end here -->
 		</div><!-- content -->
 	</div><!-- container -->
@@ -104,6 +110,11 @@
 			text-decoration:none; 
 		}
 	</style>
-<![endif]-->	
+<![endif]-->
+<script type="text/javascript">
+jQuery(document).ready(function() {
+	$("#loadingDiv").hide();
+});	
+</script>	
 </body>
 </html>

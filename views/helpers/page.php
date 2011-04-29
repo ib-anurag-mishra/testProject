@@ -4,7 +4,7 @@ class PageHelper extends AppHelper {
     var $helpers = array('Session');
     
     function getPageContent($type) {
-		if($this->Session->read('Config.language') == '' || $type == 'login'){
+		if($this->Session->read('Config.language') == ''){
 			$page = 'en';
 		} 
 		else {
