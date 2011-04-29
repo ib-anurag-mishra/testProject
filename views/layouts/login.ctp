@@ -33,7 +33,8 @@
 				else
 				{
 					$('#container').html('');
-					$('#container').html(response);
+					$('#footer').html('');
+					$('#allContent').html(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -81,24 +82,26 @@ jQuery(document).ready(function() {
 	    	</div>
 	  	</div>
 	<![endif]-->
-	<div id="container"> <!-- content -->
-		<?php echo $this->element('header'); ?>
-		<?php $session->flash(); ?>
-		<div id="content">
-			<!-- Main contents start here -->
-			<?php echo $content_for_layout; ?>
-			<div id="loginText">
-			<div id="loadingDiv" style="z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
-				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-			</div>			
-			<?php echo $page->getPageContent('login'); ?>
+	<div id="allContent">
+		<div id="container"> <!-- content -->
+			<?php echo $this->element('header'); ?>
+			<?php $session->flash(); ?>
+			<div id="content">
+				<!-- Main contents start here -->
+				<?php echo $content_for_layout; ?>
+				<div id="loginText">
+				<div id="loadingDiv" style="z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
+					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+				</div>			
+				<?php echo $page->getPageContent('login'); ?>
+				</div>
+				<!-- Main contents end here -->
+			</div><!-- content -->
+		</div><!-- container -->
+		<div id="footer">
+			<div id="copyright">
+				&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
 			</div>
-			<!-- Main contents end here -->
-		</div><!-- content -->
-	</div><!-- container -->
-	<div id="footer">
-		<div id="copyright">
-			&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
 		</div>
 	</div>
 <!--[if IE 7]>	
