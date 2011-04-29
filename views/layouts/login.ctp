@@ -88,7 +88,7 @@ jQuery(document).ready(function() {
 			<!-- Main contents start here -->
 			<?php echo $content_for_layout; ?>
 			<div id="loginText">
-			<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
+			<div id="loadingDiv" style="z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
 				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
 			</div>			
 			<?php echo $page->getPageContent('login'); ?>
@@ -111,10 +111,5 @@ jQuery(document).ready(function() {
 		}
 	</style>
 <![endif]-->
-<script type="text/javascript">
-jQuery(document).ready(function() {
-	$("#loadingDiv").hide();
-});	
-</script>	
 </body>
 </html>
