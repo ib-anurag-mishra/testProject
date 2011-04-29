@@ -10,9 +10,17 @@
 <div id="language">
 <?php
 $language = $language->getLanguage();
+if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
+	$lang = "English";
+} 
+else{
+	$lang = "Spanish";
+}
 foreach($language as $k => $v){
-	echo "<div id=".$k." onClick='changeLang(".$k.")'";
-	if($k == '1'){
+	?>
+	<div id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'inhdlogin')"
+	<?php
+	if($v == $lang){
 		echo 'class = "active"';
 	}
 	else {
@@ -23,3 +31,6 @@ foreach($language as $k => $v){
 ?>
 </div>
 <div class="clr"></div>
+<script type="text/javascript">
+	$("#loadingDiv").hide();
+</script>

@@ -14,13 +14,13 @@
 <script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js"></script>	
 <script type="text/javascript">
 	var webroot = '<?php echo $this->webroot; ?>';
-	function changeLang(type){
+	function changeLang(type,page){
 		$("#loadingDiv").show();
 		var language = type;
 		var data = "lang="+language;
 		$.ajax({
 			type: "post",  // Request method: post, get
-			url: webroot+"users/login", // URL to request
+			url: webroot+"users/"+page, // URL to request
 			data: data,  // post data
 			success: function(response) {
 				var msg = response.substring(0,5);

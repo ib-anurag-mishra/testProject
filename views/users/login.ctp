@@ -22,7 +22,9 @@ else{
 	$lang = "Spanish";
 }
 foreach($language as $k => $v){
-	echo "<div id=".$k." onClick='changeLang(".$k.")'";
+	?>
+	<div id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'login')"
+	<?php
 	if($v == $lang){
 		echo 'class = "active"';
 	}

@@ -908,6 +908,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -1099,6 +1107,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -1433,6 +1449,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -1748,7 +1772,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';     
-		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -1945,6 +1976,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -2262,7 +2301,15 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		$this->layout = 'login';     
+		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -2480,7 +2527,15 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		$this->layout = 'login';     
+		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -2672,7 +2727,15 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		$this->layout = 'login';     
+		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -2995,7 +3058,15 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		$this->layout = 'login';     
+		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -3405,6 +3476,14 @@ Class UsersController extends AppController
 			}
 		}
       $this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}	  
 	  if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -3739,13 +3818,21 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
-		  if ($this->Session->read('patron')){
-				$userType = $this->Session->read('patron');
-				if($userType != ''){
-					$this->redirect('/homes/index');
-					$this->Auth->autoRedirect = false;     
-				}
-		  }	
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
+				$this->redirect('/homes/index');
+				$this->Auth->autoRedirect = false;     
+			}
+		}	
 		$this->set('pin',"");
 		$this->set('card',"");
 		if($this->data){         
@@ -4074,13 +4161,21 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
-		  if ($this->Session->read('patron')){
-				$userType = $this->Session->read('patron');
-				if($userType != ''){
-					$this->redirect('/homes/index');
-					$this->Auth->autoRedirect = false;     
-				}
-		  }	
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
+				$this->redirect('/homes/index');
+				$this->Auth->autoRedirect = false;     
+			}
+		}	
 		$this->set('pin',"");
 		$this->set('card',"");
 		if($this->data){         
@@ -4411,6 +4506,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
@@ -4572,6 +4675,14 @@ Class UsersController extends AppController
 			}
 		}
 		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		} 
+		else {
+			$this->Session->write('Config.language', 'en');
+		}		
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
