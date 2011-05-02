@@ -8,9 +8,9 @@
 		echo '<br class="clr">';
 		echo $form->input('password', array('label' => __('Password', true)));
 		echo '<span class="forgot_password">';
-		echo $html->link(__('Forgot', true).' '.__('Password', true).'?', array('controller' => 'homes', 'action' => 'forgot_password'));
+		echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
 		echo '</span>';
-	echo $form->end('Login');   
+	echo $form->end(__('Login', true));   
 ?>
 <div id="language">
 <?php
