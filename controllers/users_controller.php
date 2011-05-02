@@ -3321,7 +3321,7 @@ Class UsersController extends AppController
 	   
 	   
 	function sso(){
-		if(!isset($_SERVER['HTTP_REFERER'])){
+		if(isset($_REQUEST['libname'])){
 			$libName = $_REQUEST['libname'];
 			$this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');	
