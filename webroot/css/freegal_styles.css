@@ -1105,6 +1105,7 @@ div.message {
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 	border-top: 1px solid #CCCCCC;
+	#margin-top:-10px;
 	-moz-border-radius-bottomright: 5px;
 	-khtml-border-radius-bottomright: 5px;
 	-webkit-border-bottom-right-radius: 5px;
@@ -1155,7 +1156,6 @@ div.message {
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
 	border-top: 1px solid #CCCCCC;
-	padding-bottom: 1px;
 	width:147px;
 	height:20px;
 	float:left;
@@ -1174,7 +1174,6 @@ div.message {
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
 	border-top: 1px solid #CCCCCC;
-	padding-bottom: 1px;
 	width:145px;
 	height:20px;
 	float:left;

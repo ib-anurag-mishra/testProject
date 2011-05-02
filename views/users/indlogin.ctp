@@ -33,4 +33,4 @@ foreach($language as $k => $v){
 <div class="clr"></div>
 <script type="text/javascript">
 	$("#loadingDiv").hide();
-</script>>
+</script>
