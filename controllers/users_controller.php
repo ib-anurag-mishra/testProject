@@ -227,7 +227,12 @@ Class UsersController extends AppController
 			$libraryArr = $this->Library->find('first',array(                                                
 										'conditions' => array('Library.id' => $libraryId)
 										)
-									);         
+									);
+			if($libraryArr['Library']['library_status'] =='inactive'){
+				$this->Session->destroy('user'); 
+				$this -> Session -> setFlash("Please see your Library Administrator for access to this Service.");
+				$this->redirect(array('controller' => 'users', 'action' => 'login'));	
+			}									
 			$authMethod = $libraryArr['Library']['library_authentication_method'];        
 			if($authMethod == 'user_account'){
 				$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libraryId, 'patronid' => $patronId)));
