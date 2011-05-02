@@ -4,7 +4,7 @@
 	echo $form->create('User', array( 'action' => 'inlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
 		echo $form->input('card', array('label' => 'Card Number','value' => $card));		
-	echo $form->end('Login');
+	echo $form->end(__('Login', true));
 ?>
 <div id="language">
 <?php

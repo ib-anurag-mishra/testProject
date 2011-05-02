@@ -5,7 +5,7 @@
 		echo '<p class="loginbox"></p>';
 		echo $form->input('card', array('label' => 'Card Number','value' => $card));
 		echo '<br class="clr">';
-	echo $form->end('Login');
+	echo $form->end(__('Login', true));
 ?>
 <div id="language">
 <?php

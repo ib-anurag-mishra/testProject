@@ -12,7 +12,7 @@
 		echo $form->input('card', array('label' => 'Card Number','value' => $card));
 		echo '<br class="clr">';
 		echo $form->input('pin', array('label' => 'Pin','value' => $pin, 'type'=>'password'));
-	echo $form->end('Login');
+	echo $form->end(__('Login', true));
 ?>
 <div id="language">
 <?php
