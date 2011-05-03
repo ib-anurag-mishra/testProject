@@ -1,20 +1,17 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+
 # LANGUAGE translation of CakePHP Application
 # Copyright YEAR NAME <EMAIL@ADDRESS>
 #
-msgid ""
-msgstr ""
-"Project-Id-Version: FreegalMusicaGratis.com\n"
-"POT-Creation-Date: 2010-12-01 17:19-0500\n"
-"PO-Revision-Date: 2011-04-29 11:36+0530\n"
-"Last-Translator: \n"
-"Language-Team: m68 Interactive <rob@m68interactive.com>\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Poedit-Language: English\n"
-"X-Poedit-Country: UNITED STATES\n"
-
 #: /artists/admin_manageartist.ctp:32
 #: /artists/admin_managefeaturedartist.ctp:31
 #: /artists/admin_managenewartist.ctp:30
@@ -493,18 +490,6 @@ msgstr "Email"
 msgid "Password"
 msgstr "Password"
 
-#: /users/login.ctp:7
-msgid "Email"
-msgstr "Email"
-
-#: /users/login.ctp:9
-msgid "Password"
-msgstr "Password"
-
-#: /users/login.ctp:11
-msgid "Forgot"
-msgstr "Forgot"
-
 #: /users/my_account.ctp:40
 msgid "Save"
 msgstr "Save"
@@ -575,4 +560,12 @@ msgstr "%s was not deleted"
 #: /views/elements/footer.ctp:80
 msgid "All Rights Reserved"
 msgstr "All Rights Reserved"
+
+#: /users/login.ctp:11
+msgid "Forgot Password?"
+msgstr "Forgot Password?"
+
+#: /users/login.ctp:13
+msgid "Login"
+msgstr "Login"
 

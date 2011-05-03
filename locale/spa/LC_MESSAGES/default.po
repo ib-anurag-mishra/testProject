@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusicaGratis.com\n"
 "POT-Creation-Date: 2010-12-01 17:19-0500\n"
-"PO-Revision-Date: 2011-04-29 11:38+0530\n"
+"PO-Revision-Date: 2011-05-03 20:10+0530\n"
 "Last-Translator: \n"
 "Language-Team: m68 Interactive <rob@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
@@ -267,14 +267,6 @@ msgstr "Apellido"
 msgid "Email"
 msgstr "Email"
 
-#: /users/my_account.ctp:36
-msgid "Password"
-msgstr "Clave"
-
-#: /users/login.ctp:7
-msgid "Email"
-msgstr "Email"
-
 #: /users/login.ctp:9
 msgid "Password"
 msgstr "Clave"
@@ -290,4 +282,12 @@ msgstr "Salvar"
 #: /genres_controller.php:138
 msgid "Invalid Genre."
 msgstr "Género Inválido."
+
+#: /users/login.ctp:11
+msgid "Forgot Password?"
+msgstr "Olvidé mi clave"
+
+#: /users/login.ctp:13
+msgid "Login"
+msgstr "Comenzar"
 
