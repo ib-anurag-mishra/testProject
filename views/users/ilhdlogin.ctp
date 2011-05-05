@@ -12,7 +12,12 @@
 		echo $form->input('card', array('label' => 'Card Number','value' => $card));
 		echo '<br class="clr">';
 		echo $form->input('name', array('label' => 'Last Name','value' => $name, 'type'=>'password'));
-	echo $form->end(__('Login', true));
+		if($this->Session->read('Config.language') == '' || $this->Session->read('Config.language') == 'en'){
+			echo $form->end(__('Login', true));
+		}
+		else{
+			echo $form->end(__('Comenzar', true));
+		}
 ?>
 <div id="language">
 <?php

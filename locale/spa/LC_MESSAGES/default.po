@@ -288,6 +288,7 @@ msgid "Forgot Password?"
 msgstr "Olvidé mi clave"
 
 #: /users/login.ctp:13
+#: /users/inlogin.ctp:7
 msgid "Login"
 msgstr "Comenzar"
 

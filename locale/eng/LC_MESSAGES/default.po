@@ -566,6 +566,7 @@ msgid "Forgot Password?"
 msgstr "Forgot Password?"
 
 #: /users/login.ctp:13
+#: /users/inlogin.ctp:7
 msgid "Login"
 msgstr "Login"
 
