@@ -287,8 +287,21 @@ msgstr "Género Inválido."
 msgid "Forgot Password?"
 msgstr "Olvidé mi clave"
 
-#: /users/login.ctp:13
-#: /users/inlogin.ctp:7
+#: \users\idlogin.ctp:9
+#: \users\ihdlogin.ctp:9
+#: \users\ildlogin.ctp:15
+#: \users\ilhdlogin.ctp:15
+#: \users\ilogin.ctp:9
+#: \users\indlogin.ctp:8
+#: \users\inhdlogin.ctp:8
+#: \users\inhlogin.ctp:9
+#: \users\inlogin.ctp:7
+#: \users\login.ctp:13
+#: \users\plogin.ctp:9
+#: \users\sdlogin.ctp:15
+#: \users\slogin.ctp:15
+#: \users\sndlogin.ctp:11
+#: \users\snlogin.ctp:10
 msgid "Login"
 msgstr "Comenzar"
 
