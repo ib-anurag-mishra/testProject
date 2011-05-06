@@ -3,14 +3,9 @@
 	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'inhdlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
-		echo $form->input('card', array('label' => 'Card Number','value' => $card));
+		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));
 		echo '<br class="clr">';
-		if($this->Session->read('Config.language') == '' || $this->Session->read('Config.language') == 'en'){
-			echo $form->end(__('Login', true));
-		}
-		else{
-			echo $form->end(__('Comenzar', true));
-		}
+	echo $form->end(__('Login', true));
 ?>
 <div id="language">
 <?php

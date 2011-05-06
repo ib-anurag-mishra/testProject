@@ -8,19 +8,9 @@
 		echo '<br class="clr">';
 		echo $form->input('password', array('label' => __('Password', true)));
 		echo '<span class="forgot_password">';
-		if($this->Session->read('Config.language') == '' || $this->Session->read('Config.language') == 'en'){
 			echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
-		}
-		else{
-			echo $html->link(__('Olvide mi clave', true), array('controller' => 'homes', 'action' => 'forgot_password'));
-		}
 		echo '</span>';
-		if($this->Session->read('Config.language') == '' || $this->Session->read('Config.language') == 'en'){
-			echo $form->end(__('Login', true));
-		}
-		else{
-			echo $form->end(__('Comenzar', true));
-		}
+	echo $form->end(__('Login', true));
 ?>
 <div id="language">
 <?php

@@ -6,13 +6,8 @@
 	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'snlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
-		echo $form->input('card', array('label' => 'Card Number','value' => $card));
-		if($this->Session->read('Config.language') == '' || $this->Session->read('Config.language') == 'en'){
-			echo $form->end(__('Login', true));
-		}
-		else{
-			echo $form->end(__('Comenzar', true));
-		}  
+		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));
+	echo $form->end(__('Login', true)); 
 ?>
 <div id="language">
 <?php
