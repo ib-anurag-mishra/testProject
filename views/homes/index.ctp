@@ -409,7 +409,7 @@ $ieVersion =  ieversion();
     </div>
     <div id="artist_search">
 		<div id="artist_links">
-		Artist Search&nbsp;&nbsp;
+		<?php __('Artist Search') ?>&nbsp;&nbsp;
 		<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;
 		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
 		<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-06 06:01+0000\n"
-"PO-Revision-Date: 2011-05-06 16:55+0530\n"
+"POT-Creation-Date: 2011-05-06 13:10+0000\n"
+"PO-Revision-Date: 2011-05-06 19:24+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -67,7 +67,7 @@ msgstr "Artist"
 
 #: \artists\view.ctp:68
 msgid "Time"
-msgstr "TIme"
+msgstr "Time"
 
 #: \artists\view.ctp:69
 #: \homes\my_history.ctp:30
@@ -140,13 +140,22 @@ msgstr "Add to Wishlist"
 msgid "Coming Soon"
 msgstr "Coming Soon"
 
-#: \elements\header.ctp:49
-msgid "Weekly Downloads"
-msgstr "Weekly Downloads"
+#: \elements\footer.ctp:23
+msgid "Terms & Conditions"
+msgstr "Terms & Conditions"
 
+#: \elements\footer.ctp:25
 #: \elements\header.ctp:53
 msgid "FAQ"
 msgstr "FAQ"
+
+#: \elements\footer.ctp:27
+msgid "Also available in"
+msgstr "Also available in"
+
+#: \elements\header.ctp:49
+msgid "Weekly Downloads"
+msgstr "Weekly Downloads"
 
 #: \elements\header.ctp:56
 msgid "My Wishlist"
@@ -213,6 +222,18 @@ msgstr "IMPORTANT:  Please note that once you press \"Download Now\" you have us
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
 msgstr "No songs have been downloaded yet."
+
+#: \homes\index.ctp:412
+msgid "Artist Search"
+msgstr "Artist Search"
+
+#: \homes\limits.ctp:5
+msgid "English"
+msgstr "English"
+
+#: \homes\limits.ctp:6
+msgid "Spanish"
+msgstr "Spanish"
 
 #: \homes\my_history.ctp:16
 msgid "Download History"
@@ -508,14 +529,28 @@ msgid "Login"
 msgstr "Login"
 
 #: \users\login.ctp:7
+#: \users\my_account.ctp:21
 msgid "Email"
 msgstr "Email"
 
 #: \users\login.ctp:9
+#: \users\my_account.ctp:25
 msgid "Password"
 msgstr "Password"
 
 #: \users\login.ctp:11
 msgid "Forgot Password?"
 msgstr "Forgot Password?"
+
+#: \users\my_account.ctp:13
+msgid "First Name"
+msgstr "First Name"
+
+#: \users\my_account.ctp:17
+msgid "Last Name"
+msgstr "Last Name"
+
+#: \users\my_account.ctp:29
+msgid "Save"
+msgstr "Save"
 

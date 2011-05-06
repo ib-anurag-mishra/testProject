@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-06 06:01+0000\n"
+"POT-Creation-Date: 2011-05-06 13:10+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -141,12 +141,21 @@ msgstr ""
 msgid "Coming Soon"
 msgstr ""
 
-#: \elements\header.ctp:49
-msgid "Weekly Downloads"
+#: \elements\footer.ctp:23
+msgid "Terms & Conditions"
 msgstr ""
 
+#: \elements\footer.ctp:25
 #: \elements\header.ctp:53
 msgid "FAQ"
+msgstr ""
+
+#: \elements\footer.ctp:27
+msgid "Also available in"
+msgstr ""
+
+#: \elements\header.ctp:49
+msgid "Weekly Downloads"
 msgstr ""
 
 #: \elements\header.ctp:56
@@ -213,6 +222,18 @@ msgstr ""
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
+msgstr ""
+
+#: \homes\index.ctp:412
+msgid "Artist Search"
+msgstr ""
+
+#: \homes\limits.ctp:5
+msgid "English"
+msgstr ""
+
+#: \homes\limits.ctp:6
+msgid "Spanish"
 msgstr ""
 
 #: \homes\my_history.ctp:16
@@ -509,14 +530,28 @@ msgid "Login"
 msgstr ""
 
 #: \users\login.ctp:7
+#: \users\my_account.ctp:21
 msgid "Email"
 msgstr ""
 
 #: \users\login.ctp:9
+#: \users\my_account.ctp:25
 msgid "Password"
 msgstr ""
 
 #: \users\login.ctp:11
 msgid "Forgot Password?"
+msgstr ""
+
+#: \users\my_account.ctp:13
+msgid "First Name"
+msgstr ""
+
+#: \users\my_account.ctp:17
+msgid "Last Name"
+msgstr ""
+
+#: \users\my_account.ctp:29
+msgid "Save"
 msgstr ""
 
