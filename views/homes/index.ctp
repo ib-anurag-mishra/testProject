@@ -408,9 +408,9 @@ $ieVersion =  ieversion();
             ?>
     </div>
     <div id="artist_search">
-		<div id="artist_links">
-		<?php __('Artist Search') ?>&nbsp;&nbsp;
-		<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;
+		<div id="artist_links" style="font-size:12px;">
+		<?php __('Artist Search') ?>&nbsp;
+		<a href="#bottom" onclick="searchArtist('special')">#</a>
 		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
 		<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;
 		<a href="#bottom" onclick="searchArtist('c')">C</a>&nbsp;
@@ -422,21 +422,18 @@ $ieVersion =  ieversion();
         <a href="#bottom" onclick="searchArtist('h')">H</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('i')">I</a>&nbsp;
         <a href="#" onclick="searchArtist('j')">J</a>&nbsp;
-
         <a href="#bottom" onclick="searchArtist('k')">K</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('l')">L</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('m')">M</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('n')">N</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('o')">O</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('p')">P</a>&nbsp;
-
         <a href="#bottom" onclick="searchArtist('q')">Q</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('r')">R</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('s')">S</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('t')">T</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('u')">U</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('v')">V</a>&nbsp;
-
         <a href="#bottom" onclick="searchArtist('w')">W</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('x')">X</a>&nbsp;
         <a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;

@@ -139,7 +139,7 @@ body  {
 }
 
 #ticker {
-        width:939px;
+        width:948px;
         height:20px;
         background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color: <?php echo $library_boxheader_text_color; ?>;
