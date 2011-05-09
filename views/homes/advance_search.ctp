@@ -11,7 +11,7 @@
 			echo $form->input('song');
 			echo $form->input('album');
 			echo $form->input('genre_id', array('type' => 'select', 'empty' => ''));
-		echo $form->end('Advanced Search');
+		echo $form->end(__('Advanced Search', true));
 	?>
 </div>
 <?php echo $javascript->link('freegal_advsearch_curvy'); ?>
