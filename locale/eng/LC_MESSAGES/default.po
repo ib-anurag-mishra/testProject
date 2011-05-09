@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-06 13:10+0000\n"
-"PO-Revision-Date: 2011-05-06 19:24+0530\n"
+"POT-Creation-Date: 2011-05-09 05:58+0000\n"
+"PO-Revision-Date: 2011-05-09 11:52+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -140,6 +140,14 @@ msgstr "Add to Wishlist"
 msgid "Coming Soon"
 msgstr "Coming Soon"
 
+#: \elements\footer.ctp:19
+msgid "All Rights Reserved"
+msgstr "All Rights Reserved"
+
+#: \elements\footer.ctp:21
+msgid "About"
+msgstr "About"
+
 #: \elements\footer.ctp:23
 msgid "Terms & Conditions"
 msgstr "Terms & Conditions"
@@ -217,7 +225,7 @@ msgstr "National Top 10"
 
 #: \homes\index.ctp:188;191
 msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
-msgstr "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
+msgstr "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not"
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."

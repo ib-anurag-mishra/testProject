@@ -408,7 +408,7 @@ $ieVersion =  ieversion();
             ?>
     </div>
     <div id="artist_search">
-		<div id="artist_links" style="font-size:12px;">
+		<div id="artist_links" style="font-size:12px;height:20px;">
 		<?php __('Artist Search') ?>&nbsp;
 		<a href="#bottom" onclick="searchArtist('special')">#</a>
 		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;

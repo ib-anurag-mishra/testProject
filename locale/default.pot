@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-06 13:10+0000\n"
+"POT-Creation-Date: 2011-05-09 05:58+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -139,6 +139,14 @@ msgstr ""
 #: \homes\index.ctp:233;233;350;350
 #: \homes\search.ctp:177;177
 msgid "Coming Soon"
+msgstr ""
+
+#: \elements\footer.ctp:19
+msgid "All Rights Reserved"
+msgstr ""
+
+#: \elements\footer.ctp:21
+msgid "About"
 msgstr ""
 
 #: \elements\footer.ctp:23

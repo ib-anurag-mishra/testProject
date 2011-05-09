@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-06 13:10+0000\n"
-"PO-Revision-Date: 2011-05-06 19:16+0530\n"
+"POT-Creation-Date: 2011-05-09 05:58+0000\n"
+"PO-Revision-Date: 2011-05-09 11:45+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -52,7 +52,7 @@ msgstr "Géneros"
 
 #: \artists\view.ctp:57
 msgid "Label"
-msgstr "título"
+msgstr "Título"
 
 #: \artists\view.ctp:66
 msgid "Tracks"
@@ -126,12 +126,12 @@ msgstr "Límite Excedido"
 #: \homes\index.ctp:215;332
 #: \homes\search.ctp:157
 msgid "Added to Wishlist"
-msgstr "Added to Wishlist"
+msgstr "Añadido a su Lista Deseos"
 
 #: \artists\view.ctp:167
 #: \homes\index.ctp:219;336
 msgid "Add to Wishlist"
-msgstr "Add to wishlist"
+msgstr "Añadir a mi lista deseos"
 
 #: \artists\view.ctp:182
 #: \genres\index.ctp:156
@@ -139,6 +139,14 @@ msgstr "Add to wishlist"
 #: \homes\search.ctp:177;177
 msgid "Coming Soon"
 msgstr "Viene Pronto"
+
+#: \elements\footer.ctp:19
+msgid "All Rights Reserved"
+msgstr "All Rights Reserved"
+
+#: \elements\footer.ctp:21
+msgid "About"
+msgstr "Sobre"
 
 #: \elements\footer.ctp:23
 msgid "Terms & Conditions"
