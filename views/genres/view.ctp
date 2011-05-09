@@ -4,7 +4,7 @@
 </div>
 <br class="clr">
 <div id="genre_artist_search">
- <a name="bottom">Artist Search&nbsp;</a>&nbsp;
+ <a name="bottom"><?php __('Artist Search'); ?>&nbsp;</a>&nbsp;
  <?php echo $html->link('ALL',array('controller' => 'genres', 'action' => 'view', base64_encode($genre)));?>&nbsp;
  <?php echo $html->link('#',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'#'));?>&nbsp;
  <?php echo $html->link('A',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'A'));?>&nbsp;
