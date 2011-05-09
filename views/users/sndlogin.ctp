@@ -7,7 +7,6 @@
 	echo $form->create('User', array( 'action' => 'sndlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
 		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));
-		echo '<br class="clr">';
 	echo $form->end(__('Login', true));
 ?>
 <div id="language">
