@@ -76,5 +76,5 @@
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?><br />
 </div>
 <div id="genreAdvSearch">
-	Can't find what you are looking for, try our <?php echo $html->link('Advanced Search', array('controller' => 'homes', 'action' => 'advance_search')); ?>.
+	<?php __("Can't find what you are looking for, try our") ?>&nbsp;<?php echo $html->link(__('Advanced Search', true), array('controller' => 'homes', 'action' => 'advance_search')); ?>.
 </div>

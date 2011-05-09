@@ -139,7 +139,7 @@ $ieVersion =  ieversion();
 									<?php }
 									else{ ?>
 										<p>
-										<span class="beforeClick" id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>",this);'>Add to wishlist</a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+										<span class="beforeClick" id="wishlist<?php echo $catG["ProdId"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $catG["ProdId"]; ?>",this);'><?php __('Add to wishlist', true) ?></a></span><span id="wishlist_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 										<span class="afterClick" style="display:none;float:left"><?php __('Please Wait...');?></span>
 										</p>
 									<?php	
@@ -153,7 +153,7 @@ $ieVersion =  ieversion();
 						}
 					}else{
 						?>
-						<span title="<?php __('Coming Soon');?> (<?php echo $catG['SalesDate']; ?>)"> Coming Soon </span>
+						<span title="<?php __('Coming Soon');?> (<?php echo $catG['SalesDate']; ?>)"><?php __('Coming Soon');?></span>
 						<?php
 					}
 					?>
@@ -171,7 +171,7 @@ $ieVersion =  ieversion();
 <br class="clr">
 <div id="genreViewAll">
 	<div id="genreViewAllBox">
-		View All Genres
+		<?php __('View All Genres') ?>
 	</div>
 	<br class="clr" />
 	<table cellspacing="10" cellpadding="0" border="0" width="100%">

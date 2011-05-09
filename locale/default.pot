@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-09 05:58+0000\n"
+"POT-Creation-Date: 2011-05-09 12:04+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -135,7 +135,7 @@ msgid "Add to Wishlist"
 msgstr ""
 
 #: \artists\view.ctp:182
-#: \genres\index.ctp:156
+#: \genres\index.ctp:156;156
 #: \homes\index.ctp:233;233;350;350
 #: \homes\search.ctp:177;177
 msgid "Coming Soon"
@@ -199,6 +199,7 @@ msgid "Newly Added"
 msgstr ""
 
 #: \elements\navigation.ctp:100
+#: \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"
 msgstr ""
@@ -206,6 +207,18 @@ msgstr ""
 #: \genres\index.ctp:113;116
 #: \homes\search.ctp:130;133
 msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr ""
+
+#: \genres\index.ctp:142
+msgid "Add to wishlist"
+msgstr ""
+
+#: \genres\index.ctp:174
+msgid "View All Genres"
+msgstr ""
+
+#: \genres\view.ctp:79
+msgid "Can't find what you are looking for, try our"
 msgstr ""
 
 #: \homes\forgot_password.ctp:2
@@ -549,6 +562,10 @@ msgstr ""
 
 #: \users\login.ctp:11
 msgid "Forgot Password?"
+msgstr ""
+
+#: \users\my_account.ctp:4
+msgid "Manage Account"
 msgstr ""
 
 #: \users\my_account.ctp:13

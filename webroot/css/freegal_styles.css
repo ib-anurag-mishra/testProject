@@ -1050,7 +1050,7 @@ div.message {
 }
 
 #login {
-	width: 300px;
+	width: 400px;
 	height: 175px;
 	background: #F3F3F3;
 	border-top: 2px solid #CCC;
@@ -1061,21 +1061,25 @@ div.message {
 
 #login label {
 	display:block;
-	width: 110px;
+	width: 210px;
 	float: left;
 	margin-top:10px;
-	margin-left:10px;
+	margin-left: -35px;
 }
 
 #login input {
 	width: 150px;
 	float:right;
 	margin-top:10px;
-	margin-right:20px;
+	margin-right: 60px;
 }
 
 .loginbox {
 	margin-top:43px;
+}
+
+.submit {
+	margin-top:30px;
 }
 
 .forgot_password {

@@ -4,8 +4,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2011-05-09 05:58+0000\n"
-"PO-Revision-Date: 2011-05-09 11:45+0530\n"
+"POT-Creation-Date: 2011-05-09 12:04+0000\n"
+"PO-Revision-Date: 2011-05-09 17:59+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -134,7 +134,7 @@ msgid "Add to Wishlist"
 msgstr "Añadir a mi lista deseos"
 
 #: \artists\view.ctp:182
-#: \genres\index.ctp:156
+#: \genres\index.ctp:156;156
 #: \homes\index.ctp:233;233;350;350
 #: \homes\search.ctp:177;177
 msgid "Coming Soon"
@@ -198,6 +198,7 @@ msgid "Newly Added"
 msgstr "Nuevas Adiciones"
 
 #: \elements\navigation.ctp:100
+#: \genres\view.ctp:79
 #: \homes\advance_search.ctp:2
 msgid "Advanced Search"
 msgstr "Búsqueda Avanzada"
@@ -206,6 +207,18 @@ msgstr "Búsqueda Avanzada"
 #: \homes\search.ctp:130;133
 msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
 msgstr "IMPORTANTE: Porfavor note que una vez que usted 'Baja la Canción' usted ha usado una de sus bajadas, aún cuando usted 'La Cancele' o no."
+
+#: \genres\index.ctp:142
+msgid "Add to wishlist"
+msgstr "Añadir a mi lista deseos"
+
+#: \genres\index.ctp:174
+msgid "View All Genres"
+msgstr "Vea todos los géneros"
+
+#: \genres\view.ctp:79
+msgid "Can't find what you are looking for, try our"
+msgstr " ¿No encuentra lo que busca?  Pruebe nuestro"
 
 #: \homes\forgot_password.ctp:2
 msgid "Forgot Password"
@@ -548,7 +561,11 @@ msgstr "Clave"
 
 #: \users\login.ctp:11
 msgid "Forgot Password?"
-msgstr "Olvidé mi clave"
+msgstr "Forgot Password?"
+
+#: \users\my_account.ctp:4
+msgid "Manage Account"
+msgstr "Maneje su cuenta"
 
 #: \users\my_account.ctp:13
 msgid "First Name"
