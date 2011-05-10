@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2011-05-09 17:59+0530\n"
+"PO-Revision-Date: 2011-05-10 12:18+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -561,7 +561,7 @@ msgstr "Clave"
 
 #: \users\login.ctp:11
 msgid "Forgot Password?"
-msgstr "Forgot Password?"
+msgstr "Olvidé mi clave"
 
 #: \users\my_account.ctp:4
 msgid "Manage Account"
