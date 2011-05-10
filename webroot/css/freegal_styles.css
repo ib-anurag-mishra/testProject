@@ -1079,7 +1079,7 @@ div.message {
 }
 
 .submit {
-	margin-top:30px;
+	margin-top:20px;
 }
 
 .forgot_password {
@@ -1087,7 +1087,7 @@ div.message {
 }
 .forgot_password a {
 	float:right;
-	margin: 2px 40px 0 0;
+	margin: 0 70px 0 0;
 	text-decoration: none;
 	color:#666;
 }

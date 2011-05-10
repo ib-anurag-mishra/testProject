@@ -7,6 +7,7 @@
 		echo $form->input('email', array('label' => __('Email', true)));
 		echo '<br class="clr">';
 		echo $form->input('password', array('label' => __('Password', true)));
+		echo '<br class="clr">';
 		echo '<span class="forgot_password">';
 			echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
 		echo '</span>';
