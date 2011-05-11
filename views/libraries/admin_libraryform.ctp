@@ -321,7 +321,7 @@
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
-								<select name="data[Variable][0][comparison_operator]" id="oprDrop0">
+								<select name="data[Variable][0][comparison_operator]" id="oprDrop0"  onChange="getArray('0');getResponse('0');">
 									<option value="">Select a Operator</option>
 									<option value="=">=</option>
 									<option value=">">></option>
@@ -331,11 +331,20 @@
 									<option value="date">Expired</option>
 								</select>							
 							</td>
+						</tr>
+						<tr id="resArr0" style="display:none">
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Result Array');?></td>
+							<td align="left" style="padding-left:20px" class="libselect">
+								<select name="data[Variable][0][result_arr]">
+									<option value="fixed">Fixed</option>
+									<option value="variable">Variable</option>
+								</select>							
+							</td>
 						</tr>						
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
-						</tr>
+						</tr>						
 						<tr id="msgNo">
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
@@ -367,7 +376,7 @@
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Comparison Operator');?></td>
 								<td align="left" style="padding-left:20px" class="libselect">
 									<?php $var = $v['Variable']['comparison_operator']; ?>
-									<select name="data[Variable][<?php echo $k; ?>][comparison_operator]" id="oprDrop<?php echo $k; ?>" onchange="getResponse(<?php echo $k; ?>);">
+									<select name="data[Variable][<?php echo $k; ?>][comparison_operator]" id="oprDrop<?php echo $k; ?>" onchange="getResponse(<?php echo $k; ?>);getArray(<?php echo $k; ?>);">
 										<option value="">Select a Operator</option>
 										<option <?php if($var == '='){ ?> selected = "selected" <?php } ?> value = "=" >=</option>
 										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
@@ -382,6 +391,15 @@
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>
+							<tr id="resArr<?php echo $k; ?>" <?php if($var != 'contains'){ ?> style="display:none"<?php } ?>>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Result Array');?></td>
+								<td align="left" style="padding-left:20px" class="libselect">
+									<select name="data[Variable][<?php echo $k; ?>][result_arr]">
+										<option <?php if($v['Variable']['result_arr'] == 'fixed'){ ?> selected = "selected" <?php } ?> value = "fixed" >Fixed</option>
+										<option <?php if($v['Variable']['result_arr'] == 'variable'){ ?> selected = "selected" <?php } ?> value = "variable" >Variable</option>
+									</select>							
+								</td>
+							</tr>							
 							<tr <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
 								<td align="left" style="padding-left:20px" class="libselect">
@@ -1143,6 +1161,11 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+					}
+				});
+				$("#LibraryLibraryAuthenticationMethod").change(function() {
+					$("#dropDown").val($(this).val());
+					if($(this).val() == 'referral_url') {
 					}
 				});
 			});

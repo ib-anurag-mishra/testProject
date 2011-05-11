@@ -2872,7 +2872,7 @@ Class UsersController extends AppController
 													}
 												}
 												elseif($v['Variable']['comparison_operator'] == 'contains'){
-													$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
+													$res = explode("$",$info_status[$v['Variable']['result_arr']][$v['Variable']['authentication_variable']][0]);
 													if(isset($res[1])){
 														$cmp = $res[1];
 													} 
@@ -2901,6 +2901,24 @@ Class UsersController extends AppController
 														}else{
 															$status = false;
 														}
+													}
+												}
+												elseif($v['Variable']['comparison_operator'] == 'date'){
+													$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
+													if(isset($res[1])){
+														$cmp = $res[1];
+													} 
+													else {
+														$cmp = $res[0];
+													}							
+													$resDateArr = explode("-",date("Y-m-d",$cmp));
+													$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
+													$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+													if($resDate > $libDate){
+														$status = 1;
+													}
+													else{
+														$status = 'error';
 													}
 												}
 												if($status === false){
@@ -3177,7 +3195,7 @@ Class UsersController extends AppController
 											}
 										}
 										elseif($v['Variable']['comparison_operator'] == 'contains'){
-											$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
+											$res = explode("$",$info_status[$v['Variable']['result_arr']][$v['Variable']['authentication_variable']][0]);
 											if(isset($res[1])){
 												$cmp = $res[1];
 											} 
@@ -3208,6 +3226,24 @@ Class UsersController extends AppController
 												}
 											}
 										}
+										elseif($v['Variable']['comparison_operator'] == 'date'){
+											$res = explode("$",$info_status['variable'][$v['Variable']['authentication_variable']][0]);
+											if(isset($res[1])){
+												$cmp = $res[1];
+											} 
+											else {
+												$cmp = $res[0];
+											}							
+											$resDateArr = explode("-",date("Y-m-d",$cmp));
+											$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
+											$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
+											if($resDate > $libDate){
+												$status = 1;
+											}
+											else{
+												$status = 'error';
+											}
+										}										
 										if($status === false){
 											$msg = $v['Variable']['error_msg'];											
 										}
