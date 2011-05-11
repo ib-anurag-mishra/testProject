@@ -2821,7 +2821,7 @@ Class UsersController extends AppController
 											$this->Variable->recursive = -1;										
 											$allVariables = $this->Variable->find('all',array(
 																				'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
-																				'fields' => array('authentication_variable','authentication_response','message_no','comparison_operator','error_msg',)
+																				'fields' => array('authentication_variable','authentication_response','message_no','comparison_operator','error_msg','result_arr')
 																				)
 																			 );
 											$status = 1;
@@ -2872,7 +2872,7 @@ Class UsersController extends AppController
 													}
 												}
 												elseif($v['Variable']['comparison_operator'] == 'contains'){
-													$res = explode("$",$info_status[$v['Variable']['result_arr']][$v['Variable']['authentication_variable']][0]);
+													$res = explode("$",$info_status[$v['Variable']['result_arr']][$v['Variable']['authentication_variable']]);
 													if(isset($res[1])){
 														$cmp = $res[1];
 													} 
@@ -2881,10 +2881,10 @@ Class UsersController extends AppController
 													}
 													$check = strpos($cmp,$v['Variable']['authentication_response']);
 													if(!($check === false)){
-														$status = 1;
+														$status = false;
 													}
 													else{
-														$status = false;
+														$status = 1;
 													}
 												}												
 												elseif($v['Variable']['comparison_operator'] == '<>'){
@@ -3144,7 +3144,7 @@ Class UsersController extends AppController
 									$this->Variable->recursive = -1;										
 									$allVariables = $this->Variable->find('all',array(
 																		'conditions' => array('library_id' => $existingLibraries['0']['Library']['id']),
-																		'fields' => array('authentication_variable','authentication_response','comparison_operator','message_no','error_msg',)
+																		'fields' => array('authentication_variable','authentication_response','comparison_operator','message_no','error_msg','result_arr')
 																		)
 																	 );
 									$status = 1;
@@ -3195,7 +3195,7 @@ Class UsersController extends AppController
 											}
 										}
 										elseif($v['Variable']['comparison_operator'] == 'contains'){
-											$res = explode("$",$info_status[$v['Variable']['result_arr']][$v['Variable']['authentication_variable']][0]);
+											$res = explode("$",$info_status[$v['Variable']['result_arr']][$v['Variable']['authentication_variable']]);
 											if(isset($res[1])){
 												$cmp = $res[1];
 											} 
@@ -3204,10 +3204,10 @@ Class UsersController extends AppController
 											}
 											$check = strpos($cmp,$v['Variable']['authentication_response']);
 											if(!($check === false)){
-												$status = 1;
+												$status = false;
 											}
 											else{
-												$status = false;
+												$status = 1;
 											}
 										}										
 										elseif($v['Variable']['comparison_operator'] == '<>'){
