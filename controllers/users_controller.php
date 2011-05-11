@@ -2912,7 +2912,7 @@ Class UsersController extends AppController
 														$cmp = $res[0];
 													}							
 													$resDateArr = explode("-",date("Y-m-d",strtotime($cmp)));
-													$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
+													$resDate = mktime(0,0,0,$resDateArr[1],$resDateArr[2],$resDateArr[0]);
 													$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
 													if($resDate > $libDate){
 														$status = 1;
@@ -3235,7 +3235,7 @@ Class UsersController extends AppController
 												$cmp = $res[0];
 											}							
 											$resDateArr = explode("-",date("Y-m-d",strtotime($cmp)));
-											$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
+											$resDate = mktime(0,0,0,$resDateArr[1],$resDateArr[2],$resDateArr[0]);
 											$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
 											if($resDate > $libDate){
 												$status = 1;
