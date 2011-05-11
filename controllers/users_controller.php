@@ -2884,7 +2884,7 @@ Class UsersController extends AppController
 														$status = 1;
 													}
 													else{
-														$status = 'error';
+														$status = false;
 													}
 												}												
 												elseif($v['Variable']['comparison_operator'] == '<>'){
@@ -2911,14 +2911,14 @@ Class UsersController extends AppController
 													else {
 														$cmp = $res[0];
 													}							
-													$resDateArr = explode("-",date("Y-m-d",$cmp));
+													$resDateArr = explode("-",date("Y-m-d",strtotime($cmp)));
 													$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
 													$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
 													if($resDate > $libDate){
 														$status = 1;
 													}
 													else{
-														$status = 'error';
+														$status = false;
 													}
 												}
 												if($status === false){
@@ -3207,7 +3207,7 @@ Class UsersController extends AppController
 												$status = 1;
 											}
 											else{
-												$status = 'error';
+												$status = false;
 											}
 										}										
 										elseif($v['Variable']['comparison_operator'] == '<>'){
@@ -3234,7 +3234,7 @@ Class UsersController extends AppController
 											else {
 												$cmp = $res[0];
 											}							
-											$resDateArr = explode("-",date("Y-m-d",$cmp));
+											$resDateArr = explode("-",date("Y-m-d",strtotime($cmp)));
 											$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
 											$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
 											if($resDate > $libDate){
