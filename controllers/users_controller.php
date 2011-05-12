@@ -4759,7 +4759,7 @@ Class UsersController extends AppController
 							$retPos = strpos($v,"<br/>");
 							$retCard = substr($v,0,$retPos-1);
 							$retCard = str_replace(" ","",$retCard);
-							if(strpos($response,$name)){
+							if(strpos(strtolower($response),strtolower($name))){
 								$posVal = true;
 								break;
 							} else {
