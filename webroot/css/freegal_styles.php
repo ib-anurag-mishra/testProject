@@ -139,7 +139,7 @@ body  {
 }
 
 #ticker {
-        width:948px;
+        width:940px;
         height:20px;
         background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color: <?php echo $library_boxheader_text_color; ?>;
@@ -160,7 +160,7 @@ ul.marquee {
         list-style: none;
         position: relative;
         overflow: hidden;
-        width: 795px;
+        width: 780px;
         height: 20px;
 }
 
