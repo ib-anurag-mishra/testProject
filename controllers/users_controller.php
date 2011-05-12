@@ -978,10 +978,27 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$url = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";               
 					$dom= new DOMDocument();
+					pr($dom);
+					echo "<br>";
+					echo "<br>";
+					echo "<br>";
 					@$dom->loadHtmlFile($url);
 					$xpath = new DOMXPath($dom);
+					pr($xpath);
+					echo "<br>";
+					echo "<br>";
+					echo "<br>";
 					$body = $xpath->query('/html/body');
+					pr($body);
+					echo "<br>";
+					echo "<br>";
+					echo "<br>";
 					$retStr = $dom->saveXml($body->item(0));
+					pr($body);
+					echo "<br>";
+					echo "<br>";
+					echo "<br>";
+					exit;
 					if(strpos($retStr,"P BARCODE[pb]")){
 						if(strpos($retStr,$card)){
 							$posVal = true;
