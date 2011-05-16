@@ -8,8 +8,15 @@
 			echo $this->Form->input('title');
 		?>	
 		<select id="SectionLanguage" name="data[Section][language]">
-			<option value="en" <?php if($this->data['Section']['language'] == 'en'){ ?> selected="selected"<?php } ?>>English</option>
-			<option value="es" <?php if($this->data['Section']['language'] == 'es'){ ?> selected="selected"<?php } ?>>Spanish</option>
+			<?php
+			foreach($languages as $k => $v){
+			echo '<option value="'.$k.'" ';
+			if($this->data['Section']['language'] == $k){
+				echo "selected='selected'";
+			}
+			echo '>'.$v.'</option>';
+			}
+			?>
 		</select>
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>

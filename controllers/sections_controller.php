@@ -8,6 +8,7 @@
 class SectionsController extends AppController
 {
 	var $name = 'Sections';
+	var $uses = array('Language','Section');
 	
 	/*
 	 Function Name : admin_index
@@ -16,7 +17,7 @@ class SectionsController extends AppController
 	function admin_index() {
 		$this->layout = 'admin';
 		$this->Section->recursive = 0;
-		$this->set('sections', $this->paginate());
+		$this->set('sections', $this->paginate('Section'));
 	}
 	
 	/*
@@ -38,6 +39,8 @@ class SectionsController extends AppController
         */
 	function admin_add() {
 		$this->layout = 'admin';
+		$data = $this->Language->find('list', array('fields' => array('short_name', 'full_name')));
+		$this->set('languages', $data);
 		if (!empty($this->data)) {
 			$this->Section->create();
 			if ($this->Section->save($this->data)) {
@@ -55,6 +58,8 @@ class SectionsController extends AppController
         */
 	function admin_edit($id = null) {
 		$this->layout = 'admin';
+		$data = $this->Language->find('list', array('fields' => array('short_name', 'full_name')));
+		$this->set('languages', $data);		
 		if (!$id && empty($this->data)) {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'section'));
 			$this->redirect(array('action' => 'index'));

@@ -7,8 +7,12 @@
   echo $this->Form->input('title');
  ?>
   <select id="SectionLanguage" name="data[Section][language]">
-   <option value="en">English</option>
-   <option value="es">Spanish</option>
+	<?php
+	foreach($languages as $k => $v){
+	echo '<option value="'.$k.'" ';
+	echo '>'.$v.'</option>';
+	}
+	?>
   </select>
   <label class="selectlanguage">You must select a language</label>
  </fieldset>
