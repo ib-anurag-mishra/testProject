@@ -20,7 +20,7 @@ if($this->Session->read('Config.language') == 'en' || $this->Session->read('Conf
 	$lang = "English";
 } 
 else{
-	$lang = "Spanish";
+	$lang = "Español";
 }
 foreach($language as $k => $v){
 	?>
