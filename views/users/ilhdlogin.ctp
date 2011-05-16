@@ -33,7 +33,7 @@ foreach($language as $k => $v){
 	else {
 		echo 'class = "non-active"';
 	}
-	echo '>';?><?php echo __($v); ?><?php echo '</div>';
+	echo '>'.$v.'</div>';
 }
 ?>
 </div>
