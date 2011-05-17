@@ -39,11 +39,11 @@ class QuestionsController extends AppController
 	function index() {
 		  $this->layout = 'home';
 		  $this->Question->recursive = 0;
-		  $this->paginate = array('conditions' => array('Section.language' => $this->Session->read('Config.language')),       
-				'order' => 'Question.section_id ASC,Question.sort_id ASC',
-		  ); 
-		  $questions = $this->paginate('Question');    
-		  $this->set('questions', $this->paginate());
+		  $questions = $this->Question->find("all",array( 
+				'conditions' => array('Section.language' => $this->Session->read('Config.language')),       
+				'order' => 'Question.section_id ASC,Question.sort_id ASC'
+		  ));
+		  $this->set('questions', $questions);
 	}
 	
 	/*

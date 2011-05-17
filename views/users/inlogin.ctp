@@ -12,8 +12,14 @@ $language = $language->getLanguage();
 if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
 	$lang = "English";
 } 
-else{
+elseif($this->Session->read('Config.language') == 'es'){
 	$lang = "Español";
+}
+elseif($this->Session->read('Config.language') == 'fr'){
+	$lang = "FranÃ§ais";
+}
+elseif($this->Session->read('Config.language') == 'it'){
+	$lang = "Italiano";
 }
 foreach($language as $k => $v){
 	?>
