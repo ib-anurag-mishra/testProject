@@ -64,7 +64,7 @@ class QuestionsController extends AppController
         */
 	function admin_index() {
 		$this->layout = 'admin';
-		$this->Question->recursive = 0;
+		$this->Question->recursive = -2;
 		$this->paginate = array('conditions' => array(),		     
 		      'order' => 'Question.section_id ASC,Question.sort_id ASC'		     
 		);
