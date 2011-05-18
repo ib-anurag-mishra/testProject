@@ -11,7 +11,7 @@ class SslComponent extends Object {
 
 	function force() {
 		if(!$this->RequestHandler->isSSL()) {
-			$this->Controller->redirect('https://'.$this->__url());
+			$this->Controller->redirect('https://'.$_SERVER['SERVER_NAME']);
 		}
 	}
 
