@@ -991,7 +991,7 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
-					$authUrl = configure::read('dataHandlerUrl');
+					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
 					@$dom->loadHtml($result);
@@ -1192,7 +1192,7 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
-					$authUrl = configure::read('dataHandlerUrl');
+					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
 					@$dom->loadHtml($result);
@@ -1536,7 +1536,7 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
-					$authUrl = configure::read('dataHandlerUrl');
+					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);					
 					$dom= new DOMDocument();
 					@$dom->loadHtml($result);
@@ -1844,7 +1844,7 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
-					$authUrl = configure::read('dataHandlerUrl');
+					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
 					@$dom->loadHtml($result);
@@ -2045,7 +2045,7 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
-					$authUrl = configure::read('dataHandlerUrl');
+					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
 					@$dom->loadHtml($result);
@@ -2392,7 +2392,7 @@ Class UsersController extends AppController
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
 						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
-						$authUrl = configure::read('sipDataHandlerUrl');
+						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 						
 							
@@ -2607,7 +2607,7 @@ function snlogin(){
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
 						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
-						$authUrl = configure::read('sipDataHandlerUrl');
+						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 							
 							if(!empty($mysip->sip_login)){
@@ -2826,7 +2826,7 @@ function snlogin(){
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
 						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
-						$authUrl = configure::read('sipDataHandlerUrl');
+						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 						
 						
@@ -3169,7 +3169,7 @@ function snlogin(){
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
 						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
-						$authUrl = configure::read('sipDataHandlerUrl');
+						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 						
 						if(!empty($mysip->sip_login)){
@@ -3638,7 +3638,7 @@ function snlogin(){
 				curl_close($session);
 				*/
 				//$authUrl = "http://173.203.136.99:8080/curlDataHandler.php";
-				$authUrl = configure::read('curlDataHandlerUrl');
+				$authUrl = configure::read('App.curlDataHandlerUrl');
 				$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 				if(strpos($retStr,"P BARCODE[pb]")){
 					if(strpos($response,$card)){
@@ -3982,7 +3982,7 @@ function snlogin(){
 					curl_close($session);
 					*/
 					//$authUrl = "http://173.203.136.99:8080/curlDataHandler.php";
-					$authUrl = configure::read('curlDataHandlerUrl');
+					$authUrl = configure::read('App.curlDataHandlerUrl');
 					$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					if(strpos($response,"P BARCODE[pb]")){
 						if(strpos($retStr,$card)){
@@ -4310,7 +4310,7 @@ function snlogin(){
 					}
 					curl_close($session);
 					*/
-					$authUrl = configure::read('curlDataHandlerUrl');
+					$authUrl = configure::read('App.curlDataHandlerUrl');
 					$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					if(strpos($response,"P BARCODE[pb]")){
 						$retCardArr = explode("P BARCODE[pb]",$response);
@@ -4660,7 +4660,7 @@ function snlogin(){
 					//$client = new SoapClient($soapUrl); 
 					//$result = $client->validate($card, $pin);
 					//$authUrl = "http://173.203.136.99:8080/ploginDataHandler.php";
-					$authUrl = configure::read('ploginDatahandlerUrl');
+					$authUrl = configure::read('App.ploginDatahandlerUrl');
 					$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
 					$data['card'] = $card;
 					$data['pin'] = $pin;
@@ -4844,7 +4844,7 @@ function snlogin(){
 					curl_close($session);
 					*/
 					//$authUrl = "http://173.203.136.99:8080/curlDataHandler.php";
-					$authUrl = configure::read('curlDataHandlerUrl');
+					$authUrl = configure::read('App.curlDataHandlerUrl');
 					$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					if(strpos($response,"PATRN NAME[pn]=")){
 						$retCardArr = explode("PATRN NAME[pn]=",$response);
