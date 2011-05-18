@@ -20,13 +20,13 @@ Class UsersController extends AppController
 	function beforeFilter(){
 		parent::beforeFilter();
 		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
-		$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
-								'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login','login' );
+		//$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
+		//						'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login','login' );
+		$action = array( 'login' );
 
-		if( in_array( $this->params['action'] , $action ) ){
-
+		if(in_array($this->params['action'] , $action)){
 			 $this->Ssl->force();
-		}else{
+		} else{
 			 $this->Ssl->unforce();
 		}
 		
@@ -990,7 +990,6 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
 					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
@@ -1191,7 +1190,6 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
 					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
@@ -1225,7 +1223,7 @@ Class UsersController extends AppController
 					elseif($retStatus == 0 && $posVal != false){
 						$authUrlDump = $existingLibraries['0']['Library']['library_authentication_url'];               
 						$data['url'] = $authUrlDump."/PATRONAPI/".$card."/dump";
-						$authUrl = "http://173.203.136.99:8080/datahandler.php";
+						$authUrl = configure::read('App.dataHandlerUrl');
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);						
 						$domDump= new DOMDocument();
 						@$domDump->loadHtml($result);
@@ -1535,7 +1533,6 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
 					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);					
 					$dom= new DOMDocument();
@@ -1843,7 +1840,6 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
 					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
@@ -2044,7 +2040,6 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					//$authUrl = "http://173.203.136.99:8080/datahandler.php";
 					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$dom= new DOMDocument();
@@ -2391,145 +2386,139 @@ Class UsersController extends AppController
 						$data['sip_login'] = $existingLibraries['0']['Library']['library_sip_login'];
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
-						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
 						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 						
+						if(!empty($mysip->sip_login)){
+							$data['php']= '\$result = $mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);';
 							
-							if(!empty($mysip->sip_login)){
-								$data['php']= '\$result = $mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);';
-								
-								$sc_login = $this->AuthRequest->getAuthResponse($data,$authUrl);
-								$mysip->parseLoginResponse($mysip->get_message($sc_login));
-							}
-							
-							//send selfcheck status message
-							$data['php']='\$result = $mysip->msgSCStatus();';
-							$in = $this->AuthRequest->getAuthResponse($data,$authUrl);
-							
-							
-							$data['php']='\$result = $mysip->get_message("'.$in.'");';
-							$msg_result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-							//echo $msg_result;
-							
-							// Make sure the response is 98 as expected
-							if (preg_match("/^98/", $msg_result)) {
+							$sc_login = $this->AuthRequest->getAuthResponse($data,$authUrl);
+							$mysip->parseLoginResponse($mysip->get_message($sc_login));
+						}
+						
+						//send selfcheck status message
+						$data['php']='\$result = $mysip->msgSCStatus();';
+						$in = $this->AuthRequest->getAuthResponse($data,$authUrl);
+						
+						$data['php']='\$result = $mysip->get_message("'.$in.'");';
+						$msg_result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+						//echo $msg_result;
+						
+						// Make sure the response is 98 as expected
+						if (preg_match("/^98/", $msg_result)) {
+						  $result = $mysip->parseACSStatusResponse($msg_result);
+						  //  Use result to populate SIP2 setings
+						  $mysip->AO = $result['variable']['AO'][0]; /* set AO to value returned */
+						  $data['AO'] = $result['variable']['AO'][0];
+						  $mysip->AN = $result['variable']['AN'][0]; /* set AN to value returned */
+						  $data['AN'] = $result['variable']['AN'][0];
+						  $mysip->patron = $card;
+						  $data['patron'] = $card;
+						  $mysip->patronpwd = $pin;
+						  $data['patronpwd'] = $pin;
+						  $data['php']='\$result = $mysip->msgPatronStatusRequest();';
+						  $in = $this->AuthRequest->getAuthResponse($data,$authUrl);
+						  $data['php']='\$result = $mysip->get_message("'.$in.'");';
+						  $msg_result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+						  
+						  // Make sure the response is 24 as expected
+						  if (preg_match("/^24/", $msg_result)) {
+							  $result = $mysip->parsePatronStatusResponse( $msg_result );
+								if ($result['variable']['BL'][0] == 'Y') {
+								  // Successful Card!!!
 
+								 if ($result['variable']['CQ'][0] == 'Y') {
+									// Successful PIN !!!
 									
-								  $result = $mysip->parseACSStatusResponse($msg_result);
-								  //  Use result to populate SIP2 setings
-								  $mysip->AO = $result['variable']['AO'][0]; /* set AO to value returned */
-								  $data['AO'] = $result['variable']['AO'][0];
-								  $mysip->AN = $result['variable']['AN'][0]; /* set AN to value returned */
-								  $data['AN'] = $result['variable']['AN'][0];
-								  $mysip->patron = $card;
-								  $data['patron'] = $card;
-								  $mysip->patronpwd = $pin;
-								  $data['patronpwd'] = $pin;
-								  $data['php']='\$result = $mysip->msgPatronStatusRequest();';
-								  $in = $this->AuthRequest->getAuthResponse($data,$authUrl);
-								  $data['php']='\$result = $mysip->get_message("'.$in.'");';
-								  $msg_result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-								  
-								  // Make sure the response is 24 as expected
-								  if (preg_match("/^24/", $msg_result)) {
-									  $result = $mysip->parsePatronStatusResponse( $msg_result );
-										if ($result['variable']['BL'][0] == 'Y') {
-										  // Successful Card!!!
-
-										 if ($result['variable']['CQ'][0] == 'Y') {
-											// Successful PIN !!!
-											
-												//writing to memcache and writing to both the memcached servers
-												$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
-												if(count($currentPatron) > 0){
-												// do nothing
-												} else {
-													$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
-													$insertArr['patronid'] = $patronId;
-													$insertArr['session_id'] = session_id();
-													$this->Currentpatron->save($insertArr);						
-												}
-												
-												if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
-													$date = time();
-													$values = array(0 => $date, 1 => session_id());			
+										//writing to memcache and writing to both the memcached servers
+										$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+										if(count($currentPatron) > 0){
+										// do nothing
+										} else {
+											$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+											$insertArr['patronid'] = $patronId;
+											$insertArr['session_id'] = session_id();
+											$this->Currentpatron->save($insertArr);						
+										}
+										
+										if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+											$date = time();
+											$values = array(0 => $date, 1 => session_id());			
+											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+										} else {
+											$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+											$date = time();
+											$modifiedTime = $userCache[0];
+											if(!($this->Session->read('patron'))){
+												if(($date-$modifiedTime) > 60){
+													$values = array(0 => $date, 1 => session_id());	
 													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-												} else {
-													$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
-													$date = time();
-													$modifiedTime = $userCache[0];
-													if(!($this->Session->read('patron'))){
-														if(($date-$modifiedTime) > 60){
-															$values = array(0 => $date, 1 => session_id());	
-															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-														}
-														else{
-															$this->Session->destroy('user');
-															$this -> Session -> setFlash("This account is already active.");                              
-															$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-														}
-													} else {
-														if(($date-$modifiedTime) > 60){
-															$values = array(0 => $date, 1 => session_id());	
-															Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-														}
-														else{
-															$this->Session->destroy('user');
-															$this -> Session -> setFlash("This account is already active.");                 
-															$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-														}		
-													}
-													
-												}
-												$this->Session->write("library", $existingLibraries['0']['Library']['id']);
-												$this->Session->write("patron", $patronId);
-												$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-												$this->Session->write("sip2","sip2");
-												if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
-													$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
-												}
-												if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
-													$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
-												}
-												$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-												$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
-												$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
-												$this->Download->recursive = -1;
-												$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-												$this ->Session->write("downloadsUsed", $results);
-												if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-												  $this ->Session->write("block", 'yes');
 												}
 												else{
-												  $this ->Session->write("block", 'no');
+													$this->Session->destroy('user');
+													$this -> Session -> setFlash("This account is already active.");                              
+													$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 												}
-												$this->redirect(array('controller' => 'homes', 'action' => 'index'));
-										} 
-										else {
-											$this->Session->setFlash("The PIN is Invalid.");
-											$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
+											} else {
+												if(($date-$modifiedTime) > 60){
+													$values = array(0 => $date, 1 => session_id());	
+													Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+												}
+												else{
+													$this->Session->destroy('user');
+													$this -> Session -> setFlash("This account is already active.");                 
+													$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+												}		
+											}
+											
 										}
-									}
-									else{
-										  $this -> Session -> setFlash("The Card Number is Invalid.");                              
-										  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-									}								
+										$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+										$this->Session->write("patron", $patronId);
+										$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+										$this->Session->write("sip2","sip2");
+										if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
+											$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+										}
+										if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+											$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+										}
+										$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+										$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+										$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+										$this->Download->recursive = -1;
+										$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+										$this ->Session->write("downloadsUsed", $results);
+										if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
+										  $this ->Session->write("block", 'yes');
+										}
+										else{
+										  $this ->Session->write("block", 'no');
+										}
+										$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+								} 
+								else {
+									$this->Session->setFlash("The PIN is Invalid.");
+									$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 								}
-								else{
-									  $this -> Session -> setFlash("Authentication server down.");                              
-									  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-								}
+							}
+							else{
+								  $this -> Session -> setFlash("The Card Number is Invalid.");                              
+								  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
+							}								
 						}
 						else{
 							  $this -> Session -> setFlash("Authentication server down.");                              
 							  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 						}
-					
+					}
+					else{
+						  $this -> Session -> setFlash("Authentication server down.");                              
+						  $this->redirect(array('controller' => 'users', 'action' => 'slogin'));
+					}
 				}
 			}
 		}
-	}		
+	}
 
 	/*
 		Function Name : snlogin
@@ -2606,7 +2595,6 @@ function snlogin(){
 						$data['sip_login'] = $existingLibraries['0']['Library']['library_sip_login'];
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
-						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
 						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 							
@@ -2825,7 +2813,6 @@ function snlogin(){
 						$data['sip_login'] = $existingLibraries['0']['Library']['library_sip_login'];
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
-						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
 						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 						
@@ -3168,7 +3155,6 @@ function snlogin(){
 						$data['sip_login'] = $existingLibraries['0']['Library']['library_sip_login'];
 						$data['sip_password'] = $existingLibraries['0']['Library']['library_sip_password'];
 						$data['sip_location'] = $existingLibraries['0']['Library']['library_sip_location'];
-						//$authUrl = "http://173.203.136.99:8080/sipdatahandler.php";
 						$authUrl = configure::read('App.sipDataHandlerUrl');
 						$mysip = new $this->sip2;
 						
@@ -3626,18 +3612,6 @@ function snlogin(){
 				$matches = array();
 				$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 				$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-			/*	$session = curl_init($url);
-				curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-				curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-				curl_setopt ($session, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($session, CURLOPT_HEADER, true);
-				if(!$response = curl_exec ($session))  {
-					throw new Exception(curl_error($session));
-				}
-				curl_close($session);
-				*/
-				//$authUrl = "http://173.203.136.99:8080/curlDataHandler.php";
 				$authUrl = configure::read('App.curlDataHandlerUrl');
 				$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 				if(strpos($retStr,"P BARCODE[pb]")){
@@ -3970,18 +3944,6 @@ function snlogin(){
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-				/*	$session = curl_init($url);
-					curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-					curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-					curl_setopt ($session, CURLOPT_FOLLOWLOCATION, true);
-					curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($session, CURLOPT_HEADER, true);
-					if(!$response = curl_exec ($session))  {
-						throw new Exception(curl_error($session));
-					}
-					curl_close($session);
-					*/
-					//$authUrl = "http://173.203.136.99:8080/curlDataHandler.php";
 					$authUrl = configure::read('App.curlDataHandlerUrl');
 					$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					if(strpos($response,"P BARCODE[pb]")){
@@ -4298,18 +4260,6 @@ function snlogin(){
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					/*
-					$session = curl_init($url);
-					curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-					curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-					curl_setopt ($session, CURLOPT_FOLLOWLOCATION, true);
-					curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($session, CURLOPT_HEADER, true);
-					if(!$response = curl_exec ($session))  {
-						throw new Exception(curl_error($session));
-					}
-					curl_close($session);
-					*/
 					$authUrl = configure::read('App.curlDataHandlerUrl');
 					$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					if(strpos($response,"P BARCODE[pb]")){
@@ -4656,11 +4606,7 @@ function snlogin(){
 					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));
 				}        
 				else{
-					//$soapUrl = $existingLibraries['0']['Library']['library_soap_url'];
-					//$client = new SoapClient($soapUrl); 
-					//$result = $client->validate($card, $pin);
-					//$authUrl = "http://173.203.136.99:8080/ploginDataHandler.php";
-					$authUrl = configure::read('App.ploginDatahandlerUrl');
+					$authUrl = configure::read('App.ploginDataHandlerUrl');
 					$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
 					$data['card'] = $card;
 					$data['pin'] = $pin;
@@ -4832,18 +4778,6 @@ function snlogin(){
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-				/*	$session = curl_init($url);
-					curl_setopt($session, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-					curl_setopt($session, CURLOPT_SSL_VERIFYPEER, false);
-					curl_setopt ($session, CURLOPT_FOLLOWLOCATION, true);
-					curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
-					curl_setopt($session, CURLOPT_HEADER, true);
-					if(!$response = curl_exec ($session))  {
-						throw new Exception(curl_error($session));
-					}
-					curl_close($session);
-					*/
-					//$authUrl = "http://173.203.136.99:8080/curlDataHandler.php";
 					$authUrl = configure::read('App.curlDataHandlerUrl');
 					$response = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					if(strpos($response,"PATRN NAME[pn]=")){
