@@ -280,7 +280,8 @@ Class UsersController extends AppController
 						}
 						else{
 							$this->Session->destroy('user');
-							$this -> Session -> setFlash("This account is already active.");                              
+							$this -> Session -> setFlash("This account is already active."); 
+							echo 'error1';exit;
 							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 						}
 					} else {
@@ -290,7 +291,8 @@ Class UsersController extends AppController
 						}
 						else{
 							$this->Session->destroy('user');
-							$this -> Session -> setFlash("This account is already active.");                              
+							$this -> Session -> setFlash("This account is already active."); 
+							echo 'error2';exit;
 							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 						}		
 					}
