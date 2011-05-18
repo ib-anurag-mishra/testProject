@@ -22,13 +22,13 @@ Class UsersController extends AppController
 		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
 		//$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
 		//						'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login','login' );
-		$action = array( 'login','ilogin' );
+		/*$action = array( 'login','ilogin' );
 
 		if(in_array($this->params['action'] , $action)){
 			 $this->Ssl->force();
 		} else{
 			 $this->Ssl->unforce();
-		}
+		}*/
 		
 	}
    
