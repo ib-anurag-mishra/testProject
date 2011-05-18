@@ -10,7 +10,7 @@ Class UsersController extends AppController
 	var $name = 'Users';
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
-	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest');
+	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Ssl');
 	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language');
    
    /*
@@ -23,7 +23,7 @@ Class UsersController extends AppController
 	}
    
    //var $components = array( 'Ssl' );
-	/*public function beforeRender(){
+	public function beforeRender(){
 
 		$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
 								'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login' );
@@ -35,7 +35,7 @@ Class UsersController extends AppController
 			 $this->Ssl->unforce();
 		}
 
-	}*/
+	}
    /*
     Function Name : admin_index
     Desc : actions for welcome admin login
