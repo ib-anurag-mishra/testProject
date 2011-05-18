@@ -26,7 +26,7 @@ Class UsersController extends AppController
 	public function beforeRender(){
 
 		$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
-								'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login' );
+								'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login','login' );
 
 		if( in_array( $this->params['action'] , $action ) ){
 
