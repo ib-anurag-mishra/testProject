@@ -10,7 +10,7 @@ Class UsersController extends AppController
 	var $name = 'Users';
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
-	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Ssl');
+	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest');
 	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language');
    
    /*
@@ -20,7 +20,7 @@ Class UsersController extends AppController
 	function beforeFilter(){
 		parent::beforeFilter();
 		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
-		$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
+		/*$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
 								'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login','login' );
 
 		if( in_array( $this->params['action'] , $action ) ){
@@ -29,6 +29,7 @@ Class UsersController extends AppController
 		}else{
 			 $this->Ssl->unforce();
 		}
+		*/
 	}
    
    //var $components = array( 'Ssl' );
