@@ -21,13 +21,11 @@ class HomesController extends AppController
 			if($validPatron == '0') {
 				//$this->Session->destroy();
 				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-				echo 'error3';exit;
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
 				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				echo 'error4';exit;
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}			
         }
