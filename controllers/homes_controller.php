@@ -21,12 +21,10 @@ class HomesController extends AppController
 			if($validPatron == '0') {
 				//$this->Session->destroy();
 				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-				echo 'error3';exit;
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
 				//$this->Session->destroy();
-				echo 'error4';exit;
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}			
@@ -1222,7 +1220,6 @@ class HomesController extends AppController
      Desc : actions used for User end checking for cookie and javascript enable
     */
     function aboutus() {
-			echo 'hii';echo '<pre>';print_r($_SESSION);exit;
 		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
 				$url = $this->Session->read('referral_url');
