@@ -2811,10 +2811,10 @@ Class UsersController extends AppController
 									  $parsePatronStatusResponse = $mysip->parsePatronStatusResponse( $msg_result );
 									  $in = $mysip->msgPatronInformation('none');
 									  $parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );						
-									  if ($parsePatronStatusResponse['variable']['BL'][0] == 'Y' || $parsePatronStatusResponse['variable']['BL'][0] == 'Y') {
+									  if ($parsePatronStatusResponse['variable']['BL'][0] == 'Y' || $parsePatronInfoResponse['variable']['BL'][0] == 'Y') {
 										  // Successful Card!!!
 										
-										 if ($parsePatronStatusResponse['variable']['CQ'][0] == 'Y' || $parsePatronStatusResponse['variable']['CQ'][0] == 'Y') {
+										 if ($parsePatronStatusResponse['variable']['CQ'][0] == 'Y' || $parsePatronInfoResponse['variable']['CQ'][0] == 'Y') {
 											// Successful PIN !!!
 										  
 
