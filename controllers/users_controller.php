@@ -22,8 +22,8 @@ Class UsersController extends AppController
 		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
 	}
    
-   var $components = array( 'Ssl' );
-	public function beforeRender(){
+   //var $components = array( 'Ssl' );
+	/*public function beforeRender(){
 
 		$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin',
 								'sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login' );
@@ -35,7 +35,7 @@ Class UsersController extends AppController
 			 $this->Ssl->unforce();
 		}
 
-	}
+	}*/
    /*
     Function Name : admin_index
     Desc : actions for welcome admin login
