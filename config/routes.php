@@ -26,6 +26,21 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/views/pages/home.ctp)...
  */
+ $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+	if($library != 'www' && $library != 'freegalmusic')
+	{
+		Router::connect('/users/ilogin', array('controller' => 'users', 'action' => 'ilogin', $library));
+		Router::connect('/users/inlogin', array('controller' => 'users', 'action' => 'inlogin', $library));
+		Router::connect('/users/idlogin', array('controller' => 'users', 'action' => 'idlogin', $library));
+		Router::connect('/users/indlogin', array('controller' => 'users', 'action' => 'indlogin', $library));
+		Router::connect('/users/sdlogin', array('controller' => 'users', 'action' => 'sdlogin', $library));
+		Router::connect('/users/slogin', array('controller' => 'users', 'action' => 'slogin', $library));
+		Router::connect('/users/snlogin', array('controller' => 'users', 'action' => 'snlogin', $library));
+		Router::connect('/users/sndlogin', array('controller' => 'users', 'action' => 'sndlogin', $library));
+		Router::connect('/users/inhlogin', array('controller' => 'users', 'action' => 'inhlogin', $library));
+		Router::connect('/users/ihdlogin', array('controller' => 'users', 'action' => 'ihdlogin', $library));
+		Router::connect('/users/ildlogin', array('controller' => 'users', 'action' => 'ildlogin', $library));
+	}
 	Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
 /**
  * ...and connect the rest of 'Pages' controller's urls.

@@ -894,7 +894,7 @@ Class UsersController extends AppController
     Desc : For patron ilogin(Innovative) login method
    */
    
-	function ilogin(){
+	function ilogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -908,6 +908,22 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("library_subdomain",$library);
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongLibrarySubdomain = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
