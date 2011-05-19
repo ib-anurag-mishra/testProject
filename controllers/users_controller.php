@@ -31,8 +31,8 @@ Class UsersController extends AppController
 		}*/
 		
 	}
-   public function beforeRender(){
-		$action = array( 'login','ilogin','slogin' );
+  /* public function beforeRender(){
+		$action = array( 'ilogin', 'idlogin','ildlogin','inlogin','indlogin','slogin','snlogin','sdlogin','sndlogin','inhlogin','ihdlogin','ildlogin','plogin','admin_login','login' );
 
 		if(in_array($this->params['action'] , $action)){
 			 $this->Ssl->force();
@@ -40,7 +40,7 @@ Class UsersController extends AppController
 			 $this->Ssl->unforce();
 		}
 	}
-   
+   */
    /*
     Function Name : admin_index
     Desc : actions for welcome admin login
