@@ -998,7 +998,6 @@ Class UsersController extends AppController
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$authUrl = configure::read('App.dataHandlerUrl');
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					echo $result;exit;
 					$dom= new DOMDocument();
 					@$dom->loadHtml($result);
 					$xpath = new DOMXPath($dom);
