@@ -895,6 +895,7 @@ Class UsersController extends AppController
    */
 	function ilogin($library = null){ 
 		echo $library;
+		exit;
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
