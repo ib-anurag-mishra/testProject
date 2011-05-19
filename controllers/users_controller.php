@@ -31,7 +31,15 @@ Class UsersController extends AppController
 		}*/
 		
 	}
-   
+   public function beforeRender(){
+		$action = array( 'login','ilogin','slogin' );
+
+		if(in_array($this->params['action'] , $action)){
+			 $this->Ssl->force();
+		} else{
+			 $this->Ssl->unforce();
+		}
+	}
    
    /*
     Function Name : admin_index
