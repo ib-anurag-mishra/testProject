@@ -894,7 +894,7 @@ Class UsersController extends AppController
     Desc : For patron ilogin(Innovative) login method
    */
    
-	function ilogin($library = null){
+	function ilogin($library = null){ 
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
