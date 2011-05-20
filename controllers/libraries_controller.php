@@ -729,9 +729,9 @@ Class LibrariesController extends AppController
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
 		}
-		pr($library_data);
-		exit;
-	if(count($existingLibraries) == 0 && count($library_data) == 0)
+		if(count($existingLibraries) == 0)
+		$existingLibraries = $library_data;
+	if(count($existingLibraries) == 0)
         {
             $this -> Session -> setFlash("You are not authorized to view this location.");
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
