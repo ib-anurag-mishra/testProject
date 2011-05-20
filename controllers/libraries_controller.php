@@ -728,7 +728,7 @@ Class LibrariesController extends AppController
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
 		}
-		pr($librarydata);
+		pr($library_data);
 		exit;
 	if(count($existingLibraries) == 0 && count($library_data) == 0)
         {
