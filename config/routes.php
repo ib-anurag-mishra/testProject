@@ -40,6 +40,7 @@
 		Router::connect('/users/inhlogin', array('controller' => 'users', 'action' => 'inhlogin', $library));
 		Router::connect('/users/ihdlogin', array('controller' => 'users', 'action' => 'ihdlogin', $library));
 		Router::connect('/users/ildlogin', array('controller' => 'users', 'action' => 'ildlogin', $library));
+		Router::connect('/libraries/patron', array('controller' => 'libraries', 'action' => 'patron', $library));
 	}
 	Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
 /**
