@@ -142,8 +142,8 @@ class sip2Component extends Object {
         $this->_newMessage('99');
         $this->_addFixedOption($status, 1);
         $this->_addFixedOption($width, 3);
-		if($version == '2.0E'){
-			$this->_addFixedOption(sprintf("2.0E"), 4);
+		if(strcmp($version,'2.0E') == 0){
+			$this->_addFixedOption(sprintf("2.0E"), 4);						
 		} 
 		else {
 			$this->_addFixedOption(sprintf("%03.2f",$version), 4);
