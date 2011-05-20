@@ -710,7 +710,7 @@ Class LibrariesController extends AppController
      Function Name : patron
      Desc : For validating the patrons for libraries
     */
-    function patron($library1 = null,$library = null) {        
+    function patron($library = null) {        
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
@@ -724,6 +724,7 @@ Class LibrariesController extends AppController
                                                 'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
+		//echo $library1;
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
