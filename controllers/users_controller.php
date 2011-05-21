@@ -19,7 +19,47 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data');
+		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager');
+	}
+	function redirection_manager($library = null)
+	{
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					if($library_data['Library']['library_authentication_method'] == 'referral_url')
+					{
+						$this->redirect($library_data['Library']['library_domain_name']);
+					}
+					else
+					{
+						$method_vs_action = array('sip2_var' => 'sdlogin',
+												'sip2_var_wo_pin'=>'sndlogin',
+												'sip2'=>'slogin',
+												'sip2_wo_pin'=>'snlogin',
+												'innovative_var_wo_pin'=>'indlogin',
+												'innovative_https'=>'inhlogin',
+												'innovative_wo_pin'=>'inlogin',
+												'innovative_var'=>'idlogin',
+												'innovative'=>'ilogin',
+												'user_account'=>'login');
+						$action = $method_vs_action[$library_data['Library']['library_authentication_method']];
+						$this->redirect(array('controller' => 'users', 'action' => $action));
+					}
+				}
+				else 
+				{
+					$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+				}
+			}
+			else 
+			{
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}	
+		}
 	}
    
    /*

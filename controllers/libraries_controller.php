@@ -724,13 +724,13 @@ Class LibrariesController extends AppController
                                                 'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
-		//echo $library1;
+		/*echo $library1;
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
 		}
 		if(count($existingLibraries) == 0)
-		$existingLibraries = $library_data;
+		$existingLibraries = $library_data;*/
 	if(count($existingLibraries) == 0)
         {
             $this -> Session -> setFlash("You are not authorized to view this location.");
