@@ -2802,7 +2802,7 @@ function snlogin(){
 				else{	
 						$authUrl = "https://auth.libraryideas.com/snlogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-						echo $result;echo 'hi';exit;
+						//echo $result;echo 'hi';exit;
 						$resultAnalysis = explode("|",$result);
 						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
 						$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
