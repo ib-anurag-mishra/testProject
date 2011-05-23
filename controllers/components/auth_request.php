@@ -15,7 +15,8 @@ Class AuthRequestComponent extends Object
 		// tell curl we will be sending via POST
 		curl_setopt($ch, CURLOPT_POST, true);
 		// tell it not to validate ssl cert
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, true);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2); 
 		// tell it where to get POST variables from
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
