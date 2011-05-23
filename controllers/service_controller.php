@@ -28,35 +28,35 @@ class ServiceController extends AppController {
 			else {
 				$condSphinx = "";
 			}
-			$searchString =  $this->params['pass'][3];	
+			$searchString =  $this->params['pass'][4];	
 			$searchString = str_replace("^", " ", $searchString);					
 			$searchString = str_replace("$", " ", $searchString);
 			$sphinxCheckCondition = "&";
-			if($this->params['pass'][2] == 'artist') {
+			if($this->params['pass'][3] == 'artist') {
 				$sphinxArtistSearch = '@ArtistText "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxArtistSearch = '';
 			}
-			if($this->params['pass'][2] == 'composer') {
+			if($this->params['pass'][3] == 'composer') {
 				$sphinxComposerSearch = '@Composer "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxComposerSearch = '';
 			}
-			if($this->params['pass'][2] == 'song') {
+			if($this->params['pass'][3] == 'song') {
 				$sphinxSongSearch = '@SongTitle "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxSongSearch = '';
 			}
-			if($this->params['pass'][2] == 'album') {
+			if($this->params['pass'][3] == 'album') {
 				$sphinxAlbumSearch = '@Title "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxAlbumSearch = '';
 			}
-			if($this->params['pass'][2] == 'genre') {
+			if($this->params['pass'][3] == 'genre') {
 				$sphinxGenreSearch = '@Genre "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
 			}
 			else {
@@ -67,8 +67,7 @@ class ServiceController extends AppController {
 			}
 			else {
 				$sphinxTerritorySearch = '';
-			}				
-			
+			}
 			$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.''.$sphinxTerritorySearch;
 			$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 			$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
@@ -93,10 +92,11 @@ class ServiceController extends AppController {
 					));
 			
 			$searchResults = $this->paginate('Song');
-			foreach($searchResults as $k => $v){
-				$result[$k] => $v['Song'];
+			foreach($searchResults as $k=>$v){
+				$result[$k]['Song'] = $v['Song'];
 			}
-			$this->set('result', $searchResults);
+			$output = array_slice($result, 0, 100);
+			$this->set('result', $output);
 		}
 	}
 	function genre(){
@@ -207,3 +207,4 @@ class ServiceController extends AppController {
 	}
 
 }
+?>
