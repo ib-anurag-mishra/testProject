@@ -31,6 +31,10 @@ class Library extends AppModel
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -44,7 +48,11 @@ class Library extends AppModel
      'library_step1' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
-      'library_domain_name[]' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
+	  'library_domain_name[]' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
       'library_contact_fname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact First Name.'),
       'library_contact_lname' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Contact Last Name.'),
@@ -52,6 +60,10 @@ class Library extends AppModel
      ),
      'library_step1_referral_url' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  false, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
@@ -61,6 +73,10 @@ class Library extends AppModel
      ),
      'library_step1_user_account' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  true, 'message' => 'Please provide a Library Authentication URL.'),
@@ -70,6 +86,10 @@ class Library extends AppModel
      ),
      'library_step1_innovative' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -79,6 +99,10 @@ class Library extends AppModel
      ),
      'library_step1_soap' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_soap_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library SOAP URL.'),
@@ -88,6 +112,10 @@ class Library extends AppModel
      ),	 
      'library_step1_innovative_https' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -97,6 +125,10 @@ class Library extends AppModel
      ),	 
      'library_step1_innovative_var' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -106,6 +138,10 @@ class Library extends AppModel
      ),
      'library_step1_innovative_var_name' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -115,6 +151,10 @@ class Library extends AppModel
      ),
      'library_step1_innovative_var_https_name' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -124,6 +164,10 @@ class Library extends AppModel
      ),		 
      'library_step1_innovative_var_https' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -133,6 +177,10 @@ class Library extends AppModel
      ),
      'library_step1_innovative_var_https_wo_pin' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_authentication_url' => array('rule' => array('custom', '/\S+/'), 'allowEmpty' =>  false, 'message' => 'Please provide a Library Authentication URL.'),
@@ -142,6 +190,10 @@ class Library extends AppModel
      ),	 
 	 'library_step1_sip2' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
@@ -154,6 +206,10 @@ class Library extends AppModel
      ),
 	 'library_step1_sip2_wo_pin' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
@@ -166,6 +222,10 @@ class Library extends AppModel
      ),
 	 'library_step1_sip2_var' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
@@ -178,6 +238,10 @@ class Library extends AppModel
      ),
 	 'library_step1_sip2_var_wo_pin' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_domain_name' => array('rule' => 'url', 'allowEmpty' =>  true, 'message' => 'Please provide a valid Library Domain Name.'),
       'library_host_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide a Library Host Name.'),
@@ -190,6 +254,10 @@ class Library extends AppModel
      ),	 
      'library_step1_ezproxy' => array(
       'library_name' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please provide Library Name.'),
+	   'library_subdomain' => array(
+                                     'library_subdomain-1' => array('rule' => array('custom', '/^[a-zA-Z0-9]*$/'), 'allowEmpty' =>  true, 'message' => 'Please use only alphanumeric characters.', 'last' => true),
+                                     'library_subdomain-2' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This Library Subdomain is already taken please try another.')
+									),
       'library_authentication_method' => array('rule' => array('custom', '/\S+/'), 'message' => 'Please select a Library Authentication Method.'),
       'library_ezproxy_referral' => array('rule' => 'url', 'allowEmpty' =>  false, 'message' => 'Please provide a valid EZProxy Referral URL.'),
       'library_ezproxy_name' => array('rule' => 'isUnique', 'allowEmpty' =>  true, 'message' => 'This EZProxy Library Name already exists in our database.'),

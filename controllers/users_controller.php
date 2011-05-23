@@ -45,7 +45,9 @@ Class UsersController extends AppController
 												'innovative_wo_pin'=>'inlogin',
 												'innovative_var'=>'idlogin',
 												'innovative'=>'ilogin',
-												'user_account'=>'login');
+												'user_account'=>'login',
+												'innovative_var_name'=>'ildlgin',
+												'innovative_var_https_name'=>'ilhdlogin');
 						$action = $method_vs_action[$library_data['Library']['library_authentication_method']];
 						$this->redirect(array('controller' => 'users', 'action' => $action));
 					}

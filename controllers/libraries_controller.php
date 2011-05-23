@@ -298,12 +298,13 @@ Class LibrariesController extends AppController
                         $this->set('success', compact('message', 'data'));
                     }
                     else {
-                        $message = __('To proceed further please enter the data correctly.|2', true);
+                        $message = __('To proceed further please enter the data correctly.', true);
                         $User = $this->User->invalidFields();
                         $data = compact('User');
                         $this->set('errors', compact('message', 'data'));
                     }
                 }
+				
                 elseif($this->data['Library']['libraryStepNum'] == '5') {
 
                     $this->Library->create();
