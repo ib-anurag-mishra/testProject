@@ -32,6 +32,9 @@ class AppModel extends Model {
 		}
 		else{
 			$pageVal = 20;
+		}
+		if(isset($extra['webservice'])){
+			$pageVal = 10000;
 		}		
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
