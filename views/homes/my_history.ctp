@@ -75,7 +75,7 @@ $ieVersion =  ieversion();
 					<?php
 						$productInfo = $song->getDownloadData($downloadResult['Download']['ProdID']);
 						$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 					?>
 						<p>
