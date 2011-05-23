@@ -2554,7 +2554,7 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 				}        
 				else{	
-						$authUrl = "http://173.203.136.99:8080/snlogin_validation";
+						$authUrl = "https://auth.libraryideas.com/snlogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						if($result){
 						echo $result;echo 'hi';exit;
@@ -2738,7 +2738,7 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}        
 				else{
-						$authUrl = "http://173.203.136.99:8080/sdlogin_validation";
+						$authUrl = "https://auth.libraryideas.com/sdlogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						//echo $result;echo 'hiii'; exit;
 						$resultAnalysis = explode("|",$result);
@@ -2895,7 +2895,7 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 				}        
 				else{
-					$authUrl = "http://173.203.136.99:8080/sndlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/sndlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//echo $result;exit;
 					$resultAnalysis = explode("|",$result);
