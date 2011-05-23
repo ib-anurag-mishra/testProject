@@ -2,7 +2,7 @@
 class ServiceController extends AppController {
     var $name = 'Service';
     var $autoLayout = false;
-    var $uses = array('Library', 'Song', 'Country', 'Genre', 'File');
+    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files');
 	var $components = array('RequestHandler');
 	var $helpers = array('Xml'); // helpers used	
 	
@@ -30,33 +30,34 @@ class ServiceController extends AppController {
 			}
 			$searchString =  $this->params['pass'][3];	
 			$searchString = str_replace("^", " ", $searchString);					
-			$searchString = str_replace("$", " ", $searchString);       
+			$searchString = str_replace("$", " ", $searchString);
+			$sphinxCheckCondition = "&";
 			if($this->params['pass'][2] == 'artist') {
-				$sphinxArtistSearch = '@ArtistText "'.addslashes($artist).'" '.$sphinxCheckCondition.' ';
+				$sphinxArtistSearch = '@ArtistText "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxArtistSearch = '';
 			}
 			if($this->params['pass'][2] == 'composer') {
-				$sphinxComposerSearch = '@Composer "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
+				$sphinxComposerSearch = '@Composer "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxComposerSearch = '';
 			}
 			if($this->params['pass'][2] == 'song') {
-				$sphinxSongSearch = '@SongTitle "'.addslashes($song).'" '.$sphinxCheckCondition.' ';
+				$sphinxSongSearch = '@SongTitle "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxSongSearch = '';
 			}
 			if($this->params['pass'][2] == 'album') {
-				$sphinxAlbumSearch = '@Title "'.addslashes($album).'" '.$sphinxCheckCondition.' ';
+				$sphinxAlbumSearch = '@Title "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
 				$sphinxAlbumSearch = '';
 			}
 			if($this->params['pass'][2] == 'genre') {
-				$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
+				$sphinxGenreSearch = '@Genre "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
 			}
 			else {
 				$sphinxGenreSearch = '';
@@ -91,7 +92,10 @@ class ServiceController extends AppController {
 						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
 					));
 			
-			$searchResults = $this->paginate('Song');				
+			$searchResults = $this->paginate('Song');
+			foreach($searchResults as $k => $v){
+				$result[$k] => $v['Song'];
+			}
 			$this->set('result', $searchResults);
 		}
 	}
