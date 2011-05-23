@@ -64,7 +64,7 @@ $ieVersion =  ieversion();
 			<div class="songSample">
 				<?php
 					if($catG['SalesDate'] <= date('Y-m-d')) {
-						$finalSongUrl = "http://music.freegalmusic.com".$catG['SampleSong'];
+						$finalSongUrl = Configure::read('App.Music_Path').$catG['SampleSong'];
 						$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 						echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$category_key.$key, "onClick" => 'playSample(this, "'.$category_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$catG["ProdId"].', "'.$this->webroot.'");'));
 						echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$category_key.$key));
@@ -104,7 +104,7 @@ $ieVersion =  ieversion();
 						if($libraryDownload == '1' && $patronDownload == '1')
 						{
 							if($catG['status'] != 'avail'){
-								$finalSongUrl = "http://music.freegalmusic.com".$catG['SongUrl'];
+								$finalSongUrl = Configure::read('App.Music_Path').$catG['SongUrl'];
 								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
 								<p>
