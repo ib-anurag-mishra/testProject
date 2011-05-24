@@ -2739,14 +2739,15 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}        
 				else{
-						$authUrl = "https://auth.libraryideas.com/sdlogin_validation";
+						$authUrl = "http://173.203.136.99:8080/Authentications/sdlogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						//echo $result;echo 'hiii'; exit;
 						$resultAnalysis = explode("|",$result);
 						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
 						$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
 						if($resultAnalysis[0] == "fail"){
-							$this->Session->setFlash($resultAnalysis[0]);
+							$this->Session->setFlash($resultAnalysis[1]);
+							//echo $resultAnalysis[1]; exit;
 							$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 						}elseif($resultAnalysis[0] == "success"){
 							//writing to memcache and writing to both the memcached servers
