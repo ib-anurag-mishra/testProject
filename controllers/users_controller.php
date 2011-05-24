@@ -1990,7 +1990,6 @@ Class UsersController extends AppController
 						$authUrl = "http://173.203.136.99:8080/snlogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						if($result){
-						echo $result;echo 'hi';exit;
 						$resultAnalysis = explode("|",$result);
 						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
 						$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
