@@ -2,7 +2,7 @@
 class ServiceController extends AppController {
     var $name = 'Service';
     var $autoLayout = false;
-    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files');
+    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album');
 	var $components = array('RequestHandler');
 	var $helpers = array('Xml'); // helpers used	
 	
@@ -93,10 +93,38 @@ class ServiceController extends AppController {
 			
 			$searchResults = $this->paginate('Song');
 			foreach($searchResults as $k=>$v){
-				$result[$k]['Song'] = $v['Song'];
+				$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
+				$result[$k]['Song']['ProductID'] = $v['Song']['ProductID'];
+				$result[$k]['Song']['ReferenceID'] = $v['Song']['ReferenceID'];
+				$result[$k]['Song']['Title'] = $v['Song']['Title'];
+				$result[$k]['Song']['SongTitle'] = $v['Song']['SongTitle'];
+				$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
+				$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
+				$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
+				$result[$k]['Song']['ISRC'] = $v['Song']['ISRC'];
+				$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
+				$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
+				$result[$k]['Song']['Territory'] = str_replace('"','',$v['Song']['Territory']);
+				$result[$k]['Song']['DownloadStatus'] = $v['Song']['DownloadStatus'];
+				$result[$k]['Song']['TrackBundleCount'] = $v['Song']['TrackBundleCount'];
+				$albumData = $this->Album->find('all', array(
+					'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
+					'fields' => array(
+						'Album.ProdID',
+					),
+					'contain' => array(										
+						'Files' => array(
+							'fields' => array(
+								'Files.CdnPath',
+								'Files.SaveAsName',
+								'Files.SourceURL',
+								),                             
+						)
+				)));
+				$result[$k]['Song']['Album_Artwork'] = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+				
 			}
-			$output = array_slice($result, 0, 100);
-			$this->set('result', $output);
+			$this->set('result', $result);
 		}
 	}
 	function genre(){
