@@ -49,7 +49,7 @@ Class UsersController extends AppController
 												'innovative_var_name'=>'ildlgin',
 												'innovative_var_https_name'=>'ilhdlogin');
 						$action = $method_vs_action[$library_data['Library']['library_authentication_method']];
-						$this->redirect(array('controller' => 'users', 'action' => $action,'invalid'));
+						$this->redirect(array('controller' => 'users', 'action' => $action));
 					}
 				}
 				else 
@@ -59,7 +59,7 @@ Class UsersController extends AppController
 			}
 			else 
 			{
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus','invalid'));
 			}	
 		}
 	}
