@@ -27,7 +27,7 @@
  * to use (in this case, /app/views/pages/home.ctp)...
  */
 	echo '<pre>';
-	print_r($_SESSION);
+	print_r($this->Session->read('lId'));
 	exit;
  $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 	if($library != 'www' && $library != 'freegalmusic')
