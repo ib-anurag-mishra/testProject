@@ -1219,7 +1219,7 @@ class HomesController extends AppController
      Function Name : aboutus
      Desc : actions used for User end checking for cookie and javascript enable
     */
-    function aboutus() {
+    function aboutus($status = null) {
 		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
 				$url = $this->Session->read('referral_url');
@@ -1287,6 +1287,8 @@ class HomesController extends AppController
 			$this->Session->destroy();
 			$this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
 		}
+		if($status == 'invalid')
+			$this -> Session -> setFlash("The subdomain you are trying to access is not registered with us");
 		$this->layout = 'home';
     }
 	
