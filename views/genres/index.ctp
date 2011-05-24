@@ -47,12 +47,12 @@ $ieVersion =  ieversion();
 			{?>
 			<div class="smAlbumArtwork">
 				<?php echo $html->link(
-						$html->image('http://music.freegalmusic.com' . $catG['AlbumArtwork'], array(
+						$html->image(Configure::read('App.Music_Path') . $catG['AlbumArtwork'], array(
 							"alt" => "Album Artwork", 
 							"width" => "60", 
 							"height" => "60"
 						)),
-						'http://music.freegalmusic.com' . $catG['AlbumArtwork'], array(
+						Configure::read('App.Music_Path') . $catG['AlbumArtwork'], array(
 							'escape' => false, 
 							"rel" => "image", 
 							"onclick" => "show_uploaded_images();"

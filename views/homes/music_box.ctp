@@ -32,7 +32,7 @@
 					);
 				}
 				$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
-				$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+				$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 				$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 				?>
 				<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
