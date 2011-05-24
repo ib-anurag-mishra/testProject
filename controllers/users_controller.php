@@ -985,7 +985,7 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";   
-					$authUrl1 = "http://173.203.136.99:8080/Authentications/ilogin_validation";
+					$authUrl1 = "https://auth.libraryideas.com/Authentications/ilogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
 					$resultAnalysis = explode("|",$result);
 					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
@@ -1161,7 +1161,7 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest"; 
-					$authUrl = "http://173.203.136.99:8080/Authentications/idlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/Authentications/idlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);	
 					$resultAnalysis = explode("|",$result);
 					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
@@ -1338,7 +1338,7 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$url = $authUrl."/PATRONAPI/".$card."/dump";  
 					$data['url'] = $url;
-					$authUrl = "http://173.203.136.99:8080/Authentications/ildlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/Authentications/ildlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis = explode("|",$result);
 					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
@@ -1498,7 +1498,7 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump"; 
-					$authUrl = "http://173.203.136.99:8080/Authentications/inlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/inlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis = explode("|",$result);
 					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
@@ -1655,7 +1655,7 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					$authUrl = "http://173.203.136.99:8080/Authentications/indlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/indlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//echo $result;exit;
 					$resultAnalysis = explode("|",$result);
@@ -1829,7 +1829,7 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 				}        
 				else{
-						$authUrl = "http://173.203.136.99:8080/Authentications/slogin_validation";
+						$authUrl = "https://auth.libraryideas.com/slogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis = explode("|",$result);
 						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
@@ -1987,7 +1987,7 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 				}        
 				else{	
-						$authUrl = "http://173.203.136.99:8080/snlogin_validation";
+						$authUrl = "http://173.203.136.99:8080/Authentications/snlogin_validation";
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						if($result){
 						$resultAnalysis = explode("|",$result);
