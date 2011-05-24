@@ -54,7 +54,7 @@ Class UsersController extends AppController
 				}
 				else 
 				{
-					$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+					$this->redirect(array('controller' => 'homes'));
 				}
 			}
 			else 
