@@ -160,7 +160,10 @@ class ServiceController extends AppController {
 				Cache::write("genre".$country, $genreAll);
 			}
 			$genreAll = Cache::read("genre".$country);
-			$this->set('genresAll', $genreAll);	
+			foreach($genreAll as $k=>$v){
+				$result[$k]['Genre'] = $v['Genre']['Genre'];
+			}
+			$this->set('genresAll', $result);	
 		}
 	}
 	
