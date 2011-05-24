@@ -1,6 +1,6 @@
 <?php
 /**
- * Description: View page for the getQuestions method
+ * Description: View page for search web services
  * 
  * Copyright 2011, m68 Interactive. All Rights Reserved.
  *

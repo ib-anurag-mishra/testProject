@@ -1,6 +1,6 @@
 <?php
 /**
- * Description: View page for the getQuestions method
+ * Description: View page for getting list of genres
  * 
  * Copyright 2011, m68 Interactive. All Rights Reserved.
  *

@@ -269,7 +269,7 @@ class ServiceController extends AppController {
 				}
 				$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
 			}
-			$this->set('genresAll', $result);	
+			$this->set('result', $result);	
 		}
 	}
 
