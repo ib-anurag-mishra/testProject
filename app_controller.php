@@ -7,6 +7,7 @@ class AppController extends Controller
 	
 	function beforeFilter()
 	{
+		
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}

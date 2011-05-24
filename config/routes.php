@@ -29,6 +29,7 @@
  $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 	if($library != 'www' && $library != 'freegalmusic')
 	{
+		Router::connect('/', array('controller' => 'users', 'action' => 'redirection_manager',$library));
 		Router::connect('/users/ilogin', array('controller' => 'users', 'action' => 'ilogin', $library));
 		Router::connect('/users/inlogin', array('controller' => 'users', 'action' => 'inlogin', $library));
 		Router::connect('/users/idlogin', array('controller' => 'users', 'action' => 'idlogin', $library));
@@ -44,7 +45,10 @@
     
 
 	}
-	Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
+	else
+	{
+		Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
+	}
 /**
  * ...and connect the rest of 'Pages' controller's urls.
  */
