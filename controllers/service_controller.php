@@ -92,6 +92,7 @@ class ServiceController extends AppController {
 					));
 			
 			$searchResults = $this->paginate('Song');
+			$reference = '';
 			foreach($searchResults as $k=>$v){
 				$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
 				$result[$k]['Song']['ProductID'] = $v['Song']['ProductID'];
@@ -107,22 +108,25 @@ class ServiceController extends AppController {
 				$result[$k]['Song']['Territory'] = str_replace('"','',$v['Song']['Territory']);
 				$result[$k]['Song']['DownloadStatus'] = $v['Song']['DownloadStatus'];
 				$result[$k]['Song']['TrackBundleCount'] = $v['Song']['TrackBundleCount'];
-				$albumData = $this->Album->find('all', array(
-					'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
-					'fields' => array(
-						'Album.ProdID',
-					),
-					'contain' => array(										
-						'Files' => array(
-							'fields' => array(
-								'Files.CdnPath',
-								'Files.SaveAsName',
-								'Files.SourceURL',
-								),                             
-						)
-				)));
-				$result[$k]['Song']['Album_Artwork'] = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
-				
+				if($reference != $v['Song']['ReferenceID']){ 
+					$albumData = $this->Album->find('all', array(
+						'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
+						'fields' => array(
+							'Album.ProdID',
+						),
+						'contain' => array(										
+							'Files' => array(
+								'fields' => array(
+									'Files.CdnPath',
+									'Files.SaveAsName',
+									'Files.SourceURL',
+									),                             
+							)
+					)));
+					$reference = $v['Song']['ReferenceID'];
+					$albumArtWork = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . $albumData[0]['Files']['CdnPath']."/".$albumData[0]['Files']['SourceURL']);
+				}
+				$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
 			}
 			$this->set('result', $result);
 		}
