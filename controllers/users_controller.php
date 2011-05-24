@@ -59,6 +59,7 @@ Class UsersController extends AppController
 			}
 			else 
 			{
+				$this->Session->write('lib_status', 'invalid');
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus','invalid'));
 			}	
 		}
@@ -958,13 +959,12 @@ Class UsersController extends AppController
 			{
 				if($this->Session->read('lId') == '')
 				{
-					$this->Session->write("library_subdomain",$library);
 					$this->Session->write("lId",$library_data['Library']['id']);
 				}
 			}
 			else 
 			{
-				$wrongLibrarySubdomain = 1;
+				$wrongReferral = 1;
 			}	
 		}
 		$this->layout = 'login';
