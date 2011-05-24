@@ -47,7 +47,10 @@ Class UsersController extends AppController
 												'innovative'=>'ilogin',
 												'user_account'=>'login',
 												'innovative_var_name'=>'ildlgin',
-												'innovative_var_https_name'=>'ilhdlogin');
+												'innovative_var_https_name'=>'ilhdlogin',
+												'innovative_var_https'=>'ihdlogin',
+												'innovative_var_https_wo_pin'=>'inhdlogin',
+												'soap'=>'plogin');
 						$action = $method_vs_action[$library_data['Library']['library_authentication_method']];
 						$this->redirect(array('controller' => 'users', 'action' => $action));
 					}
@@ -1148,7 +1151,7 @@ Class UsersController extends AppController
     Desc : For patron idlogin(Innovative pin) login method
    */
    
-   function idlogin(){
+   function idlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1162,6 +1165,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -1487,7 +1505,7 @@ Class UsersController extends AppController
     Desc : For patron ildlogin(Innovative Var with Name) login method
    */
    
-   function ildlogin(){
+   function ildlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1501,6 +1519,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -1807,7 +1840,7 @@ Class UsersController extends AppController
     Desc : For patron inlogin(Innovative w/o PIN) login method
    */
    
-	function inlogin(){
+	function inlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1821,6 +1854,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';     
 		if(isset($_POST['lang'])){
@@ -2008,7 +2056,7 @@ Class UsersController extends AppController
     Desc : For patron indlogin(Innovative Var w/o Pin) login method
    */
    
-   function indlogin(){
+   function indlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2022,6 +2070,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -2331,7 +2394,7 @@ Class UsersController extends AppController
 	*/ 
 	   
 	   
-	function slogin(){
+	function slogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2345,6 +2408,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -2554,7 +2632,7 @@ Class UsersController extends AppController
 	*/ 
 	   
 	   
-	function snlogin(){
+	function snlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2568,6 +2646,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -2751,7 +2844,7 @@ Class UsersController extends AppController
 		Desc : For patron sdlogin(SIP2 Var) login method
 	*/ 	   
 	   
-	function sdlogin(){
+	function sdlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2765,6 +2858,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -3097,7 +3205,7 @@ Class UsersController extends AppController
 		Desc : For patron sndlogin(SIP2 Var w/o Pin) login method
 	*/ 	   
 	   
-	function sndlogin(){
+	function sndlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -3111,6 +3219,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -3529,7 +3652,7 @@ Class UsersController extends AppController
     Desc : For patron Innovative Https login method
    */
    
-   function inhlogin(){
+   function inhlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -3543,6 +3666,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
       $this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -3868,7 +4006,7 @@ Class UsersController extends AppController
     Desc : For patron ihdlogin(Innovative Var with HTTPS) login method
    */
    
-   function ihdlogin(){
+   function ihdlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -3882,6 +4020,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -4208,7 +4361,7 @@ Class UsersController extends AppController
     Desc : For patron inhdlogin(Innovative Var with HTTPS and without PIN) login method
    */
    
-   function inhdlogin(){
+   function inhdlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -4222,6 +4375,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -4550,7 +4718,7 @@ Class UsersController extends AppController
     Desc : For patron login(Using SOAP web services) login method
    */
    
-	function plogin(){
+	function plogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -4564,6 +4732,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
@@ -4716,7 +4899,7 @@ Class UsersController extends AppController
     Function Name : ilhdlogin
     Desc : For patron ilhdlogin(Innovative Var HTTPS with Name) login method
    */
-   function ilhdlogin(){
+   function ilhdlogin($library = null){
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -4730,6 +4913,21 @@ Class UsersController extends AppController
 					$wrongReferral = 1;
 				}	
 			}
+		}
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			if(count($library_data) > 0)
+			{
+				if($this->Session->read('lId') == '')
+				{
+					$this->Session->write("lId",$library_data['Library']['id']);
+				}
+			}
+			else 
+			{
+				$wrongReferral = 1;
+			}	
 		}
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
