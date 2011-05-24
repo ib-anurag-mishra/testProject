@@ -26,7 +26,7 @@ Class UsersController extends AppController
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-			if(count($library_data) > 0)
+			if(!empty($library_data))
 			{
 				if($this->Session->read('lId') == '')
 				{
