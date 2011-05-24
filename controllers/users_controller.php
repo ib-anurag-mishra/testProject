@@ -987,7 +987,6 @@ Class UsersController extends AppController
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";   
 					$authUrl1 = "http://173.203.136.99:8080/Authentications/ilogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
-					echo $result;echo "test";exit;
 					$resultAnalysis = explode("|",$result);
 					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
 					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
