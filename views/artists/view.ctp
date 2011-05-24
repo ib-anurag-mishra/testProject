@@ -84,7 +84,7 @@
 									<?php
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
 											$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Sample_Files']['CdnPath']."/".$albumSong['Sample_Files']['SaveAsName']);
-											$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+											$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 											$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$albumSong["Song"]["ProdID"].', "'.$this->webroot.'");'));
 											echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
@@ -129,7 +129,7 @@
 											{	
 												if($albumSong['Song']['status'] != 'avail'){
 													$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
-													$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+													$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 													$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 													<p>

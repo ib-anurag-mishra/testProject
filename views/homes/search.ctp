@@ -105,7 +105,7 @@ if(count($searchResults) != 0){
 						}
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d')) {
 							$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Sample_Files']['CdnPath']."/".$searchResult['Sample_Files']['SaveAsName']);
-							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$searchResult["Song"]["ProdID"].', "'.$this->webroot.'");'));
 							echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key));
@@ -121,7 +121,7 @@ if(count($searchResults) != 0){
 							if($libraryDownload == '1' && $patronDownload == '1') {
 								if($searchResult['Song']['status'] != 'avail'){
 									$songUrl = shell_exec('perl files/tokengen ' . $searchResult['Full_Files']['CdnPath']."/".$searchResult['Full_Files']['SaveAsName']);
-									$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+									$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 									$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 						 ?>
 									<p>
@@ -158,7 +158,7 @@ if(count($searchResults) != 0){
 								<?php 	}
 										else { ?>
 											<p>
-											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);'>?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 
 											</p>

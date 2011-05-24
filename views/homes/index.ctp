@@ -168,7 +168,7 @@ $ieVersion =  ieversion();
 								);
 							}
 							$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
-							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
 							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
@@ -180,7 +180,7 @@ $ieVersion =  ieversion();
 								if($libraryDownload == '1' && $patronDownload == '1') {	
 									if($songs[$i]['Song']['status'] != 'avail') {
 										$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Full_Files']['CdnPath']."/".$songs[$i]['Full_Files']['SaveAsName']);
-										$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+										$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
@@ -285,7 +285,7 @@ $ieVersion =  ieversion();
 								);
 							}
 							$songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Sample_Files']['CdnPath']."/".$nationalTopDownload[$i]['Sample_Files']['SaveAsName']);
-							$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
 							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$newCount, "onClick" => 'playSample(this, "'.$newCount.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
@@ -297,7 +297,7 @@ $ieVersion =  ieversion();
 								if($libraryDownload == '1' && $patronDownload == '1') {	
 									if($nationalTopDownload[$i]['Song']['status'] != 'avail') {
 										$songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath']."/".$nationalTopDownload[$i]['Full_Files']['SaveAsName']);
-										$finalSongUrl = "http://music.freegalmusic.com".$songUrl;
+										$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 										<span class="beforeClick" id="songtab_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
