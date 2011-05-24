@@ -146,10 +146,11 @@ class ServiceController extends AppController {
 			return;
 		}
 		else{			
-			$country = $existingLibraries['0']['Library']['library_territory'];	
+			$country = $existingLibraries['0']['Library']['library_territory'];
+			$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
 			if (($genre = Cache::read("genre".$country)) === false) {
-				$genreAll = $this->Genre->find('all',array(
+					$genreAll = $this->Genre->find('all',array(
 							'conditions' =>
 								array('and' =>
 									array(
@@ -159,8 +160,14 @@ class ServiceController extends AppController {
 							'fields' => array(
 									'Genre.Genre'
 									),
-							'group' => 'Genre.Genre'
-						));
+							'contain' => array(
+								'Country' => array(
+										'fields' => array(
+												'Country.Territory'								
+											)
+										),
+							),'group' => 'Genre.Genre'
+					));
 				Cache::write("genre".$country, $genreAll);
 			}
 			$genreAll = Cache::read("genre".$country);
