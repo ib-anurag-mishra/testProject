@@ -63,7 +63,7 @@ Class UsersController extends AppController
 			else 
 			{
 				$this->Session->write('lib_status', 'invalid');
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus','invalid'));
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}	
 		}
 	}
