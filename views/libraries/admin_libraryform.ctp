@@ -493,7 +493,7 @@
 							<?php
 								echo $this->Form->input('library_territory', array('options' => array(
 									'US' => 'US',
-									'CA' => 'CA'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_territory'])
+									'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_territory'])
 								);
 							?>
 						</td>
