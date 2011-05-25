@@ -102,12 +102,8 @@ class ServiceController extends AppController {
 				$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
 				$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
 				$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
-				$result[$k]['Song']['ISRC'] = $v['Song']['ISRC'];
 				$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 				$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-				$result[$k]['Song']['Territory'] = str_replace('"','',$v['Song']['Territory']);
-				$result[$k]['Song']['DownloadStatus'] = $v['Song']['DownloadStatus'];
-				$result[$k]['Song']['TrackBundleCount'] = $v['Song']['TrackBundleCount'];
 				if($reference != $v['Song']['ReferenceID']){ 
 					$albumData = $this->Album->find('all', array(
 						'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
