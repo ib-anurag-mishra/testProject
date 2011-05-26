@@ -246,7 +246,7 @@ Class UsersController extends AppController
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
-				$this->redirect('/');
+				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
 		}
