@@ -2,7 +2,7 @@
 class ServiceController extends AppController {
     var $name = 'Service';
     var $autoLayout = false;
-    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album');
+    var $uses = array('Library', 'Song', 'Country', 'Genre', 'Files', 'Album','Currentpatron', 'Download','Variable','Url','Language');
 	var $components = array('RequestHandler');
 	var $helpers = array('Xml'); // helpers used	
 	
@@ -104,6 +104,8 @@ class ServiceController extends AppController {
 				$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 				$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 				$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
+				$url = str_replace("search","login",$_SERVER['REQUEST_URI'];
+				$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
 				if($reference != $v['Song']['ReferenceID']){ 
 					$albumData = $this->Album->find('all', array(
 						'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -246,12 +248,9 @@ class ServiceController extends AppController {
 				$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
 				$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
 				$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
-				$result[$k]['Song']['ISRC'] = $v['Song']['ISRC'];
 				$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 				$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-				$result[$k]['Song']['Territory'] = str_replace('"','',$v['Song']['Territory']);
-				$result[$k]['Song']['DownloadStatus'] = $v['Song']['DownloadStatus'];
-				$result[$k]['Song']['TrackBundleCount'] = $v['Song']['TrackBundleCount'];
+				$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
 				if($reference != $v['Song']['ReferenceID']){ 
 					$albumData = $this->Album->find('all', array(
 						'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -275,6 +274,122 @@ class ServiceController extends AppController {
 			$this->set('result', $result);	
 		}
 	}
+	function login(){
+        $this->Library->recursive = -1;
+        $existingLibraries = $this->Library->find('all',array(
+                                                'conditions' => 
+												array('library_consortium' => $this->params['pass'][0],
+													  'id' => $this->params['pass'][1],
+													  'library_status' => 'active')
+                                                )
+                                            );
+		if(count($existingLibraries) == 0){
+			$result = array('status' => 0 , 'message' => 'Access Denied');
+			$this->set('result', $result);
+			return;
+		}
+		else{			
+			$country = $existingLibraries['0']['Library']['library_territory'];
+			$patronId = $this->params['pass'][2];
+			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+			if(count($currentPatron) > 0){
+			// do nothing
+			} else {
+				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+				$insertArr['patronid'] = $patronId;
+				$insertArr['session_id'] = session_id();
+				$this->Currentpatron->save($insertArr);						
+			}					
+			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+				$date = time();
+				$values = array(0 => $date, 1 => session_id());			
+				Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+			} else {
+				$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+				$date = time();
+				$modifiedTime = $userCache[0];
+				if(!($this->Session->read('patron'))){
+					if(($date-$modifiedTime) > 60){
+						$values = array(0 => $date, 1 => session_id());	
+						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+					}
+					else{
+						$this->Session->destroy('user');
+						$this -> Session -> setFlash("This account is already active.");                              
+						$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+					}
+				} else {
+					if(($date-$modifiedTime) > 60){
+						$values = array(0 => $date, 1 => session_id());	
+						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+					}
+					else{
+						$this->Session->destroy('user');
+						$this -> Session -> setFlash("This account is already active.");                              
+						$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+					}		
+				}
+				
+			}
+			$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+			$this->Session->write("patron", $patronId);
+			$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+			if($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative'){
+				$this->Session->write("innovative","innovative");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var'){
+				$this->Session->write("innovative_var","innovative_var");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var_name'){
+				$this->Session->write("innovative_var_name","innovative_var_name");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_wo_pin'){
+				$this->Session->write("innovative_wo_pin","innovative_wo_pin");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var_wo_pin'){
+				$this->Session->write("innovative_var_wo_pin","innovative_var_wo_pin");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'sip2'){
+				$this->Session->write("sip2","sip2");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'sip2_wo_pin'){
+				$this->Session->write("sip","sip");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'sip2_var'){
+				$this->Session->write("sip2_var","sip2_var");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'sip2_var_wo_pin'){
+				$this->Session->write("sip2_var_wo_pin","sip2_var_wo_pin");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'ezproxy'){
+				$this->Session->write("ezproxy","ezproxy");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_https'){
+				$this->Session->write("innovative_https","innovative_https");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var_https'){
+				$this->Session->write("innovative_var_https","innovative_var_https");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var_https_wo_pin'){
+				$this->Session->write("innovative_var_https_wo_pin","innovative_var_https_wo_pin");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'soap'){
+				$this->Session->write("soap","soap");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'innovative_var_https_name'){
+				$this->Session->write("innovative_var_https_name","innovative_var_name");
+			}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'referral_url'){
+				$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
+			}
+			$this->Session->write($existingLibraries['0']['Library']["library_authentication_method"],$existingLibraries['0']['Library']["library_authentication_method"]);
+			if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
+				$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+			}
+			if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+				$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+			}
+			$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+			$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+			$this->Download->recursive = -1;
+			$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+			$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+			$this ->Session->write("downloadsUsed", $results);
+			if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
+				$this ->Session->write("block", 'yes');
+			}
+			else{
+				$this ->Session->write("block", 'no');
+			}
+			$this->redirect(array('controller' => 'artists', 'action' => 'view', base64_encode($this->params['pass'][4]), $this->params['pass'][3]));			
+		}	
+	}	
+
 
 }
 ?>
