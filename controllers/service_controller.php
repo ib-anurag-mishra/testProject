@@ -104,7 +104,7 @@ class ServiceController extends AppController {
 				$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 				$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 				$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-				$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
+				$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
 				if($reference != $v['Song']['ReferenceID']){ 
 					$albumData = $this->Album->find('all', array(
 						'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -385,7 +385,7 @@ class ServiceController extends AppController {
 			else{
 				$this ->Session->write("block", 'no');
 			}
-			$this->redirect(array('controller' => 'artists', 'action' => 'view', base64_encode($this->params['pass'][4]), $this->params['pass'][3]));			
+			$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3]));			
 		}	
 	}	
 
