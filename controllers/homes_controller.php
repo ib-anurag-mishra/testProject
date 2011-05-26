@@ -36,6 +36,9 @@ class HomesController extends AppController
      Desc : actions that is invoked when the user comes to the homes controller
     */
     function index() {
+		  if($_SERVER['SERVER_PORT'] == 443){
+			$this->redirect('http://'.$_SERVER['HTTP_HOST']);
+		 }
 		// Local Top Downloads functionality
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
