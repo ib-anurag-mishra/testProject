@@ -104,7 +104,6 @@ class ServiceController extends AppController {
 				$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 				$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 				$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-				$url = str_replace("search","login",$_SERVER['REQUEST_URI'];
 				$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
 				if($reference != $v['Song']['ReferenceID']){ 
 					$albumData = $this->Album->find('all', array(
