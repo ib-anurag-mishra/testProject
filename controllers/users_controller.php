@@ -23,6 +23,7 @@ Class UsersController extends AppController
 	}
 	function redirection_manager($library = null)
 	{
+		
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
@@ -57,7 +58,7 @@ Class UsersController extends AppController
 				}
 				else 
 				{
-					$this->redirect(array('controller' => 'homes'));
+					$this->redirect('/');
 				}
 			}
 			else 
@@ -245,7 +246,7 @@ Class UsersController extends AppController
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
-				$this->redirect('/homes/index');
+				$this->redirect('/');
 				$this->Auth->autoRedirect = false;     
 			}
 		}
