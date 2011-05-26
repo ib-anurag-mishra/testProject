@@ -26,7 +26,8 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/views/pages/home.ctp)...
  */
-	
+pr($_SESSION);
+		exit;	
  $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 	if($library != 'www' && $library != 'freegalmusic')
 	{

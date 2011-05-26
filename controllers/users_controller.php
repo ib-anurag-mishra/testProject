@@ -237,8 +237,6 @@ Class UsersController extends AppController
    */
    
 	function login(){
-		pr($_SESSION);
-		exit;
 		$this->layout = 'login';
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
