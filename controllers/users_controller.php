@@ -340,7 +340,7 @@ Class UsersController extends AppController
 				else{
 					$this ->Session->write("block", 'no');
 				}
-				$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+				$this->redirect('/');
 			}
 			else{
 				$this->redirect($this->Auth->logout());
