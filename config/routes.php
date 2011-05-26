@@ -27,11 +27,12 @@
  * to use (in this case, /app/views/pages/home.ctp)...
  */
  session_start();
-pr($_SESSION);
-exit;	
  $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
 	if($library != 'www' && $library != 'freegalmusic')
 	{
+		if(isset($_SESSION['library']) && $_SESSION['library'] != '' && $_SESSION['patron']) && $_SESSION['patron'] != '')
+		Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
+		else
 		Router::connect('/', array('controller' => 'users', 'action' => 'redirection_manager',$library));
 		Router::connect('/users/ilogin', array('controller' => 'users', 'action' => 'ilogin', $library));
 		Router::connect('/users/inlogin', array('controller' => 'users', 'action' => 'inlogin', $library));
