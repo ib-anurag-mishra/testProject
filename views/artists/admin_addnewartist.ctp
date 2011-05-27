@@ -24,7 +24,7 @@ if(empty($getArtistData)){
 				echo $this->Form->input('territory', array('options' => array(
 					'' => 'Choose Territory',
 					'US' => 'US',
-					'CA' => 'CA'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Newartist']['territory'])
+					'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Newartist']['territory'])
 				);
 			?>
 		</td>
