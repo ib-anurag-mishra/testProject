@@ -63,6 +63,9 @@
 					<li>
 						<?php echo $html->link('Manage Library', array('controller' => 'libraries', 'action' => 'managelibrary'));?>
 					</li>
+					<li>
+						<?php echo $html->link('Manage Consortium', array('controller' => 'libraries', 'action' => 'consortium'));?>
+					</li>						
 				</ul>
 			</li>
 			<li>
@@ -132,7 +135,10 @@
 					</li>
 					<li>
 						<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
-					</li>					
+					</li>
+					<li>
+						<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
+					</li>						
 				</ul>
 			</li>	
 		</ul>
@@ -157,6 +163,9 @@
 					</li>
 					<li>
 						<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 					</li>					
 				</ul>
 			</li>	

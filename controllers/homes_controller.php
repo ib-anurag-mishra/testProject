@@ -853,11 +853,14 @@ class HomesController extends AppController
 		$patronid = str_replace("_","+",$_REQUEST['patronid']);
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
 		if(count($currentPatron) > 0){
-			  $updateArr = array();
-			  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
-			  $updateArr['is_approved'] = 'yes';          
-			  $this->Currentpatron->save($updateArr);
-			  $this->Session->write('approved', 'yes');
+			$updateArr = array();
+			$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
+			if($this->Session->read('consortium') && ($this->Session->read('consortium') != ''){
+				$updateArr['consortium'] = $this->Session->read('consortium');
+			}
+			$updateArr['is_approved'] = 'yes';          
+			$this->Currentpatron->save($updateArr);
+			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";
 		exit;

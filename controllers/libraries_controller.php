@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     */
     function beforeFilter() {	  
         parent::beforeFilter(); 
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview', 'admin_consortium', 'admin_consortiumform');
     }
     
     /*
@@ -796,5 +796,31 @@ Class LibrariesController extends AppController
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
     }
+	function admin_consortium(){
+		$consortium = $this->Library->find('list', array('conditions' => array("Library.library_consortium != ''"),'fields' => array('Library.library_consortium','Library.library_consortium'), 'order' => 'Library.library_consortium ASC', 'recursive' => -1,'group' => 'Library.library_consortium'));
+		$this->set('consortium', $consortium);		
+	}
+	function admin_consortiumform(){
+		$selectLibraries = $this->Library->find('list', array('conditions' => array('Library.library_consortium' => $this->params['named']['id']),'fields' => array('Library.id','Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+		$libraries = $this->Library->find('list', array('fields' => array('Library.id','Library.library_name'), 'order' => 'Library.library_consortium DESC', 'recursive' => -1));
+		$this->set('consortium_name', $this->params['named']['id']);
+		$this->set('selectLibraries', $selectLibraries);
+		$this->set('allLibraries', $libraries);
+		$this->set( 'formAction', 'admin_consortiumform' );
+		if(isset($this->data)) {	
+			foreach($this->data['Library']['libraryIds'] as $k=>$v){
+				$data[$k]['id'] = $v;
+				$data[$k]['library_consortium'] = $this->data['Library']['consortium_name'];			
+			}
+			if($this->Library->saveAll($data)){
+				$this->Session ->setFlash('Consortium updated', 'modal', array( 'class' => 'modal success' ));
+				$this->redirect('/admin/libraries/consortium');						
+			}
+			else{
+				$this->Session ->setFlash('Error occured while updating Consortium', 'modal', array( 'class' => 'modal success' ));
+				$this->redirect('/admin/libraries/consortium');					
+			}			
+		}
+	}
 }
 ?>

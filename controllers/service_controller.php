@@ -7,6 +7,7 @@ class ServiceController extends AppController {
 	var $helpers = array('Xml'); // helpers used	
 	
     function search() {
+//	print "<pre>";print_r($this->params);exit;
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => 
@@ -28,53 +29,90 @@ class ServiceController extends AppController {
 			else {
 				$condSphinx = "";
 			}
-			$searchString =  $this->params['pass'][4];	
-			$searchString = str_replace("^", " ", $searchString);					
-			$searchString = str_replace("$", " ", $searchString);
-			$sphinxCheckCondition = "&";
-			if($this->params['pass'][3] == 'artist') {
-				$sphinxArtistSearch = '@ArtistText "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
+			$artist =  $this->params['named']['artist'];
+			$composer = $this->params['named']['composer'];
+			$song =  $this->params['named']['song'];
+			$album =  $this->params['named']['album'];
+			$genre =  $this->params['named']['genre'];
+
+			$artist = str_replace("^", " ", $artist);
+			$composer = str_replace("^", " ", $composer);
+			$song = str_replace("^", " ", $song);
+			$album = str_replace("^", " ", $album);
+			$genre = str_replace("^", " ", $genre);
+					
+			$artist = str_replace("$", " ", $artist);
+			$composer = str_replace("$", " ", $composer);
+			$song = str_replace("$", " ", $song);
+			$album = str_replace("$", " ", $album);
+			$genre = str_replace("$", " ", $genre);
+			if($this->params['named']['condition'] == 'or'){
+				$sphinxCheckCondition = "|";
+			} 
+			else {
+				$sphinxCheckCondition = "&";
+			}
+
+			if($artist != '') {
+				$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');
+				$sphinxArtistSearch = '@ArtistText "'.addslashes($artist).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
+				$artistSearch = '';
 				$sphinxArtistSearch = '';
 			}
-			if($this->params['pass'][3] == 'composer') {
-				$sphinxComposerSearch = '@Composer "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
+			if($composer != '') {
+				$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');    
+				$this->set('composer', $composer);
+				$preCondition4 = array('Participant.Role' => 'Composer'); 
+				$sphinxComposerSearch = '@Composer "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
+				$role = '2';
 			}
 			else {
+				$composerSearch = '';
+				$preCondition4 = "";
 				$sphinxComposerSearch = '';
+				$role = '';
 			}
-			if($this->params['pass'][3] == 'song') {
-				$sphinxSongSearch = '@SongTitle "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
+			if($song != '') {
+				$songSearch = array('match(Song.SongTitle) against ("+'.$song.'*" in boolean mode)');
+				$sphinxSongSearch = '@SongTitle "'.addslashes($song).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
+				$songSearch = '';
 				$sphinxSongSearch = '';
 			}
-			if($this->params['pass'][3] == 'album') {
-				$sphinxAlbumSearch = '@Title "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';
+			if($album != '') {
+				$albumSearch = array('match(Song.Title) against ("+'.$album.'*" in boolean mode)');
+				$sphinxAlbumSearch = '@Title "'.addslashes($album).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
+				$albumSearch = '';
 				$sphinxAlbumSearch = '';
 			}
-			if($this->params['pass'][3] == 'genre') {
-				$sphinxGenreSearch = '@Genre "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
+			if($genre != '') {
+				$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)'); 
+				$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
 			}
 			else {
+				$genreSearch = '';
 				$sphinxGenreSearch = '';
 			}
 			if($country != '') {
+				$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)'); 
 				$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$sphinxCheckCondition.' ';
 			}
 			else {
+				$territorySearch = '';
 				$sphinxTerritorySearch = '';
-			}
+			}				
 			$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.''.$sphinxTerritorySearch;
 			$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 			$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
 			if ($condSphinx == "") {
 				$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 			}
-		
+
 			App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 			if (isset($this->passedArgs['sort'])){
 				$sphinxSort = $this->passedArgs['sort'];
