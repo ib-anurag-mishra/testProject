@@ -163,6 +163,12 @@ class ServiceController extends AppController {
 				}
 				$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
 			}
+			if(count($result) > 0){
+				$result = $result;
+			}
+			else{
+				$result = array('message' => 'No Records');
+			}		
 			$this->set('result', $result);
 		}
 	}
@@ -308,7 +314,12 @@ class ServiceController extends AppController {
 				}
 				$result[$k]['Song']['Album_Artwork'] = $albumArtWork;				
 			}
-			$this->set('result', $result);	
+			if(count($result) > 0){
+				$result = $result;
+			}
+			else{
+				$result = array('message' => 'No Records');
+			}
 		}
 	}
 	function login(){
