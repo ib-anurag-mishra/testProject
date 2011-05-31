@@ -241,7 +241,7 @@ class ServiceController extends AppController {
 			else {
 				$condSphinx = "";
 			}
-			$searchString =  $this->params['pass'][3];	
+			$searchString =  base64_decode($this->params['pass'][3]);	
 			$searchString = str_replace("^", " ", $searchString);					
 			$searchString = str_replace("$", " ", $searchString);
 			$sphinxCheckCondition = "&";
