@@ -855,7 +855,7 @@ class HomesController extends AppController
 		if(count($currentPatron) > 0){
 			$updateArr = array();
 			$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
-			if($this->Session->read('consortium') && ($this->Session->read('consortium') != ''){
+			if($this->Session->read('consortium') && $this->Session->read('consortium') != ''){
 				$updateArr['consortium'] = $this->Session->read('consortium');
 			}
 			$updateArr['is_approved'] = 'yes';          
