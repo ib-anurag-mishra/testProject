@@ -12,7 +12,7 @@
 		$getData['Library']['library_authentication_num'] = "";
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_logout_url'] = "";
-		$getData['Library']['library_apikey'] = "";
+		$getData['Library']['library_apikey'] = "none";
 		$getData['Library']['library_soap_url'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
 		$getData['Library']['library_authentication_response'] = "";
