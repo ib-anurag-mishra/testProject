@@ -189,51 +189,36 @@ class ServiceController extends AppController {
 												array('consortium_key' => $this->params['pass'][0])
 												)
                                             );
-		if(count($consortium) > 0){
-			$this->Library->recursive = -1;
-			$existingLibraries = $this->Library->find('all',array(
-													'conditions' => 
-													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
-														  'id' => $this->params['pass'][1],
-														  'library_status' => 'active')
-													)
-												);
-			if(count($existingLibraries) == 0){
-				$result = array('status' => 0 , 'message' => 'Access Denied');
-				$this->set('result', $result);
-				return;
-			}
-			else{			
-				$country = $existingLibraries['0']['Library']['library_territory'];
-				$this->Genre->Behaviors->attach('Containable');
-				$this->Genre->recursive = 2;
-				if (($genre = Cache::read("genre".$country)) === false) {
-						$genreAll = $this->Genre->find('all',array(
-								'conditions' =>
-									array('and' =>
-										array(
-											array('Country.Territory' => $country)
-										)
+		if(count($consortium) > 0){			
+			$country = $existingLibraries['0']['Library']['library_territory'];
+			$this->Genre->Behaviors->attach('Containable');
+			$this->Genre->recursive = 2;
+			if (($genre = Cache::read("genre".$country)) === false) {
+					$genreAll = $this->Genre->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										array('Country.Territory' => $country)
+									)
+								),
+							'fields' => array(
+									'Genre.Genre'
 									),
-								'fields' => array(
-										'Genre.Genre'
+							'contain' => array(
+								'Country' => array(
+										'fields' => array(
+												'Country.Territory'								
+											)
 										),
-								'contain' => array(
-									'Country' => array(
-											'fields' => array(
-													'Country.Territory'								
-												)
-											),
-								),'group' => 'Genre.Genre'
-						));
-					Cache::write("genre".$country, $genreAll);
-				}
-				$genreAll = Cache::read("genre".$country);
-				foreach($genreAll as $k=>$v){
-					$result[$k]['Genre'] = $v['Genre']['Genre'];
-				}
-				$this->set('result', $result);	
+							),'group' => 'Genre.Genre'
+					));
+				Cache::write("genre".$country, $genreAll);
 			}
+			$genreAll = Cache::read("genre".$country);
+			foreach($genreAll as $k=>$v){
+				$result[$k]['Genre'] = $v['Genre']['Genre'];
+			}
+			$this->set('result', $result);	
 		}
 		else{
 			$result = array('status' => 0 , 'message' => 'Access Denied');
