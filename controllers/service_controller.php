@@ -232,7 +232,7 @@ class ServiceController extends AppController {
 				foreach($genreAll as $k=>$v){
 					$result[$k]['Genre'] = $v['Genre']['Genre'];
 				}
-				$this->set('genresAll', $result);	
+				$this->set('result', $result);	
 			}
 		}
 		else{
