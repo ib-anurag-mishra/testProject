@@ -21,7 +21,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center"><?php echo $this->Form->hidden('Library.consortium_name', array('value' => $consortium_name)); ?>&nbsp;&nbsp;</td>
+			<td colspan="2" align="center"><?php echo $this->Form->hidden('Library.library_apikey', array('value' => $consortium_name)); ?>&nbsp;&nbsp;</td>
 		</tr>		
 		<tr>
 			<td colspan="2" align="center"><?php echo $this->Form->submit('Update Consortium', array('div' => false, 'class' => 'form_fields')); ?></td>

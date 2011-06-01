@@ -489,11 +489,11 @@ Class ReportsController extends AppController
 		$this->set('downloadResult', $downloadResult);
 	}
 	function admin_consortium(){
-		$consortium = $this->Library->find('list', array('conditions' => array("Library.library_consortium != ''"),'fields' => array('Library.library_consortium','Library.library_consortium'), 'order' => 'Library.library_consortium ASC', 'recursive' => -1,'group' => 'Library.library_consortium'));
+		$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));
 		$this->set('consortium', $consortium);
 		$this->set('libraryID', "");
         if(isset($this->data)) {
-			$consortium_id = $this->data['Report']['library_consortium'];		
+			$consortium_id = $this->data['Report']['library_apikey'];		
             $this->Report->set($this->data);
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');

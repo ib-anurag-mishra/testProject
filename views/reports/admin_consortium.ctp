@@ -27,7 +27,7 @@
                                 <td align="right"><?php echo $this->Form->label('Select Consortium');?></td>
                                 <td align="left">
                         <?php    
-                            echo $this->Form->input('library_consortium', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_consortium']));
+                            echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_apikey']));
                         ?>
                                 </td>
                                 <td align="right"><?php echo $this->Form->label('Range');?></td>
