@@ -112,6 +112,15 @@ $(function() {
 		}
 	});
 	
+	$('#LibraryLibraryApikey').change(function(){
+		if($(this).val() == 'none') {
+			$('#none_consortium').show();
+		}
+		else {
+			$('#none_consortium').hide();
+		}
+	});
+	
 	$('#LibraryLibraryDownloadLimit').change(function(){
 		if($(this).val() == 'manual') {
 			$('#manual_download').show();
@@ -120,7 +129,7 @@ $(function() {
 			$('#LibraryLibraryDownloadLimitManual').val('');
 			$('#manual_download').hide();
 		}
-	});
+	});	
 	
 	$('#step1').click(function(){
 		$(".error_message").remove();

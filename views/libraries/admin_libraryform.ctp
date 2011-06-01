@@ -12,7 +12,7 @@
 		$getData['Library']['library_authentication_num'] = "";
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_logout_url'] = "";
-		$getData['Library']['library_consortium'] = "";
+		$getData['Library']['library_apikey'] = "";
 		$getData['Library']['library_soap_url'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
 		$getData['Library']['library_authentication_response'] = "";
@@ -205,8 +205,18 @@
 						<td align="left"><?php echo $this->Form->input('library_logout_url',array( 'label' => false ,'value' => $getData['Library']['library_logout_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Consortium');?></td>
-						<td align="left"><?php echo $this->Form->input('library_consortium',array( 'label' => false ,'value' => $getData['Library']['library_consortium'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library API Key');?></td>
+						<td align="left">
+							<?php
+								$consortium['none'] = 'None';
+								echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_apikey']));
+							?>
+							<span id="none_consortium" style="display:none">
+							<?php
+								echo $this->Form->input('none_consortium',array('label' => false , 'div' => false, 'class' => 'form_fields'));
+							?>
+							</span>							
+						</td>
 					</tr>					
 					<tr>
 						<td colspan="2"  id="allurl" <?php if($getData['Library']['library_authentication_method'] == "user_account" || $getData['Library']['library_authentication_method'] == "referral_url" || $getData['Library']['library_authentication_method'] == "ezproxy"){?>style="display:none;"<?php } ?>>					

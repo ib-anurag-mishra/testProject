@@ -117,7 +117,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
 																				'Library.library_logout_url',
-																				'Library.library_consortium',
+																				'Library.library_apikey',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -179,6 +179,8 @@ Class LibrariesController extends AppController
                 $this->set('allVariables', $allVariables);				
                 $allUrls = $this->Url->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
                 $this->set('allUrls', $allUrls);
+				$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));		
+				$this->set('consortium', $consortium);					
 			}
         }
         else
@@ -189,6 +191,8 @@ Class LibrariesController extends AppController
             $this -> set( 'getData', $arr );
             $this -> set( 'formAction', 'admin_libraryform' );
             $this -> set( 'formHeader', 'Library Setup' );
+			$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));		
+			$this->set('consortium', $consortium);		
         }
     }
     
@@ -218,7 +222,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
 																				'Library.library_logout_url',
-																				'Library.library_consortium',
+																				'Library.library_apikey',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -279,7 +283,9 @@ Class LibrariesController extends AppController
                 if($this->data['Library']['library_download_limit'] == 'manual') {
                     $this->data['Library']['library_download_limit'] = $this->data['Library']['library_download_limit_manual'];
                 }
-                
+                if($this->data['Library']['library_apikey'] == 'none') {
+                    $this->data['Library']['library_apikey'] = $this->data['Library']['none_consortium'];
+                }                
                 if($this->data['Library']['libraryStepNum'] == '2') {
                     if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
 						$this->data['User']['password'] = "";
