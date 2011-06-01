@@ -543,3 +543,17 @@ function showContract(){
 			}			
 		}
 }
+
+function convertString(){
+	var str = $("#LibraryConsortiumName").val();
+	var data = "str="+str;
+	$.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/convertString", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			$("#LibraryConsortiumKey").val(response);
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});	
+}
