@@ -16,7 +16,7 @@ class ServiceController extends AppController {
 			$this->Library->recursive = -1;
 			$existingLibraries = $this->Library->find('all',array(
 													'conditions' => 
-													array('library_apikey' => $consortium['Consortium']['consortium_name'],
+													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
 														  'id' => $this->params['pass'][1],
 														  'library_status' => 'active')
 													)
@@ -193,7 +193,7 @@ class ServiceController extends AppController {
 			$this->Library->recursive = -1;
 			$existingLibraries = $this->Library->find('all',array(
 													'conditions' => 
-													array('library_apikey' => $consortium['Consortium']['consortium_name'],
+													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
 														  'id' => $this->params['pass'][1],
 														  'library_status' => 'active')
 													)
@@ -252,7 +252,7 @@ class ServiceController extends AppController {
 			$this->Library->recursive = -1;
 			$existingLibraries = $this->Library->find('all',array(
 													'conditions' => 
-													array('library_apikey' => $consortium['Consortium']['consortium_name'],
+													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
 														  'id' => $this->params['pass'][1],
 														  'library_status' => 'active')
 													)
@@ -367,7 +367,7 @@ class ServiceController extends AppController {
 			$this->Library->recursive = -1;
 			$existingLibraries = $this->Library->find('all',array(
 													'conditions' => 
-													array('library_apikey' => $consortium['Consortium']['consortium_name'],
+													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
 														  'id' => $this->params['pass'][1],
 														  'library_status' => 'active')
 													)
