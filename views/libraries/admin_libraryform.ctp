@@ -211,7 +211,7 @@
 								$consortium['none'] = 'None';
 								echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_apikey']));
 							?>
-							<span id="none_consortium" style="display:none">
+							<span id="none_consortium" <?php if(count($consortium) > 1){?>style="display:none" <?php }?>>
 							<?php
 								echo $this->Form->input('none_consortium',array('label' => false , 'div' => false, 'class' => 'form_fields'));
 							?>
