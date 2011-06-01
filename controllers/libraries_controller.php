@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium');
     
     /*
      Function Name : beforeFilter
@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     */
     function beforeFilter() {	  
         parent::beforeFilter(); 
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview', 'admin_consortium', 'admin_consortiumform');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview', 'admin_consortium', 'admin_consortiumform', 'admin_addconsortium');
     }
     
     /*
@@ -179,7 +179,7 @@ Class LibrariesController extends AppController
                 $this->set('allVariables', $allVariables);				
                 $allUrls = $this->Url->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
                 $this->set('allUrls', $allUrls);
-				$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));		
+				$$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
 				$this->set('consortium', $consortium);					
 			}
         }
@@ -191,7 +191,7 @@ Class LibrariesController extends AppController
             $this -> set( 'getData', $arr );
             $this -> set( 'formAction', 'admin_libraryform' );
             $this -> set( 'formHeader', 'Library Setup' );
-			$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));		
+			$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
 			$this->set('consortium', $consortium);		
         }
     }
@@ -803,16 +803,16 @@ Class LibrariesController extends AppController
         }
     }
 	function admin_consortium(){
-		$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));
+		$consortium = $this->Consortium->find('all', array('order' => 'consortium_key ASC'));
 		$this->set('consortium', $consortium);		
 	}
 	function admin_consortiumform(){
 		if(isset($this->data)) {
-			foreach($this->data['Library']['libraryIds'] as $k=>$v){
-				$data[$k]['id'] = $v;
-				$data[$k]['library_apikey'] = $this->data['Library']['library_apikey'];			
-			}
-			if($this->Library->saveAll($data)){
+			$this->Consortium->id = $this->data['Library']['id'];
+			$data['consortium_name'] = $this->data['Library']['consortium_name'];
+			$data['consortium_key'] = $this->data['Library']['consortium_key'];
+			$this->Consortium->set($data);
+			if($this->Consortium->save()){
 				$this->Session ->setFlash('Consortium updated', 'modal', array( 'class' => 'modal success' ));
 				$this->redirect('/admin/libraries/consortium');						
 			}
@@ -822,13 +822,26 @@ Class LibrariesController extends AppController
 			}			
 		}
 		else{
-			$selectLibraries = $this->Library->find('list', array('conditions' => array('Library.library_apikey' => $this->params['named']['id']),'fields' => array('Library.id','Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
-			$libraries = $this->Library->find('list', array('fields' => array('Library.id','Library.library_name'), 'order' => 'Library.library_apikey DESC', 'recursive' => -1));
-			$this->set('consortium_name', $this->params['named']['id']);
-			$this->set('selectLibraries', $selectLibraries);
-			$this->set('allLibraries', $libraries);
+			$consortium = $this->Consortium->find('first', array('conditions' => array('id' => $this->params['named']['id'])));
+			$this->set('id', $this->params['named']['id']);
+			$this->set('consortium', $consortium);
 			$this->set( 'formAction', 'admin_consortiumform' );		
 		}
+	}
+	function admin_addconsortium(){
+		if(isset($this->data)) {
+			if($this->Consortium->save($this->data['Library'])){
+				$this->Session ->setFlash('Consortium updated', 'modal', array( 'class' => 'modal success' ));
+				$this->redirect('/admin/libraries/consortium');						
+			}
+			else{
+				$this->Session ->setFlash('Error occured while updating Consortium', 'modal', array( 'class' => 'modal success' ));
+				$this->redirect('/admin/libraries/consortium');					
+			}			
+		}
+		else{
+			$this->set( 'formAction', 'admin_addConsortium');		
+		}		
 	}
 }
 ?>

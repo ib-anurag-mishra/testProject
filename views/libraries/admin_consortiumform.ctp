@@ -1,30 +1,40 @@
 <?php
 	$this->pageTitle = 'Libraries'; 
-	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file', 'id' => 'consortiumform'));
+	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file', 'id' => 'addconsortium'));
+	print ""
 ?>
 <fieldset>
-	<table>
+	<table cellspacing="10" cellpadding="0" border="0">
 		<tr>
-			<td style="border-right:1px solid #E0E0E0;text-align:center;">Manage Consortium</td>
+			<td colspan="2" style="padding-left:275px;">Update Consortium</td>
+		</tr>
+		<tr>
+			<td style="text-align:right;">
+				<?php
+					echo $this->Form->label('Consortium Name');
+				?>
+			</td>
 			<td>
-				<select name="data[Library][libraryIds][]" class="select_fields" multiple="multiple" size="8">
-					<?php
-						foreach($allLibraries as $k => $v){ echo "<option value=".$k;
-							if(array_key_exists($k, $selectLibraries)){
-								echo " selected=selected ";
-							}
-							echo ">".$v."</option>"; 
-						}
-						
-					?>
-				</select>
+				<?php
+					echo $this->Form->input('consortium_name',array('label' => false , 'div' => false,'value' => $consortium['Consortium']['consortium_name']));
+				?>				
 			</td>
 		</tr>
 		<tr>
-			<td colspan="2" align="center"><?php echo $this->Form->hidden('Library.library_apikey', array('value' => $consortium_name)); ?>&nbsp;&nbsp;</td>
+			<td style="text-align:right;">
+				<?php
+					echo $this->Form->label('Consortium Key');
+				?>
+			</td>
+			<td>
+				<?php
+					echo $this->Form->input('consortium_key',array('type'=>'textarea','label' => false , 'div' => false,'style' => 'width:40%', 'value' => $consortium['Consortium']['consortium_key']));
+				?>
+				<?php echo $this->Form->hidden( 'id', array('value' => $id)); ?>
+			</td>
 		</tr>		
 		<tr>
-			<td colspan="2" align="center"><?php echo $this->Form->submit('Update Consortium', array('div' => false, 'class' => 'form_fields')); ?></td>
+			<td colspan="2" style="padding-left:275px;"><?php echo $this->Form->submit('Update Consortium', array('div' => false, 'class' => 'form_fields')); ?></td>
 		</tr>		
 	</table>
 </fieldset>

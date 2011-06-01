@@ -64,8 +64,11 @@
 						<?php echo $html->link('Manage Library', array('controller' => 'libraries', 'action' => 'managelibrary'));?>
 					</li>
 					<li>
+						<?php echo $html->link('Add Consortium', array('controller' => 'libraries', 'action' => 'addconsortium'));?>
+					</li>
+					<li>
 						<?php echo $html->link('Manage Consortium', array('controller' => 'libraries', 'action' => 'consortium'));?>
-					</li>						
+					</li>					
 				</ul>
 			</li>
 			<li>

@@ -14,8 +14,8 @@
           {
             ?>
             <tr>
-                <td class="left"><?php echo $consortium;?></td>
-                <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'consortiumform','id'=>$consortium));?></td>	
+                <td class="left"><?php echo $consortium['Consortium']['consortium_name'];?></td>
+                <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'consortiumform','id'=>$consortium['Consortium']['id']));?></td>	
             </tr>            
             <?php
           }
