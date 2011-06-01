@@ -23,7 +23,7 @@
 		<tr>
 			<td style="text-align:right;">
 				<?php
-					echo $this->Form->label('Consortium Key');
+					echo $this->Form->label('API Key');
 				?>
 			</td>
 			<td>

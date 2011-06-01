@@ -831,7 +831,7 @@ Class LibrariesController extends AppController
 	function admin_addconsortium(){
 		if(isset($this->data)) {
 			if($this->Consortium->save($this->data['Library'])){
-				$this->Session ->setFlash('Consortium updated', 'modal', array( 'class' => 'modal success' ));
+				$this->Session ->setFlash('Consortium Added', 'modal', array( 'class' => 'modal success' ));
 				$this->redirect('/admin/libraries/consortium');						
 			}
 			else{
