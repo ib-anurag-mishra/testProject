@@ -179,7 +179,7 @@ Class LibrariesController extends AppController
                 $this->set('allVariables', $allVariables);				
                 $allUrls = $this->Url->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
                 $this->set('allUrls', $allUrls);
-				$$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
+				$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
 				$this->set('consortium', $consortium);					
 			}
         }
