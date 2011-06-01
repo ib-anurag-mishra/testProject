@@ -11,7 +11,7 @@ class ServiceController extends AppController {
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => 
-												array('library_consortium' => $this->params['pass'][0],
+												array('library_apikey' => $this->params['pass'][0],
 													  'id' => $this->params['pass'][1],
 													  'library_status' => 'active')
                                                 )
@@ -176,7 +176,7 @@ class ServiceController extends AppController {
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => 
-												array('library_consortium' => $this->params['pass'][0],
+												array('library_apikey' => $this->params['pass'][0],
 													  'id' => $this->params['pass'][1],
 													  'library_status' => 'active')
                                                 )
@@ -223,7 +223,7 @@ class ServiceController extends AppController {
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => 
-												array('library_consortium' => $this->params['pass'][0],
+												array('library_apikey' => $this->params['pass'][0],
 													  'id' => $this->params['pass'][1],
 													  'library_status' => 'active')
                                                 )
@@ -326,7 +326,7 @@ class ServiceController extends AppController {
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => 
-												array('library_consortium' => $this->params['pass'][0],
+												array('library_apikey' => $this->params['pass'][0],
 													  'id' => $this->params['pass'][1],
 													  'library_status' => 'active')
                                                 )
