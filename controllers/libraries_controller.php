@@ -813,10 +813,10 @@ Class LibrariesController extends AppController
 		$this->set('selectLibraries', $selectLibraries);
 		$this->set('allLibraries', $libraries);
 		$this->set( 'formAction', 'admin_consortiumform' );
-		if(isset($this->data)) {	
+		if(isset($this->data)) {
 			foreach($this->data['Library']['libraryIds'] as $k=>$v){
 				$data[$k]['id'] = $v;
-				$data[$k]['library_apikey'] = $this->data['Library']['consortium_name'];			
+				$data[$k]['library_apikey'] = $this->data['Library']['library_apikey'];			
 			}
 			if($this->Library->saveAll($data)){
 				$this->Session ->setFlash('Consortium updated', 'modal', array( 'class' => 'modal success' ));
