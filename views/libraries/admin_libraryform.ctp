@@ -205,7 +205,7 @@
 						<td align="left"><?php echo $this->Form->input('library_logout_url',array( 'label' => false ,'value' => $getData['Library']['library_logout_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
 					<tr>
-						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library API Key');?></td>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Consortium');?></td>
 						<td align="left">
 							<?php
 								$consortium['none'] = 'None';
