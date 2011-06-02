@@ -518,6 +518,34 @@ class ServiceController extends AppController {
 		}	
 	}
 
-
+	function libraries(){
+		$consortium = $this->Consortium->find('all',array(
+                                                'conditions' => 
+												array('consortium_key' => $this->params['pass'][0])
+												)
+                                            );
+		if(count($consortium) > 0){
+			$this->Library->recursive = -1;
+			$existingLibraries = $this->Library->find('all',array(
+													'conditions' => 
+													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
+														  'library_status' => 'active')
+													,'fields' => array('id','library_name'))
+												);
+			if(count($existingLibraries) == 0){
+				$result = array('message' => 'No Records');
+				$this->set('result', $result);
+				return;
+			}
+			else{
+					$this->set('result', $existingLibraries);
+			}
+		}
+		else{
+			$result = array('status' => 0 , 'message' => 'Access Denied');
+			$this->set('result', $result);
+			return;		
+		}	
+	}
 }
 ?>
