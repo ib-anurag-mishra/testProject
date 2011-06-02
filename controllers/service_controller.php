@@ -415,15 +415,7 @@ class ServiceController extends AppController {
 							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 						}
 					} else {
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());	
-							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							$this -> Session -> setFlash("This account is already active.");                              
-							$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-						}		
+						//nothing needs to be done
 					}
 					
 				}
