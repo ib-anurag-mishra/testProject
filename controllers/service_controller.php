@@ -491,7 +491,40 @@ class ServiceController extends AppController {
 			$this->set('result', $result);
 			return;		
 		}			
-	}	
+	}
+	function downloadCount(){
+		$consortium = $this->Consortium->find('all',array(
+                                                'conditions' => 
+												array('consortium_key' => $this->params['pass'][0])
+												)
+                                            );
+		if(count($consortium) > 0){
+			$this->Library->recursive = -1;
+			$existingLibraries = $this->Library->find('all',array(
+													'conditions' => 
+													array('library_apikey' => $consortium[0]['Consortium']['consortium_name'],
+														  'id' => $this->params['pass'][1],
+														  'library_status' => 'active')
+													)
+												);
+			if(count($existingLibraries) == 0){
+				$result = array('status' => 0 , 'message' => 'Access Denied');
+				$this->set('result', $result);
+				return;
+			}
+			else{
+					$available = $existingLibraries['0']['Library']['library_user_download_limit'];
+					$downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $this->params['pass'][2],'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+					$result = array('remaining_downloads' => $available-$downloadsUsed);
+					$this->set('result', $result);
+			}
+		}
+		else{
+			$result = array('status' => 0 , 'message' => 'Access Denied');
+			$this->set('result', $result);
+			return;		
+		}	
+	}
 
 
 }
