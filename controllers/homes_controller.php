@@ -1287,6 +1287,11 @@ class HomesController extends AppController
 			$this->Session->destroy();
 			$this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
 		}
+		if($this->Session->read('lib_status') == 'invalid')
+		{
+			$this ->Session->setFlash("The library you are trying to access is not registered with us");
+			$this->Session->delete('lib_status');
+		}
 		$this->layout = 'home';
     }
 	
