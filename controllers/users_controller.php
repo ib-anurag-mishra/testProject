@@ -1222,6 +1222,7 @@ Class UsersController extends AppController
 							$retStatusArr = explode($v['Variable']['authentication_variable'],$retStrDump);
 							$pos = strpos($retStatusArr['1'],"<br/>");
 							$retStatus = substr($retStatusArr['1'],1,$pos-1);
+							$retStatus = str_replace(' ','',$retStatus);
 							if($retStatus == ''){
 								$status = '';
 							}
@@ -4226,7 +4227,8 @@ Class UsersController extends AppController
 					curl_setopt($session, CURLOPT_RETURNTRANSFER, true);
 					curl_setopt($session, CURLOPT_HEADER, true);
 					if(!$response = curl_exec ($session))  {
-						throw new Exception(curl_error($session));
+						 $this -> Session -> setFlash("Not a Valid Authentication URl.");
+						 $this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
 					}
 					curl_close($session);
 					if(strpos($response,"P BARCODE[pb]")){
