@@ -29,7 +29,7 @@ Class UsersController extends AppController
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
 			if(!empty($library_data))
 			{
-				if($this->Session->read('lId') == '')
+				if($this->Session->read('library') == '' && $this->Session->read('patron')== '')
 				{
 					if($library_data['Library']['library_authentication_method'] == 'referral_url')
 					{
