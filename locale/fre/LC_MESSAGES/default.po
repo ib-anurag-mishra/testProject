@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusic.com\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2011-05-24 14:38-0500\n"
-"Last-Translator: Jessica <jessica@m68interactive.com>\n"
+"PO-Revision-Date: 2011-06-07 14:35-0500\n"
+"Last-Translator: Rob Richmond <rob@m68interactive.com>\n"
 "Language-Team: m68 Interactive <tech@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -338,7 +338,7 @@ msgstr "Connexion"
 #: \users\login.ctp:7
 #: \users\my_account.ctp:21
 msgid "Email"
-msgstr "Adresse email/courrier électronique"
+msgstr "Adresse email"
 
 #: \users\login.ctp:9
 #: \users\my_account.ctp:25
