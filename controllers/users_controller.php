@@ -3018,6 +3018,8 @@ Class UsersController extends AppController
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$authUrl = "https://auth.libraryideas.com/ihdlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+					echo $result;
+					exit;
 					$resultAnalysis = explode("|",$result);
 					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
 					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
