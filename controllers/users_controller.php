@@ -3016,7 +3016,7 @@ Class UsersController extends AppController
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-					$authUrl = "https://auth.libraryideas.com/ihdlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/authentications/ihdlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					echo 'hi';
 					echo $result;
