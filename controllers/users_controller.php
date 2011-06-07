@@ -974,7 +974,7 @@ Class UsersController extends AppController
 								 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ilogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ilogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -984,12 +984,13 @@ Class UsersController extends AppController
 				}        
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";   
-					$authUrl1 = "https://auth.libraryideas.com/ilogin_validation";
+					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
+					$data['database'] = 'freegal';
+					$authUrl1 = "https://auth.libraryideas.com/Authentications/ilogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					//echo $result;echo "check";exit;
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
@@ -1150,7 +1151,7 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/idlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/idlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1161,11 +1162,12 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest"; 
-					$authUrl = "https://auth.libraryideas.com/idlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/idlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);	
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					//echo $result; echo "hiii";exit;
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
@@ -1326,7 +1328,7 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ildlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ildlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1338,11 +1340,11 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$url = $authUrl."/PATRONAPI/".$card."/dump";  
 					$data['url'] = $url;
-					$authUrl = "https://auth.libraryideas.com/ildlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/ildlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
@@ -1487,7 +1489,7 @@ Class UsersController extends AppController
 				}				
 				
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/inlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1498,11 +1500,14 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump"; 
-					$authUrl = "https://auth.libraryideas.com/inlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/inlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					//$resultAnalysis = explode("|",$result);
+					//$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
+					//$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
@@ -1644,7 +1649,7 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/indlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/indlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1655,12 +1660,12 @@ Class UsersController extends AppController
 				else{
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					$authUrl = "https://auth.libraryideas.com/indlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/indlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//echo $result;exit;
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
@@ -1742,6 +1747,7 @@ Class UsersController extends AppController
 	   
 	   
 	function slogin(){
+		
 		if(!$this->Session->read('referral')){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1820,7 +1826,7 @@ Class UsersController extends AppController
 												 );				
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/slogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/slogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1829,11 +1835,12 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 				}        
 				else{
-						$authUrl = "https://auth.libraryideas.com/slogin_validation";
+						$authUrl = "https://auth.libraryideas.com/Authentications/slogin_validation";
+						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-						$resultAnalysis = explode("|",$result);
-						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-						$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+						
+						$resultAnalysis[0] = $result['Posts']['status'];
+						$resultAnalysis[1] = $result['Posts']['message'];
 						if($resultAnalysis[0] == "fail"){
 							$this->Session->setFlash($resultAnalysis[1]);
 							$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
@@ -1978,7 +1985,7 @@ Class UsersController extends AppController
 												 );				
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/snlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/snlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -1987,12 +1994,12 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 				}        
 				else{	
-						$authUrl = "https://auth.libraryideas.com/snlogin_validation";
+						$authUrl = "https://auth.libraryideas.com/Authentications/snlogin_validation";
+						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						if($result){
-						$resultAnalysis = explode("|",$result);
-						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-						$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+						$resultAnalysis[0] = $result['Posts']['status'];
+						$resultAnalysis[1] = $result['Posts']['message'];
 						if($resultAnalysis[0] == "fail"){
 							$this->Session->setFlash($resultAnalysis[1]);
 							$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
@@ -2158,7 +2165,7 @@ Class UsersController extends AppController
 				}				
 
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/sdlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/sdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2167,12 +2174,11 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}        
 				else{
-						$authUrl = "https://auth.libraryideas.com/sdlogin_validation";
+						$authUrl = "https://auth.libraryideas.com/Authentications/sdlogin_validation";
+						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-						//echo $result;echo 'hiii'; exit;
-						$resultAnalysis = explode("|",$result);
-						$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-						$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+						$resultAnalysis[0] = $result['Posts']['status'];
+						$resultAnalysis[1] = $result['Posts']['message'];
 						if($resultAnalysis[0] == "fail"){
 							$this->Session->setFlash($resultAnalysis[1]);
 							//echo $resultAnalysis[1]; exit;
@@ -2317,7 +2323,7 @@ Class UsersController extends AppController
 				}				
 
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/sndlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/sndlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2326,15 +2332,13 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 				}        
 				else{
-					$authUrl = "https://auth.libraryideas.com/sndlogin_validation";
+					$authUrl = "https://auth.libraryideas.com/Authentications/sndlogin_validation";
+					$data['database'] = 'freegal';
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					//echo $result;exit;
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
-					
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
-						$this->Session->setFlash($resultAnalysis[0]);
+						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 					}elseif($resultAnalysis[0] == "success"){
 					//cho $result;exit;
@@ -2611,7 +2615,7 @@ Class UsersController extends AppController
 													 );
 				}		
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/inhlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inhlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2623,11 +2627,11 @@ Class UsersController extends AppController
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-					$authUrl = "https://auth.libraryideas.com/inhlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/inhlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
@@ -2787,7 +2791,7 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ihdlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ihdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2799,11 +2803,11 @@ Class UsersController extends AppController
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-					$authUrl = "https://auth.libraryideas.com/ihdlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/ihdlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
@@ -2947,7 +2951,7 @@ Class UsersController extends AppController
 													 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/inhdlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inhdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -2959,11 +2963,11 @@ Class UsersController extends AppController
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					$authUrl = "https://auth.libraryideas.com/inhdlogin_validation";
+					$data['freegal'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/inhdlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
@@ -3124,7 +3128,7 @@ Class UsersController extends AppController
 								 );					
 				}
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/plogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/plogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -3134,11 +3138,11 @@ Class UsersController extends AppController
 				}        
 				else{
 					$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
-					$authUrl = "https://auth.libraryideas.com/plogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/plogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'plogin'));
@@ -3297,7 +3301,7 @@ Class UsersController extends AppController
 													 );
 				}	
 				if(count($existingLibraries) == 0){
-					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "http://".$_SERVER['HTTP_HOST']."/users/ilhdlogin"){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ilhdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
 					}
 					else{
@@ -3309,12 +3313,12 @@ Class UsersController extends AppController
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					$authUrl = "https://auth.libraryideas.com/ilhdlogin_validation";
+					$data['database'] = 'freegal';
+					$authUrl = "https://auth.libraryideas.com/Authentications/ilhdlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-					//echo $result;echo "hello";exit;
-					$resultAnalysis = explode("|",$result);
-					$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
-					$resultAnalysis[1] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[1]);
+		//			echo $result;echo "hello";exit;
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
 					if($resultAnalysis[0] == "fail"){
 						$this->Session->setFlash($resultAnalysis[1]);
 						$this->redirect(array('controller' => 'users', 'action' => 'ilhdlogin'));
