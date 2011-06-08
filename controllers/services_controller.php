@@ -29,10 +29,10 @@ class ServicesController extends AppController {
 			else{			
 				$country = $existingLibraries['0']['Library']['library_territory'];
 				if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-					$condSphinx = "@Advisory F";
+					$condSphinx = "@Advisory F & @Territory '".addslashes($country)."'";
 				}
 				else {
-					$condSphinx = "";
+					$condSphinx = "@Territory '".addslashes($country)."'";
 				}
 				$artist =  $this->params['named']['artist'];
 				$composer = $this->params['named']['composer'];
@@ -103,17 +103,19 @@ class ServicesController extends AppController {
 					$genreSearch = '';
 					$sphinxGenreSearch = '';
 				}
-				if($country != '') {
+				/* if($country != '') {
+					$operator = '&';
 					$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)'); 
-					$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$sphinxCheckCondition.' ';
+					$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$operator.' ';
 				}
 				else {
 					$territorySearch = '';
 					$sphinxTerritorySearch = '';
-				}				
-				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.''.$sphinxTerritorySearch;
+				}*/				
+				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.'';
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
+				//print $sphinxFinalCondition;exit;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
@@ -147,7 +149,7 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -272,10 +274,10 @@ class ServicesController extends AppController {
 			else{			
 				$country = $existingLibraries['0']['Library']['library_territory'];
 				if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
-					$condSphinx = "@Advisory F";
+					$condSphinx = "@Advisory F & @Territory '".addslashes($country)."'";
 				}
 				else {
-					$condSphinx = "";
+					$condSphinx = "@Territory '".addslashes($country)."'";
 				}
 				$searchString =  base64_decode($this->params['pass'][3]);	
 				$searchString = str_replace("^", " ", $searchString);					
@@ -286,14 +288,8 @@ class ServicesController extends AppController {
 				}
 				else {
 					$sphinxGenreSearch = '';
-				}
-				if($country != '') {
-					$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$sphinxCheckCondition.' ';
-				}
-				else {
-					$sphinxTerritorySearch = '';
 				}			
-				$sphinxTempCondition = $sphinxGenreSearch.''.$sphinxTerritorySearch;
+				$sphinxTempCondition = $sphinxGenreSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				$sphinxFinalCondition = $sphinxFinalCondition.' & @DownloadStatus 1 & '.$condSphinx;
 				if ($condSphinx == "") {
@@ -329,7 +325,7 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/service/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
+					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
