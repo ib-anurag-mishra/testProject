@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusic.com\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2011-06-07 14:35-0500\n"
+"PO-Revision-Date: 2011-06-09 08:53-0500\n"
 "Last-Translator: Rob Richmond <rob@m68interactive.com>\n"
 "Language-Team: m68 Interactive <tech@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
@@ -201,11 +201,11 @@ msgstr "Ajouter à la liste de voeux"
 
 #: \genres\index.ctp:174
 msgid "View All Genres"
-msgstr ""
+msgstr "Voir tous les genres"
 
 #: \genres\view.ctp:79
 msgid "Can't find what you are looking for, try our"
-msgstr ""
+msgstr "Vous ne trouvez pas ce que vous cherchez, essayez"
 
 #: \homes\forgot_password.ctp:2
 msgid "Forgot Password"
@@ -290,7 +290,7 @@ msgstr "Freegal Music : La Nouvelle Mediathèque"
 #: \layouts\default.ctp:6
 #: \layouts\home.ctp:6
 msgid "Freegal Music : Your New Music Library :"
-msgstr ""
+msgstr "Freegal Music: Votre nouvelle bibliotheque musicale"
 
 #: \questions\admin_add.ctp:36
 #: \questions\admin_edit.ctp:36
@@ -351,7 +351,7 @@ msgstr "Etes-vous sûr(e) de vouloir effacer?"
 
 #: \users\my_account.ctp:4
 msgid "Manage Account"
-msgstr ""
+msgstr "Gerer le compte"
 
 #: \users\my_account.ctp:13
 msgid "First Name"
