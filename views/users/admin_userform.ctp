@@ -1,6 +1,7 @@
        <?php
-              $this->pageTitle = 'Admin';
+			  $this->pageTitle = 'Admin';
               echo $this->Form->create('User', array( 'controller' => 'User','action' => $formAction));
+			  $options[6] = "Consortium";
               if(empty($getData))
               {
                      $getData['User']['first_name'] = "";
@@ -9,6 +10,7 @@
                      $getData['User']['username'] = "";
                      $getData['User']['id'] = "";
                      $getData['Group']['id'] = "";
+					 $getData['User']['consortium'] = "";
               }
        ?>
        <fieldset>
@@ -50,7 +52,7 @@
                                    ?>
                                                  <tr>
                                                         <td align="right" width="390"><?php echo $this->Form->label('Admin Type');?></td>
-                                                        <td align="left"><?php echo $this->Form->input('type_id', array('type' => 'select', 'label' => false, 'options' => $options, 'selected' => $getData['Group']['id'], 'div' => false, 'class' => 'select_fields')) ;?></td>
+                                                        <td align="left"><?php echo $this->Form->input('type_id', array('type' => 'select', 'label' => false, 'options' => $options, 'selected' => $getData['Group']['id'], 'div' => false, 'class' => 'select_fields', 'onchange' => 'showRow();')) ;?></td>
                                                  </tr>
                                    <?php
                                           }
@@ -61,6 +63,14 @@
                                    <?php       
                                    }
                                    ?>
+									<tr id="showConsortium" <?php if($getData['User']['consortium'] == ''){ ?>style="display:none" <?php }?>>
+										<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Consortium');?></td>
+										<td align="left">
+											<?php
+												echo $this->Form->input('consortium', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['User']['consortium']));
+											?>						
+										</td>
+									</tr>								   
                                    <tr>
                                           <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
                                    </tr>
@@ -73,3 +83,5 @@
               echo $this->Form->end(); 
               echo $session->flash();
        ?>
+	<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=page_specific/libraries_create.js,page_specific/ajaxfileupload.js,datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
+	   

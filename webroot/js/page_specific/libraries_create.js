@@ -557,3 +557,12 @@ function convertString(){
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});	
 }
+
+function showRow(){
+	if($("#UserTypeId").val() == 6){
+		$("#showConsortium").show();
+	}
+	else{
+		$("#showConsortium").hide();
+	}
+}

@@ -9,6 +9,7 @@
         $getData['Report']['date'] = "";
         $getData['Report']['date_from'] = "";
         $getData['Report']['date_to'] = "";
+		$getData['Report']['library_apikey'] = "";
     }
 ?>
 <fieldset>

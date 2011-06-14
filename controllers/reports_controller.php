@@ -11,7 +11,7 @@ Class ReportsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron' );
+    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron','Consortium' );
 
 	function beforeFilter(){
 		parent::beforeFilter();
@@ -291,6 +291,10 @@ Class ReportsController extends AppController
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         }
+		elseif($this->Session->read("Auth.User.type_id") == 6){
+            $this->set('libraries', $this->Library->find('list', array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium")),'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+            $this->set('libraryID', "");		
+		}
         else {
             $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             $this->set('libraryID', "");
@@ -367,10 +371,12 @@ Class ReportsController extends AppController
         Configure::write('debug', 0);
         if($this->Session->read("Auth.User.type_id") == 4) {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
-        }
+        }elseif($this->Session->read("Auth.User.type_id") == 6){
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));			
+		}
         else {
 			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC','recursive' => -1));
-        }		
+        }
 		$data = "<option value='all'>All Libraries</option>";
 		foreach($var as $k=>$v){
 			$data = $data."<option value=".$k.">".$v."</option>";
@@ -489,8 +495,13 @@ Class ReportsController extends AppController
 		$this->set('downloadResult', $downloadResult);
 	}
 	function admin_consortium(){
-		$consortium = $this->Library->find('list', array('conditions' => array("Library.library_apikey != ''"),'fields' => array('Library.library_apikey','Library.library_apikey'), 'order' => 'Library.library_apikey ASC', 'recursive' => -1,'group' => 'Library.library_apikey'));
-		$this->set('consortium', $consortium);
+		if($this->Session->read("Auth.User.type_id") == 1) {
+			$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name', 'recursive' => -1,'group' => 'consortium_name'));
+			$this->set('consortium', $consortium);
+		}else{
+			$consortium = $this->Consortium->find('list', array('conditions' => array('consortium_name' => $this->Session->read("Auth.User.consortium")),'fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name', 'recursive' => -1,'group' => 'consortium_name'));
+			$this->set('consortium', $consortium);		
+		}
 		$this->set('libraryID', "");
         if(isset($this->data)) {
 			$consortium_id = $this->data['Report']['library_apikey'];		
