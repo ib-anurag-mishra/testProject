@@ -609,7 +609,7 @@ class sip2Component extends Object {
 
     
     
-    function get_message ($message) 
+    function get_message ($message, $error = 'on') 
     {
         /* sends the current message, and gets the response */
         $result     = '';
@@ -629,7 +629,7 @@ class sip2Component extends Object {
         $this->_debugmsg("SIP2: {$result}");
 
         /* test message for CRC validity */
-        if ($this->_check_crc($result)) {
+        if ($this->_check_crc($result) || $error == 'off') {
             /* reset the retry counter on successful send */
             $this->retry=0;
             $this->_debugmsg("SIP2: Message from ACS passed CRC check");

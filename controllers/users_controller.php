@@ -2753,14 +2753,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );					
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var',$library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );					
 				}				
@@ -2786,12 +2786,12 @@ Class UsersController extends AppController
 						
 							if(!empty($mysip->sip_login)){
 								$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);
-								$mysip->parseLoginResponse($mysip->get_message($sc_login));
+								$mysip->parseLoginResponse($mysip->get_message($sc_login,$existingLibraries['0']['Library']['library_sip_error']));
 							}
 							
 							//send selfcheck status message
 							$in = $mysip->msgSCStatus('','',$existingLibraries['0']['Library']['library_sip_version']);
-							$msg_result = $mysip->get_message($in);
+							$msg_result = $mysip->get_message($in,$existingLibraries['0']['Library']['library_sip_error']);
 
 							// Make sure the response is 98 as expected
 							if (preg_match("/98/", $msg_result)) {
@@ -2806,12 +2806,12 @@ Class UsersController extends AppController
 								  $mysip->patron = $card;
 								  $mysip->patronpwd = $pin;
 								  $in = $mysip->msgPatronStatusRequest();
-								  $msg_result = $mysip->get_message($in);
+								  $msg_result = $mysip->get_message($in,$existingLibraries['0']['Library']['library_sip_error']);
 								  // Make sure the response is 24 as expected
 								  if (preg_match("/24/", $msg_result)) {
 									  $parsePatronStatusResponse = $mysip->parsePatronStatusResponse( $msg_result );
 									  $in = $mysip->msgPatronInformation('none');
-									  $parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );						
+									  $parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in,$existingLibraries['0']['Library']['library_sip_error']) );						
 									  if ($parsePatronStatusResponse['variable']['BL'][0] == 'Y' || $parsePatronInfoResponse['variable']['BL'][0] == 'Y') {
 										  // Successful Card!!!
 										
@@ -3082,14 +3082,14 @@ Class UsersController extends AppController
 					$library_cond = array('id' => $this->Session->read('lId'));
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
 												 );				
 				} else {
 					$library_cond = '';
 					$existingLibraries = $this->Library->find('all',array(
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin',$library_cond),
-													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
 												 );				
 				}				
@@ -3115,12 +3115,12 @@ Class UsersController extends AppController
 					
 						if(!empty($mysip->sip_login)){
 							$sc_login=$mysip->msgLogin($mysip->sip_login,$mysip->sip_password,$mysip->sip_location);
-							$mysip->parseLoginResponse($mysip->get_message($sc_login));
+							$mysip->parseLoginResponse($mysip->get_message($sc_login,$existingLibraries['0']['Library']['library_sip_error']));
 						}
 						
 						//send selfcheck status message
 						$in = $mysip->msgSCStatus('','',$existingLibraries['0']['Library']['library_sip_version']);
-						$msg_result = $mysip->get_message($in);
+						$msg_result = $mysip->get_message($in,$existingLibraries['0']['Library']['library_sip_error']);
 
 						// Make sure the response is 98 as expected
 						if (preg_match("/^98/", $msg_result)) {
@@ -3133,12 +3133,12 @@ Class UsersController extends AppController
 							$mysip->patron = $card;
 							//$mysip->patronpwd = $pin;
 							$in = $mysip->msgPatronStatusRequest();
-							$msg_result = $mysip->get_message($in);
+							$msg_result = $mysip->get_message($in,$existingLibraries['0']['Library']['library_sip_error']);
 							// Make sure the response is 24 as expected
 							if (preg_match("/^24/", $msg_result)) {
 								$parsePatronStatusResponse = $mysip->parsePatronStatusResponse( $msg_result );
 								$in = $mysip->msgPatronInformation('none');
-								$parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in) );								
+								$parsePatronInfoResponse = $mysip->parsePatronInfoResponse( $mysip->get_message($in,$existingLibraries['0']['Library']['library_sip_error']) );								
 								if ($parsePatronStatusResponse['variable']['BL'][0] == 'Y' || $parsePatronInfoResponse['variable']['BL'][0] == 'Y') {
 									  // Successful Card!!!
 
@@ -4281,8 +4281,15 @@ Class UsersController extends AppController
 							$status = 1;
 							foreach($allVariables as $k=>$v){
 								$responseData = explode(",",$v['Variable']['authentication_response']);
-								$retStatusArr = explode($v['Variable']['authentication_variable'],$response);
-								$pos = strpos($retStatusArr['1'],"<br/>");
+								$retStatusArr = explode($v['Variable']['authentication_variable'],$response);									
+								$checkLimit = strpos($response,"<br/>");
+								if($checkLimit === false){
+									$limit = "<BR>";
+								}
+								else{
+									$limit = "<br/>";
+								}								
+								$pos = strpos($retStatusArr['1'],$limit);
 								$retStatus = substr($retStatusArr['1'],1,$pos-1);
 								if($retStatus == ''){
 									$status = '';
@@ -4341,9 +4348,10 @@ Class UsersController extends AppController
 										}							
 										if($cmp != $val){
 											$status = 1;
-											break;
+										//	break;
 										}else{
 											$status = false;
+											break;
 										}
 									}
 								}
@@ -4364,14 +4372,14 @@ Class UsersController extends AppController
 									}
 								}							
 								elseif($v['Variable']['comparison_operator'] == 'date'){
-									$res = explode("$",$retStatus);
-									if(isset($res[1])){
-										$cmp = $res[1];
-									} 
-									else {
-										$cmp = $res[0];
-									}							
-									$resDateArr = explode("-",$cmp);
+								//	$res = explode("$",$retStatus);
+								//	if(isset($res[1])){
+								//		$cmp = $res[1];
+								//	} 
+								//	else {
+								//		$cmp = $res[0];
+								//	}							
+									$resDateArr = explode("-",$retStatus);
 									$resDate = mktime(0,0,0,$resDateArr[0],$resDateArr[1],$resDateArr[2]);
 									$libDate = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
 									if($resDate > $libDate){

@@ -18,8 +18,8 @@ Class LibrariesController extends AppController
      Desc : actions that needed before other functions are getting called
     */
     function beforeFilter() {	  
-        parent::beforeFilter(); 
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview');
+        parent::beforeFilter();
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron');
     }
     
     /*
@@ -98,6 +98,7 @@ Class LibrariesController extends AppController
      Desc : action for adding the libraries
     */
     function admin_libraryform() {
+		Configure::write('debug', 0);
         if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
         {
             $libraryId = $this -> params[ 'named' ][ 'id' ];
@@ -126,6 +127,7 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_password',
 																				'Library.library_sip_location',
 																				'Library.library_sip_version',
+																				'Library.library_sip_error',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
 																				'Library.library_ezproxy_name',
@@ -226,6 +228,7 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_password',
 																				'Library.library_sip_location',
 																				'Library.library_sip_version',
+																				'Library.library_sip_error',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
 																				'Library.library_ezproxy_name',
@@ -241,7 +244,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_navlinks_color',
                                                                                 'Library.library_navlinks_hover_color',
 																				'Library.library_box_header_color',
-																				'Library.library_box_hover_color',								'Library.library_contact_fname',
+																				'Library.library_box_hover_color',
+																				'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
                                                                                 'Library.library_user_download_limit',
