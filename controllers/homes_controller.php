@@ -136,18 +136,18 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '10' )
+												'order' => 'countProduct DESC', 'limit'=> '15' )
 											);
 			Cache::write("national".$territory, $natTopDownloaded);
 		}
 		$natTopDownloaded = Cache::read("national".$territory);
-		$natprodIds = '';
+		$natprodIds = '';$i =1;
 		foreach($natTopDownloaded as $k => $v){
 				$this->Song->recursive = 2;
-				$nationalTopDownload[] =  $this->Song->find('first',array('conditions' =>
+				$data =  $this->Song->find('first',array('conditions' =>
 						array('and' =>
 							array(
-								array("Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID'] ),
+								array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID'] ),
 							), "1 = 1 GROUP BY Song.ProdID"
 						),
 						'fields' => array(
@@ -189,6 +189,9 @@ class HomesController extends AppController
 						), 'limit'=> '10'
 						)
 				);
+				if(count($data) > 1){
+					$nationalTopDownload[] = $data;
+				}
 		}	
 		// Checking for download status 
 		$this->Download->recursive = -1;
@@ -639,6 +642,13 @@ class HomesController extends AppController
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
+
+        $validPatron = $this->ValidatePatron->validatepatron();
+		if($validPatron == '0') {
+			echo "loggedout";
+            exit;
+		}
+		
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_REQUEST['prodId'];
@@ -1502,6 +1512,13 @@ class HomesController extends AppController
     function wishlistDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
+        $validPatron = $this->ValidatePatron->validatepatron();
+		
+		if($validPatron == '0') {
+			echo "loggedout";
+            exit;
+		}
+		
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
 		$prodId = $_REQUEST['prodId'];
@@ -1622,6 +1639,13 @@ class HomesController extends AppController
     function historyDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
+		
+        $validPatron = $this->ValidatePatron->validatepatron();
+		if($validPatron == '0') {
+			echo "loggedout";
+            exit;
+		}
+		
         $id = $_REQUEST['id'];
 		$libId = $_REQUEST['libid'];
 		$patId = $_REQUEST['patronid'];
