@@ -642,12 +642,6 @@ class HomesController extends AppController
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-
-        $validPatron = $this->ValidatePatron->validatepatron();
-		if($validPatron == '0') {
-			echo "loggedout";
-            exit;
-		}
 		
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -756,7 +750,7 @@ class HomesController extends AppController
 		}
 		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-        echo $downloadsUsed;
+        echo "suces|".$downloadsUsed;
         exit;
     }
     
@@ -1512,12 +1506,6 @@ class HomesController extends AppController
     function wishlistDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-        $validPatron = $this->ValidatePatron->validatepatron();
-		
-		if($validPatron == '0') {
-			echo "loggedout";
-            exit;
-		}
 		
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -1629,7 +1617,7 @@ class HomesController extends AppController
         //get no of downloads for this week
 		$this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));        
-        echo $downloadsUsed;
+        echo "suces|".$downloadsUsed;
 		exit;
     }
     /*
@@ -1639,12 +1627,6 @@ class HomesController extends AppController
     function historyDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-		
-        $validPatron = $this->ValidatePatron->validatepatron();
-		if($validPatron == '0') {
-			echo "loggedout";
-            exit;
-		}
 		
         $id = $_REQUEST['id'];
 		$libId = $_REQUEST['libid'];
@@ -1660,7 +1642,7 @@ class HomesController extends AppController
 			$this->Download->setDataSource('default');
 			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
 			$downloadCount =  $downloadsUsed[0]['Download']['history'];
-            echo $downloadCount;			
+            echo "suces|".$downloadCount;			
         } else {
 			echo "error";
 		}

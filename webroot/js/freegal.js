@@ -83,24 +83,24 @@ function userDownloadIE(prodId)
 				location.reload();
 				return false;
 			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}
-			else
+			else if(msg == 'suces')
 			{
 				$('.afterClick').hide();
 				$('.beforeClick').show();
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
 				document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip(prodId);
-
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -154,16 +154,11 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
 			}			
-			else
+			else if(msg == 'suces')
 			{		
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
@@ -173,6 +168,12 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -200,14 +201,9 @@ function userDownloadIE_top(prodId)
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
 			}			
-			else if(msg == 'there'){
+			else if(msg == 'there')
+			{
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -219,11 +215,12 @@ function userDownloadIE_top(prodId)
 				$('.beforeClick').show();				
 				return false;
 			}			
-			else
+			else if(msg == 'suces')
 			{
 				$('.afterClick').hide();
 				$('.beforeClick').show();
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
@@ -231,6 +228,12 @@ function userDownloadIE_top(prodId)
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip_top(prodId);
 
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -261,14 +264,9 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
 			}			
-			else if(msg == 'there'){
+			else if(msg == 'there')
+			{
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -280,9 +278,10 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				$('.beforeClick').show();				
 				return false;
 			}
-			else
+			else if(msg == 'suces')
 			{		
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('song_'+prodId).innerHTML='';
@@ -293,6 +292,12 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
@@ -319,14 +324,9 @@ function userDownloadIE_toptab(prodId)
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
+			}	
+			else if(msg == 'there')
 			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}			
-			else if(msg == 'there'){
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -338,11 +338,12 @@ function userDownloadIE_toptab(prodId)
 				$('.beforeClick').show();				
 				return false;
 			}			
-			else
+			else if(msg == 'suces')
 			{
 				$('.afterClick').hide();
 				$('.beforeClick').show();
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('songtab_'+prodId).innerHTML='';
@@ -350,6 +351,12 @@ function userDownloadIE_toptab(prodId)
 				document.getElementById('songtab_'+prodId).style.display = 'block';
 				addQtip_toptab(prodId);
 
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -380,14 +387,9 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
+			}		
+			else if(msg == 'there')
 			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}			
-			else if(msg == 'there'){
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -399,9 +401,10 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				$('.beforeClick').show();					
 				return false;
 			}			
-			else
+			else if(msg == 'suces')
 			{		
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('songtab_'+prodId).innerHTML='';
@@ -411,6 +414,12 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				location.href = unescape(finalURL);
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -442,18 +451,13 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
+			}		
+			else if(msg == 'suces')
 			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}			
-			else
-			{			
 				$('.afterClick').hide();
 				$('.beforeClick').show();
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				$('.download_links_'+prodId).html('');
@@ -461,7 +465,12 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				document.getElementById('song_'+prodId).style.display = 'block';
 				addQtip(prodId);
 				location.href = unescape(finalURL);
-			
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -565,7 +574,8 @@ function addToWishlist(prodId)
 				return false;
 			}
 			else
-			{	var msg = response.substring(0,7);
+			{	
+				var msg = response.substring(0,7);
 				if(msg == 'Success'){
 					$('.beforeClick').show();
 					$('.afterClick').hide();				
@@ -599,13 +609,14 @@ function addToWishlist_top(prodId)
 				return false;
 			}
 			else
-			{	var msg = response.substring(0,7);
+			{	
+				var msg = response.substring(0,7);
 				if(msg == 'Success'){
 					$('.beforeClick').show();
 					$('.afterClick').hide();				
 					document.getElementById('wishlist_top'+prodId).innerHTML = 'Added to Wishlist';
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-				}				
+				}
 			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
@@ -634,23 +645,24 @@ function wishlistDownloadIE(prodId,id)
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}			
-			else
+			}		
+			else if(msg == 'suces')
 			{
 				$('.afterClick').hide();
 				$('.beforeClick').show();			
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
@@ -674,14 +686,8 @@ function historyDownload(id,libID,patronID)
 				alert("Your have already downloaded this song twice.");
 				location.reload();
 				return false;
-			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
 			}			
-			else
+			else if(msg == 'suces')
 			{
 				var count = response.substring(0,1);
 					if(count == 2){
@@ -690,6 +696,12 @@ function historyDownload(id,libID,patronID)
 				document.getElementById('download_loader_'+id).style.display = 'none';
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
+			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
 			}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -719,13 +731,7 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 				location.reload();
 				return false;
 			}
-			else if(msg == 'loggedout')
-			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}			
-			else
+			else if(msg == 'suces')
 			{
 				var count = response.substring(0,1);
 					if(count == 2){
@@ -736,6 +742,12 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 				document.getElementById('download_loader_'+id).style.display = 'none';
 				location.href = unescape(finalURL);
 			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}	
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
@@ -766,15 +778,10 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				location.reload();
 				return false;
 			}
-			else if(msg == 'loggedout')
+			else if(msg == 'suces')
 			{
-				alert("You have been logged out from the system. Please login again.");
-				location.reload();
-				return false;
-			}			
-			else
-			{
-				document.getElementById('downloads_used').innerHTML = response;
+				var downloadUsedArr = response.split('|');		
+				document.getElementById('downloads_used').innerHTML = downloadUsedArr[1];
 				document.getElementById('wishlist_song_'+prodId).innerHTML = 'Downloaded';
 				document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				document.getElementById('downloading_'+prodId).style.display = 'none';
@@ -783,6 +790,12 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 			}
+			else
+			{
+				alert("You have been logged out from the system. Please login again.");
+				location.reload();
+				return false;				
+			}	
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {}
 	});
