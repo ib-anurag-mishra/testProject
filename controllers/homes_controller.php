@@ -840,7 +840,7 @@ class HomesController extends AppController
 			$values = array(0 => $date, 1 => session_id());
 			//writing to memcache and writing to both the memcached servers
 			Cache::write("login_".$libid.$patronid, $values);
-			echo "Success".$name;
+			echo "success".$name;
 			exit;
 		}
     }

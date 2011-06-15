@@ -823,8 +823,19 @@ function checkPatron(libid,patronid)
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/checkPatron", // URL to request
 		data: data,  // post data
-		success: function(response) {		
-				setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
+		success: function(response)
+		{
+				var msg = response.substring(0,7);
+				if(msg == 'success')
+				{
+					setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
+				}
+				else
+				{
+					alert("You have been logged out from the system. Please login again.");
+					location.reload();
+					return false;				
+				}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
 		}
