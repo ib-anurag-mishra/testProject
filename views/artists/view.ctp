@@ -33,7 +33,7 @@
 					}
 					else {
 						
-						mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="250" height="250" border="0">

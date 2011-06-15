@@ -37,6 +37,9 @@ class QuestionsController extends AppController
 	 Desc : actions index for showing faqs at user end
         */
 	function index() {
+		if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+			$this->Session->write('Config.language', 'en');
+		}
 		  $this->layout = 'home';
 		  $this->Question->recursive = 0;
 		  $questions = $this->Question->find("all",array( 
@@ -64,7 +67,7 @@ class QuestionsController extends AppController
         */
 	function admin_index() {
 		$this->layout = 'admin';
-		$this->Question->recursive = -2;
+//		$this->Question->recursive = -2;
 		$this->paginate = array('conditions' => array(),		     
 		      'order' => 'Question.section_id ASC,Question.sort_id ASC'		     
 		);

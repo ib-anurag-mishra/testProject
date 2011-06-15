@@ -63,7 +63,7 @@ echo $paginator->counter(array(
 		</tr>
 		<tr>
             <th style="border-right:1px solid #E0E0E0">Start Date</th>
-            <th class="left"><?php echo $paginator->sort('End Date', 'library_contract_start_date')."&nbsp;".$paginator->sort('`', 'library_contract_start_date', array('id' => 'sort_arrow'));?></th>
+            <th class="left"><?php echo $paginator->sort('End Date', 'library_contract_end_date')."&nbsp;".$paginator->sort('`', 'library_contract_end_date', array('id' => 'sort_arrow'));?></th>
             <th style="border-right:1px solid #E0E0E0">Today </th>
 			<th style="border-right:1px solid #E0E0E0">Week</th>
             <th style="border-right:1px solid #E0E0E0">Month</th>

@@ -50,7 +50,6 @@
                                                                     'day' => 'Day',
                                                                     'week' => 'Week',
                                                                     'month' => 'Month',
-                                                                    'year' => 'Year',
                                                                     'manual' => 'Manual'
                                                                     ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
                                                             );
@@ -69,7 +68,6 @@
                                                                     'day' => 'Day',
                                                                     'week' => 'Week',
                                                                     'month' => 'Month',
-                                                                    'year' => 'Year',
                                                                     'manual' => 'Manual'
                                                                     ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
                                                             );

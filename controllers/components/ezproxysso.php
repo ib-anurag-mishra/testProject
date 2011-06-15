@@ -12,7 +12,7 @@ class EZproxySSOComponent {
   function EZproxySSOComponent(
     $secret = "", 
     $ssourl = "",
-    $tolerance = 60, 
+    $tolerance = 360, 
     $initDebug = false)
   {
     $debug = $initDebug;

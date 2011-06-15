@@ -3,7 +3,7 @@ class CountController extends AppController {
     var $name = 'Count';
     var $autoLayout = false;
     var $uses = array();
-	function index(){
+/*	function admin_index(){
 		$memcache = new Memcache;
 		$memcache->connect('127.0.0.1', 11211) or die ("Could not connect to memcache server");
 		$list = array();
@@ -46,6 +46,6 @@ class CountController extends AppController {
 		}
 		print  "<title>Patron Count Page</title>";
 		print "No of users curently online: ".count($new1);exit;
-	}
+	}*/
 }	
 ?>

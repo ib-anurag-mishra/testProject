@@ -4,7 +4,7 @@
  File Description : Report controller page
  Author : maycreate
  */
-
+ini_set('memory_limit', '1024M');
 Class ReportsController extends AppController
 {
     var $name = 'Reports';
