@@ -656,7 +656,7 @@ class HomesController extends AppController
 		$this->Download->recursive = -1;
 		$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
         if(count($downloadsUsed) > 0) {
-            echo "there";
+            echo "incld";
             exit;
         }		
         $trackDetails = $this->Song->getdownloaddata($prodId);        

@@ -202,7 +202,7 @@ function userDownloadIE_top(prodId)
 				location.reload();
 				return false;
 			}			
-			else if(msg == 'there')
+			else if(msg == 'incld')
 			{
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
@@ -265,7 +265,7 @@ function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 				location.reload();
 				return false;
 			}			
-			else if(msg == 'there')
+			else if(msg == 'incld')
 			{
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
@@ -325,7 +325,7 @@ function userDownloadIE_toptab(prodId)
 				location.reload();
 				return false;
 			}	
-			else if(msg == 'there')
+			else if(msg == 'incld')
 			{
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
@@ -388,7 +388,7 @@ function userDownloadOthers_toptab(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				location.reload();
 				return false;
 			}		
-			else if(msg == 'there')
+			else if(msg == 'incld')
 			{
 				alert("You have already downloaded this song.Get it from your recent downloads");
 				document.getElementById('download_loader_'+prodId).style.display = 'none';
