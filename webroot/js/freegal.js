@@ -576,12 +576,19 @@ function addToWishlist(prodId)
 			else
 			{	
 				var msg = response.substring(0,7);
-				if(msg == 'Success'){
+				if(msg == 'Success')
+				{
 					$('.beforeClick').show();
 					$('.afterClick').hide();				
 					document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
-				}				
+				}
+				else
+				{
+					alert("You have been logged out from the system. Please login again.");
+					location.reload();
+					return false;				
+				}
 			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
@@ -611,12 +618,19 @@ function addToWishlist_top(prodId)
 			else
 			{	
 				var msg = response.substring(0,7);
-				if(msg == 'Success'){
+				if(msg == 'Success')
+				{
 					$('.beforeClick').show();
 					$('.afterClick').hide();				
 					document.getElementById('wishlist_top'+prodId).innerHTML = 'Added to Wishlist';
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}
+				else
+				{
+					alert("You have been logged out from the system. Please login again.");
+					location.reload();
+					return false;				
+				}				
 			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						
