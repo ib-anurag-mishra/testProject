@@ -843,6 +843,32 @@ function checkPatron(libid,patronid)
 	return false; 
 }
 
+function auto_check()
+{	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/auto_check", // URL to request
+		data: data,  // post data
+		success: function(response)
+		{
+				var msg = response.substring(0,7);
+				if(msg == 'success')
+				{
+					//nothing
+				}
+				else
+				{
+					alert("You have been logged out from the system. Please login again.");
+					location.reload();
+					return false;				
+				}
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
+		}
+	});
+	return false; 
+}
+
 function approvePatron(libid,patronid)
 {
 	var _loaderDiv = $("#loaderDiv");
