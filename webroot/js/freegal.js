@@ -848,7 +848,6 @@ function auto_check()
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/auto_check", // URL to request
-		data: data,  // post data
 		success: function(response)
 		{
 				var msg = response.substring(0,7);

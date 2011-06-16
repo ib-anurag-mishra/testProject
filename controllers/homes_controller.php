@@ -1902,7 +1902,8 @@ class HomesController extends AppController
     function auto_check() {
 		$this->layout = false;
         if(!$this->Session->read('library') || !$this->Session->read('patron')){
-			//do nothing
+			print "error";
+			exit;
 		}
 		else{
 			echo "success";
