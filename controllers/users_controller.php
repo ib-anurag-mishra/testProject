@@ -52,7 +52,7 @@ Class UsersController extends AppController
 												'innovative_var'=>'idlogin',
 												'innovative'=>'ilogin',
 												'user_account'=>'login',
-												'innovative_var_name'=>'ildlgin',
+												'innovative_var_name'=>'ildlogin',
 												'innovative_var_https_name'=>'ilhdlogin',
 												'innovative_var_https'=>'ihdlogin',
 												'innovative_var_https_wo_pin'=>'inhdlogin',
