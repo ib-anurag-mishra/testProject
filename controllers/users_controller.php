@@ -2423,7 +2423,7 @@ Class UsersController extends AppController
 							}
 							$this->redirect('/');	
 						}
-						}
+				}
 			}
 		}
 	}
@@ -3195,7 +3195,7 @@ Class UsersController extends AppController
 					$matches = array();
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-					$data['freegal'] = 'freegal';
+					$data['database'] = 'freegal';
 					$authUrl = "https://auth.libraryideas.com/Authentications/inhdlogin_validation";
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
