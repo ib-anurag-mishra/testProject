@@ -830,7 +830,7 @@ function checkPatron(libid,patronid)
 				{
 					setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
 				}
-				else
+				else if(response != '')
 				{
 					alert("You have been logged out from the system. Please login again.");
 					location.reload();
