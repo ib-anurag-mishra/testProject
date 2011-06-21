@@ -843,7 +843,7 @@ function checkPatron(libid,patronid)
 	return false; 
 }
 
-function auto_check()
+/*function auto_check()
 {	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -866,7 +866,7 @@ function auto_check()
 		}
 	});
 	return false; 
-}
+}*/
 
 function approvePatron(libid,patronid)
 {
