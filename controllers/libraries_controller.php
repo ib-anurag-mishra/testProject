@@ -118,6 +118,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
 																				'Library.library_logout_url',
+																				'Library.library_subdomain',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -219,6 +220,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
 																				'Library.library_logout_url',
+																				'Library.library_subdomain',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -300,12 +302,13 @@ Class LibrariesController extends AppController
                         $this->set('success', compact('message', 'data'));
                     }
                     else {
-                        $message = __('To proceed further please enter the data correctly.|2', true);
+                        $message = __('To proceed further please enter the data correctly.', true);
                         $User = $this->User->invalidFields();
                         $data = compact('User');
                         $this->set('errors', compact('message', 'data'));
                     }
                 }
+				
                 elseif($this->data['Library']['libraryStepNum'] == '5') {
 
                     $this->Library->create();
@@ -712,19 +715,27 @@ Class LibrariesController extends AppController
      Function Name : patron
      Desc : For validating the patrons for libraries
     */
-    function patron() {        
+    function patron($library = null) {        
         $this->layout = false;        
         if(isset($_REQUEST['url']))
         {
             $requestUrlArr = explode("/", $_REQUEST['url']);
             $patronId = $requestUrlArr['2'];          
         }
+		
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);        
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
-                                            );        
+                                            );
+		/*echo $library1;
+		if($library != null)
+		{
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+		}
+		if(count($existingLibraries) == 0)
+		$existingLibraries = $library_data;*/
 	if(count($existingLibraries) == 0)
         {
             $this -> Session -> setFlash("You are not authorized to view this location.");

@@ -36,6 +36,9 @@ class HomesController extends AppController
      Desc : actions that is invoked when the user comes to the homes controller
     */
     function index() {
+		  if($_SERVER['SERVER_PORT'] == 443){
+			$this->redirect('http://'.$_SERVER['HTTP_HOST']);
+		 }
 		// Local Top Downloads functionality
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
@@ -1290,6 +1293,11 @@ class HomesController extends AppController
 		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "cookie_err") {
 			$this->Session->destroy();
 			$this -> Session -> setFlash("Cookies must be enabled to use this site. <a href='http://www.google.com/support/accounts/bin/answer.py?&answer=61416' target='_blank'>Click Here</a> for the steps to enable cookies in the different browser types.");
+		}
+		if($this->Session->read('lib_status') == 'invalid')
+		{
+			$this ->Session->setFlash("The library you are trying to access is not registered with us");
+			$this->Session->delete('lib_status');
 		}
 		$this->layout = 'home';
     }
