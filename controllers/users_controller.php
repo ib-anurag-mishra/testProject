@@ -345,7 +345,7 @@ Class UsersController extends AppController
 				else{
 					$this ->Session->write("block", 'no');
 				}
-				$this->redirect('/homes');
+				$this->redirect('/index');
 			}
 			else{
 				$this->redirect($this->Auth->logout());
