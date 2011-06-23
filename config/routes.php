@@ -26,13 +26,11 @@
  * its action called 'display', and we pass a param to select the view file
  * to use (in this case, /app/views/pages/home.ctp)...
  */
- session_start();
+ 
  $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
-	if($library != 'www' && $library != 'freegalmusic')
+	if($library != 'www' && $library != 'freegalmusic' && $library != '50')
 	{
-		if(isset($_SESSION['library']) && $_SESSION['library'] != '' && isset($_SESSION['patron']) && $_SESSION['patron'] != '')
-		Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
-		else
+		
 		Router::connect('/', array('controller' => 'users', 'action' => 'redirection_manager',$library));
 		Router::connect('/users/ilogin', array('controller' => 'users', 'action' => 'ilogin', $library));
 		Router::connect('/users/inlogin', array('controller' => 'users', 'action' => 'inlogin', $library));
@@ -53,7 +51,8 @@
 	{
 		Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
 	}
-/**
+	Router::connect('/index', array('controller' => 'homes', 'action' => 'index')); 
+/**	
  * ...and connect the rest of 'Pages' controller's urls.
  */
 	
