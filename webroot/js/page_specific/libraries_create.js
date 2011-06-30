@@ -120,7 +120,7 @@ $(function() {
 			$('#LibraryLibraryDownloadLimitManual').val('');
 			$('#manual_download').hide();
 		}
-	});
+	});	
 	
 	$('#step1').click(function(){
 		$(".error_message").remove();
@@ -542,4 +542,27 @@ function showContract(){
 				$("#upgrd").show();
 			}			
 		}
+}
+
+function convertString(){
+	var str = $("#LibraryConsortiumName").val();
+	var data = "str="+str;
+	$.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/convertString", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			$("#LibraryConsortiumKey").val(response);
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {}
+	});	
+}
+
+function showRow(){
+	if($("#UserTypeId").val() == 6){
+		$("#showConsortium").show();
+	}
+	else{
+		$("#showConsortium").hide();
+	}
 }

@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 		parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'convertString') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -860,11 +860,14 @@ class HomesController extends AppController
 		$patronid = str_replace("_","+",$_REQUEST['patronid']);
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
 		if(count($currentPatron) > 0){
-			  $updateArr = array();
-			  $updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
-			  $updateArr['is_approved'] = 'yes';          
-			  $this->Currentpatron->save($updateArr);
-			  $this->Session->write('approved', 'yes');
+			$updateArr = array();
+			$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
+			if($this->Session->read('consortium') && $this->Session->read('consortium') != ''){
+				$updateArr['consortium'] = $this->Session->read('consortium');
+			}
+			$updateArr['is_approved'] = 'yes';          
+			$this->Currentpatron->save($updateArr);
+			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";
 		exit;
@@ -1919,5 +1922,14 @@ class HomesController extends AppController
 		}
     }	
    
+}
+	
+    function convertString(){
+		Configure::write('debug', 0);
+		$this->layout = false;
+		$str = $_POST['str'];
+		echo sha1($str);
+		exit;
+   }
 }
 ?>

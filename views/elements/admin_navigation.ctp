@@ -1,10 +1,10 @@
 <?php
 	if ($this->Session->read('Auth.User.type_id') == 4) {
 ?>
-		<ul id="menu" class="sf-menu">
 			<?php
 			if($library->getAuthenticationType($this->Session->read('Auth.User.id')) == "user_account") {
 			?>
+			<ul id="menu" class="sf-menu">
 				<li>
 					<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Patrons</a>
 					<ul>
@@ -63,6 +63,12 @@
 					<li>
 						<?php echo $html->link('Manage Library', array('controller' => 'libraries', 'action' => 'managelibrary'));?>
 					</li>
+					<li>
+						<?php echo $html->link('Add Consortium', array('controller' => 'libraries', 'action' => 'addconsortium'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Manage Consortium', array('controller' => 'libraries', 'action' => 'consortium'));?>
+					</li>					
 				</ul>
 			</li>
 			<li>
@@ -132,10 +138,32 @@
 					</li>
 					<li>
 						<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
-					</li>					
+					</li>
+					<li>
+						<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
+					</li>						
 				</ul>
 			</li>	
 		</ul>
+<?php	
+	}elseif ($this->Session->read('Auth.User.type_id') == 6) {
+?>	
+	<ul id="menu" class="sf-menu">
+		<li>
+			<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
+			<ul>
+				<li>
+					<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
+				</li>
+				<li>
+					<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
+				</li>
+				<li>
+					<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
+				</li>				
+			</ul>
+		</li>
+	</ul>	
 <?php	
 	} else {
 ?>
@@ -157,6 +185,9 @@
 					</li>
 					<li>
 						<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
+					</li>
+					<li>
+						<?php echo $html->link('Consortium Download Report', array('controller' => 'reports', 'action' => 'consortium'));?>
 					</li>					
 				</ul>
 			</li>	

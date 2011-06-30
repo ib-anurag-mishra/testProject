@@ -11,7 +11,7 @@ Class UsersController extends AppController
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
 	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest');
-	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language');
+	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium');
    
    /*
     Function Name : beforeFilter
@@ -623,6 +623,8 @@ Class UsersController extends AppController
 			}               
 		}
 		$this->set('options',$this->Group->getallusertype());
+		$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
+		$this->set('consortium', $consortium);	
 	}
    
    /*

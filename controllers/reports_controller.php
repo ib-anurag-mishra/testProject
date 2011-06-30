@@ -11,8 +11,12 @@ Class ReportsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre' );
-    
+    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron','Consortium' );
+
+	function beforeFilter(){
+		parent::beforeFilter();
+		$this->Auth->allow('admin_consortium');
+	}    
     /*
      Function Name : admin_index
      Desc : actions for library reports page
@@ -287,6 +291,10 @@ Class ReportsController extends AppController
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         }
+		elseif($this->Session->read("Auth.User.type_id") == 6){
+            $this->set('libraries', $this->Library->find('list', array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium")),'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+            $this->set('libraryID', "");		
+		}
         else {
             $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             $this->set('libraryID', "");
@@ -363,10 +371,12 @@ Class ReportsController extends AppController
         Configure::write('debug', 0);
         if($this->Session->read("Auth.User.type_id") == 4) {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
-        }
+        }elseif($this->Session->read("Auth.User.type_id") == 6){
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));			
+		}
         else {
 			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC','recursive' => -1));
-        }		
+        }
 		$data = "<option value='all'>All Libraries</option>";
 		foreach($var as $k=>$v){
 			$data = $data."<option value=".$k.">".$v."</option>";
@@ -483,6 +493,74 @@ Class ReportsController extends AppController
 		$this->set( 'date', $this->data['Report']['date']);
 		$this->set('month', date("F", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))));		
 		$this->set('downloadResult', $downloadResult);
+	}
+	function admin_consortium(){
+		if($this->Session->read("Auth.User.type_id") == 1) {
+			$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name', 'recursive' => -1,'group' => 'consortium_name'));
+			$this->set('consortium', $consortium);
+		}else{
+			$consortium = $this->Consortium->find('list', array('conditions' => array('consortium_name' => $this->Session->read("Auth.User.consortium")),'fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name', 'recursive' => -1,'group' => 'consortium_name'));
+			$this->set('consortium', $consortium);		
+		}
+		$this->set('libraryID', "");
+        if(isset($this->data)) {
+			$consortium_id = $this->data['Report']['library_apikey'];		
+            $this->Report->set($this->data);
+            if($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            }
+            else {
+                $this->Report->setValidation('reports_manual');
+            }
+			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('Currentpatron.consortium' => $consortium_id)));
+			$patronIds = '';
+			foreach($currentPatron as $k => $v){
+				$patronIds .= $v['Currentpatron']['patronid']."','"; 
+			}
+            if($this->Report->validates()) {
+                if($this->data['Report']['reports_daterange'] == 'day') {
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumDaysDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'week') {
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumWeeksDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'month') {
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumMonthsDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'year') {
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'manual') {
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                }
+                $this->set('downloads', $downloads);
+                $this->set('patronDownloads', $patronDownloads);
+                $this->set('genreDownloads', $genreDownloads);
+            }
+            else {
+                $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
+                $arr = array();
+                $this->set('wishlists', $arr);
+                $this->set('errors', $this->Report->invalidFields());
+                if($this->data['Report']['downloadType'] == 'pdf') {
+                    $this->layout = 'pdf';
+                    $this->render("/reports/admin_downloadConsortiumWishListReportAsPdf");
+                }
+                elseif($this->data['Report']['downloadType'] == 'csv') {
+                    $this->layout = false;
+                    $this->render("/reports/admin_downloadConsortiumWishListReportAsCsv");
+                }				
+            }
+            $this -> set( 'formAction', 'admin_consortium' );
+            $this->set('getData', $this->data);
+        }
+        else {
+            $this -> set( 'formAction', 'admin_consortium' );
+            $arr = array();
+            $this->set('getData', $arr);
+            $this->set('consortiumData', $arr);
+            $this->set('errors', $arr);
+        }		
 	}
 }
 ?>
