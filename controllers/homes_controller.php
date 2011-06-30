@@ -1920,9 +1920,7 @@ class HomesController extends AppController
 			echo "success";
 			exit;
 		}
-    }	
-   
-}
+    }
 	
     function convertString(){
 		Configure::write('debug', 0);
