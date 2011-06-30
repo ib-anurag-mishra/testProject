@@ -15,7 +15,7 @@ if($this->Session->read('Config.language') == 'en' || $this->Session->read('Conf
 	$lang = "English";
 } 
 elseif($this->Session->read('Config.language') == 'es'){
-	$lang = "EspaÃ±ol";
+	$lang = "Español";
 }
 elseif($this->Session->read('Config.language') == 'fr'){
 	$lang = "FranÃ§ais";

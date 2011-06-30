@@ -156,7 +156,6 @@ class sip2Component extends Object {
 		else {
 			$this->_addFixedOption(sprintf("%03.2f",$version), 4);
 		}
->>>>>>> remotes/origin/freegal-subdomain-liauth-merged
         return $this->_returnMessage();
     }
 

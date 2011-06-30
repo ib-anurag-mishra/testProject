@@ -63,7 +63,7 @@ Class UsersController extends AppController
 				}
 				else 
 				{
-					$this->redirect('/');
+					$this->redirect('/homes');
 				}
 			}
 			else 
@@ -252,7 +252,7 @@ Class UsersController extends AppController
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->Auth->autoRedirect = false;   
-				$this->redirect('/homes/index');
+				$this->redirect('/index');
 				  
 			}
 		}
@@ -345,7 +345,7 @@ Class UsersController extends AppController
 				else{
 					$this ->Session->write("block", 'no');
 				}
-				$this->redirect('/');
+				$this->redirect('/index');
 			}
 			else{
 				$this->redirect($this->Auth->logout());
@@ -602,7 +602,7 @@ Class UsersController extends AppController
 			if(isset($this->data)){
 				$insertObj = new User();                    
 				$getData['User'] = $this->data['User'];
-				$this->data['User']['library_id'] = Configure::read('LibraryIdeas');;
+				$this->data['User']['library_id'] = Configure::read('LibraryIdeas');
 				if($this->data['User']['type_id'] == 5){
 					$this->data['User']['sales'] = 'yes';
 				}
@@ -1126,7 +1126,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					
 					}					
 				}
@@ -1317,7 +1317,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					}
 				}         
 			}
@@ -1510,7 +1510,7 @@ Class UsersController extends AppController
 					else{
 						$this ->Session->write("block", 'no');
 					}
-					$this->redirect('/');
+					$this->redirect('/index');
 					}
 				}         
 			}
@@ -1688,7 +1688,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					}
 				}
 			}         
@@ -1861,7 +1861,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					}					
 				}         
 			}
@@ -2052,7 +2052,7 @@ Class UsersController extends AppController
 								else{
 								  $this ->Session->write("block", 'no');
 								}
-								$this->redirect('/');
+								$this->redirect('/index');
 								$this->Auth->autoRedirect = false;
 						}
 						//echo $result;exit;
@@ -2232,7 +2232,7 @@ Class UsersController extends AppController
 						//echo $result;exit;
 					}else{
 						$this -> Session -> setFlash("Authentication server down.");                              
-						$this->redirect('/');
+						$this->redirect('/index');
 					}					
 				}
 			}
@@ -2421,7 +2421,7 @@ Class UsersController extends AppController
 							else{
 								$this ->Session->write("block", 'no');
 							}
-							$this->redirect('/');	
+							$this->redirect('/index');	
 						}
 				}
 			}
@@ -2593,7 +2593,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					
 					}
 					
@@ -2901,7 +2901,7 @@ Class UsersController extends AppController
 						else{
 						  $this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					}
 				}
 			}         
@@ -3093,7 +3093,7 @@ Class UsersController extends AppController
 					   else{
 						   $this ->Session->write("block", 'no');
 					   }
-					   $this->redirect('/');
+					   $this->redirect('/index');
 					}
 				}         
 			}
@@ -3268,7 +3268,7 @@ Class UsersController extends AppController
 					   else{
 						   $this ->Session->write("block", 'no');
 					   }
-					   $this->redirect('/');
+					   $this->redirect('/index');
 					}
 				}         
 			}
@@ -3457,7 +3457,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					}
 				}
 			}         
@@ -3648,7 +3648,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('/');
+						$this->redirect('/index');
 					}
 				}         
 			}

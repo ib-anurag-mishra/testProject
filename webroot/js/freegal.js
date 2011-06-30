@@ -830,7 +830,7 @@ function checkPatron(libid,patronid)
 				{
 					setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
 				}
-				else
+				else if(response != '')
 				{
 					alert("You have been logged out from the system. Please login again.");
 					location.reload();
@@ -843,7 +843,7 @@ function checkPatron(libid,patronid)
 	return false; 
 }
 
-function auto_check()
+/*function auto_check()
 {	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -866,7 +866,7 @@ function auto_check()
 		}
 	});
 	return false; 
-}
+}*/
 
 function approvePatron(libid,patronid)
 {
