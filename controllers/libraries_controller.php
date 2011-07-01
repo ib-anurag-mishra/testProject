@@ -38,7 +38,6 @@ Class LibrariesController extends AppController
      Desc : action for showing preview of the layout in the admin end
     */
     function admin_ajax_preview() {
-		Configure::write('debug', 0);		
 		$this->layout = false;
 		if(isset($_GET['bgColor']) &&
 		   isset($_GET['navBgColor']) && isset($_GET['boxheaderBgColor']) &&
@@ -226,6 +225,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_url',
 																				'Library.library_logout_url',
 																				'Library.library_subdomain',
+																				'Library.library_apikey',
 																				'Library.library_soap_url',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
@@ -288,9 +288,9 @@ Class LibrariesController extends AppController
                 if($this->data['Library']['library_download_limit'] == 'manual') {
                     $this->data['Library']['library_download_limit'] = $this->data['Library']['library_download_limit_manual'];
                 }
-                if($this->data['Library']['library_apikey'] == 'none') {
-                    $this->data['Library']['library_apikey'] = $this->data['Library']['none_consortium'];
-                }                
+//                if($this->data['Library']['library_apikey'] == 'none') {
+//                    $this->data['Library']['library_apikey'] = $this->data['Library']['none_consortium'];
+//                }                
                 if($this->data['Library']['libraryStepNum'] == '2') {
                     if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5") {
 						$this->data['User']['password'] = "";
