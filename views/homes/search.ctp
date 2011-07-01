@@ -205,7 +205,9 @@ if(count($searchResults) != 0){
 <?php
 	}
 	else {
-		echo '<table><tr><td width="180" valign="top"><p><div class="paging"><?php __("No records found");?></div><br class="clr"></td></tr></table>';
+		echo '<table><tr><td width="180" valign="top"><p><div class="paging">';
+		echo __("No records found");
+		echo '</div><br class="clr"></td></tr></table>';
 	}
 ?>
 </div>
