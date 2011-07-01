@@ -1921,8 +1921,6 @@ class HomesController extends AppController
 			exit;
 		}
     }	
-   
-}
 	
     function convertString(){
 		Configure::write('debug', 0);
