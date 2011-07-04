@@ -1,5 +1,5 @@
 <?php
-	if ($this->Session->read('Auth.User.type_id') == 4) {
+	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
 ?>
 			<?php
 			if($library->getAuthenticationType($this->Session->read('Auth.User.id')) == "user_account") {
@@ -33,6 +33,28 @@
 				</ul>
 			</li>
 		</ul>
+<?php
+	} elseif ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') != '') {
+?>
+			<ul id="menu" class="sf-menu">
+				<li>
+					<a href="#" <?php if ($this->pageTitle == "Reports") echo "class=\"current\""; ?>>Reports</a>
+					<ul>
+						<li>
+							<?php echo $html->link('Library Download Report', array('controller' => 'reports', 'action' => 'index'));?>
+						</li>
+						<li>
+							<?php echo $html->link('Library WishList Report', array('controller' => 'reports', 'action' => 'librarywishlistreport'));?>
+						</li>						
+						<li>
+							<?php echo $html->link('Library Unlimited Report', array('controller' => 'reports', 'action' => 'unlimited'));?>
+						</li>
+						<li>
+							<?php echo $html->link('Library Consortium Report', array('controller' => 'reports', 'action' => 'consortium'));?>
+						</li>						
+					</ul>
+				</li>
+			</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 1) {
 ?>

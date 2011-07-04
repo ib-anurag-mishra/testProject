@@ -23,7 +23,7 @@ Class ReportsController extends AppController
     */
     function admin_index() {
 	//	print_r($this->data);exit;
-        if($this->Session->read("Auth.User.type_id") == 4) {
+        if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
@@ -47,7 +47,7 @@ Class ReportsController extends AppController
 				$library_id = $this->data['Report']['library_id'];
 			}
 			$this->set('library_id', $library_id);
-			if($this->Session->read("Auth.User.type_id") == 4){
+			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
 				$territory = $libraryAdminID["Library"]["library_territory"];
 			} else {
 				$territory = $this->data['Report']['Territory'];				
@@ -130,7 +130,7 @@ Class ReportsController extends AppController
 				$library_id = $this->data['Report']['library_id'];
 			}
 			$this->set('library_id', $library_id);
-			if($this->Session->read("Auth.User.type_id") == 4) {
+			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
 				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
 				$territory = $libraryAdminID["Library"]["library_territory"];
 			} else {
@@ -202,7 +202,7 @@ Class ReportsController extends AppController
 				$library_id = $this->data['Report']['library_id'];
 			}
 			$this->set('library_id', $library_id);
-			if($this->Session->read("Auth.User.type_id") == 4) {
+			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
 				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
 				$territory = $libraryAdminID["Library"]["library_territory"];
 			} else {
@@ -286,12 +286,12 @@ Class ReportsController extends AppController
      Desc : actions for library wishlist reports page
     */
     function admin_librarywishlistreport() {
-        if($this->Session->read("Auth.User.type_id") == 4) {
+        if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         }
-		elseif($this->Session->read("Auth.User.type_id") == 6){
+		elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
             $this->set('libraries', $this->Library->find('list', array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium")),'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             $this->set('libraryID', "");		
 		}
@@ -369,9 +369,9 @@ Class ReportsController extends AppController
     }
 	function admin_getLibraryIds(){
         Configure::write('debug', 0);
-        if($this->Session->read("Auth.User.type_id") == 4) {
+        if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
-        }elseif($this->Session->read("Auth.User.type_id") == 6){
+        }elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
             $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));			
 		}
         else {
@@ -384,7 +384,7 @@ Class ReportsController extends AppController
 		print "<select class='select_fields' name='library_id'>".$data."</select>";exit;
 	}
 	function admin_unlimited(){
-        if($this->Session->read("Auth.User.type_id") == 4) {
+        if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
             $this->set('libraryID', $libraryAdminID["Library"]["id"]);
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);

@@ -27,7 +27,7 @@
                                 <td align="right"><?php echo $this->Form->label('Select Library');?></td>
                                 <td align="left">
                         <?php    
-                                    $libraries['all'] = "All Libraries";
+                                    if($this->Session->read("Auth.User.consortium") == ''){ $libraries['all'] = "All Libraries"; }
                                     echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_id']));
                         ?>
                                 </td>

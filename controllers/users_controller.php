@@ -110,11 +110,14 @@ Class UsersController extends AppController
 			}
 			$this->set('libraries', $this->paginate('Library'));
 		}
-		if($userType == '4'){
+		if($userType == '4' && $this->Session->read('Auth.User.consortium') == ''){
 			$libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")),'recursive' => -1)); 
 			if($libraryDetail['Library']['library_unlimited'] != '1'){
 				$this->set('libraryLimited', 1);
 			}
+		}
+		if($userType == '4' && $this->Session->read('Auth.User.consortium') != ''){
+				//nothing needs to be done
 		}
 		//takes to the default admin home page
 		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header 
@@ -578,6 +581,9 @@ Class UsersController extends AppController
 					$this->data['User']['library_id'] = Configure::read('LibraryIdeas');
 					if($this->data['User']['type_id'] == 5){
 						$this->data['User']['sales'] = 'yes';
+					}
+					if($this->data['User']['type_id'] == 6 && $this->data['User']['consortium'] != ''){
+						$this->data['User']['type_id'] = 4;
 					}					
 					$getData['Group']['id'] = $this->data['User']['type_id'];
 					$this->set('getData', $getData);
@@ -606,11 +612,14 @@ Class UsersController extends AppController
 				if($this->data['User']['type_id'] == 5){
 					$this->data['User']['sales'] = 'yes';
 				}
+				if($this->data['User']['type_id'] == 6 && $this->data['User']['consortium'] != ''){
+					$this->data['User']['type_id'] = 4;
+				}				
 				$getData['Group']['id'] = $this->data['User']['type_id'];
 				$this->set('getData', $getData);
 				if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){                     
 					$this->data['User']['password'] = "";                      
-				}                  
+				}
 				$this->User->set($this->data['User']);                  
 				if($this->User->save()){                    
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
