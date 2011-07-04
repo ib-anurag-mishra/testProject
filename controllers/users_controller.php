@@ -240,7 +240,7 @@ Class UsersController extends AppController
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
-			$this->redirect('/users/admin_index');
+			$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			$this->Auth->autoRedirect = false;
 		}
 	}
