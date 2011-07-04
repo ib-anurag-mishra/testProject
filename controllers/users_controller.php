@@ -87,8 +87,23 @@ Class UsersController extends AppController
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));	
 		}
 		if($userType == '5' && $this->Session->read('Auth.User.sales') != 'yes'){
-			$this->redirect('/homes/index');
-			$this->Auth->autoRedirect = false;
+			$libid = $this->Session->read('Auth.User.library_id');       
+			$patronid = $this->Session->read('Auth.User.id');
+			$patronid = str_replace("_","+",$this->Session->read('Auth.User.id'));
+			$userCache = Cache::read("login_".$libid.$patronid);
+			$date = time();
+			$modifiedTime = $userCache[0];
+			if(($date-$modifiedTime) < 60)
+			{
+				$this->redirect('homes/index');
+			}
+			else
+			{
+				$this->Session->destroy('Auth.User');
+				$this -> Session -> setFlash("Email id or password are not valid.");
+				$this->redirect(array('controller' => 'users', 'action' => 'login', 'admin' => true));
+				$this->Auth->autoRedirect = false;
+			}
 		}
 		if($userType == '1' || $this->Session->read('Auth.User.sales') == 'yes'){
 			if($library == 'special') {
