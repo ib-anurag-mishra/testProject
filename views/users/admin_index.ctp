@@ -1,337 +1,103 @@
-<?php
-    $this->pageTitle = 'Reports'; 
-    echo $this->Form->create('Report', array( 'action' => $formAction ));
-    if(empty($getData))
-    {
-        $getData['Report']['library_id'] = "all";
-        $getData['Report']['reports_daterange'] = "day";
-        $getData['Report']['date'] = "";
-        $getData['Report']['date_from'] = "";
-        $getData['Report']['date_to'] = "";
-		$getData['Report']['Territory'] = "";
-    }
-?>
+<?php $this->pageTitle = 'Admin'; ?>
+<form>
 <fieldset>
-<legend>Generate Library Downloads Report <?php if($libraryID != "") { echo "for \"".$libraryname."\""; }?></legend>
-    <div class="formFieldsContainer">
-        <div class="formFieldsbox">
-            <div id="form_step" class="form_steps">
-                <h1>Report Settings</h1>
-                <table cellspacing="10" cellpadding="0" border="0" width="100%">
-                    <tr><td id="formError" class="formError" colspan="4"></td></tr>
-                    <tr>
-                        <?php
-                            if($libraryID == "") {
-                        ?>
-							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>   
-							<td align="left">
-										<?php
-											echo $this->Form->input('Territory', array('options' => array(
-																			'' => 'Select Territory',
-																			'CA' => 'CA',
-																			'US' => 'US',
-																			), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
-																	);
-                                ?>
-                            </td>						
-                            <td align="right"><?php echo $this->Form->label('Select Library');?></td>
-                            <td align="left">
-							<div id="allLibrary">
-                        <?php    
-                                    if($this->Session->read("Auth.User.consortium") == '') { $libraries['all'] = "All Libraries"; }
-                                    echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
-                        ?>
-                            </div>
-							</td>
-                            <td align="right"><?php echo $this->Form->label('Range');?></td>
-                            <td align="left">
-                                <?php
-                                    echo $this->Form->input('reports_daterange', array('options' => array(
-                                                                    'day' => 'Day',
-                                                                    'week' => 'Week',
-                                                                    'month' => 'Month',
-                                                                    'manual' => 'Manual'
-                                                                    ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
-                                                            );
-                                ?>
-                            </td>
-       							
-                        <?php
-                            }
-                            else {
-                        ?>							
-                            <td align="center" colspan="4">
-                                <?php
-                                    echo $this->Form->label('Range');
-                                    echo $this->Form->hidden('library_id', array('value' => $libraryID));
-                                    echo $this->Form->input('reports_daterange', array('options' => array(
-                                                                    'day' => 'Day',
-                                                                    'week' => 'Week',
-                                                                    'month' => 'Month',
-                                                                    'manual' => 'Manual'
-                                                                    ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
-                                                            );
-                                ?>
-                            </td>							
-                        <?php
-                            }
-                        ?>
-                        
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr id="initial_date_range" <?php if($getData['Report']['reports_daterange'] == "manual") {?>style="display:none;"<?php } ?>>
-                        <td align="center" colspan="6">
-                            <?php
-                                echo $this->Form->label('Select Date');
-                                echo $this->Form->input('date',array('label' => false ,'value' => $getData['Report']['date'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly'));
-                            ?>
-                        </td>
-                    </tr>
-                    <tr id="date_range" <?php if($getData['Report']['reports_daterange'] != "manual") {?>style="display:none;"<?php } ?>>
-                        <td align="right" colspan="2">
-                            <?php
-                                echo $this->Form->label('From');
-                                echo $this->Form->input('date_from',array('label' => false ,'value' => $getData['Report']['date_from'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly'));
-                            ?>
-                        </td>
-                        <td align="left" colspan="2">
-                            <?php
-                                echo $this->Form->label('To');
-                                echo $this->Form->input('date_to',array('label' => false ,'value' => $getData['Report']['date_to'], 'div' => false, 'class' => 'form_fields', 'readonly' => 'readonly'));
-                            ?>
-                        </td>
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr>
-                        <td colspan="6" align="center"><?php echo $this->Form->submit('Generate Report', array('id' => 'generateReportSubmit'));?></td>
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <?php
-                    if(!empty($downloads)) {
-                    ?>
-                    <tr>
-                        <td colspan="3" align="center">
-                            <?php
-                                echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadCVSOne'));
-                            ?>
-                        </td>
-                        <td colspan="3" align="center">
-                            <?php
-                                echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadPDFOne'));
-                            ?>
-                        </td>
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Library Remaining Downloads</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-									<th>&nbsp;</th>
-                                    <th>Library Name</th>
-                                    <th>Number of Remaining Downloads</th>
-                                </tr>
-                                <?php
-								$i = 1;
-                                foreach($libraries_download as $LibraryName => $libraryid) {
-                                ?>
-                                    <tr>
-										<td><?php echo $i; ?></td>
-                                        <td><?php echo $libraryid['Library']['library_name']; ?></td>
-											<?php
-											if($libraryid['Library']['library_unlimited'] == 1){
-												$text = "Unlimited";
-											} else {
-												$text = $libraryid['Library']['library_available_downloads'];
-											}
-											?>
-                                        <td align="center"><?php echo $text; ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>
-					<tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Library Downloads Report</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-				    <th>&nbsp;</th>
-                                    <th>Library Name</th>
-                                    <th>Patron ID</th>
-                                    <th>Artists Name</th>
-                                    <th>Track Title</th>
-                                    <th>Download</th>
-                                </tr>
-                                <?php
-								$i = 1;
-				//				print "<pre>";print_r($downloads);exit;
-                                foreach($downloads as $key => $download) {	
-                                ?>
-                                    <tr>
-										<td><?php echo $i; ?></td>
-                                        <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
-                                        <td><?php 
-											if($download['Download']['email']!=''){
-												echo $download['Download']['email'];
-											}else{
-												echo $download['Download']['patron_id'];
-											}?>
-										</td>
-                                        <td><?php echo $download['Download']['artist']; ?></td>
-                                        <td><?php echo $download['Download']['track_title']; ?></td>
-                                        <td><?php echo date('Y-m-d', strtotime($download['Download']['created'])); ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Patron Downloads Report</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-				    <th>&nbsp;</th>
-                                    <th>Patron ID</th>
-                                    <th>Library Name</th>
-                                    <th>Total Number of Tracks Downloaded</th>
-                                </tr>
-                                <?php
-				$i = 1;
-                                foreach($patronDownloads as $key => $patronDownload) {
-                                ?>
-                                    <tr>
-					<td><?php echo $i; ?></td>
-										<td><?php 
-										if($patronDownload['Download']['email']!=''){
-											echo $patronDownload['Download']['email'];
-										}else{
-											echo $patronDownload['Download']['patron_id'];
-										}?>
-										</td>
-                                        <td><?php echo $library->getLibraryName($patronDownload['Download']['library_id']); ?></td>
-                                        <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr><td colspan="6">&nbsp;</td></tr>
-                    <tr><th colspan="6" align="center">Genres Downloads Report</th></tr>
-                    <tr>
-                        <td colspan="6" align="center">
-                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
-                                <tr>
-				    <th>&nbsp;</th>
-                                    <th>Genre Name</th>
-                                    <th>Total Number of Tracks Downloaded</th>
-                                </tr>
-                                <?php
-				$i = 1;
-                                foreach($genreDownloads as $key => $genreDownload) {
-                                ?>
-                                    <tr>
-					<td><?php echo $i; ?></td>
-                                        <td><?php echo $genreDownload['Genre']['Genre']; ?></td>
-                                        <td align="center"><?php echo $genreDownload[0]['totalProds']; ?></td>
-                                    </tr>
-                                <?php
-				    $i++;
-                                }
-                                ?>
-                            </table>
-                        </td>
-                    </tr>
-                    <?php
-                    }
-                    elseif(empty($downloads) && empty($errors) && isset($this->data)) {
-                    ?>
-                    <tr>
-                        <td colspan="6" align="center"><label>There are not downloads found for the selected criteria.</label></td>
-                    </tr>
-                    <?php
-                    }
-                    ?>
-                </table>
-            </div>
-        </div>
-    </div>
+<legend>Welcome <?php echo $session->read('Auth.User.first_name'); ?></legend>
+Welcome to the Administrative Section of <b><i>Freegal Music</i></b>
 </fieldset>
+</form>
+<?php if($this->Session->read('Auth.User.type_id') == 1){ ?>
+<?php $this->pageTitle = 'Libraries'; ?>
+<form>
+<fieldset>
+<legend>Library Listing</legend>
+<br class="clr">
+<div id="library_search">
+ <a name="bottom">Library Search&nbsp;</a>&nbsp;
+ <?php echo $html->link('ALL',array('controller' => 'users', 'action' => 'admin_index'));?>&nbsp;
+ <?php echo $html->link('#',array('controller' => 'users', 'action' => 'admin_index', 'special'));?>&nbsp;
+ <?php echo $html->link('A',array('controller' => 'users', 'action' => 'admin_index', 'A'));?>&nbsp;
+ <?php echo $html->link('B',array('controller' => 'users', 'action' => 'admin_index', 'B'));?>&nbsp;
+ <?php echo $html->link('C',array('controller' => 'users', 'action' => 'admin_index', 'C'));?>&nbsp;
+ <?php echo $html->link('D',array('controller' => 'users', 'action' => 'admin_index', 'D'));?>&nbsp;
+ <?php echo $html->link('E',array('controller' => 'users', 'action' => 'admin_index', 'E'));?>&nbsp;
+ <?php echo $html->link('F',array('controller' => 'users', 'action' => 'admin_index', 'F'));?>&nbsp;
+ <?php echo $html->link('G',array('controller' => 'users', 'action' => 'admin_index', 'G'));?>&nbsp;
+ <?php echo $html->link('H',array('controller' => 'users', 'action' => 'admin_index', 'H'));?>&nbsp;
+ <?php echo $html->link('I',array('controller' => 'users', 'action' => 'admin_index', 'I'));?>&nbsp;
+ <?php echo $html->link('J',array('controller' => 'users', 'action' => 'admin_index', 'J'));?>&nbsp;
+ <?php echo $html->link('K',array('controller' => 'users', 'action' => 'admin_index', 'K'));?>&nbsp;
+ <?php echo $html->link('L',array('controller' => 'users', 'action' => 'admin_index', 'L'));?>&nbsp;
+ <?php echo $html->link('M',array('controller' => 'users', 'action' => 'admin_index', 'M'));?>&nbsp;
+ <?php echo $html->link('N',array('controller' => 'users', 'action' => 'admin_index', 'N'));?>&nbsp;
+ <?php echo $html->link('O',array('controller' => 'users', 'action' => 'admin_index', 'O'));?>&nbsp;
+ <?php echo $html->link('P',array('controller' => 'users', 'action' => 'admin_index', 'P'));?>&nbsp;
+ <?php echo $html->link('Q',array('controller' => 'users', 'action' => 'admin_index', 'Q'));?>&nbsp;
+ <?php echo $html->link('R',array('controller' => 'users', 'action' => 'admin_index', 'R'));?>&nbsp;
+ <?php echo $html->link('S',array('controller' => 'users', 'action' => 'admin_index', 'S'));?>&nbsp;
+ <?php echo $html->link('T',array('controller' => 'users', 'action' => 'admin_index', 'T'));?>&nbsp;
+ <?php echo $html->link('U',array('controller' => 'users', 'action' => 'admin_index', 'U'));?>&nbsp;
+ <?php echo $html->link('V',array('controller' => 'users', 'action' => 'admin_index', 'V'));?>&nbsp;
+ <?php echo $html->link('W',array('controller' => 'users', 'action' => 'admin_index', 'W'));?>&nbsp;
+ <?php echo $html->link('X',array('controller' => 'users', 'action' => 'admin_index', 'X'));?>&nbsp;
+ <?php echo $html->link('Y',array('controller' => 'users', 'action' => 'admin_index', 'Y'));?>&nbsp;
+ <?php echo $html->link('Z',array('controller' => 'users', 'action' => 'admin_index', 'Z'));?>&nbsp;
+</div>
+<br class="clr">
+<p>
 <?php
- echo $this->Form->end();
+$curStartDate = date("Y-m-d")." 00:00:00";
+$curEndDate = date("Y-m-d")." 23:59:59";
+$curWeekStartDate = Configure::read('App.curWeekStartDate');
+$curWeekEndDate = Configure::read('App.curWeekEndDate');
+$monthStartDate = date("Y-m-d", strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
+$monthEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))))." 23:59:59";
+echo $paginator->counter(array(
+'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
+));
+?></p>
+  <table id="list">
+          <tr>            
+            <th class="left" style="border-right:1px solid #E0E0E0" rowspan="2">Name</th>
+			<th class="left" style="border-right:1px solid #E0E0E0;text-align:center" colspan="2">Contract</th>
+			<th class="left" style="border-right:1px solid #E0E0E0;text-align:center" colspan="6">Downloads</th>
+		</tr>
+		<tr>
+            <th style="border-right:1px solid #E0E0E0">Start Date</th>
+            <th class="left"><?php echo $paginator->sort('End Date', 'library_contract_end_date')."&nbsp;".$paginator->sort('`', 'library_contract_end_date', array('id' => 'sort_arrow'));?></th>
+            <th style="border-right:1px solid #E0E0E0">Today </th>
+			<th style="border-right:1px solid #E0E0E0">Week</th>
+            <th style="border-right:1px solid #E0E0E0">Month</th>
+			<th style="border-right:1px solid #E0E0E0">YTD</th>
+            <th class="left"><?php echo $paginator->sort('Remaining', 'library_available_downloads')."&nbsp;".$paginator->sort('`', 'library_available_downloads', array('id' => 'sort_arrow'));?></th>
+          </tr>
+          <?php
+          foreach($libraries as $library)
+          {
+            ?>
+            <tr>
+				<td><?php echo $html->link($library['Library']['library_name'], array('controller'=>'libraries','action'=>'libraryform','id'=>$library['Library']['id']));?></td>
+				<td class="left"><?php echo $library['Library']['library_contract_start_date'];?></td>
+				<td class="left"><?php echo $library['Library']['library_contract_end_date'];?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curStartDate, $curEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $curWeekStartDate, $curWeekEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $monthStartDate, $monthEndDate);?></td>
+				<td class="left"><?php echo $download->getDownloadData($library['Library']['id'], $library['Library']['library_contract_start_date']." 00:00:00", $library['Library']['library_contract_end_date']." 23:59:59");?></td>
+				<td class="left"><?php if($library['Library']['library_unlimited'] == 1){
+				 echo "Unlimited"; } else { echo $library['Library']['library_available_downloads']; }?></td>
+            </tr>            
+            <?php
+          }
+          ?>
+        </table>
+	<br class="clr" />
+	<div class="paging">
+	      <?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
+	| 	<?php echo $paginator->numbers();?>
+	      <?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	</div>
+</fieldset>
+<?php 
  echo $session->flash();
 ?>
-<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=flick/jquery-ui-1.8.custom.css" />
-<script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
-<script type="text/javascript">
-    $(function() {
-        $("#ReportDate").datepicker({showWeek: true, firstDay: 1, maxDate: '+0D', numberOfMonths: 3});
-        var dates = $('#ReportDateFrom, #ReportDateTo').datepicker({
-                defaultDate: "-1w",
-                maxDate: '+0D',
-                changeMonth: true,
-                numberOfMonths: 3,
-                onSelect: function(selectedDate) {
-                        var option = this.id == "ReportDateFrom" ? "minDate" : "maxDate";
-                        var instance = $(this).data("datepicker");
-                        var date = $.datepicker.parseDate(instance.settings.dateFormat || $.datepicker._defaults.dateFormat, selectedDate, instance.settings);
-                        dates.not(this).datepicker("option", option, date);
-                }
-        });
-        $("#ReportReportsDaterange").change(function() {
-            if($(this).val() == "manual") {
-                $("#date_range").show();
-                $("#initial_date_range").hide();
-            }
-            else {
-                $("#initial_date_range").show();
-                $("#date_range").hide();
-            }
-        });
-        $("#ReportTerritory").change(function() {
-			var data = "Territory="+$("#ReportTerritory").val();
-			jQuery.ajax({
-				type: "post",  // Request method: post, get
-				url: webroot+"admin/reports/getLibraryIds", // URL to request
-				data: data,  // post data
-				success: function(response) {
-						$('#allLibrary').text('');
-						$('#allLibrary').html(response);
-				},
-				error:function (XMLHttpRequest, textStatus, errorThrown) {}
-			});
-			return false;
-		});
-		
-    });
-    <?php
-        if(!empty($downloads)) {
-    ?>
-            $("#generateReportSubmit").click(function() {
-                $("#ReportAdminIndexForm").attr('action','/admin/reports/index');
-            });
-            
-            $("#downloadCVSOne").click(function() {
-                $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsCsv');
-                $("#ReportAdminIndexForm").submit();
-            });
-            
-            $("#downloadPDFOne").click(function() {
-                $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsPdf');
-                $("#ReportAdminIndexForm").submit();
-            });
-    <?php
-        }
-    ?>
-</script>
+</form>
+<?php } ?>
