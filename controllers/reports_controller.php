@@ -369,6 +369,7 @@ Class ReportsController extends AppController
     }
 	function admin_getLibraryIds(){
         Configure::write('debug', 0);
+		$data = '';
         if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
         }elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
@@ -376,8 +377,8 @@ Class ReportsController extends AppController
 		}
         else {
 			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC','recursive' => -1));
-        }
-		$data = "<option value='all'>All Libraries</option>";
+			$data = "<option value='all'>All Libraries</option>";
+		}
 		foreach($var as $k=>$v){
 			$data = $data."<option value=".$k.">".$v."</option>";
 		}

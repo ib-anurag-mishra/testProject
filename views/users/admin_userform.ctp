@@ -12,6 +12,9 @@
                      $getData['Group']['id'] = "";
 					 $getData['User']['consortium'] = "";
               }
+			  if($getData['User']['consortium'] != ''){
+					$getData['Group']['id'] = 6;
+			  }
        ?>
        <fieldset>
               <legend><?php echo $formHeader;?></legend>
