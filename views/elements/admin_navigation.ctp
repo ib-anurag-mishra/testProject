@@ -1,10 +1,10 @@
 <?php
 	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
 ?>
+		<ul id="menu" class="sf-menu">
 			<?php
 			if($library->getAuthenticationType($this->Session->read('Auth.User.id')) == "user_account") {
 			?>
-			<ul id="menu" class="sf-menu">
 				<li>
 					<a href="#" <?php if ($this->pageTitle == "Admin") echo "class=\"current\""; ?>>Patrons</a>
 					<ul>
