@@ -289,7 +289,7 @@ Class UsersController extends AppController
 			$this -> Session -> setFlash("This account has been deactivated.  Please contact your administrator for further questions.");
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));	
 		}	  
-		if($typeId == '5'){
+		if($typeId == '5' || $this->Session->read('Auth.User.consortium') != ''){
 			$libraryId = $this->Session->read('Auth.User.library_id');
 			$this->Library->recursive = -1;
 			$libraryArr = $this->Library->find('first',array(                                                

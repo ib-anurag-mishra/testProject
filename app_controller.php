@@ -364,7 +364,7 @@ class AppController extends Controller
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_logout' );
 		$this -> Acl -> allow( $adminType, 'controllers/Artists' );
 		$adminType -> id = 4;
-		$this -> Acl -> deny( $adminType, 'controllers' );
+		$this -> Acl -> allow( $adminType, 'controllers' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_index' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_logout' );
 		$this -> Acl -> allow( $adminType, 'controllers/users/admin_patronform' );
