@@ -7,7 +7,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
     
     /*
@@ -16,7 +16,7 @@ class HomesController extends AppController
     */
     function beforeFilter() {
 		parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'convertString') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate')) {
+        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
@@ -29,6 +29,11 @@ class HomesController extends AppController
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
 			}			
         }
+		$this->Cookie->name = 'baker_id';
+		$this->Cookie->time = 3600; // or '1 hour'
+		$this->Cookie->path = '/';
+		$this->Cookie->domain = 'freegalmusic.com';
+		//$this->Cookie->key = 'qSI232qs*&sXOw!';
     }
     
     /*
@@ -1302,6 +1307,14 @@ class HomesController extends AppController
 			$this ->Session->setFlash("The library you are trying to access is not registered with us");
 			$this->Session->delete('lib_status');
 		}
+		if($this->Cookie->read('msg') != '')
+		{
+			$this ->Session->setFlash("This account is already active");
+			$this->Cookie->delete('msg');
+		}
+		//echo '+++++'.$this->Cookie->read('msg').'asfsdaf';
+		
+		//exit;
 		$this->layout = 'home';
     }
 	
