@@ -13,7 +13,7 @@
 		$getData['Library']['library_authentication_url'] = "";
 		$getData['Library']['library_logout_url'] = "";
 		$getData['Library']['library_subdomain'] = "";
-		$getData['Library']['library_apikey'] = "none";
+		$getData['Library']['library_consortium'] = "none";
 		$getData['Library']['library_soap_url'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
 		$getData['Library']['library_authentication_response'] = "";
@@ -211,7 +211,7 @@
 						<td align="left">
 							<?php
 								$consortium['none'] = 'None';
-								echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_apikey']));
+								echo $this->Form->input('library_consortium', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_consortium']));
 							?>						
 						</td>
 					</tr>					

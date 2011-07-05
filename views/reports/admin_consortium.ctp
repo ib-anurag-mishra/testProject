@@ -9,7 +9,7 @@
         $getData['Report']['date'] = "";
         $getData['Report']['date_from'] = "";
         $getData['Report']['date_to'] = "";
-		$getData['Report']['library_apikey'] = "";
+		$getData['Report']['library_consortium'] = "";
     }
 ?>
 <fieldset>
@@ -28,7 +28,7 @@
                                 <td align="right"><?php echo $this->Form->label('Select Consortium');?></td>
                                 <td align="left">
                         <?php    
-                            echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_apikey']));
+                            echo $this->Form->input('library_consortium', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_consortium']));
                         ?>
                                 </td>
                                 <td align="right"><?php echo $this->Form->label('Range');?></td>
