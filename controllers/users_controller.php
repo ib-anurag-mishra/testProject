@@ -2267,13 +2267,13 @@ Class UsersController extends AppController
 								  else{
 									  $this ->Session->write("block", 'no');
 								  }
-								  $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+								  $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');;
 							
 						}
 						//echo $result;exit;
 					}else{
 						$this -> Session -> setFlash("Authentication server down.");                              
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}					
 				}
 			}
