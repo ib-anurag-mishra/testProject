@@ -342,6 +342,9 @@ Class UsersController extends AppController
 				$this->Session->write("library", $libraryId);
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("territory", $libraryArr['Library']['library_territory']);
+				if($this->Session->read('Auth.User.consortium') != ''){
+					$this->Session->write("consortium", $this->Session->read('Auth.User.consortium'));
+				}				
 				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));            
 				$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 				$this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);

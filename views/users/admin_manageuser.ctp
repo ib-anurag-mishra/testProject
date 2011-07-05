@@ -59,7 +59,7 @@ echo $paginator->counter(array(
                 <td class="left"><?php echo $admin['User']['first_name'];?></td>
                 <td class="left"><?php echo $admin['User']['last_name'];?></td>
                 <td class="left"><?php echo $admin['User']['email'];?></td>
-		<td class="left"><?php echo $user->getAdminType($admin['User']['type_id']); ?></td>
+		<td class="left"><?php if($admin['User']['consortium'] != ''){ echo 'consortium'; }else{ echo $user->getAdminType($admin['User']['type_id']);} ?></td>
         <td><?php echo $html->link('Edit', array('controller'=>'users','action'=>'userform','id'=>$admin['User']['id']));?></td>
 		<td>
 		<?php
