@@ -600,7 +600,7 @@ Class ArtistsController extends AppController
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 		$albumSongs = array();
-		if(count($albumData) != 0)
+		if(!empty($albumData))
 		{
 			foreach($albumData as $album) {
 				$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
