@@ -600,61 +600,64 @@ Class ArtistsController extends AppController
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 		$albumSongs = array();
-		foreach($albumData as $album) {
-			$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
-					'conditions' =>
-						array('and' =>
-							array(
-								array('Song.ReferenceID' => $album['Album']['ProdID']),							
-								array('Song.DownloadStatus' => 1),
-							//	array('Song.TrackBundleCount' => 0),
-								array("Song.Sample_FileID != ''"),
-								array("Song.FullLength_FIleID != ''"),
-								array('Country.Territory' => $country),$cond
-							)
-						),
-					'fields' => array(
-							'Song.ProdID',
-							'Song.Title',
-							'Song.ArtistText',
-							'Song.DownloadStatus',
-							'Song.SongTitle',
-							'Song.Artist',
-							'Song.Advisory',
-							'Song.Sample_Duration',
-							'Song.FullLength_Duration',
-							'Song.Sample_FileID',
-							'Song.FullLength_FIleID'
+		if(count($albumData) != 0)
+		{
+			foreach($albumData as $album) {
+				$albumSongs[$album['Album']['ProdID']] =  $this->Song->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Song.ReferenceID' => $album['Album']['ProdID']),							
+									array('Song.DownloadStatus' => 1),
+								//	array('Song.TrackBundleCount' => 0),
+									array("Song.Sample_FileID != ''"),
+									array("Song.FullLength_FIleID != ''"),
+									array('Country.Territory' => $country),$cond
+								)
+							),
+						'fields' => array(
+								'Song.ProdID',
+								'Song.Title',
+								'Song.ArtistText',
+								'Song.DownloadStatus',
+								'Song.SongTitle',
+								'Song.Artist',
+								'Song.Advisory',
+								'Song.Sample_Duration',
+								'Song.FullLength_Duration',
+								'Song.Sample_FileID',
+								'Song.FullLength_FIleID'
 
-						    ),
-					'contain' => array(
-						'Genre' => array(
-								'fields' => array(
-										'Genre.Genre'								
-									)
 								),
-						'Country' => array(
-								'fields' => array(
-										'Country.Territory',
-										'Country.SalesDate'
-									)
-								),								
-						'Sample_Files' => array(
-								'fields' => array(
-											'Sample_Files.CdnPath' ,
-											'Sample_Files.SaveAsName'
-									)
-								),
-						'Full_Files' => array(
-								'fields' => array(
-											'Full_Files.CdnPath' ,
-											'Full_Files.SaveAsName'
-									)
-								),
-								
-					),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
-				      ));
-	    }
+						'contain' => array(
+							'Genre' => array(
+									'fields' => array(
+											'Genre.Genre'								
+										)
+									),
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory',
+											'Country.SalesDate'
+										)
+									),								
+							'Sample_Files' => array(
+									'fields' => array(
+												'Sample_Files.CdnPath' ,
+												'Sample_Files.SaveAsName'
+										)
+									),
+							'Full_Files' => array(
+									'fields' => array(
+												'Full_Files.CdnPath' ,
+												'Full_Files.SaveAsName'
+										)
+									),
+									
+						),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
+						  ));
+			}
+		}
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){
 			foreach($albumSong as $key => $value){
