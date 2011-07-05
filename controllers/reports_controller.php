@@ -292,7 +292,7 @@ Class ReportsController extends AppController
             $this->set('libraryname', $libraryAdminID["Library"]["library_name"]);
         }
 		elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
-            $this->set('libraries', $this->Library->find('list', array("conditions" => array('Library.library_consortium' => $this->Session->read("Auth.User.consortium")),'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+            $this->set('libraries', $this->Library->find('list', array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium")),'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             $this->set('libraryID', "");		
 		}
         else {
@@ -373,7 +373,7 @@ Class ReportsController extends AppController
         if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
         }elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
-            $var = $this->Library->find("list", array("conditions" => array('Library.library_consortium' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));			
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));			
 		}
         else {
 			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC','recursive' => -1));
@@ -505,7 +505,7 @@ Class ReportsController extends AppController
 		}
 		$this->set('libraryID', "");
         if(isset($this->data)) {
-			$consortium_id = $this->data['Report']['library_consortium'];		
+			$consortium_id = $this->data['Report']['library_apikey'];		
             $this->Report->set($this->data);
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
