@@ -6,7 +6,7 @@
 <div id="genre_artist_search">
  <a name="bottom"><?php __('Artist Search'); ?>&nbsp;</a>&nbsp;
  <?php echo $html->link('ALL',array('controller' => 'genres', 'action' => 'view', base64_encode($genre)));?>&nbsp;
- <?php echo $html->link('#',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'#'));?>&nbsp;
+ <?php echo $html->link('#',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'spl'));?>&nbsp;
  <?php echo $html->link('A',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'A'));?>&nbsp;
  <?php echo $html->link('B',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'B'));?>&nbsp;
  <?php echo $html->link('C',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'C'));?>&nbsp;
