@@ -232,7 +232,7 @@ Class GenresController extends AppController
 		if($Artist == 'spl') {
 			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");			
 		}
-		elseif($Artist != '' || $Artist != 'img') {
+		elseif($Artist != '' && $Artist != 'img') {
 			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
 		}
 		else {
