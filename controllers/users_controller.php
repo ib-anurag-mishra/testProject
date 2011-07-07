@@ -229,7 +229,7 @@ Class UsersController extends AppController
 				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;     
 			}
-			$this->redirect('/users/admin_index');
+			$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			$this->Auth->autoRedirect = false;
 		}
 	}
@@ -597,7 +597,9 @@ Class UsersController extends AppController
 					}
 					if($this->data['User']['type_id'] == 6 && $this->data['User']['consortium'] != ''){
 						$this->data['User']['type_id'] = 4;
-					} 
+					}else{
+						$this->data['User']['consortium'] = '';
+					}
 					$getData['Group']['id'] = $this->data['User']['type_id'];
 					$this->set('getData', $getData);
 					$this->User->id = $this->data['User']['id'];
@@ -627,7 +629,9 @@ Class UsersController extends AppController
 				}
 				if($this->data['User']['type_id'] == 6 && $this->data['User']['consortium'] != ''){
 					$this->data['User']['type_id'] = 4;
-				} 
+				}else{
+					$this->data['User']['consortium'] = '';
+				}
 				$getData['Group']['id'] = $this->data['User']['type_id'];
 				$this->set('getData', $getData);
 				if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){                     

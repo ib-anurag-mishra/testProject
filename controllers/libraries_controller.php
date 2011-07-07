@@ -647,7 +647,7 @@ Class LibrariesController extends AppController
             
             if($error == "") {
                 if($_REQUEST['LibraryStepNum'] == "5" && $_REQUEST['LibraryID'] != "") {
-                    $upload_dir = '../webroot/img/';
+                    $upload_dir = WWW_ROOT.'img/';
                     $fileName = $_REQUEST['LibraryID'].".".$ph;
                     $upload_Path = $upload_dir . $fileName;
                     if(!file_exists($upload_dir)) {

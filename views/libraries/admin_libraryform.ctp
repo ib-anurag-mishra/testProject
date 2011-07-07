@@ -211,7 +211,8 @@
 						<td align="left">
 							<?php
 								$consortium['none'] = 'None';
-								echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_consortium']));
+								if($getData['Library']['library_apikey'] == ''){ $getData['Library']['library_apikey'] = "none";}
+								echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_apikey']));
 							?>						
 						</td>
 					</tr>					

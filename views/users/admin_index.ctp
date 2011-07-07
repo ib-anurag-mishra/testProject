@@ -101,3 +101,25 @@ echo $paginator->counter(array(
 ?>
 </form>
 <?php } ?>
+<script type="text/javascript" src="//asset0.zendesk.com/external/zenbox/zenbox-2.0.js"></script>
+<style type="text/css" media="screen, projection">
+
+    @import url(//asset0.zendesk.com/external/zenbox/zenbox-2.0.css);
+
+</style>
+<script type="text/javascript">
+
+    if (typeof(Zenbox) !== "undefined") {
+
+        Zenbox.init({
+        dropboxID: "9331",
+        url: "libraryideas.zendesk.com",
+        tabID: "support",
+        tabColor: "#0099FF",
+        tabPosition: "Right"
+
+    });
+
+    }
+
+</script>
