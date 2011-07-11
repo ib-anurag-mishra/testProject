@@ -1389,6 +1389,14 @@ class HomesController extends AppController
     function forgot_password() {
         $this->layout = 'login';
         $errorMsg ='';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		}
+		else{
+			$this->Session->write('Config.language', 'en');
+		}
         if($this->data){
             $email = $this->data['Home']['email'];
             if($email == ''){

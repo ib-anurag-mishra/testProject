@@ -40,6 +40,33 @@
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
 		});
 	}
+	function changeLang_password(type,page){
+		$("#loadingDiv").show();
+		var language = type;
+		var data = "lang="+language;
+		$.ajax({
+			type: "post",  // Request method: post, get
+			url: webroot+"homes/"+page, // URL to request
+			data: data,  // post data
+			success: function(response) {
+				var msg = response.substring(0,5);
+				if(msg == 'error')
+				{
+					alert("There was an error while saving your request.");
+					location.reload();
+					return false;
+				}
+				else
+				{
+					$('#container').html('');
+					$('#footer').html('');
+					$('#allContent').html(response);
+				}
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {}
+		});
+	}
+	
 jQuery(document).ready(function() {
 	$("#loadingDiv").hide();
 });	
