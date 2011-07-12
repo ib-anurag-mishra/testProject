@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager');
+		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -31,6 +31,25 @@ Class UsersController extends AppController
     Desc : This function redirects the libraries to their corresponding login page basing on the 
 		   library subdomain name in the url.
    */
+	function method_action_mapper($method = null)
+	{
+		$method_vs_action = array('sip2_var' => 'sdlogin',
+								'sip2_var_wo_pin'=>'sndlogin',
+								'sip2'=>'slogin',
+								'sip2_wo_pin'=>'snlogin',
+								'innovative_var_wo_pin'=>'indlogin',
+								'innovative_https'=>'inhlogin',
+								'innovative_wo_pin'=>'inlogin',
+								'innovative_var'=>'idlogin',
+								'innovative'=>'ilogin',
+								'user_account'=>'login',
+								'innovative_var_name'=>'ildlogin',
+								'innovative_var_https_name'=>'ilhdlogin',
+								'innovative_var_https'=>'ihdlogin',
+								'innovative_var_https_wo_pin'=>'inhdlogin',
+								'soap'=>'plogin');
+		return $method_vs_action[$method];
+	}
 	function redirection_manager($library = null)
 	{
 		
@@ -47,22 +66,7 @@ Class UsersController extends AppController
 					}
 					else
 					{
-						$method_vs_action = array('sip2_var' => 'sdlogin',
-												'sip2_var_wo_pin'=>'sndlogin',
-												'sip2'=>'slogin',
-												'sip2_wo_pin'=>'snlogin',
-												'innovative_var_wo_pin'=>'indlogin',
-												'innovative_https'=>'inhlogin',
-												'innovative_wo_pin'=>'inlogin',
-												'innovative_var'=>'idlogin',
-												'innovative'=>'ilogin',
-												'user_account'=>'login',
-												'innovative_var_name'=>'ildlogin',
-												'innovative_var_https_name'=>'ilhdlogin',
-												'innovative_var_https'=>'ihdlogin',
-												'innovative_var_https_wo_pin'=>'inhdlogin',
-												'soap'=>'plogin');
-						$action = $method_vs_action[$library_data['Library']['library_authentication_method']];
+						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
 						//$this->redirect(array('controller' => 'users', 'action' => $action));
 						$this->redirect('https://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
 					}
@@ -220,6 +224,7 @@ Class UsersController extends AppController
    
 	function admin_login() {
 		$this->layout = 'admin';
+		$this->Auth->autoRedirect = false;
 		if (empty($this->data)) {
 			$this->Session->delete('Message.auth');
 		}
@@ -976,6 +981,15 @@ Class UsersController extends AppController
    */
    
 	function ilogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -983,6 +997,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'ilogin');
 					}
 				}
 				else {
@@ -1174,6 +1189,15 @@ Class UsersController extends AppController
    */
    
    function idlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1181,6 +1205,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'idlogin');
 					}
 				}
 				else {
@@ -1371,13 +1396,22 @@ Class UsersController extends AppController
    */
    
    function ildlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
-						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'ildlogin');
 					}
 				}
 				else {
@@ -1567,6 +1601,15 @@ Class UsersController extends AppController
    */
    
 	function inlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1574,6 +1617,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write('login_action','inlogin');
 					}
 				}
 				else {
@@ -1748,6 +1792,15 @@ Class UsersController extends AppController
    */
    
    function indlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -1755,6 +1808,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'indlogin');
 					}
 				}
 				else {
@@ -1925,7 +1979,15 @@ Class UsersController extends AppController
 	   
 	   
 	function slogin($library = null){
-		
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}		
 		if(!$this->Session->read('referral')){
 			if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => @$_SERVER['HTTP_REFERER'])));
@@ -1933,6 +1995,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'slogin');
 					}
 				}
 				else {
@@ -2121,6 +2184,15 @@ Class UsersController extends AppController
 	   
 	   
 	function snlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2128,6 +2200,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'snlogin');
 					}
 				}
 				else {
@@ -2300,6 +2373,15 @@ Class UsersController extends AppController
 	*/
  
 	function sdlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2307,6 +2389,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write('login_action','sdlogin');
 					}
 				}
 				else {
@@ -2396,7 +2479,7 @@ Class UsersController extends AppController
 														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );					
-				}				
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/sdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -2496,6 +2579,15 @@ Class UsersController extends AppController
 	*/ 	   
 	   
 	function sndlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2503,6 +2595,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write('login_action','sndlogin');
 					}
 				}
 				else {
@@ -2795,6 +2888,15 @@ Class UsersController extends AppController
    */
    
    function inhlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2802,6 +2904,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'inhlogin');
 					}
 				}
 				else {
@@ -2990,6 +3093,15 @@ Class UsersController extends AppController
    */
    
    function ihdlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -2997,6 +3109,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'ihdlogin');
 					}
 				}
 				else {
@@ -3186,6 +3299,15 @@ Class UsersController extends AppController
    */
    
    function inhdlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -3193,6 +3315,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'inhdlogin');
 					}
 				}
 				else {
@@ -3367,6 +3490,15 @@ Class UsersController extends AppController
    */
    
 	function plogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -3374,6 +3506,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'plogin');
 					}
 				}
 				else {
@@ -3558,6 +3691,15 @@ Class UsersController extends AppController
     Desc : For patron ilhdlogin(Innovative Var HTTPS with Name) login method
    */
    function ilhdlogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER'])){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -3565,6 +3707,7 @@ Class UsersController extends AppController
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
 						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'ilhdlogin');
 					}
 				}
 				else {
