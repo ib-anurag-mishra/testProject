@@ -1411,6 +1411,7 @@ Class UsersController extends AppController
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
 						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
 						$this->Session->write("login_action",'ildlogin');
 					}
 				}
