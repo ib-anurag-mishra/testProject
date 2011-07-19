@@ -513,26 +513,27 @@ Class ReportsController extends AppController
             else {
                 $this->Report->setValidation('reports_manual');
             }
-			$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('Currentpatron.consortium' => $consortium_id)));
-			$patronIds = '';
-			foreach($currentPatron as $k => $v){
-				$patronIds .= $v['Currentpatron']['patronid']."','"; 
+			$all_Ids = '';
+			$sql = "SELECT id from libraries where library_api_key = '".$consortium_id."'";
+			$result = mysql_query($sql);
+			while ($row = mysql_fetch_assoc($result)) {
+				$all_Ids = $all_Ids.$row["id"].",";
 			}
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumDaysDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumDaysDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumWeeksDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumWeeksDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumMonthsDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumMonthsDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation("'".rtrim($patronIds,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
                 }
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);

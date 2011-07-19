@@ -73,7 +73,8 @@ Class ArtistsController extends AppController
 			$featuredtData = $getFeaturedDataObj -> getallartists();
 			$condition = 'add';
 			$artistName = '';
-		}		
+		}
+		Cache::delete("featured");
 	}
 	
 	/*
@@ -124,6 +125,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
+		Cache::delete("featured");
 	}
 	
 	/*
@@ -181,6 +183,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
+		Cache::delete("featured");
 	}
 	
 	/*
@@ -201,6 +204,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
+		Cache::delete("featured");
 	}
 	
 	/*
@@ -317,6 +321,7 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
+		Cache::delete("artists");
 	}
 	
 	/*
@@ -346,6 +351,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'manageartist' );
 		}
+		Cache::delete("artists");
 	}
 	
 	/*
@@ -464,6 +470,7 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
+		Cache::delete("newartists");
 	}
 	
 	/*
@@ -493,6 +500,7 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managenewartist' );
 		}
+		Cache::delete("newartists");
 	}
 	
 	/*

@@ -151,8 +151,8 @@ class Download extends AppModel
       return array($this->find('all', compact('conditions')), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition, '1 = 1 GROUP BY patron_id, library_id'), 'fields' => array('patron_id', 'library_id','email' , 'COUNT(patron_id) AS totalDownloads'), 'order' => 'patron_id DESC','recursive' => -1)), $this->find('all', array('conditions' => array('created BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition), 'group' => array('Genre.Genre'), 'fields' => array('Genre.Genre', 'COUNT(DISTINCT Download.id) AS totalProds'), 'order' => 'Genre.Genre')));
   }
   
-	function getConsortiumDaysDownloadInformation($patronID, $date) {
-		$lib_condition = "and patron_id IN (".$patronID.")";
+	function getConsortiumDaysDownloadInformation($libraryID, $date) {
+		$lib_condition = "and library_id IN (".$libraryID.")";
 		$date_arr = explode("/", $date);
 		$startDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 00:00:00";
 		$endDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1]." 23:59:59";
@@ -166,8 +166,8 @@ class Download extends AppModel
    Function Name : getWeeksDownloadInformation
    Desc : lists all the downloads for for the selected week
   */
-	function getConsortiumWeeksDownloadInformation($patronID, $date) {
-		$lib_condition = "and patron_id IN (".$patronID.")";
+	function getConsortiumWeeksDownloadInformation($libraryID, $date) {
+		$lib_condition = "and library_id IN (".$libraryID.")";
 		$date_arr = explode("/", $date);
 		if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
 			$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
@@ -184,8 +184,8 @@ class Download extends AppModel
    Function Name : getMonthsDownloadInformation
    Desc : lists all the downloads for for the selected month
   */
-  function getConsortiumMonthsDownloadInformation($patronID, $date) {
-	  $lib_condition = "and patron_id IN (".$patronID.")";
+  function getConsortiumMonthsDownloadInformation($libraryID, $date) {
+	  $lib_condition = "and library_id IN (".$libraryID.")";
       $date_arr = explode("/", $date);
       $startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
       $endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
@@ -199,8 +199,8 @@ class Download extends AppModel
    Function Name : getYearsDownloadInformation
    Desc : lists all the downloads for for the selected year
   */
-  function getConsortiumYearsDownloadInformation($patronID, $date) {
-	$lib_condition = "and patron_id IN (".$patronID.")";
+  function getConsortiumYearsDownloadInformation($libraryID, $date) {
+	$lib_condition = "and library_id IN (".$libraryID.")";
 	$date_arr = explode("/", $date);
     $startDate = date('Y-m-d', mktime(0, 0, 0, 1, 1, $date_arr[2]))." 00:00:00";
     $endDate = date('Y-m-d', mktime(0, 0, 0, 12, 31, $date_arr[2]))." 23:59:59";
@@ -214,8 +214,8 @@ class Download extends AppModel
    Function Name : getYearsDownloadInformation
    Desc : lists all the downloads for for the selected date range
   */
-  function getConsortiumManualDownloadInformation($patronID, $date) {
-	  $lib_condition = "and patron_id IN (".$patronID.")";
+  function getConsortiumManualDownloadInformation($libraryID, $date) {
+	  $lib_condition = "and library_id IN (".$libraryID.")";
       $date_arr_from = explode("/", $date_from);
       $date_arr_to = explode("/", $date_to);
       $startDate = $date_arr_from[2]."-".$date_arr_from[0]."-".$date_arr_from[1]." 00:00:00";
