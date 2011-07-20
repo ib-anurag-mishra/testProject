@@ -514,44 +514,48 @@ Class ReportsController extends AppController
                 $this->Report->setValidation('reports_manual');
             }
 			$all_Ids = '';
-			$sql = "SELECT id from libraries where library_api_key = '".$consortium_id."'";
+			$sql = "SELECT id from libraries where library_apikey = '".$consortium_id."'";
 			$result = mysql_query($sql);
 			while ($row = mysql_fetch_assoc($result)) {
 				$all_Ids = $all_Ids.$row["id"].",";
 			}
+			$libraryData = $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
+			$this->set('libraries_download', $libraryData);		
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumDaysDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumDaysDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumWeeksDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumWeeksDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumMonthsDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumMonthsDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumYearsDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation("'".rtrim($all_Ids,",'")."'", $this->data['Report']['date']);
-                }
+                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
+                }				
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
                 $this->set('genreDownloads', $genreDownloads);
+                if($this->data['Report']['downloadType'] == 'pdf') {
+                    $this->layout = 'pdf';
+                    $this->render("/reports/admin_downloadConsortiumRenewalReportAsPdf");
+                }
+                elseif($this->data['Report']['downloadType'] == 'csv') {
+					Configure::write('debug', 0);
+                    $this->layout = false;
+                    $this->render("/reports/admin_downloadConsortiumRenewalReportAsCsv");
+                }				
             }
             else {
                 $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
                 $arr = array();
                 $this->set('wishlists', $arr);
                 $this->set('errors', $this->Report->invalidFields());
-                if($this->data['Report']['downloadType'] == 'pdf') {
-                    $this->layout = 'pdf';
-                    $this->render("/reports/admin_downloadConsortiumWishListReportAsPdf");
-                }
-                elseif($this->data['Report']['downloadType'] == 'csv') {
-                    $this->layout = false;
-                    $this->render("/reports/admin_downloadConsortiumWishListReportAsCsv");
-                }				
+				
             }
             $this -> set( 'formAction', 'admin_consortium' );
             $this->set('getData', $this->data);

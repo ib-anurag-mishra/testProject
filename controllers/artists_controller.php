@@ -74,7 +74,11 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-		Cache::delete("featured");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_featured");
+		memcache_close($memcache);
 	}
 	
 	/*
@@ -125,7 +129,11 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
-		Cache::delete("featured");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_featured");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -183,7 +191,11 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-		Cache::delete("featured");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_featured");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -204,7 +216,11 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
-		Cache::delete("featured");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_featured");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -321,7 +337,11 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
-		Cache::delete("artists");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_artists");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -351,7 +371,11 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'manageartist' );
 		}
-		Cache::delete("artists");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_artists");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -470,7 +494,11 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
-		Cache::delete("newartists");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_newartists");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -500,7 +528,11 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managenewartist' );
 		}
-		Cache::delete("newartists");
+		$memcache = new Memcache;
+		$memcache->addServer('10.181.59.94', 11211);
+		$memcache->addServer('10.181.59.64', 11211);
+		memcache_delete($memcache, "app_prod_newartists");
+		memcache_close($memcache);		
 	}
 	
 	/*

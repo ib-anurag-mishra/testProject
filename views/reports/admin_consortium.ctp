@@ -28,7 +28,7 @@
                                 <td align="right"><?php echo $this->Form->label('Select Consortium');?></td>
                                 <td align="left">
                         <?php    
-                            echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_consortium']));
+                            echo $this->Form->input('library_apikey', array('options' => $consortium, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['library_apikey']));
                         ?>
                                 </td>
                                 <td align="right"><?php echo $this->Form->label('Range');?></td>
@@ -100,17 +100,48 @@
                     <tr>
                         <td colspan="3" align="center">
                             <?php
-                                echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadCVSOne'));
+                                echo $html->image('excel_icon.gif', array("alt" => "Download As CSV", "title" => "Download As CSV", 'style' => 'cursor:pointer;', 'id' => 'downloadCVS'));
                             ?>
                         </td>
                         <td colspan="3" align="center">
                             <?php
-                                echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadPDFOne'));
+                                echo $html->image('pdf_icon.gif', array("alt" => "Download As PDF", "title" => "Download As PDF", 'style' => 'cursor:pointer;', 'id' => 'downloadPDF'));
                             ?>
                         </td>
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <tr><th colspan="6" align="center">Library Remaining Downloads</th></tr>
+	                <tr>
+                        <td colspan="6" align="center">
+                            <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
+                                <tr>
+									<th>&nbsp;</th>
+                                    <th>Library Name</th>
+                                    <th>Number of Remaining Downloads</th>
+                                </tr>
+                                <?php
+								$i = 1;
+                                foreach($libraries_download as $LibraryName => $libraryid) {
+                                ?>
+                                    <tr>
+										<td><?php echo $i; ?></td>
+                                        <td><?php echo $libraryid['Library']['library_name']; ?></td>
+											<?php
+											if($libraryid['Library']['library_unlimited'] == 1){
+												$text = "Unlimited";
+											} else {
+												$text = $libraryid['Library']['library_available_downloads'];
+											}
+											?>
+                                        <td align="center"><?php echo $text; ?></td>
+                                    </tr>
+                                <?php
+								$i++;
+                                }
+                                ?>
+                            </table>
+                        </td>
+                    </tr>				
 					<tr><td colspan="6">&nbsp;</td></tr>
                     <tr><th colspan="6" align="center">Library Downloads Report</th></tr>
                     <tr>
@@ -256,7 +287,7 @@
         });
     });
     <?php
-        if(!empty($wishlists)) {
+        if(!empty($downloads)) {
     ?>
             $("#generateWishlistSubmit").click(function() {
                 $("#ReportDownloadType").val("");
