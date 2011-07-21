@@ -2636,9 +2636,10 @@ Class UsersController extends AppController
 		}            
 		if($this->data){
 			$card = $this->data['User']['card'];
-			$data['card'] = str_replace(" ","",$card);
+			$card = str_replace(" ","",$card);
+			$data['card'] = $card;
 			$patronId = $card; 
-			$data['patronId'] = str_replace(" ","",$patronId);			
+			$data['patronId'] = $patronId;			
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
