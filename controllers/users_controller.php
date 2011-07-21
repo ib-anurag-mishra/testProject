@@ -2634,11 +2634,11 @@ Class UsersController extends AppController
 				$this->Auth->autoRedirect = false;     
 			}
 		}            
-		if($this->data){  
+		if($this->data){
 			$card = $this->data['User']['card'];
-			$data['card'] = $card;
+			$data['card'] = str_replace(" ","",$card);
 			$patronId = $card; 
-			$data['patronId'] = $patronId;
+			$data['patronId'] = str_replace(" ","",$patronId);			
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
