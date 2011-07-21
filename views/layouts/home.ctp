@@ -34,6 +34,11 @@
 		echo $javascript->link('qtip');
 		echo $javascript->link('qtip_add');
 		echo $scripts_for_layout;
+		if($this->Session->read('Config.language') == 'en'){
+			$setLang = 'en';
+		}else{
+			$setLang = 'es';
+		}
 		if($this->Session->read('library') && $this->Session->read('library') != '')
 		{
 			$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
@@ -64,6 +69,7 @@
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
 					<?php }	?>
 				});
+				var languageSet = '<?php echo $setLang; ?>';
 				var webroot = '<?php echo $this->webroot; ?>';	
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				var attributes = { id: "audioplayer" }; 

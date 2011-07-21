@@ -1048,7 +1048,6 @@ color:<?php echo $library_text_color; ?>;
 padding: 5px 10px;
 cursor: pointer;
 position: relative;
-//background-color:#FFCCCC;
 margin:1px 0 0 100px;
 font-size: 13px;
 }
@@ -1056,7 +1055,6 @@ font-size: 13px;
 padding: 5px 10px 5px;
 background-color:<?php echo $library_boxheader_bgcolor; ?>;
 color:<?php echo $library_boxheader_text_color; ?>;
-//background-color:#d8d8d8;
 margin-left: 100px;
 font-size: 13px;
 display:none;
@@ -1381,4 +1379,26 @@ div.message {
 	text-align:center;
 	display:block;
 	border-bottom:0px;
+}
+
+.footerlinks {
+	float: right;
+	width: auto;
+}
+
+.footerLink {
+	float:left;
+	width:auto;
+}
+
+.navbar {
+	float:left;
+	padding:0 5px;
+}
+
+#language {
+	float:left;
+	font-size:12px;
+	width: 965px;
+	text-align: center;
 }
