@@ -62,7 +62,8 @@ Class UsersController extends AppController
 				{
 					if($library_data['Library']['library_authentication_method'] == 'referral_url')
 					{
-						$this->redirect($library_data['Library']['library_domain_name']);
+						$referral = explode(",",$library_data['Library']['library_domain_name']);
+						$this->redirect($referral[0]);
 					}
 					else
 					{
@@ -1039,6 +1040,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -1247,6 +1250,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -1454,6 +1459,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$name = $this->data['User']['name'];
 			$data['name'] = $name;
@@ -1659,6 +1666,8 @@ Class UsersController extends AppController
 		$this->set('card',"");      
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$patronId = $card;
 			$data['patronId'] = $patronId;
@@ -1850,6 +1859,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$patronId = $card;
 			$data['patronId'] = $card;
@@ -2036,6 +2047,8 @@ Class UsersController extends AppController
 		}	            
 		if($this->data){  
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -2241,6 +2254,8 @@ Class UsersController extends AppController
 		}	            
 		if($this->data){  
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$patronId = $card;    
 			$data['patronId'] = $patronId;
@@ -2431,6 +2446,8 @@ Class UsersController extends AppController
 		}            
 		if($this->data){  
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -2637,6 +2654,7 @@ Class UsersController extends AppController
 		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$patronId = $card; 
 			$data['patronId'] = $patronId;			
@@ -2948,6 +2966,8 @@ Class UsersController extends AppController
       $this->set('card',"");
       if($this->data){         
          $card = $this->data['User']['card'];
+		 $card = str_replace(" ","",$card);
+		 $card = strtolower($card);		 
 		 $data['card'] = $card;
          $pin = $this->data['User']['pin'];
 		 $data['pin'] = $pin;
@@ -3153,6 +3173,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -3361,6 +3383,7 @@ Class UsersController extends AppController
 		if($this->data){         
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$patronId = $card; 
 			$data['patronId'] = $patronId;
@@ -3551,6 +3574,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -3753,6 +3778,8 @@ Class UsersController extends AppController
 		$this->set('card',"");
 		if($this->data){         
 			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);			
 			$data['card'] = $card;
 			$name = $this->data['User']['name'];
 			$data['name'] = $name;
