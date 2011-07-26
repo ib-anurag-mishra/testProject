@@ -372,6 +372,7 @@ ul.marquee li {
 .artist_line {
         border-bottom: 1px solid #999;
         min-width:560px;
+		#width:560px;
 }
 	
 #footer {
@@ -1401,4 +1402,27 @@ div.message {
 	font-size:12px;
 	width: 965px;
 	text-align: center;
+}
+
+.headerLink{
+	float:left;
+	width:auto;
+	margin-top:4px;
+}
+
+.navbarheader {
+	float:left;
+	padding:0 5px;
+	margin-top:4px;
+	
+}
+
+.headerImg{
+	#float:left;
+	#margin-left:15%;
+}
+
+.alphabetLink{
+	float:left;
+	width:auto;
 }

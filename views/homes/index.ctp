@@ -409,35 +409,37 @@ $ieVersion =  ieversion();
     </div>
     <div id="artist_search">
 		<div id="artist_links" style="font-size:12px;height:20px;">
-		<?php __('Artist Search') ?>&nbsp;
-		<a href="#bottom" onclick="searchArtist('special')">#</a>
-		<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;
-		<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;
-		<a href="#bottom" onclick="searchArtist('c')">C</a>&nbsp;
-		<a href="#bottom" onclick="searchArtist('d')">D</a>&nbsp;
+		<div style="margin-left:8%">
+		<div class="alphabetLink"><?php __('Artist Search') ?>&nbsp;</div>
+		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;</div>
+		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;</div>
+		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;</div>
+		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('c')">C</a>&nbsp;</div>
+		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('d')">D</a>&nbsp;</div>
 
-        <a href="#bottom" onclick="searchArtist('e')">E</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('f')">F</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('g')">G</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('h')">H</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('i')">I</a>&nbsp;
-        <a href="#" onclick="searchArtist('j')">J</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('k')">K</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('l')">L</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('m')">M</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('n')">N</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('o')">O</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('p')">P</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('q')">Q</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('r')">R</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('s')">S</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('t')">T</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('u')">U</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('v')">V</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('w')">W</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('x')">X</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;
-        <a href="#bottom" onclick="searchArtist('z')">Z</a>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('e')">E</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('f')">F</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('g')">G</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('h')">H</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('i')">I</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#" onclick="searchArtist('j')">J</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('k')">K</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('l')">L</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('m')">M</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('n')">N</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('o')">O</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('p')">P</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('q')">Q</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('r')">R</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('s')">S</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('t')">T</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('u')">U</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('v')">V</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('w')">W</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('x')">X</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;</div>
+        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('z')">Z</a></div>
+		</div>
 		</div>
 		<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;text-align:center;">
 			<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
