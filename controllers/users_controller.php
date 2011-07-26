@@ -2447,7 +2447,7 @@ Class UsersController extends AppController
 		if($this->data){  
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+		//	$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -2654,7 +2654,7 @@ Class UsersController extends AppController
 		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);
+		//	$card = strtolower($card);
 			$data['card'] = $card;
 			$patronId = $card; 
 			$data['patronId'] = $patronId;			
