@@ -992,7 +992,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -1202,7 +1202,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -1411,7 +1411,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -1619,7 +1619,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -1812,7 +1812,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -2000,8 +2000,8 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}		
-		if(!$this->Session->read('referral')){
-			if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => @$_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -2208,7 +2208,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -2399,7 +2399,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -2607,7 +2607,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -2918,7 +2918,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -3125,7 +3125,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -3333,7 +3333,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -3526,7 +3526,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
@@ -3729,7 +3729,7 @@ Class UsersController extends AppController
 			}
 		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
-			if(isset($_SERVER['HTTP_REFERER'])){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
 					if($this->Session->read('referral') == ''){
