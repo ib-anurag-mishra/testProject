@@ -1090,6 +1090,8 @@ div.message {
 	margin: 0 70px 0 0;
 	text-decoration: none;
 	color:#666;
+	#float:left !important;
+	#padding-left:40% !important;
 }
 
 .forgot_password a:hover {
