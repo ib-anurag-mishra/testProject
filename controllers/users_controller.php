@@ -1056,6 +1056,9 @@ Class UsersController extends AppController
 					$this->set('pin',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -1265,6 +1268,9 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -1475,6 +1481,9 @@ Class UsersController extends AppController
 				   $this->set('name',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($name == ''){            
 				$this -> Session -> setFlash("Please provide patron Last Name.");            
 				if($card != ''){
@@ -1673,7 +1682,10 @@ Class UsersController extends AppController
 			$data['patronId'] = $patronId;
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
-			}         
+			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -1867,6 +1879,9 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			else{				
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -2064,6 +2079,9 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -2262,6 +2280,9 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -2463,6 +2484,9 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -2661,6 +2685,9 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -2982,6 +3009,9 @@ Class UsersController extends AppController
                $this->set('pin',"");
             }            
          }
+		 elseif(strlen($card) < 5){
+			$this->Session->setFlash("Please provide a correct card number.");			
+		 }		 
          elseif($pin == ''){            
             $this -> Session -> setFlash("Please provide pin.");            
             if($card != ''){
@@ -3189,6 +3219,9 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -3390,6 +3423,9 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");          
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -3590,6 +3626,9 @@ Class UsersController extends AppController
 					$this->set('pin',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -3794,6 +3833,9 @@ Class UsersController extends AppController
 				   $this->set('name',"");
 				}            
 			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}			
 			elseif($name == ''){            
 				$this -> Session -> setFlash("Please provide patron Last Name.");            
 				if($card != ''){
