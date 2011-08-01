@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : slogin.ctp
+ File Description : view page for slogin
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'sLogin';
 	if(!isset($pin)){
 		$pin='';

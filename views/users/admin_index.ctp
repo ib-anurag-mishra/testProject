@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_index.ctp
+ File Description : view page for admin index
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Admin'; ?>
 <form>
 <fieldset>

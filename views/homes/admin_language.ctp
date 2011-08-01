@@ -1,4 +1,9 @@
 <?php
+/*
+	 File Name : admin_language.ctp
+	 File Description : View page for admin language setting
+	 Author : m68interactive
+ */
 $this->pageTitle = 'Content';
 if(empty($getData))
 {

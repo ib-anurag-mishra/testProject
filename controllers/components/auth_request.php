@@ -1,7 +1,9 @@
 <?php
  /**
+ *File Name : auth_request.php
  * Validate patrons function
  * This function will validate the patron access
+	Author : m68interactive
  */
  
 Class AuthRequestComponent extends Object

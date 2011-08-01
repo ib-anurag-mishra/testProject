@@ -1,4 +1,9 @@
 <?php 
+/*
+	 File Name : admin_managegenre.ctp
+	 File Description : View page for managing genre
+	 Author : m68interactive
+ */
     $this->pageTitle = 'Content';
     echo $this->Form->create('Genre', array( 'controller' => 'Genre','action' => 'managegenre'));
     $i=0;

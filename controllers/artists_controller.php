@@ -2,7 +2,7 @@
 /*
  File Name : artists_controller.php
  File Description : Artist controller page
- Author : maycreate
+ Author : m68interactive
  */
 
 Class ArtistsController extends AppController

@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : admin_index.ctp
+ File Description : view page for admin index for site setting
+ Author : m68interactive
+ */
+?>
+<?php
     $this->pageTitle = 'Content'; 
     echo $this->Form->create('SiteSetting', array( 'action' => $formAction ));
 ?>

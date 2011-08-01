@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : index.ctp
+	 File Description : View page for genre index
+	 Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('freegal_genreall_curvy', false); ?>
 <?php
 function ieversion()

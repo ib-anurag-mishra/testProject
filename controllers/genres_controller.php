@@ -2,7 +2,7 @@
 /*
  File Name : genres_controller.php
  File Description : Genre controller page
- Author : maycreate
+ Author : m68interactive
  */
 
 ini_set('memory_limit', '2048M');

@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : advance_search.ctp
+	 File Description : View page for advance search
+	 Author : m68interactive
+ */
+?>
 <div id="advance_search_box">
 	<?php __('Advanced Search'); ?>
 </div>

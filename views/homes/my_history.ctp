@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : my_history.ctp
+	 File Description : View page for download history page
+	 Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
 <?php echo $session->flash();?>
 <?php

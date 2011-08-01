@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_add.ctp
+ File Description : view page for adding new sections
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Content'; ?>
 <div class="sections form">
 <?php echo $this->Form->create('Section');?>

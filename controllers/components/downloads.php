@@ -2,7 +2,7 @@
  /*
  File Name : downloads.php
  File Description : Component page for the  download functionality.
- Author : maycreate
+ Author : m68interactive
  */
  
 Class DownloadsComponent extends Object

@@ -2,7 +2,7 @@
 /*
  File Name : questions_controller.php
  File Description : Question controller page
- Author : maycreate
+ Author : m68interactive
  */
 
 class QuestionsController extends AppController

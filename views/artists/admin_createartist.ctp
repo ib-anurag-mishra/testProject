@@ -1,4 +1,9 @@
 <?php
+/*
+ File Name : admin_createartist.php
+ File Description : View page for create artist
+ Author : m68interactive
+ */
        $this->pageTitle = 'Content';
        echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));
        if(empty($getData))

@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_edit.ctp
+ File Description : View page for edit questions page
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Content'; ?>
 <?php
 	if (isset ($javascript)) {

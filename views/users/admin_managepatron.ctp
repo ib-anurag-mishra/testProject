@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_managepatron.ctp
+ File Description : view page for manage patron
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Admin'; ?>
 <form>
 <fieldset>

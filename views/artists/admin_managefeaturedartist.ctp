@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_managefeaturedartist.php
+ File Description : View page for manage featured artist
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Content'; ?>
 <form>
 <fieldset>

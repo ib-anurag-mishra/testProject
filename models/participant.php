@@ -2,7 +2,7 @@
 /*
  File Name : Participant.php
  File Description : Models page for the  Participant table.
- Author : maycreate
+ Author : m68interactive
  */
 
 class Participant extends AppModel

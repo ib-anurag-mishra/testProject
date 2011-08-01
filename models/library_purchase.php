@@ -2,7 +2,7 @@
 /*
  File Name : library_purchase.php
  File Description : Models page for the  library purchase functionality.
- Author : maycreate
+ Author : m68interactive
 */
  
 class LibraryPurchase extends AppModel

@@ -1,5 +1,9 @@
 <?php
-
+/*
+	 File Name : library.php
+	 File Description : helper file for getting library detail
+	 Author : m68interactive
+ */
 class LibraryHelper extends AppHelper {
     var $uses = array('Library');
     

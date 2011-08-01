@@ -2,7 +2,7 @@
 /*
  File Name : category.php
  File Description : Models page for the  categories table.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Category extends AppModel

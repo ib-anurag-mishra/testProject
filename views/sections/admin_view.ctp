@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_view.ctp
+ File Description : view page for section display
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Content'; ?>
 <div class="sections view">
 <h2><?php  __('Section');?></h2>

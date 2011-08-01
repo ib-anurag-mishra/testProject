@@ -2,7 +2,7 @@
 /*
  File Name : wishlist.php
  File Description : Models page for the  Wishlist functionality.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Genreid extends AppModel

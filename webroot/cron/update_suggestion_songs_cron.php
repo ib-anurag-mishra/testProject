@@ -4,7 +4,6 @@
  *
  * @author Rob Richmond
  * @version $Id$
- * @copyright Maycreate Idea Group, 19 January, 2010
  * This cron script is intended to run on a regular interval to create/update the home page suggestion songs random list of songs
  * @package update_suggestion_songs_cron
  **/

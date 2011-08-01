@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : plogin.ctp
+ File Description : view page for plogin
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'pLogin';
 	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'plogin', 'id' => 'login'));

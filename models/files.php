@@ -2,7 +2,7 @@
 /*
  File Name : files.php
  File Description : Models page for the  file table.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Files extends AppModel

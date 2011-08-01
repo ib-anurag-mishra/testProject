@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : my_wishlist.ctp
+	 File Description : View page for wishlist information
+	 Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
 <?php echo $session->flash();?>
 <div id="genre">

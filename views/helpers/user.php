@@ -1,5 +1,9 @@
 <?php
-
+/*
+	 File Name : user.php
+	 File Description : helper file for getting user group detail
+	 Author : m68interactive
+ */
 class UserHelper extends AppHelper {
     var $uses = array('Group');
     

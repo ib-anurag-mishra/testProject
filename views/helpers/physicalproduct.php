@@ -1,5 +1,9 @@
 <?php
-
+/*
+	 File Name : physicalproduct.php
+	 File Description : helper file for getting physicalproduct detail
+	 Author : m68interactive
+ */
 class PhysicalproductHelper extends AppHelper {
     var $uses = array('Physicalproduct');
     

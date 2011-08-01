@@ -2,7 +2,7 @@
 /*
  File Name : availability.php
  File Description : Availability model
- Author : maycreate
+ Author : m68interactive
 */
  
 class Availability extends AppModel {

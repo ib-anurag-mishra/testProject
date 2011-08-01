@@ -2,7 +2,7 @@
  /*
  File Name : genre.php
  File Description : Models page for the  Genre table.
- Author : maycreate
+ Author : m68interactive
 */
  
 class Genre extends AppModel {

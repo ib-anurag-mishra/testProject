@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_consortium.ctp
+ File Description : View page for consortium
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Libraries'; ?>
 <form>
 <fieldset>

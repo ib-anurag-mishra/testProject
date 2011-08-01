@@ -1,5 +1,9 @@
 <?php
-
+/*
+	 File Name : song.php
+	 File Description : helper file for getting songs detail
+	 Author : m68interactive
+ */
 class SongHelper extends AppHelper {
     var $uses = array('Song');
     

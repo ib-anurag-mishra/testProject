@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_userform.ctp
+ File Description : view page for admin user form
+ Author : m68interactive
+ */
+?>
        <?php
 			  $this->pageTitle = 'Admin';
               echo $this->Form->create('User', array( 'controller' => 'User','action' => $formAction));

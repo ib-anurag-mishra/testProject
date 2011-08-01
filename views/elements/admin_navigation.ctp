@@ -1,4 +1,9 @@
 <?php
+/*
+ File Name : admin_navigation.php
+ File Description : View page for adfmin navigation
+ Author : m68interactive
+ */
 	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
 ?>
 		<ul id="menu" class="sf-menu">

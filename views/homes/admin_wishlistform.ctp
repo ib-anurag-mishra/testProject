@@ -1,4 +1,9 @@
 <?php
+/*
+	 File Name : admin_wishlistform.ctp
+	 File Description : View page for admin wishlist form
+	 Author : m68interactive
+ */
 	$this->pageTitle = 'Content'; 
 	echo $this->Form->create('Home', array( 'action' => $formAction ));
 	if(empty($getData))

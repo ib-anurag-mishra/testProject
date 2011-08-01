@@ -2,7 +2,7 @@
 /*
  File Name : group.php
  File Description : model for the admin types
- Author : maycreate
+ Author : m68interactive
 */
  
 class Group extends AppModel

@@ -2,7 +2,7 @@
  /*
  File Name : users_controller.php
  File Description : Controller page for the  login functionality.
- Author : maycreate
+ Author : m68interactive
  */
  
 Class UsersController extends AppController

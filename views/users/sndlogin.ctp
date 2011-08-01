@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : sndlogin.ctp
+ File Description : view page for sndlogin
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'sndLogin';
 	if(!isset($card)){
 		$card='';

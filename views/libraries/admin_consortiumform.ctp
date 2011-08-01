@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : admin_consortiumform.ctp
+ File Description : View page for consortium form
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'Libraries'; 
 	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file', 'id' => 'addconsortium'));
 	print ""

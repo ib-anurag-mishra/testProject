@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : limits.ctp
+	 File Description : View page for limit
+	 Author : m68interactive
+ */
+?>
 <br class="clr" />
 <div id="aboutBox">
 	About Download Limits

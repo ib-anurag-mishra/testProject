@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : login.ctp
+ File Description : view page for login
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'Login';
 	echo $session->flash();
 	echo $session->flash('auth');

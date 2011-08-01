@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : ilhdlogin.ctp
+ File Description : view page for ilhdlogin
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'ilhdLogin';
 	echo $session->flash();
 	if(!isset($name)){

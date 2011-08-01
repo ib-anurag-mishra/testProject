@@ -2,7 +2,7 @@
 /*
  File Name : question.php
  File Description : Question page.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Question extends AppModel {

@@ -1,11 +1,8 @@
 <?php
 /**
- * 
- *
- * @author Rob Richmond
- * @version $Id$
- * @copyright Maycreate Idea Group, 19 February, 2010
- * @package default
+	File Name : header.php
+	File Description : View page for header of the application
+	Author : m68interactive
  **/
 
 /**

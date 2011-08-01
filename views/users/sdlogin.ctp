@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : sdlogin.ctp
+ File Description : view page for sdlogin
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'sdLogin';
 	if(!isset($pin)){
 		$pin='';

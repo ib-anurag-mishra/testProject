@@ -2,7 +2,7 @@
 /*
  File Name : graphic.php
  File Description : Models page for the  graphic table.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Graphic extends AppModel

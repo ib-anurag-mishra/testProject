@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : view.ctp
+	 File Description : View page for genre view
+	 Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
 <div id="genre">
 	<?php echo $genre; ?>	

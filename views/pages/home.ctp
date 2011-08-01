@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : home.ctp
+ File Description : View page for home page
+ Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <div id="artist_slideshow">
 	<div id="slideshow">

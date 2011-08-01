@@ -1,4 +1,9 @@
 <?php
+/*
+	 File Name : admin_limitsform.ctp
+	 File Description : View page for admin limit form
+	 Author : m68interactive
+ */
 	$this->pageTitle = 'Content'; 
 	echo $this->Form->create('Home', array( 'action' => $formAction ));
 	if(empty($getData))

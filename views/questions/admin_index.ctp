@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_index.ctp
+ File Description : View page for admin index
+ Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('dragdrop'); ?>
 <?php echo $javascript->link('dragdrop_add'); ?>
 <?php $this->pageTitle = 'Content'; ?>

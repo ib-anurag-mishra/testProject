@@ -2,7 +2,7 @@
 /*
  File Name : album.php
  File Description : Models page for the  Songs table.
- Author : maycreate
+ Author : m68interactive
  */
 
 class Album extends AppModel

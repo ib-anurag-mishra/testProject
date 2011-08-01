@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : admin_consortiumform.ctp
+ File Description : View page for consortium form
+ Author : m68interactive
+ */
+?>
+<?php
     $this->pageTitle = 'Reports'; 
     echo $this->Form->create('Report', array( 'action' => $formAction ));
     if(empty($getData))

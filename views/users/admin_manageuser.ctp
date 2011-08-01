@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_manageuser.ctp
+ File Description : view page for manage user
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Admin'; ?>
 <form>
 <fieldset>

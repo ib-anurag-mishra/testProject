@@ -2,7 +2,7 @@
 /*
  File Name : reports_controller.php
  File Description : Report controller page
- Author : maycreate
+ Author : m68interactive
  */
 ini_set('memory_limit', '1024M');
 Class ReportsController extends AppController

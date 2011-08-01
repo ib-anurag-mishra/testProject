@@ -2,6 +2,7 @@
  /**
  * Validate patrons function
  * This function will validate the patron access
+   Author : m68interactive
  */
  
 Class ValidatePatronComponent extends Object

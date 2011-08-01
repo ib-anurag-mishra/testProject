@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : sso.ctp
+ File Description : view page for sso login
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'sso';
 	if(!isset($card)){
 		$card='';

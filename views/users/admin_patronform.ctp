@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_poatronform.ctp
+ File Description : view page for admin patron form
+ Author : m68interactive
+ */
+?>
        <?php
               $this->pageTitle = 'Admin';
               echo $this->Form->create('User', array( 'controller' => 'User','action' => $formAction));

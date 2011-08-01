@@ -2,7 +2,7 @@
 /*
  File Name : download.php
  File Description : Models page for the  downloads table.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Download extends AppModel

@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_managelibrary.ctp
+ File Description : View page for edit library.
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Libraries'; ?>
 <form>
 <fieldset>

@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : admin_addconsortium.ctp
+ File Description : View page for adding consortium
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'Libraries'; 
 	echo $this->Form->create('Library', array( 'action' => $formAction, 'type' => 'file', 'id' => 'addconsortium'));
 ?>

@@ -2,7 +2,7 @@
 /*
  File Name : sections_controller.php
  File Description : Sections controller page
- Author : maycreate
+ Author : m68interactive
  */
 
 class SectionsController extends AppController

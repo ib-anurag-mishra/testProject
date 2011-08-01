@@ -1,4 +1,8 @@
 <?php
+/* File Name: maintenance_controller.php
+   File Description: This is used to take the site into maintenace mode 
+   Author: m68interactive
+*/
 class MaintenanceController extends AppController {
     var $name = 'Maintenance';
     var $autoLayout = false;

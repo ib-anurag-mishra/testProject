@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : artist_search.ctp
+	 File Description : View page for artist search
+	 Author : m68interactive
+ */
+?>
 <div id="artist_searchBox">
 			<div class="scrollarea">
 				<table cellspacing="0" cellpadding="0">

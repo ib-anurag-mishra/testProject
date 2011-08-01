@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : index.ctp
+ File Description : View page for index
+ Author : m68interactive
+ */
+?>
 <div class="questions index">
 	<div id="aboutBox">
 		<?php __('FAQs');?>

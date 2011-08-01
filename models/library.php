@@ -2,7 +2,7 @@
 /*
  File Name : library.php
  File Descr : Models page for the  libraries functionality.
- Author : maycreate
+ Author : m68interactive
 */
  
 class Library extends AppModel

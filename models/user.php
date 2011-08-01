@@ -2,7 +2,7 @@
 /*
  File Name : user.php
  File Description : Models page for the  login functionality.
- Author : maycreate
+ Author : m68interactive
 */
 
 class User extends AppModel

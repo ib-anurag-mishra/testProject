@@ -1,11 +1,8 @@
 <?php
 /**
- * 
- *
- * @author Rob Richmond
- * @version $Id$
- * @copyright Maycreate Idea Group, 19 February, 2010
- * @package default
+	File Name : navigation.php
+	File Description : View page for navigation file for front-end site
+	Author : m68interactive
  **/
 
 /**

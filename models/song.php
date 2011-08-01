@@ -2,7 +2,7 @@
 /*
  File Name : song.php
  File Description : Models page for the  Songs table.
- Author : maycreate
+ Author : m68interactive
  */
 
 class Song extends AppModel

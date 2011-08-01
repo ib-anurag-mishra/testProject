@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_view.ctp
+ File Description : View page foradmin_view
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Content'; ?>
 <div class="questions view">
 <h2><?php  __('FAQs');?></h2>

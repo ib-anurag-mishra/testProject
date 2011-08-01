@@ -1,4 +1,9 @@
  <?php
+ /*
+	 File Name : auto_complete.ctp
+	 File Description : View page for auto_complete
+	 Author : m68interactive
+ */
  $finalResults = Array();
  if(count($albumResults) > 0){ 
    foreach($albumResults as $albumResult):

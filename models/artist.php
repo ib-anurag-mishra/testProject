@@ -2,7 +2,7 @@
 /*
  File Name : artist.php
  File Description : Models page for the artists table.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Artist extends AppModel

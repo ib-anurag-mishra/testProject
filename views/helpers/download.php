@@ -1,5 +1,9 @@
 <?php
-
+/*
+	 File Name : download.php
+	 File Description : helper file for getting download details
+	 Author : m68interactive
+ */
 class DownloadHelper extends AppHelper {
     var $uses = array('Download');
     

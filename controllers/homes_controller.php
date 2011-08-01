@@ -1,7 +1,7 @@
 <?php
 /* File Name: homes_controller.php
    File Description: Displays the home page for each patron 
-   Author: Maycreate
+   Author: m68interactive
 */
 class HomesController extends AppController
 {

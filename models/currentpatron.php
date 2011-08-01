@@ -2,7 +2,7 @@
 /*
  File Name : currentpatron.php
  File Description : Models page for the  currentpatrons table.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Currentpatron extends AppModel

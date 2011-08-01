@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : admin_index.ctp
+ File Description : view page for admin index page
+ Author : m68interactive
+ */
+?>
 <?php $this->pageTitle = 'Content'; ?>
 <div class="sections index">
 	<h2><?php __('FAQ Sections');?></h2>

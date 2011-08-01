@@ -2,7 +2,7 @@
 /*
  File Name : url.php
  File Description : Models page for the  Multiple Referral Url.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Url extends AppModel

@@ -2,6 +2,7 @@
  /**
  * CDN Upload function
  * This function will upload images to the cdn
+	Author : m68interactive
  */
  
 Class CdnUploadComponent extends Object

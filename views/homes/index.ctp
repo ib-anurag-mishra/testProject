@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : index.ctp
+	 File Description : View page for home index page
+	 Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('jquery.marquee.min'); ?>
 <?php echo $javascript->link('freegal_home_curvy'); ?>
 <?php echo $javascript->link('jquery.corner'); ?>

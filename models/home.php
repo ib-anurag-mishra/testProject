@@ -2,7 +2,7 @@
 /*
  File Name : home.php
  File Description : 
- Author : maycreate
+ Author : m68interactive
 */
 
 class Home extends AppModel

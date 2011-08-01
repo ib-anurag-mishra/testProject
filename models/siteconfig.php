@@ -2,7 +2,7 @@
 /*
  File Name : siteconfig.php
  File Description : Models page for the  site setting functionality.
- Author : maycreate
+ Author : m68interactive
 */
  
 class Siteconfig extends AppModel

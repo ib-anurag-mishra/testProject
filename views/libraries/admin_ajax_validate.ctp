@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : admin_ajax_validate.ctp
+ File Description : View page for admin layout
+ Author : m68interactive
+ */
+?>
+<?php
 	$output = array();
 	if($this->validationErrors) {
 		$errorArr = explode("|", $errors['message']);

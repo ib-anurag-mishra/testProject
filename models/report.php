@@ -2,7 +2,7 @@
 /*
  File Name : report.php
  File Description : Models page for the report functionality.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Report extends AppModel

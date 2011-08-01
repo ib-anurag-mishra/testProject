@@ -4,7 +4,6 @@
  *
  * @author Rob Richmond
  * @version $Id$
- * @copyright Maycreate Idea Group, 19 January, 2010
  * @package report
  * This cron script is intended to run on every week to generate the download report for Sony and SCP to sony server
  **/

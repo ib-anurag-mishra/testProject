@@ -1,4 +1,11 @@
 <?php
+/*
+	 File Name : music_box.ctp
+	 File Description : View page for music box
+	 Author : m68interactive
+ */
+?>
+<?php
 	$j =0;
 	for($i = 0; $i < count($songs); $i++) {
 	if($j==8){

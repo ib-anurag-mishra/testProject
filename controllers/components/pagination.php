@@ -1,6 +1,7 @@
 <?php 
 /**
  * Pagination Component, responsible for managing the DATA required for pagination.
+   Author : m68interactive
  */
 class PaginationComponent extends Object
 {

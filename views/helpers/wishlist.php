@@ -1,5 +1,9 @@
 <?php
-
+/*
+	 File Name : wishlist.php
+	 File Description : helper file for getting wishlist information
+	 Author : m68interactive
+ */
 class WishlistHelper extends AppHelper {
     var $helpers = array('Session');	
     var $uses = array('Wishlist');

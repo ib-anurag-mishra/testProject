@@ -1,4 +1,9 @@
 <?php
+/*
+	 File Name : page.php
+	 File Description : helper file for getting page detail
+	 Author : m68interactive
+ */
 class PageHelper extends AppHelper {
     var $uses = array('Page');
     var $helpers = array('Session');

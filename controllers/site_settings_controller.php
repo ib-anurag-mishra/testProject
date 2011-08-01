@@ -2,7 +2,7 @@
 /*
  File Name : site_settings_controller.php
  File Description : Site Settings controller page
- Author : maycreate
+ Author : m68interactive
  */
 ini_set('memory_limit', '1024M');
 Class SiteSettingsController extends AppController

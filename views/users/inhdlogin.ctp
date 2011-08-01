@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : inhdlogin.ctp
+ File Description : view page for inhdlogin
+ Author : m68interactive
+ */
+?>
+<?php
 	$this->pageTitle = 'inhdlogin';
 	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'inhdlogin', 'id' => 'login'));

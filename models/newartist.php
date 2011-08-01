@@ -2,7 +2,7 @@
 /*
  File Name : metadata.php
  File Description : Newartist Model
- Author : maycreate
+ Author : m68interactive
 */
 
 class Newartist extends AppModel

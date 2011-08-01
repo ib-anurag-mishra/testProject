@@ -1,3 +1,10 @@
+<?php
+/*
+	 File Name : search.ctp
+	 File Description : View page for  search
+	 Author : m68interactive
+ */
+?>
 <?php echo $javascript->link('freegal_genre_curvy'); ?>
 <div id="genre"><?php __("Search Results");?></div>
 <div style="float:left;width:955px;">

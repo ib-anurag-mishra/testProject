@@ -1,4 +1,11 @@
 <?php
+/*
+ File Name : my_account.ctp
+ File Description : view page for my_account
+ Author : m68interactive
+ */
+?>
+<?php
     $this->pageTitle = 'My Account';
     echo $session->flash();
 	echo '<div id=aboutBox>'.__("Manage Account", true).'</div>';

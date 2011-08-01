@@ -1,3 +1,10 @@
+<?php
+/*
+ File Name : view.ctp
+ File Description : 
+ Author : m68interactive
+ */
+?>
 <div class="questions view">
 <h2><?php  __('Question');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>

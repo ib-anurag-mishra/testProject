@@ -1,4 +1,9 @@
 <?php
+/*
+ File Name : services_controller.php
+ File Description : Controller page for the  web services.
+ Author : m68interactive
+ */
 class ServicesController extends AppController {
     var $name = 'Services';
     var $autoLayout = false;

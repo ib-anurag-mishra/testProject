@@ -2,7 +2,7 @@
 /*
  File Name : section.php
  File Description : Section page.
- Author : maycreate
+ Author : m68interactive
 */
 
 class Section extends AppModel {
