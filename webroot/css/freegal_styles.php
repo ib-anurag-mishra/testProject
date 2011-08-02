@@ -1375,7 +1375,7 @@ div.message {
 #tabsugg {
 	font-size:13px;
 	clear:both;
-	width:310px;
+	width:311px;
 	height:20px;
 	text-align:center;
 	display:block;
