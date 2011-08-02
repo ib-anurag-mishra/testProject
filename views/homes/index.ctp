@@ -132,8 +132,8 @@ $ieVersion =  ieversion();
 </div>
 <div id="sug" class="suggestions">
 	<div id="tabsugg">
-		<div id="tb1" <?php if($ieVersion > 8){?> style="width:151px;"<?php }?>><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('MyLib Top 10', true));?></a></div></div>
-		<div id="tb2" <?php if($ieVersion > 8){?> style="width:151px;"<?php }?>><div id="t2" class="nonactive"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
+		<div id="tb1" <?php if($ieVersion > 8){?> style="width:151px;"<?php }else{?> style="width:153px;" <?php }?>><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('MyLib Top 10', true));?></a></div></div>
+		<div id="tb2" <?php if($ieVersion > 8){?> style="width:151px;"<?php }else{?> style="width:153px;" <?php }?>><div id="t2" class="nonactive"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
 	</div>
 	<div id="sugtab" class="tab_container">
 		<div id="tab1" class="tab_content" style="display:block;">
