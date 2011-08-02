@@ -538,9 +538,7 @@
 						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Territory');?></td>
 						<td align="left">
 							<?php
-								echo $this->Form->input('library_territory', array('options' => array(
-									'US' => 'US',
-									'CA' => 'CA','IT' => 'IT','AU' => 'AU','NZ' => 'NZ'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_territory'])
+								echo $this->Form->input('library_territory', array('options' => $territory,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_territory'])
 								);
 							?>
 						</td>
