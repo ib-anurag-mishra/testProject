@@ -11,7 +11,7 @@ Class ReportsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron','Consortium' );
+    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron', 'Consortium', 'Territory');
 
 	function beforeFilter(){
 		parent::beforeFilter();
@@ -112,6 +112,7 @@ Class ReportsController extends AppController
             $this->set('downloads', $arr);
             $this->set('errors', $arr);
         }
+		$this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
     }
     
     /*
