@@ -736,7 +736,7 @@ Class LibrariesController extends AppController
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);        
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
-                                                'conditions' => array('LOWER(library_domain_name)' => $referrerUrl,'library_status' => 'active','library_authentication_method' => 'referral_url')
+                                                'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
 		/*echo $library1;
