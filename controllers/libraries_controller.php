@@ -116,6 +116,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_space_check',
 																				'Library.library_logout_url',
 																				'Library.library_subdomain',
 																				'Library.library_apikey',
@@ -130,6 +131,7 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_terminal_password',
 																				'Library.library_sip_version',
 																				'Library.library_sip_error',
+																				'Library.library_sip_institution',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
 																				'Library.library_ezproxy_name',
@@ -225,6 +227,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
+																				'Library.library_space_check',
 																				'Library.library_logout_url',
 																				'Library.library_subdomain',
 																				'Library.library_apikey',
@@ -239,6 +242,7 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_terminal_password',
 																				'Library.library_sip_version',
 																				'Library.library_sip_error',
+																				'Library.library_sip_institution',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
 																				'Library.library_ezproxy_name',
@@ -733,7 +737,11 @@ Class LibrariesController extends AppController
             $patronId = $requestUrlArr['2'];          
         }
 		
-        $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);        
+        $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
+		if($referrerUrl == ''){
+            $this -> Session -> setFlash("You are not coming from a correct referral url.");
+            $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
+		}        
         $this->Library->recursive = -1;
         $existingLibraries = $this->Library->find('all',array(
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
@@ -763,7 +771,8 @@ Class LibrariesController extends AppController
 				$insertArr['session_id'] = session_id();
 				$this->Currentpatron->save($insertArr);						
 			}		
-			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+			Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);			
+		/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());			
 				Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -793,7 +802,7 @@ Class LibrariesController extends AppController
 					}		
 				}
 				
-			}
+			} */
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
             $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);

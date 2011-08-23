@@ -1,7 +1,7 @@
 <?php
 /* File Name: homes_controller.php
    File Description: Displays the home page for each patron 
-   Author: m68interactive
+   Author: Maycreate
 */
 class HomesController extends AppController
 {
@@ -655,8 +655,9 @@ class HomesController extends AppController
         $patId = $this->Session->read('patron');
         $prodId = $_REQUEST['prodId'];
 		$downloadsDetail = array();
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+/*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		
         if($libraryDownload != '1' || $patronDownload != '1') {
             echo "error";
             exit;
@@ -666,14 +667,14 @@ class HomesController extends AppController
         if(count($downloadsUsed) > 0) {
             echo "incld";
             exit;
-        }		
+        }*/		
         $trackDetails = $this->Song->getdownloaddata($prodId);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;	
         $insertArr['ProdID'] = $prodId;     
-        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+        $insertArr['artist'] = addslashes($trackDetails['0']['Song']['Artist']);
+        $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
@@ -748,9 +749,23 @@ class HomesController extends AppController
 			$insertArr['email'] = $this->Session->read('Auth.User.email');
 			$insertArr['user_login_type'] = 'user_account';   
          }
-		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
+		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-         if($this->Download->save($insertArr)){
+		$this->Library->setDataSource('master');
+		$sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+		$this->Library->query($sql);
+		$sql = "SELECT @ret";
+		$data = $this->Library->query($sql);
+		$return = $data[0][0]['@ret'];
+		if(is_numeric($return)){
+			echo "suces|".$return;
+			exit;
+		}
+		else{
+			echo $return;
+			exit;			
+		}
+/*		if($this->Download->save($insertArr)){
 			$this->Library->setDataSource('master');
 			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
 			$this->Library->query($sql);
@@ -763,7 +778,7 @@ class HomesController extends AppController
 		else{
             echo "error";
             exit;		
-		}
+		}*/
     }
     
     /*
@@ -833,28 +848,28 @@ class HomesController extends AppController
 		$libid = $_REQUEST['libid'];       
 		$patronid = $_REQUEST['patronid'];
 		$patronid = str_replace("_","+",$_REQUEST['patronid']);
-		$userCache = Cache::read("login_".$libid.$patronid);
+		$userCache = Cache::read("login_".$this->Session->read('territory')."_".$libid."_".$patronid);
 		$date = time();
 		$modifiedTime = $userCache[0];
 		//checking form db if session exists
 		$sql = mysql_query("SELECT id FROM `sessions` Where id='".session_id()."'");
 		$count = mysql_num_rows($sql);
 		$values = array(0 => $date, 1 => session_id());
-		if(($date-$modifiedTime) > 60 && $count == 0){
+/*		if(($date-$modifiedTime) > 60 && $count == 0){
 			//deleting sessions and memcache key
 			$this->Session->destroy();
 			Cache::delete("login_".$libid.$patronid);
 			echo "Error";
 			exit;
-		} else {
+		} else {*/
 			$date = time();
 			$name = $_SERVER['SERVER_ADDR'];
 			$values = array(0 => $date, 1 => session_id());
 			//writing to memcache and writing to both the memcached servers
-			Cache::write("login_".$libid.$patronid, $values);
+			Cache::write("login_".$this->Session->read('territory')."_".$libid."_".$patronid, $values);
 			echo "success".$name;
 			exit;
-		}
+		//}
     }
     
     /*

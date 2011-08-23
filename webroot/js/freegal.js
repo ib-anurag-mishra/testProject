@@ -83,6 +83,23 @@ function userDownloadIE(prodId)
 				location.reload();
 				return false;
 			}
+			else if(msg == 'incld')
+			{
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).innerHTML='';
+				if(languageSet == 'en'){
+					document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";	
+				}else{
+					document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+				}
+				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
+				return false;
+			}			
 			else if(msg == 'suces')
 			{
 				$('.afterClick').hide();
@@ -157,6 +174,23 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 			{
 				alert("Your download limit has exceeded.");
 				location.reload();
+				return false;
+			}
+			else if(msg == 'incld')
+			{
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				document.getElementById('song_'+prodId).innerHTML='';
+				if(languageSet == 'en'){
+					document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";	
+				}else{
+					document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+				}
+				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
 				return false;
 			}			
 			else if(msg == 'suces')
@@ -491,7 +525,24 @@ function userDownloadOthers_safari(prodId,downloadUrl1,downloadUrl2,downloadUrl3
 				alert("Your download limit has exceeded.");
 				location.reload();
 				return false;
-			}		
+			}
+			else if(msg == 'incld')
+			{
+				alert("You have already downloaded this song.Get it from your recent downloads");
+				document.getElementById('download_loader_'+prodId).style.display = 'none';
+				document.getElementById('downloading_'+prodId).style.display = 'none';
+				$('.download_links_'+prodId).html('');
+				if(languageSet == 'en'){
+					document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>Downloaded</a>";	
+				}else{
+					document.getElementById('song_'+prodId).innerHTML = "<a href='/homes/my_history'>bajaedas</a>";
+				}
+				document.getElementById('song_'+prodId).style.display = 'block';
+				addQtip_top(prodId);
+				$('.afterClick').hide();
+				$('.beforeClick').show();				
+				return false;
+			}			
 			else if(msg == 'suces')
 			{
 				$('.afterClick').hide();
@@ -896,9 +947,10 @@ function checkPatron(libid,patronid)
 				}
 				else if(response != '')
 				{
-					alert("You have been logged out from the system. Please login again.");
-					location.reload();
-					return false;				
+				//	alert("You have been logged out from the system. Please login again.");
+				//	location.reload();
+				//	return false;
+					setTimeout(function(){ checkPatron(libid,patronid) }, 30000);
 				}
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {						

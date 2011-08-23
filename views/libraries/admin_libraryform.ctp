@@ -18,6 +18,7 @@
 		$getData['Library']['library_home_url'] = "";
 		$getData['Library']['library_authentication_num'] = "";
 		$getData['Library']['library_authentication_url'] = "";
+		$getData['Library']['library_space_check'] = "yes";
 		$getData['Library']['library_logout_url'] = "";
 		$getData['Library']['library_subdomain'] = "";
 		$getData['Library']['library_apikey'] = "none";
@@ -33,6 +34,7 @@
 		$getData['Library']['library_sip_terminal_password'] = "";
 		$getData['Library']['library_sip_version'] = "";
 		$getData['Library']['library_sip_error'] = "on";
+		$getData['Library']['library_sip_institution'] = "";
 		$getData['Library']['library_ezproxy_secret'] = "";
 		$getData['Library']['library_ezproxy_referral'] = "";
 		$getData['Library']['library_ezproxy_name'] = "";
@@ -262,6 +264,18 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Referral URL');?></td>
 						<td align="left"><?php echo $this->Form->input('library_domain_name',array( 'label' => false ,'value' => $getData['Library']['library_domain_name'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
+					<tr id="space" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Space Check');?></td>
+						<td aligh="left">
+							<?php
+								echo $this->Form->input('library_space_check', array('options' => array(
+									'yes' => 'yes',
+									'no' => 'no'
+									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_space_check'])
+								);
+							?>
+						</td>
+					</tr>					
 					<tr id="innovative1" <?php if($getData['Library']['library_authentication_method'] != "innovative" && $getData['Library']['library_authentication_method'] != "innovative_https" && $getData['Library']['library_authentication_method'] != "innovative_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var" && $getData['Library']['library_authentication_method'] != "innovative_var_https" && 
 					$getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" &&
 					$getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" &&  
@@ -301,6 +315,10 @@
 					<tr id="sip_terminal" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2" && $getData['Library']['library_authentication_method'] != "sip2_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Terminal Password');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_terminal_password',array('label' => false, 'value' => $getData['Library']['library_sip_terminal_password'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="sip_institution" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Institution ID');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_sip_institution',array('label' => false, 'value' => $getData['Library']['library_sip_institution'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
 					<tr id="sip_version" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250">
@@ -841,12 +859,14 @@
 						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'innovative') {
 						$("#allurl").show();
@@ -865,12 +885,14 @@
 						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'innovative_var') {
 						$("#allurl").show();
@@ -889,13 +911,15 @@
 						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").hide();						
+						$("#msgNo").hide();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'innovative_var_https') {
 						$("#allurl").show();
@@ -913,6 +937,7 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -920,7 +945,8 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").hide();						
+						$("#msgNo").hide();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'innovative_var_https_wo_pin') {
 						$("#allurl").show();
@@ -938,6 +964,7 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#sip_password").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -945,7 +972,8 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").hide();						
+						$("#msgNo").hide();
+						$("#space").hide();
 					}					
 					else if ($(this).val() == 'innovative_https') {
 						$("#allurl").show();
@@ -964,12 +992,14 @@
 						$("#sip_version").hide();
 						$("#sip_password").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}					
 					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#allurl").show();
@@ -989,12 +1019,14 @@
 						$("#sip_error").hide();
 						$("#sip_password").hide();
 						$("#sip_location").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'sip2') {
 						$("#allurl").show();
@@ -1012,6 +1044,7 @@
 						$("#sip_location").show();
 						$("#sip_terminal").show();
 						$("#sip_version").hide();
+						$("#sip_institution").hide();
 						$("#sip_error").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -1019,6 +1052,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'sip2_wo_pin') {
 						$("#allurl").show();
@@ -1036,6 +1070,7 @@
 						$("#sip_location").show();
 						$("#sip_terminal").show();
 						$("#sip_version").hide();
+						$("#sip_institution").hide();
 						$("#sip_error").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -1043,6 +1078,7 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'sip2_var') {
 						$("#allurl").show();
@@ -1060,6 +1096,7 @@
 						$("#sip_location").show();
 						$("#sip_terminal").show();
 						$("#sip_version").show();
+						$("#sip_institution").show();
 						$("#sip_error").show();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -1067,7 +1104,8 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").show();						
+						$("#msgNo").show();
+						$("#space").show();
 					}
 					else if ($(this).val() == 'sip2_var_wo_pin') {
 						$("#allurl").show();
@@ -1085,6 +1123,7 @@
 						$("#sip_location").show();
 						$("#sip_terminal").show();
 						$("#sip_version").show();
+						$("#sip_institution").show();
 						$("#sip_error").show();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
@@ -1092,7 +1131,8 @@
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").show();						
+						$("#msgNo").show();
+						$("#space").show();
 					}					
 					else if ($(this).val() == 'ezproxy') {
 						$("#allurl").hide();
@@ -1111,12 +1151,14 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").show();
 						$("#ezproxy_referral").show();
 						$("#ezproxy_name").show();
 						$("#ezproxy_logout").show();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();						
 					}					
 					else if ($(this).val() == 'innovative_var_wo_pin') {
 						$("#allurl").show();
@@ -1135,13 +1177,15 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").hide();						
+						$("#msgNo").hide();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'innovative_var_name') {
 						$("#allurl").show();
@@ -1160,13 +1204,15 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").hide();						
+						$("#msgNo").hide();
+						$("#space").hide();
 					}
 					else if ($(this).val() == 'innovative_var_https_name') {
 						$("#allurl").show();
@@ -1185,13 +1231,15 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
-						$("#msgNo").hide();						
+						$("#msgNo").hide();
+						$("#space").hide();
 					}					
 					else if ($(this).val() == 'soap') {
 						$("#allurl").show();
@@ -1211,11 +1259,13 @@
 						$("#sip_version").hide();
 						$("#sip_error").hide();
 						$("#sip_password").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#block_explicit").hide();
+						$("#space").hide();
 					}					
 					else {
 						$("#allurl").hide();
@@ -1234,12 +1284,14 @@
 						$("#sip_terminal").hide();
 						$("#sip_version").hide();
 						$("#sip_error").hide();
+						$("#sip_institution").hide();
 						$("#ezproxy_secret").hide();
 						$("#ezproxy_referral").hide();
 						$("#ezproxy_name").hide();
 						$("#ezproxy_logout").hide();
 						$("#soap").hide();
 						$("#block_explicit").show();
+						$("#space").hide();
 					}
 				});
 				$("#LibraryLibraryAuthenticationMethod").change(function() {

@@ -308,8 +308,11 @@ Class UsersController extends AppController
 					$insertArr['session_id'] = session_id();
 					$this->Currentpatron->save($insertArr);						
 				}
+				$date = time();
+				$values = array(0 => $date, 1 => session_id());			
+				Cache::write("login_".$libraryArr['Library']['library_territory']."_".$libraryId."_".$patronId, $values);				
 				//writing to memcache and writing to both the memcached servers
-				if (($currentPatron = Cache::read("login_".$libraryId.$patronId)) === false) {
+			/*	if (($currentPatron = Cache::read("login_".$libraryId.$patronId)) === false) {
 					$date = time();
 					$values = array(0 => $date, 1 => session_id());			
 					Cache::write("login_".$libraryId.$patronId, $values);
@@ -343,7 +346,7 @@ Class UsersController extends AppController
 						}		
 					}
 					
-				}				
+				}*/				
 		
 				$this->Session->write("library", $libraryId);
 				$this->Session->write("patron", $patronId);
@@ -392,7 +395,7 @@ Class UsersController extends AppController
 			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
 			$this->Currentpatron->saveField('modified',$updateTime, false);
 			//writing to memcache and writing to both the memcached servers
-			Cache::delete("login_".$libraryId.$patronId);			
+			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);			
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
 				$redirectUrl = $this->Session->read('referral_url');
 				$this->Session->destroy();
@@ -1123,8 +1126,11 @@ Class UsersController extends AppController
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
-						}					
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -1158,7 +1164,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1336,8 +1342,11 @@ Class UsersController extends AppController
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
-						}						
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -1370,7 +1379,7 @@ Class UsersController extends AppController
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
 								}		
 							}
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1549,8 +1558,10 @@ Class UsersController extends AppController
 						$insertArr['patronid'] = $patronId;
 						$insertArr['session_id'] = session_id();
 						$this->Currentpatron->save($insertArr);						
-					}						
-					if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+					}
+					$date = time();
+					$values = array(0 => $date, 1 => session_id());			
+					Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);				/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 						$date = time();
 						$values = array(0 => $date, 1 => session_id());			
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -1582,7 +1593,7 @@ Class UsersController extends AppController
 							}		
 						}
 						
-					}
+					}*/
 					$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					$this->Session->write("patron", $patronId);
 					$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1745,8 +1756,11 @@ Class UsersController extends AppController
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
-						}					
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -1778,7 +1792,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1936,8 +1950,11 @@ Class UsersController extends AppController
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
-						}					
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -1969,7 +1986,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2144,8 +2161,11 @@ Class UsersController extends AppController
 									$insertArr['session_id'] = session_id();
 									$this->Currentpatron->save($insertArr);						
 								}
+								$date = time();
+								$values = array(0 => $date, 1 => session_id());			
+								Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 								
-								if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+							/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 									$date = time();
 									$values = array(0 => $date, 1 => session_id());			
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -2177,7 +2197,7 @@ Class UsersController extends AppController
 										}		
 									}
 									
-								}
+								}*/
 								$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 								$this->Session->write("patron", $patronId);
 								$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2336,8 +2356,11 @@ Class UsersController extends AppController
 									$insertArr['session_id'] = session_id();
 									$this->Currentpatron->save($insertArr);						
 								}										  
+								$date = time();
+								$values = array(0 => $date, 1 => session_id());			
+								Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 								  
-								if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+							/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 									$date = time();
 									$values = array(0 => $date, 1 => session_id());			
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -2369,7 +2392,7 @@ Class UsersController extends AppController
 										}		
 									}
 									
-								  }
+								  }*/
 								  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 								  $this->Session->write("patron", $patronId);
 								  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2467,6 +2490,7 @@ Class UsersController extends AppController
 		}            
 		if($this->data){  
 			$card = $this->data['User']['card'];
+			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
 		//	$card = strtolower($card);			
 			$data['card'] = $card;
@@ -2552,8 +2576,11 @@ Class UsersController extends AppController
 								$insertArr['session_id'] = session_id();
 								$this->Currentpatron->save($insertArr);						
 							}
+							$date = time();
+							$values = array(0 => $date, 1 => session_id());			
+							Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 							
-							if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 								$date = time();
 								$values = array(0 => $date, 1 => session_id());			
 								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -2585,7 +2612,7 @@ Class UsersController extends AppController
 									}		
 								}
 								
-							}
+							}*/
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2677,6 +2704,7 @@ Class UsersController extends AppController
 		}            
 		if($this->data){
 			$card = $this->data['User']['card'];
+			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
 		//	$card = strtolower($card);
 			$data['card'] = $card;
@@ -2744,7 +2772,11 @@ Class UsersController extends AppController
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
 						}									
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
+
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -2776,7 +2808,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -2872,7 +2904,10 @@ Class UsersController extends AppController
 				$insertArr['session_id'] = session_id();
 				$this->Currentpatron->save($insertArr);						
 			}
-			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card)) === false) {
+			$date = time();
+			$values = array(0 => $date, 1 => session_id());
+			Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$card, $values);
+		/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card)) === false) {
 				$date = time();
 				$values = array(0 => $date, 1 => session_id());			
 				Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
@@ -2906,7 +2941,7 @@ Class UsersController extends AppController
 					}		
 				}
 				
-			}
+			}*/
 			$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 			$this->Session->write("patron", $user);
 			$this->Session->write("ezproxy","ezproxy");
@@ -3075,8 +3110,11 @@ Class UsersController extends AppController
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
-						}					
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -3110,7 +3148,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3288,8 +3326,11 @@ Class UsersController extends AppController
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
 						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -3321,7 +3362,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3483,8 +3524,11 @@ Class UsersController extends AppController
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
 						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -3516,7 +3560,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3692,7 +3736,11 @@ Class UsersController extends AppController
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
 						}					
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
+
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -3724,7 +3772,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -3903,7 +3951,11 @@ Class UsersController extends AppController
 							$insertArr['session_id'] = session_id();
 							$this->Currentpatron->save($insertArr);						
 						}						
-						if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
+
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -3935,7 +3987,7 @@ Class UsersController extends AppController
 								}		
 							}
 							
-						}
+						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
