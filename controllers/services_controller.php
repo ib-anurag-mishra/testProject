@@ -1,9 +1,4 @@
 <?php
-/*
- File Name : services_controller.php
- File Description : Controller page for the  web services.
- Author : m68interactive
- */
 class ServicesController extends AppController {
     var $name = 'Services';
     var $autoLayout = false;
@@ -154,7 +149,7 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -331,7 +326,7 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
+					$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -444,7 +439,7 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "http://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".$v['Song']['ArtistText'];
+					$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),

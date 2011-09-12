@@ -746,7 +746,7 @@ class HomesController extends AppController
 			$insertArr['user_login_type'] = 'soap';  
 		}		
         else{
-			$insertArr['email'] = $this->Session->read('Auth.User.email');
+			$insertArr['email'] = $this->Session->read('patronEmail');
 			$insertArr['user_login_type'] = 'user_account';   
          }
 		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);	

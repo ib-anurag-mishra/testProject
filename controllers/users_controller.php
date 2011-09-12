@@ -102,24 +102,28 @@ Class UsersController extends AppController
 			$this->Auth->autoRedirect = false;
 		}
 		if($userType == '1' || $this->Session->read('Auth.User.sales') == 'yes'){
+			$memcache = new Memcache;
+			$memcache->addServer('10.181.59.64', 11211);
+			$memcache->addServer('10.181.59.94', 11211);
+			$x = memcache_get($memcache,"librarydownload");
 			if($library == 'special') {
-				$condition = array("library_name REGEXP '^[^A-Za-z]'",'library_status' => 'active');			
+				foreach($x as $k => $v){
+					if(ord($v['library_name']{0}) > 122 ||  ord($v['library_name']{0}) < 65){					
+						$res[] = $v;
+					}
+				}			
 			}
 			elseif($library != '') {
-				$condition = array('library_name LIKE' => $library.'%','library_status' => 'active');
+				foreach($x as $k => $v){
+					if($v['library_name']{0} == $library){
+						$res[] = $v;
+					}
+				}
 			}
 			else {
-				$condition = array('library_status' => 'active');
+				$res = $x;
 			}
-			$url = $_SERVER['REQUEST_URI'];
-			header( "refresh:300;url=".$url);
-			$this->Library->recursive = -1;
-			if($condition != ''){
-				$this->paginate = array('conditions' => $condition);
-			} else {
-				$this->paginate = array('order' => 'library_name');
-			}
-			$this->set('libraries', $this->paginate('Library'));
+			$this->set('x', $res);
 		}
 		if($userType == '4'){
 			$libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' => 
@@ -139,75 +143,44 @@ Class UsersController extends AppController
 	function admin_data($library = null) {
 		$userType = $this->Session->read('Auth.User.type_id'); 
 		if($userType == '1'){
-			$this->Library->recursive = -1;
+			$memcache = new Memcache;
+			$memcache->addServer('10.181.59.64', 11211);
+			$memcache->addServer('10.181.59.94', 11211);
+			$x = memcache_get($memcache,"librarydownload");
 			if($library == 'special') {
-				$condition = array('library_name REGEXP "^[^A-Za-z]"');
+				foreach($x as $k => $v){
+					if(ord($v['library_name']{0}) > 122 ||  ord($v['library_name']{0}) < 65){					
+						$res[] = $v;
+					}
+				}			
 			}
 			elseif($library != '') {
-				$condition = array('library_name LIKE' => $library.'%');
+				foreach($x as $k => $v){
+					if($v['library_name']{0} == $library){
+						$res[] = $v;
+					}
+				}
 			}
 			else {
-				$condition = "";
-			}
-			if($condition != ''){
-				$cond = array('conditions' => $condition);
-				$library = $this->Library->find('all',array( 'fields' => array(
-																				'Library.id',
-																				'Library.library_name',
-																				'Library.library_total_downloads',
-																				'Library.library_available_downloads',
-																				'Library.library_contract_start_date',
-																				'Library.library_available_downloads'
-											),'conditions' => $condition));				
-			} else {
-				$cond = array('order' => 'library_name');
-				$library = $this->Library->find('all',array( 'fields' => array(
-																				'Library.id',
-																				'Library.library_name',
-																				'Library.library_total_downloads',
-																				'Library.library_available_downloads',
-																				'Library.library_contract_start_date',
-																				'Library.library_available_downloads'
-											),'order' => 'library_name'));					
-			}
-			$curStartDate = date("Y-m-d")." 00:00:00";
-			$curStartDate = date("Y-m-d")." 23:59:59";
-			$curWeekStartDate = Configure::read('App.curWeekStartDate');
-			$curWeekEndDate = Configure::read('App.curWeekEndDate');
-			$monthStartDate = date("Y-m-d", strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))." 00:00:00";
-			$monthEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('this month',strtotime(date('m').'/01/'.date('Y').' 00:00:00')))))." 23:59:59";
-			$downloadInstance->recursive = -1;
-			foreach($library as $k => $v){
-				$library[$k]['Library']['today'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($curStartDate, $curStartDate))));
-				
-				$library[$k]['Library']['week'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($curWeekStartDate, $curWeekEndDate))));
-				
-				$library[$k]['Library']['month'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($monthStartDate, $monthEndDate))));
-				
-				$library[$k]['Library']['ytd'] = $this->Download->find('count',array('conditions' => array('library_id' => $v['Library']['id'],'created BETWEEN ? AND ?' => array($v['Library']['library_contract_start_date']." 00:00:00", date("Y-m-d",strtotime($v['Library']['library_contract_start_date'])+365*24*60*60)." 23:59:59"))));
-				
-				$library[$k]['Library']['library_contract_end_date'] = date("Y-m-d",strtotime($v['Library']['library_contract_start_date'])+365*24*60*60);
+				$res = $x;
 			}
 			$this->autoRender=false;
 			header ("Content-type: text/xml;charset=utf-8");
 			$xml= "<?xml version='1.0' encoding='utf-8'?>"; 
 			$xml .= "<rows>"; 
-			if($library){						
-				while(list($key,$value)= each($library)){
-
-					while( list(,$row)=each($value)){
+			if($res){						
+				while(list($key,$value)= each($res)){
 						$xml = $xml. "<row id='".$row['id']."'>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['library_name'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['library_contract_start_date'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['library_contract_end_date'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['today'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['week'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['month'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['ytd'],ENT_QUOTES)."]]></cell>";
-						$xml = $xml. "<cell><![CDATA[".htmlentities($row['library_available_downloads'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['library_name'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['library_contract_start_date'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['library_contract_end_date'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['today'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['week'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['month'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['ytd'],ENT_QUOTES)."]]></cell>";
+						$xml = $xml. "<cell><![CDATA[".htmlentities($value['library_available_downloads'],ENT_QUOTES)."]]></cell>";
 						$xml .= "</row>";
 					}
-				}	
 			}
 			$xml .= "</rows>";
 			return $xml;
@@ -350,6 +323,7 @@ Class UsersController extends AppController
 		
 				$this->Session->write("library", $libraryId);
 				$this->Session->write("patron", $patronId);
+				$this->Session->write("patronEmail", $this->Session->read('Auth.User.email'));
 				$this->Session->write("territory", $libraryArr['Library']['library_territory']);
 				if($this->Session->read('Auth.User.consortium') != ''){
 					$this->Session->write("consortium", $this->Session->read('Auth.User.consortium'));
