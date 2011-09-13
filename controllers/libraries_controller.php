@@ -771,6 +771,11 @@ Class LibrariesController extends AppController
 				$insertArr['session_id'] = session_id();
 				$this->Currentpatron->save($insertArr);						
 			}		
+			if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+				$date = time();
+				$values = array(0 => $date, 1 => session_id());			
+				Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+			} else {
 			Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);			
 		/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 				$date = time();
