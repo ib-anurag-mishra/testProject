@@ -808,6 +808,7 @@ Class LibrariesController extends AppController
 				}
 				
 			} */
+			}
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
             $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
