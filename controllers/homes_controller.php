@@ -757,6 +757,7 @@ class HomesController extends AppController
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
+		$this->Library->setDataSource('default');
 		if(is_numeric($return)){
 			echo "suces|".$return;
 			exit;
