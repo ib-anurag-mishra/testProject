@@ -32,9 +32,13 @@
 				}
 				else
 				{
-					$('#container').html('');
-					$('#footer').html('');
-					$('#allContent').html(response);
+					if(navigator.appName == 'Microsoft Internet Explorer'){
+						location.reload();
+					}else{
+						$('#container').html('');
+						$('#footer').html('');
+						$('#container').html(response);
+					}
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -58,9 +62,9 @@
 				}
 				else
 				{
-					$('#container').html('');
+					$('#main').html('');
 					$('#footer').html('');
-					$('#allContent').html(response);
+				//	$('#container').html(response);
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
@@ -73,6 +77,7 @@ jQuery(document).ready(function() {
 </script>	
 </head>
 <body>
+<div id="container">
 	<!--[if lt IE 7]>
 	  	<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
 	    	<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
@@ -109,22 +114,41 @@ jQuery(document).ready(function() {
 	    	</div>
 	  	</div>
 	<![endif]-->
-	<div id="allContent">
-		<div id="container"> <!-- content -->
-			<?php echo $this->element('header'); ?>
-			<?php $session->flash(); ?>
+	<div id="main">
+		<div class="main-holder">
+			<div class="visual">
+				<img src="/img/img1.png" alt="image description" class="decor pos1" width="161" height="158" />
+				<img src="/img/img2.png" alt="image description" class="decor pos2" width="153" height="148" />
+				<img src="/img/img3.png" alt="image description" class="decor pos3" width="181" height="180" />
+				<img src="/img/img4.png" alt="image description" class="decor pos4" width="184" height="180" />
+				<img src="/img/img5.png" alt="image description" class="decor pos5" width="153" height="150" />
+				<img src="/img/img6.png" alt="image description" class="decor pos6" width="170" height="167" />
+			</div>
 			<div id="content">
+				<div class="popup">
+					<div class="popup-t"></div>
+					<div class="popup-c">
+						<h1 class="logo"><a href="#">Freegal music</a></h1>
 				<!-- Main contents start here -->
 				<?php echo $content_for_layout; ?>
 				<div id="loginText">
 				<div id="loadingDiv" style="z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
 					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-				</div>			
-				<?php echo $page->getPageContent('login'); ?>
+				</div>
 				</div>
 				<!-- Main contents end here -->
-			</div><!-- content -->
-		</div><!-- container -->
+				</div>
+				<div class="popup-b"></div>
+				</div>
+				<?php echo $page->getPageContent('login'); ?>
+				<ul class="ad-list">
+					<li><a href="#"><img src="/img/ad1.jpg" alt="image description" width="60" height="32" /></a></li>
+					<li><a href="#"><img src="/img/ad2.jpg" alt="image description" width="43" height="47" /></a></li>
+					<li><a href="#"><img src="/img/ad3.jpg" alt="image description" width="88" height="44" /></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
 		<div id="footer">
 			<div id="copyright">
 				&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
@@ -141,5 +165,6 @@ jQuery(document).ready(function() {
 		}
 	</style>
 <![endif]-->
+</div>
 </body>
 </html>

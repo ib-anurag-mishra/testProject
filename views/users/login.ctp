@@ -9,47 +9,62 @@
 	$this->pageTitle = 'Login';
 	echo $session->flash();
 	echo $session->flash('auth');
-	echo $form->create('User', array( 'action' => 'login', 'id' => 'login'));
-		echo '<p class="loginbox"></p>';
-		echo $form->input('email', array('label' => __('Email', true)));
-		echo '<br class="clr">';
-		echo $form->input('password', array('label' => __('Password', true)));
-		echo '<br class="clr">';
-		echo '<span class="forgot_password">';
+		echo '<div class="login-box">';
+		echo '<div class="holder">';
+		echo '<fieldset>';
+		echo $form->create('User', array( 'action' => 'login', 'id' => 'login'));
+		echo '<div class="row">';
+		echo $form->input('email', array('label' => __('Email', true),'div' => false));
+		echo '</div>';
+		echo '<div class="row">';
+		echo $form->input('password', array('label' => __('Password', true),'div' => false));
+		echo '</div>';
+		echo '<span class="forgot">';
 			echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
 		echo '</span>';
-	echo $form->end(__('Login', true));
+		echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));		
+		echo '</fieldset>';
+		echo '</div>';
+		echo '</div>';
 ?>
-<div id="language">
-<?php
-$language = $language->getLanguage();
-if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
-	$lang = "English";
-} 
-elseif($this->Session->read('Config.language') == 'es'){
-	$lang = "Español";
-}
-elseif($this->Session->read('Config.language') == 'fr'){
-	$lang = "FranÃ§ais";
-}
-elseif($this->Session->read('Config.language') == 'it'){
-	$lang = "Italiano";
-}
-foreach($language as $k => $v){
-	?>
-	<div id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'login')"
+<ul class="lang">
 	<?php
-	if($v == $lang){
-		echo 'class = "active"';
+	$language = $language->getLanguage();
+	if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
+		$lang = "English";
+	} 
+	elseif($this->Session->read('Config.language') == 'es'){
+		$lang = "Español";
 	}
-	else {
-		echo 'class = "non-active"';
+	elseif($this->Session->read('Config.language') == 'fr'){
+		$lang = "FranÃ§ais";
 	}
-	echo '>'.$v.'</div>';
+	elseif($this->Session->read('Config.language') == 'it'){
+		$lang = "Italiano";
+	}
+	foreach($language as $k => $v){
+		?>
+		<li id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'login')"
+		<?php
+		if($v == $lang){
+			echo 'class = "active"';
+		}
+		else {
+			echo 'class = "non-active"';
+		}
+		echo '>'.$v.'</li>';
+	}
+	?>
+</ul>
+<?php
+if($this->Session->read('Config.language') == 'es'){
+?>
+	<script type="text/javascript">
+	$(".popup .login-box .holder").css('padding': '46px 9px 45px');
+	</script>
+<?php	
 }
 ?>
-</div>
-<div class="clr"></div>
 <script type="text/javascript">
 	$("#loadingDiv").hide();
 </script>
