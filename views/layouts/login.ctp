@@ -142,9 +142,9 @@ jQuery(document).ready(function() {
 				</div>
 				<?php echo $page->getPageContent('login'); ?>
 				<ul class="ad-list">
-					<li><a href="#"><img src="/img/ad1.jpg" alt="image description" width="60" height="32" /></a></li>
-					<li><a href="#"><img src="/img/ad2.jpg" alt="image description" width="43" height="47" /></a></li>
-					<li><a href="#"><img src="/img/ad3.jpg" alt="image description" width="88" height="44" /></a></li>
+					<li><a href="http://www.iodalliance.com/"><img src="/img/ad1.jpg" alt="image description" width="60" height="32" /></a></li>
+					<li><a href="http://www.sonymusic.com/"><img src="/img/ad2.jpg" alt="image description" width="43" height="47" /></a></li>
+					<li><a href="http://www.libraryideas.com/"><img src="/img/ad3.jpg" alt="image description" width="88" height="44" /></a></li>
 				</ul>
 			</div>
 		</div>
