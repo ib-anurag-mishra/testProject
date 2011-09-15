@@ -219,4 +219,14 @@ form, fieldset{
 	background:url(../img/bg-footer.gif) repeat-x;
 }
 #footer p{margin:0;}
-.message{text-align:center;color:red;}
+div.message {
+	clear: both;
+	color: #fff;
+	font-size: 100%;
+	font-weight: bold;
+	margin: 0 0 1em 0;
+	text-align: center;
+	background: #c73e14;
+	padding: 5px;
+	width: 100%;
+}
