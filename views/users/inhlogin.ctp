@@ -7,7 +7,7 @@
 ?>
 <?php
 	$this->pageTitle = 'inhLogin';
-	echo $session->flash();	
+//	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'inhlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
 		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));

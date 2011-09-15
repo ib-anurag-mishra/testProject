@@ -7,7 +7,7 @@
 ?>
 <?php
 	$this->pageTitle = 'ilhdLogin';
-	echo $session->flash();
+//	echo $session->flash();
 	if(!isset($name)){
 		$name='';
 	}

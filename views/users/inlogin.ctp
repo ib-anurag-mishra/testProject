@@ -7,7 +7,7 @@
 ?>
 <?php
 	$this->pageTitle = 'inLogin';
-	echo $session->flash();	
+//	echo $session->flash();	
 	echo '<div class="login-box">';
 	echo '<div class="holder">';
 	echo '<fieldset>';	

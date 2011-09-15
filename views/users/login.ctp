@@ -7,8 +7,8 @@
 ?>
 <?php
 	$this->pageTitle = 'Login';
-	echo $session->flash();
-	echo $session->flash('auth');
+//	echo $session->flash();
+//	echo $session->flash('auth');
 		echo '<div class="login-box">';
 		echo '<div class="holder">';
 		echo '<fieldset>';

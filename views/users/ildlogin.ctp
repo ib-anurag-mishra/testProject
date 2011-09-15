@@ -7,7 +7,7 @@
 ?>
 <?php
 	$this->pageTitle = 'ildLogin';
-	echo $session->flash();
+//	echo $session->flash();
 	if(!isset($name)){
 		$name='';
 	}
