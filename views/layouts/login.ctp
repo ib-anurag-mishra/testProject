@@ -115,16 +115,11 @@ jQuery(document).ready(function() {
 	  	</div>
 	<![endif]-->
 	<div id="main">
+		<?php
+			echo $session->flash();
+			echo $session->flash('auth');				
+		?>	
 		<div class="main-holder">
-			<?php $arr = $this->Session->read('Message');;
-			/*	if(isset($arr['flash']['message'])){
-					echo $arr['flash']['message'];
-				}else{
-					echo "Login failed. Invalid username or password.";
-				}*/
-				echo $session->flash();
-				echo $session->flash('auth');				
-			?>
 			<div class="visual">
 				<img src="/img/img1.png" alt="image description" class="decor pos1" width="161" height="158" />
 				<img src="/img/img2.png" alt="image description" class="decor pos2" width="153" height="148" />
