@@ -159,6 +159,16 @@ form, fieldset{
 	cursor:pointer;
 	background:url(../img/btn-login.gif) no-repeat;
 }
+.popup .submit{
+	float:right;
+	width:133px;
+	height:18px;
+	border:0;
+	font-size:0;
+	line-height:0;
+	cursor:pointer;
+	background:url(../img/btn-submit.png) no-repeat;
+}
 .popup .login-box{
 	width:259px;
 	margin:0 0 10px;
@@ -229,4 +239,12 @@ div.message {
 	background: #c73e14;
 	padding: 5px;
 	width: 100%;
+}
+.popup .row_f label {
+    color: #FFFFFF;
+    font-weight: bold;
+    line-height: 17px;
+    margin: 0 3px 0 65px;
+    text-align: left;
+    width: 112px;
 }

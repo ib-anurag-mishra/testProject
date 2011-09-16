@@ -62,9 +62,13 @@
 				}
 				else
 				{
-					$('#main').html('');
-					$('#footer').html('');
-				//	$('#container').html(response);
+					if(navigator.appName == 'Microsoft Internet Explorer'){
+						location.reload();
+					}else{
+						$('#container').html('');
+						$('#footer').html('');
+						$('#container').html(response);
+					}
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}

@@ -9,9 +9,9 @@
 		echo $this->Form->label(null, __('Forgot Password', true));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('email', array('label' => 'Email'));
+		echo $form->input('email', array('label' => __('Email', true),'div' => false));
 		echo '</div>';
-	echo $form->end(array('label' => __('Submit', true),'div' => false, 'class' => 'button'));		
+	echo $form->end(array('label' => __('Submit', true),'div' => false, 'class' => 'submit'));		
 	echo '</fieldset>';
 	echo '</div>';
 	echo '</div>'; 
@@ -33,7 +33,7 @@
 	}
 	foreach($language as $k => $v){
 		?>
-		<li id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'snlogin')"
+		<li id="<?php echo $k; ?>" onClick="changeLang_password(<?php echo $k;?>,'forgot_password')"
 		<?php
 		if($v == $lang){
 			echo 'class = "active"';
@@ -45,29 +45,6 @@
 	}
 	?>
 </ul>
-<style>
-.popup .row_f label {
-    color: #FFFFFF;
-    font-weight: bold;
-    line-height: 17px;
-    margin: 0 3px 0 65px;
-    text-align: left;
-    width: 112px;
-}
-</style>
-<?php
-if($this->Session->read('Config.language') == 'es'){
-?>
-	<style>
-	.popup .login-box .holder {padding: 46px 0px 45px}
-	.popup .row label {margin: margin: 0 1px 0 0;}
-	.popup .row label {width:133px;text-align: center;}
-	.popup .row input {width:116px}
-	.popup .button {width:138px}
-	</style>
-<?php	
-}
-?>
 <div class="clr"></div>
 <script type="text/javascript">
 	$("#loadingDiv").hide();
