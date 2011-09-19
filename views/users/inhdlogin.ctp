@@ -6,11 +6,13 @@
  */
 ?>
 <?php
-	$this->pageTitle = 'inhdlogin';
+	$this->pageTitle = 'inhdLogin';
 //	echo $session->flash();	
 	echo $form->create('User', array( 'action' => 'inhdlogin', 'id' => 'login'));
 		echo '<p class="loginbox"></p>';
 		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));
+		echo '<br class="clr">';
+		echo $form->input('pin', array('label' => 'Pin','value' => $pin, 'type'=>'password'));
 	echo $form->end(__('Login', true));
 ?>
 <div id="language">
