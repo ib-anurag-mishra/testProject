@@ -53,9 +53,8 @@ form, fieldset{
 	height: 60px;
 	overflow:hidden;
 }
-.visual .heading-public-library a{
-	display:block;
-	height:100%;
+.visual .heading-public-library  img{
+	max-width: 260px;
 }
 .visual .pos1{
 	z-index:2;
