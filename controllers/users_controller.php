@@ -227,8 +227,40 @@ Class UsersController extends AppController
     Desc : Logs users/patrons in to the system
    */
    
-	function login(){
+	function login($library = null){
 		$this->layout = 'login';
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'ilogin');
+					}
+				}
+				else {
+					$wrongReferral = 1;
+					$data['wrongReferral'] = $wrongReferral;
+				}	
+			}
+			else if($library != null)
+			{
+				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				if(count($library_data) > 0)
+				{
+					if($this->Session->read('lId') == '')
+					{
+						$this->Session->write("subdomain",$library);
+						$this->Session->write("lId",$library_data['Library']['id']);
+					}
+				}
+				else 
+				{
+					$wrongReferral = 1;
+				}	
+			}
+		}		
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -1248,7 +1280,7 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
+			elseif(strlen($card) < 5 && !$this->Session->read("subdomain")){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}			
 			elseif($pin == ''){            

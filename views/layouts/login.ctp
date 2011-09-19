@@ -129,7 +129,9 @@ jQuery(document).ready(function() {
 				if($this->Session->read('lId')){
 				$libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
 				?>
+				<strong class="heading-public-library">
 				<img src="<?php echo $cdnPath; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
+				</strong>
 				<?php
 				}
 				?>
