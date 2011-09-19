@@ -53,7 +53,6 @@ form, fieldset{
 	height:48px;
 	text-indent:-9999px;
 	overflow:hidden;
-	background:url(../img/bg-heading-public-library.png) no-repeat;
 }
 .visual .heading-public-library a{
 	display:block;
