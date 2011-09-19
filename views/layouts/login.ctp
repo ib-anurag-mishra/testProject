@@ -128,11 +128,13 @@ jQuery(document).ready(function() {
 				<?php
 				if($this->Session->read('lId')){
 				$libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
+				if($libraryInfo['Library']['library_image_name'] != ''){
 				?>
 				<strong class="heading-public-library">
 				<img src="<?php echo $cdnPath; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
 				</strong>
 				<?php
+				}
 				}
 				?>
 				<img src="/img/img1.png" alt="image description" class="decor pos1" width="161" height="158" />
