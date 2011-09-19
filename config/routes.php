@@ -33,6 +33,7 @@
 		
 		Router::connect('/', array('controller' => 'users', 'action' => 'redirection_manager',$library));
 		Router::connect('/users/login', array('controller' => 'users', 'action' => 'login', $library));
+		Router::connect('/users/inhdlogin', array('controller' => 'users', 'action' => 'inhdlogin', $library));
 		Router::connect('/users/ilogin', array('controller' => 'users', 'action' => 'ilogin', $library));
 		Router::connect('/users/inlogin', array('controller' => 'users', 'action' => 'inlogin', $library));
 		Router::connect('/users/idlogin', array('controller' => 'users', 'action' => 'idlogin', $library));
