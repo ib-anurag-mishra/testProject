@@ -52,6 +52,7 @@ form, fieldset{
 	width:270px;
 	height: 60px;
 	overflow:hidden;
+	text-align: center;
 }
 .visual .heading-public-library  img{
 	max-width: 260px;
