@@ -37,7 +37,7 @@
 	}
 	foreach($language as $k => $v){
 		?>
-		<li id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'ihdlogin')"
+		<li id="<?php echo $k; ?>" onClick="changeLang(<?php echo $k;?>,'indlogin')"
 		<?php
 		if($v == $lang){
 			echo 'class = "active"';
