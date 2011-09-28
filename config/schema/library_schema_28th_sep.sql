@@ -1,0 +1,1 @@
+ALTER TABLE `libraries` ADD `library_sip_24_check` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 'yes' AFTER `library_sip_institution` 
