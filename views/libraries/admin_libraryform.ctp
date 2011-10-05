@@ -327,11 +327,11 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Institution ID');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_institution',array('label' => false, 'value' => $getData['Library']['library_sip_institution'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="curl_url" <?php if($getData['Library']['library_authentication_method'] != "curl" && $getData['Library']['library_authentication_method'] != "curl"){?>style="display:none;"<?php } ?>>
+					<tr id="curl_url" <?php if($getData['Library']['library_authentication_method'] != "curl_method" && $getData['Library']['library_authentication_method'] != "curl_method"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Curl URL');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_curl_url',array('label' => false, 'value' => $getData['Library']['library_curl_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
-					<tr id="curl_db" <?php if($getData['Library']['library_authentication_method'] != "curl" && $getData['Library']['library_authentication_method'] != "curl"){?>style="display:none;"<?php } ?>>
+					<tr id="curl_db" <?php if($getData['Library']['library_authentication_method'] != "curl_method" && $getData['Library']['library_authentication_method'] != "curl_method"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Curl DB Name');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_curl_db',array('label' => false, 'value' => $getData['Library']['library_curl_db'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
@@ -1343,7 +1343,7 @@
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
-					else if ($(this).val() == 'curl') {
+					else if ($(this).val() == 'curl_method') {
 						$("#allurl").show();
 						$("#referral_url").hide();
 						$("#innovative1").hide();
