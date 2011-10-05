@@ -1,0 +1,2 @@
+ALTER TABLE `libraries` ADD `library_curl_url` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `library_soap_url`;
+ALTER TABLE `libraries` ADD `library_curl_db` VARCHAR( 100 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL AFTER `library_curl_url` ;
