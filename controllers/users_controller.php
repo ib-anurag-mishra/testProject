@@ -47,7 +47,8 @@ Class UsersController extends AppController
 								'innovative_var_https_name'=>'ilhdlogin',
 								'innovative_var_https'=>'ihdlogin',
 								'innovative_var_https_wo_pin'=>'inhdlogin',
-								'soap'=>'plogin');
+								'soap'=>'plogin',
+								'curl_method'=>'clogin');
 		return $method_vs_action[$method];
 	}
 	function redirection_manager($library = null)
@@ -545,6 +546,16 @@ Class UsersController extends AppController
 				} else {
 					$this->Session->destroy();
 					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));				
+				}
+			}
+			elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){            
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'clogin'));				
 				}
 			}			
 			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
@@ -4022,6 +4033,223 @@ Class UsersController extends AppController
 			}
 		}
 	} 
+	
+   /*
+    Function Name : clogin
+    Desc : For patron clogin(Curl) login method
+   */
+   
+	function clogin($library = null){
+		if($this->Session->read('login_action'))
+		{
+			if($this->action != $this->Session->read('login_action'))
+			{
+				$this->Session->destroy('referral');
+				$this->Session->destroy('subdomain');
+				$this->Session->destroy('login_action');
+			}
+		}
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
+			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
+				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
+				if(count($url) > 0){
+					if($this->Session->read('referral') == ''){
+						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
+						$this->Session->write("lId",$url[0]['Url']['library_id']);
+						$this->Session->write("login_action",'clogin');
+					}
+				}
+				else {
+					$wrongReferral = 1;
+					$data['wrongReferral'] = $wrongReferral;
+				}	
+			}
+			else if($library != null)
+			{
+				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				if(count($library_data) > 0)
+				{
+					if($this->Session->read('lId') == '')
+					{
+						$this->Session->write("subdomain",$library);
+						$this->Session->write("lId",$library_data['Library']['id']);
+					}
+				}
+				else 
+				{
+					$wrongReferral = 1;
+				}	
+			}
+		}
+		$this->layout = 'login';
+		if(isset($_POST['lang'])){
+			$language = $_POST['lang'];
+			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
+			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
+		}		
+		if ($this->Session->read('patron')){
+			$userType = $this->Session->read('patron');
+			if($userType != ''){
+				$this->redirect('/homes/index');
+				$this->Auth->autoRedirect = false;     
+			}
+		}
+		$this->set('pin',"");
+		$this->set('card',"");
+		if($this->data){         
+			$card = $this->data['User']['card'];
+			$card = str_replace(" ","",$card);
+			$card = strtolower($card);
+			$data['card'] = $card;
+			$pin = $this->data['User']['pin'];
+			$data['pin'] = $pin;
+			$patronId = $card; 
+			$data['patronId'] = $patronId;
+			if($card == ''){            
+				$this -> Session -> setFlash("Please provide card number.");
+				if($pin != ''){
+					$this->set('pin',$pin);
+				}
+				else{
+					$this->set('pin',"");
+				}            
+			}
+			elseif(strlen($card) < 5){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}
+			elseif($pin == ''){            
+				$this -> Session -> setFlash("Please provide pin.");            
+				if($card != ''){
+					$this->set('card',$card);
+				}
+				else{
+					$this->set('card',"");
+				}            
+			}
+			else{
+				$cardNo = substr($card,0,5);
+				$data['cardNo'] = $cardNo;
+				$this->Library->recursive = -1;
+				$this->Library->Behaviors->attach('Containable');
+				$data['referral'] = $this->Session->read('referral');
+				$data['subdomain']=$this->Session->read("subdomain");
+				if($this->Session->read('referral') || $this->Session->read("subdomain")){
+					$library_cond = $this->Session->read('lId');
+					$data['library_cond'] = $library_cond;
+					$existingLibraries = $this->Library->find('all',array(
+									'conditions' => array('library_status' => 'active','library_authentication_method' => 'curl','id' => $library_cond),
+									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+									)
+								 );					
+				} else {
+					$library_cond = '';
+					$data['library_cond'] = $library_cond;
+					$existingLibraries = $this->Library->find('all',array(
+									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'curl'),
+									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+									)
+								 );					
+				}
+				if(count($existingLibraries) == 0){
+					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/clogin"){
+						$this->Session->setFlash("You are not authorized to view this location.");
+					}
+					else{
+						$this->Session->setFlash("This is not a valid credential.");
+					}
+					$this->redirect(array('controller' => 'users', 'action' => 'clogin'));
+				}        
+				else{
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
+					$data['database'] = 'freegal';
+					$authUrl1 = Configure::read('App.AuthUrl')."clogin_validation";
+					$result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
+					//echo $result;echo "check";exit;
+					$resultAnalysis[0] = $result['Posts']['status'];
+					$resultAnalysis[1] = $result['Posts']['message'];
+					if($resultAnalysis[0] == "fail"){
+						$this->Session->setFlash($resultAnalysis[1]);
+						$this->redirect(array('controller' => 'users', 'action' => 'clogin'));
+					}elseif($resultAnalysis[0] == "success"){
+						//writing to memcache and writing to both the memcached servers
+						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
+						if(count($currentPatron) > 0){
+						// do nothing
+						} else {
+							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
+							$insertArr['patronid'] = $patronId;
+							$insertArr['session_id'] = session_id();
+							$this->Currentpatron->save($insertArr);						
+						}
+						$date = time();
+						$values = array(0 => $date, 1 => session_id());			
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+							$date = time();
+							$values = array(0 => $date, 1 => session_id());			
+							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+						} else {
+							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
+							$date = time();
+							$modifiedTime = $userCache[0];
+							if(!($this->Session->read('patron'))){
+								if(($date-$modifiedTime) > 60){
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								}
+								else{
+									$this->Session->destroy('user');
+									//$this -> Session -> setFlash("This account is already active.");
+									//$this->autoRender = false; 
+									$this->Cookie->write('msg','This account is already active.');
+									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
+								}
+							} else {
+								if(($date-$modifiedTime) > 60){
+									$values = array(0 => $date, 1 => session_id());	
+									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
+								}
+								else{
+									$this->Session->destroy('user');
+									//$this -> Session -> setFlash("This account is already active.");
+									//$this->autoRender = false; 
+									$this->Cookie->write('msg','This account is already active.');                              
+									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
+								}		
+							}
+							
+						}*/
+						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+						$this->Session->write("patron", $patronId);
+						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
+						$this->Session->write("innovative","innovative");
+						if($existingLibraries['0']['Library']['library_logout_url'] != '' && ($this->Session->read('referral') != '' || $this->Session->read("subdomain") != '')){
+							$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
+						}
+						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+						}
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
+						$this->Download->recursive = -1;
+						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+						$this ->Session->write("downloadsUsed", $results);
+						if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1'){
+							$this ->Session->write("block", 'yes');
+						}
+						else{
+							$this ->Session->write("block", 'no');
+						}
+						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+					
+					}					
+				}
+			}         
+		}
+	}
+	
 	
 }
 ?>

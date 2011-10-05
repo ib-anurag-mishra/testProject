@@ -744,6 +744,10 @@ class HomesController extends AppController
 		elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'soap';  
+		}
+		elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'curl_method';  
 		}		
         else{
 			$insertArr['email'] = $this->Session->read('patronEmail');
@@ -1303,7 +1307,10 @@ class HomesController extends AppController
 			}
 			elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){            
 				$url = $this->webroot.'users/plogin';
-			}			
+			}
+			elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){            
+				$url = $this->webroot.'users/clogin';
+			}				
 			else {
 			   $url = $this->webroot.'users/login';
 			}
@@ -1648,6 +1655,10 @@ class HomesController extends AppController
 		elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'soap';  
+		}
+		elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'curl_method';  
 		}		
         else{
 			$insertArr['email'] = $this->Session->read('patronEmail');

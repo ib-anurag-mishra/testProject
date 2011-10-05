@@ -121,6 +121,8 @@ Class LibrariesController extends AppController
 																				'Library.library_subdomain',
 																				'Library.library_apikey',
 																				'Library.library_soap_url',
+																				'Library.library_curl_url',
+																				'Library.library_curl_db',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
 																				'Library.library_host_name',
@@ -233,6 +235,8 @@ Class LibrariesController extends AppController
 																				'Library.library_subdomain',
 																				'Library.library_apikey',
 																				'Library.library_soap_url',
+																				'Library.library_curl_url',
+																				'Library.library_curl_db',
 																				'Library.library_authentication_variable',
 																				'Library.library_authentication_response',
 																				'Library.library_host_name',
@@ -379,6 +383,9 @@ Class LibrariesController extends AppController
                     }
                     elseif($this->data['Library']['library_authentication_method'] == 'soap') {
                         $this->Library->setValidation('library_step1_soap');
+                    }
+                    elseif($this->data['Library']['library_authentication_method'] == 'curl') {
+                        $this->Library->setValidation('library_step1_curl');
                     }					
 					else {
                         $this->Library->setValidation('library_step1');
@@ -612,7 +619,10 @@ Class LibrariesController extends AppController
                     }
 					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'soap') {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_soap');
-                    }					
+                    }
+					elseif($this->data['Library']['libraryStepNum'] == 1 && $this->data['Library']['library_authentication_method'] == 'curl') {
+                        $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum'].'_curl');
+                    }						
 					else {
                         $this->Library->setValidation('library_step'.$this->data['Library']['libraryStepNum']);
                     }

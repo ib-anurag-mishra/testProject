@@ -23,6 +23,8 @@
 		$getData['Library']['library_subdomain'] = "";
 		$getData['Library']['library_apikey'] = "none";
 		$getData['Library']['library_soap_url'] = "";
+		$getData['Library']['library_curl_url'] = "";
+		$getData['Library']['library_curl_db'] = "";
 		$getData['Library']['library_authentication_variable'] = "";
 		$getData['Library']['library_authentication_response'] = "";
 		$getData['Library']['error_msg'] = "";		
@@ -170,6 +172,9 @@
 								}
 								elseif($getData['Library']['library_authentication_method'] == "soap") {
 									echo "<label>SOAP Web Services</label>";
+								}
+								elseif($getData['Library']['library_authentication_method'] == "curl_method") {
+									echo "<label>Curl Method</label>";
 								}								
 								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
 							?>
@@ -192,6 +197,7 @@
 									'sip2_var_wo_pin' => 'SIP2 Var w/o PIN',
 									'ezproxy' => 'EZProxy',
 									'soap' => 'SOAP Web Services',
+									'curl_method' => 'Curl Method',
 									'user_account' => 'User Account',
 									'innovative' => 'Innovative',
 									'innovative_var' => 'Innovative Var',
@@ -320,7 +326,16 @@
 					<tr id="sip_institution" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Institution ID');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_institution',array('label' => false, 'value' => $getData['Library']['library_sip_institution'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="curl_url" <?php if($getData['Library']['library_authentication_method'] != "curl" && $getData['Library']['library_authentication_method'] != "curl"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Curl URL');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_curl_url',array('label' => false, 'value' => $getData['Library']['library_curl_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
+					<tr id="curl_db" <?php if($getData['Library']['library_authentication_method'] != "curl" && $getData['Library']['library_authentication_method'] != "curl"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Curl DB Name');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_curl_db',array('label' => false, 'value' => $getData['Library']['library_curl_db'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>					
+					
 					<tr id="sip_version" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250">
 						<?php echo $this->Form->label(null, 'Library SIP2 Server Version');?></td>
@@ -881,6 +896,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'innovative') {
 						$("#allurl").show();
@@ -908,6 +925,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'innovative_var') {
 						$("#allurl").show();
@@ -936,6 +955,8 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_https') {
 						$("#allurl").show();
@@ -964,6 +985,8 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_https_wo_pin') {
 						$("#allurl").show();
@@ -992,6 +1015,8 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}					
 					else if ($(this).val() == 'innovative_https') {
 						$("#allurl").show();
@@ -1019,6 +1044,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}					
 					else if ($(this).val() == 'innovative_wo_pin') {
 						$("#allurl").show();
@@ -1047,6 +1074,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'sip2') {
 						$("#allurl").show();
@@ -1074,6 +1103,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'sip2_wo_pin') {
 						$("#allurl").show();
@@ -1101,6 +1132,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'sip2_var') {
 						$("#allurl").show();
@@ -1129,6 +1162,8 @@
 						$("#msgNo").show();
 						$("#space").show();
 						$("#24_message").show();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'sip2_var_wo_pin') {
 						$("#allurl").show();
@@ -1157,6 +1192,8 @@
 						$("#msgNo").show();
 						$("#space").show();
 						$("#24_message").show();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}					
 					else if ($(this).val() == 'ezproxy') {
 						$("#allurl").hide();
@@ -1184,6 +1221,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}					
 					else if ($(this).val() == 'innovative_var_wo_pin') {
 						$("#allurl").show();
@@ -1212,6 +1251,8 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_name') {
 						$("#allurl").show();
@@ -1240,6 +1281,8 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 					else if ($(this).val() == 'innovative_var_https_name') {
 						$("#allurl").show();
@@ -1268,6 +1311,8 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}					
 					else if ($(this).val() == 'soap') {
 						$("#allurl").show();
@@ -1295,7 +1340,38 @@
 						$("#block_explicit").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-					}					
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
+					}
+					else if ($(this).val() == 'curl') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").hide();
+						$("#innovative2").hide();
+						$("#soap").hide();
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_location").hide();
+						$("#sip_terminal").hide();
+						$("#sip_version").hide();
+						$("#sip_error").hide();
+						$("#sip_password").hide();
+						$("#sip_institution").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+						$("#block_explicit").hide();
+						$("#space").hide();
+						$("#24_message").hide();
+						$("#curl_url").show();
+						$("#curl_db").show();						
+					}						
 					else {
 						$("#allurl").hide();
 						$("#referral_url").hide();
@@ -1322,6 +1398,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
 					}
 				});
 				$("#LibraryLibraryAuthenticationMethod").change(function() {
