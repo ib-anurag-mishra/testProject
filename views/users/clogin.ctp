@@ -13,7 +13,7 @@
 	echo '<fieldset>';	
 	echo $form->create('User', array( 'action' => 'clogin', 'id' => 'login'));
 		echo '<div class="row">';
-		echo $form->input('card', array('label' => __('Member Code', true),'value' => $card));
+		echo $form->input('card', array('label' => __('MemberCode', true),'value' => $card));
 		echo '</div>';
 		echo '<div class="row">';
 		echo $form->input('pin', array('label' => 'Password','value' => $pin, 'type'=>'password'));

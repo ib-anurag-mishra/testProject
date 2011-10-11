@@ -595,7 +595,7 @@
 							<?php
 								echo $this->Form->input('library_language', array('options' => array(
 									'en' => 'English',
-									'es' => 'Spanish'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_language'])
+									'es' => 'Spanish','it' => 'Italian'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_language'])
 								);
 							?>
 						</td>
