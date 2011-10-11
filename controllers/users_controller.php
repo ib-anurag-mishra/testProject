@@ -4140,6 +4140,15 @@ Class UsersController extends AppController
 									)
 								 );					
 				}
+				else {
+					$library_cond = '';
+					$data['library_cond'] = $library_cond;
+					$existingLibraries = $this->Library->find('all',array(
+									'conditions' => array('library_status' => 'active','library_authentication_method' => 'curl_method','id' => $library_cond),
+									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+									)
+								 );					
+				}				
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/clogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
