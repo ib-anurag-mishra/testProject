@@ -16,8 +16,8 @@ class DownloadHelper extends AppHelper {
     function getDownloadData($libId,$startDate,$endDate) {
         $downloadInstance = ClassRegistry::init('Download');
         $downloadInstance->recursive = -1;
-        $downloadCount = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
-        return $downloadCount;
+        $downloadCount = $downloadInstance->find('all',array('fields' => array('COUNT(DISTINCT Download.id) AS totalProds'),'conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate))));
+        return $downloadCount[0][0]['totalProds'];
     }      
 }
 

@@ -90,7 +90,7 @@ class Song extends AppModel
 						));
 		$featuredArtistArr = array();
 		$featuredArtistObj = new Featuredartist();
-		$featuredArtistList = $featuredArtistObj->getallartists();
+		$featuredArtistList = $featuredArtistObj->find('all');
 		foreach($featuredArtistList as $featuredArtist){
 			array_push($featuredArtistArr,$featuredArtist['Featuredartist']['artist_name']);
 		}    

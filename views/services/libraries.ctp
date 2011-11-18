@@ -10,4 +10,4 @@
 
 	header('Content-type: text/xml');
 	echo $this->Xml->header();
-	echo $this->Xml->serialize($result, array('root' => 'Library', 'format' => 'tags', 'cdata' => true));
+	echo $this->Xml->serialize($result, array('root' => 'Libraries', 'format' => 'tags', 'cdata' => true ,'slug' => false));

@@ -5,9 +5,13 @@
 	 Author : m68interactive
  */
 ?>
-<?php echo $javascript->link('freegal_genre_curvy'); ?>
-<div id="genre"><?php __("Search Results");?></div>
-<div style="float:left;width:955px;">
+<div class="breadCrumb">
+<?php
+	$html->addCrumb('Search Results');	
+	echo $html->getCrumbs('&nbsp>&nbsp;','Home','/homes');
+?>
+</div>
+<div style="float:left;width:100%;">
 <?php
 function ieversion()
 {
@@ -32,7 +36,7 @@ if(count($searchResults) != 0){
 <div id="genreAlbum" class="links" >
 	<?php echo $paginator->sort(__("Album") , 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?>>
+<div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:248px;" <?php } ?>>
 	<?php echo $paginator->sort(__("Track") , 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
 <div id="genreDownload"><?php __("Download");?></div>
@@ -50,8 +54,8 @@ if(count($searchResults) != 0){
 			}
 		//	if($searchResult['Country']['Territory'] == $this->Session->read('territory')){
 	?>
-			<tr <?php echo $class; ?>>
-				<td width="180" valign="top">
+			<tr style="margin-left:68px" <?php echo $class; ?>>
+				<td width="210" valign="top">
 					<p>
 						<?php
 							$name = $searchResult['Song']['ArtistText'];
@@ -60,12 +64,12 @@ if(count($searchResults) != 0){
 								if (strlen($searchResult['Song']['ArtistText']) >= 60) {
 									$searchResult['Song']['ArtistText'] = substr($searchResult['Song']['ArtistText'], 0, 60) . '...';
 								}
-								echo '<span title="'.htmlentities($searchResult['Song']['ArtistText']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($name),$searchResult['Song']['ReferenceID'])).'</span>';
+								echo '<span title="'.htmlentities($searchResult['Song']['ArtistText']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'album', base64_encode($name))).'</span>';
 						?>
 						<?php
 							} else {
 								$ArtistName = $searchResult['Song']['ArtistText'];
-								echo $html->link($ArtistName, array('controller' => 'artists', 'action' => 'view', base64_encode($name),$searchResult['Song']['ReferenceID']));
+								echo $html->link($ArtistName, array('controller' => 'artists', 'action' => 'album', base64_encode($name),$searchResult['Song']['ReferenceID']));
 							}
 						?>
 					</p>
@@ -87,7 +91,8 @@ if(count($searchResults) != 0){
 					</p>
 				</td>
 				<?php } ?>
-				<td width="180" valign="top">
+				<td width="210" valign="top">
+					<a href="/artists/view/<?php echo base64_encode($searchResult['Song']['ArtistText']); ?>/<?php echo $searchResult['Song']['ReferenceID'];  ?>" >
 					<p>
 					<?php
 						if (strlen($searchResult['Song']['Title']) >= 19) {
@@ -98,8 +103,9 @@ if(count($searchResults) != 0){
 						
 					?>
 					</p>
+					</a>
 				</td>
-				<td <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:400px;" <?php } ?> valign="top">
+				<td <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:274px;" <?php } ?> valign="top">
 					<p>
 					<?php 
 						if (strlen($searchResult['Song']['SongTitle']) > 25) {
@@ -121,7 +127,7 @@ if(count($searchResults) != 0){
 					?>
 					</p>
 				</td>
-				<td width="130" align="center" style="padding-left:10px" valign="top">
+				<td width="196" align="center" style="padding-left:10px" valign="top">
 					<?php
 						if($searchResult['Country']['SalesDate'] <= date('Y-m-d'))
 						{

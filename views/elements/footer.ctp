@@ -19,13 +19,14 @@ if ($this->Session->read('library') && $this->Session->read('library') != '') {
 		&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;<?php __('All Rights Reserved') ?>
 	</div>
 	<div class="footerlinks">
-		<div class="footerLink"><?php echo $html->link(__('About', true).' Freegal Music', array('controller' => 'homes', 'action' => 'aboutus')); ?></div>
+		<div class="footerLink"><?php echo $html->link(__('About Freegal Music', true), array('controller' => 'homes', 'action' => 'aboutus')); ?></div>
 		<div class="navbar">|</div>
 		<div class="footerLink"><?php echo $html->link(__('Terms & Conditions', true), array('controller' => 'homes', 'action' => 'terms')); ?></div>
 		<div class="navbar">|</div>
 		<div class="footerLink"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></div>
 	</div>
-	<div id="language">
+</div>
+	<span id="language">
 		<?php __('Also available in'); ?>&nbsp;
 		<?php
 		$language = $language->getLanguage();
@@ -38,8 +39,7 @@ if ($this->Session->read('library') && $this->Session->read('library') != '') {
 			$i++;
 		}
 		?>
-	</div>
-</div>
+	</span>
 <?php
 }
 ?>

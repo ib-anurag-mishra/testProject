@@ -367,7 +367,8 @@ $.Autocompleter = function(input, options) {
 				url: options.url,
 				data: $.extend({
 					q: lastWord(term),
-					limit: options.max
+					limit: options.max,
+					type: findType()
 				}, extraParams),
 				success: function(data) {
 					var parsed = options.parse && options.parse(data) || parse(data);
@@ -398,7 +399,9 @@ $.Autocompleter = function(input, options) {
 		}
 		return parsed;
 	};
-
+	  function findType() {
+		return $('#type111').val();
+	  }
 	function stopLoading() {
 		$input.removeClass(options.loadingClass);
 	};

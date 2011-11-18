@@ -53,7 +53,7 @@
 	?>
 </ul>
 <?php
-if($this->Session->read('Config.language') == 'es'){
+if($this->Session->read('Config.language') == 'es' || $this->Session->read('Config.language') == 'it'){
 ?>
 	<style>
 	.popup .login-box .holder {padding: 46px 0px 45px}

@@ -57,7 +57,7 @@
 	?>
 </ul>
 <?php
-if($this->Session->read('Config.language') == 'es'){
+if($this->Session->read('Config.language') == 'es' || $this->Session->read('Config.language') == 'it'){
 ?>
 	<script type="text/javascript">
 	$(".popup .login-box .holder").css('padding': '46px 9px 45px');
