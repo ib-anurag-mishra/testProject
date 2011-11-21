@@ -30,13 +30,7 @@ class Genre extends AppModel {
 		'Country' => array(
 			'className' => 'Country',
 			'foreignKey' => 'ProdID'
-		),	
-		
-		'Songs' => array(
-			'className' => 'Song',
-			'foreignKey' => 'Genre'
-		),	
-		
+		),		
 	);
 	
 }

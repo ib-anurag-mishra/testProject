@@ -1,10 +1,4 @@
-<div class="breadCrumb">
-<?php
-	$html->addCrumb(__($artistName, true), '/artists/album/'.base64_encode($artistName));
-	$html->addCrumb( $albumData[0]['Album']['AlbumTitle']  , '/artists/view/'.base64_encode($artistName).'/'.$album);
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
-?>
-</div>
+<?php echo $javascript->link('freegal_artist_curvy'); ?>
 <div id="artistBox">
 	<?php
 	if(strlen($artistName) >= 30){

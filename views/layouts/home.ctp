@@ -207,7 +207,6 @@
 			</div>
 		</div>
 	<?php } ?>
-	<div id="border-background" >
 	<div id="container">
 		<?php echo $this->element('header'); ?>
 		<div id="content">
@@ -221,6 +220,5 @@
 		<br class="clr">
 	</div>
 	<?php echo $this->element('footer'); ?>
-	</div>
 </body>
 </html>

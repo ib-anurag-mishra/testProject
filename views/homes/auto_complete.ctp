@@ -5,22 +5,22 @@
 	 Author : m68interactive
  */
  $finalResults = Array();
- if(count($output) > 0 && $type == 'album'){ 
-   foreach($output as $albumResult):
+ if(count($albumResults) > 0){ 
+   foreach($albumResults as $albumResult):
        $finalResults[$albumResult['Song']['Title']] = $albumResult['Song']['Title'];
    endforeach;
  }
- if(count($output) > 0 && $type == 'artist'){
-   foreach($output as $artistResult):
+ if(count($artistResults) > 0){
+   foreach($artistResults as $artistResult):
        $finalResults[$artistResult['Song']['ArtistText']] = $artistResult['Song']['ArtistText'];
    endforeach;
  }
- if(count($output) > 0 && $type == 'song'){
-   foreach($output as $songResult):
+ if(count($songResults) > 0){
+   foreach($songResults as $songResult):
        $finalResults[$songResult['Song']['SongTitle']] = $songResult['Song']['SongTitle'];
    endforeach;
  }
- if(count($finalResults) > 0)
+ if($finalResults != '')
  {
    foreach($finalResults as $key => $value):
        echo "$key|$value\n";
@@ -31,4 +31,3 @@
    echo "No results found";
  }
  ?>
- 
