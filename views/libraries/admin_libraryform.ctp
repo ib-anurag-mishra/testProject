@@ -72,6 +72,10 @@
 		$getData['LibraryPurchase']['purchased_tracks'] = "";
 		$getData['LibraryPurchase']['purchased_amount'] = "";
 		$getData['Library']['library_unlimited'] = 0;
+		$getData['Library']['facebook_icon'] = '';
+		$getData['Library']['twiter_icon'] = '';
+		$getData['Library']['youtube_icon'] = '';
+		
 		$getData['Library']['library_language'] = 'en';
 	}
 ?>
@@ -616,6 +620,20 @@
 							</td>
 						</tr>
 					<?php } ?>
+
+					 <tr><td colspan="2"><?php echo $this->Form->label('Social Networking Settings');?></td></tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label(null, 'Twiter link');?></td>
+					  <td aligh="left"><?php echo $this->Form->input('twiter_icon',array('label' => false, 'value' => $getData['Library']['twiter_icon'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					 </tr>       
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label(null, 'Fecbook Link');?></td>
+					  <td aligh="left"><?php echo $this->Form->input('facebook_icon',array('label' => false, 'value' => $getData['Library']['facebook_icon'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					 </tr> 
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label(null, 'Youtube Link');?></td>
+					  <td aligh="left"><?php echo $this->Form->input('youtube_icon',array('label' => false, 'value' => $getData['Library']['youtube_icon'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					 </tr>		
 					<tr>
 						<td colspan="2" align="right"><?php echo $this->Form->button('Next >', array('type' => 'button', 'id' => 'next_btn1'));?></td>
 					</tr>

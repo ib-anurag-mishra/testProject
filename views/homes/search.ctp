@@ -36,10 +36,10 @@ if(count($searchResults) != 0){
 <div id="genreAlbum" class="links" >
 	<?php echo $paginator->sort(__("Album") , 'Song.Title', array('url' => array("?"=>$searchKey))) . $paginator->sort('`', 'Song.Title', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:248px;" <?php } ?>>
+<div id="genreTrack" class="links" <?php if(isset($composer)){ ?> style="width:230px;" <?php }else{ ?> style="width:291px;" <?php } ?>>
 	<?php echo $paginator->sort(__("Track") , 'Song.SongTitle', array('url' => array("?"=>$searchKey))) . $paginator->sort('`',  'Song.SongTitle', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
 </div>
-<div id="genreDownload"><?php __("Download");?></div>
+<div id="genreDownload" style="width:203px"><?php __("Download");?></div>
 <br class="clr">
 <div id="genreResults">
 	<table cellspacing="0" cellpadding="0">
@@ -69,7 +69,7 @@ if(count($searchResults) != 0){
 						<?php
 							} else {
 								$ArtistName = $searchResult['Song']['ArtistText'];
-								echo $html->link($ArtistName, array('controller' => 'artists', 'action' => 'album', base64_encode($name),$searchResult['Song']['ReferenceID']));
+								echo $html->link($ArtistName, array('controller' => 'artists', 'action' => 'album', base64_encode($name)));
 							}
 						?>
 					</p>

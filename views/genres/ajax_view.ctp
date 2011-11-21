@@ -26,13 +26,13 @@ for ($i = 0; $i < $totalRows; $i++) {
 				$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
 				echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
 					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Song']['ArtistText']))) . '</span>'; ?>
+					array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText']))) . '</span>'; ?>
 			<?php
 			} else {
 				$ArtistName = $genres[$counter]['Song']['ArtistText'];
 				echo $html->link(
 					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'view', base64_encode($genres[$counter]['Song']['ArtistText'])));
+					array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText'])));
 			}
 			echo '</p></td>';
 		}

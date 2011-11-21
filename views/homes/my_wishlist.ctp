@@ -7,18 +7,17 @@
 ?>
 <style>
 .txt-my-wishlist {
-	position:absolute;
-	left:160px;
-	width:228px;
-	height:88px;
-	overflow:hidden;
-	text-indent:-9999px;
-	background:url(../img/en/my_wishlist.png) no-repeat;
+	height: 60px;
+    left: 39px;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
+    width: 228px;
+	background:url(../img/<?php echo $this->Session->read('Config.language'); ?>/my_wishlist.png) no-repeat;
 }
 </style>
 <div class="breadCrumb">
 <?php
-	echo $html->image('home.png').'&nbsp;';	
 	$html->addCrumb('My Wishlist', '/homes/my_wishlist');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
@@ -28,7 +27,7 @@
 <div class="txt-my-wishlist">
 	<?php __("Wishlist");?>
 </div>
-<br class="clr"><br class="clr"><br class="clr">
+
 <div id="wishlistText"><?php echo $page->getPageContent('wishlist'); ?></div>
 <div id="genreArtist">
 	<P><?php __("Artist");?></p>

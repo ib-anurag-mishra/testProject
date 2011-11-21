@@ -169,6 +169,9 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date',
 																				'Library.library_contract_end_date',
+																																																			'Library.facebook_icon',
+                                                                                'Library.twiter_icon',
+																				'Library.youtube_icon',
 																				'Library.library_unlimited'
 																				
                                                                                 ),

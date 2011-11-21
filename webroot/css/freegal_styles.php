@@ -430,7 +430,6 @@ ul.marquee li {
 #nav a{
 	float:left;
 	text-align:center;
-	width:144px;
 /*	background:url(../images/tab-gray.png) top left no-repeat;*/
 	text-decoration:none;
 	color:<?php echo $library_navlinks_color; ?>;

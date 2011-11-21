@@ -11,6 +11,7 @@
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
+<br class="clr">
 <style>
 .txt-my-about {
 	background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/about.png") no-repeat scroll 0 0 transparent;
@@ -26,4 +27,5 @@
 <div class="txt-my-about">
 	About Freegal Music&trade;
 </div>
+<br class="clr">
 <div id="aboutUs"><?php echo $page->getPageContent('aboutus'); ?></div>

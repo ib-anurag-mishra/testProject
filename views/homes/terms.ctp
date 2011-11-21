@@ -11,6 +11,7 @@
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
+<br class="clr">
 <style>
 .txt-my-terms {
 	background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/terms.png") no-repeat scroll 0 0 transparent;
@@ -25,6 +26,7 @@
 <div class="txt-my-terms">
 	<?php __('Terms &amp; Conditions');?>
 </div>
+<br class="clr">
 <div id="terms">
     <?php echo $page->getPageContent('terms'); ?>
 </div>

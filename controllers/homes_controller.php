@@ -59,7 +59,7 @@ class HomesController extends AppController
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')),'provider_type != "ioda"'), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$prodIds = '';
 
-			$topDownloaded = Cache::read("lib".$libId);	
+//			$topDownloaded = Cache::read("lib".$libId);	
 			foreach($topDownloaded as $k => $v){
 				$prodIds .= $v['Download']['ProdID']."','"; 
 			}
@@ -114,20 +114,21 @@ class HomesController extends AppController
 			} else {
 				$topDownload = array();
 			}
-
-			// Checking for download status 
-			$this->Download->recursive = -1;
-			foreach($topDownload as $key => $value){
-				$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-				if(count($downloadsUsed) > 0){
-					$topDownload[$key]['Song']['status'] = 'avail';
-				} else{
-					$topDownload[$key]['Song']['status'] = 'not';
-				}
-			}
 			Cache::write("lib".$libId, $topDownload);
 		}
 		$topDownload = Cache::read("lib".$libId);
+		// Checking for download status 
+		$this->Download->recursive = -1;
+		foreach($topDownload as $key => $value){
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+			if(count($downloadsUsed) > 0){
+				$topDownload[$key]['Song']['status'] = 'avail';
+			} else{
+				$topDownload[$key]['Song']['status'] = 'not';
+			}
+		}
+				
+		
 		$this->set('songs',$topDownload);
 		
 		// National Top Downloads functionality
@@ -147,7 +148,7 @@ class HomesController extends AppController
 														), 
 												'group' => array('ProdID'), 
 												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '15' )
+												'order' => 'countProduct DESC', 'limit'=> '100' )
 											);
 			$natprodIds = '';
 			$i =1;
@@ -203,18 +204,18 @@ class HomesController extends AppController
 					}
 			}	
 			// Checking for download status 
-			$this->Download->recursive = -1;
-			foreach($nationalTopDownload as $key => $value){
-				$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-				if(count($downloadsUsed) > 0){
-					$nationalTopDownload[$key]['Song']['status'] = 'avail';
-				} else{
-					$nationalTopDownload[$key]['Song']['status'] = 'not';
-				}
-			}
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
 		$nationalTopDownload = Cache::read("national".$territory);
+		$this->Download->recursive = -1;
+		foreach($nationalTopDownload as $key => $value){
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+			if(count($downloadsUsed) > 0){
+				$nationalTopDownload[$key]['Song']['status'] = 'avail';
+			} else{
+				$nationalTopDownload[$key]['Song']['status'] = 'not';
+			}
+		}		
 		$this->set('nationalTopDownload',$nationalTopDownload);
 		$ids = '';
 		$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory')), 'recursive' => -1));
@@ -322,9 +323,8 @@ class HomesController extends AppController
 					}
 			}
 			Cache::write("pop".$country, $genre_pop);
-		}
+		}		
 		$genre_pop = Cache::read("pop".$country);
-		
 		// Checking for download status 
 		$this->Download->recursive = -1;
 		foreach($genre_pop as $key => $value){
@@ -334,7 +334,7 @@ class HomesController extends AppController
 			} else{
 				$genre_pop[$key]['Song']['status'] = 'not';
 			}
-		}		
+		}
 		$this->set('genre_pop', $genre_pop);
 		
 		//Cachec results for Rock Genre
@@ -392,7 +392,7 @@ class HomesController extends AppController
 					if(count($data) > 1){
 						$genre_rock[] = $data;
 					}
-			}
+			}		
 			Cache::write("rock".$country, $genre_rock);
 		}
 		$genre_rock = Cache::read("rock".$country);
@@ -405,7 +405,7 @@ class HomesController extends AppController
 			} else{
 				$genre_rock[$key]['Song']['status'] = 'not';
 			}
-		}		
+		}			
 		$this->set('genre_rock', $genre_rock);
 		//cache result for Country Genre
 		
@@ -462,7 +462,7 @@ class HomesController extends AppController
 					if(count($data) > 1){
 						$genre_country[] = $data;
 					}
-			}
+			}			
 			Cache::write("country".$country, $genre_country);
 		}
 		$genre_country = Cache::read("country".$country);
@@ -475,11 +475,11 @@ class HomesController extends AppController
 			} else{
 				$genre_country[$key]['Song']['status'] = 'not';
 			}
-		}
+		}		
 		$this->set('genre_country', $genre_country);
 		
 		if (($artists = Cache::read("alternate".$country)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Alternate' ORDER BY created DESC LIMIT 20";
+			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Classical' ORDER BY created DESC LIMIT 20";
 			$genredata = $this->Album->query($genre_query);
 			foreach($genredata as $k => $v){
 					$this->Song->recursive = 2;
@@ -578,6 +578,7 @@ class HomesController extends AppController
 			$searchParam = "@SongTitle ".$searchKey;
 		}
 		$sphinxFinalCondition = $searchParam." & "."@Territory '".$country."' & @DownloadStatus 1";
+//		print $sphinxFinalCondition;exit;
 		$condSphinx = '';
 		$sphinxSort = "";
 		$sphinxDirection = "";
@@ -586,8 +587,9 @@ class HomesController extends AppController
 					));
 	
 		$searchResults = $this->paginate('Song');
-		$output = array_slice($searchResults, 0, 6);			
-		$this->set('albumResults', $output);
+//		$output = array_slice($searchResults, 0, 6);			
+		$this->set('output', $searchResults);
+		$this->set('type', $_REQUEST['type']);
 		$this->layout = 'ajax';
     }
     
@@ -940,11 +942,6 @@ class HomesController extends AppController
         $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-		$provider = 'sony';
-		if($provider != 'sony'){
-			$provider = 'ioda';
-		}
-		$insertArr['provider_type'] = $provider;
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';
@@ -1024,7 +1021,7 @@ class HomesController extends AppController
 		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 		$this->Library->setDataSource('master');
-		$sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."','".$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+		$sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
 		$this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
@@ -1052,8 +1049,7 @@ class HomesController extends AppController
             echo "error";
             exit;		
 		}*/
-    }
-    
+    }    
     /*
      Function Name : advance_search
      Desc : actions used for showing advanced search form
@@ -1762,12 +1758,7 @@ class HomesController extends AppController
             $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
             $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
-			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-			$provider = "sony";
-			if($provider != 'sony'){
-				$provider = "ioda";
-			}
-			$insertArr['provider_type'] = $provider;
+			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];            
             //insert into wishlist table
             $this->Wishlist->save($insertArr);
             //update the libraries table
@@ -1861,11 +1852,6 @@ class HomesController extends AppController
         $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-		$provider = "sony";
-		if($provider != 'sony'){
-			$provider = "ioda";
-		}
-		$insertArr['provider_type'] = $provider;		
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';

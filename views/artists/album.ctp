@@ -1,8 +1,8 @@
-<div id="album_artistBox">
+<div class="breadCrumb">
 	<?php
 		echo $html->link('Home', array('controller'=>'homes', 'action'=>'index'));
 		echo " > ";
-		echo " Search Results ";
+		echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
 		echo " > ";
 		if(strlen($artistName) >= 30){
 			$artistName = substr($artistName, 0, 30). '...';

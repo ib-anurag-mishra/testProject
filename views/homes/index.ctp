@@ -134,8 +134,8 @@
 .txt-new-releases {
 	position:absolute;
 	top:-94px;
-	right:74px;
-	width:238px;
+	right:40px;
+	width:275px;
 	height:88px;
 	overflow:hidden;
 	text-indent:-9999px;
@@ -256,20 +256,20 @@
 	text-indent:-9999px;
 }
 .txt-mylib {
-	width:150px;
-	background:url(../img/txt-tab.gif) no-repeat;
+	width:192px;
+	background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat;
 }
-.active .txt-mylib {background:url(../img/txt-tab.gif) no-repeat 0 -29px;}
+.active .txt-mylib {background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -29px;}
 .txt-national {
 	width:189px;
-	background:url(../img/txt-tab.gif) no-repeat 0 -100px;
+	background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -100px;
 }
-.active .txt-national {background:url(../img/txt-tab.gif) no-repeat 0 -71px;}
+.active .txt-national {background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -71px;}
 .txt-top-genres {
-	width:128px;
-	background:url(../img/txt-tab.gif) no-repeat 0 -170px;
+	width:144px;
+	background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -170px;
 }
-.active .txt-top-genres {background:url(../img/txt-tab.gif) no-repeat 0 -140px;}
+.active .txt-top-genres {background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -140px;}
 .tab-content {
 	width:628px;
 	float:left;
@@ -342,8 +342,7 @@
 	color:#000;
 	padding:0 0 0 20px;
 	text-decoration:none;
-	font-weight:bold;
-	font-size:14px;
+	font-size:13px;
 	white-space:nowrap;
 	line-height:15px;
 }
@@ -363,8 +362,10 @@
 	text-align:center;
 	color:#fff;
 	text-decoration:none;
-	background:url(../img/btn-more.gif) no-repeat;
-	font:20px/34px Tahoma, Arial, Helvetica, sans-serif;
+	background:url(../img/<? echo $this->Session->read('Config.language');?>/Freegal1_bluebutton.png) no-repeat;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
 }
 .outtaHere {
 	position:absolute;
@@ -646,7 +647,9 @@ $ieVersion =  ieversion();
 											?>
 										</span>										
 									</span>
-								<?php }
+								<?php 
+									$k++;
+									}
 									echo "</li>";
 								}else{
 									echo "<p>No Songs downloaded yet</p>";
@@ -661,7 +664,7 @@ $ieVersion =  ieversion();
 			<div class="tab-content" id="tab-2">
 						<div id="info-part">
 							<div id="left-part">
-								<div class="text-box vscrollable" style="width:100%;">
+								<div class="text-box vscrollable" style="width:100%;left: -8px;">
 									<ul>
 										<?php if(count($nationalTopDownload) > 0){ ?>
 										<?php
@@ -782,7 +785,7 @@ $ieVersion =  ieversion();
 						<li><a href="#tab-4" class="tab active">Pop</a></li>
 						<li><a href="#tab-5" class="tab">Rock</a></li>
 						<li><a href="#tab-6" class="tab">Country</a></li>
-						<li><a href="#tab-7" class="tab">Alternative</a></li>
+						<li><a href="#tab-7" class="tab">Classical</a></li>
 					</ul>
 					<div class="tab-content" id="tab-4">
 						<div id="info-part">
@@ -870,15 +873,15 @@ $ieVersion =  ieversion();
 											</span>
 											<span class="song">
 												<?php											
-												if (strlen($genre_pop[$i]['Song']['SongTitle']) >= 15 ) {
-													echo '<span title="'.$genre_pop[$i]['Song']['SongTitle'].'">' . substr($genre_pop[$i]['Song']['SongTitle'], 0, 15) . "..." . "</span>";
+												if (strlen($genre_pop[$i]['Song']['SongTitle']) >= 25 ) {
+													echo '<span title="'.$genre_pop[$i]['Song']['SongTitle'].'">' . substr($genre_pop[$i]['Song']['SongTitle'], 0, 25) . "..." . "</span>";
 												} else {
 													echo $genre_pop[$i]['Song']['SongTitle'];
 												}
 												?>				
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/view/".base64_encode($genre_pop[$i]['Song']['Artist'])."/".$genre_pop[$i]['Song']['ReferenceID']."'>".substr($genre_pop[$i]['Song']['Artist'], 0, 15)."</a>";
+														echo "<a href='/artists/view/".base64_encode($genre_pop[$i]['Song']['Artist'])."/".$genre_pop[$i]['Song']['ReferenceID']."'>".substr($genre_pop[$i]['Song']['Artist'], 0, 25)."</a>";
 													?>
 												</span>									
 											</span>
@@ -980,15 +983,15 @@ $ieVersion =  ieversion();
 											</span>
 										<span class="song">
 											<?php											
-											if (strlen($genre_rock[$i]['Song']['SongTitle']) >= 15 ) {
-												echo '<span title="'.$genre_rock[$i]['Song']['SongTitle'].'">' . substr($genre_rock[$i]['Song']['SongTitle'], 0, 15) . "..." . "</span>";
+											if (strlen($genre_rock[$i]['Song']['SongTitle']) >= 25 ) {
+												echo '<span title="'.$genre_rock[$i]['Song']['SongTitle'].'">' . substr($genre_rock[$i]['Song']['SongTitle'], 0, 25) . "..." . "</span>";
 											} else {
 												echo $genre_rock[$i]['Song']['SongTitle'];
 											}
 											?>				
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/view/".base64_encode($genre_rock[$i]['Song']['Artist'])."/".$genre_rock[$i]['Song']['ReferenceID']."'>".substr($genre_rock[$i]['Song']['Artist'], 0, 15)."</a>";
+														echo "<a href='/artists/view/".base64_encode($genre_rock[$i]['Song']['Artist'])."/".$genre_rock[$i]['Song']['ReferenceID']."'>".substr($genre_rock[$i]['Song']['Artist'], 0, 25)."</a>";
 													?>
 												</span>											
 										</span>
@@ -1090,15 +1093,15 @@ $ieVersion =  ieversion();
 											</span>
 										<span class="song">
 											<?php											
-											if (strlen($genre_country[$i]['Song']['SongTitle']) >= 15 ) {
-												echo '<span title="'.$genre_country[$i]['Song']['SongTitle'].'">' . substr($genre_country[$i]['Song']['SongTitle'], 0, 15) . "..." . "</span>";
+											if (strlen($genre_country[$i]['Song']['SongTitle']) >= 25 ) {
+												echo '<span title="'.$genre_country[$i]['Song']['SongTitle'].'">' . substr($genre_country[$i]['Song']['SongTitle'], 0, 25) . "..." . "</span>";
 											} else {
 												echo $genre_country[$i]['Song']['SongTitle'];
 											}
 											?>				
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/view/".base64_encode($genre_country[$i]['Song']['Artist'])."/".$genre_country[$i]['Song']['ReferenceID']."'>".substr($genre_country[$i]['Song']['Artist'], 0, 15)."</a>";
+														echo "<a href='/artists/view/".base64_encode($genre_country[$i]['Song']['Artist'])."/".$genre_country[$i]['Song']['ReferenceID']."'>".substr($genre_country[$i]['Song']['Artist'], 0, 25)."</a>";
 													?>
 												</span>											
 										</span>
@@ -1201,15 +1204,15 @@ $ieVersion =  ieversion();
 										<span >
 										<span class="song">
 											<?php											
-											if (strlen($genre_alternate[$i]['Song']['SongTitle']) >= 15 ) {
-												echo '<span title="'.$genre_alternate[$i]['Song']['SongTitle'].'">' . substr($genre_alternate[$i]['Song']['SongTitle'], 0, 15) . "..." . "</span>";
+											if (strlen($genre_alternate[$i]['Song']['SongTitle']) >= 23 ) {
+												echo '<span title="'.$genre_alternate[$i]['Song']['SongTitle'].'">' . substr($genre_alternate[$i]['Song']['SongTitle'], 0, 23) . "..." . "</span>";
 											} else {
 												echo $genre_alternate[$i]['Song']['SongTitle'];
 											}
 											?>				
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/view/".base64_encode($genre_alternate[$i]['Song']['Artist'])."/".$genre_alternate[$i]['Song']['ReferenceID']."'>".substr($genre_alternate[$i]['Song']['Artist'], 0, 25)."</a>";
+														echo "<a href='/artists/view/".base64_encode($genre_alternate[$i]['Song']['Artist'])."/".$genre_alternate[$i]['Song']['ReferenceID']."'>".substr($genre_alternate[$i]['Song']['Artist'], 0, 23)."</a>";
 													?>
 												</span>										
 										</span>

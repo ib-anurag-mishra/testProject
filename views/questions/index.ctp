@@ -18,7 +18,6 @@
 </style>
 <div class="breadCrumb">
 <?php
-	echo $html->image('home.png').'&nbsp;';	
 	$html->addCrumb('FAQ', '/questions');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>

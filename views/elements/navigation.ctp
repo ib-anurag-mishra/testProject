@@ -14,11 +14,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
 		$width = 125;
-		
 	}elseif($libraryInfo['Library']['library_unlimited'] == "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
-		$width = 150;
+		$width = 140;
+	}elseif($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] != "user_account"){
+		$width = 140;
 	}else{
-		$width = 168;
+		$width = 166;
 	}
 }
  ?>
@@ -147,7 +148,7 @@ form, fieldset {
 	background:#004080;
 	margin: 5px 0 0;
 }
-#nav li {width:<?php echo $width.'px';?>;}
+#nav li {}
 
 #nav li.first-child {background:none;}
 
@@ -156,6 +157,7 @@ form, fieldset {
 	float:left;
 	text-align:center;
 	text-decoration:none;
+	width:<?php echo $width.'px';?> !important;
 }
 #nav li a:hover {text-decoration:underline;}
 </style>
@@ -166,23 +168,35 @@ form, fieldset {
 		<?php
 		if($libraryInfo['Library']['twiter_icon'] != "") {
 		?>		
-			<li><a href="<?php echo $libraryInfo['Library']['twiter_icon'];?>" class="twitter">twitter</a></li>
+			<li><a href="<?php echo $libraryInfo['Library']['twiter_icon'];?>" class="twitter"  TARGET="_blank">twitter</a></li>
 		<?php 
-			} 
+			} else {
+			?>
+				<li>&nbsp;&nbsp;</li>
+			<?php
+			}
 		?>
 		<?php
 		if($libraryInfo['Library']['facebook_icon'] != "") {
 		?>		
-			<li><a href="<?php echo $libraryInfo['Library']['facebook_icon'];?>" class="facebook">facebook</a></li>
+			<li><a href="<?php echo $libraryInfo['Library']['facebook_icon'];?>" class="facebook"  TARGET="_blank">facebook</a></li>
 		<?php 
-			} 
+			} else {
+			?>
+				<li>&nbsp;&nbsp;</li>
+			<?php
+			}
 		?>
 		<?php
 		if($libraryInfo['Library']['youtube_icon'] != "") {
 		?>		
-			<li><a href="<?php echo $libraryInfo['Library']['youtube_icon'];?>" class="youtube">youtube</a></li>
+			<li><a href="<?php echo $libraryInfo['Library']['youtube_icon'];?>" class="youtube"  TARGET="_blank">youtube</a></li>
 		<?php 
-			} 
+			} else {
+			?>
+				<li>&nbsp;&nbsp;</li>
+			<?php
+			}
 		?>			
 		</ul>
 		<h1 class="logo">
@@ -204,11 +218,11 @@ form, fieldset {
 		}
 		?>
 		</h1>
-		<p>Weekly Downloads <span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></p>
+		<p><?php __('Weekly Downloads'); ?><span id='downloads_used'><?php echo " ".$downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></p>
 	</div>
 	<ul id="nav">
 		<li class="first-child" ><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index') , array('class' => 'navigation_item') );?></li>
-		<li><?php echo $html->link(__('Genres', true), array('controller' => 'genres','action'=>'view'));?></li>
+		<li><?php echo $html->link(__('Genre', true), array('controller' => 'genres','action'=>'view'));?></li>
 		<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>
 		<?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
 		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 'my_wishlist')); ?></li>
@@ -216,7 +230,7 @@ form, fieldset {
 		<?php if($libraryInfo['Library']['library_authentication_method'] == "user_account"){ ?>
 		<li><?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?></li>
 		<?php } ?>		
-		<li><?php echo $html->link(__('My History', true), array('controller' => 'homes', 'action' => 'my_history')); ?></li>
+		<li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array('controller' => 'homes', 'action' => 'my_history')); ?></li>
 		<li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
 		<li><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'));?></li>
 	</ul>
