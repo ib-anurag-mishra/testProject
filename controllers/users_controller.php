@@ -1125,7 +1125,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
-					$authUrl1 = Configure::read('App.AuthUrl')."ilogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl1 = Configure::read('App.AuthUrl_AU')."ilogin_validation";
+					}
+					else{
+						$authUrl1 = Configure::read('App.AuthUrl')."ilogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
 					//echo $result;echo "check";exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -1341,7 +1346,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest"; 
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."idlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."idlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."idlogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);	
 					//echo $result; echo "hiii";exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -1558,7 +1568,12 @@ Class UsersController extends AppController
 					$url = $authUrl."/PATRONAPI/".$card."/dump";  
 					$data['url'] = $url;
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."ildlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."ildogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."ildogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -1753,7 +1768,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump"; 
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."inlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."inlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."inlogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//$resultAnalysis = explode("|",$result);
 					//$resultAnalysis[0] = preg_replace('/[\x00-\x1F\x80-\xFF]/', '', $resultAnalysis[0]);
@@ -1949,7 +1969,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."indlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."indlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."indlogin_validation";
+					}					
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//echo $result;exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -2158,7 +2183,12 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 				}        
 				else{
-						$authUrl = Configure::read('App.AuthUrl')."slogin_validation";
+						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+							$authUrl = Configure::read('App.AuthUrl_AU')."slogin_validation";
+						}
+						else{
+							$authUrl = Configure::read('App.AuthUrl')."slogin_validation";
+						}				
 						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						
@@ -2352,8 +2382,13 @@ Class UsersController extends AppController
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 				}        
-				else{	
-						$authUrl = Configure::read('App.AuthUrl')."snlogin_validation";
+				else{
+						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+							$authUrl = Configure::read('App.AuthUrl_AU')."snlogin_validation";
+						}
+						else{
+							$authUrl = Configure::read('App.AuthUrl')."snlogin_validation";
+						}				
 						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						if($result){
@@ -2573,7 +2608,12 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}        
 				else{
-						$authUrl = Configure::read('App.AuthUrl')."sdlogin_validation";
+						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+							$authUrl = Configure::read('App.AuthUrl_AU')."sdlogin_validation";
+						}
+						else{
+							$authUrl = Configure::read('App.AuthUrl')."sdlogin_validation";
+						}				
 						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis[0] = $result['Posts']['status'];
@@ -2768,7 +2808,12 @@ Class UsersController extends AppController
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 				}        
 				else{
-					$authUrl = Configure::read('App.AuthUrl')."sndlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."sndlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."sndlogin_validation";
+					}				
 					$data['database'] = 'freegal';
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -3110,7 +3155,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."inhlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."inhlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."inhlogin_validation";
+					}					
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -3325,7 +3375,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."ihdlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."ihdlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."ihdlogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -3523,7 +3578,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."inhdlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."inhdlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."inhdlogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -3735,7 +3795,13 @@ Class UsersController extends AppController
 				else{
 					$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."plogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."plogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."plogin_validation";
+					}					
+
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -3949,7 +4015,12 @@ Class UsersController extends AppController
 					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
-					$authUrl = Configure::read('App.AuthUrl')."ilhdlogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl = Configure::read('App.AuthUrl_AU')."ilhdlogin_validation";
+					}
+					else{
+						$authUrl = Configure::read('App.AuthUrl')."ilhdlogin_validation";
+					}					
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 		//			echo $result;echo "hello";exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -4160,7 +4231,12 @@ Class UsersController extends AppController
 				}        
 				else{
 					$data['database'] = 'freegal';
-					$authUrl1 = Configure::read('App.AuthUrl')."clogin_validation";
+					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+						$authUrl1 = Configure::read('App.AuthUrl_AU')."clogin_validation";
+					}
+					else{
+						$authUrl1 = Configure::read('App.AuthUrl')."clogin_validation";
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
