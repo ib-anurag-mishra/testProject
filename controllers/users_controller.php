@@ -1569,10 +1569,10 @@ Class UsersController extends AppController
 					$data['url'] = $url;
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
-						$authUrl = Configure::read('App.AuthUrl_AU')."ildogin_validation";
+						$authUrl = Configure::read('App.AuthUrl_AU')."ildlogin_validation";
 					}
 					else{
-						$authUrl = Configure::read('App.AuthUrl')."ildogin_validation";
+						$authUrl = Configure::read('App.AuthUrl')."ildlogin_validation";
 					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];

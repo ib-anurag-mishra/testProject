@@ -54,7 +54,9 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$prodIds = '';
 		$this->Download->recursive = -1;
-		if (($libDownload = Cache::read("lib".$libId)) === false) {
+		$topDownloaded = array();
+		$topDownloaded = Cache::read("lib".$libId);
+		if (($libDownload = Cache::read("lib".$libId)) === false || count($topDownloaded) == 0) {
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$prodIds = '';
 			Cache::write("lib".$libId, $topDownloaded);

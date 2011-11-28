@@ -163,6 +163,9 @@ Class LibrariesController extends AppController
 																				'Library.show_library_name',
 																				'Library.library_territory',
 																				'Library.library_language',
+																				'Library.facebook_icon',
+                                                                                'Library.twiter_icon',
+																				'Library.youtube_icon',
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date',
 																				'Library.library_contract_end_date',
@@ -282,6 +285,9 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date',
 																				'Library.library_contract_end_date',
+																				'Library.facebook_icon',
+                                                                                'Library.twiter_icon',
+																				'Library.youtube_icon',
 																				'Library.library_unlimited'			
                                                                                 ),
                                                                'contain' => array(
