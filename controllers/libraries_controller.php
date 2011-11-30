@@ -97,8 +97,8 @@ Class LibrariesController extends AppController
      Desc : action for adding the libraries
     */
     function admin_libraryform() {
-		Configure::write('debug', 0);
-        if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
+	//	Configure::write('debug', 0);
+        if( !empty( $this -> params[ 'named' ][ 'id' ] ) ||  $this -> params[ 'named' ][ 'id' ] == '0')//gets the values from the url in form  of array
         {
             $libraryId = $this -> params[ 'named' ][ 'id' ];
             $condition = 'edit';
@@ -170,6 +170,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_contract_start_date',
 																				'Library.library_contract_end_date',
 																				'Library.library_unlimited'
+																				
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(
@@ -182,6 +183,7 @@ Class LibrariesController extends AppController
                                                                                                 )
                                                                             )
                                                                 )));
+			
 				$this -> set( 'getData', $getData );
                 $this->LibraryPurchase->recursive = -1;
                 $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId), 'order' => array('created' => 'asc')));
@@ -288,7 +290,8 @@ Class LibrariesController extends AppController
 																				'Library.facebook_icon',
                                                                                 'Library.twiter_icon',
 																				'Library.youtube_icon',
-																				'Library.library_unlimited'			
+																				'Library.library_unlimited'
+																
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(

@@ -1,19 +1,19 @@
 <?php
-/*
- File Name : admin_artistform.php
- File Description : View page for artist form
- Author : m68interactive
- */
  $this->pageTitle = 'Content'; 
  echo $form->create('Artist', array( 'controller' => 'Artist','action' => $formAction,'enctype' => 'multipart/form-data'));       	 	
  if(empty($getData))
  {
-  $getData['Featuredartist']['artist_name'] = ""; 
-  $getData['Featuredartist']['id'] = "";
-  $getData['Featuredartist']['territory'] = "";    
+	$getData['Featuredartist']['artist_name'] = ""; 
+	$getData['Featuredartist']['id'] = "";
+	$getData['Featuredartist']['territory'] = "";
+	$getData['Featuredartist']['language'] = "";
+	$getData['Featuredartist']['album'] = "";
  }
  if(empty($getArtistData)){
 	$getArtistData = array();
+ }
+ if(empty($album)){
+	$album = array();
  }
 ?>
 <fieldset>
@@ -35,14 +35,21 @@
 			</td>
 		</tr>
 		<tr>
-                 <td align="right" width="390"><?php echo $form->label('Artist Name');?></td>
-                 <td align="left"><div id="getArtist"><?php echo $form->select('artist_name', $getArtistData, $getData['Featuredartist']['artist_name'], array('label' => false, 'div' => false, 'class' => 'select_fields')); ?></div></td>
-          </tr>
-          <tr>
-                 <td align="right" width="390"><?php echo $form->label('Artist Photo');?></td>
-                 <td align="left"><?php echo $form->file('artist_image', array('label' => false, 'div' => false, 'class' => 'form_fields')); ?></td>
-          </tr>
-          <tr>
+		     <td align="right" width="390"><?php echo $form->label('Artist Name');?></td>
+		     <td align="left"><div id="getArtist"><?php echo $form->select('artist_name', $getArtistData, $getData['Featuredartist']['artist_name'], array('label' => false, 'id' => 'artistName', 'div' => false, 'class' => 'select_fields', 'onchange' => 'getAlbum();')); ?></div></td>
+	        </tr>
+		
+		<tr>
+			<td align="right" width="390"><?php echo $form->label('Choose Album');?></td>
+			<td align="left">
+				<div id="getAlbum">
+					<?php
+						echo $form->select('album', $album, $getData['Featuredartist']['album'], array('label' => false, 'div' => false, 'class' => 'select_fields'));
+					?>
+				</div>
+			</td>
+		</tr>		
+        <tr>
                  <td align="center" colspan="2"><p class="submit"><input type="submit" value="Save" /></p></td>
           </tr>
    </table>
@@ -73,4 +80,18 @@
 		});
 		
     });
+	function getAlbum(){		
+		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+$("#artistName").val();
+		jQuery.ajax({
+			type: "post",  // Request method: post, get
+			url: webroot+"admin/artists/getAlbums", // URL to request
+			data: data,  // post data
+			success: function(response) {
+					$('#getAlbum').text('');
+					$('#getAlbum').html(response);
+			},
+			error:function (XMLHttpRequest, textStatus, errorThrown) {}
+		});
+		return false;
+	}	
 </script>

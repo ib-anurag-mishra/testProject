@@ -8,7 +8,7 @@
         $getData['Report']['date'] = "";
         $getData['Report']['date_from'] = "";
         $getData['Report']['date_to'] = "";
-		$getData['Report']['Territory'] = '';
+		$getData['Report']['Territory'] = "";
     }
 ?>
 <fieldset>
@@ -26,8 +26,6 @@
 							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>   
 							<td align="left">
 										<?php
-											$territory[''] = 'Select Territory';
-											ksort($territory);
 											echo $this->Form->input('Territory', array('options' => $territory, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
 																	);
                                 ?>

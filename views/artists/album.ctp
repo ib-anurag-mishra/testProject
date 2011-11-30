@@ -24,7 +24,8 @@
 	?>	
 </div>
 <br class="clr">
-<table style="padding-left:46px;padding-right:40px;" width="100%">
+<div style="padding-left:46px;padding-right:40px;" >
+<table  width="100%">
 <?php
 $i = 0;
 	foreach($albumData as $album_key => $album):
@@ -89,6 +90,7 @@ if($i == 3){
 	endforeach;
 ?>
 </table>
+</div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>

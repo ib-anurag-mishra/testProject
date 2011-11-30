@@ -45,7 +45,7 @@ class NewsController extends AppController
 		$this->layout = 'home';
 		
 		$this->paginate = array(   
-			'order' => 'News.created DESC','limit' => '3'
+			'order' => 'News.created DESC','limit' => '3','cache' => 'no'
 		);
 		$this->set('news', $this->paginate('News'));
 		

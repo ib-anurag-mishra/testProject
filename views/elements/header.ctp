@@ -8,7 +8,7 @@
 /**
  * Header file for home page
  **/
-if($this->Session->read('library') && $this->Session->read('library') != '')
+/*if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
@@ -84,5 +84,5 @@ else {
 	</div>
 </div>
 <?php
-}
+}*/
 ?>

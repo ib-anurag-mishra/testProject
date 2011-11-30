@@ -18,7 +18,7 @@ Class GenresController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view','index');
+		$this->Auth->allowedActions = array('view','index','ajax_view');
 		$libraryCheckArr = array("view","index");
 		if(in_array($this->action,$libraryCheckArr)) {
 		  $validPatron = $this->ValidatePatron->validatepatron();
@@ -103,6 +103,8 @@ Class GenresController extends AppController
 													array('Song.DownloadStatus' => 1),
 												//	array('Song.TrackBundleCount' => 0),
 													array("Song.Sample_FileID != ''"),
+													array('Song.provider_type = Genre.provider_type'),
+													array('Song.provider_type = Country.provider_type'),													
 													array("Song.FullLength_FIleID != ''"),													
 													array('Country.Territory' => $country),
 													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
@@ -116,7 +118,8 @@ Class GenresController extends AppController
 												'Song.DownloadStatus',
 												'Song.SongTitle',
 												'Song.Artist',
-												'Song.Advisory'
+												'Song.Advisory',
+												'Song.provider_type',
 											),
 											'contain' => array(
 												'Genre' => array(
@@ -164,7 +167,7 @@ Class GenresController extends AppController
 				$this->Song->recursive = 2;
 				$this->Song->Behaviors->attach('Containable');
 				$downloadData = $this->Album->find('all', array(
-					'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID']),
+					'conditions'=>array('Album.ProdID' => $genre['Song']['ReferenceID'],'Song.provider_type = Genre.provider_type','Song.provider_type = Country.provider_type'),
 					'fields' => array(
 						'Album.ProdID',
 					),
@@ -188,6 +191,7 @@ Class GenresController extends AppController
 				$finalArr[$i]['AlbumArtwork'] = $albumArtwork;
 				$finalArr[$i]['SongUrl'] = $songUrl;
 				$finalArr[$i]['ProdId'] = $genre['Song']['ProdID'];
+				$finalArr[$i]['provider_type'] = $genre['Song']['provider_type'];
 				$finalArr[$i]['ReferenceId'] = $genre['Song']['ReferenceID'];
 				$finalArr[$i]['SalesDate'] = $genre['Country']['SalesDate'];
 				$finalArr[$i]['SampleSong'] = $sampleSongUrl;
@@ -211,11 +215,41 @@ Class GenresController extends AppController
 	 Desc : actions on view all genres page
         */
 	function view($Genre = null,$Artist = null) {
+		if($Genre == ''){
+			$Genre = "QWx0ZXJuYXRpdmU=";
+		}
 		$this -> layout = 'home';
+		$country = $this->Session->read('territory');
 		if( !base64_decode($Genre) ) {
 			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
 			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
 		}
+		$this->Genre->Behaviors->attach('Containable');
+		$this->Genre->recursive = 2;
+		//if (($genre = Cache::read("genre".$country)) === false) {
+			$genreAll = $this->Genre->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Country.Territory' => $country, "Genre.Genre NOT IN( 'Caribbean','Downtempo','Dub','Fusion','House','Indie' ,'Progressive Rock','Psychedelic Rock', 'Symphony' ,'World' )"
+									)
+								)
+							),
+						'fields' => array(
+								'Genre.Genre'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory'								
+										)
+									),
+						),'group' => 'Genre.Genre'
+					));
+			// Cache::write("genre".$country, $genreAll);
+		// }
+		//$genreAll = Cache::read("genre".$country);
+		$this->set('genresAll', $genreAll);		
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
@@ -244,7 +278,93 @@ Class GenresController extends AppController
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);					
 		$this->paginate = array(
-		      'conditions' => array("Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		      'conditions' => array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type","Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		      'fields' => array('Song.ArtistText'),
+			  'contain' => array(
+				'Country' => array(
+					'fields' => array(
+						'Country.Territory'								
+						)),
+				'Genre' => array(
+					'fields' => array(
+							'Genre.Genre'								
+						)),
+			  ),
+			  'extra' => array('chk' => 1),
+		      'order' => 'Song.ArtistText ASC',		      
+		      'limit' => '60', 'cache' => 'yes','check' => 2
+		      ); 
+		$this->Song->unbindModel(array('hasOne' => array('Participant')));
+		$allArtists = $this->paginate('Song');
+		$this->set('genres', $allArtists);
+		$this->set('genre',base64_decode($Genre));
+	}
+	
+	
+	function ajax_view($Genre = null,$Artist = null) {
+		if($Genre == ''){
+			$Genre = "QWx0ZXJuYXRpdmU=";
+		}
+		$this -> layout = 'ajax';
+		$country = $this->Session->read('territory');
+		if( !base64_decode($Genre) ) {
+			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
+			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
+		}
+		$this->Genre->Behaviors->attach('Containable');
+		$this->Genre->recursive = 2;
+		if (($genre = Cache::read("genre".$country)) === false) {
+			$genreAll = $this->Genre->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Country.Territory' => $country)
+								)
+							),
+						'fields' => array(
+								'Genre.Genre'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory'								
+										)
+									),
+						),'group' => 'Genre.Genre'
+					));
+			Cache::write("genre".$country, $genreAll);
+		}
+		$genreAll = Cache::read("genre".$country);
+		$this->set('genresAll', $genreAll);		
+		$patId = $this->Session->read('patron');
+		$libId = $this->Session->read('library');
+		$country = $this->Session->read('territory');
+		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+		$this->set('libraryDownload',$libraryDownload);
+		$this->set('patronDownload',$patronDownload);
+		if($this->Session->read('block') == 'yes') {
+		      $cond = array('Song.Advisory' => 'F');
+		}
+		else {
+		      $cond = "";
+		}
+		if($Artist == 'spl') {
+			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");			
+		}
+		elseif($Artist != '' && $Artist != 'img') {
+			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
+		}
+		else {
+			$condition = "";
+		}
+		$this->Song->unbindModel(array('hasOne' => array('Participant')));		
+		$this->Song->Behaviors->attach('Containable');
+		$this->Song->recursive = 0;
+		$genre = base64_decode($Genre);
+		$genre = mysql_escape_string($genre);					
+		$this->paginate = array(
+		      'conditions' => array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type","Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
 		      'fields' => array('Song.ArtistText'),
 			  'contain' => array(
 				'Country' => array(
