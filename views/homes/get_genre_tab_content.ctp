@@ -91,7 +91,7 @@ jQuery(document).ready(function() {
 						<?php
 						}?>
 				</span>
-					<span style="float:left;margin-left:12px;">
+					<span style="float:left;margin-left:25px;">
 					<?php
 						$songUrl = shell_exec('perl files/tokengen ' . $genre_info[$i]['Sample_Files']['CdnPath']."/".$genre_info[$i]['Sample_Files']['SaveAsName']);
 						$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
@@ -111,7 +111,7 @@ jQuery(document).ready(function() {
 					?>				
 						<span class="singer">
 							<?php
-								echo "<a href='/artists/view/".base64_encode($genre_info[$i]['Song']['ArtistText'])."/".$genre_info[$i]['Song']['ReferenceID']."'>".substr($genre_info[$i]['Song']['ArtistText'], 0, 23)."</a>";
+								echo "<a href='/artists/album/".base64_encode($genre_info[$i]['Song']['ArtistText'])."'>".substr($genre_info[$i]['Song']['ArtistText'], 0, 23)."</a>";
 							?>
 						</span>										
 				</span>

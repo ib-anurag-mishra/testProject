@@ -149,18 +149,6 @@ jQuery(document).ready(function() {
 		?>	
 		<div class="main-holder">
 			<div class="visual">
-				<?php
-				if($this->Session->read('lId')){
-					$libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
-					if($libraryInfo['Library']['library_image_name'] != ''){
-						?>
-						<strong class="heading-public-library">
-						<img src="<?php echo $cdnPath; ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
-						</strong>
-						<?php
-					}
-				}
-				?>
 				<img src="/img/img1.png" alt="Kenny Chesney - Hemingway's Whiskey" class="decor pos1" width="161" height="158" />
 				<img src="/img/img2.png" alt="Pitbull - Planet Pit" class="decor pos2" width="153" height="148" />
 				<img src="/img/img3.png" alt="Pink - Greatest Hits...So Far" class="decor pos3" width="181" height="180" />
@@ -194,7 +182,7 @@ jQuery(document).ready(function() {
 			</div>
 		</div>
 	</div>
-	<div id="lbOverlay" style="opacity: 0.8;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Authenticating your credentials, please wait...</div></div>
+	<div id="lbOverlay" style="opacity: 0.8;filter: alpha(opacity = 80); zoom:1;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Please wait. Login in progress...</div></div>
 		<div id="footer">
 			<div id="copyright">
 				&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved

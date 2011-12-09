@@ -624,7 +624,7 @@ class HomesController extends AppController
 		
 		//used for gettting top downloads for Pop Genre
 		if (($artists = Cache::read("pop".$country)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Pop' ORDER BY created DESC LIMIT 20";
+			$genre_query = "SELECT downloads.ProdID FROM downloads,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%Pop%' ORDER BY downloads.created DESC LIMIT 10";
 			$genredata = $this->Album->query($genre_query);
 			foreach($genredata as $k => $v){
 					$this->Song->recursive = 2;
@@ -709,7 +709,7 @@ class HomesController extends AppController
 		$this->set('tab_no',$tab_no);
 		 
 		if (($artists = Cache::read($genre.$territory)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = '$genre' ORDER BY created DESC LIMIT 20";
+			$genre_query = "SELECT downloads.ProdID FROM downloads,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%".$genre."%' ORDER BY downloads.created DESC LIMIT 10";
 			$genredata = $this->Album->query($genre_query);
 			foreach($genredata as $k => $v){
 					$this->Song->recursive = 2;
@@ -729,7 +729,7 @@ class HomesController extends AppController
 								'Song.Artist',
 								'Song.Advisory',
 								'Song.Sample_Duration',
-								'Song.FullLength_Duration',
+								'Song.FullLength_Duration'
 							),
 							'contain' => array(
 								'Genre' => array(
@@ -759,10 +759,10 @@ class HomesController extends AppController
 							)
 					);
 					if(count($data) > 1){
-						$genre_info[] = $data;
+						$genre_data[] = $data;
 					}
-			}		
-			Cache::write($genre.$territory, $genre_info);
+			}			
+			Cache::write($genre.$territory, $genre_data);
 		}
 		$genre_info = Cache::read($genre.$territory);
 		// Checking for download status 
@@ -865,20 +865,8 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false) {
-			$terLibrary = $this->Library->find('all', array('conditions' => array('library_territory' => $territory), 'fields' => array('id'), 'order' => 'id DESC'));
-			$libraryds = '';
-			foreach($terLibrary as $k => $v){
-				$libraryds .= $v['Library']['id']."','"; 
-			}
-			$this->Download->recursive = -1;			
-			$natTopDownloaded = $this->Download->find('all', 
-										array('conditions' 
-												=> array('and' => array("Download.library_id IN ('".rtrim($libraryds,",'")."')",'Download.created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')))
-														), 
-												'group' => array('ProdID'), 
-												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '102' )
-											);
+			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '2011-12-06 00:00:00' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 102";
+			$natTopDownloaded = $this->Album->query($sql);
 			$natprodIds = '';
 			$i =1;
 			foreach($natTopDownloaded as $k => $v){
@@ -968,9 +956,14 @@ class HomesController extends AppController
 		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 		if($_REQUEST['type'] == 'album'){
 			$searchParam = "@Title ".$searchKey;
-		}else if($_REQUEST['type'] == 'artist'){
+		}
+		else if($_REQUEST['type'] == 'artist'){
 			$searchParam = "@ArtistText ".$searchKey;
-		}else{
+		}
+		else if($_REQUEST['type'] == 'composer'){
+			$searchParam = "@composer ".$searchKey;
+		}
+		else{
 			$searchParam = "@SongTitle ".$searchKey;
 		}
 		$sphinxFinalCondition = $searchParam." & "."@Territory '".$country."' & @DownloadStatus 1";
@@ -1206,7 +1199,6 @@ class HomesController extends AppController
 						));
 				
 				$searchResults = $this->paginate('Song');
-				print "<pre>";print_r($searchResults);exit;
 				$this->Download->recursive = -1;
 				foreach($searchResults as $key => $value){
 						$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
@@ -1219,6 +1211,9 @@ class HomesController extends AppController
 				$this->set('searchResults', $searchResults);
 			}
 			else {
+				if($_REQUEST['search_type'] == 'composer'){
+					$this->set('composer', "composer");	
+				}
 				$searchKey = '';      
 				$auto = 0;
 				if(isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
@@ -1248,21 +1243,20 @@ class HomesController extends AppController
 						$value = str_replace("$", " ", $value);
 						$value = '"'.addslashes($value).'"';
 						if ($searchParam == "") {
-							$searchParam = "@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+							$searchParam = "@composer ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 						} else {
-							$searchParam = $searchParam." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+							$searchParam = $searchParam." | "."@composer ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
 						}
 					}
 				} else {
 					$searchKey = str_replace("^", " ", $searchKey);
 					$searchKey = str_replace("$", " ", $searchKey);
 					$searchKey = '"'.addslashes($searchKey).'"';
-					$searchParam = "@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey;
+					$searchParam = "@composer ".$searchKey." | "."@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey;
 				}
 				/*$spValue = substr($spValue, 0, -1);
 				$spValue = '"'.$spValue.'"';
 				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;*/
-				
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
 				}		

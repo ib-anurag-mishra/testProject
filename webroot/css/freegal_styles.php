@@ -963,7 +963,7 @@ ul.marquee li {
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
 	text-align: center;
-	margin: 10px 0 10px 10px;
+	margin: 10px 0 10px 45px;
 	line-height:20px;
 }
 
@@ -976,7 +976,7 @@ ul.marquee li {
 
 .lgAlbumArtwork {
         float:left;
-        margin: 0 0 10px 10px;
+        margin: 0 0 10px 45px;
         background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
         width:250px; /* to be removed */

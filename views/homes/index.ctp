@@ -66,9 +66,9 @@
 }
 .form-search {
 	width:326px;
-	height:136px;
+	height:159px;
 	float:left;
-	padding:5px 0 0 18px;
+	padding:0 0 0 18px;
 	background:url(../img/bg-box02.png) no-repeat;
 }
 .logo-freegal {
@@ -79,6 +79,16 @@
 	overflow:hidden;
 	text-indent:-9999px;
 	background:url(../img/logo-freegal.png) no-repeat;
+}
+.advance_search {
+	width:326px;
+	float:left;
+	text-align:right;
+	margin-top:7px;
+}
+.advance_search a:hover {
+	text-decoration:underline;
+	cursor:pointer;
 }
 .form-search .row {
 	overflow:hidden;
@@ -135,7 +145,7 @@
 }
 .txt-new-releases {
 	position:absolute;
-	top:-94px;
+	top:-92px;
 	right:40px;
 	width:275px;
 	height:88px;
@@ -215,7 +225,7 @@
 	float:left;
 }
 .tab-content .tabset {
-	width:311px;
+	width:220px;
 	margin:0;
 	position:relative;
 	z-index:10;
@@ -227,7 +237,7 @@
 	margin:0 0 -4px;
 }
 .tab-content .tabset li {
-	width:311px;
+	width:220px;
 	margin:0;
 	border-bottom:2px solid #bbb;
 }
@@ -240,7 +250,7 @@
 }
 .tab-content .tabset li a {
 	background:none;
-	width:308px;
+	width:216px;
 	height:45px;
 	padding:20px 0 0 22px;
 	text-decoration:none;
@@ -281,7 +291,7 @@
 	background:url(../img/bg-box.png) no-repeat;
 }
 .tab-content .tab-content {
-	width:310px;
+	width:400px;
 	padding:0;
 	background:none;
 	z-index:1;
@@ -330,7 +340,7 @@
 	overflow:hidden;
 	padding:12px 24px 0 0;
 	height:42px;
-	width:340px;
+	width: 400px;
 	vertical-align:top;
 	word-spacing:-2px;
 	border-bottom:2px solid #e6e6e6;
@@ -509,9 +519,10 @@ $ieVersion =  ieversion();
 						<span class="field"><input name="search" type="text" size="24" id="autoComplete" value="" /></span>
 						<input type="hidden" name="auto" size="24" id="auto" value="0" />
 						<span class="in">in</span>
-						<select title="Artists" id="type111"><option value="artist">Artists</option><option value="song">Song</option><option value="album">Album</option></select>
+						<select title="Artists" id="type111" name="search_type"><option value="artist">Artists</option><option value="song">Song</option><option value="album">Album</option><option value="composer">Composer</option></select>
 						<input type="submit" class="submit" value="ok" />
 						</form>
+						<span class="advance_search"><a href="/homes/advance_search">Advanced Search</a>&nbsp;&nbsp;&nbsp;</span>
 					</div>
 				</fieldset>
 			</span>
@@ -633,7 +644,7 @@ $ieVersion =  ieversion();
 												<?php
 												}?>
 										</span>
-											<span style="float:left;margin-left:12px;">
+											<span style="float:left;margin-left:25px;">
 											<?php
 												$songUrl = shell_exec('perl files/tokengen ' . $genre_pop[$i]['Sample_Files']['CdnPath']."/".$genre_pop[$i]['Sample_Files']['SaveAsName']);
 												$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
@@ -653,7 +664,7 @@ $ieVersion =  ieversion();
 												?>				
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/view/".base64_encode($genre_pop[$i]['Song']['ArtistText'])."/".$genre_pop[$i]['Song']['ReferenceID']."'>".substr($genre_pop[$i]['Song']['ArtistText'], 0, 22)."</a>";
+														echo "<a href='/artists/album/".base64_encode($genre_pop[$i]['Song']['ArtistText'])."'>".substr($genre_pop[$i]['Song']['ArtistText'], 0, 22)."</a>";
 													?>
 												</span>									
 											</span>

@@ -72,7 +72,7 @@ function get_content_for_genre_tab(tabno,genre)
 	var load_info = jQuery('#genre-load-info-'+tabno).val();
 	if(load_info == 0)
 	{
-		jQuery('#genre-tab-'+tabno+'-content').empty().html('<img src="/img/ajax-loader-big.gif" img="" style="margin-left: 100px; margin-top: 80px;">');
+		jQuery('#genre-tab-'+tabno+'-content').empty().html('<img src="/img/ajax-loader-big.gif" img="" style="margin-left: 150px; margin-top: 80px;">');
 		jQuery('#genre-tab-'+tabno+'-content').load('/homes/get_genre_tab_content/'+tabno+'/'+genre);
 		jQuery('#genre-load-info-' + tabno).val(1);
 		//setInterval('VSA_initScrollbars()' , 200);

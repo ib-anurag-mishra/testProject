@@ -13,10 +13,10 @@ if($this->Session->read('Config.language') != '') {
 	$html->addCrumb('About Freegal Music', '/homes/aboutus');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
+</div>
 <?php
 }
 ?>
-</div>
 <br class="clr">
 <style>
 .txt-my-about {

@@ -56,6 +56,13 @@
 		$getData['Library']['library_contact_fname'] = "";
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
+		$getData['Library']['library_phone'] = "";
+		$getData['Library']['library_address'] = "";
+		$getData['Library']['library_address2'] = "";
+		$getData['Library']['library_city'] = "";
+		$getData['Library']['library_state'] = "";
+		$getData['Library']['library_country'] = "";
+		$getData['Library']['library_zipcode'] = "";
 		$getData['Library']['library_download_limit'] = "";
 	    $getData['Library']['library_user_download_limit'] = "";
 	    $getData['Library']['library_download_type'] = "daily";

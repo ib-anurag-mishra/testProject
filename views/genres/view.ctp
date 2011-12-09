@@ -209,14 +209,14 @@ function sortText(a, b) {
 
 
  jQuery(document).ready(function() {
- 
- var tgt = $('#genre_scroller');
+
+	var tgt = $('#genre_scroller');
 	arr = $(tgt.find('a').get().sort(sortText));
 	tgt.empty();
 	tgt.empty().append(arr);
 	VSA_initScrollbars();
-	
-	
+
+
    var map = {};
 	jQuery("#genre_scroller a").each(function(){
 		var value = $(this).text();
@@ -228,7 +228,7 @@ function sortText(a, b) {
 		}
 	});
  });
- 
+  
 function replaceText() {
     jQuery(".paging span a").each(function () { 
 		jQuery(this).attr('href' , jQuery(this).attr('href').replace('ajax_view' , 'view'));
@@ -296,7 +296,7 @@ jQuery("html").ajaxStop(replaceText);
 
 <div id="ajax_genrelist_content">
 <div id="genre_artist_search" style="overflow-y: hidden;">
- <a name="bottom"><?php __('Artist Search'); ?>&nbsp;</a>&nbsp;
+ <?php __('Artist Search'); ?>&nbsp;&nbsp;
  <?php echo $html->link('ALL',array('controller' => 'genres', 'action' => 'view', base64_encode($genre)));?>&nbsp;
  <?php echo $html->link('#',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'spl'));?>&nbsp;
  <?php echo $html->link('A',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'A'));?>&nbsp;

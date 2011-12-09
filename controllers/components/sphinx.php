@@ -22,7 +22,7 @@ class SphinxComponent extends Object {
         
     }
 
-    function search($query){
+    function search($query){print_r($query);exit;
         if(!isset(self::$sphinx)){
             self::initialize(null);
         }

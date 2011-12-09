@@ -5,6 +5,12 @@
 	 Author : m68interactive
  */
 ?>
+<div class="breadCrumb">
+<?php
+	$html->addCrumb(__('Advance Search', true), '/homes/advance_search');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
+</div>
 <div id="advance_search_box">
 	<?php __('Advanced Search'); ?>
 </div>
@@ -21,4 +27,3 @@
 		echo $form->end(__('Advanced Search', true));
 	?>
 </div>
-<?php echo $javascript->link('freegal_advsearch_curvy'); ?>

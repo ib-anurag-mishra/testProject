@@ -20,6 +20,11 @@
        $finalResults[$songResult['Song']['SongTitle']] = $songResult['Song']['SongTitle'];
    endforeach;
  }
+ if(count($output) > 0 && $type == 'composer'){
+   foreach($output as $songResult):
+       $finalResults[$songResult['Participant']['Name']] = $songResult['Participant']['Name'];
+   endforeach;
+ }
  if(count($finalResults) > 0)
  {
    foreach($finalResults as $key => $value):

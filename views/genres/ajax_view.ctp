@@ -7,7 +7,7 @@ if(count($genres) == 0)
 
 ?>
 <div id="genre_artist_search" style="overflow-y: hidden;">
- <a name="bottom"><?php __('Artist Search'); ?>&nbsp;</a>&nbsp;
+<?php __('Artist Search'); ?>&nbsp;&nbsp;
  <?php echo $html->link('ALL',array('controller' => 'genres', 'action' => 'view', base64_encode($genre)));?>&nbsp;
  <?php echo $html->link('#',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'spl'));?>&nbsp;
  <?php echo $html->link('A',array('controller' => 'genres', 'action' => 'view', base64_encode($genre),'A'));?>&nbsp;

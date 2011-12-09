@@ -120,7 +120,7 @@ jQuery(document).ready(function() {
 						?>				
 						<span class="singer">
 							<?php
-								echo "<a href='/artists/view/".base64_encode($songs[$i]['Song']['Artist'])."/".$songs[$i]['Song']['ReferenceID']."'>".substr($songs[$i]['Song']['Artist'], 0, 35)."</a>";
+								echo "<a href='/artists/album/".base64_encode($songs[$i]['Song']['ArtistText'])."'>".substr($songs[$i]['Song']['ArtistText'], 0, 35)."</a>";
 							?>
 						</span>										
 					</span>

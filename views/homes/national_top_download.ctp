@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 										<?php
 											$j = 0;
 											$k = 2000;
-											for($i = 0; $i < count($nationalTopDownload); $i++) {
+											for($i = 0; $i < 100; $i++) {
 											if($j==5){
 												break;
 											}
@@ -122,7 +122,7 @@ jQuery(document).ready(function() {
 												?>				
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/view/".base64_encode($nationalTopDownload[$i]['Song']['Artist'])."/".$nationalTopDownload[$i]['Song']['ReferenceID']."'>".substr($nationalTopDownload[$i]['Song']['Artist'], 0, 35)."</a>";
+														echo "<a href='/artists/album/".base64_encode($nationalTopDownload[$i]['Song']['ArtistText'])."'>".substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 35)."</a>";
 													?>
 												</span>									
 											</span>
