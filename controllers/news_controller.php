@@ -38,10 +38,6 @@ class NewsController extends AppController
 	 Desc : actions index for showing faqs at user end
         */
 	function index() {
-	
-		if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
-			$this->Session->write('Config.language', 'en');
-		}
 		$this->layout = 'home';
 		
 		$this->paginate = array(   

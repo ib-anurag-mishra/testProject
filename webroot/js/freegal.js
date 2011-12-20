@@ -223,6 +223,16 @@ function userDownloadOthers(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 	return false;
 }
 
+function userDownloadAll(prodId)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_loader_'+prodId).style.display = 'block';
+	alert(prodId);
+}
+
 function userDownloadIE_top(prodId)
 {
 	$('.beforeClick').hide();

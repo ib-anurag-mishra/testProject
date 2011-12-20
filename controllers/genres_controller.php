@@ -105,7 +105,7 @@ Class GenresController extends AppController
 													array("Song.Sample_FileID != ''"),
 													array("Song.FullLength_FIleID != ''"),													
 													array('Country.Territory' => $country),
-													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
+													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-10 week"))),$cond
 												)
 											),
 											'fields' => array(

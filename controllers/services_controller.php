@@ -149,7 +149,12 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					if(isset($this->params['pass'][3])){
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					}
+					else{
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);					
+					}
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -280,11 +285,17 @@ class ServicesController extends AppController {
 				else {
 					$condSphinx = "@Territory '".addslashes($country)."'";
 				}
-				$searchString =  base64_decode($this->params['pass'][3]);	
+				if($this->params['pass'][4] != ''){
+					$genre = $this->params['pass'][4];
+				}else{
+					$genre = $this->params['pass'][3];
+				}
+	//			print $genre;exit;
+				$searchString =  base64_decode($genre);	
 				$searchString = str_replace("^", " ", $searchString);					
 				$searchString = str_replace("$", " ", $searchString);
 				$sphinxCheckCondition = "&";
-				if($this->params['pass'][3] != '') {
+				if($genre != '') {
 					$sphinxGenreSearch = '@Genre "'.addslashes($searchString).'" '.$sphinxCheckCondition.' ';	
 				}
 				else {
@@ -326,7 +337,12 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					if(isset($this->params['pass'][4])){
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					}
+					else{
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);					
+					}
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -439,7 +455,12 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
-					$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					if(isset($this->params['pass'][3])){
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+					}
+					else{
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);					
+					}
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
 							'conditions'=>array('Album.ProdID' => $v['Song']['ReferenceID']),
@@ -496,7 +517,134 @@ class ServicesController extends AppController {
 				$this->set('result', $result);
 				return;
 			}
-			else{			
+			else{
+				//verification with auth server
+				$card = $this->params['pass'][2];
+				$card = str_replace(" ","",$card);
+				$card = strtolower($card);			
+				$data['card'] = $card;
+				$data['card_orig'] = $card;
+				$data['pin'] = @$this->params['pass'][3];
+				$data['name'] = @$this->params['pass'][3];
+
+				$patronId = $card;
+				$data['patronId'] = $patronId;
+				$cardNo = substr($card,0,5);
+				$data['cardNo'] = $cardNo;
+				$data['library_cond'] = $this->params['pass'][1];
+				$url = $this->Url->find('all', array('conditions' => array('library_id' => $this->params['pass'][1])));
+				if(count($url) > 0){
+					$data['referral']= @$url[0]['Url']['domain_name'];
+				}
+		
+				$data['referral']= @$urlArr[0]['domain_name'];
+				$data['subdomain']= $existingLibraries['0']['Library']['library_subdomain'];
+				$data['database'] = 'freegal';
+				if($existingLibraries['0']['Library']['library_authentication_method'] != 'ezproxy' && $existingLibraries['0']['Library']['library_authentication_method'] != 'user_account') {
+					if($existingLibraries['0']['Library']['library_authentication_method'] == 'referral_url') {
+						//do nothing
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative') {
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/".$v['pin']."/pintest";
+						$authUrl = "https://auth.libraryideas.com/Authentications/ilogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_var') {
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/".$v['pin']."/pintest";
+						$authUrl = "https://auth.libraryideas.com/Authentications/idlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_var_name') {
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/dump";
+						$authUrl = "https://auth.libraryideas.com/Authentications/ildlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_var_https_name') {
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/dump";
+						$authUrl = "https://auth.libraryideas.com/Authentications/ilhdlogin_validation";
+					}			
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_var_https') {
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/".$v['pin']."/pintest";
+						$authUrl = "https://auth.libraryideas.com/Authentications/ihdlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_var_https_wo_pin') {
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/dump";
+						$authUrl = "https://auth.libraryideas.com/Authentications/inhdlogin_validation";
+					}			
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_https'){
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/".$v['pin']."/pintest";
+						$authUrl = "https://auth.libraryideas.com/Authentications/inhlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_wo_pin') {
+						$nopin = 1;
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/dump";
+						$authUrl = "https://auth.libraryideas.com/Authentications/inlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'innovative_var_wo_pin') {
+						$nopin = 1;
+						$data['url'] = $existingLibraries['0']['Library']['library_authentication_url']."/PATRONAPI/".$card."/dump";
+						$authUrl = "https://auth.libraryideas.com/Authentications/indlogin_validation";
+					}		
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'sip2'){            
+						$authUrl = "https://auth.libraryideas.com/Authentications/slogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'sip2_wo_pin'){ 
+						$nopin = 1;
+						$authUrl = "https://auth.libraryideas.com/Authentications/snlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'sip2_var'){            
+						$authUrl = "https://auth.libraryideas.com/Authentications/sdlogin_validation";
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'sip2_var_wo_pin'){
+						$nopin = 1;
+						$authUrl = "https://auth.libraryideas.com/Authentications/sndlogin_validation";
+					}			
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'ezproxy'){ 
+						$nopin = 1;
+						//do nothing
+					}
+					elseif($existingLibraries['0']['Library']['library_authentication_method'] == 'soap'){            
+						$authUrl = "https://auth.libraryideas.com/Authentications/plogin_validation";
+					}			
+					else {
+						$nopin = 1;
+					   //do nothing
+					}
+					if(!empty($data))
+					{
+						$str = '<data ';
+						foreach($data as $key=>$value)
+						{
+							$str = $str.$key.'="'.htmlentities($value).'" ';
+						}
+						$str = $str."></data>";
+					}
+					$post_data = array('xml'=>$str);
+					$url = $authUrl;
+					$ch=curl_init();
+					// tell curl target url
+					curl_setopt($ch, CURLOPT_URL, $url);
+					// tell curl we will be sending via POST
+					curl_setopt($ch, CURLOPT_POST, true);
+					// tell it not to validate ssl cert
+					curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+					curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+					//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+					//curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt"); 
+					// tell it where to get POST variables from
+					curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+					curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+					// make the connection
+					$result = curl_exec($ch);
+					if(strpos($result,"successful") != false){
+						//	Valid credentials
+
+					}
+					else{
+						$result = array('status' => 0 , 'message' => 'Invalid Credentials');
+						$this->set('result', $result);
+						return;	
+					}
+				}
+
+			
 				$country = $existingLibraries['0']['Library']['library_territory'];
 				$patronId = $this->params['pass'][2];
 				$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
@@ -507,8 +655,9 @@ class ServicesController extends AppController {
 					$insertArr['patronid'] = $patronId;
 					$insertArr['session_id'] = session_id();
 					$this->Currentpatron->save($insertArr);						
-				}					
-				if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
+				}
+				Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
+				/*if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 					$date = time();
 					$values = array(0 => $date, 1 => session_id());			
 					Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
@@ -530,7 +679,7 @@ class ServicesController extends AppController {
 						//nothing needs to be done
 					}
 					
-				}
+				}*/
 				$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("consortium", $consortium[0]['Consortium']['consortium_name']);
@@ -567,6 +716,8 @@ class ServicesController extends AppController {
 					$this->Session->write("innovative_var_https_name","innovative_var_name");
 				}elseif($existingLibraries['0']['Library']["library_authentication_method"] == 'referral_url'){
 					$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
+				}else{
+					$nopin = 1;
 				}
 				$this->Session->write($existingLibraries['0']['Library']["library_authentication_method"],$existingLibraries['0']['Library']["library_authentication_method"]);
 				if($existingLibraries['0']['Library']['library_logout_url'] != '' && $this->Session->read('referral') != ''){
@@ -587,7 +738,11 @@ class ServicesController extends AppController {
 				else{
 					$this ->Session->write("block", 'no');
 				}
-				$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3]));			
+				if(isset($nopin)){
+					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3]));
+				}else{
+					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4]));				
+				}
 			}
 		}
 		else{

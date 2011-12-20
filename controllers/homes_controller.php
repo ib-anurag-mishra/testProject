@@ -139,7 +139,9 @@ class HomesController extends AppController
 		
 		
 		$this->Download->recursive = -1;
-		if (($national = Cache::read("national".$territory)) === false) {
+		$natTopDownloaded = array();
+		$natTopDownloaded = Cache::read("national".$territory);		
+		if (($national = Cache::read("national".$territory)) === false || count($natTopDownloaded) == 0) {
 			$natTopDownloaded = $this->Download->find('all', 
 										array('conditions' 
 												=> array('and' => array("Download.library_id IN ('".rtrim($libraryds,",'")."')",'Download.created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')) )
@@ -234,7 +236,7 @@ class HomesController extends AppController
 											'Country.SalesDate'								
 										)
 									),
-								),'cache' => 'yes'
+								),'cache' => 'no'
 							)
 						);
 						

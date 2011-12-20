@@ -43,12 +43,7 @@
                                 <tr>
                                     <td align="left" ><?php echo $library['Library']['library_name']; ?></td>
                                     <td align="left" ><?php echo $library['Library']['library_contract_start_date']; ?></td>
-                                    <td align="left" >
-                                    <?php
-                                        $contractDateArr = explode("-", $library['Library']['library_contract_start_date']);
-                                        echo date("Y-m-d", mktime(0, 0, 0, $contractDateArr[1], $contractDateArr[2], $contractDateArr[0]+1));
-                                    ?>
-                                    </td>
+									<td align="left" ><?php echo $library['Library']['library_contract_end_date']; ?></td>
                                     <td align="left" >
                                     <?php
                                         if($library['Library']['library_status'] == 'active') {

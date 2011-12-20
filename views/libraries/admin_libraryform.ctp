@@ -56,6 +56,13 @@
 		$getData['Library']['library_contact_fname'] = "";
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
+		$getData['Library']['library_phone'] = "";
+		$getData['Library']['library_address'] = "";
+		$getData['Library']['library_address2'] = "";
+		$getData['Library']['library_city'] = "";
+		$getData['Library']['library_state'] = "";
+		$getData['Library']['library_country'] = "";
+		$getData['Library']['library_zipcode'] = "";
 		$getData['Library']['library_download_limit'] = "";
 	    $getData['Library']['library_user_download_limit'] = "";
 	    $getData['Library']['library_download_type'] = "daily";
@@ -583,6 +590,34 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Email Address');?></td>
 						<td align="left"><?php echo $this->Form->input('library_contact_email',array('label' => false ,'value' => $getData['Library']['library_contact_email'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
+					<tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Phone Number');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_phone',array('label' => false ,'value' => $getData['Library']['library_phone'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Address');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_address',array('label' => false ,'type' => 'textarea','rows' => 4, 'value' => $getData['Library']['library_address'], 'div' => false, 'style' => 'width:40%', 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Address2');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_address2',array('label' => false ,'type' => 'textarea','rows' => 4, 'value' => $getData['Library']['library_address2'], 'div' => false, 'style' => 'width:40%', 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('City');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_city',array('label' => false ,'value' => $getData['Library']['library_city'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('State');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_state',array('label' => false ,'value' => $getData['Library']['library_state'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Zip');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_zipcode',array('label' => false ,'value' => $getData['Library']['library_zipcode'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Country');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_country',array('label' => false ,'value' => $getData['Library']['library_country'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Territory');?></td>

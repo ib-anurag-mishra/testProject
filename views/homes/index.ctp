@@ -372,8 +372,8 @@ $ieVersion =  ieversion();
 <div id="artist_container">
     <div id="featured_artist">
             <?php
-            foreach($featuredArtists as $key => $featuredArtist):
-				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory') && $featuredArtist['Featuredartist']['language'] == Configure::read('App.LANGUAGE')){
+            foreach($featuredArtistMenu as $key => $featuredArtist):
+				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory') && $featuredArtist['Featuredartist']['language']  == Configure::read('App.LANGUAGE')){
 					if($key == 0) {
 						echo $html->link(
 							$html->image($cdnPath.'featuredimg/'.$featuredArtist['Featuredartist']['artist_image'], array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),

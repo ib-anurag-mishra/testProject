@@ -11,6 +11,22 @@
 		echo $this->Html->css('freegal_styles');
 		echo $scripts_for_layout;
 	?>
+<style>
+#lbOverlay {
+    background-color: #000000;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+	display:none;
+}
+</style>
 <script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js"></script>	
 <script type="text/javascript">
 	var webroot = '<?php echo $this->webroot; ?>';
@@ -76,6 +92,10 @@
 	}
 	
 jQuery(document).ready(function() {
+
+	jQuery('form').submit(function() {
+		jQuery('#lbOverlay').show();
+	});
 	$("#loadingDiv").hide();
 });	
 </script>	
@@ -128,8 +148,8 @@ jQuery(document).ready(function() {
 				<img src="/img/img1.png" alt="Kenny Chesney - Hemingway's Whiskey" class="decor pos1" width="161" height="158" />
 				<img src="/img/img2.png" alt="Pitbull - Planet Pit" class="decor pos2" width="153" height="148" />
 				<img src="/img/img3.png" alt="Pink - Greatest Hits...So Far" class="decor pos3" width="181" height="180" />
-				<img src="/img/img4.png" alt=" Kings of Leon - Come Around Sundown" class="decor pos4" width="184" height="180" />
-				<img src="/img/img5.png" alt="Adele - 21" class="decor pos5" width="153" height="150" />
+				<img src="/img/Rightside_album1.png" alt=" Beyonce" class="decor pos4" width="184" height="180" />
+				<img src="/img/Rightside_album2.png" alt="Kings of Leon - Come Around Sundown" class="decor pos5" width="153" height="150" />
 				<img src="/img/img6.png" alt="John Mayer - Battle Studies" class="decor pos6" width="170" height="167" />
 			</div>
 			<div id="content">
@@ -157,6 +177,7 @@ jQuery(document).ready(function() {
 			</div>
 		</div>
 	</div>
+		<div id="lbOverlay" style="opacity: 0.8;filter: alpha(opacity = 80); zoom:1;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Please wait. Login in progress...</div></div>
 		<div id="footer">
 			<div id="copyright">
 				&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved

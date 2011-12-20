@@ -75,8 +75,7 @@ Class ArtistsController extends AppController
 			$artistName = '';
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_featured");
 		memcache_close($memcache);
 	}
@@ -130,8 +129,7 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'artistform' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_featured");
 		memcache_close($memcache);		
 	}
@@ -192,8 +190,7 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'managefeaturedartist' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_featured");
 		memcache_close($memcache);		
 	}
@@ -217,8 +214,7 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'managefeaturedartist' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_featured");
 		memcache_close($memcache);		
 	}
@@ -338,8 +334,7 @@ Class ArtistsController extends AppController
 			}
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_artists");
 		memcache_close($memcache);		
 	}
@@ -372,8 +367,7 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'manageartist' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_artists");
 		memcache_close($memcache);		
 	}
@@ -495,8 +489,7 @@ Class ArtistsController extends AppController
 			}
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_newartists");
 		memcache_close($memcache);		
 	}
@@ -529,8 +522,7 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'managenewartist' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
+		$memcache->addServer('10.176.4.199', 11211);
 		memcache_delete($memcache, "app_prod_newartists");
 		memcache_close($memcache);		
 	}
