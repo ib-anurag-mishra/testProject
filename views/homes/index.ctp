@@ -148,7 +148,7 @@ $ieVersion =  ieversion();
 			?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text'>
+						<p class='suggest_text' <?php if($songs[$i]['Song']['status'] == 'avail'){ ?> style=" border-bottom: 1px solid #999;" <?php } ?>>
 							<?php
 							$slNo = ($i + 1);
 							echo $slNo.". ";
@@ -190,17 +190,14 @@ $ieVersion =  ieversion();
 										$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
+										<form method="Post" id="form<?php echo $songs[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+										<input type="hidden" name="ProdID" value="<?php echo $songs[$i]["Song"]["ProdID"];?>" />
 										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
-										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-										<a href='#' onclick='return userDownloadOthers_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
-										<?php } else {?>
-										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a></label>
-										<![endif]-->
-										<?php } ?>
+										<a href='javascript:void(0);' onclick='userDownloadAll("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...');?></span>
-										<span id="download_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+										<span id="download_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-15px;margin-right:15px;')); ?></span>
+										</form>
 										<?php	
 									} else {
 									?>
@@ -265,7 +262,7 @@ $ieVersion =  ieversion();
 			?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text'>
+						<p class='suggest_text' <?php if($nationalTopDownload[$i]['Song']['status'] == 'avail'){ ?> style=" border-bottom: 1px solid #999;" <?php } ?>>
 							<?php
 							$slNo = ($i + 1);
 							echo $slNo.". ";
@@ -307,17 +304,14 @@ $ieVersion =  ieversion();
 										$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
-										<span class="beforeClick" id="songtab_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
-										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-											<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>'><?php __("Download Now");?></label></a>
-										<?php } else {?>
-										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __("Download Now");?></a></label>
-										<![endif]-->
-										<?php } ?>
+										<form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload"  class="suggest_text1">
+										<input type="hidden" name="ProdID" value="<?php echo $nationalTopDownload[$i]["Song"]["ProdID"];?>" />
+										<span class="beforeClick" id="song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
+											<a href='javascript:void(0);' onclick='userDownloadAll("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
 										</span>
 										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-										<span id="download_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+										<span id="download_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-15px;margin-right:15px;')); ?></span>
+										</form>
 										<?php	
 									} else {
 									?>

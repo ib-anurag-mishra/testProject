@@ -203,7 +203,8 @@ class Song extends AppModel
 		'contain' => array(										
 			'Full_Files' => array(
 				'fields' => array(
-					'Full_Files.CdnPath'								                                                
+					'Full_Files.CdnPath',
+					'Full_Files.SaveAsName'
 					),                             
 			)
 	)));

@@ -20,7 +20,7 @@ class HomesController extends AppController
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
 				//$this->Session->destroy();
-				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
+				$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 			else if($validPatron == '2') {
@@ -654,10 +654,9 @@ class HomesController extends AppController
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-		
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        $prodId = $_REQUEST['prodId'];
+        $prodId = $_POST['ProdID'];
 		$downloadsDetail = array();
 /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -681,6 +680,8 @@ class HomesController extends AppController
         $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
+		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';
@@ -767,12 +768,18 @@ class HomesController extends AppController
 		$return = $data[0][0]['@ret'];
 		$this->Library->setDataSource('default');
 		if(is_numeric($return)){
-			echo "suces|".$return;
+			header("Location: ".$finalSongUrl);
 			exit;
 		}
 		else{
-			echo $return;
-			exit;			
+			if($return == 'incld'){
+				$this->Session->setFlash("You have already downloaded this song. Get it from your recent downloads.");
+				$this->redirect(array('controller' => 'homes', 'action' => 'my_history'));	
+			}
+			else{
+				header("Location: ".$_SERVER['HTTP_REFERER']);
+				exit;
+			}
 		}
 /*		if($this->Download->save($insertArr)){
 			$this->Library->setDataSource('master');

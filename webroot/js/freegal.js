@@ -229,8 +229,9 @@ function userDownloadAll(prodId)
 	$('.afterClick').show();
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('song_'+prodId).style.display = 'none';
-	document.getElementById('download_loader_'+prodId).style.display = 'block';
-	alert(prodId);
+	document.getElementById('download_loader_'+prodId).style.display = 'block';	
+	$('#form'+prodId).submit();
+	setTimeout("location.reload(true)", 7000);
 }
 
 function userDownloadIE_top(prodId)

@@ -214,11 +214,20 @@ ul.marquee li {
         font-size:12px;
         margin-left:20px;
         padding-left:10px;
-        padding-bottom:2px;
-        border-bottom: 1px solid #999;
         width:252px;
 }
 
+.suggest_text1 {
+        position:relative;
+        font-size:12px;
+        margin-left:20px;
+        padding-left:10px;
+        padding-bottom:2px;
+        #margin-left:0px !important;
+        #padding-left:0px !important;			
+        border-bottom: 1px solid #999;
+        width:252px;
+}
 .suggest_text img {
         position:absolute;
         top:9px;

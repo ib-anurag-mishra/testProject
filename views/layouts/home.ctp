@@ -115,6 +115,10 @@
 			padding: 0 0 0 2px;
 			height:22px;
 		}
+		.suggest_text1 {
+			margin-left:0px;
+			padding-left:0px;
+		}		
 	</style>
 <![endif]-->
 <!--[if IE 8]>
@@ -123,6 +127,18 @@
 			padding: 0 0 0 2px;
 			height:20px;
 		}
+		.suggest_text1 {
+			margin-left:0px;
+			padding-left:0px;
+		}		
+	</style>
+<![endif]-->
+<!--[if IE 9]>
+	<style>
+		.suggest_text1 {
+			margin-left:0px;
+			padding-left:0px;
+		}		
 	</style>
 <![endif]-->
 	<noscript>

@@ -115,17 +115,14 @@ $ieVersion =  ieversion();
 								$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							?>
 								<p>
-									<span class="beforeClick" id="song_<?php echo $catG["ProdId"]; ?>">
-										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-											<div class="download_links_<?php echo $catG["ProdId"]; ?>"><a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='return userDownloadOthers_safari("<?php echo $catG["ProdId"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a></div>
-										<?php } else {?>
-										<!--[if IE]>
-											<div class="download_links_<?php echo $catG["ProdId"]; ?>"><a title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='return userDownloadIE("<?php echo $catG["ProdId"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a></div>
-										<![endif]-->
-										<?php } ?>
-									</span>
-									<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left"><?php __('Please Wait...');?></span>
-									<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+									<form method="Post" id="form<?php echo $catG["ProdId"]; ?>" action="/homes/userDownload">
+										<input type="hidden" name="ProdID" value="<?php echo $catG["ProdId"];?>" />
+										<span class="beforeClick" id="song_<?php echo $catG["ProdId"]; ?>">
+											<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $catG["ProdId"]; ?>);'><?php __('Download Now');?></a>
+										</span>
+										<span class="afterClick" id="downloading_<?php echo $catG["ProdId"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+										<span id="download_loader_<?php echo $catG["ProdId"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+									</form>													
 								</p>
 							<?php
 							}else {
