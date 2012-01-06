@@ -1325,6 +1325,8 @@ function VSA_handleMouseWheel(event){
 	}
 }
 
+
+
 function VSA_handleSelectStart()
 {
 	event.returnValue = false;
