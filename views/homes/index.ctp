@@ -148,10 +148,11 @@
 	top:-92px;
 	right:40px;
 	width:275px;
-	height:88px;
+	height:98px;
 	overflow:hidden;
 	text-indent:-9999px;
 	background:url(../img/<? echo $this->Session->read('Config.language');?>/featured_artist.gif) no-repeat;
+	margin-top:5px;
 }
 .carousel .holder {
 	width:910px;
@@ -449,6 +450,7 @@
 	display: block;
 	height:1%;
 	padding: 2px 4px;
+	text-align:left;
 }
 .optionsDivVisible a img {
 	border:none;
@@ -589,21 +591,15 @@ $ieVersion =  ieversion();
 													if($libraryDownload == '1' && $patronDownload == '1') {	
 														$genre_pop[$i]['Song']['status'] = 'avail1';
 														if($genre_pop[$i]['Song']['status'] != 'avail') {
-															$songUrl = shell_exec('perl files/tokengen ' . $genre_pop[$i]['Full_Files']['CdnPath']."/".$genre_pop[$i]['Full_Files']['SaveAsName']);
-															$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-															$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-															?>
+															?>															
+															<form method="Post" id="form<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+															<input type="hidden" name="ProdID" value="<?php echo $genre_pop[$i]["Song"]["ProdID"];?>" />
 															<span class="beforeClick" id="song_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>">
-															<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-															<a href='#' onclick='return userDownloadOthers_top("<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
-															<?php } else {?>
-															<!--[if IE]>
-															<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a></label>
-															<![endif]-->
-															<?php } ?>
+															<a href='javascript:void(0);' onclick='userDownloadAll("<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
 															</span>
-															<span class="afterClick" id="downloading_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...');?></span>
-															<span id="download_loader_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+															<span class="afterClick" id="downloading_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+															<span id="download_loader_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-15px;margin-right:-15px')); ?></span>
+															</form>
 															<?php	
 														} else {
 														?>
@@ -644,13 +640,8 @@ $ieVersion =  ieversion();
 												<?php
 												}?>
 										</span>
-											<span style="float:left;margin-left:25px;">
-											<?php
-												$songUrl = shell_exec('perl files/tokengen ' . $genre_pop[$i]['Sample_Files']['CdnPath']."/".$genre_pop[$i]['Sample_Files']['SaveAsName']);
-												$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-												$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-											?>											
-											<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$genre_pop[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
+											<span style="float:left;margin-left:25px;">											
+											<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", '.$genre_pop[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
 											<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$k)); ?>
 											<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$k, "onClick" => 'stopThis(this, "'.$k.'");')); ?>										
 											</span>

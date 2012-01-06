@@ -67,7 +67,7 @@ $(document).ready(function()
          tip: true
       }
    });
-   $('.dload').qtip({
+   $('span .dload').qtip({
       position: {
          corner: {
             target: 'topRight',

@@ -26,10 +26,10 @@ class Featuredartist extends AppModel
     Desc : gets all the artists
     */
     function getallartists() {
-		if (($artists = Cache::read("featured")) === false) {
+//		if (($artists = Cache::read("featured")) === false) {
 			$getArtists = $this->find('all');
 			Cache::write("featured", $getArtists);
-		}
+//		}
 		$getArtists = Cache::read("featured");
         return $getArtists;
     }

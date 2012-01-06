@@ -136,11 +136,8 @@ function getVolume(event) {
 function handleResponse(value) {
 }
 
-function load(event, audioURLOne, audioURLTwo, audioURLThree, playID) {
-    var finalURL = audioURLOne;
-    finalURL += audioURLTwo;
-    finalURL += audioURLThree;
-    document.getElementById('audioplayer').loadAudio(unescape(finalURL), true, playID);
+function load(event, url, playID) {
+    document.getElementById('audioplayer').loadAudio(unescape(url), true, playID);
 }
 
 function pause(event) {
@@ -162,7 +159,7 @@ function stopThis(event, objID) {
     document.getElementById("stop_audio"+objID).style.display = "none";
 }
 
-function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID, webRoot) {
+function playSample(obj, objID, playID, webRoot) {
     $("img[id^='play_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "block";
     });
@@ -177,11 +174,18 @@ function playSample(obj, objID, audioURLOne, audioURLTwo, audioURLThree, playID,
        $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
 	$(".upgradeFlash").click().delay(800);
     }
-    imageID = objID;
-    URLOne = audioURLOne;
-    URLTwo = audioURLTwo;
-    URLThree = audioURLThree;
-    PID = playID;
-    webRootURL = webRoot;
-    load(obj, audioURLOne, audioURLTwo, audioURLThree, playID);
+	var data = "prodId="+playID;
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webRoot+"homes/userSample", // URL to request
+		data: data,  // post data
+		success: function(response) {
+			imageID = objID;
+			PID = playID;
+			webRootURL = webRoot;		
+			load(obj, response, playID);
+		}
+		
+		});	
+//    load(obj, audioURLOne, audioURLTwo, audioURLThree, playID);
 }

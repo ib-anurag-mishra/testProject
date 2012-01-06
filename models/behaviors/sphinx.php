@@ -96,7 +96,7 @@ class SphinxBehavior extends ModelBehavior
         $this->runtime[$model->alias]['sphinx']->SetLimits(($query['page'] - 1) * $query['limit'],
                                                            $query['limit']);
 
-        $indexes = !empty($query['sphinx']['index']) ? implode(',' , $query['sphinx']['index']) : '*';
+        $indexes = !empty($query['sphinx']['index']) ? implode(',' , $query['sphinx']['index']) : 'test1';
 
         $result = $this->runtime[$model->alias]['sphinx']->Query($query['search'], $indexes);
 

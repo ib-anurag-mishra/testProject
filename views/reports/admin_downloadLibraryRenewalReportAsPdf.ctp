@@ -48,7 +48,7 @@
     //Data loading
     foreach($sitelibraries as $library) {
         $contractDateArr = explode("-", $library['Library']['library_contract_start_date']);
-        $contractEndDate = date("Y-m-d", mktime(0, 0, 0, $contractDateArr[1], $contractDateArr[2], $contractDateArr[0]+1));
+        $contractEndDate = $library['Library']['library_contract_end_date'];
         if($library['Library']['library_status'] == 'active') {
             $currentsatus = "Active";
         }

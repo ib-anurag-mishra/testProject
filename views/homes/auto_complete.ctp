@@ -31,9 +31,5 @@
        echo "$key|$value\n";
        endforeach;
  }
- else
- {
-   echo "No results found";
- }
  ?>
  

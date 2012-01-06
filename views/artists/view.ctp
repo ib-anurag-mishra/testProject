@@ -89,10 +89,7 @@
 									<p>
 									<?php
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
-											$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Sample_Files']['CdnPath']."/".$albumSong['Sample_Files']['SaveAsName']);
-											$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-											$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$albumSong["Song"]["ProdID"].', "'.$this->webroot.'");'));
+											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.$this->webroot.'");'));
 											echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
 											echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
 										}
@@ -134,22 +131,16 @@
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
 												if($albumSong['Song']['status'] != 'avail'){
-													$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
-													$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-													$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 													<p>
-														<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-															<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-																<a href='#' title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a>
-															<?php } else {?>
-															<!--[if IE]>
-																<a title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a>
-															<![endif]-->
-															<?php } ?>
-														</span>
-														<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left;"><?php __("Please Wait...");?></span>
-														<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
+															<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+																<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+															</span>
+															<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+														</form>													
 													</p>													
 									<?php	
 												} else {

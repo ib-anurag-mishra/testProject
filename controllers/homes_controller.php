@@ -865,7 +865,7 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false) {
-			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '2011-12-06 00:00:00' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 102";
+			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 102";
 			$natTopDownloaded = $this->Album->query($sql);
 			$natprodIds = '';
 			$i =1;
@@ -1307,10 +1307,9 @@ class HomesController extends AppController
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-		
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
-        $prodId = $_REQUEST['prodId'];
+        $prodId = $_POST['ProdID'];
 		$downloadsDetail = array();
 /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -1334,6 +1333,8 @@ class HomesController extends AppController
         $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
+		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';
@@ -1420,12 +1421,18 @@ class HomesController extends AppController
 		$return = $data[0][0]['@ret'];
 		$this->Library->setDataSource('default');
 		if(is_numeric($return)){
-			echo "suces|".$return;
+			header("Location: ".$finalSongUrl);
 			exit;
 		}
 		else{
-			echo $return;
-			exit;			
+			if($return == 'incld'){
+				$this->Session->setFlash("You have already downloaded this song. Get it from your recent downloads.");
+				$this->redirect(array('controller' => 'homes', 'action' => 'my_history'));	
+			}
+			else{
+				header("Location: ".$_SERVER['HTTP_REFERER']);
+				exit;
+			}
 		}
 /*		if($this->Download->save($insertArr)){
 			$this->Library->setDataSource('master');
@@ -1441,7 +1448,7 @@ class HomesController extends AppController
             echo "error";
             exit;		
 		}*/
-    }    
+    }
     /*
      Function Name : advance_search
      Desc : actions used for showing advanced search form
@@ -2637,5 +2644,29 @@ class HomesController extends AppController
 		echo sha1($str);
 		exit;
    }
+	//Used to get Sample Song url
+	function userSample()
+	{
+		Configure::write('debug', 0);
+		$this->layout = false;
+		$prodId = $_POST['prodId'];
+		$this->Song->recursive = 2;
+		$data =  $this->Song->find('first',array('conditions' => array('Song.ProdID' =>$prodId),
+												'contain' => array(
+													'Sample_Files' => array(
+														'fields' => array(
+																	'Sample_Files.CdnPath' ,
+																	'Sample_Files.SaveAsName'
+															)
+														)
+												)
+											)
+										);
+												
+		$songUrl = shell_exec('perl files/tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
+		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+		echo $finalSongUrl;
+		exit;
+	}   
 }
 ?>
