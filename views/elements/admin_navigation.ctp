@@ -92,7 +92,10 @@
 					</li>
 					<li>
 						<?php echo $html->link('Manage Consortium', array('controller' => 'libraries', 'action' => 'consortium'));?>
-					</li>					
+					</li>
+					<li>
+						<?php echo $html->link('mdlogin/mndlogin Cards', array('controller' => 'libraries', 'action' => 'card'));?>
+					</li>
 				</ul>
 			</li>
 			<li>
