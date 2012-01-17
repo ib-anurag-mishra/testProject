@@ -92,7 +92,10 @@
 					</li>
 					<li>
 						<?php echo $html->link('Manage Consortium', array('controller' => 'libraries', 'action' => 'consortium'));?>
-					</li>					
+					</li>
+					<li>
+						<?php echo $html->link('mdlogin/mndlogin Cards', array('controller' => 'libraries', 'action' => 'card'));?>
+					</li>
 				</ul>
 			</li>
 			<li>
@@ -137,9 +140,6 @@
 							<li><?php echo $html->link('Manage Recent Downloads Text', array('controller' => 'homes', 'action' => 'historyform'));?></li>
 						</ul>
 					</li>
-					
-					<li><?php echo $html->link('Add News', array('controller' => 'news', 'action' => 'add'));?></li>	
-					
 					<li>
 						<?php echo $html->link('Site Settings', array('controller' => 'site_settings', 'action' => 'index'));?>
 					</li>

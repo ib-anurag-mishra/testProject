@@ -1343,6 +1343,14 @@ class HomesController extends AppController
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative';
 		}
+		elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'mdlogin_reference';
+		}		
+		elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'mndlogin_reference';
+		}	
 		elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var';
@@ -1929,6 +1937,12 @@ class HomesController extends AppController
 			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')) {
 				$url = $this->webroot.'users/ilogin';
 			}
+			elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')) {
+				$url = $this->webroot.'users/mdlogin';
+			}	
+			elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')) {
+				$url = $this->webroot.'users/mndlogin';
+			}
 			elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')) {
 				$url = $this->webroot.'users/idlogin';
 			}
@@ -2005,7 +2019,7 @@ class HomesController extends AppController
 		//echo '+++++'.$this->Cookie->read('msg').'asfsdaf';
 		
 		//exit;
-		$this->layout = 'aboutus';
+		$this->layout = 'home';
     }
 	
 /*
@@ -2259,6 +2273,14 @@ class HomesController extends AppController
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative';
 		}
+		elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'mdlogin_reference';
+		}		
+		elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
+			$insertArr['email'] = '';
+			$insertArr['user_login_type'] = 'mndlogin_reference';
+		}	
 		elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var';

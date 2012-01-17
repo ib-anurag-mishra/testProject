@@ -186,7 +186,13 @@
 								}
 								elseif($getData['Library']['library_authentication_method'] == "curl_method") {
 									echo "<label>Curl Method</label>";
-								}								
+								}
+								elseif($getData['Library']['library_authentication_method'] == "mdlogin_reference") {
+									echo "<label>MDLogin</label>";
+								}	
+								elseif($getData['Library']['library_authentication_method'] == "mndlogin_reference") {
+									echo "<label>MNDLogin</label>";
+								}	
 								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
 							?>
 						</td>
@@ -217,8 +223,10 @@
 									'innovative_wo_pin' => 'Innovative w/o PIN',
 									'innovative_https' => 'Innovative HTTPS',
 									'innovative_var_https' => 'Innovative Var HTTPS',
+									
 									'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
-									'innovative_var_wo_pin' => 'Innovative Var w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
+									'innovative_var_wo_pin' => 'Innovative Var w/o PIN','mdlogin_reference' => 'MDLogin','mndlogin_reference' => 'MNDLogin'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
+									)
 								);
 							?>
 						</td>
@@ -298,7 +306,9 @@
 					$getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" &&
 					$getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" &&  
 					$getData['Library']['library_authentication_method'] != "innovative_var_https_name" &&
-					$getData['Library']['library_authentication_method'] != "soap"){?>style="display:none;"<?php } ?>>
+					$getData['Library']['library_authentication_method'] != "soap" &&
+					$getData['Library']['library_authentication_method'] != "mdlogin_reference" && 
+					$getData['Library']['library_authentication_method'] != "mndlogin_reference" ){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
@@ -590,6 +600,34 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Email Address');?></td>
 						<td align="left"><?php echo $this->Form->input('library_contact_email',array('label' => false ,'value' => $getData['Library']['library_contact_email'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
+					<tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Phone Number');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_phone',array('label' => false ,'value' => $getData['Library']['library_phone'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Address');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_address',array('label' => false ,'type' => 'textarea','rows' => 4, 'value' => $getData['Library']['library_address'], 'div' => false, 'style' => 'width:40%', 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Address2');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_address2',array('label' => false ,'type' => 'textarea','rows' => 4, 'value' => $getData['Library']['library_address2'], 'div' => false, 'style' => 'width:40%', 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('City');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_city',array('label' => false ,'value' => $getData['Library']['library_city'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('State');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_state',array('label' => false ,'value' => $getData['Library']['library_state'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Zip');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_zipcode',array('label' => false ,'value' => $getData['Library']['library_zipcode'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Country');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_country',array('label' => false ,'value' => $getData['Library']['library_country'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Territory');?></td>
@@ -953,6 +991,64 @@
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
+					else if ($(this).val() == 'mdlogin_reference') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").hide();
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_location").hide();
+						$("#sip_terminal").hide();
+						$("#sip_version").hide();
+						$("#sip_password").hide();
+						$("#sip_error").hide();
+						$("#sip_institution").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+						$("#soap").hide();
+						$("#block_explicit").show();
+						$("#space").hide();
+						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
+					}					
+					else if ($(this).val() == 'mndlogin_reference') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").hide();
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_location").hide();
+						$("#sip_terminal").hide();
+						$("#sip_version").hide();
+						$("#sip_password").hide();
+						$("#sip_error").hide();
+						$("#sip_institution").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+						$("#soap").hide();
+						$("#block_explicit").show();
+						$("#space").hide();
+						$("#24_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
+					}					
 					else if ($(this).val() == 'innovative_var') {
 						$("#allurl").show();
 						$("#referral_url").hide();

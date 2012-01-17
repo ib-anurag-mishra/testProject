@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card');
     
     /*
      Function Name : beforeFilter
@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     */
     function beforeFilter() {	  
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron','admin_consortium', 'admin_consortiumform', 'admin_addconsortium');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron','admin_consortium', 'admin_consortiumform', 'admin_addconsortium' , 'admin_card' , 'admin_get_libraries');
     }
     
     /*
@@ -97,8 +97,8 @@ Class LibrariesController extends AppController
      Desc : action for adding the libraries
     */
     function admin_libraryform() {
-	//	Configure::write('debug', 0);
-        if( !empty( $this -> params[ 'named' ][ 'id' ] ) ||  $this -> params[ 'named' ][ 'id' ] == '0')//gets the values from the url in form  of array
+		Configure::write('debug', 0);
+        if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
         {
             $libraryId = $this -> params[ 'named' ][ 'id' ];
             $condition = 'edit';
@@ -154,13 +154,13 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
-																			//    'Library.library_phone',
-																			//    'Library.library_address',
-																			//    'Library.library_address2',
-																			//    'Library.library_city',
-																			//    'Library.library_state',
-																			//    'Library.library_zipcode',
-																			//    'Library.library_country',
+																				'Library.library_phone',
+																				'Library.library_address',
+																				'Library.library_address2',
+																				'Library.library_city',
+																				'Library.library_state',
+																				'Library.library_zipcode',
+																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
@@ -177,7 +177,6 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_contract_start_date',
 																				'Library.library_contract_end_date',
 																				'Library.library_unlimited'
-																				
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(
@@ -190,7 +189,6 @@ Class LibrariesController extends AppController
                                                                                                 )
                                                                             )
                                                                 )));
-			
 				$this -> set( 'getData', $getData );
                 $this->LibraryPurchase->recursive = -1;
                 $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId), 'order' => array('created' => 'asc')));
@@ -280,13 +278,13 @@ Class LibrariesController extends AppController
 																				'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
-																			//	'Library.library_phone',
-																			//	'Library.library_address',
-																			//	'Library.library_address2',
-																			//	'Library.library_city',
-																			//	'Library.library_state',
-																			//	'Library.library_zipcode',
-																			//	'Library.library_country',
+																				'Library.library_phone',
+																				'Library.library_address',
+																				'Library.library_address2',
+																				'Library.library_city',
+																				'Library.library_state',
+																				'Library.library_zipcode',
+																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
@@ -304,8 +302,7 @@ Class LibrariesController extends AppController
 																				'Library.facebook_icon',
                                                                                 'Library.twiter_icon',
 																				'Library.youtube_icon',
-																				'Library.library_unlimited'
-																
+																				'Library.library_unlimited'			
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(
@@ -910,5 +907,141 @@ Class LibrariesController extends AppController
 			$this->set( 'formAction', 'admin_addConsortium');		
 		}		
 	}
+	
+		/*
+    Function Name : admin_card
+    Desc : action for adding library cards
+    */
+    function admin_card() {
+	
+		set_time_limit(0);
+		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
+		
+		if(isset($this->data)) {
+
+			if($this->data['Libraries']['Login Method'] == '')
+			{
+				$this->Session->setFlash( 'Error: Please select a login Method.' , 'modal', array( 'class' => 'modal problem' ) );
+			}
+			else if($this->data['Libraries']['Library'] == '')
+			{
+				$this->Session->setFlash( 'Error: Please select a library.' , 'modal', array( 'class' => 'modal problem' ) );
+				$login_method = $this->data['Libraries']['Login Method'];
+				$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$login_method."%")));
+				$this->set('libs' , $libs);
+			}
+			else if($_FILES["xls_sheet"]['name'] == '')
+			{
+				$this->Session->setFlash( 'Error: You must upload a xls file.' , 'modal', array( 'class' => 'modal problem' ) );
+				$login_method = $this->data['Libraries']['Login Method'];
+				$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$login_method."%")));
+				$this->set('libs' , $libs);
+			}
+			else if(end(explode(".",strtolower($_FILES["xls_sheet"]['name']))) != 'xls')
+			{
+				$this->Session->setFlash( 'Error: Only .xls files are supported', 'modal', array( 'class' => 'modal problem' ) );
+				$login_method = $this->data['Libraries']['Login Method'];
+				$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$login_method."%")));
+				$this->set('libs' , $libs);
+			}
+			else
+			{
+				$file_path = "uploads/" . $_FILES["xls_sheet"]["name"];
+				if(move_uploaded_file($_FILES["xls_sheet"]["tmp_name"], $file_path))
+				{
+					require_once 'Excel/reader.php';
+					error_reporting(E_ALL ^ E_NOTICE);
+					$data = new Spreadsheet_Excel_Reader();
+
+					// Set output Encoding.
+					$data->setOutputEncoding('CP1251');
+					$data->read($file_path);
+					
+					//Validations
+					$card_array = array();
+					$error = 0; 
+					for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
+					
+						if($data->sheets[0]['cells'][$i][1] == '') {
+							$this->Session->setFlash( 'Card number can not be empty! Error at Line '.$i.' in xls sheet.', 'modal', array( 'class' => 'modal problem' ) );
+							$error++;
+							$this->redirect(array('controller' => 'libraries', 'action' => 'card'));
+							
+						} else if(($data->sheets[0]['cells'][$i][2] == '') && ($this->data['Libraries']['Login Method'] == 'mdlogin')) {
+							$this->Session->setFlash( 'Pin can not be empty for mdlogin method! Error at Line '.$i.' in xls sheet.', 'modal', array( 'class' => 'modal problem' ) );
+							$error++;
+							$this->redirect(array('controller' => 'libraries', 'action' => 'card'));
+						}
+						
+						$card_array[] = $data->sheets[0]['cells'][$i];
+					}
+					if(!$error)
+					{
+						foreach ($card_array as $card) {
+
+							$card_number = trim($card[1] , '"');
+							
+							if($this->data['Libraries']['Login Method'] == 'mdlogin')
+								$pin = mysql_real_escape_string(trim($card[2] , '"'));
+							else
+								$pin = '';
+							$library_id = mysql_real_escape_string($this->data['Libraries']['Library']);
+							$chk_result = mysql_query("SELECT id FROM cards WHERE card_number = '$card_number' and library_id = '$library_id'");
+							if(mysql_num_rows($chk_result) > 0)
+							{
+							
+								$this->Card->setDataSource('master');
+								$sql = "UPDATE cards SET pin = $pin  , modified = NOW() WHERE card_number = '$card_number' AND library_id = '$library_id'";
+								$this->Card->query($sql);
+								$this->Card->setDataSource('default');
+								
+							}
+							else
+							{
+								$this->Card->setDataSource('master');
+								$sql = "INSERT INTO cards(library_id , card_number , pin , created , modified) VALUES ('$library_id' , '$card_number' , '$pin' , NOW() , NOW() )";
+								$this->Card->query($sql);
+								$this->Card->setDataSource('default');
+								
+							}
+
+						}
+						$this->Session->setFlash( 'Credentials imported successfully!', 'modal', array( 'class' => 'modal success' ) );
+						$this->redirect(array('controller' => 'libraries', 'action' => 'card'));
+					}
+				}
+			}
+			
+	  
+		
+		}
+		else{
+			$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'),'conditions' => array('Library.library_territory= "'.$this->data['Report']['Territory'].'"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));	
+			$this->set( 'formAction', 'admin_card');		
+		}		
+    }
+	
+	function admin_get_libraries() {
+		Configure::write('debug', 0);
+		$this->layout = false;
+		if(isset($_POST['method']) && (!empty($_POST['method']))){
+			$methode = $_POST['method'];
+			$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$methode."%")));
+			$data = '';
+			foreach($libs as $k=>$v){
+			$data = $data."<option value=".$k.">".$v."</option>";
+			}
+			print "<select id='LibrariesLibrary' name='data[Libraries][Library]' ><option value=''>Select Library</option>".$data."</select>";exit;
+	
+		}	
+		else
+		{
+			print "<select id='LibrariesLibrary' name='data[Libraries][Library]' ><option value='' >Select Library</option></select>";exit;
+			print "";
+		}
+    }
 }
 ?>
