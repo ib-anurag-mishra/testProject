@@ -191,7 +191,7 @@ class CacheController extends AppController {
 									),
 						),'group' => 'Genre.Genre'
 					));
-			echo $territory;
+			Cache::write("genre".$territory, $genreAll);
 			echo date("Y-m-d H:i:s");				
 			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 100";
 			$natTopDownloaded = $this->Album->query($sql);
