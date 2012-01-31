@@ -1241,6 +1241,7 @@ class HomesController extends AppController
 				}else if($_REQUEST['search_type'] == 'song'){
 					$searchtype = 'SongTitle';
 				}
+				$this->set('searchtype', $searchtype);
 				if ($auto == 0) {
 					$searchParam = "";
 					$expSearchKeys = explode(" ", $searchKey);

@@ -200,8 +200,8 @@ if(count($searchResults) != 0){
 </div>
 <div class="paging">
     <?php
-		if(isset($composer)){
-			$searchKey = $searchKey."&search_type=".$composer;
+		if(isset($searchtype)){
+			$searchKey = $searchKey."&search_type=".$searchtype;
 		}
         $paginator->options(array('url' => array("?"=>$searchKey)));
     ?>
