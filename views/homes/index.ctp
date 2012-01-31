@@ -148,7 +148,7 @@ $ieVersion =  ieversion();
 			?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text' <?php if($songs[$i]['Song']['status'] == 'avail'){ ?> style=" border-bottom: 1px solid #999;" <?php } ?>>
+						<p class='suggest_text' <?php if($songs[$i]['Song']['status'] == 'avail' || $patronDownload != '1' || $libraryDownload != '1' || $songs[$i]['Country']['SalesDate'] > date('Y-m-d')){ ?> style=" border-bottom: 1px solid #999;" <?php } ?>>
 							<?php
 							$slNo = ($i + 1);
 							echo $slNo.". ";
@@ -262,7 +262,7 @@ $ieVersion =  ieversion();
 			?>
 				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
 					<td>
-						<p class='suggest_text' <?php if($nationalTopDownload[$i]['Song']['status'] == 'avail'){ ?> style=" border-bottom: 1px solid #999;" <?php } ?>>
+						<p class='suggest_text' <?php if($nationalTopDownload[$i]['Song']['status'] == 'avail' || $patronDownload != '1' || $libraryDownload != '1'  || $nationalTopDownload[$i]['Country']['SalesDate'] > date('Y-m-d')){ ?> style=" border-bottom: 1px solid #999;" <?php } ?>>
 							<?php
 							$slNo = ($i + 1);
 							echo $slNo.". ";

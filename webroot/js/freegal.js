@@ -63,15 +63,20 @@ else if (document.all&&!document.getElementById) {
 document.oncontextmenu=new Function("return false");
 var id;
 
+var prodId;
 function userDownloadAll(prodId)
 {
-	$('.beforeClick').hide();
-	$('.afterClick').show();
-	document.getElementById('downloading_'+prodId).style.display = 'block';
-	document.getElementById('song_'+prodId).style.display = 'none';
-	document.getElementById('download_loader_'+prodId).style.display = 'block';	
-	$('#form'+prodId).submit();
-	setTimeout("location.reload(true)", 7000);
+	if(prodId > 0){
+		$('.beforeClick').hide();
+		$('.afterClick').show();
+		document.getElementById('downloading_'+prodId).style.display = 'block';
+		document.getElementById('song_'+prodId).style.display = 'none';
+		document.getElementById('download_loader_'+prodId).style.display = 'block';	
+		$('#form'+prodId).submit();
+		setTimeout("location.reload(true)", 7000);
+	}else{
+		alert("Incorrect Data");
+	}
 }
 
 function userDownloadIE(prodId)

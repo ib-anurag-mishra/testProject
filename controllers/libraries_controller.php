@@ -483,6 +483,17 @@ Class LibrariesController extends AppController
 																}
 															}
 														}
+														
+														if($this->data['Library']['id'] != '' && $this->data['LibraryPurchase']['purchased_order_num'] == "" && $this->data['LibraryPurchase']['purchased_amount'] == ""){
+															
+															$this->ContractLibraryPurchase->setDataSource('master');
+															$sql = "UPDATE contract_library_purchases SET library_contract_start_date = '".$this->data['Library']['library_contract_start_date']."' , library_contract_end_date = '".$this->data['Library']['library_contract_end_date']."' where library_id = '".$this->Library->id."' ORDER BY id DESC LIMIT 1";
+															$this->ContractLibraryPurchase->query($sql);
+															$this->ContractLibraryPurchase->setDataSource('default');
+																														
+														}
+
+
 														if($this->data['Libraryurl'][0]['domain_name']){
 															if($this->data['Library']['library_authentication_method'] != 'referral_url' || $this->data['Library']['library_authentication_method'] != 'user_account'){														
 																foreach($this->data['Libraryurl'] as $k=>$v){

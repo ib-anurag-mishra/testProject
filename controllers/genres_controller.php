@@ -92,7 +92,7 @@ Class GenresController extends AppController
 				$cond = "";
 				$block = 'no';
 			}
-			if (($genres = Cache::read($genreName.$block)) === false) {
+			if (($genres = Cache::read($genreName.$block.$country)) === false) {
 				$this->Song->recursive = 2;
 				$this->Song->Behaviors->attach('Containable');			
 				$genreDetails = $this->Song->find('all',array('conditions' =>

@@ -1588,8 +1588,8 @@ Class UsersController extends AppController
 				}        
 				else{
 				
-					$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.pin' => $pin ) , 'fields' => array('id')));
-					if(count($login_res) == 1) {
+					$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.pin' => $pin , 'Card.library_id' => $existingLibraries['0']['Library']['id'] ) , 'fields' => array('id')));
+					if(isset($login_res['Card']['id'])) {
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -1629,7 +1629,7 @@ Class UsersController extends AppController
 					}
 					else
 					{
-						$this->Session->setFlash($resultAnalysis[1]);
+						$this->Session->setFlash('Invalid Credentials');
 						$this->redirect(array('controller' => 'users', 'action' => 'mdlogin'));
 					}
 					
@@ -1761,8 +1761,8 @@ Class UsersController extends AppController
 				}        
 				else{
 				
-				$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card ) , 'fields' => array('id')));
-					if(count($login_res) == 1) {
+				$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.library_id' => $existingLibraries['0']['Library']['id'] ) , 'fields' => array('id')));
+					if(isset($login_res['Card']['id'])) {
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -1802,7 +1802,7 @@ Class UsersController extends AppController
 					}
 					else
 					{
-						$this->Session->setFlash($resultAnalysis[1]);
+						$this->Session->setFlash('Invalid Credentials');
 						$this->redirect(array('controller' => 'users', 'action' => 'mndlogin'));
 					}
 					

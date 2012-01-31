@@ -47,6 +47,7 @@ class HomesController extends AppController
 		// Local Top Downloads functionality
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
+		$territory = $this->Session->read('territory');
 		$nationalTopDownload = array();
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
@@ -71,7 +72,7 @@ class HomesController extends AppController
 			$topDownload =  $this->Song->find('all',array('conditions' =>
 					array('and' =>
 						array(
-							array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')" ),
+							array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')",'Country.Territory' => $territory),
 						), "1 = 1 GROUP BY Song.ProdID"
 					),
 					'fields' => array(
@@ -545,7 +546,7 @@ class HomesController extends AppController
 				}
 				
 				$this->paginate = array('Song' => array(
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
 						));
 				
 				$searchResults = $this->paginate('Song');
@@ -626,7 +627,7 @@ class HomesController extends AppController
 					$sphinxDirection = "";
 				}
 				$this->paginate = array('Song' => array(
-								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
 							));
 			
 				$searchResults = $this->paginate('Song');
@@ -657,6 +658,9 @@ class HomesController extends AppController
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
+		if($prodId == '' || $prodId == 0){
+			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+		}
 		$downloadsDetail = array();
 /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
