@@ -53,6 +53,7 @@ $i = 0;
 			</div>
 			</a>			
 			<div class="albumData" style="float:left">
+				<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>" >
 				<div class="albumlistBox">
 					<b>
 					<?php
@@ -63,6 +64,7 @@ $i = 0;
 					<?php echo $album['Album']['AlbumTitle'];?>		
 					</b>
 				</div>
+				</a>
 				<div class="album_artistInfo" style="float:left">
 					<?php
 						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
