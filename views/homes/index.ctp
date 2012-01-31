@@ -12,6 +12,7 @@
 	width:100%;
 	overflow:hidden;
 	padding:0 0 27px;
+	#padding-top:27px;
 }
 .gallery {
 	width:578px;
