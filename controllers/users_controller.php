@@ -106,7 +106,7 @@ Class UsersController extends AppController
 		}
 		if($userType == '1' || $this->Session->read('Auth.User.sales') == 'yes'){
 			$memcache = new Memcache;
-			$memcache->addServer('10.176.4.199', 11211);
+			$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
 			$x = memcache_get($memcache,"librarydownload");
 			if($library == 'special') {
 				foreach($x as $k => $v){
@@ -403,7 +403,7 @@ Class UsersController extends AppController
 			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
 			$this->Currentpatron->saveField('modified',$updateTime, false);
 			//writing to memcache and writing to both the memcached servers
-			Cache::delete("login_".$this->Session->read('territory')."_".$libraryId."_".$patronId);			
+			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);			
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
 				$redirectUrl = $this->Session->read('referral_url');
 				$this->Session->destroy();
@@ -1588,8 +1588,8 @@ Class UsersController extends AppController
 				}        
 				else{
 				
-					$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.pin' => $pin ) , 'fields' => array('id')));
-					if(count($login_res) == 1) {
+					$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.pin' => $pin , 'Card.library_id' => $existingLibraries['0']['Library']['id'] ) , 'fields' => array('id')));
+					if(isset($login_res['Card']['id'])) {
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -1629,7 +1629,7 @@ Class UsersController extends AppController
 					}
 					else
 					{
-						$this->Session->setFlash($resultAnalysis[1]);
+						$this->Session->setFlash('Invalid Credentials');
 						$this->redirect(array('controller' => 'users', 'action' => 'mdlogin'));
 					}
 					
@@ -1761,8 +1761,8 @@ Class UsersController extends AppController
 				}        
 				else{
 				
-				$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card ) , 'fields' => array('id')));
-					if(count($login_res) == 1) {
+				$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.library_id' => $existingLibraries['0']['Library']['id'] ) , 'fields' => array('id')));
+					if(isset($login_res['Card']['id'])) {
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -1802,7 +1802,7 @@ Class UsersController extends AppController
 					}
 					else
 					{
-						$this->Session->setFlash($resultAnalysis[1]);
+						$this->Session->setFlash('Invalid Credentials');
 						$this->redirect(array('controller' => 'users', 'action' => 'mndlogin'));
 					}
 					

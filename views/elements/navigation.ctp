@@ -101,7 +101,7 @@ form, fieldset {
 }
 #header .top-box {
 	overflow:hidden;
-	height:50%;
+	height:60%;
 	background:#fefefe; 
 	padding:25px 5px 0 25px;
 }

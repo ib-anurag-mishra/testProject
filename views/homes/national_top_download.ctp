@@ -27,7 +27,7 @@ jQuery(document).ready(function() {
 										<?php
 											$j = 0;
 											$k = 2000;
-											for($i = 0; $i < 100; $i++) {
+											for($i = 0; $i < count($nationalTopDownload); $i++) {
 											if($j==5){
 												break;
 											}
@@ -117,6 +117,8 @@ jQuery(document).ready(function() {
 											$k++;
 											}
 											echo "</li>";
+										}else{
+											echo "&nbsp;&nbsp;&nbsp;&nbsp;No Songs has been downloaded yet";
 										}
 										?>
 										

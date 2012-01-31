@@ -570,6 +570,7 @@ class HomesController extends AppController
 		//featured artist slideshow
 		if (($artists = Cache::read("featured".$country)) === false) {
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory')), 'recursive' => -1));
+		//	print "<pre>";print_r($featured);exit;
 			foreach($featured as $k => $v){
 				 if($v['Featuredartist']['album'] != 0){
 					$ids .= $v['Featuredartist']['album'].",";
@@ -580,7 +581,7 @@ class HomesController extends AppController
 				$featured =  $this->Album->find('all',array('conditions' =>
 							array('and' =>
 								array(
-									array("Album.ProdID IN (".rtrim($ids,",'").")" ),
+									array("Country.Territory" => $territory, "Album.ProdID IN (".rtrim($ids,",'").")" ),
 								), "1 = 1 GROUP BY Album.ProdID"
 							),
 							'fields' => array(
@@ -865,7 +866,7 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false) {
-			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 102";
+			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 100";
 			$natTopDownloaded = $this->Album->query($sql);
 			$natprodIds = '';
 			$i =1;
@@ -1031,7 +1032,7 @@ class HomesController extends AppController
 		$this->layout = 'ajax';
     }
     
-    /*
+   /*
      Function Name : search
      Desc : actions that is needed for advanced search
     */
@@ -1195,7 +1196,7 @@ class HomesController extends AppController
 				}
 				
 				$this->paginate = array('Song' => array(
-							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
 						));
 				
 				$searchResults = $this->paginate('Song');
@@ -1214,6 +1215,7 @@ class HomesController extends AppController
 				if($_REQUEST['search_type'] == 'composer'){
 					$this->set('composer', "composer");	
 				}
+							
 				$searchKey = '';      
 				$auto = 0;
 				if(isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
@@ -1230,6 +1232,15 @@ class HomesController extends AppController
 				$this->set('searchKey','search='.urlencode($searchText).'&auto='.$auto);
 				
 				//$spValue = "";
+				if($_REQUEST['search_type'] == 'composer'){
+					$searchtype = 'composer';
+				}else if($_REQUEST['search_type'] == 'artist'){
+					$searchtype = 'ArtistText';
+				}else if($_REQUEST['search_type'] == 'album'){
+					$searchtype = 'Title';
+				}else if($_REQUEST['search_type'] == 'song'){
+					$searchtype = 'SongTitle';
+				}
 				if ($auto == 0) {
 					$searchParam = "";
 					$expSearchKeys = explode(" ", $searchKey);
@@ -1243,17 +1254,18 @@ class HomesController extends AppController
 						$value = str_replace("$", " ", $value);
 						$value = '"'.addslashes($value).'"';
 						if ($searchParam == "") {
-							$searchParam = "@composer ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+							$searchParam = "@".$searchtype." ".$value;
 						} else {
-							$searchParam = $searchParam." | "."@composer ".$value." | "."@ArtistText ".$value." | "."@Title ".$value." | "."@SongTitle ".$value;
+							$searchParam = $searchParam." | @".$searchtype." ".$value;
 						}
 					}
 				} else {
 					$searchKey = str_replace("^", " ", $searchKey);
 					$searchKey = str_replace("$", " ", $searchKey);
 					$searchKey = '"'.addslashes($searchKey).'"';
-					$searchParam = "@composer ".$searchKey." | "."@ArtistText ".$searchKey." | "."@Title ".$searchKey." | "."@SongTitle ".$searchKey;
+					$searchParam = "@".$searchtype." ".$searchKey;
 				}
+			//	echo $searchParam;exit;
 				/*$spValue = substr($spValue, 0, -1);
 				$spValue = '"'.$spValue.'"';
 				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;*/
@@ -1278,7 +1290,7 @@ class HomesController extends AppController
 					$sphinxDirection = "";
 				}
 				$this->paginate = array('Song' => array(
-								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection
+								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
 							));
 			
 				$searchResults = $this->paginate('Song');
@@ -1310,6 +1322,9 @@ class HomesController extends AppController
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
+		if($prodId == '' || $prodId == 0){
+			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
+		}
 		$downloadsDetail = array();
 /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);

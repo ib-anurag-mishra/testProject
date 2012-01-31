@@ -12,7 +12,7 @@ class NewsController extends AppController
 	//var $components = array('RequestHandler','ValidatePatron');
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language');
-	//var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
+	var $components = array('CdnUpload');
 	/*
 	 Function Name : beforeFilter
 	 Desc : actions that needed before other functions are getting called
@@ -118,12 +118,17 @@ class NewsController extends AppController
 				
 				$path_parts = pathinfo($fileName);
 				
-				$newPath = $newPath .$updateObj->getNextAutoIncrement(). "." . $path_parts['extension'];
-			
+				$img_name = $updateObj->getNextAutoIncrement(). "." . $path_parts['extension'];
+				$newPath = $newPath . $img_name;
+				$src = WWW_ROOT."img_news/" . $img_name;
+				$dst = Configure::read('App.CDN_PATH').'news_image/'.$img_name;
 				
 				if(move_uploaded_file($this->data['News']['image_name']['tmp_name'], $newPath ))
 				{
-					$updateArr['image_name'] = $updateObj->getNextAutoIncrement(). "." . $path_parts['extension'];
+					
+					$success = $this->CdnUpload->sendFile($src, $dst);
+					$updateArr['image_name'] = $img_name;
+
 				}
 				else
 				{
@@ -136,7 +141,10 @@ class NewsController extends AppController
 			if(empty( $errorMsg )) {
 				if( $this->News->save($updateArr) ) {
 					$this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
+					
 				}
+				
+				$this->redirect(array('action' => 'index'));
 			}
 			else {
 				$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
@@ -175,6 +183,7 @@ class NewsController extends AppController
 				$fileName = $this -> data[ 'News' ][ 'image_name' ][ 'name' ];
 				$path_parts = pathinfo($fileName);
 				$newPath .= $id. "." . $path_parts['extension'];
+				
 				if (file_exists($newPath))
 				{
 					unlink($newPath);
@@ -182,6 +191,9 @@ class NewsController extends AppController
 				
 				if(move_uploaded_file($this->data['News']['image_name']['tmp_name'], $newPath ))
 				{
+					$src = WWW_ROOT."img_news/" . $id. "." . $path_parts['extension'] ;
+					$dst = Configure::read('App.CDN_PATH').'news_image/'. $id. "." . $path_parts['extension'];
+					$success = $this->CdnUpload->sendFile($src, $dst);
 					$updateArr['image_name'] = $id . "." . $path_parts['extension'];
 				}
 				else

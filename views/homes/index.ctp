@@ -8,11 +8,6 @@
 
 
 <style>
-#main {
-	width:940px;
-	padding:35px 10px 37px 46px;
-	overflow:hidden;
-}
 .main-holder {
 	width:100%;
 	overflow:hidden;
@@ -424,6 +419,7 @@
 	border: 1px solid #ccc;
 	z-index: 30;
 	font-size: 13px;
+	width: 87px !important;
 }
 .optionsDivScroll ul {
 	height: 205px;
@@ -540,10 +536,15 @@ $ieVersion =  ieversion();
 								foreach($featuredArtists as $k => $v){
 									$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
 									$image =  Configure::read('App.Music_Path').$albumArtwork;
+									if(strlen($v['Album']['AlbumTitle']) > 15){
+										$title = substr($v['Album']['AlbumTitle'], 0, 15)."..";
+									}else{
+										$title = $v['Album']['AlbumTitle'];
+									}
 								//	$imageUrl = "/proxy/?url=".$image."&maxlength=84"; 
 									echo "<li>".$html->link($html->image($image,array("height" => "77", "width" => "84")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID']),
-										array('class'=>'first','escape'=>false)).'<a class="title-album">'.$v['Album']['AlbumTitle']."</a></li>";
+										array('class'=>'first','escape'=>false)).'<a class="title-album">'.$title."</a></li>";
 								}
 							?>
 						</ul>

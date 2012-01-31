@@ -53,9 +53,7 @@
 		echo "<div style= 'padding:8px;float:left;clear: none;'>";
 	?>
 	
-		<?php if($news['News']['image_name'] != ''){ ?>
-				<img style = "height: 150px;" src = "/img_news/<?php echo $news['News']['image_name']; ?>" alt = '<?php echo $news['News']['subject']; ?>' />
-			<?php } ?>
+		<img style = "height: 150px;" src = "<?php echo $cdnPath. 'news_image/' . $news['News']['image_name']; ?>" alt = '<?php echo $news['News']['subject']; ?>' />
 	</fieldset>
 <?php echo $this->Form->end(__('Submit', true));?>
 </div>
@@ -63,8 +61,6 @@
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Question.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Question.id'))); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Questions', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Section', true)), array('controller' => 'sections', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('News', true)), array('controller' => 'news', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

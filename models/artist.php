@@ -26,10 +26,10 @@ class Artist extends AppModel
      Desc : lists all the artists for slideshow in the homepage
     */
     function getallartists() {
-		if (($artists = Cache::read("artists")) === false) {
+	//	if (($artists = Cache::read("artists")) === false) {
 			$getArtists = $this->find('all');
 			Cache::write("artists", $getArtists);
-		}
+	//	}
 		$getArtists = Cache::read("artists");
         return $getArtists;
     }

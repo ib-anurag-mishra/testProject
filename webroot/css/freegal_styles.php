@@ -906,7 +906,12 @@ ul.marquee li {
 	margin: 6px 10px 0 10px;
 	font-size:13px;
 }
-
+#main {
+	margin-top: 6px;
+	width:940px;
+	padding:35px 10px 37px 46px;
+	overflow:hidden;
+}
 #genreViewAll a {
 	text-decoration: none;
 	color:<?php echo $library_links_color; ?>;
@@ -1008,12 +1013,13 @@ ul.marquee li {
 	font-size:13px;
 	padding-bottom: 25px;
 	padding-top: 10px;
+	width:330px;
 }
 
 .album_artistInfo {
         margin:5px 0 10px 12px;
 		text-align: left;
-        width:191px;
+        width:201px;
 		font-size:13px;
 		word-wrap: break-word;
 }
@@ -1111,7 +1117,7 @@ ul.marquee li {
 
 .downloadHeader {
         float:left;
-        width:150px;
+        width:145px;
 }
 
 .artistInfo {

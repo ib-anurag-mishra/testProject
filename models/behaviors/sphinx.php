@@ -130,6 +130,12 @@ class SphinxBehavior extends ModelBehavior
             else
                 $ids = array(0);
             $query['conditions'] = array($model->alias . '.'.$model->primaryKey => $ids);
+			
+			if(isset($query['cont'])){
+				$cond = array('Country.Territory' => $query['cont']);
+				$query['conditions'] = array_merge($query['conditions'], $cond);
+			}
+			
             $query['order'] = 'FIND_IN_SET('.$model->alias.'.'.$model->primaryKey.', \'' . implode(',', $ids) . '\')';
 
         }

@@ -30,7 +30,7 @@
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('News Image'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php if($news['News']['image_name'] != ''){ ?>
-				<img style = "height: 150px;" src = "/img_news/<?php echo $news['News']['image_name']; ?>" alt = '<?php echo $news['News']['subject']; ?>' />
+				<img style = "height: 150px;" src = "<?php echo $cdnPath. 'news_image/' . $news['News']['image_name']; ?>" alt = '<?php echo $news['News']['subject']; ?>' />
 			<?php }
 				else 
 					echo __('No Image');

@@ -35,9 +35,9 @@ $i = 0;
 	$i++;
 ?>
 		<td valign="top" >
-		<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>" >
 		<div id="album_list_page" style="float:left">
-			<div class="album_lgAlbumArtwork">
+			<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>" >
+			<div class="album_lgAlbumArtwork" style="float:left">
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
@@ -51,7 +51,8 @@ $i = 0;
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
 			</div>
-			<div class="albumData">
+			</a>			
+			<div class="albumData" style="float:left">
 				<div class="albumlistBox">
 					<b>
 					<?php
@@ -62,7 +63,7 @@ $i = 0;
 					<?php echo $album['Album']['AlbumTitle'];?>		
 					</b>
 				</div>
-				<div class="album_artistInfo">
+				<div class="album_artistInfo" style="float:left">
 					<?php
 						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
@@ -78,9 +79,8 @@ $i = 0;
 						}
 					?>
 				</div>
-			</div>
+			</div>			
 		</div>
-		</a>
 		</td>
 <?php
 if($i == 3){

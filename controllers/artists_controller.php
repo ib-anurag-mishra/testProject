@@ -86,9 +86,12 @@ Class ArtistsController extends AppController
 			$artistName = '';
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
-		memcache_delete($memcache, "app_test_featured");
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
 		memcache_close($memcache);		
 	}
 	
@@ -134,6 +137,14 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
+		$memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -184,6 +195,14 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'managefeaturedartist' );
 		}
+		$memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+		memcache_close($memcache);		
 	}
 	
 	/*
@@ -321,9 +340,8 @@ Class ArtistsController extends AppController
 			}
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
-		memcache_delete($memcache, "app_test_artists");
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
 		memcache_close($memcache);		
 	}
 	
@@ -355,9 +373,8 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'manageartist' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
-		memcache_delete($memcache, "app_test_artists");
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
 		memcache_close($memcache);		
 	}
 	
@@ -478,10 +495,9 @@ Class ArtistsController extends AppController
 			}
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
-		memcache_delete($memcache, "app_test_newartists");
-		memcache_close($memcache);		
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_newartists");
+		memcache_close($memcache);	
 	}
 	
 	/*
@@ -512,9 +528,8 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'managenewartist' );
 		}
 		$memcache = new Memcache;
-		$memcache->addServer('10.181.59.94', 11211);
-		$memcache->addServer('10.181.59.64', 11211);
-		memcache_delete($memcache, "app_test_newartists");
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_newartists");
 		memcache_close($memcache);		
 	}
 	
