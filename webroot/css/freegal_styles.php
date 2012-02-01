@@ -95,8 +95,7 @@ body  {
 #lib_name {
         float:left;
         font-size: 20px;
-        margin-top: 17px;
-        margin-left: 10px;
+        margin-left: -270px;
         font-weight: bold;
 }
 #lib_image {
