@@ -124,7 +124,7 @@
 								<td width="50" valign="top" align="center">
 									<p><?php echo $albumSong['Song']['FullLength_Duration']?></p>
 								</td>
-								<td width="130" valign="top" align="left" style="padding-left:30px">
+								<td width="120" valign="top" align="left" style="padding-left:30px">
 										<?php
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
