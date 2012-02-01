@@ -217,6 +217,13 @@ form, fieldset {
 		<?php
 		}
 		?>
+		<?php
+		if(!$libraryInfo['Library']['show_library_name']) {
+		?>
+			<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+		<?php
+		}
+		?>		
 		</h1>
 		<p><?php __('Weekly Downloads'); ?>&nbsp;<span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></p>
 	</div>
