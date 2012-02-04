@@ -187,11 +187,11 @@ class Song extends AppModel
    Function Name : allartistname
    Desc : This would returna the download data for the patron
   */
-  function getdownloaddata($id) {
+  function getdownloaddata($id , $provider) {
     $this->recursive = 2;
     $this->Behaviors->attach('Containable');
     $downloadData = $this->find('all', array(
-		'conditions'=>array('Song.ProdID' => $id),
+		'conditions'=>array('Song.ProdID' => $id , 'Song.provider_type' => $provider),
 		'fields' => array(
 			'Song.ProdID',
 			'Song.ProductID',

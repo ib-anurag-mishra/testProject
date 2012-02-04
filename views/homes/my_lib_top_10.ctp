@@ -40,6 +40,7 @@ jQuery(document).ready(function() {
 									?>									
 									<form method="Post" id="form<?php echo $songs[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
 									<input type="hidden" name="ProdID" value="<?php echo $songs[$i]["Song"]["ProdID"];?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $songs[$i]["Song"]["provider_type"]; ?>" />
 									<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
 									<a href='javascript:void(0);' onclick='userDownloadAll("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
 									</span>
@@ -68,7 +69,7 @@ jQuery(document).ready(function() {
 										<?php 
 										} else { 
 										?>
-											<span class="beforeClick" id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+											<span class="beforeClick" id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo $songs[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
 											<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
 										<?php	
 										}

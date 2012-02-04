@@ -672,6 +672,7 @@ Class LibrariesController extends AppController
                 }
             }
         }
+		Cache::delete("library".$libraryId);
     }
     
     /*

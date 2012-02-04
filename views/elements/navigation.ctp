@@ -108,7 +108,7 @@ form, fieldset {
 #header p {margin:0;}
 .logo {
 	margin:-25px 0 0;
-	width:350px;
+	width:428px;
 	height:100px;
 	overflow:hidden;
 	float:left;
@@ -199,7 +199,7 @@ form, fieldset {
 			}
 		?>			
 		</ul>
-		<h1 class="logo">
+		<div id="lib_image">
 		<?php
 		if($libraryInfo['Library']['library_image_name'] != "") {
 		?>
@@ -217,7 +217,7 @@ form, fieldset {
 		<?php
 		}
 		?>		
-		</h1>
+		</div>
 		<?php
 		if(!$libraryInfo['Library']['show_library_name']) {
 		?>

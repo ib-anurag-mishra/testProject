@@ -662,12 +662,12 @@ function addQtip_toptab(prodId){
    });
 }
 
-function addToWishlist(prodId)
+function addToWishlist(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
-	var data = "prodId="+prodId;	
+	var data = "prodId="+prodId+"&provider="+providerType;	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/addToWishlist", // URL to request
@@ -708,12 +708,12 @@ function addToWishlist(prodId)
 	return false; 
 }
 
-function addToWishlist_top(prodId)
+function addToWishlist_top(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
-	var data = "prodId="+prodId;	
+	var data = "prodId="+prodId+"&provider="+providerType;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/addToWishlist", // URL to request

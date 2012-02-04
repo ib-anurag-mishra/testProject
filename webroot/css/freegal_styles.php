@@ -95,7 +95,7 @@ body  {
 #lib_name {
         float:left;
         font-size: 20px;
-        margin-left: -270px;
+        margin-left: 10px;
         font-weight: bold;
 }
 #lib_image {
@@ -103,6 +103,7 @@ body  {
         font-size: 20px;
         margin-left: 10px;
         font-weight: bold;
+		margin-top: -22px;
 }
 #header_right a {
         color:<?php echo $library_links_color; ?>;
@@ -738,6 +739,7 @@ ul.marquee li {
 
 #genreResults td {
 	padding: 5px 0 5px 0;
+	max-width: 240px;
 }
 
 #genreResults img {

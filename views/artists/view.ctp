@@ -1,7 +1,7 @@
 <div class="breadCrumb">
 <?php
 	$html->addCrumb(__($artistName, true), '/artists/album/'.base64_encode($artistName));
-	$html->addCrumb( $albumData[0]['Album']['AlbumTitle']  , '/artists/view/'.base64_encode($artistName).'/'.$album);
+	$html->addCrumb( $albumData[0]['Album']['AlbumTitle']  , '/artists/view/'.base64_encode($artistName).'/'.$album.'/'.base64_encode($albumData[0]['Album']['provider_type']));
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
@@ -135,6 +135,8 @@
 													<p>
 														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
 															<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+															<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
+															
 															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
 																<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 															</span>
@@ -161,7 +163,7 @@
 														<?php }
 														else{ ?>
 															<p>
-																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 																<span class="afterClick" style="display:none;float:left;">Please Wait...</span>
 															</p>
 														<?php	

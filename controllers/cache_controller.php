@@ -193,7 +193,7 @@ class CacheController extends AppController {
 					));
 			Cache::write("genre".$territory, $genreAll);
 			echo date("Y-m-d H:i:s");				
-			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 100";
+			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 105";
 			$natTopDownloaded = $this->Album->query($sql);
 			echo count($natTopDownloaded);
 			$nationalTopDownload = array();
@@ -217,6 +217,7 @@ class CacheController extends AppController {
 								'Song.Advisory',
 								'Song.Sample_Duration',
 								'Song.FullLength_Duration',
+								'Song.provider_type'
 							),
 							'contain' => array(
 								'Genre' => array(

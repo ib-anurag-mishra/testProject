@@ -41,34 +41,38 @@ if(count($genres) == 0)
 <div id="genreResults">
 <table cellspacing="0" cellpadding="0" border="0" width = "733px">
 <?php
-$totalRows = ceil(count($genres)/3);
-for ($i = 0; $i < $totalRows; $i++) {
-	$class = null;
-	if ($i % 2 != 0) {
-		$class = ' class="altrow"';
-	}
-	echo "<tr" . $class . ">";
-	$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)));
-	foreach ($counters as $counter):
-		if($counter < count($genres)) {
-			
-			echo "<td width='250'><p>";
-			if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
-				$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
-				echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText']))) . '</span>'; ?>
-			<?php
-			} else {
-				$ArtistName = $genres[$counter]['Song']['ArtistText'];
-				echo $html->link(
-					$ArtistName, 
-					array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText'])));
-			}
-			echo '</p></td>';
+if(count($genres) > 0){
+	$totalRows = ceil(count($genres)/3);
+	for ($i = 0; $i < $totalRows; $i++) {
+		$class = null;
+		if ($i % 2 != 0) {
+			$class = ' class="altrow"';
 		}
-	endforeach;
-	echo '</tr>';
+		echo "<tr" . $class . ">";
+		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)));
+		foreach ($counters as $counter):
+			if($counter < count($genres)) {
+				
+				echo "<td width='250'><p>";
+				if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
+					$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
+					echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
+						$ArtistName, 
+						array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText']))) . '</span>'; ?>
+				<?php
+				} else {
+					$ArtistName = $genres[$counter]['Song']['ArtistText'];
+					echo $html->link(
+						$ArtistName, 
+						array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText'])));
+				}
+				echo '</p></td>';
+			}
+		endforeach;
+		echo '</tr>';
+	}
+}else{
+	echo "<tr><td>No Results Found</td></tr>";
 }
 ?>
 </table>

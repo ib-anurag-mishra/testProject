@@ -35,522 +35,6 @@ class HomesController extends AppController
 		$this->Cookie->domain = 'freegalmusic.com';
 		//$this->Cookie->key = 'qSI232qs*&sXOw!';
     }
-    /*
-     Function Name : index
-     Desc : actions that is invoked when the user comes to the homes controller
-    */
-      function index1() {
-		  if($_SERVER['SERVER_PORT'] == 443){
-			$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-		 }
-		// Local Top Downloads functionality
-		$libId = $this->Session->read('library');
-		$patId = $this->Session->read('patron');
-		$country = $this->Session->read('territory');
-		$nationalTopDownload = array();
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
-		$prodIds = '';
-		$this->Download->recursive = -1;
-		if (($libDownload = Cache::read("lib".$libId)) === false) {
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-			$prodIds = '';
-
-//			$topDownloaded = Cache::read("lib".$libId);	
-			foreach($topDownloaded as $k => $v){
-				$prodIds .= $v['Download']['ProdID']."','"; 
-			}
-
-			if($prodIds != ''){
-				$this->Song->recursive = 2;
-				$topDownload =  $this->Song->find('all',array('conditions' =>
-						array('and' =>
-							array(
-								array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')"  ,'Country.Territory' => $country),
-							), "1 = 1 GROUP BY Song.ProdID"
-						),
-						'fields' => array(
-							'Song.ProdID',
-							'Song.ReferenceID',
-							'Song.Title',
-							'Song.ArtistText',
-							'Song.DownloadStatus',
-							'Song.SongTitle',
-							'Song.Artist',
-							'Song.Advisory',
-							'Song.Sample_Duration',
-							'Song.FullLength_Duration',
-						),
-						'contain' => array(
-							'Genre' => array(
-								'fields' => array(
-									'Genre.Genre'        
-								)
-							),
-							'Country' => array(
-								'fields' => array(
-									'Country.Territory',
-									'Country.SalesDate'
-								)
-							),            
-							'Sample_Files' => array(
-								'fields' => array(
-											'Sample_Files.CdnPath' ,
-											'Sample_Files.SaveAsName'
-									)
-								), 
-							'Full_Files' => array(
-								'fields' => array(
-											'Full_Files.CdnPath' ,
-											'Full_Files.SaveAsName'
-									)
-								),
-						), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10' 
-						)
-				);
-			} else {
-				$topDownload = array();
-			}
-			Cache::write("lib".$libId, $topDownload);
-		}
-		$topDownload = Cache::read("lib".$libId);
-		// Checking for download status 
-/*		$this->Download->recursive = -1;
-		foreach($topDownload as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$topDownload[$key]['Song']['status'] = 'avail';
-			} else{
-				$topDownload[$key]['Song']['status'] = 'not';
-			}
-		}*/
-				
-		
-		$this->set('songs',$topDownload);
-		$territory = $this->Session->read('territory');		
-		// National Top Downloads functionality
-		if (($national = Cache::read("national".$territory)) === false) {
-			$terLibrary = $this->Library->find('all', array('conditions' => array('library_territory' => $territory), 'fields' => array('id'), 'order' => 'id DESC'));
-			$libraryds = '';
-			foreach($terLibrary as $k => $v){
-				$libraryds .= $v['Library']['id']."','"; 
-			}
-			$this->Download->recursive = -1;			
-			$natTopDownloaded = $this->Download->find('all', 
-										array('conditions' 
-												=> array('and' => array("Download.library_id IN ('".rtrim($libraryds,",'")."')",'Download.created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate')))
-														), 
-												'group' => array('ProdID'), 
-												'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 
-												'order' => 'countProduct DESC', 'limit'=> '100' )
-											);
-			$natprodIds = '';
-			$i =1;
-			foreach($natTopDownloaded as $k => $v){
-					$this->Song->recursive = 2;
-					$data =  $this->Song->find('first',array('conditions' =>
-							array('and' =>
-								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID']),
-								), "1 = 1 GROUP BY Song.ProdID"
-							),
-							'fields' => array(
-								'Song.ProdID',
-								'Song.ReferenceID',
-								'Song.Title',
-								'Song.ArtistText',
-								'Song.DownloadStatus',
-								'Song.SongTitle',
-								'Song.Artist',
-								'Song.Advisory',
-								'Song.Sample_Duration',
-								'Song.FullLength_Duration',
-							),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'        
-									)
-								),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory',
-										'Country.SalesDate'
-									)
-								),            
-								'Sample_Files' => array(
-									'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'
-										)
-									), 
-								'Full_Files' => array(
-									'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'
-										)
-									),
-							), 'limit'=> '10'
-							)
-					);
-					if(count($data) > 1){
-						$nationalTopDownload[] = $data;
-					}
-			}	
-			// Checking for download status 
-			Cache::write("national".$territory, $nationalTopDownload);
-		}
-		$nationalTopDownload = Cache::read("national".$territory);
-/*		$this->Download->recursive = -1;
-		foreach($nationalTopDownload as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$nationalTopDownload[$key]['Song']['status'] = 'avail';
-			} else{
-				$nationalTopDownload[$key]['Song']['status'] = 'not';
-			}
-		}*/		
-		$this->set('nationalTopDownload',$nationalTopDownload);
-		$ids = '';
-		if (($artists = Cache::read("featured".$country)) === false) {
-			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory')), 'recursive' => -1));
-			foreach($featured as $k => $v){
-				 if($v['Featuredartist']['album'] != 0){
-					$ids .= $v['Featuredartist']['album'].",";
-				 }
-			}
-			if($ids != ''){
-				$this->Album->recursive = 2;
-				$featured =  $this->Album->find('all',array('conditions' =>
-							array('and' =>
-								array(
-									array("Album.ProdID IN (".rtrim($ids,",'").")" ),
-								), "1 = 1 GROUP BY Album.ProdID"
-							),
-							'fields' => array(
-								'Album.ProdID',
-								'Album.Title',
-								'Album.ArtistText',
-								'Album.AlbumTitle',
-								'Album.Artist',
-								'Album.ArtistURL',
-								'Album.Label',
-								'Album.Copyright',						
-								),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'								
-										)
-									),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory'								
-										)
-									),												
-								'Files' => array(
-									'fields' => array(
-										'Files.CdnPath' ,
-										'Files.SaveAsName',
-										'Files.SourceURL'
-								),
-							)			                                
-						), 'order' => array('Country.SalesDate' => 'desc')
-					)
-				);
-			} else {
-				$featured = array();
-			}
-			Cache::write("featured".$territory, $featured);
-		}
-		$featured = Cache::read("featured".$country);
-		$this->set('featuredArtists', $featured);
-		if (($artists = Cache::read("pop".$country)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Pop' ORDER BY created DESC LIMIT 20";
-			$genredata = $this->Album->query($genre_query);
-			foreach($genredata as $k => $v){
-					$this->Song->recursive = 2;
-					$data =  $this->Song->find('first',array('conditions' =>
-							array('and' =>
-								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID']),
-								), "1 = 1 GROUP BY Song.ProdID"
-							),
-							'fields' => array(
-								'Song.ProdID',
-								'Song.ReferenceID',
-								'Song.Title',
-								'Song.ArtistText',
-								'Song.DownloadStatus',
-								'Song.SongTitle',
-								'Song.Artist',
-								'Song.Advisory',
-								'Song.Sample_Duration',
-								'Song.FullLength_Duration'
-							),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'        
-									)
-								),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory',
-										'Country.SalesDate'
-									)
-								),            
-								'Sample_Files' => array(
-									'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'
-										)
-									), 
-								'Full_Files' => array(
-									'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'
-										)
-									),
-							), 'limit'=> '10'
-							)
-					);
-					if(count($data) > 1){
-						$genre_pop[] = $data;
-					}
-			}
-			Cache::write("pop".$country, $genre_pop);
-		}		
-		$genre_pop = Cache::read("pop".$country);
-		// Checking for download status 
-		/*$this->Download->recursive = -1;
-		foreach($genre_pop as $key => $value){	
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$genre_pop[$key]['Song']['status'] = 'avail';
-			} else{
-				$genre_pop[$key]['Song']['status'] = 'not';
-			}
-		}*/
-		$this->set('genre_pop', $genre_pop);
-		
-		//Cachec results for Rock Genre
-		
-		if (($artists = Cache::read("rock".$country)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Rock' ORDER BY created DESC LIMIT 20";
-			$genredata = $this->Album->query($genre_query);
-			foreach($genredata as $k => $v){
-					$this->Song->recursive = 2;
-					$data =  $this->Song->find('first',array('conditions' =>
-							array('and' =>
-								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID']),
-								), "1 = 1 GROUP BY Song.ProdID"
-							),
-							'fields' => array(
-								'Song.ProdID',
-								'Song.ReferenceID',
-								'Song.Title',
-								'Song.ArtistText',
-								'Song.DownloadStatus',
-								'Song.SongTitle',
-								'Song.Artist',
-								'Song.Advisory',
-								'Song.Sample_Duration',
-								'Song.FullLength_Duration',
-							),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'        
-									)
-								),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory',
-										'Country.SalesDate'
-									)
-								),            
-								'Sample_Files' => array(
-									'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'
-										)
-									), 
-								'Full_Files' => array(
-									'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'
-										)
-									),
-							), 'limit'=> '10'
-							)
-					);
-					if(count($data) > 1){
-						$genre_rock[] = $data;
-					}
-			}		
-			Cache::write("rock".$country, $genre_rock);
-		}
-		$genre_rock = Cache::read("rock".$country);
-		// Checking for download status 
-/*		$this->Download->recursive = -1;
-		foreach($genre_rock as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$genre_rock[$key]['Song']['status'] = 'avail';
-			} else{
-				$genre_rock[$key]['Song']['status'] = 'not';
-			}
-		}*/			
-		$this->set('genre_rock', $genre_rock);
-		//cache result for Country Genre
-		
-		if (($artists = Cache::read("country".$country)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Country' ORDER BY created DESC LIMIT 20";
-			$genredata = $this->Album->query($genre_query);
-			foreach($genredata as $k => $v){
-					$this->Song->recursive = 2;
-					$data =  $this->Song->find('first',array('conditions' =>
-							array('and' =>
-								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID']),
-								), "1 = 1 GROUP BY Song.ProdID"
-							),
-							'fields' => array(
-								'Song.ProdID',
-								'Song.ReferenceID',
-								'Song.Title',
-								'Song.ArtistText',
-								'Song.DownloadStatus',
-								'Song.SongTitle',
-								'Song.Artist',
-								'Song.Advisory',
-								'Song.Sample_Duration',
-								'Song.FullLength_Duration',
-							),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'        
-									)
-								),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory',
-										'Country.SalesDate'
-									)
-								),            
-								'Sample_Files' => array(
-									'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'
-										)
-									), 
-								'Full_Files' => array(
-									'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'
-										)
-									),
-							), 'limit'=> '10'
-							)
-					);
-					if(count($data) > 1){
-						$genre_country[] = $data;
-					}
-			}			
-			Cache::write("country".$country, $genre_country);
-		}
-		$genre_country = Cache::read("country".$country);
-		// Checking for download status 
-/*		$this->Download->recursive = -1;
-		foreach($genre_country as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$genre_country[$key]['Song']['status'] = 'avail';
-			} else{
-				$genre_country[$key]['Song']['status'] = 'not';
-			}
-		}	*/	
-		$this->set('genre_country', $genre_country);
-		
-		if (($artists = Cache::read("alternate".$country)) === false) {
-			$genre_query = "SELECT DISTINCT downloads.ProdID FROM downloads LEFT JOIN Genre ON downloads.ProdID = Genre.ProdID LEFT JOIN countries ON downloads.ProdID = countries.ProdID WHERE Genre.Genre = 'Classical' ORDER BY created DESC LIMIT 20";
-			$genredata = $this->Album->query($genre_query);
-			foreach($genredata as $k => $v){
-					$this->Song->recursive = 2;
-					$data =  $this->Song->find('first',array('conditions' =>
-							array('and' =>
-								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID']),
-								), "1 = 1 GROUP BY Song.ProdID"
-							),
-							'fields' => array(
-								'Song.ProdID',
-								'Song.ReferenceID',
-								'Song.Title',
-								'Song.ArtistText',
-								'Song.DownloadStatus',
-								'Song.SongTitle',
-								'Song.Artist',
-								'Song.Advisory',
-								'Song.Sample_Duration',
-								'Song.FullLength_Duration',
-							),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'        
-									)
-								),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory',
-										'Country.SalesDate'
-									)
-								),            
-								'Sample_Files' => array(
-									'fields' => array(
-												'Sample_Files.CdnPath' ,
-												'Sample_Files.SaveAsName'
-										)
-									), 
-								'Full_Files' => array(
-									'fields' => array(
-												'Full_Files.CdnPath' ,
-												'Full_Files.SaveAsName'
-										)
-									),
-							), 'limit'=> '10'
-							)
-					);
-					if(count($data) > 1){
-						$genre_alternate[] = $data;
-					}
-			}
-			Cache::write("alternate".$country, $genre_alternate);
-		}
-		$genre_alternate = Cache::read("alternate".$country);
-		// Checking for download status 
-/*		$this->Download->recursive = -1;
-		if(count($genre_alternate) > 0){
-			foreach($genre_alternate as $key => $value){
-				$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-				if(count($downloadsUsed) > 0){
-					$genre_alternate[$key]['Song']['status'] = 'avail';
-				} else{
-					$genre_alternate[$key]['Song']['status'] = 'not';
-				}
-			}
-		}*/
-		$this->set('genre_alternate', $genre_alternate);		
-		
-        $this->set('artists', $this->Artist->getallartists());
-        $this->layout = 'home';
-    }
 	
 	function index() {
 		  if($_SERVER['SERVER_PORT'] == 443){
@@ -569,7 +53,7 @@ class HomesController extends AppController
 		$ids = '';
 		//featured artist slideshow
 		if (($artists = Cache::read("featured".$country)) === false) {
-			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory')), 'recursive' => -1));
+			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory')), 'recursive' => -1,'Featuredartist.language' => Configure::read('App.LANGUAGE')));
 		//	print "<pre>";print_r($featured);exit;
 			foreach($featured as $k => $v){
 				 if($v['Featuredartist']['album'] != 0){
@@ -592,7 +76,9 @@ class HomesController extends AppController
 								'Album.Artist',
 								'Album.ArtistURL',
 								'Album.Label',
-								'Album.Copyright',						
+								'Album.Copyright',	
+								'Album.provider_type'
+								
 								),
 							'contain' => array(
 								'Genre' => array(
@@ -625,14 +111,15 @@ class HomesController extends AppController
 		
 		//used for gettting top downloads for Pop Genre
 		if (($artists = Cache::read("pop".$country)) === false) {
-			$genre_query = "SELECT downloads.ProdID FROM downloads,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%Pop%' ORDER BY downloads.created DESC LIMIT 10";
+			$genre_query = "SELECT downloads.ProdID, COUNT(DISTINCT downloads.id) AS countProduct FROM `downloads`,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%Pop%' AND Songs.Territory LIKE '%".$territory."%' GROUP BY downloads.ProdID ORDER BY countProduct DESC LIMIT 10";
+			
 			$genredata = $this->Album->query($genre_query);
 			foreach($genredata as $k => $v){
 					$this->Song->recursive = 2;
 					$data =  $this->Song->find('first',array('conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID']),
+									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID'],"Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Song.ProdID"
 							),
 							'fields' => array(
@@ -645,7 +132,8 @@ class HomesController extends AppController
 								'Song.Artist',
 								'Song.Advisory',
 								'Song.Sample_Duration',
-								'Song.FullLength_Duration'
+								'Song.FullLength_Duration',
+								'Song.provider_type'
 							),
 							'contain' => array(
 								'Genre' => array(
@@ -710,14 +198,14 @@ class HomesController extends AppController
 		$this->set('tab_no',$tab_no);
 		 
 		if (($artists = Cache::read($genre.$territory)) === false) {
-			$genre_query = "SELECT downloads.ProdID FROM downloads,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%".$genre."%' ORDER BY downloads.created DESC LIMIT 10";
+			$genre_query = "SELECT downloads.ProdID, COUNT(DISTINCT downloads.id) AS countProduct FROM `downloads`,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%".$genre."%' AND Songs.Territory LIKE '%".$territory."%' GROUP BY downloads.ProdID ORDER BY countProduct DESC LIMIT 10";
 			$genredata = $this->Album->query($genre_query);
 			foreach($genredata as $k => $v){
 					$this->Song->recursive = 2;
 					$data =  $this->Song->find('first',array('conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID']),
+									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['downloads']['ProdID'],"Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Song.ProdID"
 							),
 							'fields' => array(
@@ -730,7 +218,8 @@ class HomesController extends AppController
 								'Song.Artist',
 								'Song.Advisory',
 								'Song.Sample_Duration',
-								'Song.FullLength_Duration'
+								'Song.FullLength_Duration',
+								'Song.provider_type'
 							),
 							'contain' => array(
 								'Genre' => array(
@@ -802,7 +291,7 @@ class HomesController extends AppController
 				$topDownload =  $this->Song->find('all',array('conditions' =>
 						array('and' =>
 							array(
-								array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')"  ,'Country.Territory' => $country),
+								array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')"  ,'Country.Territory' => $country,"Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type"),
 							), "1 = 1 GROUP BY Song.ProdID"
 						),
 						'fields' => array(
@@ -816,6 +305,7 @@ class HomesController extends AppController
 							'Song.Advisory',
 							'Song.Sample_Duration',
 							'Song.FullLength_Duration',
+							'Song.provider_type'
 						),
 						'contain' => array(
 							'Genre' => array(
@@ -866,7 +356,8 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false) {
-			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.ProdID) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 100";
+			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 105";
+			
 			$natTopDownloaded = $this->Album->query($sql);
 			$natprodIds = '';
 			$i =1;
@@ -875,7 +366,7 @@ class HomesController extends AppController
 					$data =  $this->Song->find('first',array('conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID']),
+									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID'],"Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Song.ProdID"
 							),
 							'fields' => array(
@@ -889,6 +380,7 @@ class HomesController extends AppController
 								'Song.Advisory',
 								'Song.Sample_Duration',
 								'Song.FullLength_Duration',
+								'Song.provider_type'
 							),
 							'contain' => array(
 								'Genre' => array(
@@ -1005,8 +497,8 @@ class HomesController extends AppController
 										array(
 											$cond,
 											array('Country.Territory' => $country),
-										//	array('Song.provider_type = Genre.provider_type'),
-										//	array('Song.provider_type = Country.provider_type'),											
+											//array('Song.provider_type = Genre.provider_type'),
+											array('Song.provider_type = Country.provider_type'),											
 											array('DownloadStatus' => 1),
 											array("Song.Sample_FileID != ''")
 										)
@@ -1340,13 +832,21 @@ class HomesController extends AppController
             echo "incld";
             exit;
         }*/		
-        $trackDetails = $this->Song->getdownloaddata($prodId);        
+		
+		$provider = $_POST['ProviderType'];
+        $trackDetails = $this->Song->getdownloaddata($prodId , $provider );        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;	
         $insertArr['ProdID'] = $prodId;     
         $insertArr['artist'] = addslashes($trackDetails['0']['Song']['Artist']);
         $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
+		
+		if($provider != 'sony'){
+			$provider = 'ioda';
+		}
+		$insertArr['provider_type'] = $provider;
+		
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
@@ -1438,7 +938,7 @@ class HomesController extends AppController
 		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);	
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 		$this->Library->setDataSource('master');
-		$sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+		$sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
 		$this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
@@ -2176,7 +1676,9 @@ class HomesController extends AppController
             $prodId = $_REQUEST['prodId'];
 			$downloadsDetail = array();
             //get song details
-            $trackDetails = $this->Song->getdownloaddata($prodId);
+			$provider = $_REQUEST['provider'];
+			
+            $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
             $insertArr = Array();
             $insertArr['library_id'] = $libraryId;
             $insertArr['patron_id'] = $patronId;
@@ -2185,6 +1687,12 @@ class HomesController extends AppController
             $insertArr['album'] = $trackDetails['0']['Song']['Title'];
             $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
             $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+
+			if($provider != 'sony'){
+				$provider = 'ioda';
+			}
+			$insertArr['provider_type'] = $provider;
+			
             $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
 			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];            
@@ -2271,8 +1779,9 @@ class HomesController extends AppController
             exit;
         }
         $id = $_REQUEST['id'];
+		$provider = $_REQUEST['provider'];;
         //get details for this song
-        $trackDetails = $this->Song->getdownloaddata($prodId);        
+        $trackDetails = $this->Song->getdownloaddata($prodId , $provider);        
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;

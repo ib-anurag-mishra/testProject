@@ -4,10 +4,10 @@
 		echo " > ";
 		echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
 		echo " > ";
-		if(strlen($artistName) >= 30){
-			$artistName = substr($artistName, 0, 30). '...';
+		if(strlen($artisttext) >= 30){
+			$artisttext = substr($artisttext, 0, 30). '...';
 		}
-		echo $artistName;
+		echo $artisttext;
 	?>
 	
 	<?php
@@ -36,7 +36,7 @@ $i = 0;
 ?>
 		<td valign="top" >
 		<div id="album_list_page" style="float:left">
-			<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>" >
+			<a href="/artists/view/<?php echo base64_encode($artisttext); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 			<div class="album_lgAlbumArtwork" style="float:left">
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
@@ -53,7 +53,7 @@ $i = 0;
 			</div>
 			</a>			
 			<div class="albumData" style="float:left">
-				<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>" >
+				<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 				<div class="albumlistBox">
 					<b>
 					<?php

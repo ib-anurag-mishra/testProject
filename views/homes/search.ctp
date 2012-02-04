@@ -26,6 +26,9 @@ $ieVersion =  ieversion();
 ?>
 <?php
 if(count($searchResults) != 0){
+if(isset($searchtype)){
+	$searchKey = $searchKey."&search_type=".$searchtype;
+}
 ?>
 <div id="genreArtist" class="links" <?php if(isset($composer)){ ?> style="width:192px;" <?php }else{ ?> style="width:215px;" <?php } ?>>
 	<?php echo $paginator->sort(__("Artist") , 'Song.Artist', array('url' => array("?"=>$searchKey)))  . $paginator->sort('`', 'Song.Artist', array('url' => array("?"=>$searchKey), 'id' => 'sort_arrows'));?>
@@ -93,7 +96,7 @@ if(count($searchResults) != 0){
 				</td>
 				<?php } ?>
 				<td width="210" valign="top" style="padding-left:10px;" >
-					<a href="/artists/view/<?php echo base64_encode($searchResult['Song']['ArtistText']); ?>/<?php echo $searchResult['Song']['ReferenceID'];  ?>" >
+					<a href="/artists/view/<?php echo base64_encode($searchResult['Song']['ArtistText']); ?>/<?php echo $searchResult['Song']['ReferenceID'];  ?>/<?php echo base64_encode($searchResult['Song']['provider_type']);  ?>" >
 					<p>
 					<?php
 						if (strlen($searchResult['Song']['Title']) >= 19) {
@@ -138,6 +141,7 @@ if(count($searchResults) != 0){
 									<p>
 										<form method="Post" id="form<?php echo $searchResult["Song"]["ProdID"]; ?>" action="/homes/userDownload">
 											<input type="hidden" name="ProdID" value="<?php echo $searchResult["Song"]["ProdID"];?>" />
+											<input type="hidden" name="ProviderType" value="<?php echo $searchResult["Song"]["provider_type"]; ?>" />
 											<span class="beforeClick" id="song_<?php echo $searchResult["Song"]["ProdID"]; ?>">
 												<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $searchResult["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 											</span>
@@ -166,7 +170,7 @@ if(count($searchResults) != 0){
 								<?php 	}
 										else { ?>
 											<p>
-											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>",this);'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+											<span class="beforeClick" id="wishlist<?php echo $searchResult["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $searchResult["Song"]["ProdID"]; ?>","<?php echo $searchResult["Song"]["provider_type"]; ?>");'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $searchResult["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 
 											</p>
