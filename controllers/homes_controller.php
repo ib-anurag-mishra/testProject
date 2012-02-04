@@ -53,7 +53,7 @@ class HomesController extends AppController
 		$ids = '';
 		//featured artist slideshow
 		if (($artists = Cache::read("featured".$country)) === false) {
-			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory')), 'recursive' => -1,'Featuredartist.language' => Configure::read('App.LANGUAGE')));
+			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 		//	print "<pre>";print_r($featured);exit;
 			foreach($featured as $k => $v){
 				 if($v['Featuredartist']['album'] != 0){
@@ -65,9 +65,10 @@ class HomesController extends AppController
 				$featured =  $this->Album->find('all',array('conditions' =>
 							array('and' =>
 								array(
-									array("Country.Territory" => $territory, "Album.ProdID IN (".rtrim($ids,",'").")" ),
+									array("Country.Territory" => $territory, "Album.ProdID IN (".rtrim($ids,",'").")" ,"Album.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Album.ProdID"
 							),
+							
 							'fields' => array(
 								'Album.ProdID',
 								'Album.Title',

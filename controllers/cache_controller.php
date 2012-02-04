@@ -26,7 +26,7 @@ class CacheController extends AppController {
 			Cache::delete("login_".$libid.$patronid);
 			print "success";exit;
     }
-	function cacheGenre(){
+	function cacheGenre1(){
 		$sql = "SELECT Genre FROM categories WHERE Language = 'EN'";
 		$result = mysql_query($sql);
 		while ($row = mysql_fetch_assoc($result)) {
@@ -166,7 +166,7 @@ class CacheController extends AppController {
 	
 	//for caching data 
 	
-	function cacheData(){
+	function cacheGenre(){
 		$territoryNames = array('US','CA','AU','IT','NZ');	
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
@@ -203,7 +203,7 @@ class CacheController extends AppController {
 					$data =  $this->Song->find('first',array('conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID']),
+									array('Country.Territory' => $territory,"Song.DownloadStatus" => 1,"Song.ProdID" => $v['Download']['ProdID'],"Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Song.ProdID"
 							),
 							'fields' => array(
@@ -255,7 +255,7 @@ class CacheController extends AppController {
 			// Checking for download status 
 			$featured = array();
 			$ids = '';
-			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory), 'recursive' => -1));
+			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 			foreach($featured as $k => $v){
 				 if($v['Featuredartist']['album'] != 0){
 					$ids .= $v['Featuredartist']['album'].",";
@@ -267,9 +267,9 @@ class CacheController extends AppController {
 				$featured =  $this->Album->find('all',array('conditions' =>
 							array('and' =>
 								array(
-									array("Album.ProdID IN (".rtrim($ids,",'").")" ),
+									array("Album.ProdID IN (".rtrim($ids,",'").")"  , "Country.Territory" => $territory , "Album.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Album.ProdID"
-							),
+							),   
 							'fields' => array(
 								'Album.ProdID',
 								'Album.Title',
@@ -278,7 +278,8 @@ class CacheController extends AppController {
 								'Album.Artist',
 								'Album.ArtistURL',
 								'Album.Label',
-								'Album.Copyright',						
+								'Album.Copyright',
+								'Album.provider_type'
 								),
 							'contain' => array(
 								'Genre' => array(
@@ -314,7 +315,7 @@ class CacheController extends AppController {
 			{
 				$genre_data = array();
 				echo $territory;
-				$genre_query = "SELECT downloads.ProdID FROM downloads,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%".$genre."%' AND Songs.Territory LIKE '%".$territory."%' ORDER BY downloads.created DESC LIMIT 10";
+				$genre_query = "SELECT downloads.ProdID, COUNT(DISTINCT downloads.id) AS countProduct FROM `downloads`,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%".$genre."%' AND Songs.Territory LIKE '%".$territory."%' GROUP BY downloads.ProdID ORDER BY countProduct DESC LIMIT 10";
 				$genredata = $this->Album->query($genre_query);
 				foreach($genredata as $k => $v){
 						$this->Song->recursive = 2;
@@ -334,7 +335,8 @@ class CacheController extends AppController {
 									'Song.Artist',
 									'Song.Advisory',
 									'Song.Sample_Duration',
-									'Song.FullLength_Duration'
+									'Song.FullLength_Duration',
+									'Song.provider_type'
 								),
 								'contain' => array(
 									'Genre' => array(
