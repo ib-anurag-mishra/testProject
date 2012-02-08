@@ -138,6 +138,7 @@ class ServicesController extends AppController {
 				
 				$searchResults = $this->paginate('Song');
 				$reference = '';
+
 				foreach($searchResults as $k=>$v){
 					$result[$k]['Song']['ProdID'] = $v['Song']['ProdID'];
 					$result[$k]['Song']['ProductID'] = $v['Song']['ProductID'];
@@ -145,15 +146,16 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Title'] = $v['Song']['Title'];
 					$result[$k]['Song']['SongTitle'] = $v['Song']['SongTitle'];
 					$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
+					$result[$k]['Song']['provider_type'] = $v['Song']['provider_type'];
 					$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
 					if(isset($this->params['pass'][3])){
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);
 					}
 					else{
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);					
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);					
 					}
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
@@ -333,15 +335,16 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Title'] = $v['Song']['Title'];
 					$result[$k]['Song']['SongTitle'] = $v['Song']['SongTitle'];
 					$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
+					$result[$k]['Song']['provider_type'] = $v['Song']['provider_type'];
 					$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
 					if(isset($this->params['pass'][4])){
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);
 					}
 					else{
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);					
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);					
 					}
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
@@ -451,15 +454,16 @@ class ServicesController extends AppController {
 					$result[$k]['Song']['Title'] = $v['Song']['Title'];
 					$result[$k]['Song']['SongTitle'] = $v['Song']['SongTitle'];
 					$result[$k]['Song']['ArtistText'] = $v['Song']['ArtistText'];
+					$result[$k]['Song']['provider_type'] = $v['Song']['provider_type'];
 					$result[$k]['Song']['Artist'] = $v['Song']['Artist'];
 					$result[$k]['Song']['Advisory'] = $v['Song']['Advisory'];
 					$result[$k]['Song']['Composer'] = str_replace('"','',$v['Song']['Composer']);
 					$result[$k]['Song']['Genre'] = str_replace('"','',$v['Song']['Genre']);
 					if(isset($this->params['pass'][3])){
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$this->params['pass'][3]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);
 					}
 					else{
-						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText']);					
+						$result[$k]['Song']['freegal_url'] = "https://".$_SERVER['HTTP_HOST']."/services/login/".$this->params['pass'][0]."/".$this->params['pass'][1]."/".$this->params['pass'][2]."/".$v['Song']['ReferenceID']."/".base64_encode($v['Song']['ArtistText'])."/".base64_encode($v['Song']['provider_type']);					
 					}
 					if($reference != $v['Song']['ReferenceID']){ 
 						$albumData = $this->Album->find('all', array(
@@ -739,9 +743,9 @@ class ServicesController extends AppController {
 					$this ->Session->write("block", 'no');
 				}
 				if(isset($nopin)){
-					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3]));
+					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][4], $this->params['pass'][3], $this->params['pass']['5']));
 				}else{
-					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4]));				
+					$this->redirect(array('controller' => 'artists', 'action' => 'view', $this->params['pass'][5], $this->params['pass'][4], $this->params['pass']['6']));				
 				}
 			}
 		}
