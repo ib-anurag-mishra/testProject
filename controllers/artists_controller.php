@@ -592,7 +592,7 @@ Class ArtistsController extends AppController
 				'conditions' => array('Song.ArtistText' => $artistText, 'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
       $sql = $this->Song->lastQuery();
-      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' ip '.$_SERVER['REMOTE_ADDR']." from album action of the artists controller", 'debug');
+      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' ip '.$_SERVER['REMOTE_ADDR']." from view action of the artists controller", 'debug');
 
 			$val = '';
 
