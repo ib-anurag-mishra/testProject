@@ -12,7 +12,7 @@ Class ArtistsController extends AppController
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language','Album');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
-	
+
 	/*
 	 Function Name : beforeFilter
 	 Desc : actions that needed before other functions are getting called
@@ -31,20 +31,20 @@ Class ArtistsController extends AppController
 			else if($validPatron == '2') {
 				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 		}
 	}
-	
+
 	/*
 	 Function Name : managefeaturedartist
 	 Desc : action for listing all the featured artists
         */
 	function admin_managefeaturedartist() {
-		$artists = $this->paginate('Featuredartist',array('album != ""','language' => Configure::read('App.LANGUAGE')));		
+		$artists = $this->paginate('Featuredartist',array('album != ""','language' => Configure::read('App.LANGUAGE')));
 		$this -> set( 'artists', $artists );
 	}
-	
+
 	/*
 	 Function Name : admin_artistform
 	 Desc : action for displaying the add/edit featured artist form
@@ -92,9 +92,9 @@ Class ArtistsController extends AppController
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);		
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : admin_insertfeaturedartist
 	 Desc : inserts a featured artist
@@ -106,21 +106,21 @@ Class ArtistsController extends AppController
 			$artist = $_REQUEST[ 'artistName' ];
 		} else{
 			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
-		}				
+		}
 		if(isset($_REQUEST[ 'album' ])){
 			$album = $_REQUEST[ 'album' ];
 		} else{
 			$album = $this->data[ 'Artist' ][ 'album' ];
-		}		
+		}
 		if( $artist == '' ) {
 			$errorMsg .= 'Please select an Artist.<br/>';
 		}
 		if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
 			$errorMsg .= 'Please Choose a Territory<br/>';
-		}		
+		}
 		if( $album == '' ) {
 			$errorMsg .= 'Please select an Album.<br/>';
-		}		
+		}
 		$insertArr = array();
 		$insertArr[ 'artist_name' ] = $artist;
 		$insertArr[ 'album' ] = $album;
@@ -144,9 +144,9 @@ Class ArtistsController extends AppController
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);		
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : admin_updatefeaturedartist
 	 Desc : Updates a featured artist
@@ -163,7 +163,7 @@ Class ArtistsController extends AppController
 			$artist = $_REQUEST[ 'artistName' ];
 		} else{
 			$artist = $this->data[ 'Artist' ][ 'artist_name' ];
-		}				
+		}
 		if(isset($_REQUEST[ 'album' ])){
 			$album = $_REQUEST[ 'album' ];
 		} else{
@@ -174,10 +174,10 @@ Class ArtistsController extends AppController
 		}
 		if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
 			$errorMsg .= 'Please Choose a Territory';
-		}		
+		}
 		if( $album == '' ) {
 			$errorMsg .= 'Please select an Album.<br/>';
-		}		
+		}
 		$updateArr = array();
 		$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
 		$updateArr[ 'artist_name' ] = $artist;
@@ -202,9 +202,9 @@ Class ArtistsController extends AppController
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);		
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : admin_delete
 	 Desc : For deleting a featured artist
@@ -221,7 +221,7 @@ Class ArtistsController extends AppController
 			$this -> redirect( 'managefeaturedartist' );
 		}
 	}
-	
+
 	/*
 	 Function Name : admin_createartist
 	 Desc : assigns artists with images
@@ -257,7 +257,7 @@ Class ArtistsController extends AppController
 					}
 					if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
 						$errorMsg .= 'Please Choose a Territory';
-					}					
+					}
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
 					$updateArr[ 'artist_name' ] = $artist;
 					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
@@ -286,7 +286,7 @@ Class ArtistsController extends AppController
 				}
 				$country = $getData[ 'Artist' ][ 'territory' ];
 				$getArtistDataObj = new Song();
-				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );				
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
 				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
@@ -299,11 +299,11 @@ Class ArtistsController extends AppController
 				$artist = $_REQUEST[ 'artistName' ];
 			} else{
 				$artist = $this->data[ 'Artist' ][ 'artist_name' ];
-			}			
-			
-			
+			}
+
+
 			if( isset( $this -> data ) ) {
-				
+
 				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
 				}
@@ -312,7 +312,7 @@ Class ArtistsController extends AppController
 				}
 				if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
 					$errorMsg .= 'Please Choose a Territory<br/>';
-				}				
+				}
 				$newPath = '../webroot/img/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
@@ -342,18 +342,18 @@ Class ArtistsController extends AppController
 		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
-		memcache_close($memcache);		
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : admin_manageartist
 	 Desc : manages new artists with images
         */
 	function admin_manageartist() {
-		$artists = $this->paginate('Artist',array('language' => Configure::read('App.LANGUAGE')));	
+		$artists = $this->paginate('Artist',array('language' => Configure::read('App.LANGUAGE')));
 		$this -> set( 'artists', $artists );
 	}
-	
+
 	/*
 	 Function Name : admin_deleteartists
 	 Desc : For deleting a new artist
@@ -375,9 +375,9 @@ Class ArtistsController extends AppController
 		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
-		memcache_close($memcache);		
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : admin_addnewartist
 	 Desc : assigns artists with images
@@ -404,7 +404,7 @@ Class ArtistsController extends AppController
 					$artist = $_REQUEST[ 'artistName' ];
 				} else{
 					$artist = $this->data[ 'Artist' ][ 'artist_name' ];
-				}				
+				}
 				if( isset( $this -> data ) ) {
 					$updateObj = new Newartist();
 					$updateArr = array();
@@ -413,7 +413,7 @@ Class ArtistsController extends AppController
 					}
 					if( $this -> data[ 'Artist' ][ 'territory' ] == '' ) {
 						$errorMsg .= 'Please Choose a Territory';
-					}					
+					}
 					$updateArr[ 'id' ] = $this -> data[ 'Artist' ][ 'id' ];
 					$updateArr[ 'artist_name' ] = $artist;
 					$updateArr[ 'territory' ] = $this -> data[ 'Artist' ][ 'territory' ];
@@ -442,7 +442,7 @@ Class ArtistsController extends AppController
 				}
 				$country = $getData[ 'Newartist' ][ 'territory' ];
 				$getArtistDataObj = new Song();
-				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );				
+				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
 				$this -> set( 'getArtistData', $getArtistData );
 			}
 		}
@@ -456,8 +456,8 @@ Class ArtistsController extends AppController
 				$artist = $_REQUEST[ 'artistName' ];
 			} else{
 				$artist = $this->data[ 'Artist' ][ 'artist_name' ];
-			}				
-			
+			}
+
 			if( isset( $this -> data ) ){
 				if( $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ] == '' ) {
 					$errorMsg .= 'Please upload an image<br/>';
@@ -467,7 +467,7 @@ Class ArtistsController extends AppController
 				}
 				if( trim( $artist ) == '' ) {
 					$errorMsg .= 'Please select an artist name<br/>';
-				}				
+				}
 				$newPath = '../webroot/img/';
 				$fileName = $this -> data[ 'Artist' ][ 'artist_image' ][ 'name' ];
 				$newPath = $newPath . $fileName;
@@ -497,9 +497,9 @@ Class ArtistsController extends AppController
 		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_newartists");
-		memcache_close($memcache);	
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : admin_managenewartist
 	 Desc : manages artists with images
@@ -508,7 +508,7 @@ Class ArtistsController extends AppController
 		$artists = $this->paginate('Newartist',array('language' => Configure::read('App.LANGUAGE')));
 		$this -> set( 'artists', $artists );
 	}
-	
+
 	/*
 	 Function Name : admin_deletenewartists
 	 Desc : For deleting a featured artist
@@ -518,7 +518,7 @@ Class ArtistsController extends AppController
 		$deleteObj = new Newartist();
 		$data = $this->Newartist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
 		$fileName = $data[0]['Newartist']['artist_image'];
-		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'newartistimg/'.$fileName);		
+		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'newartistimg/'.$fileName);
 		if( $deleteObj -> del( $deleteArtistUserId ) ) {
 			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
 			$this -> redirect( 'managenewartist' );
@@ -530,17 +530,17 @@ Class ArtistsController extends AppController
 		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
 		memcache_delete($memcache, Configure::read('App.memcache_key')."_newartists");
-		memcache_close($memcache);		
+		memcache_close($memcache);
 	}
-	
+
 	/*
 	 Function Name : view
 	 Desc : For artist view page
 	*/
-	function view($id=null,$album=null, $provider=null) 
+	function view($id=null,$album=null, $provider=null)
 	{
 		if(count($this -> params['pass']) > 1) {
-			$count = count($this -> params['pass']);	      
+			$count = count($this -> params['pass']);
 			$id = $this -> params['pass'][0];
 			for($i=1;$i<$count-1;$i++) {
 				if(!is_numeric($this -> params['pass'][$i])) {
@@ -556,7 +556,7 @@ Class ArtistsController extends AppController
 				$provider = "";
 			}
 		}
-		
+
 		// echo base64_decode($id) . $album;
 		// exit;
 		$country = $this->Session->read('territory');
@@ -565,7 +565,7 @@ Class ArtistsController extends AppController
 		}
 		else{
 			$cond = "";
-		}		
+		}
 		if($album != '') {
 			$condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider);
 		}
@@ -580,20 +580,28 @@ Class ArtistsController extends AppController
 				// }
 			// }
 			// $condition = array("Album.ProdID IN (".rtrim($val,",").")");
-			
+
 			$this->Song->Behaviors->attach('Containable');
+
+      $artistText = trim($id);
+      $artistText = base64_decode($artistText);
+      $artistText = preg_replace('/[^A-Za-z ]*/','',$artistText);
+
 			$songs = $this->Song->find('all', array(
 				'fields' => array('Song.ReferenceID'),
-				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
-			
+				'conditions' => array('Song.ArtistText' => $artistText, 'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
+
+      $sql = $this->Song->lastQuery();
+      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' ip '.$_SERVER['REMOTE_ADDR']." from album action of the artists controller", 'debug');
+
 			$val = '';
-			
+
 			foreach($songs as $k => $v){
 				$val = $val.$v['Song']['ReferenceID'].",";
 			}
 			$condition = array("Album.ProdID IN (".rtrim($val,",").")");
 		}
-		
+
 		$this->layout = 'home';
 		$this->set('artistName',base64_decode($id));
 		$this->set('album',$album);
@@ -609,13 +617,13 @@ Class ArtistsController extends AppController
 		}
 		else{
 			$cond = "";
-		}	
+		}
 		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
 						//   array('Album.ArtistText' => base64_decode($id)),
 						//	array('Album.provider_type = Genre.provider_type'),
-						//	array('Album.provider_type = Country.provider_type'),	
+						//	array('Album.provider_type = Country.provider_type'),
 						    $condition
 						), "1 = 1 GROUP BY Album.ProdID"
 					),
@@ -628,26 +636,26 @@ Class ArtistsController extends AppController
 						'Album.ArtistURL',
 						'Album.Label',
 						'Album.Copyright',
-						'Album.provider_type'					
+						'Album.provider_type'
 						),
 					'contain' => array(
 						'Genre' => array(
 							'fields' => array(
-								'Genre.Genre'								
+								'Genre.Genre'
 								)
 							),
 						'Country' => array(
 							'fields' => array(
-								'Country.Territory'								
+								'Country.Territory'
 								)
-							),												
+							),
 						'Files' => array(
 							'fields' => array(
 								'Files.CdnPath' ,
 								'Files.SaveAsName',
 								'Files.SourceURL'
 							),
-						)			                                
+						)
 					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '3','cache' => 'yes', 'chk' => 2
 				);
 		if($this->Session->read('block') == 'yes') {
@@ -659,7 +667,7 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
-		
+
 		$albumSongs = array();
 		if(!empty($albumData))
 		{
@@ -668,7 +676,7 @@ Class ArtistsController extends AppController
 						'conditions' =>
 							array('and' =>
 								array(
-									array('Song.ReferenceID' => $album['Album']['ProdID']),							
+									array('Song.ReferenceID' => $album['Album']['ProdID']),
 									//array('Song.provider_type = Genre.provider_type'),
 									array('Song.provider_type = Country.provider_type'),
 									array('Song.DownloadStatus' => 1),
@@ -697,7 +705,7 @@ Class ArtistsController extends AppController
 						'contain' => array(
 							'Genre' => array(
 									'fields' => array(
-											'Genre.Genre'								
+											'Genre.Genre'
 										)
 									),
 							'Country' => array(
@@ -705,7 +713,7 @@ Class ArtistsController extends AppController
 											'Country.Territory',
 											'Country.SalesDate'
 										)
-									),								
+									),
 							'Sample_Files' => array(
 									'fields' => array(
 												'Sample_Files.CdnPath' ,
@@ -718,12 +726,12 @@ Class ArtistsController extends AppController
 												'Full_Files.SaveAsName'
 										)
 									),
-									
+
 						),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
 						  ));
 			}
 		}
-		
+
 		// echo "<pre>";
 		// print_r($albumSongs);
 		// exit;
@@ -749,13 +757,13 @@ Class ArtistsController extends AppController
 		$pre = '';
 		$res = array();
 	    $this->set('albumSongs',$albumSongs);
-	
+
 	}
-	
-	function album($id=null,$album=null,$provider=null) 
+
+	function album($id=null,$album=null,$provider=null)
 	{
 		if(count($this -> params['pass']) > 1) {
-			$count = count($this -> params['pass']);	      
+			$count = count($this -> params['pass']);
 			$id = $this -> params['pass'][0];
 			for($i=1;$i<$count-1;$i++) {
 				if(!is_numeric($this -> params['pass'][$i])) {
@@ -778,13 +786,13 @@ Class ArtistsController extends AppController
 		}
 		else{
 			$cond = "";
-		}		
+		}
 		if($album != '') {
 			$condition = array("Album.ProdID" => $album , 'Album.provider_type' => $provider );
 		}
 		else{
 			// $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
-			
+
 			// $val = '';
 			// $this->Song->Behaviors->attach('Containable');
 			// foreach($allAlbum as $k => $v){
@@ -796,12 +804,20 @@ Class ArtistsController extends AppController
 			// $condition = array("Album.ProdID IN (".rtrim($val,",").")");
 
 			$this->Song->Behaviors->attach('Containable');
-			$songs = $this->Song->find('all', array(
+
+      $artistText = trim($id);
+      $artistText = base64_decode($artistText);
+      $artistText = preg_replace('/[^A-Za-z ]*/','',$artistText);
+
+      $songs = $this->Song->find('all', array(
 				'fields' => array('Song.ReferenceID'),
-				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
-			
+				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
+
+      $sql = $this->Song->lastQuery();
+      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' referer '.$_SERVER['HTTP_REFERER'].' ip '.$_SERVER['REMOTE_ADDR']." from album action of the artists controller", 'debug');
+
 			$val = '';
-			
+
 			foreach($songs as $k => $v){
 				$val = $val.$v['Song']['ReferenceID'].",";
 			}
@@ -820,13 +836,13 @@ Class ArtistsController extends AppController
 		}
 		else{
 			$cond = "";
-		}	
+		}
 		$this->paginate =  array('conditions' =>
 					array('and' =>
 						array(
 						    //array('Album.ArtistText' => base64_decode($id)),
 							//array('Album.provider_type = Genre.provider_type'),
-							array('Album.provider_type = Country.provider_type'),							
+							array('Album.provider_type = Country.provider_type'),
 						    $condition
 						), "1 = 1 GROUP BY Album.ProdID"
 					),
@@ -838,28 +854,28 @@ Class ArtistsController extends AppController
 						'Album.Artist',
 						'Album.ArtistURL',
 						'Album.Label',
-						'Album.Copyright',	
+						'Album.Copyright',
 						'Album.provider_type'
 						),
 					'contain' => array(
 						'Genre' => array(
 							'fields' => array(
-								'Genre.Genre'								
+								'Genre.Genre'
 								)
 							),
 						'Country' => array(
 							'fields' => array(
-								'Country.Territory'								
+								'Country.Territory'
 								)
-							),												
+							),
 						'Files' => array(
 							'fields' => array(
 								'Files.CdnPath' ,
 								'Files.SaveAsName',
 								'Files.SourceURL'
 							),
-						)			                                
-					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2 
+						)
+					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
@@ -869,9 +885,9 @@ Class ArtistsController extends AppController
 		}
 		$this->Album->recursive = 2;
 		$albumData = array();
-		$albumData = $this->paginate('Album'); //getting the Albums for the artist	
+		$albumData = $this->paginate('Album'); //getting the Albums for the artist
 
-		
+
 		$albumSongs = array();
 	    $this->set('albumData', $albumData);
 	    if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -879,23 +895,23 @@ Class ArtistsController extends AppController
 	    }else {
 	       $this->set('artistUrl', "N/A");
 	    }
-		
+
 		// $array = array();
 		// $pre = '';
 		// $res = array();
 	    // $this->set('albumSongs',$albumSongs);
-		
+
 
 	}
-	
-	
+
+
 	/*
 	 Function Name : view
 	 Desc : For artist view page
 	*/
 	function admin_getArtists(){
-        Configure::write('debug', 0);	
-		$this->Song->recursive = 2;	
+        Configure::write('debug', 0);
+		$this->Song->recursive = 2;
 		$artist = $this->Song->find('all',array(
 							'conditions' =>
 								array('and' =>
@@ -909,18 +925,18 @@ Class ArtistsController extends AppController
 							'contain' => array(
 									'Country' => array(
 											'fields' => array(
-												'Country.Territory'								
+												'Country.Territory'
 											)
 										),
 								),
 							'order' => 'Song.ArtistText'
 						));
-		$data = "<option value=''>SELECT</option>";				
+		$data = "<option value=''>SELECT</option>";
 		foreach($artist as $k=>$v){
 			$data = $data."<option value='".$v['Song']['ArtistText']."'>".$v['Song']['ArtistText']."</option>";
 		}
 		print "<select class='select_fields' name='artistName' onchange='getAlbum()', id='artistName'>".$data."</select>";exit;
-						
+
 	}
 	function admin_getAlbums(){
         Configure::write('debug', 0);
@@ -940,7 +956,7 @@ Class ArtistsController extends AppController
 			$data = $data."<option value='".$k."'>".$v."</option>";
 		}
 		print "<select class='select_fields' id='album' name='album'>".$data."</select>";exit;
-						
-	}	
+
+	}
   }
 ?>
