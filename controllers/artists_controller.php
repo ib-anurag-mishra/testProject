@@ -583,16 +583,16 @@ Class ArtistsController extends AppController
 
 			$this->Song->Behaviors->attach('Containable');
 
-      $artistText = trim($id);
-      $artistText = base64_decode($artistText);
-      $artistText = preg_replace('/[^A-Za-z ]*/','',$artistText);
+      //$artistText = trim($id);
+      $artistText = base64_decode($id);
+      //$artistText = preg_replace('/[^A-Za-z1-9 ]*/','',$artistText);
 
 			$songs = $this->Song->find('all', array(
 				'fields' => array('Song.ReferenceID'),
 				'conditions' => array('Song.ArtistText' => $artistText, 'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
       $sql = $this->Song->lastQuery();
-      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' ip '.$_SERVER['REMOTE_ADDR']." from view action of the artists controller", 'debug');
+      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' referer '.(isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER']:"Not Found").' ip '.$_SERVER['REMOTE_ADDR']." from view action of the artists controller", 'debug');
 
 			$val = '';
 
@@ -805,16 +805,18 @@ Class ArtistsController extends AppController
 
 			$this->Song->Behaviors->attach('Containable');
 
-      $artistText = trim($id);
-      $artistText = base64_decode($artistText);
-      $artistText = preg_replace('/[^A-Za-z ]*/','',$artistText);
+      //$artistText = trim($id);
+
+      $artistText = base64_decode($id);
+
+      //$artistText = preg_replace('/[^A-Za-z1-9 ]*/','',$artistText);
 
       $songs = $this->Song->find('all', array(
 				'fields' => array('Song.ReferenceID'),
 				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
 
       $sql = $this->Song->lastQuery();
-      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' referer '.$_SERVER['HTTP_REFERER'].' ip '.$_SERVER['REMOTE_ADDR']." from album action of the artists controller", 'debug');
+      $this->log("The System executed Query ".$sql." on ".date('m-d-Y h:i:s', time()).' referer '.(isset($_SERVER['HTTP_REFERER'])? $_SERVER['HTTP_REFERER']:"Not Found").' ip '.$_SERVER['REMOTE_ADDR']." from album action of the artists controller", 'debug');
 
 			$val = '';
 
