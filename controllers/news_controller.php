@@ -249,5 +249,21 @@ class NewsController extends AppController
 		}
 		$this->Question->setDataSource('default'); 
 	}
+  function clearcache($page=1){
+    $this->autoRender = false;
+    $alias = 'News';
+    $args = array('0' => array( ),'1' => null ,'2' => 'News.created DESC','3' => 3,'4' => intval($page),'5' => 1,'6' => array('cache' => 'yes'));
+    $uniqueCacheId = '';
+    foreach ($args as $arg) {
+      $uniqueCacheId .= serialize($arg);
+    }
+    $uniqueCacheId = md5($uniqueCacheId);
+    $check = Cache::delete('pagination-'.$alias.'-'.$uniqueCacheId);
+    if($check == true){
+      echo "Cache cleared";
+    } else {
+      echo "Cache not cleared";
+    }
+  }
 }
 ?>
