@@ -11,7 +11,7 @@ Class GenresController extends AppController
 	var $uses = array('Category','Files','Album','Song','Download');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron');
 	var $helpers = array('Cache','Library','Page','Wishlist', 'Language');
-	
+
 	/*
 	 Function Name : beforeFilter
 	 Desc : actions that needed before other functions are getting called
@@ -30,18 +30,18 @@ Class GenresController extends AppController
 			else if($validPatron == '2') {
 				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
 		}
 	}
-	
+
 	/*
 	 Function Name : index
 	 Desc : actions on landing page
         */
 	function index() {
 		$country = $this->Session->read('territory');
-		//$country = "'".$country."'";		
+		//$country = "'".$country."'";
 		$this->layout = 'home';
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
@@ -65,7 +65,7 @@ Class GenresController extends AppController
 						'contain' => array(
 							'Country' => array(
 									'fields' => array(
-											'Country.Territory'								
+											'Country.Territory'
 										)
 									),
 						),'group' => 'Genre.Genre'
@@ -94,18 +94,18 @@ Class GenresController extends AppController
 			}
 			if (($genres = Cache::read($genreName.$block)) === false) {
 				$this->Song->recursive = 2;
-				$this->Song->Behaviors->attach('Containable');			
+				$this->Song->Behaviors->attach('Containable');
 				$genreDetails = $this->Song->find('all',array('conditions' =>
 											array('and' =>
 												array(
-													array('Genre.Genre' => $genreName),							
+													array('Genre.Genre' => $genreName),
 													array("Song.ReferenceID <> Song.ProdID"),
 													array('Song.DownloadStatus' => 1),
 												//	array('Song.TrackBundleCount' => 0),
-													array("Song.Sample_FileID != ''"),													
-													array("Song.FullLength_FIleID != ''"),		
+													array("Song.Sample_FileID != ''"),
+													array("Song.FullLength_FIleID != ''"),
 													array('Song.provider_type = Genre.provider_type'),
-													array('Song.provider_type = Country.provider_type'),													
+													array('Song.provider_type = Country.provider_type'),
 													array('Country.Territory' => $country),
 													array("Song.UpdateOn >" => date('Y-m-d', strtotime("-1 week"))),$cond
 												)
@@ -124,15 +124,15 @@ Class GenresController extends AppController
 											'contain' => array(
 												'Genre' => array(
 													'fields' => array(
-														'Genre.Genre'								
+														'Genre.Genre'
 													)
 												),
 												'Country' => array(
 													'fields' => array(
 														'Country.Territory',
-														'Country.SalesDate',														
+														'Country.SalesDate',
 													)
-												),												
+												),
 												'Sample_Files' => array(
 													'fields' => array(
 														'Sample_Files.CdnPath',
@@ -146,7 +146,7 @@ Class GenresController extends AppController
 														'Full_Files.SaveAsName',
 														'Full_Files.SourceURL'
 													),
-												),												
+												),
 											),'limit' => '50'));
 			Cache::write($genreName.$block, $genreDetails);
 			}
@@ -157,11 +157,11 @@ Class GenresController extends AppController
 			  $rand_keys = array_rand($genreDetails,3);
 			  $songArr[0] = $genreDetails[$rand_keys[0]];
 			  $songArr[1] = $genreDetails[$rand_keys[1]];
-			  $songArr[2] = $genreDetails[$rand_keys[2]];				
+			  $songArr[2] = $genreDetails[$rand_keys[2]];
 			}
 			else {
 			  $songArr = $genreDetails;
-			}				
+			}
 			$this->Download->recursive = -1;
 			foreach($songArr as $genre) {
 				$this->Song->recursive = 2;
@@ -171,13 +171,13 @@ Class GenresController extends AppController
 					'fields' => array(
 						'Album.ProdID',
 					),
-					'contain' => array(										
+					'contain' => array(
 						'Files' => array(
 							'fields' => array(
 								'Files.CdnPath',
 								'Files.SaveAsName',
 								'Files.SourceURL',
-								),                             
+								),
 						)
 				)));
 				$albumArtwork = shell_exec('perl files/tokengen ' . $downloadData[0]['Files']['CdnPath']."/".$downloadData[0]['Files']['SourceURL']);
@@ -201,7 +201,7 @@ Class GenresController extends AppController
 				} else{
 					$finalArr[$i]['status'] = 'not';
 				}
-				$i++;				
+				$i++;
 			}
 			$finalArray[$j] = $finalArr;
 			$finalArray[$j]['Genre'] = $genreName;
@@ -209,14 +209,14 @@ Class GenresController extends AppController
 		}
 		$this->set('categories',$finalArray);
 	}
-	
+
 	/*
 	 Function Name : view
 	 Desc : actions on view all genres page
         */
 	function view($Genre = null,$Artist = null) {
 		if($Genre == ''){
-			$Genre = "QWx0ZXJuYXRpdmU=";
+			$Genre = "QWxs";
 		}
 		$this -> layout = 'home';
 		$country = $this->Session->read('territory');
@@ -241,7 +241,7 @@ Class GenresController extends AppController
 						'contain' => array(
 							'Country' => array(
 									'fields' => array(
-											'Country.Territory'								
+											'Country.Territory'
 										)
 									),
 						),'group' => 'Genre.Genre'
@@ -249,7 +249,7 @@ Class GenresController extends AppController
 			 Cache::write("genre".$country, $genreAll);
 		}
 		$genreAll = Cache::read("genre".$country);
-		$this->set('genresAll', $genreAll);		
+		$this->set('genresAll', $genreAll);
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
@@ -264,7 +264,7 @@ Class GenresController extends AppController
 		      $cond = "";
 		}
 		if($Artist == 'spl') {
-			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");			
+			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
 		}
 		elseif($Artist != '' && $Artist != 'img') {
 			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
@@ -272,38 +272,64 @@ Class GenresController extends AppController
 		else {
 			$condition = "";
 		}
-		$this->Song->unbindModel(array('hasOne' => array('Participant')));		
+		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$this->Song->Behaviors->attach('Containable');
 		$this->Song->recursive = 0;
 		$genre = base64_decode($Genre);
-		$genre = mysql_escape_string($genre);					
-		$this->paginate = array(
-		      'conditions' => array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type" , "Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		$genre = mysql_escape_string($genre);
+    if($genre != 'All'){
+      $gcondition = array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type" , "Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $this->paginate = array(
+		      'conditions' => $gcondition,
 		      'fields' => array('Song.ArtistText'),
 			  'contain' => array(
 				'Country' => array(
 					'fields' => array(
-						'Country.Territory'								
+						'Country.Territory'
 						)),
 				'Genre' => array(
 					'fields' => array(
-							'Genre.Genre'								
+							'Genre.Genre'
 						)),
 			  ),
 			  'extra' => array('chk' => 1),
-		      'order' => 'Song.ArtistText ASC',		      
+		      'order' => 'Song.ArtistText ASC',
 		      'limit' => '60', 'cache' => 'yes','check' => 2
-		      ); 
+		      );
+    } else {
+      $gcondition = array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $this->paginate = array(
+        'conditions' => $gcondition,
+        'fields' => array('Song.ArtistText'),
+        'contain' => array(
+          'Country' => array(
+            'fields' => array(
+              'Country.Territory'
+            )
+          ),
+          'Genre' => array(
+            'fields' => array(
+              'Genre.Genre'
+						)
+          ),
+        ),
+        'extra' => array('chk' => 1),
+        'order' => 'Song.ArtistText ASC',
+        'limit' => '60',
+        'cache' => 'yes',
+        'check' => 2
+      );
+    }
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
-	
-	
+
+
 	function ajax_view($Genre = null,$Artist = null) {
 		if($Genre == ''){
-			$Genre = "QWx0ZXJuYXRpdmU=";
+      $Genre = "QWxs";
 		}
 		$this -> layout = 'ajax';
 		$country = $this->Session->read('territory');
@@ -327,7 +353,7 @@ Class GenresController extends AppController
 						'contain' => array(
 							'Country' => array(
 									'fields' => array(
-											'Country.Territory'								
+											'Country.Territory'
 										)
 									),
 						),'group' => 'Genre.Genre'
@@ -335,7 +361,7 @@ Class GenresController extends AppController
 			Cache::write("genre".$country, $genreAll);
 		}
 		$genreAll = Cache::read("genre".$country);
-		$this->set('genresAll', $genreAll);		
+		$this->set('genresAll', $genreAll);
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
@@ -350,7 +376,7 @@ Class GenresController extends AppController
 		      $cond = "";
 		}
 		if($Artist == 'spl') {
-			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");			
+			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
 		}
 		elseif($Artist != '' && $Artist != 'img') {
 			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
@@ -358,34 +384,60 @@ Class GenresController extends AppController
 		else {
 			$condition = "";
 		}
-		$this->Song->unbindModel(array('hasOne' => array('Participant')));		
+		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$this->Song->Behaviors->attach('Containable');
 		$this->Song->recursive = 0;
 		$genre = base64_decode($Genre);
-		$genre = mysql_escape_string($genre);					
-		$this->paginate = array(
-		      'conditions' => array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type" , "Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
+		$genre = mysql_escape_string($genre);
+    if($genre != 'All'){
+      $gcondition = array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type" , "Genre.Genre = '$genre'",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $this->paginate = array(
+		      'conditions' => $gcondition,
 		      'fields' => array('Song.ArtistText'),
 			  'contain' => array(
 				'Country' => array(
 					'fields' => array(
-						'Country.Territory'								
+						'Country.Territory'
 						)),
 				'Genre' => array(
 					'fields' => array(
-							'Genre.Genre'								
+							'Genre.Genre'
 						)),
 			  ),
 			  'extra' => array('chk' => 1),
-		      'order' => 'Song.ArtistText ASC',		      
+		      'order' => 'Song.ArtistText ASC',
 		      'limit' => '60', 'cache' => 'yes','check' => 2
-		      ); 
+		      );
+    } else {
+      $gcondition = array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $this->paginate = array(
+        'conditions' => $gcondition,
+        'fields' => array('Song.ArtistText'),
+        'contain' => array(
+          'Country' => array(
+            'fields' => array(
+              'Country.Territory'
+            )
+          ),
+          'Genre' => array(
+            'fields' => array(
+              'Genre.Genre'
+						)
+          ),
+        ),
+        'extra' => array('chk' => 1),
+        'order' => 'Song.ArtistText ASC',
+        'limit' => '60',
+        'cache' => 'yes',
+        'check' => 2
+      );
+    }
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
-		$this->set('genres', $allArtists);
+    $this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
-	
+
 	/*
 	 Function Name : admin_managegenre
 	 Desc : actions for admin end manage genre to add/edit genres
@@ -407,10 +459,10 @@ Class GenresController extends AppController
 				}
 			}
 			$this->Session -> setFlash( 'Your selection saved successfully!!', 'modal', array( 'class' => 'modal success' ) );
-		}		
+		}
 		$this->Genre->recursive = -1;
 		$allGenres = $this->Genre->find('all', array(
-							'fields' => 'DISTINCT Genre', 
+							'fields' => 'DISTINCT Genre',
 							'order' => 'Genre')
 						);
 		$this->set('allGenres', $allGenres);

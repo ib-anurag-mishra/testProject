@@ -30,7 +30,7 @@
 
 
 
-.scroll-content {    
+.scroll-content {
     height: 552px;
     margin-left: 5px;
     overflow: auto;
@@ -39,9 +39,9 @@
 .form-search {
 	width:326px;
 	float:right;
-	margin-top: -14px;	
-	margin-left: 40px;	
-	
+	margin-top: -14px;
+	margin-left: 40px;
+
 }
 .logo-freegal {
 	display:block;
@@ -131,7 +131,7 @@
 .genre_list_item{
 	cursor: pointer;
 	display:block;
-} 
+}
 #ajax_genrelist_content{
 	margin-left: 20px;
 }
@@ -149,9 +149,9 @@ jQuery(document).ready(function() {
 	$html->addCrumb( $genre  , '/genres/view/'.base64_encode($genre));
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 	$totalRows = count($genresAll);
-	
-	
-	$genre_text_conversion = array( 
+
+
+	$genre_text_conversion = array(
 		"Children's Music" =>  "Children's" ,
 		"Classic"  =>  "Soundtracks",
 		"Comedy/Humor"  =>  "Comedy",
@@ -191,11 +191,11 @@ function load_genres(link , id_serial , genre_name)
 	jQuery(".breadCrumb").find("a:eq(2)").html(genre_name);
 	jQuery(".breadCrumb").find("a:eq(2)").attr('href' , link );
 	jQuery(".breadCrumb").find("a:eq(2)").attr('href' , jQuery(".breadCrumb").find("a:eq(2)").attr('href').replace('ajax_view' , 'view'));
-	
-	 jQuery("#genre_artist_search a").each(function () { 
+
+	 jQuery("#genre_artist_search a").each(function () {
 		jQuery(this).attr('href' , jQuery(this).attr('href').replace('ajax_view' , 'view'));
 	});
-	
+
 
 	//setInterval('VSA_initScrollbars()' , 500);
 }
@@ -228,13 +228,13 @@ function sortText(a, b) {
 		}
 	});
  });
-  
+
 function replaceText() {
-    jQuery(".paging span a").each(function () { 
+    jQuery(".paging span a").each(function () {
 		jQuery(this).attr('href' , jQuery(this).attr('href').replace('ajax_view' , 'view'));
 	});
-	
-	
+
+
 }
 jQuery(document).ready(replaceText);
 jQuery("#ajax_genrelist_content").ajaxStop(replaceText);
@@ -264,22 +264,20 @@ jQuery("html").ajaxStop(replaceText);
 	<br class="clr" />
 
 	<div class="scroll-content vscrollable" id = "genre_scroller">
+    <a class="genre_list_item" style="font-weight:bold;" id="genre_list_item_0" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a>
     <?php
 		$genre_count = 1;
-		foreach ($genresAll as $genre_all):
+    foreach ($genresAll as $genre_all):
 				if($genre_all['Genre']['Genre'] != ''){
 					if($genre_all['Genre']['Genre'] == $genre){
 						?>
 						<a class="genre_list_item" style="font-weight:bold;" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($genre_all['Genre']['Genre']);  ?>')"><?php echo isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre']; ?></a>
 						<?php
 					}
-					else{				
+					else{
 						?>
-						
 						<a class="genre_list_item" id="genre_list_item_<?php echo $genre_count; ?>" style="curser:pointer" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($genre_all['Genre']['Genre']);  ?>' )" ><?php echo isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre']; ?></a>
-			
 						<?php
-			
 					}
 				}
 		$genre_count++;
@@ -340,18 +338,18 @@ jQuery("html").ajaxStop(replaceText);
 			$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)));
 			foreach ($counters as $counter):
 				if($counter < count($genres)) {
-					
+
 					echo "<td width='250'><p>";
 					if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
 						$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
 						echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
-							$ArtistName, 
+							$ArtistName,
 							array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText']))) . '</span>'; ?>
 					<?php
 					} else {
 						$ArtistName = $genres[$counter]['Song']['ArtistText'];
 						echo $html->link(
-							$ArtistName, 
+							$ArtistName,
 							array('controller' => 'artists', 'action' => 'album', base64_encode($genres[$counter]['Song']['ArtistText'])));
 					}
 					echo '</p></td>';

@@ -77,10 +77,16 @@
 	background:url(../img/logo-freegal.png) no-repeat;
 }
 .advance_search {
-	width:326px;
+	width:163px;
 	float:left;
 	text-align:right;
 	margin-top:7px;
+}
+.artist_browse {
+  float: left;
+  margin-top: 7px;
+  text-align: left;
+  width: 163px;
 }
 .advance_search a:hover {
 	text-decoration:underline;
@@ -496,7 +502,7 @@ $ieVersion =  ieversion();
 											).'</li>';
 										}
 									}
-							endforeach; 
+							endforeach;
 						?>
 					</ul>
 				</div>
@@ -521,6 +527,7 @@ $ieVersion =  ieversion();
 						<select title="Artists" id="type111" name="search_type"><option value="artist">Artists</option><option value="song">Song</option><option value="album">Album</option><option value="composer">Composer</option></select>
 						<input type="submit" class="submit" value="ok" />
 						</form>
+            <span class="artist_browse"><a href="/genres/view">A to Z Artist Browsing</a>&nbsp;&nbsp;&nbsp;</span>
 						<span class="advance_search"><a href="/homes/advance_search">Advanced Search</a>&nbsp;&nbsp;&nbsp;</span>
 					</div>
 				</fieldset>
@@ -542,7 +549,7 @@ $ieVersion =  ieversion();
 									}else{
 										$title = $v['Album']['AlbumTitle'];
 									}
-								//	$imageUrl = "/proxy/?url=".$image."&maxlength=84"; 
+								//	$imageUrl = "/proxy/?url=".$image."&maxlength=84";
 									echo "<li>".$html->link($html->image($image,array("height" => "77", "width" => "84")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
 										array('class'=>'first','escape'=>false)).'<a class="title-album">'.$title."</a></li>";
@@ -560,9 +567,9 @@ $ieVersion =  ieversion();
 				<li><a href="#tab-2" id="tab-2-li" class="tab"><span class="txt-national">National Top 100</span></a></li>
 				<li><a href="#tab-3" id="tab-3-li" class="tab active"><span class="txt-top-genres">Top Genres</span></a></li>
 			</ul>
-			<div class="tab-content" id="tab-1">							
+			<div class="tab-content" id="tab-1">
 			</div>
-			<div class="tab-content" id="tab-2">		
+			<div class="tab-content" id="tab-2">
 			</div>
 			<div class="tab-content" id="tab-3">
 				<div class="tabs-area">
@@ -590,10 +597,10 @@ $ieVersion =  ieversion();
 										<span class="download">
 										<?php
 												if($genre_pop[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-													if($libraryDownload == '1' && $patronDownload == '1') {	
+													if($libraryDownload == '1' && $patronDownload == '1') {
 														$genre_pop[$i]['Song']['status'] = 'avail1';
 														if($genre_pop[$i]['Song']['status'] != 'avail') {
-															?>															
+															?>
 															<form method="Post" id="form<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
 															<input type="hidden" name="ProdID" value="<?php echo $genre_pop[$i]["Song"]["ProdID"];?>" />
 															<input type="hidden" name="ProviderType" value="<?php echo $genre_pop[$i]["Song"]["provider_type"]; ?>" />
@@ -604,7 +611,7 @@ $ieVersion =  ieversion();
 															<span class="afterClick" id="downloading_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
 															<span id="download_loader_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-15px;margin-right:-15px')); ?></span>
 															</form>
-															<?php	
+															<?php
 														} else {
 														?>
 															<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
@@ -615,28 +622,28 @@ $ieVersion =  ieversion();
 															$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 															$wishlistCount = $wishlist->getWishlistCount();
 															if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
-															?> 
-																<?php __("Limit Exceeded");?> 
+															?>
+																<?php __("Limit Exceeded");?>
 															<?php
 															} else {
 																$wishlistInfo = $wishlist->getWishlistData($genre_pop[$i]["Song"]["ProdID"]);
 																if($wishlistInfo == 'Added to Wishlist') {
-																?> 
+																?>
 																	<?php __("Added to Wishlist");?>
-																<?php 
-																} else { 
+																<?php
+																} else {
 																?>
 																	<span class="beforeClick" id="wishlist<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>","<?php echo $genre_pop[$i]["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
 																	<span class="afterClick" id="downloading_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-																<?php	
+																<?php
 																}
 															}
 
-														} else { 
+														} else {
 														?>
 															<?php __("Limit Exceeded");?>
-														<?php	
-														}												
+														<?php
+														}
 													}
 												} else {
 												?>
@@ -644,36 +651,36 @@ $ieVersion =  ieversion();
 												<?php
 												}?>
 										</span>
-											<span style="float:left;margin-left:25px;">											
+											<span style="float:left;margin-left:25px;">
 											<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", '.$genre_pop[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
 											<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$k)); ?>
-											<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$k, "onClick" => 'stopThis(this, "'.$k.'");')); ?>										
+											<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$k, "onClick" => 'stopThis(this, "'.$k.'");')); ?>
 											</span>
 											<span class="song">
-												<?php											
+												<?php
 												if (strlen($genre_pop[$i]['Song']['SongTitle']) >= 22 ) {
 													echo '<span title="'.$genre_pop[$i]['Song']['SongTitle'].'">' . substr($genre_pop[$i]['Song']['SongTitle'], 0, 22) . "..." . "</span>";
 												} else {
 													echo $genre_pop[$i]['Song']['SongTitle'];
 												}
-												?>				
+												?>
 												<span class="singer">
 													<?php
 														echo "<a href='/artists/album/".base64_encode($genre_pop[$i]['Song']['ArtistText'])."'>".substr($genre_pop[$i]['Song']['ArtistText'], 0, 22)."</a>";
 													?>
-												</span>									
+												</span>
 											</span>
-										<?php 
+										<?php
 											$k++;
 											}
 											echo "</li>";
 										}
 										?>
-										
+
 									</ul>
 								</div>
 							</div>
-						</div>								
+						</div>
 					</div>
 					<div class="tab-content" id="genre-tab-2-content">
 					</div>
@@ -682,11 +689,11 @@ $ieVersion =  ieversion();
 					<div class="tab-content" id="genre-tab-4-content">
 					</div>
 					</div></div>
-					
+
 			</div>
-			
+
 		<a href="/genres/view" class="btn-more">See All Genres</a>
-		
+
 	</div>
 	<input type="hidden" id="genre-load-info-1" value="0" />
 	<input type="hidden" id="genre-load-info-2" value="0" />
