@@ -1,6 +1,6 @@
 <?php
 /* File Name: homes_controller.php
-   File Description: Displays the home page for each patron 
+   File Description: Displays the home page for each patron
    Author: Maycreate
 */
 class HomesController extends AppController
@@ -9,7 +9,7 @@ class HomesController extends AppController
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
-    
+
     /*
      Function Name : beforeFilter
      Desc : actions that needed before other functions are getting called
@@ -26,8 +26,8 @@ class HomesController extends AppController
 			else if($validPatron == '2') {
 				//$this->Session->destroy();
 				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));			
-			}			
+				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+			}
         }
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
@@ -35,7 +35,7 @@ class HomesController extends AppController
 		$this->Cookie->domain = 'freegalmusic.com';
 		//$this->Cookie->key = 'qSI232qs*&sXOw!';
     }
-	
+
 	function index() {
 		  if($_SERVER['SERVER_PORT'] == 443){
 			$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
@@ -68,7 +68,7 @@ class HomesController extends AppController
 									array("Country.Territory" => $territory, "Album.ProdID IN (".rtrim($ids,",'").")" ,"Album.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Album.ProdID"
 							),
-							
+
 							'fields' => array(
 								'Album.ProdID',
 								'Album.Title',
@@ -77,28 +77,28 @@ class HomesController extends AppController
 								'Album.Artist',
 								'Album.ArtistURL',
 								'Album.Label',
-								'Album.Copyright',	
+								'Album.Copyright',
 								'Album.provider_type'
-								
+
 								),
 							'contain' => array(
 								'Genre' => array(
 									'fields' => array(
-										'Genre.Genre'								
+										'Genre.Genre'
 										)
 									),
 								'Country' => array(
 									'fields' => array(
-										'Country.Territory'								
+										'Country.Territory'
 										)
-									),												
+									),
 								'Files' => array(
 									'fields' => array(
 										'Files.CdnPath' ,
 										'Files.SaveAsName',
 										'Files.SourceURL'
 								),
-							)			                                
+							)
 						), 'order' => array('Country.SalesDate' => 'desc')
 					)
 				);
@@ -109,11 +109,11 @@ class HomesController extends AppController
 		}
 		$featured = Cache::read("featured".$country);
 		$this->set('featuredArtists', $featured);
-		
+
 		//used for gettting top downloads for Pop Genre
 		if (($artists = Cache::read("pop".$country)) === false) {
 			$genre_query = "SELECT downloads.ProdID, COUNT(DISTINCT downloads.id) AS countProduct FROM `downloads`,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%Pop%' AND Songs.Territory LIKE '%".$territory."%' GROUP BY downloads.ProdID ORDER BY countProduct DESC LIMIT 10";
-			
+
 			$genredata = $this->Album->query($genre_query);
 			foreach($genredata as $k => $v){
 					$this->Song->recursive = 2;
@@ -139,7 +139,7 @@ class HomesController extends AppController
 							'contain' => array(
 								'Genre' => array(
 									'fields' => array(
-										'Genre.Genre'        
+										'Genre.Genre'
 									)
 								),
 								'Country' => array(
@@ -147,13 +147,13 @@ class HomesController extends AppController
 										'Country.Territory',
 										'Country.SalesDate'
 									)
-								),            
+								),
 								'Sample_Files' => array(
 									'fields' => array(
 												'Sample_Files.CdnPath' ,
 												'Sample_Files.SaveAsName'
 										)
-									), 
+									),
 								'Full_Files' => array(
 									'fields' => array(
 												'Full_Files.CdnPath' ,
@@ -168,11 +168,11 @@ class HomesController extends AppController
 					}
 			}
 			Cache::write("pop".$country, $genre_pop);
-		}		
+		}
 		$genre_pop = Cache::read("pop".$country);
-		// Checking for download status 
+		// Checking for download status
 		/*$this->Download->recursive = -1;
-		foreach($genre_pop as $key => $value){	
+		foreach($genre_pop as $key => $value){
 			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 			if(count($downloadsUsed) > 0){
 				$genre_pop[$key]['Song']['status'] = 'avail';
@@ -181,13 +181,13 @@ class HomesController extends AppController
 			}
 		}*/
 		$this->set('genre_pop', $genre_pop);
-        $this->set('artists', $this->Artist->getallartists());
-        $this->layout = 'home';
+    $this->set('artists', $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6)));
+    $this->layout = 'home';
     }
-	
+
 	function get_genre_tab_content($tab_no , $genre){
 		//Cachec results for Rock Genre
-		
+
 		$this -> layout = 'ajax';
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
@@ -197,7 +197,7 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('patronDownload',$patronDownload);
 		$this->set('tab_no',$tab_no);
-		 
+
 		if (($artists = Cache::read($genre.$territory)) === false) {
 			$genre_query = "SELECT downloads.ProdID, COUNT(DISTINCT downloads.id) AS countProduct FROM `downloads`,Songs WHERE downloads.ProdID = Songs.ProdID AND Songs.Genre LIKE '%".$genre."%' AND Songs.Territory LIKE '%".$territory."%' GROUP BY downloads.ProdID ORDER BY countProduct DESC LIMIT 10";
 			$genredata = $this->Album->query($genre_query);
@@ -225,7 +225,7 @@ class HomesController extends AppController
 							'contain' => array(
 								'Genre' => array(
 									'fields' => array(
-										'Genre.Genre'        
+										'Genre.Genre'
 									)
 								),
 								'Country' => array(
@@ -233,13 +233,13 @@ class HomesController extends AppController
 										'Country.Territory',
 										'Country.SalesDate'
 									)
-								),            
+								),
 								'Sample_Files' => array(
 									'fields' => array(
 												'Sample_Files.CdnPath' ,
 												'Sample_Files.SaveAsName'
 										)
-									), 
+									),
 								'Full_Files' => array(
 									'fields' => array(
 												'Full_Files.CdnPath' ,
@@ -252,11 +252,11 @@ class HomesController extends AppController
 					if(count($data) > 1){
 						$genre_data[] = $data;
 					}
-			}			
+			}
 			Cache::write($genre.$territory, $genre_data);
 		}
 		$genre_info = Cache::read($genre.$territory);
-		// Checking for download status 
+		// Checking for download status
 /*		$this->Download->recursive = -1;
 		foreach($genre_info as $key => $value){
 			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
@@ -265,7 +265,7 @@ class HomesController extends AppController
 			} else{
 				$genre_info[$key]['Song']['status'] = 'not';
 			}
-		}*/			
+		}*/
 		$this->set('genre_info', $genre_info);
 	}
 	function my_lib_top_10()
@@ -277,14 +277,14 @@ class HomesController extends AppController
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);		
+		$this->set('patronDownload',$patronDownload);
 		if (($libDownload = Cache::read("lib".$libId)) === false) {
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$prodIds = '';
 
-//			$topDownloaded = Cache::read("lib".$libId);	
+//			$topDownloaded = Cache::read("lib".$libId);
 			foreach($topDownloaded as $k => $v){
-				$prodIds .= $v['Download']['ProdID']."','"; 
+				$prodIds .= $v['Download']['ProdID']."','";
 			}
 
 			if($prodIds != ''){
@@ -311,7 +311,7 @@ class HomesController extends AppController
 						'contain' => array(
 							'Genre' => array(
 								'fields' => array(
-									'Genre.Genre'        
+									'Genre.Genre'
 								)
 							),
 							'Country' => array(
@@ -319,20 +319,20 @@ class HomesController extends AppController
 									'Country.Territory',
 									'Country.SalesDate'
 								)
-							),            
+							),
 							'Sample_Files' => array(
 								'fields' => array(
 											'Sample_Files.CdnPath' ,
 											'Sample_Files.SaveAsName'
 									)
-								), 
+								),
 							'Full_Files' => array(
 								'fields' => array(
 											'Full_Files.CdnPath' ,
 											'Full_Files.SaveAsName'
 									)
 								),
-						), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10' 
+						), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10'
 						)
 				);
 			} else {
@@ -343,8 +343,8 @@ class HomesController extends AppController
 		$topDownload = Cache::read("lib".$libId);
 		$this->set('songs',$topDownload);
 	}
-	
-	
+
+
 	function national_top_download()
 	{
 		$this -> layout = 'ajax';
@@ -358,7 +358,7 @@ class HomesController extends AppController
 		// National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false) {
 			$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct FROM `downloads` AS `Download`WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$territory."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 105";
-			
+
 			$natTopDownloaded = $this->Album->query($sql);
 			$natprodIds = '';
 			$i =1;
@@ -386,7 +386,7 @@ class HomesController extends AppController
 							'contain' => array(
 								'Genre' => array(
 									'fields' => array(
-										'Genre.Genre'        
+										'Genre.Genre'
 									)
 								),
 								'Country' => array(
@@ -394,13 +394,13 @@ class HomesController extends AppController
 										'Country.Territory',
 										'Country.SalesDate'
 									)
-								),            
+								),
 								'Sample_Files' => array(
 									'fields' => array(
 												'Sample_Files.CdnPath' ,
 												'Sample_Files.SaveAsName'
 										)
-									), 
+									),
 								'Full_Files' => array(
 									'fields' => array(
 												'Full_Files.CdnPath' ,
@@ -413,11 +413,11 @@ class HomesController extends AppController
 					if(count($data) > 1){
 						$nationalTopDownload[] = $data;
 					}
-			}	
-			// Checking for download status 
+			}
+			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
-		
+
 		$nationalTopDownload = Cache::read("national".$territory);
 /*		$this->Download->recursive = -1;
 		foreach($nationalTopDownload as $key => $value){
@@ -427,18 +427,18 @@ class HomesController extends AppController
 			} else{
 				$nationalTopDownload[$key]['Song']['status'] = 'not';
 			}
-		}*/		
+		}*/
 		$this->set('nationalTopDownload',$nationalTopDownload);
 	}
-    
+
     /*
      Function Name : autoComplete
      Desc : actions that is needed for auto-completeing the search
     */
     function autoComplete() {
-		Configure::write('debug', 0);		
+		Configure::write('debug', 0);
 		$country = $this->Session->read('territory');
-		$searchKey = '';   
+		$searchKey = '';
 		if(isset($_REQUEST['q']) && $_REQUEST['q'] != '') {
 			$searchKey = $_REQUEST['q'];
 		}
@@ -446,7 +446,7 @@ class HomesController extends AppController
 		$this->set('searchKey','search='.urlencode($searchText));
 		$searchKey = str_replace("^", " ", $searchKey);
 		$searchKey = str_replace("$", " ", $searchKey);
-		$searchKey = '"^'.addslashes($searchKey).'"';				
+		$searchKey = '"^'.addslashes($searchKey).'"';
 		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 		if($_REQUEST['type'] == 'album'){
 			$searchParam = "@Title ".$searchKey;
@@ -468,16 +468,16 @@ class HomesController extends AppController
 		$this->paginate = array('Song' => array(
 						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
 					));
-	
+
 		$searchResults = $this->paginate('Song');
-//		$output = array_slice($searchResults, 0, 6);			
+//		$output = array_slice($searchResults, 0, 6);
 		$this->set('output', $searchResults);
 		$this->set('type', $_REQUEST['type']);
 		$this->layout = 'ajax';
     }
-	
-	
-    
+
+
+
     /*
      Function Name : artistSearch
      Desc : actions that is needed for auto-completeing the search
@@ -499,7 +499,7 @@ class HomesController extends AppController
 											$cond,
 											array('Country.Territory' => $country),
 											//array('Song.provider_type = Genre.provider_type'),
-											array('Song.provider_type = Country.provider_type'),											
+											array('Song.provider_type = Country.provider_type'),
 											array('DownloadStatus' => 1),
 											array("Song.Sample_FileID != ''")
 										)
@@ -510,21 +510,21 @@ class HomesController extends AppController
 								'contain' => array(
 										'Country' => array(
 												'fields' => array(
-													'Country.Territory'								
+													'Country.Territory'
 												)
 											),
 									),
 								'order' => 'Song.ArtistText',
 								'group' => 'Song.ArtistText'
 							));
-				Cache::write("artist".$search.$country, $artistAll);			
+				Cache::write("artist".$search.$country, $artistAll);
 		}
 		$artistAll = Cache::read("artist".$search.$country);
 		//$this->Song->recursive = -1;
 		$this->set('distinctArtists', $artistAll);
 		$this->layout = 'ajax';
     }
-    
+
    /*
      Function Name : search
      Desc : actions that is needed for advanced search
@@ -539,8 +539,8 @@ class HomesController extends AppController
 			$countryVal = 2;
 		}
         $patId = $this->Session->read('patron');
-        $libId = $this->Session->read('library');        
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+        $libId = $this->Session->read('library');
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
@@ -555,14 +555,14 @@ class HomesController extends AppController
 		if((isset($_REQUEST['artist']) && $_REQUEST['artist']!= '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) &&  $_REQUEST['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) &&  $this->data['Home']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')){
 			if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
 				if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
-					 if($_REQUEST['match'] == 'All') {			 
+					 if($_REQUEST['match'] == 'All') {
 						$condition = "and";
 						$preCondition1 = array('Song.DownloadStatus' => 1);
 						$preCondition2 = array('Song.TrackBundleCount' => 0);
 						$preCondition3 = array('Country.Territory' => $country);
 						$sphinxCheckCondition = "&";
 						$matchType = "All";
-						
+
 					}
 					 else {
 						$condition = "or";
@@ -600,17 +600,17 @@ class HomesController extends AppController
 					$song =  $this->data['Home']['song'];
 					$album =  $this->data['Home']['album'];
 					$genre =  $this->data['Home']['genre_id'];
-					
+
 					$artist = str_replace("^", " ", $artist);
 					$composer = str_replace("^", " ", $composer);
 					$song = str_replace("^", " ", $song);
 					$album = str_replace("^", " ", $album);
-					
+
 					$artist = str_replace("$", " ", $artist);
 					$composer = str_replace("$", " ", $composer);
 					$song = str_replace("$", " ", $song);
 					$album = str_replace("$", " ", $album);
-				}            
+				}
 				if($artist != '') {
 					$artistSearch = array('match(Song.ArtistText) against ("+'.$artist.'*" in boolean mode)');
 					$sphinxArtistSearch = '@ArtistText "'.addslashes($artist).'" '.$sphinxCheckCondition.' ';
@@ -620,9 +620,9 @@ class HomesController extends AppController
 					$sphinxArtistSearch = '';
 				}
 				if($composer != '') {
-					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');    
+					$composerSearch = array('match(Song.Composer) against ("+'.$composer.'*" in boolean mode)');
 					$this->set('composer', $composer);
-					$preCondition4 = array('Participant.Role' => 'Composer'); 
+					$preCondition4 = array('Participant.Role' => 'Composer');
 					$sphinxComposerSearch = '@Composer "'.addslashes($composer).'" '.$sphinxCheckCondition.' ';
 					$role = '2';
 				}
@@ -649,22 +649,22 @@ class HomesController extends AppController
 					$sphinxAlbumSearch = '';
 				}
 				if($genre != '') {
-					$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)'); 
-					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';	
+					$genreSearch = array('match(Song.Genre) against ("+'.$genre.'*" in boolean mode)');
+					$sphinxGenreSearch = '@Genre "'.addslashes($genre).'" '.$sphinxCheckCondition.' ';
 				}
 				else {
 					$genreSearch = '';
 					$sphinxGenreSearch = '';
 				}
 				if($country != '') {
-					$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)'); 
+					$territorySearch = array('match(Song.Territory) against ("+'.$country.'*" in boolean mode)');
 					$sphinxTerritorySearch = '@Territory "'.addslashes($country).'" '.$sphinxCheckCondition.' ';
 				}
 				else {
 					$territorySearch = '';
 					$sphinxTerritorySearch = '';
-				}				
-				
+				}
+
 				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch.''.$sphinxTerritorySearch;
 				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
@@ -673,9 +673,9 @@ class HomesController extends AppController
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
-			
+
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-				
+
 				$this->set('searchKey','match='.$matchType.'&artist='.urlencode($artist).'&composer='.urlencode($composer).'&song='.urlencode($song).'&album='.urlencode($album).'&genre_id='.urlencode($genre));
 				if (isset($this->passedArgs['sort'])){
 					$sphinxSort = $this->passedArgs['sort'];
@@ -687,11 +687,11 @@ class HomesController extends AppController
 				} else {
 					$sphinxDirection = "";
 				}
-				
+
 				$this->paginate = array('Song' => array(
 							'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
 						));
-				
+
 				$searchResults = $this->paginate('Song');
 				$this->Download->recursive = -1;
 				foreach($searchResults as $key => $value){
@@ -701,15 +701,15 @@ class HomesController extends AppController
 						} else{
 							$searchResults[$key]['Song']['status'] = 'not';
 						}
-				}				
+				}
 				$this->set('searchResults', $searchResults);
 			}
 			else {
 				if($_REQUEST['search_type'] == 'composer'){
-					$this->set('composer', "composer");	
+					$this->set('composer', "composer");
 				}
-							
-				$searchKey = '';      
+
+				$searchKey = '';
 				$auto = 0;
 				if(isset($_REQUEST['search']) && $_REQUEST['search'] != '') {
 					$searchKey = $_REQUEST['search'];
@@ -723,7 +723,7 @@ class HomesController extends AppController
 				$searchText = $searchKey;
 				//$searchKey = '"'.addslashes($searchKey).'"';
 				$this->set('searchKey','search='.urlencode($searchText).'&auto='.$auto);
-				
+
 				//$spValue = "";
 				if($_REQUEST['search_type'] == 'composer'){
 					$searchtype = 'composer';
@@ -765,14 +765,14 @@ class HomesController extends AppController
 				$searchParam = "@Artist ".$spValue." | "."@ArtistText ".$spValue." | "."@Title ".$spValue." | "."@SongTitle ".$spValue;*/
 				if(!isset($_REQUEST['composer'])) {
 					$this->Song->unbindModel(array('hasOne' => array('Participant')));
-				}		
+				}
 				App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 				//$sphinxFinalCondition = $searchParam." & "."@TrackBundleCount 0 & @DownloadStatus 1 & @Territory !".$nonMatchCountry." & @Territory ".$country." & ".$condSphinx;
 				$sphinxFinalCondition = $searchParam." & "."@Territory ".$country." & @DownloadStatus 1 & ".$condSphinx;
 				if ($condSphinx == "") {
 					$sphinxFinalCondition = substr($sphinxFinalCondition, 0, -2);
 				}
-				
+
 				if (isset($this->passedArgs['sort'])){
 					$sphinxSort = $this->passedArgs['sort'];
 				} else {
@@ -786,7 +786,7 @@ class HomesController extends AppController
 				$this->paginate = array('Song' => array(
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
 							));
-			
+
 				$searchResults = $this->paginate('Song');
 //				print "<pre>";print_r($searchResults);exit;
 				$this->Download->recursive = -1;
@@ -797,7 +797,7 @@ class HomesController extends AppController
 						} else{
 							$searchResults[$key]['Song']['status'] = 'not';
 						}
-				}				
+				}
 				$this->set('searchResults', $searchResults);
 			}
 		} else {
@@ -805,7 +805,7 @@ class HomesController extends AppController
 		}
         $this->layout = 'home';
     }
-    
+
     /*
      Function Name : userDownload
      Desc : actions that is used for updating user download
@@ -822,7 +822,7 @@ class HomesController extends AppController
 		$downloadsDetail = array();
 /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		
+
         if($libraryDownload != '1' || $patronDownload != '1') {
             echo "error";
             exit;
@@ -832,22 +832,22 @@ class HomesController extends AppController
         if(count($downloadsUsed) > 0) {
             echo "incld";
             exit;
-        }*/		
-		
+        }*/
+
 		$provider = $_POST['ProviderType'];
-        $trackDetails = $this->Song->getdownloaddata($prodId , $provider );        
+        $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
-        $insertArr['patron_id'] = $patId;	
-        $insertArr['ProdID'] = $prodId;     
+        $insertArr['patron_id'] = $patId;
+        $insertArr['ProdID'] = $prodId;
         $insertArr['artist'] = addslashes($trackDetails['0']['Song']['Artist']);
         $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
-		
+
 		if($provider != 'sony'){
 			$provider = 'ioda';
 		}
 		$insertArr['provider_type'] = $provider;
-		
+
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
@@ -863,11 +863,11 @@ class HomesController extends AppController
 		elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'mdlogin_reference';
-		}		
+		}
 		elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'mndlogin_reference';
-		}	
+		}
 		elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var';
@@ -879,7 +879,7 @@ class HomesController extends AppController
 		elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https_name';
-		}		
+		}
 		elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https';
@@ -887,56 +887,56 @@ class HomesController extends AppController
 		elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
-		}		
+		}
         elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_https';
-		}		
+		}
 		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_wo_pin';  
+			$insertArr['user_login_type'] = 'innovative_wo_pin';
 		}
 		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2';  
+			$insertArr['user_login_type'] = 'sip2';
 		}
 		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
 			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'sip';   
+            $insertArr['user_login_type'] = 'sip';
         }
 		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_wo_pin';  
+			$insertArr['user_login_type'] = 'innovative_var_wo_pin';
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var';  
+			$insertArr['user_login_type'] = 'sip2_var';
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
 		}
 		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
-		}		
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
+		}
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'ezproxy';  
+			$insertArr['user_login_type'] = 'ezproxy';
 		}
 		elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'soap';  
+			$insertArr['user_login_type'] = 'soap';
 		}
 		elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'curl_method';  
-		}		
+			$insertArr['user_login_type'] = 'curl_method';
+		}
         else{
 			$insertArr['email'] = $this->Session->read('patronEmail');
-			$insertArr['user_login_type'] = 'user_account';   
+			$insertArr['user_login_type'] = 'user_account';
          }
-		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);	
+		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 		$this->Library->setDataSource('master');
 		$sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
@@ -952,7 +952,7 @@ class HomesController extends AppController
 		else{
 			if($return == 'incld'){
 				$this->Session->setFlash("You have already downloaded this song. Get it from your recent downloads.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'my_history'));	
+				$this->redirect(array('controller' => 'homes', 'action' => 'my_history'));
 			}
 			else{
 				header("Location: ".$_SERVER['HTTP_REFERER']);
@@ -961,17 +961,17 @@ class HomesController extends AppController
 		}
 /*		if($this->Download->save($insertArr)){
 			$this->Library->setDataSource('master');
-			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId; 
+			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
 			$this->Library->query($sql);
 			$this->Library->setDataSource('default');
 			$this->Download->recursive = -1;
 			$downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 			echo "suces|".$downloadsUsed;
-			exit;			
+			exit;
 		}
 		else{
             echo "error";
-            exit;		
+            exit;
 		}*/
     }
     /*
@@ -994,14 +994,14 @@ class HomesController extends AppController
 									'contain' => array(
 									'Country' => array(
 										'fields' => array(
-											'Country.Territory'								
+											'Country.Territory'
 											)
-										)),								
+										)),
 									'group' => array('Genre')));
 			$data='';
 			foreach($results as $k => $v){
-				$data .= $v['Song']['ProdID'].','; 
-			}		
+				$data .= $v['Song']['ProdID'].',';
+			}
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
 							array('and' =>
@@ -1016,7 +1016,7 @@ class HomesController extends AppController
 						'contain' => array(
 							'Country' => array(
 									'fields' => array(
-											'Country.Territory'								
+											'Country.Territory'
 										)
 									),
 						),'group' => 'Genre.Genre'
@@ -1029,7 +1029,7 @@ class HomesController extends AppController
             $resultArr[$genre['Genre']['Genre']] = $genre['Genre']['Genre'];
         }
         $this->set('genres',$resultArr);
-    } 
+    }
 
     /*
      Function Name : checkPatron
@@ -1038,7 +1038,7 @@ class HomesController extends AppController
     function checkPatron() {
 		Configure::write('debug', 0);
 		$this->layout = false;
-		$libid = $_REQUEST['libid'];       
+		$libid = $_REQUEST['libid'];
 		$patronid = $_REQUEST['patronid'];
 		$patronid = str_replace("_","+",$_REQUEST['patronid']);
 		$userCache = Cache::read("login_".$this->Session->read('territory')."_".$libid."_".$patronid);
@@ -1064,7 +1064,7 @@ class HomesController extends AppController
 			exit;
 		//}
     }
-    
+
     /*
      Function Name : approvePatron
      Desc : actions used for approve terms access
@@ -1072,24 +1072,24 @@ class HomesController extends AppController
     function approvePatron() {
 		Configure::write('debug', 0);
 		$this->layout = false;
-		$libid = $_REQUEST['libid'];       
+		$libid = $_REQUEST['libid'];
 		$patronid = $_REQUEST['patronid'];
 		$patronid = str_replace("_","+",$_REQUEST['patronid']);
-		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));        
+		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));
 		if(count($currentPatron) > 0){
 			$updateArr = array();
 			$updateArr['id'] = $currentPatron[0]['Currentpatron']['id'];
 			if($this->Session->read('consortium') && $this->Session->read('consortium') != ''){
 				$updateArr['consortium'] = $this->Session->read('consortium');
 			}
-			$updateArr['is_approved'] = 'yes';          
+			$updateArr['is_approved'] = 'yes';
 			$this->Currentpatron->save($updateArr);
 			$this->Session->write('approved', 'yes');
 		}
 		echo "Success";
 		exit;
     }
-    
+
     /*
      Function Name : admin_aboutusform
      Desc : actions used for admin about us form
@@ -1159,7 +1159,7 @@ class HomesController extends AppController
 	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
 	$this->layout = 'admin';
     }
-    
+
     /*
      Function Name : admin_termsform
      Desc : actions used for admin terms form
@@ -1438,10 +1438,10 @@ class HomesController extends AppController
 	    }
 	}
 	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
-	
+
 	$this->layout = 'admin';
     }
-    
+
     /*
      Function Name : aboutus
      Desc : actions used for User end checking for cookie and javascript enable
@@ -1456,7 +1456,7 @@ class HomesController extends AppController
 			}
 			elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')) {
 				$url = $this->webroot.'users/mdlogin';
-			}	
+			}
 			elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')) {
 				$url = $this->webroot.'users/mndlogin';
 			}
@@ -1468,14 +1468,14 @@ class HomesController extends AppController
 			}
 			elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')) {
 				$url = $this->webroot.'users/ilhdlogin';
-			}			
+			}
 			elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')) {
 				$url = $this->webroot.'users/ihdlogin';
 			}
 			elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')) {
 				$url = $this->webroot.'users/inhdlogin';
-			}			
-			elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+			}
+			elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
 				$url = $this->webroot.'users/inhlogin';
 			}
 			elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')) {
@@ -1483,28 +1483,28 @@ class HomesController extends AppController
 			}
 			elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')) {
 				$url = $this->webroot.'users/indlogin';
-			}		
-			elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
-				$url = $this->webroot.'users/slogin';  
 			}
-			elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
+			elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
+				$url = $this->webroot.'users/slogin';
+			}
+			elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
 				$url = $this->webroot.'users/snlogin';
 			}
-			elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+			elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
 				$url = $this->webroot.'users/sdlogin';
 			}
-			elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
 				$url = $this->webroot.'users/sndlogin';
-			}			
-			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){            
+			}
+			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
 				$url = $this->webroot.'users/sso';
 			}
-			elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){            
+			elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
 				$url = $this->webroot.'users/plogin';
 			}
-			elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){            
+			elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
 				$url = $this->webroot.'users/clogin';
-			}				
+			}
 			else {
 			   $url = $this->webroot.'users/login';
 			}
@@ -1534,15 +1534,15 @@ class HomesController extends AppController
 			$this->Cookie->delete('msg');
 		}
 		//echo '+++++'.$this->Cookie->read('msg').'asfsdaf';
-		
+
 		//exit;
 		$this->layout = 'home';
     }
-	
+
 /*
  Function Name : aboutus
  Desc : actions used for Admin end checking for cookie and javascript enable
-*/	
+*/
     function admin_aboutus() {
 		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
 			$url = $this->webroot.'admin/users/login';
@@ -1555,7 +1555,7 @@ class HomesController extends AppController
 		}
 		$this->layout = 'admin';
     }
-        
+
     /*
      Function Name : terms
      Desc : actions used for terms page
@@ -1563,7 +1563,7 @@ class HomesController extends AppController
     function terms(){
 		$this->layout = 'home';
     }
-    
+
     /*
      Function Name : limits
      Desc : actions used for limits page
@@ -1571,7 +1571,7 @@ class HomesController extends AppController
     function limits() {
         $this->layout = 'home';
     }
-    
+
     /*
      Function Name : check_email
      Desc : check for a valid email
@@ -1580,7 +1580,7 @@ class HomesController extends AppController
         $email_regexp = "^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$";
         return eregi($email_regexp, $email);
     }
-    
+
     /*
      Function Name : _sendForgotPasswordMail
      Desc : email function for forgot password
@@ -1600,9 +1600,9 @@ class HomesController extends AppController
 		$this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
 		$this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
 		$this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-        $result = $this->Email->send(); 
+        $result = $this->Email->send();
     }
-    
+
     /*
      Function Name : forgot_password
      Desc : To send mail to patrons with new password
@@ -1627,31 +1627,31 @@ class HomesController extends AppController
                 $errorMsg = "This is not a valid email.";
             }
             else{
-                $email_exists = $this->User->find('all',array('conditions' => array('email' => $email, 'type_id' => '5')));               
+                $email_exists = $this->User->find('all',array('conditions' => array('email' => $email, 'type_id' => '5')));
                 if(count($email_exists) == 0){
-                    $errorMsg = "This is not a valid patron email.";    
-                }                
-            }            
-            if($errorMsg != ''){                
+                    $errorMsg = "This is not a valid patron email.";
+                }
+            }
+            if($errorMsg != ''){
                 $this->Session->setFlash($errorMsg);
                 $this->redirect($this->webroot.'homes/forgot_password');
-            }            
+            }
             else{
                 $temp_password = $this->PasswordHelper->generatePassword(8);
-                $this->User->id = $email_exists[0]['User']['id'];                
+                $this->User->id = $email_exists[0]['User']['id'];
                 $this->data['User']['email'] = $email;
                 $this->data['User']['type_id'] = '5';
-                $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);               
+                $this->data['User']['password'] = Security::hash(Configure::read('Security.salt').$temp_password);
                 $this->User->set($this->data['User']);
                 if($this->User->save()){
                     $this->_sendForgotPasswordMail($this->User->id, $temp_password);
                     $this->Session->setFlash("An email with your new password has been sent to your email account.");
                 }
                 $this->redirect($this->webroot.'homes/forgot_password');
-            }            
-        }        
-    }   
-    
+            }
+        }
+    }
+
     /*
      Function Name : addToWishlist
      Desc : To let the patron add songs to wishlist
@@ -1669,7 +1669,7 @@ class HomesController extends AppController
         $patronLimit = $libraryDetails[0]['Library']['library_user_download_limit'];
         //get no of downloads for this week
         $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-        if($wishlistCount >= $patronLimit && $libraryDownload != '1' && $patronDownload != '0') {            
+        if($wishlistCount >= $patronLimit && $libraryDownload != '1' && $patronDownload != '0') {
             echo "error";
             exit;
         }
@@ -1678,7 +1678,7 @@ class HomesController extends AppController
 			$downloadsDetail = array();
             //get song details
 			$provider = $_REQUEST['provider'];
-			
+
             $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
             $insertArr = Array();
             $insertArr['library_id'] = $libraryId;
@@ -1693,10 +1693,10 @@ class HomesController extends AppController
 				$provider = 'ioda';
 			}
 			$insertArr['provider_type'] = $provider;
-			
+
             $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
-			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];            
+			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
             //insert into wishlist table
             $this->Wishlist->save($insertArr);
             //update the libraries table
@@ -1708,16 +1708,16 @@ class HomesController extends AppController
             exit;
         }
     }
-    
+
     /*
      Function Name : my_wishlist
      Desc : To show songs present in wishlist
     */
-    function my_wishlist() {        
+    function my_wishlist() {
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
-        $patronId = $this->Session->read('patron');        
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);		
+        $patronId = $this->Session->read('patron');
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
@@ -1730,7 +1730,7 @@ class HomesController extends AppController
      Function Name : my_history
      Desc : To show songs user downloaded in last 2 weeks
     */
-    function my_history() {        
+    function my_history() {
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
@@ -1738,7 +1738,7 @@ class HomesController extends AppController
         $downloadResults =  $this->Download->find('all',array('group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
 		$this->set('downloadResults',$downloadResults);
     }
-    
+
     /*
      Function Name : removeWishlistSong
      Desc : For removing a song from wishlist page
@@ -1759,7 +1759,7 @@ class HomesController extends AppController
 			$this->redirect('my_wishlist');
 		}
     }
-   
+
     /*
      Function Name : wishlistDownload
      Desc : For downloading a song in wishlist page
@@ -1767,12 +1767,12 @@ class HomesController extends AppController
     function wishlistDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-		
+
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
 		$prodId = $_REQUEST['prodId'];
-		$downloadsDetail = array();		
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);		
+		$downloadsDetail = array();
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         //check for download availability
         if($libraryDownload != '1' || $patronDownload != '1'){
@@ -1782,11 +1782,11 @@ class HomesController extends AppController
         $id = $_REQUEST['id'];
 		$provider = $_REQUEST['provider'];;
         //get details for this song
-        $trackDetails = $this->Song->getdownloaddata($prodId , $provider);        
+        $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
         $insertArr['patron_id'] = $patId;
-        $insertArr['ProdID'] = $prodId;     
+        $insertArr['ProdID'] = $prodId;
         $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
         $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
@@ -1802,11 +1802,11 @@ class HomesController extends AppController
 		elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'mdlogin_reference';
-		}		
+		}
 		elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'mndlogin_reference';
-		}	
+		}
 		elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var';
@@ -1818,7 +1818,7 @@ class HomesController extends AppController
 		elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https_name';
-		}		
+		}
 		elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https';
@@ -1826,82 +1826,82 @@ class HomesController extends AppController
 		elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
-		}		
+		}
         elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_https';
-		}		
+		}
 		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_wo_pin';  
+			$insertArr['user_login_type'] = 'innovative_wo_pin';
 		}
 		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2';  
+			$insertArr['user_login_type'] = 'sip2';
 		}
 		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
 			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'sip';   
+            $insertArr['user_login_type'] = 'sip';
         }
 		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_wo_pin';  
+			$insertArr['user_login_type'] = 'innovative_var_wo_pin';
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var';  
+			$insertArr['user_login_type'] = 'sip2_var';
 		}
 		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
 		}
 		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';  
-		}		
+			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
+		}
 		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'ezproxy';  
+			$insertArr['user_login_type'] = 'ezproxy';
 		}
 		elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'soap';  
+			$insertArr['user_login_type'] = 'soap';
 		}
 		elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
 			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'curl_method';  
-		}		
+			$insertArr['user_login_type'] = 'curl_method';
+		}
         else{
 			$insertArr['email'] = $this->Session->read('patronEmail');
-			$insertArr['user_login_type'] = 'user_account';   
+			$insertArr['user_login_type'] = 'user_account';
         }
-		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];	
-		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];		
+		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
         //save to downloads table
         if($this->Download->save($insertArr)){
         //update library table
 			$this->Library->setDataSource('master');
-			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;	
+			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
 			$this->Library->query($sql);
 			$this->Library->setDataSource('default');
 		}
         //delete from wishlist table
-        $deleteSongId = $id;     
+        $deleteSongId = $id;
         $this->Wishlist->delete($deleteSongId);
         //get no of downloads for this week
 		$this->Download->recursive = -1;
-        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));        
+        $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
         echo "suces|".$downloadsUsed;
 		exit;
     }
     /*
      Function Name : historyDownload
-     Desc : For getting download count on My History 
+     Desc : For getting download count on My History
     */
     function historyDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-		
+
         $id = $_REQUEST['id'];
 		$libId = $_REQUEST['libid'];
 		$patId = $_REQUEST['patronid'];
@@ -1916,7 +1916,7 @@ class HomesController extends AppController
 			$this->Download->setDataSource('default');
 			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
 			$downloadCount =  $downloadsUsed[0]['Download']['history'];
-            echo "suces|".$downloadCount;			
+            echo "suces|".$downloadCount;
         } else {
 			echo "error";
 		}
@@ -1991,8 +1991,8 @@ class HomesController extends AppController
 	}
 	$this->set('languages', $this->Language->find('list', array('fields' => array('short_name', 'full_name'))));
 	$this->layout = 'admin';
-    }	
-	
+    }
+
 	/*
      Function Name : music_box
      Desc : For getting Top Downloads and FreegalMusic records for home page
@@ -2007,29 +2007,29 @@ class HomesController extends AppController
 			$this->Download->recursive = -1;
 			$wk = date('W')-10;
 			// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
+			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
 			$prodIds = '';
 			foreach($topDownloaded as $k => $v){
-				$prodIds .= $v['Download']['ProdID']."','"; 
+				$prodIds .= $v['Download']['ProdID']."','";
 			}
 		} else {
 			// FreegalMusic Downloads functionality
 			$this->Download->recursive = -1;
 			$wk = date('W')-10;
 			// $startDate = date('Y-m-d', strtotime(date('Y')."W".$wk."1"))." 00:00:00";
-			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";  
+			// $endDate = date('Y-m-d', strtotime(date('Y')."W".date('W')."7"))." 23:59:59";
 			$startDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))-70, date('Y'))) . ' 00:00:00';
 		$endDate = date('Y-m-d', mktime(1, 0, 0, date('m'), (date('d')-date('w'))+7, date('Y'))) . ' 23:59:59';
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('created BETWEEN ? AND ?' => array($startDate, $endDate)), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC','limit'=> '8' ));
 			$prodIds = '';
 			foreach($topDownloaded as $k => $v){
-				$prodIds .= $v['Download']['ProdID']."','"; 
+				$prodIds .= $v['Download']['ProdID']."','";
 			}
 		}
-		
+
 		if($prodIds != ''){
 			$this->Song->recursive = 2;
 			$topDownload =  $this->Song->find('all',array('conditions' =>
@@ -2053,7 +2053,7 @@ class HomesController extends AppController
 					'contain' => array(
 						'Genre' => array(
 							'fields' => array(
-								'Genre.Genre'        
+								'Genre.Genre'
 							)
 						),
 						'Country' => array(
@@ -2061,13 +2061,13 @@ class HomesController extends AppController
 								'Country.Territory',
 								'Country.SalesDate'
 							)
-						),            
+						),
 						'Sample_Files' => array(
 							'fields' => array(
 										'Sample_Files.CdnPath' ,
 										'Sample_Files.SaveAsName'
 								)
-							),                              
+							),
 					), 'order' => array('Country.SalesDate' => 'desc')
 					)
 			);
@@ -2095,11 +2095,11 @@ class HomesController extends AppController
             print "Coming Soon....";
         }
 		exit;
-   }	
+   }
     /*
     Function Name : admin_language
     Desc : Adding languages at admin end
-   */	
+   */
    function admin_language(){
 		if (!empty($this->data)) {
 			$data['Language']['id'] = '';
@@ -2114,19 +2114,19 @@ class HomesController extends AppController
 				$this->redirect('/admin/homes/language');
 			}
 			$this->set('languages', $this->Language->find('all'));
-		} 
+		}
 		else {
-			$this->set('languages', $this->Language->find('all'));		
+			$this->set('languages', $this->Language->find('all'));
 		}
 	    $this -> set( 'formAction', 'admin_language');
-	    $this -> set( 'formHeader', 'Add Languages' );		
+	    $this -> set( 'formHeader', 'Add Languages' );
 		$this->layout = 'admin';
    }
     /*
      Function Name : admin_language_activate
      Desc : For activating a Language
     */
-	
+
     function admin_language_activate() {
         $languageID = $this->params['named']['id'];
         if(trim($languageID) != "" && is_numeric($languageID)) {
@@ -2144,12 +2144,12 @@ class HomesController extends AppController
             $this->redirect('/admin/homes/language');
         }
     }
-	
+
     /*
      Function Name : admin_language_deactivate
      Desc : For deactivating a Language
     */
-	
+
     function admin_language_deactivate() {
         $languageID = $this->params['named']['id'];
         if(trim($languageID) != "" && is_numeric($languageID)) {
@@ -2167,12 +2167,12 @@ class HomesController extends AppController
             $this->redirect('/admin/homes/language');
         }
     }
-	
+
     /*
      Function Name : auto_check
      Desc : For checking if user session is Active ro Not
     */
-	
+
     function auto_check() {
 		$this->layout = false;
         if(!$this->Session->read('library') || !$this->Session->read('patron')){
@@ -2183,8 +2183,8 @@ class HomesController extends AppController
 			echo "success";
 			exit;
 		}
-    }	
-	
+    }
+
     function convertString(){
 		Configure::write('debug', 0);
 		$this->layout = false;
@@ -2210,11 +2210,11 @@ class HomesController extends AppController
 												)
 											)
 										);
-												
+
 		$songUrl = shell_exec('perl files/tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
 		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 		echo $finalSongUrl;
 		exit;
-	}   
+	}
 }
 ?>
