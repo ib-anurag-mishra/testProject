@@ -362,14 +362,15 @@
 						<?php echo $this->Form->label(null, 'Library SIP2 Server Version');?></td>
 						<td aligh="left">
 							<?php
-								if($getData['Library']['library_sip_version'] == '2.0E'){
-									$version = '2.0E';
+								if($getData['Library']['library_sip_version'] == '2.0E' || $getData['Library']['library_sip_version'] == '2.0S'){
+									$version = $getData['Library']['library_sip_version'];
 								} else {
 									$version = '2.00';
 								}
 								echo $this->Form->input('library_sip_version', array('options' => array(
 									'2.00' => '2.00',
-									'2.0E' => '2.0E'
+									'2.0E' => '2.0E',
+                  '2.0S' => '2.0S'
 									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $version)
 								);
 							?>						
