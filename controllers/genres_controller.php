@@ -297,30 +297,23 @@ Class GenresController extends AppController
 		      'limit' => '60', 'cache' => 'yes','check' => 2
 		      );
     } else {
-      $gcondition = array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $this->Song->unbindModel(array('hasOne' => array('Country')));
+      $this->Song->unbindModel(array('hasOne' => array('Genre')));
+      $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
       $this->paginate = array(
         'conditions' => $gcondition,
         'fields' => array('Song.ArtistText'),
-        'contain' => array(
-          'Country' => array(
-            'fields' => array(
-              'Country.Territory'
-            )
-          ),
-          'Genre' => array(
-            'fields' => array(
-              'Genre.Genre'
-						)
-          ),
-        ),
         'extra' => array('chk' => 1),
         'order' => 'Song.ArtistText ASC',
         'limit' => '60',
         'cache' => 'yes',
-        'check' => 2
+        'check' => 2,
+        'all_query'=> true,
+        'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
+        'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
       );
     }
-		$this->Song->unbindModel(array('hasOne' => array('Participant')));
+    $this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
@@ -409,27 +402,20 @@ Class GenresController extends AppController
 		      'limit' => '60', 'cache' => 'yes','check' => 2
 		      );
     } else {
-      $gcondition = array("Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type",'Country.Territory' => $country,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $this->Song->unbindModel(array('hasOne' => array('Country')));
+      $this->Song->unbindModel(array('hasOne' => array('Genre')));
+      $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
       $this->paginate = array(
         'conditions' => $gcondition,
         'fields' => array('Song.ArtistText'),
-        'contain' => array(
-          'Country' => array(
-            'fields' => array(
-              'Country.Territory'
-            )
-          ),
-          'Genre' => array(
-            'fields' => array(
-              'Genre.Genre'
-						)
-          ),
-        ),
         'extra' => array('chk' => 1),
         'order' => 'Song.ArtistText ASC',
         'limit' => '60',
         'cache' => 'yes',
-        'check' => 2
+        'check' => 2,
+        'all_query'=> true,
+        'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
+        'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
       );
     }
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));

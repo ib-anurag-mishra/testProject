@@ -1,6 +1,6 @@
 <?php
 class AppModel extends Model {
- 
+
     function find($conditions = null, $fields = array(), $order = null, $recursive = null) {
         $doQuery = true;
         // check if we want the cache
@@ -9,9 +9,9 @@ class AppModel extends Model {
          // check if we have specified a custom config, e.g. different expiry time
          if (!empty($fields['cacheConfig']))
              $cacheConfig = $fields['cacheConfig'];
-        
+
          $cacheName = $this->name . '-' . $fields['cache'];
-            
+
              // if so, check if the cache exists
              if (($data = Cache::read($cacheName, $cacheConfig)) === false) {
               $data = parent::find($conditions, $fields, $order, $recursive);
@@ -23,8 +23,8 @@ class AppModel extends Model {
             $data = parent::find($conditions, $fields, $order, $recursive);
         return $data;
     }
-    
-    function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) { 
+
+    function paginate ($conditions, $fields, $order, $limit, $page = 1, $recursive = null, $extra = array()) {
 		global $callType;
 		$callType = "paginate";
 		if(isset($extra['extra'])){
@@ -35,7 +35,7 @@ class AppModel extends Model {
 		}
 		if(isset($extra['webservice'])){
 			$pageVal = 10000;
-		}		
+		}
        if(isset($extra['cache']) &&  $extra['cache'] == 'yes'){
           $args = func_get_args();
           $uniqueCacheId = '';
@@ -43,7 +43,7 @@ class AppModel extends Model {
                   $uniqueCacheId .= serialize($arg);
           }
           if (!empty($extra['contain'])) {
-                  $contain = $extra['contain']; 
+                  $contain = $extra['contain'];
           }
           $uniqueCacheId = md5($uniqueCacheId);
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
@@ -62,8 +62,8 @@ class AppModel extends Model {
 							}
 						} else {
 							$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
-						} 
-						
+						}
+
 						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 				  } else {
 						$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
@@ -85,16 +85,12 @@ class AppModel extends Model {
 						}
 					} else {
 						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
-					} 
-					
-					if(isset($extra['cont'])){
-						$pagination = $this->find('all', array('cont' => $extra['cont'],'search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
-					}else{
-						$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 					}
+
+					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
 					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
-			}          
+			}
         }
         return $pagination;
     }
@@ -109,9 +105,9 @@ class AppModel extends Model {
         }
         $uniqueCacheId = md5($uniqueCacheId);
         if (!empty($extra['contain'])) {
-                $contain = $extra['contain'];	
+                $contain = $extra['contain'];
         }
-		
+
 		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 			$paginationcount = "";
 		} else {
@@ -120,23 +116,34 @@ class AppModel extends Model {
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
-                    if($v == "1 = 1 GROUP BY Album.ProdID"){
+                    if($v === "1 = 1 GROUP BY Album.ProdID"){
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
-                    if($v == "1 = 1 GROUP BY Song.ProdID"){
-						$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
-                        $paginationcount = count($paginationcount);
-                        $group = "yes";
-                    }
-                    if($v == "1 = 1 GROUP BY Song.ArtistText"){
+                    if($v === "1 = 1 GROUP BY Song.ProdID"){
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
-                    }					
+                    }
+                    if($v === "1 = 1 GROUP BY Song.ArtistText"){
+                        if(isset($extra['all_query']) && $extra['all_query'] == true){
+                          $fields = array('count'=>'count(DISTINCT ArtistText)');
+                          $paginationrow = $this->query("SELECT COUNT(Distinct ArtistText) FROM Songs AS Song WHERE Song.DownloadStatus = '1' AND Song.Sample_FileID != '' AND Song.FullLength_FIleID != '' AND ".$extra['all_country'].((!empty($extra['all_condition']))?" AND ".$extra['all_condition']:""));
+                          $paginationcount = $paginationrow[0][0]['COUNT(Distinct ArtistText)'];
+                          $group = "yes";
+                          //$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                          //$paginationcount = count($paginationcount);
+                          //$group = "yes";
+                        }
+                        else{
+                          $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                          $paginationcount = count($paginationcount);
+                          $group = "yes";
+                        }
+                    }
 
-				}
+                }
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
 					$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
@@ -166,23 +173,23 @@ class AppModel extends Model {
         $this->useDbConfig = $oldDb;
         return $return;
     }
-	
+
 	function saveAll($data = null, $options = array()){
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
         $return = parent::saveAll($data , $options);
         $this->useDbConfig = $oldDb;
-        return $return;	
+        return $return;
 	}
-	
-	function delete($id = null, $cascade = true) {	
+
+	function delete($id = null, $cascade = true) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
         $return = parent::delete($id, $cascade);
         $this->useDbConfig = $oldDb;
         return $return;
 	}
-	
+
 	function deleteAll($conditions, $cascade = true, $callbacks = false) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');
@@ -196,7 +203,7 @@ class AppModel extends Model {
         $return = parent::saveField($name, $value, $validate);
         $this->useDbConfig = $oldDb;
         return $return;
-	}	
+	}
 	function create($data = array(), $filterKey = false) {
         $oldDb = $this->useDbConfig;
         $this->setDataSource('master');

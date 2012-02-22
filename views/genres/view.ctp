@@ -132,6 +132,10 @@
 	cursor: pointer;
 	display:block;
 }
+.genre_list_item_all{
+  cursor: pointer;
+	display:block;
+}
 #ajax_genrelist_content{
 	margin-left: 20px;
 }
@@ -186,7 +190,7 @@ function load_genres(link , id_serial , genre_name)
 {
 	jQuery("#ajax_genrelist_content").empty().html(jQuery("#ajx_loader").html());
 	jQuery('#ajax_genrelist_content').load(link);
-	jQuery('.genre_list_item').css('font-weight' , 'normal');
+	jQuery('.genre_list_item_all,.genre_list_item').css('font-weight' , 'normal');
 	jQuery('#genre_list_item_'+id_serial).css('font-weight' , 'bold');
 	jQuery(".breadCrumb").find("a:eq(2)").html(genre_name);
 	jQuery(".breadCrumb").find("a:eq(2)").attr('href' , link );
@@ -211,9 +215,11 @@ function sortText(a, b) {
  jQuery(document).ready(function() {
 
 	var tgt = $('#genre_scroller');
-	arr = $(tgt.find('a').get().sort(sortText));
+  all = $(tgt.find('a.genre_list_item_all'));
+	arr = $(tgt.find('a.genre_list_item').get().sort(sortText));
 	tgt.empty();
-	tgt.empty().append(arr);
+	tgt.empty().append(all);
+  tgt.append(arr);
 	VSA_initScrollbars();
 
 
@@ -264,7 +270,7 @@ jQuery("html").ajaxStop(replaceText);
 	<br class="clr" />
 
 	<div class="scroll-content vscrollable" id = "genre_scroller">
-    <a class="genre_list_item" style="font-weight:bold;" id="genre_list_item_0" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a>
+    <a class="genre_list_item_all" style="font-weight:bold;" id="genre_list_item_0" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a>
     <?php
 		$genre_count = 1;
     foreach ($genresAll as $genre_all):
