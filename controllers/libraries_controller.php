@@ -736,7 +736,11 @@ Class LibrariesController extends AppController
         if(trim($libraryID) != "" && is_numeric($libraryID)) {
             $this->Session -> setFlash( 'Library deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
-	    $this->Library->set(array('library_status' => 'inactive', 'library_status_updated_by' => 'admin'));
+            $u = $this->Auth->user();
+            $uid = $u['User']['id'];	
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $library_status_updated_by = "Uid :" . $uid . ", IP :" . $ip;
+	    $this->Library->set(array('library_status' => 'inactive', 'library_status_updated_by' => $library_status_updated_by));
             $this->Library->save();
             $this->autoRender = false;
             $this->redirect('managelibrary');
