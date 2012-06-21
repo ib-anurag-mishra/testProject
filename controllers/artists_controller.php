@@ -15,7 +15,7 @@ Class ArtistsController extends AppController
 	
 	/*
 	 Function Name : beforeFilter
-	 Desc : actions that needed before other functions are getting called
+	 Desc : actions that needed before other functions are getting called.
         */
 	function beforeFilter() {
 		parent::beforeFilter();
