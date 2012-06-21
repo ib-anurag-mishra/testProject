@@ -9,7 +9,7 @@ class QuestionsController extends AppController
 {
 	var $name = 'Questions';
 	var $helpers = array('Library', 'Page', 'Language');
-	var $components = array('RequestHandler','ValidatePatron');
+	var $components = array('RequestHandler','ValidatePatron', 'Auth', 'Acl');
 	
 	/*
 	 Function Name : beforeFilter
@@ -17,6 +17,7 @@ class QuestionsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
+                $this->Auth->allow('index', 'view');                
 		if(($this->action != 'admin_reorder') && ($this->action != 'admin_index') && ($this->action != 'admin_view') && ($this->action != 'admin_add') && ($this->action != 'admin_edit') && ($this->action != 'admin_delete')) {
 			$validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {

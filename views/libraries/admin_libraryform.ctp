@@ -38,6 +38,7 @@
 		$getData['Library']['library_sip_error'] = "on";
 		$getData['Library']['library_sip_institution'] = "";
 		$getData['Library']['library_sip_24_check'] = "yes";
+		$getData['Library']['library_sip_64_check_off'] = 0;
 		$getData['Library']['library_ezproxy_secret'] = "";
 		$getData['Library']['library_ezproxy_referral'] = "";
 		$getData['Library']['library_ezproxy_name'] = "";
@@ -56,6 +57,13 @@
 		$getData['Library']['library_contact_fname'] = "";
 		$getData['Library']['library_contact_lname'] = "";
 		$getData['Library']['library_contact_email'] = "";
+		$getData['Library']['library_phone'] = "";
+		$getData['Library']['library_address'] = "";
+		$getData['Library']['library_address2'] = "";
+		$getData['Library']['library_city'] = "";
+		$getData['Library']['library_state'] = "";
+		$getData['Library']['library_country'] = "";
+		$getData['Library']['library_zipcode'] = "";
 		$getData['Library']['library_download_limit'] = "";
 	    $getData['Library']['library_user_download_limit'] = "";
 	    $getData['Library']['library_download_type'] = "daily";
@@ -77,6 +85,7 @@
 		$getData['Library']['youtube_icon'] = '';
 		
 		$getData['Library']['library_language'] = 'en';
+		$getData['Library']['library_exp_date_format'] = '';
 	}
 ?>
 <fieldset>
@@ -179,7 +188,13 @@
 								}
 								elseif($getData['Library']['library_authentication_method'] == "curl_method") {
 									echo "<label>Curl Method</label>";
-								}								
+								}
+								elseif($getData['Library']['library_authentication_method'] == "mdlogin_reference") {
+									echo "<label>MDLogin</label>";
+								}	
+								elseif($getData['Library']['library_authentication_method'] == "mndlogin_reference") {
+									echo "<label>MNDLogin</label>";
+								}	
 								echo $this->Form->hidden( 'library_authentication_method', array('value' => $getData['Library']['library_authentication_method']));
 							?>
 						</td>
@@ -210,8 +225,10 @@
 									'innovative_wo_pin' => 'Innovative w/o PIN',
 									'innovative_https' => 'Innovative HTTPS',
 									'innovative_var_https' => 'Innovative Var HTTPS',
+									
 									'innovative_var_https_wo_pin' => 'Innovative Var HTTPS w/o PIN',
-									'innovative_var_wo_pin' => 'Innovative Var w/o PIN'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'])
+									'innovative_var_wo_pin' => 'Innovative Var w/o PIN','mdlogin_reference' => 'MDLogin','mndlogin_reference' => 'MNDLogin'), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['library_authentication_method'],
+									)
 								);
 							?>
 						</td>
@@ -291,7 +308,9 @@
 					$getData['Library']['library_authentication_method'] != "innovative_var_https_wo_pin" &&
 					$getData['Library']['library_authentication_method'] != "innovative_var_wo_pin" && $getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin" && $getData['Library']['library_authentication_method'] != "innovative_var_name" &&  
 					$getData['Library']['library_authentication_method'] != "innovative_var_https_name" &&
-					$getData['Library']['library_authentication_method'] != "soap"){?>style="display:none;"<?php } ?>>
+					$getData['Library']['library_authentication_method'] != "soap" &&
+					$getData['Library']['library_authentication_method'] != "mdlogin_reference" && 
+					$getData['Library']['library_authentication_method'] != "mndlogin_reference" ){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Number');?></td>
 						<td align="left"><?php echo $this->Form->input('library_authentication_num',array( 'label' => false ,'value' => $getData['Library']['library_authentication_num'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
@@ -345,14 +364,15 @@
 						<?php echo $this->Form->label(null, 'Library SIP2 Server Version');?></td>
 						<td aligh="left">
 							<?php
-								if($getData['Library']['library_sip_version'] == '2.0E'){
-									$version = '2.0E';
+								if($getData['Library']['library_sip_version'] == '2.0E' || $getData['Library']['library_sip_version'] == '2.0S'){
+									$version = $getData['Library']['library_sip_version'];
 								} else {
 									$version = '2.00';
 								}
 								echo $this->Form->input('library_sip_version', array('options' => array(
 									'2.00' => '2.00',
-									'2.0E' => '2.0E'
+									'2.0E' => '2.0E',
+                  '2.0S' => '2.0S'
 									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $version)
 								);
 							?>						
@@ -369,7 +389,23 @@
 								);
 							?>
 						</td>
-					</tr>					
+					</tr>	
+					<tr id="64_message" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250">
+							<?php
+								if($getData['Library']['library_sip_64_check_off'] == 0) {
+									$checked = false;
+								}
+								elseif($getData['Library']['library_sip_64_check_off'] == 1) {
+									$checked = true;
+								}
+								echo $this->Form->checkbox('library_sip_64_check_off', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked)); 
+              ?>            
+            </td>
+						<td aligh="left">
+							<?php echo $this->Form->label('Library Message(64) Check off');?>
+						</td>
+					</tr> 
 					<tr id="sip_error" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250">
 						<?php echo $this->Form->label(null, 'Library SIP2 Error Correction');?></td>
@@ -424,9 +460,25 @@
 									<option value=">">></option>
 									<option value="<"><</option>
 									<option value="<>"><></option>
+									<option value="begins">begins</option>
+                                                                        <option value="notbegins">does not begin with</option>
+									<option value="cmp_pos">cmp_pos</option>
 									<option value="contains">Contains</option>
+                                                                        <option value="notcontain">does not contain</option>
 									<option value="date">Expired</option>
+									<option value="=(Fixed)">=(Fixed)</option>
+									<option value=">(Fixed)">>(Fixed)</option>
+									<option value="<(Fixed)"><(Fixed)</option>
+									<option value="<>(Fixed)"><>(Fixed)</option>
+									<option value="begins(Fixed)">begins(Fixed)</option>
+									<option value="cmp_pos(Fixed)">cmp_pos(Fixed)</option>
 								</select>							
+							</td>
+						</tr>
+						<tr id="authentication_response_pos0" style="display:none">
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Response Position');?></td>
+							<td align="left"  class="libselect">
+								<input type="text" name="data[Variable][0][authentication_response_pos]" class="form_fields" size="20" value="<?php echo $v['Variable']['authentication_response_pos']; ?>">							
 							</td>
 						</tr>
 						<tr id="resArr0" style="display:none">
@@ -479,9 +531,25 @@
 										<option <?php if($var == '>'){ ?> selected = "selected" <?php } ?> value=">"> > </option>
 										<option <?php if($var == '<'){ ?> selected = "selected" <?php } ?> value="<"> < </option>
 										<option <?php if($var == '<>'){ ?> selected = "selected" <?php } ?> value="<>"> <> </option>
+										<option <?php if($var == 'begins'){ ?> selected = "selected" <?php } ?> value="begins"> begins </option>
+                                                                                <option <?php if($var == 'notbegins'){ ?> selected = "selected" <?php } ?> value="notbegins">does not begin with</option>
+										<option <?php if($var == 'cmp_pos'){ ?> selected = "selected" <?php } ?> value="cmp_pos"> cmp_pos</option>
 										<option <?php if($var == 'contains'){ ?> selected = "selected" <?php } ?> value="contains"> Contains </option>
+                                                                                <option <?php if($var == 'notcontain'){ ?> selected = "selected" <?php } ?> value="notcontain">does not contain</option>
 										<option <?php if($var == 'date'){ ?> selected = "selected" <?php } ?> value="date"> Expired </option>
+										<option <?php if($var == '=(Fixed)'){ ?> selected = "selected" <?php } ?> value = "=(Fixed)" >=(Fixed)</option>
+										<option <?php if($var == '>(Fixed)'){ ?> selected = "selected" <?php } ?> value=">(Fixed)"> >(Fixed) </option>
+										<option <?php if($var == '<(Fixed)'){ ?> selected = "selected" <?php } ?> value="<(Fixed)"> <(Fixed) </option>
+										<option <?php if($var == '<>(Fixed)'){ ?> selected = "selected" <?php } ?> value="<>(Fixed)"> <>(Fixed) </option>
+										<option <?php if($var == 'begins(Fixed)'){ ?> selected = "selected" <?php } ?> value="begins(Fixed)"> begins(Fixed) </option>
+										<option <?php if($var == 'cmp_pos(Fixed)'){ ?> selected = "selected" <?php } ?> value="cmp_pos(Fixed)"> cmp_pos(Fixed) </option>
 									</select>							
+								</td>
+							</tr>
+							<tr id="authentication_response_pos<?php echo $k; ?>" <?php if(!($var == 'cmp_pos' || $var == 'cmp_pos(Fixed)')){ ?> style="display:none"<?php } ?>>
+								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Response Position');?></td>
+								<td align="left"  class="libselect">
+									<input type="text" name="data[Variable][<?php echo $k; ?>][authentication_response_pos]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response_pos']; ?>">							
 								</td>
 							</tr>
 							<tr>
@@ -583,6 +651,34 @@
 						<td align="right" width="250"><?php echo $this->Form->label('Email Address');?></td>
 						<td align="left"><?php echo $this->Form->input('library_contact_email',array('label' => false ,'value' => $getData['Library']['library_contact_email'], 'div' => false, 'class' => 'form_fields'));?></td>
 					</tr>
+					<tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Phone Number');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_phone',array('label' => false ,'value' => $getData['Library']['library_phone'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Address');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_address',array('label' => false ,'type' => 'textarea','rows' => 4, 'value' => $getData['Library']['library_address'], 'div' => false, 'style' => 'width:40%', 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Address2');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_address2',array('label' => false ,'type' => 'textarea','rows' => 4, 'value' => $getData['Library']['library_address2'], 'div' => false, 'style' => 'width:40%', 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('City');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_city',array('label' => false ,'value' => $getData['Library']['library_city'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('State');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_state',array('label' => false ,'value' => $getData['Library']['library_state'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Zip');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_zipcode',array('label' => false ,'value' => $getData['Library']['library_zipcode'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
+					 <tr>
+					  <td align="right" width="250"><?php echo $this->Form->label('Country');?></td>
+					  <td align="left"><?php echo $this->Form->input('library_country',array('label' => false ,'value' => $getData['Library']['library_country'], 'div' => false, 'class' => 'form_fields'));?></td>
+					 </tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr>
 						<td align="right" width="255"><?php echo $this->Form->label(null, 'Choose Territory');?></td>
@@ -603,7 +699,25 @@
 								);
 							?>
 						</td>
-					</tr>					
+					</tr>
+					<tr>
+						<td align="right" width="255"><?php echo $this->Form->label(null, 'Expiration Date Format');?></td>
+						<td align="left">
+							<?php
+                $option_array = array(      
+                                            '0' => 'Select a Expiration Date Format',
+                                            'MM-DD-YYYY' => 'MM-DD-YYYY',
+                                            'DD-MM-YYYY' => 'DD-MM-YYYY',
+                                            'MM-DD-YY' => 'MM-DD-YY',
+                                            'DD-MM-YY' => 'DD-MM-YY',
+                                            'YYYYMMDD' => 'YYYYMMDD',
+                                            'YYYY-MM-DD' => 'YYYY-MM-DD',                                            
+                                            );
+								echo $this->Form->input('library_exp_date_format', array('options' => $option_array,'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['library_exp_date_format'])
+								);
+							?>
+						</td>
+					</tr> 					
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Logo Upload ( Image height should not exceed 60 pixels )');?></td></tr>
 					<tr>
@@ -914,6 +1028,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+						$("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -943,9 +1058,70 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();        
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
+					else if ($(this).val() == 'mdlogin_reference') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").hide();
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_location").hide();
+						$("#sip_terminal").hide();
+						$("#sip_version").hide();
+						$("#sip_password").hide();
+						$("#sip_error").hide();
+						$("#sip_institution").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+						$("#soap").hide();
+						$("#block_explicit").show();
+						$("#space").hide();
+						$("#24_message").hide();
+            $("#64_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
+					}					
+					else if ($(this).val() == 'mndlogin_reference') {
+						$("#allurl").show();
+						$("#referral_url").hide();
+						$("#innovative1").show();
+						$("#innovative2").hide();
+						$("#innv_var").hide();
+						//$("#innovative_var_pin").hide();
+						//$("#variable").hide();						
+						$("#sip_host").hide();
+						$("#sip_port").hide();
+						$("#sip_pin").hide();
+						$("#sip_login").hide();
+						$("#sip_location").hide();
+						$("#sip_terminal").hide();
+						$("#sip_version").hide();
+						$("#sip_password").hide();
+						$("#sip_error").hide();
+						$("#sip_institution").hide();
+						$("#ezproxy_secret").hide();
+						$("#ezproxy_referral").hide();
+						$("#ezproxy_name").hide();
+						$("#ezproxy_logout").hide();
+						$("#soap").hide();
+						$("#block_explicit").show();
+						$("#space").hide();
+						$("#24_message").hide();
+            $("#64_message").hide();
+						$("#curl_url").hide();
+						$("#curl_db").hide();						
+					}					
 					else if ($(this).val() == 'innovative_var') {
 						$("#allurl").show();
 						$("#referral_url").hide();
@@ -973,6 +1149,7 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1003,6 +1180,7 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1033,6 +1211,7 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1062,6 +1241,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1092,6 +1272,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1121,6 +1302,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1150,6 +1332,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1180,6 +1363,7 @@
 						$("#msgNo").show();
 						$("#space").show();
 						$("#24_message").show();
+            $("#64_message").show();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1210,6 +1394,7 @@
 						$("#msgNo").show();
 						$("#space").show();
 						$("#24_message").show();
+            $("#64_message").show();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1239,6 +1424,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1269,6 +1455,7 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1299,6 +1486,7 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1329,6 +1517,7 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1358,6 +1547,7 @@
 						$("#block_explicit").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1387,6 +1577,7 @@
 						$("#block_explicit").hide();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").show();
 						$("#curl_db").show();						
 					}						
@@ -1416,6 +1607,7 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+            $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}

@@ -15,7 +15,7 @@ class AppController extends Controller
 		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
 		$this->Auth->loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
-		$this->set ( 'genresMenu' ,  $this->Category->find('all',array('cache' => 'yes')));	
+		$this->set ( 'genresMenu' ,  $this->Category->find('all',array('cache' => 'no')));	
 		$this -> set ( 'featuredArtistMenu' ,  $this->Featuredartist->getallartists());
 		$this -> set ( 'newArtistMenu' ,  $this->Newartist->getallnewartists());
 		$this->set('cdnPath', Configure::read('App.CDN'));

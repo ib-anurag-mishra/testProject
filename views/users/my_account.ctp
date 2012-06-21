@@ -5,10 +5,43 @@
  Author : m68interactive
  */
 ?>
+<style>
+.txt-my-history {
+	background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/my_account.png") no-repeat scroll 0 0 transparent;
+    height: 62px;
+    left: 35px;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
+    width: 228px;
+}
+</style>
+<?php echo $session->flash();?>
+<?php
+function ieversion()
+{
+	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+	  if(!isset($reg[1])) {
+		return -1;
+	  } else {
+		return floatval($reg[1]);
+	  }
+}
+$ieVersion =  ieversion();
+?>
+<div class="breadCrumb">
+<?php
+	$html->addCrumb(__('My Account', true), '/users/my_account');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
+</div>
+<br class="clr">
+<div class="txt-my-history">
+	<?php __("Download History");?>
+</div>
 <?php
     $this->pageTitle = 'My Account';
     echo $session->flash();
-	echo '<div id=aboutBox>'.__("Manage Account", true).'</div>';
 	echo '<br class="clr">';
     echo $this->Form->create('User', array( 'controller' => 'User','action' => 'my_account'));            
 ?>
@@ -41,4 +74,3 @@
 	<?php
 		echo $this->Form->end();               
 	?>
-<?php echo $javascript->link('freegal_about_curvy'); ?>

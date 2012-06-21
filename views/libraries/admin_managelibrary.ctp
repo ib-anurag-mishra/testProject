@@ -20,6 +20,7 @@ echo $paginator->counter(array(
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
             <th style="border-right:1px solid #E0E0E0">Edit</th>
 	    <th>Action</th>
+            <th>Cache</th>
           </tr>
           <?php
           foreach($libraries as $library)
@@ -41,6 +42,7 @@ echo $paginator->counter(array(
 		<?php
 		}
 		?>
+                <td><?php echo $html->link('Clear Cache', array('controller'=>'clear','action'=>'library',$library['Library']['id']));?></td>
             </tr>            
             <?php
           }

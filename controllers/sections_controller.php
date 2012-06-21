@@ -9,6 +9,16 @@ class SectionsController extends AppController
 {
 	var $name = 'Sections';
 	var $uses = array('Language','Section');
+        var $components = array('Auth', 'Acl');
+        
+        /*
+	 Function Name : beforeFilter
+	 Desc : actions that needed before other functions are getting called
+        */
+	function beforeFilter() {
+            parent::beforeFilter();
+            $this->Auth->allow('index', 'view');
+	}
 	
 	/*
 	 Function Name : admin_index

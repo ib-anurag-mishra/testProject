@@ -43,28 +43,71 @@
  		<legend><?php printf(__('Edit %s', true), __('News', true)); ?></legend>
 	<?php
 		echo $this->Form->input('id');
+	?>	
+		<div class="input text" >
+			<label for="NewsPlace">Language</label>			
+			<select id="newsLanguage" name="data[News][language]" onchange="javascript:languagechange();">
+				<?php
+				
+				if($_POST['language']){
+					$selected_language = $_POST['language'];				
+				}
+				else{
+					$selected_language = $news['News']['language'];	
+				}
+				foreach($languages as $k => $v){
+				echo '<option value="'.$k.'" ';
+				
+				if($selected_language  == $k){
+					echo "selected='selected'";
+				}
+				
+				echo '>'.$v.'</option>';
+				}
+				?>
+			</select>
+		</div>
+	<?php
 		echo $this->Form->input('place');
-		echo $this->Form->input('subject', array('cols' => '80', 'rows' => '10'));
+		echo $this->Form->input('subject');
 		echo $this->Form->input('body', array('cols' => '80', 'rows' => '20'));
-		echo "<div style= 'padding:8px;width:240px;float:left;'>";
+		echo "<div style= 'padding:8px;width:240px;float:left;' id ='newsimagediv'>";
 		echo "News image<br/>";
 		echo $form->file('image_name', array('label' => false, 'div' => false));
 		echo "</div>";
-		echo "<div style= 'padding:8px;float:left;clear: none;'>";
+		echo "<div style= 'padding:8px;float:left;clear: none;' >";
 	?>
-	
-		<?php if($news['News']['image_name'] != ''){ ?>
-				<img style = "height: 150px;" src = "/img_news/<?php echo $news['News']['image_name']; ?>" alt = '<?php echo $news['News']['subject']; ?>' />
-			<?php } ?>
+		<?php 
+		if($news['News']['image_name']){
+		?>
+		<img style = "height: 150px;" src = "<?php echo $cdnPath. 'news_image/' . $news['News']['image_name']; ?>" alt = '<?php echo $news['News']['subject']; ?>' />
+		<?php } ?>
 	</fieldset>
+	<input type="hidden" id="NewsLanguageChange" value="0" name="data[News][language_change]" />
+	
 <?php echo $this->Form->end(__('Submit', true));?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Question.id')), null, sprintf(__('Are you sure you want to delete # %s?', true), $this->Form->value('Question.id'))); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Questions', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('List %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('Section', true)), array('controller' => 'sections', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('New %s', true), __('News', true)), array('controller' => 'news', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
+<script language="javascript" type="text/javascript">
+var newsLanguage = document.getElementById('newsLanguage');
+if(newsLanguage.value != 'en'){
+	document.getElementById('newsimagediv').style.display = 'none';
+}
+else{
+	document.getElementById('newsimagediv').style.display = 'block';
+}
+function languagechange(){
+	var formId = document.getElementById('NewsAdminEditForm');
+	
+	var path = webroot+'admin/news/edit/<?php echo $news['News']['id']?>';
+	$('#NewsLanguageChange').val('1');
+	formId.setAttribute("action", path);
+	formId.submit();
+}
+</script>

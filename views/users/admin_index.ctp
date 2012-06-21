@@ -97,12 +97,13 @@ foreach($x as $library)
     @import url(//asset0.zendesk.com/external/zenbox/zenbox-2.0.css);
 
 </style>
+
 <script type="text/javascript">
 
     if (typeof(Zenbox) !== "undefined") {
 
         Zenbox.init({
-        dropboxID: "9331",
+        dropboxID: "20038017",
         url: "libraryideas.zendesk.com",
         tabID: "support",
         tabColor: "#0099FF",
@@ -113,3 +114,11 @@ foreach($x as $library)
     }
 
 </script>
+<style>
+#zenbox_tab{
+	float:right;
+	display: block;
+	margin-top: 50px;
+}
+
+</style>

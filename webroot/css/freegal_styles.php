@@ -61,23 +61,40 @@ body  {
 	color: <?php echo $library_text_color; ?>;
 }
 
-#container { 
-	width: 965px;
+.song_url
+{
+  float:left;
+  margin-left: 50px;
+  overflow: hidden;
+  z-index: 101;
+  height:30px;
+  margin-top:2px;
+}
+
+.sereial_no
+{
+  color: #DAD2D2;
+  float: left;
+  font-size: 16px;
+  margin-left: -44px;
+  padding-right: 7px;
+  z-index: 102;
+}
+
+#container {
+	width: 1024px;
 	min-height: 500px;
 	margin: 0 auto;
 	text-align: left;
 	background-color: <?php echo $library_content_bgcolor; ?>;
 }
 
-#header {  
-	height:60px;
-	background:#333 url(../img/header.png) no-repeat;
-	border-bottom: 1px solid #999;
+#header {
+	height:65px;
 }
 #lib_name {
         float:left;
         font-size: 20px;
-        margin-top: 17px;
         margin-left: 10px;
         font-weight: bold;
 }
@@ -86,6 +103,7 @@ body  {
         font-size: 20px;
         margin-left: 10px;
         font-weight: bold;
+		margin-top: -22px;
 }
 #header_right a {
         color:<?php echo $library_links_color; ?>;
@@ -109,7 +127,7 @@ body  {
         text-align: right;
         line-height: 130%;
 }
-	
+
 #content {
 /*	height: 600px;*/
 }
@@ -171,7 +189,7 @@ ul.marquee li {
         display: block;
         white-space: nowrap;
 }
-        
+
 #suggestions {
         clear:both;
         float:left;
@@ -267,7 +285,7 @@ ul.marquee li {
         width: 640px;
         height: 335px;
 }
-        
+
 #featured_artist {
         float:left;
         width:300px;
@@ -335,18 +353,23 @@ ul.marquee li {
 #genre_artist_search {
         font-size:13px;
         clear:both;
-        width:945px;
+        width:750px;
         height:20px;
         text-align:center;
         background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
-        margin:10px 10px 0;
+        margin:10px 3px 0;
         display:block;
 }
 
 #genre_artist_search a {
         text-decoration: none;
         color:<?php echo $library_box_header_color; ?>;
+}
+
+#genreViewAll a .selected{
+        text-decoration: none;
+		font-weight:bold;
 }
 
 #genre_artist_search a:hover {
@@ -374,18 +397,25 @@ ul.marquee li {
         min-width:560px;
 		#width:560px;
 }
-	
+
 #footer {
 	clear:both;
 	width:945px;
 	color:#fff;
-	height: 16px;
+	height: 21px;
 	font-size: 10px;
 	text-align:right;
 	margin:0 auto;
 	padding:0 10px;
 	line-height:16px;
 	#margin:0 0 0 20px;
+}
+
+#border-background
+{
+	background-color: #5E5C5C;
+    margin: 0 auto;
+    width: 1068px;
 }
 
 #footer a {
@@ -420,7 +450,6 @@ ul.marquee li {
 #nav a{
 	float:left;
 	text-align:center;
-	width:144px;
 /*	background:url(../images/tab-gray.png) top left no-repeat;*/
 	text-decoration:none;
 	color:<?php echo $library_navlinks_color; ?>;
@@ -436,7 +465,7 @@ ul.marquee li {
 	padding:1px 0 0;
 	margin:0;
 	text-transform:none;
-	
+
 }
 
 /* This is the top rollover */
@@ -448,7 +477,7 @@ ul.marquee li {
 	display:block;
 }
 
-#nav li:hover a, #nav li.hover a, #nav li.active a{ 
+#nav li:hover a, #nav li.hover a, #nav li.active a{
 /*	background:url(../images/tab-white.png) top left no-repeat; */
 	color:<?php echo $library_navlinks_hover_color; ?>;
 	text-decoration: underline;
@@ -499,10 +528,9 @@ ul.marquee li {
 .search_form {
 	float:left;
 	line-height:14px;
-	background:#fff;
 }
 
-#search .ac_input {	
+#search .ac_input {
 	background:transparent url(../img/search.png) top right no-repeat;
 	line-height:14px;
 }
@@ -522,8 +550,8 @@ ul.marquee li {
 	border:none;
 	height:13px;
 	width:12px;
-	cursor:pointer;	
-} 
+	cursor:pointer;
+}
 
 #search .submit {
 	float:left;
@@ -548,12 +576,12 @@ ul.marquee li {
 #genreArtist {
 	clear:both;
 	float:left;
-	width: 180px;
+	width: 220px;
 	height: 20px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
 	text-align: center;
-	margin: 10px 0 0 10px;
+	margin: 10px 0 0 45px;
 	line-height: 20px;
 	font-size:13px;
 }
@@ -580,7 +608,7 @@ ul.marquee li {
 }
 #genreAlbum {
 	float:left;
-	width: 180px;
+	width: 200px;
 	height: 20px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
@@ -613,31 +641,36 @@ ul.marquee li {
 
 #genreDownload {
 	float:left;
-	width: 109px;
 	height: 20px;
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
-	padding-left:41px;
+
 	margin: 10px 0 0 3px;
 	line-height: 20px;
 	font-size:13px;
+	 text-align: center;
+    width: 243px;
 }
 
 #aboutBox {
-	float:left;
-	font-size:13px;
-	width:250px;
-	height: 20px;
-	background-color:<?php echo $library_boxheader_bgcolor; ?>;
-    color:<?php echo $library_boxheader_text_color; ?>;
-	text-align: center;
-	margin: 10px 0 10px 10px;
-	line-height:20px;
+	color: <?php echo $library_boxheader_text_color; ?>;
+    float: left;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    margin: 10px 0 10px 49px;
+    text-align: center;
+	/*background-color:<?php echo $library_boxheader_bgcolor; ?>;*/
+}
+
+.news_list {
+    padding-left: 42px;
+    padding-right: 40px;
 }
 
 #aboutUs {
 	clear: both;
-	margin: 0 10px 10px 10px;
+	margin: 0 10px 10px 45px;
 	font-size:13px;
 	min-height:375px;
 }
@@ -657,9 +690,9 @@ ul.marquee li {
 }
 #terms {
 	clear: both;
-	margin: 10px;
 	font-size:13px;
 	min-height:375px;
+	margin: 10px 10px 10px 45px;
 }
 
 #terms p {
@@ -684,10 +717,10 @@ ul.marquee li {
 }
 
 #genreResults {
-	margin-left:10px;
-	margin-bottom:10px;
-	font-size:13px;
-	min-height:375px;
+    font-size: 13px;
+    margin-bottom: 10px;
+    min-height: 375px;
+
 }
 
 #genreResults a {
@@ -705,10 +738,8 @@ ul.marquee li {
 }
 
 #genreResults td {
-//	border-left: 1px solid #FFF;
-//	border-right: 1px solid #fff;
-//	border-bottom: 1px solid #E1E8EB;
 	padding: 5px 0 5px 0;
+	max-width: 240px;
 }
 
 #genreResults img {
@@ -717,15 +748,13 @@ ul.marquee li {
 }
 
 #genreViewAllBox {
-	float:left;
-	width: 200px;
-	height: 20px;
-	background-color:<?php echo $library_boxheader_bgcolor; ?>;
-        color:<?php echo $library_boxheader_text_color; ?>;
-	text-align: center;
-	margin: 10px 0 0 3px;
-	line-height: 20px;
-	font-size:13px;
+	/*background: url("../img/en/genre.png") no-repeat scroll 0 0 transparent;*/
+    float: left;
+    height: 34px;
+    overflow: hidden;
+    position: relative;
+    /*text-indent: -9999px;*/
+    width: 194px;
 }
 
 .info {
@@ -734,6 +763,13 @@ ul.marquee li {
 	text-decoration: none;
 }
 
+.up-down{
+	width:100%;text-align: center;width: 100%;background-color:#EAE8E8;cursor:pointer;
+}
+
+.up-down:hover{
+	background-color:#D3CFCF;
+}
 .info:hover {
 	z-index:25;
 }
@@ -868,10 +904,15 @@ ul.marquee li {
 }
 
 #genreViewAll {
-	margin: 10px 10px 0 10px;
+	margin: 6px 10px 0 10px;
 	font-size:13px;
 }
-
+#main {
+	margin-top: 6px;
+	width:940px;
+	padding:35px 10px 37px 46px;
+	overflow:hidden;
+}
 #genreViewAll a {
 	text-decoration: none;
 	color:<?php echo $library_links_color; ?>;
@@ -928,7 +969,7 @@ ul.marquee li {
 	background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
 	text-align: center;
-	margin: 10px 0 10px 10px;
+	margin: 10px 0 10px 45px;
 	line-height:20px;
 }
 
@@ -941,11 +982,78 @@ ul.marquee li {
 
 .lgAlbumArtwork {
         float:left;
-        margin: 0 0 10px 10px;
+        margin: 0 0 10px 45px;
         background-color:<?php echo $library_boxheader_bgcolor; ?>;
         color:<?php echo $library_boxheader_text_color; ?>;
         width:250px; /* to be removed */
         height:250px; /* to be removed */
+}
+
+#album_artistBox {
+/*
+	float:left;
+	font-size:13px;
+	width:250px;
+	height: 20px;
+	background-color:<?php echo $library_boxheader_bgcolor; ?>;
+        color:<?php echo $library_boxheader_text_color; ?>;
+	text-align: center;
+	margin: 10px 0 10px 10px;
+	line-height:20px;
+*/
+    float: left;
+    font-size: 13px;
+    height: 20px;
+    line-height: 20px;
+    margin: 10px 0 10px 49px;
+    text-align: center;
+	/*background-color:<?php echo $library_boxheader_bgcolor; ?>;*/
+}
+
+#album_list_page {
+	font-size:13px;
+	padding-bottom: 25px;
+	padding-top: 10px;
+	width:330px;
+}
+
+.album_artistInfo {
+        margin:5px 0 10px 12px;
+		text-align: left;
+        width:201px;
+		font-size:13px;
+		word-wrap: break-word;
+}
+
+.album_artistInfo a {
+        text-decoration: none;
+        color: <?php echo $library_links_color; ?>;
+}
+
+.album_artistInfo a:hover {
+        text-decoration: underline;
+        color: <?php echo $library_links_hover_color; ?>;
+}
+
+.albumlistBox {
+		/*
+        height: 20px;
+        background-color:<?php echo $library_boxheader_bgcolor; ?>;
+        color:<?php echo $library_boxheader_text_color; ?>;
+		*/
+        text-align: left;
+        margin: 0 0 5px 10px;
+        line-height:20px;
+		width:200px;
+}
+
+.album_lgAlbumArtwork {
+        float:left;
+        margin: 0 0 10px 0;
+        background-color:<?php echo $library_boxheader_bgcolor; ?>;
+        color:<?php echo $library_boxheader_text_color; ?>;
+        width:100px; /* to be removed */
+        height:100px; /* to be removed */
 }
 
 .albumData {
@@ -1010,7 +1118,7 @@ ul.marquee li {
 
 .downloadHeader {
         float:left;
-        width:150px;
+        width:145px;
 }
 
 .artistInfo {
@@ -1029,7 +1137,7 @@ ul.marquee li {
         text-decoration: underline;
         color: <?php echo $library_links_hover_color; ?>;
 }
-		
+
 .explicit {
 	color: red;
 	display: inline;
@@ -1039,7 +1147,7 @@ ul.marquee li {
 	margin: 0 0 0 10px;
 }
 .question_list {
-margin: 10px 10px 0 10px;
+margin: 10px 45px 0;
 padding: 0px;
 width: 875px;
 font-size: 13px;
@@ -1053,7 +1161,7 @@ margin:1px 0 0 100px;
 font-size: 13px;
 }
 .answer {
-padding: 5px 10px 5px;
+padding: 5px 18px 5px;
 background-color:<?php echo $library_boxheader_bgcolor; ?>;
 color:<?php echo $library_boxheader_text_color; ?>;
 margin-left: 100px;
@@ -1072,6 +1180,12 @@ display:none;
 .answer p {
 	margin-bottom: 10px;
 	font-size: 13px;
+}
+
+.answer ul {
+	margin-left: 15px;
+        margin-bottom: 10px;
+        font-size: 13px;
 }
 
 /** Advance Search **/
@@ -1122,7 +1236,7 @@ div.paging {
 	float:left;
 	font-size:13px;
 	width:500px;
-	padding-bottom: 10px;	
+	padding-bottom: 10px;
 }
 div.paging span.disabled {
 	color: #ddd;
@@ -1277,9 +1391,15 @@ div.code-coverage-results span.result-good {
 
 #nav li > .search_form > div.auto_complete > ul > li.hover, #nav li > .search_form > div.auto_complete > ul > li:hover {
 	background: url(../img/nav_back_grey.png) top left repeat;
-	color:#fff; 
+	color:#fff;
 	text-align:left;
 	cursor:pointer;
+}
+
+#nav li {
+	float:left;
+	padding:14px 0;
+	background:url(../img/separator.gif) no-repeat 0 50%;
 }
 
 .input{
@@ -1336,11 +1456,16 @@ div.message {
 }
 
 #wishlistText {
-	margin: 10px 10px 0 10px;
+	font-size: 90%;
+    margin: 10px 70px 0 10px;
+}
+#GenreText {
+	margin: 10px 45px 0;
 	font-size: 90%;
 }
 #wishlistText p {
-	padding-bottom: 10px;
+    padding-bottom: 10px;
+    padding-left: 36px;
 }
 #wishlistText a {
 	text-decoration: none;
@@ -1398,10 +1523,15 @@ div.message {
 }
 
 #language {
-	float:left;
 	font-size:12px;
 	width: 965px;
 	text-align: center;
+	color:#FFF;
+}
+
+#language a{
+	text-decoration:none;
+	color:#FFF;
 }
 
 .headerLink{
@@ -1414,7 +1544,7 @@ div.message {
 	float:left;
 	padding:0 5px;
 	margin-top:4px;
-	
+
 }
 
 .headerImg{
@@ -1425,3 +1555,19 @@ div.message {
 .alphabetLink{
 	float:left;
 	width:auto;
+}
+.breadCrumb{
+    color: #000000;
+    font-size: 13px;
+    margin: 15px 0 0 45px;
+    padding-top: 40px;
+    text-decoration: none;
+}
+.breadCrumb a{
+	text-decoration:none;
+	 color:<?php echo $library_links_color; ?> !important;
+}
+
+.twitter {background:url(../img/ico-social.gif) no-repeat;}
+.facebook {background:url(../img/ico-social.gif) no-repeat -46px 0;}
+.youtube {background:url(../img/ico-social.gif) no-repeat -92px 0;}

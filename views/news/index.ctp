@@ -54,9 +54,9 @@ $(".adjust").toggle(
           {
             ?>
             <tr>
-				<td valign = 'top' class="left"> <img src ='/img_news/<?php echo $newx['News']['image_name'];?>' style="width:180px;height:180px;" /></td>
+				<td valign = 'top' class="left"> <img src ='<?php echo $cdnPath. 'news_image/' . $newx['News']['image_name'];?>' style="width:180px;height:180px;" /></td>
 				<td valign = 'top' style ='padding-left: 19px;' >
-					<label><?php echo $newx['News']['subject'];?></label>
+					<label><h3><?php echo $newx['News']['subject'];?></h3></label>
 					<label><b><?php echo $newx['News']['place'] . " : " . date( "F d, Y", strtotime($newx['News']['created']))  ;?></b></label>
 					
 					<div class="more-less" style = "padding-top:3px;">

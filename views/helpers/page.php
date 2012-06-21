@@ -16,8 +16,13 @@ class PageHelper extends AppHelper {
 			$page = $this->Session->read('Config.language');
 		}
         $pageInstance = ClassRegistry::init('Page');
-        $pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $page)));
-        if(count($pageDetails) != 0) {
+        $pageInstance = ClassRegistry::init('Page');
+		if (($pageData = Cache::read("page".$page.$type)) === false) {
+			$pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $page)));
+			Cache::write("page".$page.$type, $pageDetails);
+		}
+        $pageDetails = Cache::read("page".$page.$type);
+		if(count($pageDetails) != 0) {
             return $pageDetails[0]['Page']['page_content'];
         }
         else {

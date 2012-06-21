@@ -90,7 +90,7 @@ class Song extends AppModel
 						));
 		$featuredArtistArr = array();
 		$featuredArtistObj = new Featuredartist();
-		$featuredArtistList = $featuredArtistObj->getallartists();
+		$featuredArtistList = $featuredArtistObj->find('all');
 		foreach($featuredArtistList as $featuredArtist){
 			array_push($featuredArtistArr,$featuredArtist['Featuredartist']['artist_name']);
 		}    
@@ -187,11 +187,11 @@ class Song extends AppModel
    Function Name : allartistname
    Desc : This would returna the download data for the patron
   */
-  function getdownloaddata($id) {
+  function getdownloaddata($id , $provider) {
     $this->recursive = 2;
     $this->Behaviors->attach('Containable');
     $downloadData = $this->find('all', array(
-		'conditions'=>array('Song.ProdID' => $id),
+		'conditions'=>array('Song.ProdID' => $id , 'Song.provider_type' => $provider),
 		'fields' => array(
 			'Song.ProdID',
 			'Song.ProductID',
@@ -203,7 +203,8 @@ class Song extends AppModel
 		'contain' => array(										
 			'Full_Files' => array(
 				'fields' => array(
-					'Full_Files.CdnPath'								                                                
+					'Full_Files.CdnPath',
+					'Full_Files.SaveAsName'
 					),                             
 			)
 	)));

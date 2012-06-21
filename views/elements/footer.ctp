@@ -19,13 +19,14 @@ if ($this->Session->read('library') && $this->Session->read('library') != '') {
 		&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;<?php __('All Rights Reserved') ?>
 	</div>
 	<div class="footerlinks">
-		<div class="footerLink"><?php echo $html->link(__('About', true).' Freegal Music', array('controller' => 'homes', 'action' => 'aboutus')); ?></div>
+		<div class="footerLink"><?php echo $html->link(__('About Freegal Music', true), array('controller' => 'homes', 'action' => 'aboutus')); ?></div>
 		<div class="navbar">|</div>
 		<div class="footerLink"><?php echo $html->link(__('Terms & Conditions', true), array('controller' => 'homes', 'action' => 'terms')); ?></div>
 		<div class="navbar">|</div>
 		<div class="footerLink"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></div>
 	</div>
-	<div id="language">
+</div>
+	<span id="language">
 		<?php __('Also available in'); ?>&nbsp;
 		<?php
 		$language = $language->getLanguage();
@@ -38,8 +39,23 @@ if ($this->Session->read('library') && $this->Session->read('library') != '') {
 			$i++;
 		}
 		?>
+	</span>
+<?php
+} 
+else {
+?>
+<div id="footer">
+	<div id="copyright" style="float:left;">
+		&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;<?php __('All Rights Reserved') ?>
 	</div>
 </div>
-<?php
-}
-?>
+<?php } ?>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-16162084-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>

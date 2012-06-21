@@ -43,7 +43,7 @@
  		<legend><?php printf(__('Add %s', true), __('News', true)); ?></legend>
 	<?php
 		echo $this->Form->input('place');
-		echo $this->Form->input('subject', array('cols' => '80', 'rows' => '10'));
+		echo $this->Form->input('subject');
 		echo $this->Form->input('body', array('cols' => '80', 'rows' => '20'));
 		echo "News image<br/>";
 		echo $form->file('image_name', array('label' => false, 'div' => false, 'class' => 'form_fields'));
