@@ -1,11 +1,21 @@
 <?php
 /*
-	 File Name : my_history.ctp
+	 File Name : my_history.ctp 
 	 File Description : View page for download history page
 	 Author : m68interactive
  */
 ?>
-<?php echo $javascript->link('freegal_genre_curvy'); ?>
+<style>
+.txt-my-history {
+	background: url("../img/<?php echo $this->Session->read('Config.language'); ?>/my_history.png") no-repeat scroll 0 0 transparent;
+    height: 62px;
+    left: 35px;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
+    width: 228px;
+}
+</style>
 <?php echo $session->flash();?>
 <?php
 function ieversion()
@@ -19,11 +29,18 @@ function ieversion()
 }
 $ieVersion =  ieversion();
 ?>
-<div id="genre">
-	<?php __("Download History");?>
+<div class="breadCrumb">
+<?php
+	$html->addCrumb(__('My History', true), '/homes/my_history');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
 </div>
 <br class="clr">
-<div id="wishlistText"><?php echo $page->getPageContent('history'); ?></div>
+<div class="txt-my-history">
+	<?php __("Download History");?>
+</div>
+
+<div id="GenreText"><?php echo $page->getPageContent('history'); ?></div>
 <div id="genreArtist" style="width:200px;">
 	<P><?php __("Artist");?></p>
 </div>
@@ -37,7 +54,7 @@ $ieVersion =  ieversion();
 	<?php __("Download");?>
 </div>
 <br class="clr">
-<div id="genreResults">
+<div id="genreResults" <?php if(count($downloadResults) == 0){ ?> style="margin-left: 36px;" <?php } else {?> style="margin-left: 45px;" <?php } ?>>
 	<table cellspacing="0" cellpadding="0">
 	<?php
 	if(count($downloadResults) != 0)

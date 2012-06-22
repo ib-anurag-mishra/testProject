@@ -1,16 +1,33 @@
 <?php
 /*
-	 File Name : my_wishlist.ctp
+	 File Name : my_wishlist.ctp 
 	 File Description : View page for wishlist information
 	 Author : m68interactive
  */
 ?>
-<?php echo $javascript->link('freegal_genre_curvy'); ?>
-<?php echo $session->flash();?>
-<div id="genre">
-	<?php __("Wishlist");?>
+<style>
+.txt-my-wishlist {
+	height: 60px;
+    left: 39px;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
+    width: 228px;
+	background:url(../img/<?php echo $this->Session->read('Config.language'); ?>/my_wishlist.png) no-repeat;
+}
+</style>
+<div class="breadCrumb">
+<?php
+	$html->addCrumb('My Wishlist', '/homes/my_wishlist');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
 </div>
 <br class="clr">
+<?php echo $session->flash();?>
+<div class="txt-my-wishlist">
+	<?php __("Wishlist");?>
+</div>
+
 <div id="wishlistText"><?php echo $page->getPageContent('wishlist'); ?></div>
 <div id="genreArtist">
 	<P><?php __("Artist");?></p>
@@ -23,9 +40,6 @@
 </div>
 <div id="genreDownload">
 	<?php __("Download");?>
-</div>
-<div id="genreDownload">
-	
 </div>
 <br class="clr">
 <div id="genreResults">
@@ -85,10 +99,10 @@
 							<p>
 								<span class="beforeClick" id="wishlist_song_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>">
 									<![if !IE]>
-										<a href='#' title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthers("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a>
+										<a href='#' title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadOthers("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>" , "<?php echo $wishlistResult['Wishlist']["provider_type"]; ?>");'><?php __('Download Now');?></a>
 									<![endif]>
 									<!--[if IE]>
-									<a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadIE("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a>
+									<a title="IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not." onclick='return wishlistDownloadIE("<?php echo $wishlistResult['Wishlist']['ProdID']; ?>", "<?php echo $wishlistResult['Wishlist']['id']; ?>" , "<?php echo $wishlistResult['Wishlist']["provider_type"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a>
 									<![endif]-->							
 								</span>
 								<span class="afterClick" id="downloading_<?php echo $wishlistResult['Wishlist']['ProdID']; ?>" style="display:none;float:left"><?php __('Please Wait...');?></span>
@@ -96,7 +110,7 @@
 							</p>
 					<?php	}
 						else{ ?>
-							<p><?php __("Limit Exceeded");?></p>
+							<p><?php __("Limit Met");?></p>
 						<?php
 						}
 					?>

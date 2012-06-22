@@ -47,7 +47,7 @@
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<script type="text/javascript">
 				$(document).ready(function() {
-					checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
+				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					$('#autoComplete').keypress(function(event) {
 						//auto_check();
 						if (event.which != '13') {
@@ -207,6 +207,7 @@
 			</div>
 		</div>
 	<?php } ?>
+	<div id="border-background" >
 	<div id="container">
 		<?php echo $this->element('header'); ?>
 		<div id="content">
@@ -220,5 +221,6 @@
 		<br class="clr">
 	</div>
 	<?php echo $this->element('footer'); ?>
+	</div>
 </body>
 </html>

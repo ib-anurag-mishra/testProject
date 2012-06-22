@@ -291,6 +291,18 @@ function userDownloadIE_top(prodId)
 	return false;
 }
 
+
+function userDownloadAll(prodId)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	document.getElementById('downloading_'+prodId).style.display = 'block';
+	document.getElementById('song_'+prodId).style.display = 'none';
+	document.getElementById('download_loader_'+prodId).style.display = 'block';	
+	$('#form'+prodId).submit();
+	setTimeout("location.reload(true)", 7000);
+}
+
 function userDownloadOthers_top(prodId,downloadUrl1,downloadUrl2,downloadUrl3)
 {
 	$('.beforeClick').hide();
@@ -650,12 +662,12 @@ function addQtip_toptab(prodId){
    });
 }
 
-function addToWishlist(prodId)
+function addToWishlist(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
-	var data = "prodId="+prodId;	
+	var data = "prodId="+prodId+"&provider="+providerType;	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/addToWishlist", // URL to request
@@ -696,12 +708,12 @@ function addToWishlist(prodId)
 	return false; 
 }
 
-function addToWishlist_top(prodId)
+function addToWishlist_top(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
-	var data = "prodId="+prodId;	
+	var data = "prodId="+prodId+"&provider="+providerType;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/addToWishlist", // URL to request
@@ -809,7 +821,7 @@ function historyDownload(id,libID,patronID)
 				var count = response.substring(0,1);
 					if(count == 2){
 						if(languageSet == 'en'){
-							document.getElementById('download_song_'+id).innerHTML = 'Limit Exceeded';
+							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
 						}else{
 							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}
@@ -857,7 +869,7 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 				var count = response.substring(0,1);
 					if(count == 2){
 						if(languageSet == 'en'){
-							document.getElementById('download_song_'+id).innerHTML = 'Limit Exceeded';
+							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
 						}else{
 							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}

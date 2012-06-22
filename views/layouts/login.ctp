@@ -12,6 +12,22 @@
 		echo $scripts_for_layout;
 	?>
 <script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js"></script>	
+<style>
+#lbOverlay {
+    background-color: #000000;
+    color: #FFFFFF;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: bold;
+    height: 100%;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 9999;
+	display:none;
+}
+</style>
 <script type="text/javascript">
 	var webroot = '<?php echo $this->webroot; ?>';
 	function changeLang(type,page){
@@ -75,9 +91,17 @@
 		});
 	}
 	
+	
 jQuery(document).ready(function() {
-	$("#loadingDiv").hide();
+	jQuery('form').submit(function() {
+		jQuery('#lbOverlay').show();
+	});
+	jQuery("#loadingDiv").hide();
 });	
+
+
+
+
 </script>	
 </head>
 <body>
@@ -128,8 +152,8 @@ jQuery(document).ready(function() {
 				<img src="/img/img1.png" alt="Kenny Chesney - Hemingway's Whiskey" class="decor pos1" width="161" height="158" />
 				<img src="/img/img2.png" alt="Pitbull - Planet Pit" class="decor pos2" width="153" height="148" />
 				<img src="/img/img3.png" alt="Pink - Greatest Hits...So Far" class="decor pos3" width="181" height="180" />
-				<img src="/img/img4.png" alt=" Kings of Leon - Come Around Sundown" class="decor pos4" width="184" height="180" />
-				<img src="/img/img5.png" alt="Adele - 21" class="decor pos5" width="153" height="150" />
+				<img src="/img/img4.png" alt="Beyonce" class="decor pos4" width="184" height="180" />
+				<img src="/img/img5.png" alt="Kings of Leon - Come Around Sundown" class="decor pos5" width="153" height="150" />
 				<img src="/img/img6.png" alt="John Mayer - Battle Studies" class="decor pos6" width="170" height="167" />
 			</div>
 			<div id="content">
@@ -140,9 +164,10 @@ jQuery(document).ready(function() {
 				<!-- Main contents start here -->
 				<?php echo $content_for_layout; ?>
 				<div id="loginText">
-				<div id="loadingDiv" style="z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
-					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-				</div>
+					<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
+						<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+					</div>
+
 				</div>
 				<!-- Main contents end here -->
 				</div>
@@ -157,6 +182,7 @@ jQuery(document).ready(function() {
 			</div>
 		</div>
 	</div>
+	<div id="lbOverlay" style="opacity: 0.8;filter: alpha(opacity = 80); zoom:1;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Please wait. Login in progress...</div></div>
 		<div id="footer">
 			<div id="copyright">
 				&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved

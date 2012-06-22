@@ -10,12 +10,8 @@ class LanguageHelper extends AppHelper {
     
     function getLanguage() {
         $languageInstance = ClassRegistry::init('Language');
-		if (($language = Cache::read("language")) === false) {
-			$language = $languageDetails =  $languageInstance->find('list', array('conditions' => array('status' => 'active'), 'fields' => array('id', 'full_name')));
-			Cache::write("language", $language);
-		}
-		$languageDetails = Cache::read("language");       
-        return $languageDetails;
+        $languageDetails =  $languageInstance->find('list', array('conditions' => array('status' => 'active'), 'fields' => array('id', 'full_name'), 'cache' => 'yes'));
+		return $languageDetails;
     }
 }
 

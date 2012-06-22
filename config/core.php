@@ -33,7 +33,7 @@
  * In production mode, flash messages redirect after a time interval.
  * In development mode, you need to click the flash message to continue.
  */
-	Configure::write('debug', 2);
+	Configure::write('debug',0);
 
 /**
  * CakePHP Log Level:
@@ -102,7 +102,10 @@
  * or in each action using $this->cacheAction = true.
  *
  */
-	Configure::write('Cache.check', true);
+	if(isset($_SERVER['REQUEST_URI']) && strstr($_SERVER['REQUEST_URI'],'admin'))
+		Configure::write('Cache.disable', true);
+	else
+		Configure::write('Cache.check', true);
 
 /**
  * Defines the default error type when using the log() function. Used for
@@ -284,33 +287,55 @@
  *
  *   Memcache (http://www.danga.com/memcached/)
  */
-/*
+	Cache::config('_cake_core_', array(
+		'engine' => 'Apc',
+		'duration' => 3600,
+		'probability' => 100,
+		'prefix' => Inflector::slug(APP_DIR) . '_prod_', //[optional]  prefix every cache file with this string
+		)
+	);
+	
   	Cache::config('default', array(
  		'engine' => 'Memcache', //[required]
- 		'duration'=> '+1 hours', //[optional]
+ 		'duration'=> '+1 day', //[optional]
  		'probability'=> 100, //[optional]
-  		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
+  		'prefix' => Inflector::slug(APP_DIR) . '_prod_', //[optional]  prefix every cache file with this string
   		'servers' => array(
-  			'127.0.0.1:11211' // localhost, default port 11211
+			'10.176.4.199:11211'
+  		//	'10.181.59.94:11211',
+		//	'10.181.59.64:11211' // localhost, default port 11211
   		), //[optional]
   		'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
  	));
          
         Cache::config('paginate_cache', array(
  		'engine' => 'Memcache', //[required]
- 		'duration'=> '+1 hours', //[optional]
+ 		'duration'=> '+1 day', //[optional]
  		'probability'=> 100, //[optional]
-  		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
+  		'prefix' => Inflector::slug(APP_DIR) . '_prod_', //[optional]  prefix every cache file with this string
   		'servers' => array(
-  			'127.0.0.1:11211' // localhost, default port 11211
+			'10.176.4.199:11211'
+  		//	'10.181.59.94:11211',
+		//	'10.181.59.64:11211' // localhost, default port 11211
   		), //[optional]
   		'compress' => false, // [optional] compress data in Memcache (slower, but uses less memory)
- 	));     
-*/
-	Cache::config('default', array('engine' => 'File'));
+ 	)); 
+	
+	//Cache::config('default', array('engine' => 'File'));
 
 /**
  * The classname and database used in CakePHP's
  * access control lists.
- */
-        Configure::load('config');
+ nflector::slug(APP_DIR) . '_prod_'iInflector::slug(APP_DIR) . '_prod_'*/
+       Configure::load('config');
+	/*if($_SERVER['REMOTE_ADDR'] == '111.93.167.67' || $_SERVER['REMOTE_ADDR'] == '203.129.204.131'){
+		Configure::write('SiteSettings.site_status', 'Online');
+	}
+	else
+	{
+		Configure::write('SiteSettings.site_status', 'Offline');
+		Configure::write('SiteSettings.site_offline_url', '/maintenance');			
+	}*/	   
+	//To change site status into online/offline mode
+	Configure::write('SiteSettings.site_status', 'Online');
+	//Configure::write('SiteSettings.site_offline_url', '/maintenance');

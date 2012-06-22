@@ -5,7 +5,9 @@
  Author : m68interactive
  */
 ?>
+
 <?php
+
 $line = array('Library Remaining Downloads');
 $csv->addRow($line);
 
@@ -24,6 +26,91 @@ foreach($libraries_download as $LibraryName => $DownloadCount) {
 }
 $line = array('', '', '', '', '', '');
 $csv->addRow($line);
+
+
+// start - Total Downloads during Reporting Period
+
+
+if(empty($arr_all_library_downloads)) {
+  
+  $line = array('Total Downloads during Reporting Period');
+  $csv->addRow($line);
+
+  $line = array('Total Downloads');
+  $csv->addRow($line);
+
+  $line = array(count($downloads));
+  $csv->addRow($line);
+
+  $line = array('', '', '', '', '', '');
+  $csv->addRow($line);
+ 
+} else {
+  
+  $line = array('Total Downloads during Reporting Period');
+  $csv->addRow($line);
+  
+  $line = array('', 'Library Name', 'Total Downloads');
+  $csv->addRow($line);
+  $key=1;
+  foreach($arr_all_library_downloads as $LibraryName => $DownloadCount) {
+   
+    $line = array($key, $LibraryName, $DownloadCount);
+    $csv->addRow($line);
+    $key++;
+  }
+  
+  $line = array('', '', '', '', '', '');
+  $csv->addRow($line);
+
+}
+
+  
+// end - Total Downloads during Reporting Period 
+
+
+// start - Total Patrons
+
+
+if(empty($arr_all_patron_downloads)) {
+  
+  $line = array('Total Patrons');
+  $csv->addRow($line);
+
+  $line = array('Total Number of Patrons who have downloaded during Reporting Period');
+  $csv->addRow($line);
+
+  $line = array(count($patronDownloads));
+  $csv->addRow($line);
+  
+  $line = array('', '', '', '', '', '');
+  $csv->addRow($line);
+  
+} else {
+  
+  $line = array('Total Number of Patrons who have downloaded during Reporting Period');
+  $csv->addRow($line);
+  
+  $line = array('', 'Library Name', 'Total Patrons');
+  $csv->addRow($line);
+  $key=1;
+  foreach($arr_all_patron_downloads as $LibraryName => $DownloadCount) {
+   
+    $line = array($key, $LibraryName, $DownloadCount);
+    $csv->addRow($line);
+    $key++;
+  }
+    
+  $line = array('', '', '', '', '', '');
+  $csv->addRow($line);
+
+
+}
+
+  
+// end - Total Patrons
+
+
 
 $line = array('Library Downloads Report');
 $csv->addRow($line);
@@ -53,13 +140,13 @@ $line = array('', 'Patron ID', 'Library Name', 'Total Number of Tracks Downloade
 $csv->addRow($line);
 
 foreach($patronDownloads as $key => $patronDownload) {
-	if($patronDownload['Download']['email']!=''){
-		$patron_id = $patronDownload['Download']['email'];
+	if($patronDownload['Downloadpatron']['email']!=''){
+		$patron_id = $patronDownload['Downloadpatron']['email'];
 	}
 	else{
-		$patron_id = $patronDownload['Download']['patron_id'];
+		$patron_id = $patronDownload['Downloadpatron']['patron_id'];
 	}
-    $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Download']['library_id']), $patronDownload[0]['totalDownloads']);
+    $line = array($key+1, $patron_id, $library->getLibraryName($patronDownload['Downloadpatron']['library_id']), (($dataRange == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']));
     $csv->addRow($line);
 }
 
@@ -73,7 +160,7 @@ $line = array('', 'Genre Name', 'Total Number of Tracks Downloaded');
 $csv->addRow($line);
 
 foreach($genreDownloads as $key => $genreDownload) {
-    $line = array($key+1, $genreDownload['Genre']['Genre'], $genreDownload[0]['totalProds']);
+    $line = array($key+1, $genreDownload['Downloadgenre']['genre_name'], (($dataRange == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']));
     $csv->addRow($line);
 }
 
@@ -91,12 +178,12 @@ if($this->data['Report']['reports_daterange'] == 'day') {
 }
 elseif($this->data['Report']['reports_daterange'] == 'week') {
 	if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));	
+		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))-6, $date_arr[2]));
 		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
-	}else{	  
-		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));	
+	}else{
+		$startDate = date('Y-m-d H:i:s', mktime(0, 0, 0, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+1, $date_arr[2]));
 		$endDate = date('Y-m-d H:i:s', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
-	}	  
+	}
     $dateRange = "_for_week_of_".$startDate."_to_".$endDate;
 }
 elseif($this->data['Report']['reports_daterange'] == 'month') {

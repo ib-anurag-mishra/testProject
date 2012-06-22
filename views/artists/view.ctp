@@ -1,4 +1,41 @@
-<?php echo $javascript->link('freegal_artist_curvy'); ?>
+<div class="breadCrumb">
+<?php
+        $genre_text_conversion = array(
+            "Children's Music" =>  "Children's" ,
+            "Classic"  =>  "Soundtracks",
+            "Comedy/Humor"  =>  "Comedy",
+            "Country/Folk"  =>  "Country",
+            "Dance/House"  =>  "Dance",
+            "Easy Listening Vocal" => "Easy Listening",
+            "Easy Listening Vocals"  =>  "Easy Listening",
+            "Folk/Blues" => "Folk",
+            "Folk/Country" => "Folk",
+            "Folk/Country/Blues" => "Folk",
+            "Hip Hop Rap" => "Hip-Hop Rap",
+            "Rap/Hip-Hop" => "Hip-Hop Rap",
+            "Rap / Hip-Hop" => "Hip-Hop Rap",
+            "Jazz/Blues"  =>  "Jazz",
+            "Kindermusik"  =>  "Children's",
+            "Miscellaneous/Other" => "Miscellaneous",
+            "Other" => "Miscellaneous",
+            "Age/Instumental" => "New Age",
+            "Pop / Rock" =>  "Pop/Rock",
+            "R&B/Soul" => "R&B",
+            "Soundtracks" => "Soundtrack",
+            "Soundtracks/Musicals" => "Soundtrack",
+            "World Music (Other)" => "World Music"
+        );
+        $genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);			
+        $html->addCrumb(__('All Genre', true), '/genres/view/');
+        if($genre_crumb_name != "")
+        {
+            $html->addCrumb( $genre_crumb_name  , '/genres/view/'.base64_encode($genre_crumb_name));
+        }
+	$html->addCrumb(__($artistName, true), '/artists/album/'.str_replace('/','@',base64_encode($artistName)).'/'.base64_encode($genre));
+	$html->addCrumb( $albumData[0]['Album']['AlbumTitle']  , '/artists/view/'.str_replace('/','@',base64_encode($artistName)).'/'.$album.'/'.base64_encode($albumData[0]['Album']['provider_type']));
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+?>
+</div>
 <div id="artistBox">
 	<?php
 	if(strlen($artistName) >= 30){
@@ -83,10 +120,7 @@
 									<p>
 									<?php
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
-											$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Sample_Files']['CdnPath']."/".$albumSong['Sample_Files']['SaveAsName']);
-											$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-											$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$albumSong["Song"]["ProdID"].', "'.$this->webroot.'");'));
+											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.$this->webroot.'");'));
 											echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
 											echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
 										}
@@ -121,29 +155,25 @@
 								<td width="50" valign="top" align="center">
 									<p><?php echo $albumSong['Song']['FullLength_Duration']?></p>
 								</td>
-								<td width="130" valign="top" align="left" style="padding-left:30px">
+								<td width="120" valign="top" align="left" style="padding-left:30px">
 										<?php
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
 												if($albumSong['Song']['status'] != 'avail'){
-													$songUrl = shell_exec('perl files/tokengen ' . $albumSong['Full_Files']['CdnPath']."/".$albumSong['Full_Files']['SaveAsName']);
-													$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-													$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 										?>
 													<p>
-														<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-															<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-																<a href='#' title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>' onclick='return userDownloadOthers("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download Now');?></a>
-															<?php } else {?>
-															<!--[if IE]>
-																<a title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>' onclick='return userDownloadIE("<?php echo $albumSong["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a>
-															<![endif]-->
-															<?php } ?>
-														</span>
-														<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left;"><?php __("Please Wait...");?></span>
-														<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
+															<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+															<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
+															
+															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+																<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+															</span>
+															<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+														</form>													
 													</p>													
 									<?php	
 												} else {
@@ -155,7 +185,7 @@
 													$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 													$wishlistCount = $wishlist->getWishlistCount();
 													if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
-														?> <p><?php __("Limit Exceeded");?></p> <?php
+														?> <p><?php __("Limit Met");?></p> <?php
 													}
 													else{
 														$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
@@ -164,7 +194,7 @@
 														<?php }
 														else{ ?>
 															<p>
-																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 																<span class="afterClick" style="display:none;float:left;">Please Wait...</span>
 															</p>
 														<?php	
@@ -173,7 +203,7 @@
 													
 												}
 												else{ ?>
-													<p><?php __("Limit Exceeded");?></p>
+													<p><?php __("Limit Met");?></p>
 												<?php	
 												}												
 											}

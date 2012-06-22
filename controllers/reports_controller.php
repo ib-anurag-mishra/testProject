@@ -11,17 +11,19 @@ Class ReportsController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session', 'Library', 'Csv');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler' );
-    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron', 'Consortium', 'Territory');
+    var $uses = array( 'Library', 'User', 'Download', 'Report', 'SonyReport', 'Wishlist', 'Genre', 'Currentpatron', 'Consortium', 'Territory', 'Downloadpatron', 'Downloadgenre');
 
 	function beforeFilter(){
 		parent::beforeFilter();
 		$this->Auth->allow('admin_consortium');
-	}    
+	}
     /*
      Function Name : admin_index
      Desc : actions for library reports page
     */
     function admin_index() {
+      ini_set('memory_limit', '1024M');
+      set_time_limit(0);
 	//	print_r($this->data);exit;
         if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
@@ -31,14 +33,14 @@ Class ReportsController extends AppController
         else {
 			if($this->data['Report']['Territory'] == ''){
 				//$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-				$this->set('libraries', array());	
+				$this->set('libraries', array());
             } else {
-				$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'),'conditions' => array('Library.library_territory= "'.$this->data['Report']['Territory'].'"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+				$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'),'conditions' => array('Library.library_territory= "'.$this->data['Report']['Territory'].'"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 			}
 			$this->set('libraryID', "");
         }
         if(isset($this->data)) {
-			//Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+			//Configure::write('debug',0); // Otherwise we cannot use this method while developing
 			$all_Ids = '';
             $this->Report->set($this->data);
 			if(isset($_REQUEST['library_id'])){
@@ -50,7 +52,7 @@ Class ReportsController extends AppController
 			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
 				$territory = $libraryAdminID["Library"]["library_territory"];
 			} else {
-				$territory = $this->data['Report']['Territory'];				
+				$territory = $this->data['Report']['Territory'];
 			}
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
@@ -64,34 +66,218 @@ Class ReportsController extends AppController
 					$result = mysql_query($sql);
 					while ($row = mysql_fetch_assoc($result)) {
 						$all_Ids = $all_Ids.$row["id"].",";
-					}		  
+					}
 					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
 					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 				else{
-					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 			}
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+                  $downloads = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsDay($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadDay($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getDaysDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
+                    if(mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time()){
+                      $compareDate = date('Y-m-d', time());
+                    } else {
+                      $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+                    }
+                  } else {
+                    if(mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]) > time()){
+                      $compareDate = date('Y-m-d', time());
+                    } else {
+                      $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+                    }
+                  }
+                  $downloads = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsWeek($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadWeek($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".date('d',time());
+
+                  $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadMonth($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".date('m-d',time());
+
+                  $downloads = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsYear($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadYear($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date_to']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+
+                  $downloads = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+
                 }
-                
+                $date = date('Y-m-d',time());
+                if($compareDate == $date){
+                  $currentPatronDownload = $this->Download->getCurrentPatronDownloads($library_id,$date,$territory,$all_Ids);
+                  $currentGenreDownload = $this->Download->getCurrentGenreDownloads($library_id,$date,$territory,$all_Ids);
+                } else {
+                  $currentPatronDownload = array();
+                  $currentGenreDownload = array();
+                }
+
                 $this->set('downloads', $downloads);
-                $this->set('patronDownloads', $patronDownloads);
-                $this->set('genreDownloads', $genreDownloads);
+                $this->set('arr_all_library_downloads', $arr_all_library_downloads);
+                $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
+
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentPatronDownload)){
+                    foreach($currentPatronDownload as $patronRecord){
+                      $i = count($patronDownloads);
+                      $patronDownloads[$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
+                      $patronDownloads[$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                      $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
+                    }
+                  }
+                  $this->set('patronDownloads', $patronDownloads);
+                } else {
+                  if(!empty($currentPatronDownload)){
+                    foreach($currentPatronDownload as $patronRecord){
+                      if(!empty($patronDownloads[0])){
+                        $i = count($patronDownloads[0]);
+                        $flag = false;
+                        foreach($patronDownloads[0] as $pkey=>$patronDownload){
+                          if($patronRecord['Download']['patron_id'] == $patronDownload['Downloadpatron']['patron_id']){
+                            $patronDownloads[0][$pkey][0]['total'] += $patronRecord[0]['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
+                          $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                          $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
+                        }
+                      } else {
+                        $i = count($patronDownloads[0]);
+                        $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['patron_id'];
+                        $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                        $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('patronDownloads', $patronDownloads[0]);
+                }
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentGenreDownload)){
+                    foreach($currentGenreDownload as $genreRecord){
+                      $i = count($genreDownloads);
+                      $genreDownloads[$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                      $genreDownloads[$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                      $genreDownloads[$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                      $genreDownloads[$i]['Downloadgenre']['total'] = $genreRecord[0]['total'];
+                    }
+                  }
+                  $this->set('genreDownloads', $genreDownloads);
+                } else {
+                  if(!empty($currentGenreDownload)){
+                    foreach($currentGenreDownload as $genreRecord){
+                      if(!empty($genreDownloads[0])){
+                        $i = count($genreDownloads[0]);
+                        $flag=false;
+                        foreach($genreDownloads[0] as $gkey=>$genreDownload){
+                          if($genreRecord['table1']['Genre'] == $genreDownload['Downloadgenre']['genre_name']){
+                            $genreDownloads[0][$gkey][0]['total'] += $genreRecord[0]['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                          $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                          $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                          $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
+                        }
+                      } else {
+                        $i = count($genreDownloads[0]);
+                        $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                        $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                        $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                        $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('genreDownloads', $genreDownloads[0]);
+                }
                 $arr = array();
                 $this->set('errors', $arr);
             }
@@ -114,86 +300,16 @@ Class ReportsController extends AppController
         }
 		$this->set('territory', $this->Territory->find('list', array('fields' => array('Territory', 'Territory'))));
     }
-    
+
     /*
      Function Name : admin_downloadAsCsv
      Desc : actions for library reports download as CSV page
     */
     function admin_downloadAsCsv() {
+       ini_set('memory_limit', '2048M');
+       set_time_limit(0);
         Configure::write('debug', 0);
         $this->layout = false;
-        if(isset($this->data)) {
-			$all_Ids = '';		
-            $this->Report->set($this->data);
-			if(isset($_REQUEST['library_id'])){
-				$library_id = $_REQUEST['library_id'];
-			}else{
-				$library_id = $this->data['Report']['library_id'];
-			}
-			$this->set('library_id', $library_id);
-			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
-				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
-				$territory = $libraryAdminID["Library"]["library_territory"];
-			} else {
-				$territory = $this->data['Report']['Territory'];
-			}
-            if($this->data['Report']['reports_daterange'] != 'manual') {
-                $this->Report->setValidation('reports_date');
-            }
-            else {
-                $this->Report->setValidation('reports_manual');
-            }
-			if($territory != ''){
-				if($library_id == 'all'){
-					$sql = "SELECT id from libraries where library_territory = '".$territory."'";
-					$result = mysql_query($sql);
-					while ($row = mysql_fetch_assoc($result)) {
-						$all_Ids = $all_Ids.$row["id"].",";
-					}		  
-					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
-					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-				}
-				else{
-					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
-				}
-			}			
-            if($this->Report->validates()) {
-                if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                }
-                elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                }
-                elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                }
-                elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
-                }
-                elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
-                }
-                $this->set('downloads', $downloads);
-                $this->set('patronDownloads', $patronDownloads);
-                $this->set('genreDownloads', $genreDownloads);
-            }
-            else {
-                $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
-                $this->redirect(array('action'=>'index'), null, true);
-            }
-        }
-        else {
-            $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
-            $this->redirect(array('action'=>'index'), null, true);
-        }
-    }
-    
-    /*
-     Function Name : admin_downloadAsPdf
-     Desc : actions for library reports download as PDF page
-    */
-    function admin_downloadAsPdf() {
-        Configure::write('debug',0); // Otherwise we cannot use this method while developing 
         if(isset($this->data)) {
 			$all_Ids = '';
             $this->Report->set($this->data);
@@ -221,33 +337,480 @@ Class ReportsController extends AppController
 					$result = mysql_query($sql);
 					while ($row = mysql_fetch_assoc($result)) {
 						$all_Ids = $all_Ids.$row["id"].",";
-					}		  
+					}
 					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
 					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
 				else{
-					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));			
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));
 				}
-			}		
+			}
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+                  $downloads = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsDay($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getDaysDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadDay($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getDaysDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'week') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
+                    if(mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time()){
+                      $compareDate = date('Y-m-d', time());
+                    } else {
+                      $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+                    }
+                  } else {
+                    if(mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]) > time()){
+                      $compareDate = date('Y-m-d', time());
+                    } else {
+                      $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+                    }
+                  }
+
+                  $downloads = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsWeek($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadWeek($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'month') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".date('d',time());
+
+                  $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadMonth($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'year') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".date('m-d',time());
+
+                  $downloads = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsYear($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadYear($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
-                    list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  $date_arr = explode("/", $this->data['Report']['date_to']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+
+                  $downloads = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
                 }
+
+                $date = date('Y-m-d',time());
+                if($compareDate == $date){
+                  $currentPatronDownload = $this->Download->getCurrentPatronDownloads($library_id,$date,$territory,$all_Ids);
+                  $currentGenreDownload = $this->Download->getCurrentGenreDownloads($library_id,$date,$territory,$all_Ids);
+                } else {
+                  $currentPatronDownload = array();
+                  $currentGenreDownload = array();
+                }
+                $this->set('dataRange',$this->data['Report']['reports_daterange']);
                 $this->set('downloads', $downloads);
-                $this->set('patronDownloads', $patronDownloads);
-                $this->set('genreDownloads', $genreDownloads);
+                $this->set('arr_all_library_downloads', $arr_all_library_downloads);
+                $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentPatronDownload)){
+                    foreach($currentPatronDownload as $patronRecord){
+                      $i = count($patronDownloads);
+                      $patronDownloads[$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
+                      $patronDownloads[$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                      $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
+                    }
+                  }
+                  $this->set('patronDownloads', $patronDownloads);
+                } else {
+                  if(!empty($currentPatronDownload)){
+                    foreach($currentPatronDownload as $patronRecord){
+                      if(!empty($patronDownloads[0])){
+                        $i = count($patronDownloads[0]);
+                        $flag = false;
+                        foreach($patronDownloads[0] as $pkey=>$patronDownload){
+                          if($patronRecord['Download']['patron_id'] == $patronDownload['Downloadpatron']['patron_id']){
+                            $patronDownloads[0][$pkey][0]['total'] += $patronRecord[0]['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
+                          $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                          $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
+                        }
+                      } else {
+                        $i = count($patronDownloads[0]);
+                        $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['patron_id'];
+                        $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                        $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('patronDownloads', $patronDownloads[0]);
+                }
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentGenreDownload)){
+                    foreach($currentGenreDownload as $genreRecord){
+                      $i = count($genreDownloads);
+                      $genreDownloads[$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                      $genreDownloads[$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                      $genreDownloads[$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                      $genreDownloads[$i]['Downloadgenre']['total'] = $genreRecord[0]['total'];
+                    }
+                  }
+                  $this->set('genreDownloads', $genreDownloads);
+                } else {
+                  if(!empty($currentGenreDownload)){
+                    foreach($currentGenreDownload as $genreRecord){
+                      if(!empty($genreDownloads[0])){
+                        $i = count($genreDownloads[0]);
+                        $flag=false;
+                        foreach($genreDownloads[0] as $gkey=>$genreDownload){
+                          if($genreRecord['table1']['Genre'] == $genreDownload['Downloadgenre']['genre_name']){
+                            $genreDownloads[0][$gkey][0]['total'] += $genreRecord[0]['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                          $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                          $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                          $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
+                        }
+                      } else {
+                        $i = count($genreDownloads[0]);
+                        $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                        $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                        $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                        $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('genreDownloads', $genreDownloads[0]);
+                }
+            }
+            else {
+                $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
+                $this->redirect(array('action'=>'index'), null, true);
+            }
+        }
+        else {
+            $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
+            $this->redirect(array('action'=>'index'), null, true);
+        }
+    }
+
+    /*
+     Function Name : admin_downloadAsPdf
+     Desc : actions for library reports download as PDF page
+    */
+    function admin_downloadAsPdf() {
+      ini_set('memory_limit', '2048M');
+      set_time_limit(0);
+      Configure::write('debug',0); // Otherwise we cannot use this method while developing
+      if(isset($this->data)) {
+        $all_Ids = '';
+        $this->Report->set($this->data);
+			if(isset($_REQUEST['library_id'])){
+				$library_id = $_REQUEST['library_id'];
+			}else{
+				$library_id = $this->data['Report']['library_id'];
+			}
+			$this->set('library_id', $library_id);
+			if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == ''){
+				$libraryAdminID = $this->Library->find("first", array("conditions" => array('library_admin_id' => $this->Session->read("Auth.User.id")), 'fields' => array('id', 'library_name','library_territory'), 'recursive' => -1));
+				$territory = $libraryAdminID["Library"]["library_territory"];
+			} else {
+				$territory = $this->data['Report']['Territory'];
+			}
+            if($this->data['Report']['reports_daterange'] != 'manual') {
+                $this->Report->setValidation('reports_date');
+            }
+            else {
+                $this->Report->setValidation('reports_manual');
+            }
+			if($territory != ''){
+				if($library_id == 'all'){
+					$sql = "SELECT id from libraries where library_territory = '".$territory."'";
+					$result = mysql_query($sql);
+					while ($row = mysql_fetch_assoc($result)) {
+						$all_Ids = $all_Ids.$row["id"].",";
+					}
+					$lib_condition = "and library_id IN (".rtrim($all_Ids,",'").")";
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				}
+				else{
+					$this->set('libraries_download', $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id = '.$library_id,'Library.library_territory= "'.$territory.'"'),'order' => 'Library.library_name ASC', 'recursive' => -1)));
+				}
+			}
+            if($this->Report->validates()) {
+                if($this->data['Report']['reports_daterange'] == 'day') {
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+
+                  $downloads = $this->Download->getDaysDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsDay($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getDaysDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadDay($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getDaysDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'week') {
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  if(date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])) == 0){
+                    if(mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]) > time()){
+                      $compareDate = date('Y-m-d', time());
+                    } else {
+                      $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2]))), $date_arr[2]));
+                    }
+                  } else {
+                    if(mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]) > time()){
+                      $compareDate = date('Y-m-d', time());
+                    } else {
+                      $compareDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(23, 59, 59, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
+                    }
+                  }
+
+                  $downloads = $this->Download->getWeeksDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsWeek($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadWeek($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getWeeksDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'month') {
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".date('d',time());
+
+                  $downloads = $this->Download->getMonthsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsMonth($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadMonth($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getMonthsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'year') {
+                  $date_arr = explode("/", $this->data['Report']['date']);
+                  $compareDate = $date_arr[2]."-".date('m-d',time());
+
+                  $downloads = $this->Download->getYearsDownloadInformation($library_id, $this->data['Report']['date'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsYear($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadYear($library_id, $this->data['Report']['date'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getYearsDownloadInformation($library_id,$this->data['Report']['date'] , $territory);
+                }
+                elseif($this->data['Report']['reports_daterange'] == 'manual') {
+                  $date_arr = explode("/", $this->data['Report']['date_to']);
+                  $compareDate = $date_arr[2]."-".$date_arr[0]."-".$date_arr[1];
+
+                  $downloads = $this->Download->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+
+                  $arr_all_library_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_library_downloads = $this->Download->getAllLibraryDownloadsManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }
+
+                  $patronDownloads = $this->Downloadpatron->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+
+                  $arr_all_patron_downloads = array();
+                  if($library_id == "all") {
+                    $arr_all_patron_downloads = $this->Downloadpatron->getTotalPatronDownloadManual($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                  }
+
+                  $genreDownloads = $this->Downloadgenre->getManualDownloadInformation($library_id, $this->data['Report']['date_from'], $this->data['Report']['date_to'], $territory);
+                }
+                $date = date('Y-m-d',time());
+                if($compareDate == $date){
+                  $currentPatronDownload = $this->Download->getCurrentPatronDownloads($library_id,$date,$territory,$all_Ids);
+                  $currentGenreDownload = $this->Download->getCurrentGenreDownloads($library_id,$date,$territory,$all_Ids);
+                } else {
+                  $currentPatronDownload = array();
+                  $currentGenreDownload = array();
+                }
+                $this->set('dataRange',$this->data['Report']['reports_daterange']);
+                $this->set('downloads', $downloads);
+                $this->set('arr_all_library_downloads', $arr_all_library_downloads);
+                $this->set('arr_all_patron_downloads', $arr_all_patron_downloads);
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentPatronDownload)){
+                    foreach($currentPatronDownload as $patronRecord){
+                      $i = count($patronDownloads);
+                      $patronDownloads[$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
+                      $patronDownloads[$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                      $patronDownloads[$i]['Downloadpatron']['total'] = $patronRecord[0]['total'];
+                    }
+                  }
+                  $this->set('patronDownloads', $patronDownloads);
+                } else {
+                  if(!empty($currentPatronDownload)){
+                    foreach($currentPatronDownload as $patronRecord){
+                      if(!empty($patronDownloads[0])){
+                        $i = count($patronDownloads[0]);
+                        $flag = false;
+                        foreach($patronDownloads[0] as $pkey=>$patronDownload){
+                          if($patronRecord['Download']['patron_id'] == $patronDownload['Downloadpatron']['patron_id']){
+                            $patronDownloads[0][$pkey][0]['total'] += $patronRecord[0]['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['library_id'];
+                          $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                          $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
+                        }
+                      } else {
+                        $i = count($patronDownloads[0]);
+                        $patronDownloads[0][$i]['Downloadpatron']['library_id'] = $patronRecord['Download']['patron_id'];
+                        $patronDownloads[0][$i]['Downloadpatron']['patron_id'] = $patronRecord['Download']['patron_id'];
+                        $patronDownloads[0][$i][0]['total'] = $patronRecord[0]['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('patronDownloads', $patronDownloads[0]);
+                }
+                if($this->data['Report']['reports_daterange'] == 'day'){
+                  if(!empty($currentGenreDownload)){
+                    foreach($currentGenreDownload as $genreRecord){
+                      $i = count($genreDownloads);
+                      $genreDownloads[$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                      $genreDownloads[$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                      $genreDownloads[$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                      $genreDownloads[$i]['Downloadgenre']['total'] = $genreRecord[0]['total'];
+                    }
+                  }
+                  $this->set('genreDownloads', $genreDownloads);
+                } else {
+                  if(!empty($currentGenreDownload)){
+                    foreach($currentGenreDownload as $genreRecord){
+                      if(!empty($genreDownloads[0])){
+                        $i = count($genreDownloads[0]);
+                        $flag=false;
+                        foreach($genreDownloads[0] as $gkey=>$genreDownload){
+                          if($genreRecord['table1']['Genre'] == $genreDownload['Downloadgenre']['genre_name']){
+                            $genreDownloads[0][$gkey][0]['total'] += $genreRecord[0]['total'];
+                            $flag=true;
+                            break;
+                          }
+                        }
+                        if($flag==false){
+                          $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                          $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                          $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                          $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
+                        }
+                      } else {
+                        $i = count($genreDownloads[0]);
+                        $genreDownloads[0][$i]['Downloadgenre']['download_date'] = $genreRecord['table1']['day_downloaded'];
+                        $genreDownloads[0][$i]['Downloadgenre']['library_id'] = $genreRecord['table1']['library_id'];
+                        $genreDownloads[0][$i]['Downloadgenre']['genre_name'] = $genreRecord['table1']['Genre'];
+                        $genreDownloads[0][$i][0]['total'] = $genreRecord[0]['total'];
+                      }
+                    }
+                    //die;
+                  }
+                  $this->set('genreDownloads', $genreDownloads[0]);
+                }
                 $this->layout = 'pdf';
                 $this->render();
             }
@@ -261,14 +824,14 @@ Class ReportsController extends AppController
             $this->redirect(array('action'=>'index'), null, true);
         }
     }
-    
+
     /*
      Function Name : admin_libraryrenewalreport
      Desc : actions for library renewal reports page
     */
     function admin_libraryrenewalreport() {
         if(isset($this->data)) {
-            Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+            Configure::write('debug',0); // Otherwise we cannot use this method while developing
             $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
             if($this->data['downloadType'] == 'pdf') {
                 $this->layout = 'pdf';
@@ -281,7 +844,7 @@ Class ReportsController extends AppController
         }
         $this->set("sitelibraries", $this->Library->find("all", array('order' => 'library_contract_start_date ASC', 'recursive' => -1)));
     }
-    
+
     /*
      Function Name : admin_librarywishlistreport
      Desc : actions for library wishlist reports page
@@ -294,14 +857,14 @@ Class ReportsController extends AppController
         }
 		elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
             $this->set('libraries', $this->Library->find('list', array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium")),'fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
-            $this->set('libraryID', "");		
+            $this->set('libraryID', "");
 		}
         else {
             $this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));
             $this->set('libraryID', "");
         }
         if(isset($this->data)) {
-            Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+            Configure::write('debug',0); // Otherwise we cannot use this method while developing
             $this->Report->set($this->data);
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
@@ -340,7 +903,7 @@ Class ReportsController extends AppController
             $this->set('errors', $arr);
         }
     }
-    
+
     /*
      Function Name : admin_sonyreports
      Desc : actions for library download for sony reports page
@@ -348,7 +911,7 @@ Class ReportsController extends AppController
     function admin_sonyreports() {
         if(!empty($this->params['named']['id']))//gets the values from the url in form  of array
         {
-            Configure::write('debug',0); // Otherwise we cannot use this method while developing 
+            Configure::write('debug',0); // Otherwise we cannot use this method while developing
             $sonyReport = $this->SonyReport->find("first", array('conditions' => array('id' => base64_decode($this->params['named']['id']))));
             $path = "http://music.freegalmusic.com/freegalmusic/prod/EN/sony_reports"; // change the path to fit your websites document structure
             $fullPath = $path."/".$sonyReport['SonyReport']['report_name'];
@@ -374,7 +937,7 @@ Class ReportsController extends AppController
         if($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") == '') {
             $var = $this->Library->find("list", array("conditions" => array('Library.library_admin_id' => $this->Session->read("Auth.User.id"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
         }elseif($this->Session->read("Auth.User.type_id") == 4 && $this->Session->read("Auth.User.consortium") != ''){
-            $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));			
+            $var = $this->Library->find("list", array("conditions" => array('Library.library_apikey' => $this->Session->read("Auth.User.consortium"),'Library.library_territory' => $_REQUEST['Territory']), 'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC', 'recursive' => -1));
 		}
         else {
 			$var = $this->Library->find('list', array('conditions' => array('Library.library_territory' => $_REQUEST['Territory']),'fields' => array('Library.id','Library.library_name'),'order' => 'Library.library_name ASC','recursive' => -1));
@@ -393,7 +956,7 @@ Class ReportsController extends AppController
         }
         else {
 			$this->set('libraryID', "");
-        }	
+        }
 		if(isset($this->data)) {
 			$all_Ids = '';
 			$sql = "SELECT id from libraries where library_unlimited = '1'";
@@ -403,7 +966,7 @@ Class ReportsController extends AppController
 			}
 			$lib_condition = "and library_id IN (".rtrim($all_Ids,",").")";
 			$date_arr = explode("/", $this->data['Report']['date']);
-			
+
 			$startDate = date("Y-m-d", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))." 00:00:00";
 			$endDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).' 00:00:00'))))." 23:59:59";
 			$conditions = array(
@@ -414,7 +977,7 @@ Class ReportsController extends AppController
 				$nameQuery = "SELECT library_name FROM libraries WHERE id=".$v['Download']['library_id'];
 				$row = mysql_fetch_assoc(mysql_query($nameQuery));
 				$downloadResult[$k]['Download']['library_name'] = $row['library_name'];
-				$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE 
+				$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE
 								  library_id='".$v['Download']['library_id']."' ORDER BY created DESC";
 				$row = mysql_fetch_assoc(mysql_query($purchaseQuery));
 				$downloadResult[$k]['Download']['library_price'] = $row['purchased_amount'];
@@ -432,7 +995,7 @@ Class ReportsController extends AppController
 	}
 	function admin_unlimitedcsv(){
 //        Configure::write('debug', 0);
-        $this->layout = false;	
+        $this->layout = false;
 		$all_Ids = '';
 		$sql = "SELECT id from libraries where library_unlimited = '1'";
 		$result = mysql_query($sql);
@@ -451,7 +1014,7 @@ Class ReportsController extends AppController
 			$nameQuery = "SELECT library_name FROM libraries WHERE id=".$v['Download']['library_id'];
 			$row = mysql_fetch_assoc(mysql_query($nameQuery));
 			$downloadResult[$k]['Download']['library_name'] = $row['library_name'];
-			$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE 
+			$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE
 							  library_id='".$v['Download']['library_id']."' ORDER BY created DESC";
 			$row = mysql_fetch_assoc(mysql_query($purchaseQuery));
 			$downloadResult[$k]['Download']['library_price'] = $row['purchased_amount'];
@@ -465,7 +1028,7 @@ Class ReportsController extends AppController
 	}
 	function admin_unlimitedpdf(){
         Configure::write('debug', 0);
-        $this->layout = false;	
+        $this->layout = false;
 		$all_Ids = '';
 		$sql = "SELECT id from libraries where library_unlimited = '1'";
 		$result = mysql_query($sql);
@@ -484,7 +1047,7 @@ Class ReportsController extends AppController
 			$nameQuery = "SELECT library_name FROM libraries WHERE id=".$v['Download']['library_id'];
 			$row = mysql_fetch_assoc(mysql_query($nameQuery));
 			$downloadResult[$k]['Download']['library_name'] = $row['library_name'];
-			$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE 
+			$purchaseQuery = "SELECT purchased_amount FROM library_purchases WHERE
 							  library_id='".$v['Download']['library_id']."' ORDER BY created DESC";
 			$row = mysql_fetch_assoc(mysql_query($purchaseQuery));
 			$downloadResult[$k]['Download']['library_price'] = $row['purchased_amount'];
@@ -493,20 +1056,27 @@ Class ReportsController extends AppController
 			$downloadResult[$k]['Download']['mechanical_royalty'] = ($v[0]['totalDownloads']* (.091/2));
 		}
 		$this->set( 'date', $this->data['Report']['date']);
-		$this->set('month', date("F", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))));		
+		$this->set('month', date("F", strtotime(date('m', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])).'/01/'.date('Y', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))));
 		$this->set('downloadResult', $downloadResult);
 	}
 	function admin_consortium(){
+
+		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
+
 		if($this->Session->read("Auth.User.type_id") == 1) {
 			$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name', 'recursive' => -1,'group' => 'consortium_name'));
 			$this->set('consortium', $consortium);
 		}else{
 			$consortium = $this->Consortium->find('list', array('conditions' => array('consortium_name' => $this->Session->read("Auth.User.consortium")),'fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name', 'recursive' => -1,'group' => 'consortium_name'));
-			$this->set('consortium', $consortium);		
+			$this->set('consortium', $consortium);
 		}
+
 		$this->set('libraryID', "");
         if(isset($this->data)) {
-			$consortium_id = $this->data['Report']['library_apikey'];		
+			$consortium_id = $this->data['Report']['library_apikey'];
             $this->Report->set($this->data);
             if($this->data['Report']['reports_daterange'] != 'manual') {
                 $this->Report->setValidation('reports_date');
@@ -521,7 +1091,7 @@ Class ReportsController extends AppController
 				$all_Ids = $all_Ids.$row["id"].",";
 			}
 			$libraryData = $this->Library->find('all', array('fields' => array('Library.library_name','Library.library_unlimited','Library.library_available_downloads'),'conditions' => array('Library.id IN ('.rtrim($all_Ids,",").')'), 'order' => 'Library.library_name ASC', 'recursive' => -1));
-			$this->set('libraries_download', $libraryData);		
+			$this->set('libraries_download', $libraryData);
             if($this->Report->validates()) {
                 if($this->data['Report']['reports_daterange'] == 'day') {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumDaysDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
@@ -537,7 +1107,7 @@ Class ReportsController extends AppController
                 }
                 elseif($this->data['Report']['reports_daterange'] == 'manual') {
                     list($downloads, $patronDownloads, $genreDownloads) = $this->Download->getConsortiumManualDownloadInformation(rtrim($all_Ids,",'"), $this->data['Report']['date']);
-                }				
+                }
                 $this->set('downloads', $downloads);
                 $this->set('patronDownloads', $patronDownloads);
                 $this->set('genreDownloads', $genreDownloads);
@@ -549,14 +1119,14 @@ Class ReportsController extends AppController
 					Configure::write('debug', 0);
                     $this->layout = false;
                     $this->render("/reports/admin_downloadConsortiumRenewalReportAsCsv");
-                }				
+                }
             }
             else {
                 $this->Session->setFlash( 'Error occured while entering the Reports Setting fields', 'modal', array( 'class' => 'modal problem' ) );
                 $arr = array();
                 $this->set('wishlists', $arr);
                 $this->set('errors', $this->Report->invalidFields());
-				
+
             }
             $this -> set( 'formAction', 'admin_consortium' );
             $this->set('getData', $this->data);
@@ -567,7 +1137,7 @@ Class ReportsController extends AppController
             $this->set('getData', $arr);
             $this->set('consortiumData', $arr);
             $this->set('errors', $arr);
-        }		
+        }
 	}
 }
 ?>

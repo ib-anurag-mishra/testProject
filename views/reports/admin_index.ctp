@@ -1,5 +1,5 @@
 <?php
-    $this->pageTitle = 'Reports'; 
+    $this->pageTitle = 'Reports';
     echo $this->Form->create('Report', array( 'action' => $formAction ));
     if(empty($getData))
     {
@@ -8,7 +8,7 @@
         $getData['Report']['date'] = "";
         $getData['Report']['date_from'] = "";
         $getData['Report']['date_to'] = "";
-		$getData['Report']['Territory'] = '';
+		$getData['Report']['Territory'] = "";
     }
 ?>
 <fieldset>
@@ -23,19 +23,17 @@
                         <?php
                             if($libraryID == "") {
                         ?>
-							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>   
+							<td align="right"><?php echo $this->Form->label('Choose Territory');?></td>
 							<td align="left">
 										<?php
-											$territory[''] = 'Select Territory';
-											ksort($territory);
 											echo $this->Form->input('Territory', array('options' => $territory, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['Territory'])
 																	);
                                 ?>
-                            </td>						
+                            </td>
                             <td align="right"><?php echo $this->Form->label('Select Library');?></td>
                             <td align="left">
 							<div id="allLibrary">
-                        <?php    
+                        <?php
                                     if($this->Session->read("Auth.User.consortium") == '') { $libraries['all'] = "All Libraries"; }
                                     echo $this->Form->input('library_id', array('options' => $libraries, 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $library_id));
                         ?>
@@ -53,11 +51,11 @@
                                                             );
                                 ?>
                             </td>
-       							
+
                         <?php
                             }
                             else {
-                        ?>							
+                        ?>
                             <td align="center" colspan="4">
                                 <?php
                                     echo $this->Form->label('Range');
@@ -70,11 +68,11 @@
                                                                     ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Report']['reports_daterange'])
                                                             );
                                 ?>
-                            </td>							
+                            </td>
                         <?php
                             }
                         ?>
-                        
+
                     </tr>
                     <tr><td colspan="6">&nbsp;</td></tr>
                     <tr id="initial_date_range" <?php if($getData['Report']['reports_daterange'] == "manual") {?>style="display:none;"<?php } ?>>
@@ -152,6 +150,101 @@
                             </table>
                         </td>
                     </tr>
+                 
+          
+					<tr><td colspan="6">&nbsp;</td></tr>
+              
+              <?php 
+                
+                if(empty($arr_all_library_downloads)) { ?>
+                 
+                  <tr>
+                    <th colspan="6" align="center">Total Downloads during Reporting Period</th>
+                  </tr>
+                  <tr>
+                    <td colspan="6" align="center">
+                      <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
+                        <tr>
+                          <th>Total Downloads</th>
+                        </tr>
+                        <tr>
+                          <td align="center"><?php echo count($downloads); ?></td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+              
+              <?php  } else {  ?> 
+                <tr>
+        
+                <td colspan="6" align="center">
+                  <div style="padding-bottom: 5px;"> <b> Total Downloads during Reporting Period </b> </div>
+               
+                <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
+                  <tr>
+                    <th align="center"> &nbsp; </th>
+                    <th align="center"> Library name </th>
+                    <th align="center"> Total Downloads </th>
+                  </tr>
+                  
+                  <?php 
+                    $index = 1;
+                    foreach($arr_all_library_downloads AS $key => $val) {
+                  ?>
+                  
+                  <tr>
+                   <td> <?php echo $index; ?> </td>
+                   <td> <?php echo $key; ?> </td>
+                   <td align="center"> <?php echo $val; ?> </td>
+                  </tr>
+                  
+                  <?php $index++; } ?>
+                </table> </td></tr>    
+               <?php  } ?>         
+                    
+					<tr><td colspan="6">&nbsp;</td></tr>
+                    
+            <?php
+              if(empty($arr_all_patron_downloads)) {
+            ?>                              
+              <tr><th colspan="6" align="center">Total Patrons</th></tr>
+                <tr>
+                  <td colspan="6" align="center">
+                    <table cellspacing="0" cellpadding="0" border="1" class="reportsTable" align="center">
+                      <tr><th>Total Number of Patrons who have downloaded during Reporting Period</th></tr>
+                      <tr><td align="center"><?php echo count($patronDownloads); ?></td></tr>
+                    </table>
+                  </td>
+                </tr>
+            <?php  } else {  ?>         
+              <tr>
+                <td colspan="6" align="center">
+                  <div style="padding-bottom: 5px;"> <b> Total Number of Patrons who have downloaded during Reporting Period </b> </div>
+               
+                <table cellpadding="0" cellspacing="0" border="1" class="reportsTable"> 
+                  <tr>
+                    <th align="center"> &nbsp; </th>
+                    <th align="center"> Library name </th>
+                    <th align="center"> Total Patrons </th>
+                  </tr>
+                  
+                  <?php 
+                    $index = 1;
+                    foreach($arr_all_patron_downloads AS $key => $val) {
+                  ?>
+                  
+                  <tr>
+                   <td> <?php echo $index; ?> </td>
+                   <td> <?php echo $key; ?> </td>
+                   <td align="center"> <?php echo $val; ?> </td>
+                  </tr>
+                  
+                  <?php $index++; } ?>
+                </table> </td></tr>
+                
+            <?php }?>            
+                    
+                    
 					<tr><td colspan="6">&nbsp;</td></tr>
                     <tr><th colspan="6" align="center">Library Downloads Report</th></tr>
                     <tr>
@@ -168,12 +261,12 @@
                                 <?php
 								$i = 1;
 				//				print "<pre>";print_r($downloads);exit;
-                                foreach($downloads as $key => $download) {	
+                                foreach($downloads as $key => $download) {
                                 ?>
                                     <tr>
 										<td><?php echo $i; ?></td>
                                         <td><?php echo $library->getLibraryName($download['Download']['library_id']); ?></td>
-                                        <td><?php 
+                                        <td><?php
 											if($download['Download']['email']!=''){
 												echo $download['Download']['email'];
 											}else{
@@ -208,15 +301,15 @@
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-										<td><?php 
-										if($patronDownload['Download']['email']!=''){
-											echo $patronDownload['Download']['email'];
+										<td><?php
+										if(isset($patronDownload['Downloadpatron']['email']) && $patronDownload['Downloadpatron']['email']!=''){
+											echo $patronDownload['Downloadpatron']['email'];
 										}else{
-											echo $patronDownload['Download']['patron_id'];
+											echo $patronDownload['Downloadpatron']['patron_id'];
 										}?>
 										</td>
-                                        <td><?php echo $library->getLibraryName($patronDownload['Download']['library_id']); ?></td>
-                                        <td align="center"><?php echo $patronDownload[0]['totalDownloads']; ?></td>
+                                        <td><?php echo $library->getLibraryName($patronDownload['Downloadpatron']['library_id']); ?></td>
+                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$patronDownload['Downloadpatron']['total']:$patronDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
 				    $i++;
@@ -236,13 +329,13 @@
                                     <th>Total Number of Tracks Downloaded</th>
                                 </tr>
                                 <?php
-				$i = 1;
+                                $i = 1;
                                 foreach($genreDownloads as $key => $genreDownload) {
                                 ?>
                                     <tr>
 					<td><?php echo $i; ?></td>
-                                        <td><?php echo $genreDownload['Genre']['Genre']; ?></td>
-                                        <td align="center"><?php echo $genreDownload[0]['totalProds']; ?></td>
+                                        <td><?php echo $genreDownload['Downloadgenre']['genre_name']; ?></td>
+                                        <td align="center"><?php echo (($getData['Report']['reports_daterange'] == 'day')?$genreDownload['Downloadgenre']['total']:$genreDownload[0]['total']); ?></td>
                                     </tr>
                                 <?php
 				    $i++;
@@ -274,6 +367,7 @@
 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript">
     $(function() {
+		report_load_page();
         $("#ReportDate").datepicker({showWeek: true, firstDay: 1, maxDate: '+0D', numberOfMonths: 3});
         var dates = $('#ReportDateFrom, #ReportDateTo').datepicker({
                 defaultDate: "-1w",
@@ -312,6 +406,22 @@
 			return false;
 		});
 		
+				
+		function report_load_page(){
+			var data = "Territory="+$("#ReportTerritory").val();
+			jQuery.ajax({
+				type: "post",  // Request method: post, get
+				url: webroot+"admin/reports/getLibraryIds", // URL to request
+				data: data,  // post data
+				success: function(response) {
+						$('#allLibrary').text('');
+						$('#allLibrary').html(response);
+				},
+				error:function (XMLHttpRequest, textStatus, errorThrown) {}
+			});
+
+		}
+
     });
     <?php
         if(!empty($downloads)) {
@@ -319,12 +429,12 @@
             $("#generateReportSubmit").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/index');
             });
-            
+
             $("#downloadCVSOne").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsCsv');
                 $("#ReportAdminIndexForm").submit();
             });
-            
+
             $("#downloadPDFOne").click(function() {
                 $("#ReportAdminIndexForm").attr('action','/admin/reports/downloadAsPdf');
                 $("#ReportAdminIndexForm").submit();

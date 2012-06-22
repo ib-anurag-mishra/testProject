@@ -60,14 +60,14 @@ $(document).ready(function()
             min: 0
          },
          border: {
-               width: 1,
-               radius: 8,
+               width: 8,
+               radius: 1,
                color: '#FAF7AA'
          },
          tip: true
       }
    });
-   $('.dload').qtip({
+   $('span .dload').qtip({
       position: {
          corner: {
             target: 'topRight',

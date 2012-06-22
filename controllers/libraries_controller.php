@@ -10,8 +10,8 @@ Class LibrariesController extends AppController
     var $name = 'Libraries';
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
-    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory');
+    var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card');
     
     /*
      Function Name : beforeFilter
@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     */
     function beforeFilter() {	  
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron','admin_consortium', 'admin_consortiumform', 'admin_addconsortium');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron','admin_consortium', 'admin_consortiumform', 'admin_addconsortium' , 'admin_card' , 'admin_get_libraries', 'sendCardImoprtErrorEmail');
     }
     
     /*
@@ -27,6 +27,10 @@ Class LibrariesController extends AppController
      Desc : action for listing all the libraries
     */
     function admin_managelibrary() {
+	if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
         $this->Library->recursive = -1;
 		$this->paginate = array('order' => 'id');
 		$this->paginate = array('cache' => 'no');
@@ -98,6 +102,10 @@ Class LibrariesController extends AppController
     */
     function admin_libraryform() {
 		Configure::write('debug', 0);
+	if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
         if( !empty( $this -> params[ 'named' ][ 'id' ] ) )//gets the values from the url in form  of array
         {
             $libraryId = $this -> params[ 'named' ][ 'id' ];
@@ -135,6 +143,7 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_error',
 																				'Library.library_sip_institution',
 																				'Library.library_sip_24_check',
+																				'Library.library_sip_64_check_off',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
 																				'Library.library_ezproxy_name',
@@ -154,6 +163,13 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
+																				'Library.library_phone',
+																				'Library.library_address',
+																				'Library.library_address2',
+																				'Library.library_city',
+																				'Library.library_state',
+																				'Library.library_zipcode',
+																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
@@ -169,7 +185,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_available_downloads',
                                                                                 'Library.library_contract_start_date',
 																				'Library.library_contract_end_date',
-																				'Library.library_unlimited'
+																				'Library.library_unlimited',
+																				 'Library.library_exp_date_format'
                                                                                 ),
                                                                'contain' => array(
                                                                             'User' => array(
@@ -252,6 +269,7 @@ Class LibrariesController extends AppController
 																				'Library.library_sip_error',
 																				'Library.library_sip_institution',
 																				'Library.library_sip_24_check',
+																				'Library.library_sip_64_check_off',
 																				'Library.library_ezproxy_secret',
 																				'Library.library_ezproxy_referral',
 																				'Library.library_ezproxy_name',
@@ -271,6 +289,13 @@ Class LibrariesController extends AppController
 																				'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
+																				'Library.library_phone',
+																				'Library.library_address',
+																				'Library.library_address2',
+																				'Library.library_city',
+																				'Library.library_state',
+																				'Library.library_zipcode',
+																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
@@ -469,6 +494,17 @@ Class LibrariesController extends AppController
 																}
 															}
 														}
+														
+														if($this->data['Library']['id'] != '' && $this->data['LibraryPurchase']['purchased_order_num'] == "" && $this->data['LibraryPurchase']['purchased_amount'] == ""){
+															
+															$this->ContractLibraryPurchase->setDataSource('master');
+															$sql = "UPDATE contract_library_purchases SET library_contract_start_date = '".$this->data['Library']['library_contract_start_date']."' , library_contract_end_date = '".$this->data['Library']['library_contract_end_date']."' where library_id = '".$this->Library->id."' ORDER BY id DESC LIMIT 1";
+															$this->ContractLibraryPurchase->query($sql);
+															$this->ContractLibraryPurchase->setDataSource('default');
+																														
+														}
+
+
 														if($this->data['Libraryurl'][0]['domain_name']){
 															if($this->data['Library']['library_authentication_method'] != 'referral_url' || $this->data['Library']['library_authentication_method'] != 'user_account'){														
 																foreach($this->data['Libraryurl'] as $k=>$v){
@@ -647,6 +683,7 @@ Class LibrariesController extends AppController
                 }
             }
         }
+		Cache::delete("library".$libraryId);
     }
     
     /*
@@ -682,12 +719,12 @@ Class LibrariesController extends AppController
 		      $this->Library->recursive = -1;
 		      $data = $this->Library->find('all', array('conditions' => array('id' => $_REQUEST['LibraryID'])));
 		      $deleteFileName = $data[0]['Library']['library_image_name'];
-		      if($deleteFileName != null){
-				$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'libraryimg/'.$deleteFileName);
+		      if($deleteFileName != null && !empty($deleteFileName)){
+				$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'libraryimg/'.$deleteFileName, true);
 		      }
 		      $src = WWW_ROOT.'img/'.$fileName;
 		      $dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
-		      $success = $this->CdnUpload->sendFile($src, $dst);
+		      $success = $this->CdnUpload->sendFile($src, $dst, true);
 		      unlink($upload_Path);
                     $this->Library->id = $_REQUEST['LibraryID'];
                     $this->Library->saveField('library_image_name', $fileName);
@@ -706,11 +743,19 @@ Class LibrariesController extends AppController
      Desc : For deactivating a library
     */
     function admin_deactivate() {
+if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID)) {
             $this->Session -> setFlash( 'Library deactivated successfully!', 'modal', array( 'class' => 'modal success' ) );
             $this->Library->id = $libraryID;
-	    $this->Library->set(array('library_status' => 'inactive', 'library_status_updated_by' => 'admin'));
+            $u = $this->Auth->user();
+            $uid = $u['User']['id'];	
+            $ip = $_SERVER['REMOTE_ADDR'];
+            $library_status_updated_by = "Uid :" . $uid . ", IP :" . $ip;
+	    $this->Library->set(array('library_status' => 'inactive', 'library_status_updated_by' => $library_status_updated_by));
             $this->Library->save();
             $this->autoRender = false;
             $this->redirect('managelibrary');
@@ -727,6 +772,10 @@ Class LibrariesController extends AppController
      Desc : For activating a library
     */
     function admin_activate() {
+if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
         $libraryID = $this->params['named']['id'];
         if(trim($libraryID) != "" && is_numeric($libraryID)) {
             $this->Session -> setFlash( 'Library activated successfully!', 'modal', array( 'class' => 'modal success' ) );
@@ -879,6 +928,11 @@ Class LibrariesController extends AppController
 		}
 	}
 	function admin_addconsortium(){
+		Configure::write('debug', 0);
+		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
 		if(isset($this->data)) {
 			if($this->Consortium->save($this->data['Library'])){
 				$this->Session ->setFlash('Consortium Added', 'modal', array( 'class' => 'modal success' ));
@@ -893,5 +947,243 @@ Class LibrariesController extends AppController
 			$this->set( 'formAction', 'admin_addConsortium');		
 		}		
 	}
+	
+		/*
+    Function Name : admin_card
+    Desc : action for adding library cards
+    */
+    function admin_card() {
+	
+		set_time_limit(0);
+		ini_set("memory_limit", "1G");
+		ini_set('max_input_time', 1800);
+		Ignore_User_Abort(True);
+    ini_set('auto_detect_line_endings',TRUE);
+		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+		{
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
+		
+		if(isset($this->data)) {
+			$file_ext = end(explode(".",strtolower($_FILES["xls_sheet"]['name'])));
+			if($this->data['Libraries']['Login Method'] == '')
+			{
+				$this->Session->setFlash( 'Error: Please select a login Method.' , 'modal', array( 'class' => 'modal problem' ) );
+			}
+			else if($this->data['Libraries']['Library'] == '')
+			{
+				$this->Session->setFlash( 'Error: Please select a library.' , 'modal', array( 'class' => 'modal problem' ) );
+				$login_method = $this->data['Libraries']['Login Method'];
+				$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$login_method."%")));
+				$this->set('libs' , $libs);
+			}
+			else if($_FILES["xls_sheet"]['name'] == '')
+			{
+				$this->Session->setFlash( 'Error: You must upload a xls or csv file.' , 'modal', array( 'class' => 'modal problem' ) );
+				$login_method = $this->data['Libraries']['Login Method'];
+				$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$login_method."%")));
+				$this->set('libs' , $libs);
+			}
+			else if(!($file_ext == 'xls' || $file_ext == 'csv'))
+			{
+				$this->Session->setFlash( 'Error: Only .xls and .csv files are supported', 'modal', array( 'class' => 'modal problem' ) );
+				$login_method = $this->data['Libraries']['Login Method'];
+				$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$login_method."%")));
+				$this->set('libs' , $libs);
+			}
+			else
+			{
+				$file_path = "uploads/" . $_FILES["xls_sheet"]["name"];
+				if(move_uploaded_file($_FILES["xls_sheet"]["tmp_name"], $file_path))
+				{				
+					$card_array = array();
+					$error = 0;	
+					$error_msg = '';
+					$card_error_message = 'System not imported following cards because Pin empty for mdlogin method:<br/> ';
+
+					//Check ext of file and prepare the data
+					switch($file_ext){
+						case 'csv':
+							$handle = fopen("$file_path", "r");							
+							$card_array_index = 0;
+							while (($csv_data = fgetcsv($handle, 1000, ",")) !== FALSE)
+							{
+								//Skipping card number if card number empty
+								if($csv_data[0] == ''){
+									$error_msg = 'Card number can not be empty! Error at Line '.($card_array_index + 1) .' in csv sheet.';
+									//$error++;
+									continue;								
+								} else if(($csv_data[1] == '') && ($this->data['Libraries']['Login Method'] == 'mdlogin')) {
+									//Skipping card number if pin empty
+									$error_msg = 'Pin can not be empty for mdlogin method! Error at Line '. ($card_array_index + 1) .' in csv sheet.';
+									$card_error_message .= '<br/>  Card No:' . $csv_data[0];
+									$error++;
+									continue;
+								}								
+								//Assign csv_data into card_array
+								$card_array[$card_array_index][1] = $csv_data[0];
+								if(($csv_data[1] != '') && ($this->data['Libraries']['Login Method'] == 'mdlogin')) {
+									$card_array[$card_array_index][2] = $csv_data[1];
+								}
+								$card_array_index++;
+							}
+							fclose($handle);							
+						break;						
+						case 'xls':
+							require_once 'Excel/reader.php';
+							error_reporting(E_ALL ^ E_NOTICE);
+							$data = new Spreadsheet_Excel_Reader();
+
+							// Set output Encoding.
+							$data->setOutputEncoding('CP1251');
+							$data->read($file_path);
+							//Validations
+							for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
+
+								if($data->sheets[0]['cells'][$i][1] == '') {
+									//Skipping card number if card number empty
+									$error_msg = 'Card number can not be empty! Error at Line '.$i.' in xls sheet.';
+									//$error++;
+									continue;
+
+								} else if(($data->sheets[0]['cells'][$i][2] == '') && ($this->data['Libraries']['Login Method'] == 'mdlogin')) {
+									//Skipping card number if pin empty
+									$error_msg = 'Pin can not be empty for mdlogin method! Error at Line '.$i.' in xls sheet.';
+									$card_error_message .= '<br/> Card No:' . $data->sheets[0]['cells'][$i][1];
+									$error++;
+									continue;
+								}
+
+								$card_array[] = $data->sheets[0]['cells'][$i];
+
+							}							
+						break;				
+					}//End switch			
+					
+					
+					$library_id = mysql_real_escape_string($this->data['Libraries']['Library']);
+					$this->Card->setDataSource('master');
+					$delete_sql = "Delete from cards Where library_id = '$library_id'";
+					$this->Card->query($delete_sql);
+					$this->Card->setDataSource('default');
+				
+					foreach ($card_array as $card) {
+
+						$card_number = trim($card[1] , '"');
+						
+						if($this->data['Libraries']['Login Method'] == 'mdlogin')
+							$pin = mysql_real_escape_string(trim($card[2] , '"'));
+						else
+							$pin = '';
+						$library_id = mysql_real_escape_string($this->data['Libraries']['Library']);
+						
+						$this->Card->setDataSource('master');
+						$sql = "INSERT INTO cards(library_id , card_number , pin , created , modified) VALUES ('$library_id' , '$card_number' , '$pin' , NOW() , NOW() )";
+						$this->Card->query($sql);
+						$this->Card->setDataSource('default');
+
+					}
+					
+					$library_id = mysql_real_escape_string($this->data['Libraries']['Library']);
+					$lib_array = $this->Library->find('list',array('fields' => array('id', 'library_name') , 'conditions' => array('id = '.$library_id)));						
+					$library_name = $lib_array[$this->data['Libraries']['Library']];					
+					
+					if($error)
+					{
+						$from_name = Configure::read('App.name');
+						$card_error_message .=<<<STR
+						 <br/><br/>Thanks<br/>
+						 $from_name						 
+STR;
+ 						
+						$this->sendCardImoprtErrorEmail($card_error_message, $library_id, $library_name);
+						//$this->Session->setFlash($card_error_message, 'modal', array( 'class' => 'modal problem' )  );
+					}
+
+					echo $show_msg =<<<STR
+					<script type="text/javascript">
+						alert('Credentials imported successfully for Library name: $library_name!!');
+						window.location = "/admin/libraries/card";
+					</script>
+STR;
+				
+					//$this->Session->setFlash( 'Credentials imported successfully!', 'modal', array( 'class' => 'modal success' ) );
+					//$this->redirect(array('controller' => 'libraries', 'action' => 'card'));
+
+				}
+				else{
+					$this->Session->setFlash( 'Credentials not imported! Problem with file uploading', 'modal', array( 'class' => 'modal problem' )  );
+					$this->redirect(array('controller' => 'libraries', 'action' => 'card'));
+				}
+			}
+			
+	  
+		
+		}
+		else{
+			$this->set('libraries', $this->Library->find('list', array('fields' => array('Library.library_name'),'conditions' => array('Library.library_territory= "'.$this->data['Report']['Territory'].'"'), 'order' => 'Library.library_name ASC', 'recursive' => -1)));	
+			$this->set( 'formAction', 'admin_card');		
+		}		
+    }
+	
+ 
+   /*
+    Function Name : _sendCardImportErrorEmail
+    Desc : For sending Card Import Error Email
+   */
+   
+	function sendCardImoprtErrorEmail($errorMsg, $library_id, $library_name) {
+	  Configure::write('debug', 0);	
+      App::import('vendor', 'PHPMailer', array('file' => 'phpmailer/class.phpmailer.php'));  
+      $mail = new PHPMailer();
+
+  
+      $mail->IsSMTP();            // set mailer to use SMTP
+      $mail->SMTPAuth = 'true';     // turn on SMTP authentication
+      $mail->Host   =  Configure::read('App.SMTP');
+      $mail->Username = Configure::read('App.SMTP_USERNAME');
+      $mail->Password = Configure::read('App.SMTP_PASSWORD');
+  
+      $mail->From     = Configure::read('App.adminEmail');
+      $mail->FromName = Configure::read('App.fromName');
+      $mail->AddAddress(Configure::read('App.ImportCardReportTO'));
+	  //$mail->AddCC('gupta09sandeep@gmail.com');
+	  $mail->ConfirmReadingTo = '';
+	  
+      $mail->CharSet  = 'UTF-8';
+      $mail->WordWrap = 50;  // set word wrap to 50 characters  
+
+      $mail->IsHTML(true);  // set email format to HTML
+	  
+      $mail->Subject = 'FreegalMusic - Library name: ' . $library_name . ' Library ID:' . $library_id  . ' Failed barcodes list for import';
+      $mail->Body    = $errorMsg;
+      $result = $mail->Send();
+  
+      if($result == false ) $result = $mail->ErrorInfo;
+      return $result;
+		
+		
+	}	
+	
+	
+	function admin_get_libraries() {
+		Configure::write('debug', 0);
+		$this->layout = false;
+		if(isset($_POST['method']) && (!empty($_POST['method']))){
+			$methode = $_POST['method'];
+			$libs = $this->Library->find('list',array('fields' => array('id','library_name') , 'conditions' => array('library_authentication_method LIKE' => "%".$methode."%")));
+			$data = '';
+			foreach($libs as $k=>$v){
+			$data = $data."<option value=".$k.">".$v."</option>";
+			}
+			print "<select id='LibrariesLibrary' name='data[Libraries][Library]' ><option value=''>Select Library</option>".$data."</select>";exit;
+	
+		}	
+		else
+		{
+			print "<select id='LibrariesLibrary' name='data[Libraries][Library]' ><option value='' >Select Library</option></select>";exit;
+			print "";
+		}
+    }
 }
 ?>

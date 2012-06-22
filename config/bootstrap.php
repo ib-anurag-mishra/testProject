@@ -66,4 +66,5 @@ Configure::write('Config.languages',
 		),
 	)
 );
+
 ?>

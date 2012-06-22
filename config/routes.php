@@ -47,6 +47,8 @@
 		Router::connect('/users/inhlogin', array('controller' => 'users', 'action' => 'inhlogin', $library));
 		Router::connect('/users/ihdlogin', array('controller' => 'users', 'action' => 'ihdlogin', $library));
 		Router::connect('/users/ildlogin', array('controller' => 'users', 'action' => 'ildlogin', $library));
+    Router::connect('/users/mdlogin', array('controller' => 'users', 'action' => 'mdlogin', $library));
+		Router::connect('/users/mndlogin', array('controller' => 'users', 'action' => 'mndlogin', $library));
 		Router::connect('/libraries/patron/:id',array('controller' => 'libraries', 'action' => 'patron',$library),array('id' => '[0-9]+'));
     
 
@@ -61,6 +63,9 @@
  */
 	
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
+  
+  Router::connect('/wsdl', array('controller' => 'soaps', 'action' => 'wsdl'));
+  //Router::connect('/soaps/*', array('controller' => 'soaps', 'action' => 'index'));
 	
 	Router::connect('/admin', array('controller' => 'users', 'action' => 'index', 'admin' => true));
 	

@@ -5,81 +5,468 @@
 	 Author : m68interactive
  */
 ?>
-<?php echo $javascript->link('jquery.marquee.min'); ?>
-<?php echo $javascript->link('freegal_home_curvy'); ?>
-<?php echo $javascript->link('jquery.corner'); ?>
-<?php echo $javascript->link('freegal.home.musicbox.js'); ?>
-<script type="text/javascript">
-	$(document).ready(function() {
-		if ($.browser.msie) {
-			$('#t1').corner("top 5px").parent().css({'padding-left' : '1px', 'padding-right' : '1px', 'padding-top' : '1px'}).corner("top 5px")
-			$('#t2').corner("top 5px").parent().css({'padding-left' : '1px', 'padding-right' : '1px', 'padding-top' : '1px'}).corner("top 5px")
-		} else {
-			$('#tb1').corner('top 5px');
-			$('#tb2').corner('top 5px');
-		}
-	});
-</script>
-<?php
-$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-?>
-<style>
-#sug a{
-	text-decoration: none;
-	color:#<?php echo isset($libraryInfo['Library']['library_links_color']) ? $libraryInfo['Library']['library_links_color'] :  "#666666"; ?>;
-}
-#sug a:hover{
-	text-decoration: none;
-	color:#<?php echo isset($libraryInfo['Library']['library_links_hover_color']) ? $libraryInfo['Library']['library_links_hover_color'] :  "#000000"; ?>;
-}
-#tb1, #tb2 {
-	float:left;
-	width:153px;
-	background-color:#<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#999"; ?>;
-	border-left: 1px solid #999;
-	border-right: 1px solid #999;
-	border-top: 1px solid #999;
-}
-#tb1 >.active, #tb2 >.active{
-	background-color:#fff;
-	color:#000;
-	-moz-border-radius-topright: 5px;
-	-khtml-border-radius-topright: 5px;
-	-webkit-border-top-right-radius: 5px;
-	-moz-border-radius-topleft: 5px;
-	-khtml-border-radius-topleft: 5px;
-	-webkit-border-top-left-radius: 5px;
-	border-bottom:0px;
-	color:#<?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
 
+
+<style>
+.main-holder {
+	width:100%;
+	overflow:hidden;
+	padding:0 0 27px;
+	#padding-top:27px;
 }
-#tb1 >.nonactive, #tb2 >.nonactive{
-	background-color:#<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#CCCCCC"; ?>;
+.gallery {
+	width:578px;
+	float:left;
+	margin:0 6px 0 0;
+}
+.gallery .switcher {
+	padding:0;
+	margin:0;
+	list-style:none;
+	overflow:hidden;
+	width:100%;
+}
+.switcher li {
+	float:left;
+	width:15px;
+	height:15px;
+	margin:0 2px 0 0;
+}
+.switcher li a {
+	display:block;
+	width:15px;
+	height:15px;
+	overflow:hidden;
+	text-indent:-9999px;
+	background:#ccc;
+}
+.switcher li a:hover,
+.switcher li.active a {background:#004080;}
+.gallery-box {
+	width:578px;
+	position:relative;
+	height:203px;
+	margin:0 0 8px;
+}
+.gallery-box ul {
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+.gallery-box ul li {
+	position:absolute;
+	top:0;
+	left:0;
+	width:578px;
+	height:203px;
+}
+.form-search {
+	width:326px;
+	height:159px;
+	float:left;
+	padding:0 0 0 18px;
+	background:url(../img/bg-box02.png) no-repeat;
+}
+.logo-freegal {
+	display:block;
+	width:193px;
+	height:95px;
+	margin:0 auto;
+	overflow:hidden;
+	text-indent:-9999px;
+	background:url(../img/logo-freegal.png) no-repeat;
+}
+.advance_search {
+	width:163px;
+	float:left;
+	text-align:right;
+	margin-top:7px;
+}
+.artist_browse {
+  float: left;
+  margin-top: 7px;
+  text-align: left;
+  width: 163px;
+}
+.advance_search a:hover {
+	text-decoration:underline;
+	cursor:pointer;
+}
+.form-search .row {
+	overflow:hidden;
+	width:100%;
+}
+.form-search .field {
+	float:left;
+	width:138px;
+	background:#fff;
+	border:1px solid #b3b3b3;
+	border-color:#b3b3b3 #b3b3b3 #e0edf1 #e0edf1;
+}
+.form-search .field input {
+	float:left;
+	width:128px;
+	padding:3px 5px;
+	margin:0;
+	background:none;
+	border:0;
+}
+.form-search .in {
+	float:left;
+	text-align:center;
+	width:30px;
+	line-height:20px;
+	font-size:15px;
+	color:#666;
+}
+.form-search .submit {
+	float:left;
+	width:31px;
+	height:18px;
+	overflow:hidden;
+	text-indent:-9999px;
+	line-height:0;
+	font-size:0;
+	border:0;
+	margin:3px 0 0;
+	cursor:pointer;
+	background:url(../img/bg-form.gif) no-repeat 0 -67px;
+}
+.form-search select {
+	float:left;
+	width:110px;
+}
+.tabs-area {
+	overflow:hidden;
+	width:100%;
+}
+.carousel {
+	width:100%;
+	margin:0 0 23px;
+	position:relative;
+}
+.txt-new-releases {
+	position:absolute;
+	top:-92px;
+	right:40px;
+	width:275px;
+	height:98px;
+	overflow:hidden;
+	text-indent:-9999px;
+	background:url(../img/<? echo $this->Session->read('Config.language');?>/featured_artist.gif) no-repeat;
+	margin-top:5px;
+}
+.carousel .holder {
+	width:910px;
+	padding:0 15px;
+	position:relative;
+	overflow:hidden;
+}
+.carousel .prev,
+.carousel .next {
+	position:absolute;
+	top:18px;
+	left:0;
+	width:14px;
+	height:52px;
+	text-indent:-9999px;
+	overflow:hidden;
+	z-index:10;
+	outline:none;
+	text-align:left;
+	background:url(../img/arrows.png) no-repeat;
+}
+.carousel .next {
+	right:0;
+	left:auto;
+	background:url(../img/arrows.png) no-repeat 100% 0;
+}
+.carousel-box {
+	width:931px;
+	float:left;
+	margin:0 -10px;
+}
+.carousel-box-holder {
+	width:910px;
+	overflow:hidden;
+	position:relative;
+}
+.carousel-box ul {
+	padding:0;
+	margin:0;
+	list-style:none;
+	width:99999px;
+	overflow: hidden;
+}
+.carousel-box li {
+	float:left;
+	padding:0 22px 0 21px;
+	width:90px;
+}
+.carousel-box .image-album {
+	display:block;
+	border:1px solid #838383;
+	background:#959594;
+	padding:2px;
+	margin:0 0 2px;
+}
+.carousel-box .image-album img {display:block;}
+.carousel-box .title-album {
+	text-decoration:none;
+	font-size:10px;
+	line-height:10px;
+	display:block;
+	padding:0 0 2px;
 	color:#000;
-	-moz-border-radius-topright: 5px;
-	-khtml-border-radius-topright: 5px;
-	-webkit-border-top-right-radius: 5px;
-	-moz-border-radius-topleft: 5px;
-	-khtml-border-radius-topleft: 5px;
-	-webkit-border-top-left-radius: 5px;
-	border-bottom:0px;
-	color:#<?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
 }
-#sep {
+.carousel-box .title-album:hover {text-decoration:underline;}
+.tabset {
+	padding:0;
+	margin:14px -12px 0 20px;
+	list-style:none;
+	width:246px;
 	float:left;
 }
-#tb1 a, #tb2 a {
-	text-decoration: none;
-	color:#<?php echo isset($libraryInfo['Library']['library_boxheader_text_color']) ? $libraryInfo['Library']['library_boxheader_text_color'] :  "#666666"; ?>;
+.tab-content .tabset {
+	width:220px;
+	margin:0;
+	position:relative;
+	z-index:10;
+	font-size:21px;
+	border-right:2px solid #bbb;
 }
-#tb1 >.active a, #tb2 >.active a{
-	text-decoration: none;
-	color:#<?php echo isset($libraryInfo['Library']['library_boxheader_bgcolor']) ? $libraryInfo['Library']['library_boxheader_bgcolor'] :  "#CCCCCC"; ?>;
+.tabset li {
+	display:block;
+	margin:0 0 -4px;
 }
-#tb1 a:hover, #tb2 a:hover{
-	text-decoration: none;
+.tab-content .tabset li {
+	width:220px;
+	margin:0;
+	border-bottom:2px solid #bbb;
 }
+.tabset li a {
+	display:block;
+	height:50px;
+	width:210px;
+	padding:25px 0 0 36px;
+	background:url(../img/bg-tab.png) no-repeat;
+}
+.tab-content .tabset li a {
+	background:none;
+	width:216px;
+	height:45px;
+	padding:20px 0 0 22px;
+	text-decoration:none;
+	color:#666;
+}
+.tab-content .tabset li a.active,
+.tab-content .tabset li a:hover {
+	color:#ff8000;
+	background:url(../img/arrow.gif) no-repeat 100% 0;
+}
+.tabset li a span {
+	display:block;
+	height:24px;
+	overflow:hidden;
+	text-indent:-9999px;
+}
+.txt-mylib {
+	width:192px;
+	background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat;
+}
+.active .txt-mylib {background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -29px;}
+.txt-national {
+	width:189px;
+	background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -100px;
+}
+.active .txt-national {background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -71px;}
+.txt-top-genres {
+	width:144px;
+	background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -170px;
+}
+.active .txt-top-genres {background:url(../img/<?php echo $this->Session->read('Config.language');  ?>/txt-tab.gif) no-repeat 0 -140px;}
+.tab-content {
+	width:628px;
+	float:left;
+	position:relative;
+	height:279px;
+	padding:8px 0 0 26px;
+	background:url(../img/bg-box.png) no-repeat;
+}
+.tab-content .tab-content {
+	width:400px;
+	padding:0;
+	background:none;
+	z-index:1;
+}
+#info-part {
+	width:100%;
+	overflow:hidden;
+	margin-top:0;
+}
+#left-part {overflow:hidden;}
+#left-part .text-box {
+	overflow:auto;
+	position:relative;
+	height:265px;
+	padding-right:5px;
+	margin-bottom:12px;
+}
+.vscroll-bar {width:16px !important;}
+#left-part .vscroll-line {
+	left:0px !important;
+	width:14px !important;
+	overflow: hidden;
+	background:url(../img/bg-line.gif) repeat-y;
+}
+#left-part .vscroll-slider{
+	left:0 !important;
+	cursor:pointer;
+	height:32px !important;
+	width:14px !important;
+	background:url(../img/bg-slider.gif) no-repeat;
+}
+.vscroll-down,
+.vscroll-up {
+	height:25px;
+	width:14px !important;
+	cursor:pointer;
+}
+.scroll-content {width:292px;}
+#info-part ul {
+	padding:0;
+	margin:0;
+	font-size:13px;
+	list-style:none;
+}
+#info-part ul li {
+	overflow:hidden;
+	padding:12px 24px 0 0;
+	height:42px;
+	width: 400px;
+	vertical-align:top;
+	word-spacing:-2px;
+	border-bottom:2px solid #e6e6e6;
+}
+#info-part ul li .download {
+	margin:4px 0 0;
+	float:right;
+	margin-right: 50px;
+}
+#info-part ul li .song {
+	float:left;
+	color:#000;
+	padding:0 0 0 20px;
+	text-decoration:none;
+	font-size:13px;
+	white-space:nowrap;
+	line-height:15px;
+}
+#info-part ul li .singer {
+	display:block;
+	color:#888;
+}
+#info-part ul li .singer a{
+	underline:none;
+	color:#888;
+}
+.btn-more {
+	width:181px;
+	height:35px;
+	float:left;
+	margin:-52px 0 0 60px;
+	text-align:center;
+	color:#fff;
+	text-decoration:none;
+	background:url(../img/<? echo $this->Session->read('Config.language');?>/Freegal1_bluebutton.png) no-repeat;
+    overflow: hidden;
+    position: relative;
+    text-indent: -9999px;
+}
+.outtaHere {
+	position:absolute;
+	left:-9999px;
+}
+.selectArea {
+	position: relative;
+	height: 23px;
+	float:left;
+	margin:0 5px 0 0;
+	padding:0;
+	color:#000;
+	font:13px/20px Tahoma, Arial, Helvetica, sans-serif;
+}
+.selectArea .left {
+	position: absolute;
+	top: 0;
+	left:0;
+	width:7px;
+	height:100%;
+	background: url(../img/bg-form.gif) no-repeat;
+}
+.selectArea a.selectButton {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width:100%;
+	height:100%;
+	background: url(../img/bg-form.gif) no-repeat 100% -26px;
+}
+.selectArea .center{
+	height: 35px;
+	display:block;
+	padding:0 28px 0 15px;
+	background: url(../img/bg-form.gif) no-repeat -7px 0;
+}
+.selectArea .center img {float:left;}
+.optionsDivInvisible,
+.optionsDivVisible {
+	position: absolute;
+	background-color: #eee;
+	border: 1px solid #ccc;
+	z-index: 30;
+	font-size: 13px;
+	width: 87px !important;
+}
+.optionsDivScroll ul {
+	height: 205px;
+	overflow: auto !important;
+}
+.drop-dif {background:#9cc;}
+.optionsDivInvisible {display: none;}
+.optionsDivVisible ul {
+	margin:0;
+	padding:2px;
+	overflow:hidden;
+	list-style: none;
+}
+.optionsDivVisible ul li {
+	float:left;
+	list-style-position:outside;
+	list-style:none;
+	width:100%;
+}
+.optionsDivVisible a {
+	color: #000;
+	overflow:hidden;
+	text-decoration: none;
+	display: block;
+	height:1%;
+	padding: 2px 4px;
+	text-align:left;
+}
+.optionsDivVisible a img {
+	border:none;
+	float:left;
+}
+.optionsDivVisible a:hover {text-decoration:underline;}
 </style>
+<?php echo $javascript->link('jquery.marquee.min'); ?>
+<?php echo $javascript->link('custom_scroller.js'); ?>
+<?php echo $javascript->link('jquery.main.js'); ?>
+<?php echo $javascript->link('freegal.home.musicbox.js'); ?>
+
+
 <?php
 function ieversion()
 {
@@ -92,419 +479,225 @@ function ieversion()
 }
 $ieVersion =  ieversion();
 ?>
-<div id="artist_slideshow">
-	<div id="slideshow">
-	<?php
-		foreach($artists as $key => $artist):
-				if($artist['Artist']['territory'] == $this->Session->read('territory') && $artist['Artist']['language'] == Configure::read('App.LANGUAGE')){
-                    if($key == 0) {
-                        echo $html->link(
-                            $html->image($cdnPath.'artistimg/'.$artist['Artist']['artist_image'], array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
-                            array('controller'=>'artists', 'action'=>'view', base64_encode($artist['Artist']['artist_name'])),
-                            array('class'=>'first','escape'=>false)
-                        );
-                    }
-                    else {
-                        echo $html->link(
-                            $html->image($cdnPath.'artistimg/'.$artist['Artist']['artist_image'], array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "215", "width" => "942")),
-                            array('controller'=>'artists', 'action'=>'view', base64_encode($artist['Artist']['artist_name'])),
-                            array('escape'=>false)
-                        );
-                    }
-				}
-		endforeach; 
-	?>					
-	</div>
-</div>
-<div id="ticker">
-	<?php __('Upcoming Releases') ?>
-	<ul id="marquee" class="marquee">
-		<?php 
-		foreach($upcoming as $newreleases):
-			if($newreleases['Country']['SalesDate']){
-				echo '<li>Coming ' . date("F d", strtotime($newreleases['Country']['SalesDate'])) . ' ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['AlbumTitle'] . '</li>';
-			} else {
-				echo '<li>Coming ' . $newreleases['Album']['ArtistText'] . ' - ' . $newreleases['Album']['AlbumTitle'] . '</li>';
-			}
-		endforeach;
-		?>
-	</ul>
-</div>
-<div id="sug" class="suggestions">
-	<div id="tabsugg">
-		<div id="tb1" <?php if($ieVersion > 8){?> style="width:151px;"<?php }else{?> style="width:153px;" <?php }?>><div id="t1" class="active"><a href="javascript:filterTD('tab1');"><?php echo (__('MyLib Top 10', true));?></a></div></div>
-		<div id="tb2" <?php if($ieVersion > 8){?> style="width:151px;"<?php }else{?> style="width:153px;" <?php }?>><div id="t2" class="nonactive"><a href="javascript:filterTD('tab2');"><?php echo (__('National Top 10', true));?></a></div></div>
-	</div>
-	<div id="sugtab" class="tab_container">
-		<div id="tab1" class="tab_content" style="display:block;">
-			<?php if(count($songs) > 0){ ?>
-			<table cellspacing="0" cellpadding="0" id="musicbox">
-			<?php
-				$j =0;
-				for($i = 0; $i < count($songs); $i++) {
-				if($j==10){
-					break;
-				}
-			?>
-				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
-					<td>
-						<p class='suggest_text'>
-							<?php
-							$slNo = ($i + 1);
-							echo $slNo.". ";
-							if (strlen($songs[$i]['Song']['SongTitle']) >= 28 ) {
-								echo '<span title="'.$songs[$i]['Song']['SongTitle'].'">' . substr($songs[$i]['Song']['SongTitle'], 0, 28) . "..." . "</span>";
-							} else {
-								echo $songs[$i]['Song']['SongTitle'];
-							}
-							?>
-							<br />
-							by&nbsp;
-							<?php
-							if (strlen($songs[$i]['Song']['Artist']) >= 24 ) {
-									echo '<span title="'.$songs[$i]['Song']['Artist'].'">' . $html->link(substr($songs[$i]['Song']['Artist'], 0, 24) . "...", array(
-									'controller' => 'artists',
-									'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
-									)
-								) . "</span>";
-							} else {
-								echo $html->link($songs[$i]['Song']['Artist'], array(
-									'controller' => 'artists',
-									'action' => 'view',base64_encode($songs[$i]['Song']['ArtistText']),$songs[$i]['Song']['ReferenceID']
-									)
-								);
-							}
-							$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Sample_Files']['CdnPath']."/".$songs[$i]['Sample_Files']['SaveAsName']);
-							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-							?>
-							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$songs[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
-							<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); ?>
-							<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); ?>
-							<?php
-							echo "<br/>";
-							if($songs[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-								if($libraryDownload == '1' && $patronDownload == '1') {	
-									if($songs[$i]['Song']['status'] != 'avail') {
-										$songUrl = shell_exec('perl files/tokengen ' . $songs[$i]['Full_Files']['CdnPath']."/".$songs[$i]['Full_Files']['SaveAsName']);
-										$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-										?>
-										<span class="beforeClick" id="song_<?php echo $songs[$i]["Song"]["ProdID"]; ?>">
-										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-										<a href='#' onclick='return userDownloadOthers_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
-										<?php } else {?>
-										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_top("<?php echo $songs[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download Now');?></a></label>
-										<![endif]-->
-										<?php } ?>
-										</span>
-										<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...');?></span>
-										<span id="download_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-										<?php	
-									} else {
-									?>
-										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
-									<?php
-									}
-								} else {
-									if($libraryDownload != '1') {
-										$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-										$wishlistCount = $wishlist->getWishlistCount();
-										if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
-										?> 
-											<?php __("Limit Exceeded");?> 
-										<?php
-										} else {
-											$wishlistInfo = $wishlist->getWishlistData($songs[$i]["Song"]["ProdID"]);
-											if($wishlistInfo == 'Added to Wishlist') {
-											?> 
-												<?php __("Added to Wishlist");?>
-											<?php 
-											} else { 
-											?>
-												<span class="beforeClick" id="wishlist<?php echo $songs[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $songs[$i]["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-												<span class="afterClick" id="downloading_<?php echo $songs[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-											<?php	
-											}
+	<div id="main">
+		<div class="main-holder">
+			<div class="gallery">
+				<div class="gallery-box">
+					<ul>
+						<?php
+							foreach($artists as $key => $artist):
+									if($artist['Artist']['territory'] == $this->Session->read('territory') && $artist['Artist']['language'] == Configure::read('App.LANGUAGE')){
+										if($key == 0) {
+											echo '<li>'.$html->link(
+												$html->image($cdnPath.'artistimg/'.$artist['Artist']['artist_image'], array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "203", "width" => "577")),
+												array('controller'=>'artists', 'action'=>'album', base64_encode($artist['Artist']['artist_name'])),
+												array('class'=>'first','escape'=>false)
+											).'</li>';
 										}
-
-									} else { 
-									?>
-										<?php __("Limit Exceeded");?>
-									<?php	
-									}												
-								}
-							} else {
-							?>
-								<span title='<?php __("Coming Soon");?> ( <?php if(isset($songs[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($songs[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span>
-							<?php
-							}
-							?>
-						</p>
-					</td>
-				</tr>
-			<?php 
-				$j++;
-			} 
-			?>
-			</table>
-			<?php } else {?>
-				<span style="padding-left:5px;"><?php __("No songs have been downloaded yet.");?></span>
-			<?php } ?>
-		</div>
-		<div id="tab2" class="tab_content" style="display:none;">
-			<table cellspacing="0" cellpadding="0" id="musicbox">
-			<?php
-				$j =0;
-				for($i = 0; $i < count($nationalTopDownload); $i++) {
-				$newCount = ($i + 10);
-				if($j==10){
-					break;
-				}
-			?>
-				<tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
-					<td>
-						<p class='suggest_text'>
-							<?php
-							$slNo = ($i + 1);
-							echo $slNo.". ";
-							if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 28 ) {
-								echo '<span title="'.$nationalTopDownload[$i]['Song']['SongTitle'].'">' . substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 28) . "..." . "</span>";
-							} else {
-								echo $nationalTopDownload[$i]['Song']['SongTitle'];
-							}
-							?>
-							<br />
-							by&nbsp;
-							<?php
-							if (strlen($nationalTopDownload[$i]['Song']['Artist']) >= 24 ) {
-									echo '<span title="'.$nationalTopDownload[$i]['Song']['Artist'].'">' . $html->link(substr($nationalTopDownload[$i]['Song']['Artist'], 0, 24) . "...", array(
-									'controller' => 'artists',
-									'action' => 'view',base64_encode($nationalTopDownload[$i]['Song']['ArtistText']),$nationalTopDownload[$i]['Song']['ReferenceID']
-									)
-								) . "</span>";
-							} else {
-								echo $html->link($nationalTopDownload[$i]['Song']['Artist'], array(
-									'controller' => 'artists',
-									'action' => 'view',base64_encode($nationalTopDownload[$i]['Song']['ArtistText']),$nationalTopDownload[$i]['Song']['ReferenceID']
-									)
-								);
-							}
-							$songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Sample_Files']['CdnPath']."/".$nationalTopDownload[$i]['Sample_Files']['SaveAsName']);
-							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-							?>
-							<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$newCount, "onClick" => 'playSample(this, "'.$newCount.'", "'.urlencode($finalSongUrlArr[0]).'", "'.urlencode($finalSongUrlArr[1]).'", "'.urlencode($finalSongUrlArr[2]).'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
-							<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$newCount)); ?>
-							<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$newCount, "onClick" => 'stopThis(this, "'.$newCount.'");')); ?>
-							<?php
-							echo "<br/>";
-							if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-								if($libraryDownload == '1' && $patronDownload == '1') {	
-									if($nationalTopDownload[$i]['Song']['status'] != 'avail') {
-										$songUrl = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Full_Files']['CdnPath']."/".$nationalTopDownload[$i]['Full_Files']['SaveAsName']);
-										$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-										$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-										?>
-										<span class="beforeClick" id="songtab_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
-										<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
-											<a href='#' onclick='return userDownloadOthers_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>'><?php __("Download Now");?></label></a>
-										<?php } else {?>
-										<!--[if IE]>
-										<label class="dload" style="width:120px;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press `Cancel` or not.');?>'><a style="cursor:pointer;" onclick='return userDownloadIE_toptab("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __("Download Now");?></a></label>
-										<![endif]-->
-										<?php } ?>
-										</span>
-										<span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-										<span id="download_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-										<?php	
-									} else {
-									?>
-										<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></label></a>
-									<?php
-									}
-								} else {
-									if($libraryDownload != '1') {
-										$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-										$wishlistCount = $wishlist->getWishlistCount();
-										if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
-										?> 
-											<?php __("Limit Exceeded");?> 
-										<?php
-										} else {
-											$wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
-											if($wishlistInfo == 'Added to Wishlist') {
-											?> 
-												<?php __("Added to Wishlist");?>
-											<?php 
-											} else { 
-											?>
-												<span  class="beforeClick" id="wishlist_top<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist_top("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>",this);'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-												<span class="afterClick" style="display:none;"><?php __("Please Wait...");?></span>
-											<?php	
-											}
+										else {
+											echo '<li>'.$html->link(
+												$html->image($cdnPath.'artistimg/'.$artist['Artist']['artist_image'], array("alt" => $artist['Artist']['artist_name'], "title" => $artist['Artist']['artist_name'], "height" => "203", "width" => "577")),
+												array('controller'=>'artists', 'action'=>'album', base64_encode($artist['Artist']['artist_name'])),
+												array('escape'=>false)
+											).'</li>';
 										}
-
-									} else { 
-									?>
-										<?php __("Limit Exceeded");?>
-									<?php	
-									}												
-								}
-							} else {
-							?>
-								<span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span>
+									}
+							endforeach;
+						?>
+					</ul>
+				</div>
+				<ul class="switcher">
+					<li class="active"><a href="#">&nbsp;</a></li>
+					<li><a href="#">&nbsp;</a></li>
+					<li><a href="#">&nbsp;</a></li>
+					<li><a href="#">&nbsp;</a></li>
+					<li><a href="#">&nbsp;</a></li>
+					<li><a href="#">&nbsp;</a></li>
+				</ul>
+			</div>
+			<span action="#" class="form-search">
+				<fieldset>
+					<legend class="hidden">search</legend>
+					<strong class="logo-freegal">freegal</strong>
+					<div class="row">
+						<form controller="Home" class="search_form" id="HomeSearchForm" method="get" action="/homes/search" accept-charset="utf-8">
+						<span class="field"><input name="search" type="text" size="24" id="autoComplete" value="" /></span>
+						<input type="hidden" name="auto" size="24" id="auto" value="0" />
+						<span class="in">in</span>
+						<select title="Artists" id="type111" name="search_type"><option value="artist">Artists</option><option value="song">Song</option><option value="album">Album</option><option value="composer">Composer</option></select>
+						<input type="submit" class="submit" value="ok" />
+						</form>
+            <span class="artist_browse"><a href="/genres/view">A to Z Artist Browsing</a>&nbsp;&nbsp;&nbsp;</span>
+						<span class="advance_search"><a href="/homes/advance_search">Advanced Search</a>&nbsp;&nbsp;&nbsp;</span>
+					</div>
+				</fieldset>
+			</span>
+		</div>
+		<div class="carousel">
+			<strong class="txt-new-releases">Featured</strong>
+			<div class="holder">
+				<a href="#" class="prev">prev</a>
+				<div class="carousel-box-holder">
+					<div class="carousel-box">
+						<ul>
 							<?php
-							}
+								foreach($featuredArtists as $k => $v){
+									$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+									$image =  Configure::read('App.Music_Path').$albumArtwork;
+									if(strlen($v['Album']['AlbumTitle']) > 14){
+										$title = substr($v['Album']['AlbumTitle'], 0, 14)."..";
+									}else{
+										$title = $v['Album']['AlbumTitle'];
+									}
+								//	$imageUrl = "/proxy/?url=".$image."&maxlength=84";
+									echo "<li>".$html->link($html->image($image,array("height" => "77", "width" => "84")),
+										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
+										array('class'=>'first','escape'=>false)).'<a class="title-album">'.$title."</a></li>";
+								}
 							?>
-						</p>
-					</td>
-				</tr>
-			<?php 
-				$j++;
-			} 
-			?>
-			</table>
+						</ul>
+					</div>
+				</div>
+				<a href="#" class="next">next</a>
+			</div>
 		</div>
-	</div>
-</div>
-<div id="artist_container">
-    <div id="featured_artist">
-            <?php
-            foreach($featuredArtists as $key => $featuredArtist):
-				if($featuredArtist['Featuredartist']['territory'] == $this->Session->read('territory') && $featuredArtist['Featuredartist']['language'] == Configure::read('App.LANGUAGE')){
-					if($key == 0) {
-						echo $html->link(
-							$html->image($cdnPath.'featuredimg/'.$featuredArtist['Featuredartist']['artist_image'], array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
-							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
-							array('class'=>'first','escape'=>false)
-						);
-					}
-					else {
-						echo $html->link(
-							$html->image($cdnPath.'featuredimg/'.$featuredArtist['Featuredartist']['artist_image'], array("alt" => "Featured Arstist", "height" => "215", "width" => "300")),
-							array('controller'=>'artists', 'action'=>'view', base64_encode($featuredArtist['Featuredartist']['artist_name'])),
-							array('escape'=>false)
-						);
-					}
-				}
-            endforeach;
-            ?>
-    </div>
-    <div id="newly_added">
-            <?php
-            foreach($newArtists as $key => $newArtist):
-				if($newArtist['Newartist']['territory'] == $this->Session->read('territory') && $newArtist['Newartist']['language'] == Configure::read('App.LANGUAGE')){			
-					if($key == 0) {
-						echo $html->link(
-							$html->image($cdnPath.'newartistimg/'.$newArtist['Newartist']['artist_image'], array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),
-							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
-							array('class'=>'first','escape'=>false)
-						);
-					}
-					else {
-						echo $html->link(
-							$html->image($cdnPath.'newartistimg/'.$newArtist['Newartist']['artist_image'], array("alt" => "Newly Added Artist", "height" => "215", "width" => "300")),
-							array('controller'=>'artists', 'action'=>'view', base64_encode($newArtist['Newartist']['artist_name'])),
-							array('escape'=>false)
-						);
-					}
-				}
-            endforeach;
-            ?>
-    </div>
-    <div id="artist_search">
-		<div id="artist_links" style="font-size:12px;height:20px;">
-		<div style="margin-left:8%">
-		<div class="alphabetLink"><?php __('Artist Search') ?>&nbsp;</div>
-		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('special')">#</a>&nbsp;</div>
-		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('a')">A</a>&nbsp;</div>
-		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('b')">B</a>&nbsp;</div>
-		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('c')">C</a>&nbsp;</div>
-		<div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('d')">D</a>&nbsp;</div>
+		<div class="tabs-area">
+			<ul class="tabset">
+				<li><a href="#tab-1" id="tab-1-li" class="tab"><span class="txt-mylib">MyLib Top 10</span></a></li>
+				<li><a href="#tab-2" id="tab-2-li" class="tab"><span class="txt-national">National Top 100</span></a></li>
+				<li><a href="#tab-3" id="tab-3-li" class="tab active"><span class="txt-top-genres">Top Genres</span></a></li>
+			</ul>
+			<div class="tab-content" id="tab-1">
+			</div>
+			<div class="tab-content" id="tab-2">
+			</div>
+			<div class="tab-content" id="tab-3">
+				<div class="tabs-area">
+					<ul class="tabset">
+						<li><a href="#genre-tab-1-content" class="tab active" id="genre-tab-1" >Pop</a></li>
+						<li><a href="#genre-tab-2-content" class="tab" id="genre-tab-2" >Rock</a></li>
+						<li><a href="#genre-tab-3-content" class="tab" id="genre-tab-3" >Country</a></li>
+						<li><a href="#genre-tab-4-content" class="tab" id="genre-tab-4" >Classical</a></li>
+					</ul>
+					<div class="tab-content" id="genre-tab-1-content">
+						<div id="info-part">
+							<div id="left-part">
+								<div class="text-box vscrollable">
+									<ul>
+										<?php if(count($genre_pop) > 0){ ?>
+										<?php
+											$j =0;
+											$k = 0;
+											for($i = 0; $i < count($genre_pop); $i++) {
+											if($j==5){
+												break;
+											}
+											echo "<li>";
+										?>
+										<span class="download">
+										<?php
+												if($genre_pop[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
+													if($libraryDownload == '1' && $patronDownload == '1') {
+														$genre_pop[$i]['Song']['status'] = 'avail1';
+														if($genre_pop[$i]['Song']['status'] != 'avail') {
+															?>
+															<form method="Post" id="form<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+															<input type="hidden" name="ProdID" value="<?php echo $genre_pop[$i]["Song"]["ProdID"];?>" />
+															<input type="hidden" name="ProviderType" value="<?php echo $genre_pop[$i]["Song"]["provider_type"]; ?>" />
 
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('e')">E</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('f')">F</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('g')">G</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('h')">H</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('i')">I</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#" onclick="searchArtist('j')">J</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('k')">K</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('l')">L</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('m')">M</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('n')">N</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('o')">O</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('p')">P</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('q')">Q</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('r')">R</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('s')">S</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('t')">T</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('u')">U</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('v')">V</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('w')">W</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('x')">X</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('y')">Y</a>&nbsp;</div>
-        <div class="alphabetLink">&nbsp;<a href="#bottom" onclick="searchArtist('z')">Z</a></div>
-		</div>
-		</div>
-		<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;text-align:center;">
-			<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-		</div>		
-        <div id="artist_searchBox">
-            <div class="scrollarea">
-                    <table cellspacing="0" cellpadding="0">
-                        <?php foreach($distinctArtists as $allArtists): ?>
-                            <tr onmouseover="this.className = 'hlt';" onmouseout="this.className = '';">
-                                <td class='artist_line'>
-                                    <p>
-                                        <?php
-                                            echo $html->link($allArtists['Song']['ArtistText'], array(
-                                                    'controller' => 'artists',
-                                                    'action' => 'view',
-                                                    base64_encode($allArtists['Song']['ArtistText']))
-                                            );
-                                        ?>
-                                    </p>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>       
-                    </table>
-            </div>
-        </div>
-    </div>
-</div>
-<style>
-.suggestions {
-	clear:both;
-	float:left;
-	display:block;
-	width:308px;
-	margin-left: 10px;
-	margin-top: 5px;
-	font-size:13px;
-	height:642px;
-	text-align: left;
-	line-height:19px;
-}
-.tab_container {
-	border-left: 1px solid #999;
-	border-right: 1px solid #999;
-	border-bottom: 1px solid #999;
-	clear: both;
-	float: left; 
-	width: 100%;
-	background: #fff;
-	padding-bottom: 1px;
-	-moz-border-radius-bottomright: 5px;
-	-khtml-border-radius-bottomright: 5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-moz-border-radius-bottomleft: 5px;
-	-khtml-border-radius-bottomleft: 5px;
-	-webkit-border-bottom-left-radius: 5px;
-}
-.tab_content {
-	height:600px;
-	padding: 5px;
-}
-</style>
+															<span class="beforeClick" id="song_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>">
+															<a href='javascript:void(0);' onclick='userDownloadAll("<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+															</span>
+															<span class="afterClick" id="downloading_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+															<span id="download_loader_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-15px;margin-right:-15px')); ?></span>
+															</form>
+															<?php
+														} else {
+														?>
+															<a href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+														<?php
+														}
+													} else {
+														if($libraryDownload != '1') {
+															$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+															$wishlistCount = $wishlist->getWishlistCount();
+															if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
+															?>
+																<?php __("Limit Met");?>
+															<?php
+															} else {
+																$wishlistInfo = $wishlist->getWishlistData($genre_pop[$i]["Song"]["ProdID"]);
+																if($wishlistInfo == 'Added to Wishlist') {
+																?>
+																	<?php __("Added to Wishlist");?>
+																<?php
+																} else {
+																?>
+																	<span class="beforeClick" id="wishlist<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>"><a href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>","<?php echo $genre_pop[$i]["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+																	<span class="afterClick" id="downloading_<?php echo $genre_pop[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+																<?php
+																}
+															}
+
+														} else {
+														?>
+															<?php __("Limit Met");?>
+														<?php
+														}
+													}
+												} else {
+												?>
+													<span title='<?php __("Coming Soon");?> ( <?php if(isset($genre_pop[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($genre_pop[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span>
+												<?php
+												}?>
+										</span>
+											<span style="float:left;margin-left:25px;">
+											<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", '.$genre_pop[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
+											<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$k)); ?>
+											<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$k, "onClick" => 'stopThis(this, "'.$k.'");')); ?>
+											</span>
+											<span class="song">
+												<?php
+												if (strlen($genre_pop[$i]['Song']['SongTitle']) >= 22 ) {
+													echo '<span title="'.$genre_pop[$i]['Song']['SongTitle'].'">' . substr($genre_pop[$i]['Song']['SongTitle'], 0, 22) . "..." . "</span>";
+												} else {
+													echo $genre_pop[$i]['Song']['SongTitle'];
+												}
+												?>
+												<span class="singer">
+													<?php
+														echo "<a href='/artists/album/".base64_encode($genre_pop[$i]['Song']['ArtistText'])."'>".substr($genre_pop[$i]['Song']['ArtistText'], 0, 22)."</a>";
+													?>
+												</span>
+											</span>
+										<?php
+											$k++;
+											}
+											echo "</li>";
+										}
+										?>
+
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="tab-content" id="genre-tab-2-content">
+					</div>
+					<div class="tab-content" id="genre-tab-3-content">
+					</div>
+					<div class="tab-content" id="genre-tab-4-content">
+					</div>
+					</div></div>
+
+			</div>
+
+		<a href="/genres/view" class="btn-more">See All Genres</a>
+
+	</div>
+	<input type="hidden" id="genre-load-info-1" value="0" />
+	<input type="hidden" id="genre-load-info-2" value="0" />
+	<input type="hidden" id="genre-load-info-3" value="0" />
+	<input type="hidden" id="genre-load-info-4" value="0" />
+	<input type="hidden" id="my-lib-load-info" value="0" />
+	<input type="hidden" id="nationsl-top-load-info" value="0" />

@@ -22,7 +22,7 @@
 		echo '<span class="forgot">';
 			echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
 		echo '</span>';
-		echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));		
+		echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button' ));		
 		echo '</fieldset>';
 		echo '</div>';
 		echo '</div>';

@@ -1,13 +1,59 @@
 <div class="breadCrumb">
 	<?php
-		echo $html->link('Home', array('controller'=>'homes', 'action'=>'index'));
-		echo " > ";
-		echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
-		echo " > ";
-		if(strlen($artistName) >= 30){
-			$artistName = substr($artistName, 0, 30). '...';
+		$reffer_url = $_SERVER['HTTP_REFERER'];
+		if(isset($genre)){
+			$genre_text_conversion = array(
+				"Children's Music" =>  "Children's" ,
+				"Classic"  =>  "Soundtracks",
+				"Comedy/Humor"  =>  "Comedy",
+				"Country/Folk"  =>  "Country",
+				"Dance/House"  =>  "Dance",
+				"Easy Listening Vocal" => "Easy Listening",
+				"Easy Listening Vocals"  =>  "Easy Listening",
+				"Folk/Blues" => "Folk",
+				"Folk/Country" => "Folk",
+				"Folk/Country/Blues" => "Folk",
+				"Hip Hop Rap" => "Hip-Hop Rap",
+				"Rap/Hip-Hop" => "Hip-Hop Rap",
+				"Rap / Hip-Hop" => "Hip-Hop Rap",
+				"Jazz/Blues"  =>  "Jazz",
+				"Kindermusik"  =>  "Children's",
+				"Miscellaneous/Other" => "Miscellaneous",
+				"Other" => "Miscellaneous",
+				"Age/Instumental" => "New Age",
+				"Pop / Rock" =>  "Pop/Rock",
+				"R&B/Soul" => "R&B",
+				"Soundtracks" => "Soundtrack",
+				"Soundtracks/Musicals" => "Soundtrack",
+				"World Music (Other)" => "World Music"
+			);
+			
+			$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+			
+			$html->addCrumb(__('All Genre', true), '/genres/view/');
+                        if($genre_crumb_name != "")
+                        {
+                            $html->addCrumb( $genre_crumb_name  , '/genres/view/'.base64_encode($genre_crumb_name));
+                        }
+		
+			echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+			echo " > ";
+			if(strlen($artisttext) >= 30){
+				$artisttext = substr($artisttext, 0, 30). '...';
+			}
+			echo $artisttext;	
+
 		}
-		echo $artistName;
+		else{
+			echo $html->link('Home', array('controller'=>'homes', 'action'=>'index'));
+			echo " > ";
+			echo "<a style='cursor: pointer;;' onClick='history.back();' >Search Results</a>";
+			echo " > ";
+			if(strlen($artisttext) >= 30){
+				$artisttext = substr($artisttext, 0, 30). '...';
+			}
+			echo $artisttext;
+		}
 	?>
 	
 	<?php
@@ -24,7 +70,42 @@
 	?>	
 </div>
 <br class="clr">
-<table style="padding-left:46px;padding-right:40px;" width="100%">
+<?php
+$explodeUrl = explode("page:", $_SERVER['HTTP_REFERER']);
+$explodeUrl = explode("genres/view/", $explodeUrl[0]);
+$explodeUrl[1] = str_replace("/", "", $explodeUrl[1]);
+
+if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_REFERER'], "page:") == "")
+{
+    echo $javascript->link('backfix.min.js');
+    ?>
+    <script type="text/javascript">
+    function goSomewhere () {
+        document.location.href = '/genres/view/<?php echo base64_encode($genre_crumb_name); ?>';
+    }
+    bajb_backdetect.OnBack = function(){
+        setTimeout('goSomewhere()', 1);
+    }
+    </script>
+<?php
+}
+else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encode($genre_crumb_name)) != trim($explodeUrl[1]))
+{
+    echo $javascript->link('backfix.min.js');
+?>
+    <script type="text/javascript">
+    function goSomewhere () {
+        document.location.href = '/genres/view/<?php echo base64_encode($genre_crumb_name); ?>';
+    }
+    bajb_backdetect.OnBack = function(){
+        setTimeout('goSomewhere()', 1);
+    }
+    </script>
+<?php
+}
+?>
+<div style="padding-left:46px;padding-right:40px;" >
+<table  width="100%">
 <?php
 $i = 0;
 	foreach($albumData as $album_key => $album):
@@ -34,9 +115,9 @@ $i = 0;
 	$i++;
 ?>
 		<td valign="top" >
-		<a href="/artists/view/<?php echo base64_encode($album['Album']['ArtistText']); ?>/<?php echo $album['Album']['ProdID'];  ?>" >
 		<div id="album_list_page" style="float:left">
-			<div class="album_lgAlbumArtwork">
+			<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
+			<div class="album_lgAlbumArtwork" style="float:left">
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
@@ -50,7 +131,9 @@ $i = 0;
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
 			</div>
-			<div class="albumData">
+			</a>			
+			<div class="albumData" style="float:left">
+				<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 				<div class="albumlistBox">
 					<b>
 					<?php
@@ -61,7 +144,8 @@ $i = 0;
 					<?php echo $album['Album']['AlbumTitle'];?>		
 					</b>
 				</div>
-				<div class="album_artistInfo">
+				</a>
+				<div class="album_artistInfo" style="float:left">
 					<?php
 						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
@@ -77,9 +161,8 @@ $i = 0;
 						}
 					?>
 				</div>
-			</div>
+			</div>			
 		</div>
-		</a>
 		</td>
 <?php
 if($i == 3){
@@ -89,6 +172,7 @@ if($i == 3){
 	endforeach;
 ?>
 </table>
+</div>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
