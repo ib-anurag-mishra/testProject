@@ -278,7 +278,7 @@ class Downloadpatron extends AppModel
 			$endDate = date('Y-m-d', mktime(23, 59, 59, $date_arr[0], ($date_arr[1]-date('w', mktime(0, 0, 0, $date_arr[0], $date_arr[1], $date_arr[2])))+7, $date_arr[2]));
 		}
 		$conditions = array('download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC");
-		return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('patron_id','library_id','SUM(total) as total'))));
+		return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(total) as total'))));
 	}
 
   /*
@@ -304,7 +304,7 @@ class Downloadpatron extends AppModel
       $conditions = array(
           'download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id, library_id ORDER BY download_date DESC"
       );
-      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('patron_id','library_id','SUM(total) as total'))));
+      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(total) as total'))));
   }
 
   /*
@@ -330,7 +330,7 @@ class Downloadpatron extends AppModel
       $conditions = array(
           'download_date BETWEEN "'.$startDate.'" and "'.$endDate.'" '.$lib_condition." AND 1 = 1 GROUP BY patron_id,library_id ORDER BY download_date DESC"
       );
-      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('patron_id','library_id','SUM(total) as total'))));
+      return array($this->find('all', array('conditions'=>$conditions,'fields'=>array('email','patron_id','library_id','SUM(total) as total'))));
   }
 
   /*
