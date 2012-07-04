@@ -18,6 +18,7 @@
 	width:578px;
 	float:left;
 	margin:0 6px 0 0;
+	position:relative;
 }
 .gallery .switcher {
 	padding:0;
