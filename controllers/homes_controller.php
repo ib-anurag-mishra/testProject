@@ -1674,7 +1674,12 @@ STR;
      Desc : To send mail to patrons with new password
     */
     function forgot_password() {
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
         $this->layout = 'login';
+		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];

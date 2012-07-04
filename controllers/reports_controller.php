@@ -306,6 +306,8 @@ Class ReportsController extends AppController
      Desc : actions for library reports download as CSV page
     */
     function admin_downloadAsCsv() {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(0);
         Configure::write('debug', 0);
         $this->layout = false;
         if(isset($this->data)) {
@@ -565,6 +567,7 @@ Class ReportsController extends AppController
      Desc : actions for library reports download as PDF page
     */
     function admin_downloadAsPdf() {
+      ini_set('memory_limit', '1024M');
       set_time_limit(0);
       Configure::write('debug',0); // Otherwise we cannot use this method while developing
       if(isset($this->data)) {

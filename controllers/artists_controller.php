@@ -50,6 +50,8 @@ Class ArtistsController extends AppController
 	 Desc : action for displaying the add/edit featured artist form
         */
 	function admin_artistform() {
+    ini_set('memory_limit','1024M');
+		set_time_limit(0);
 		if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
@@ -227,6 +229,8 @@ Class ArtistsController extends AppController
 	 Desc : assigns artists with images
         */
 	function admin_createartist() {
+    ini_set('memory_limit','1024M');
+		set_time_limit(0);
 		$errorMsg = '';
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
@@ -279,6 +283,7 @@ Class ArtistsController extends AppController
               Configure::write('Cache.disable',false);
               $cacheKey = 'ssartists_'.$this->data['Artist']['territory'].'_'.Configure::read('App.LANGUAGE');
               if(Cache::delete($cacheKey) == true){
+                Cache::write('update_ssdate_mobile',date('d/m/Y/H/i/s',time()));
               	Configure::write('Cache.disable',true);
                 $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
                 $this -> redirect( 'manageartist' );
@@ -342,6 +347,7 @@ Class ArtistsController extends AppController
             $cacheKey = 'ssartists_'.$this->data['Artist']['territory'].'_'.Configure::read('App.LANGUAGE');
             Configure::write('Cache.disable',false);
             if(Cache::delete($cacheKey) == true){
+              Cache::write('update_ssdate_mobile',date('d/m/Y/H/i/s',time()));
               Configure::write('Cache.disable',true);
               $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
               $this -> redirect( 'manageartist' );
@@ -585,7 +591,7 @@ Class ArtistsController extends AppController
 			$cond = "";
 		}
 		if($album != '') {
-			$condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider);
+			$condition = array("Album.ProdID" => $album, 'Album.provider_type' => $provider, 'Album.provider_type = Genre.provider_type');
 		}
 		else{
 			// $allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID'),'conditions' => array('Album.ArtistText' => base64_decode($id)), 'recursive' => -1));
@@ -813,7 +819,7 @@ Class ArtistsController extends AppController
 			foreach($songs as $k => $v){
 				$val = $val.$v['Song']['ReferenceID'].",";
 			}
-			$condition = array("Album.ProdID IN (".rtrim($val,",").")");
+			$condition = array("Album.ProdID IN (".rtrim($val,",").") AND Album.provider_type = Genre.provider_type");
 
 		$this->layout = 'home';
 		$this->set('artisttext',base64_decode($id));

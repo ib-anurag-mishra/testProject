@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -361,7 +361,7 @@ class SoapsController extends AppController {
   
   /**
    * Function Name : getFeaturedAlbum
-   * Desc : To get the featured album
+   * Desc : To get the featured artist
    * @param string $authenticationToken
    * @param string $append
 	 * @return FreegalFeaturedAlbumType[]
@@ -415,6 +415,7 @@ class SoapsController extends AppController {
         $obj->Artist          = '';
         $obj->ArtistURL       = '';
         $obj->Label           = '';
+        $obj->FeaturedWebsiteTime           = '';
 
         if('' != trim($append)) {
           list($name, $ext) = explode('.', $val1['Artist']['artist_image']);
@@ -439,6 +440,172 @@ class SoapsController extends AppController {
 
 	}
 
+
+
+  /**
+   * Function Name : getFeaturedArtistSlides
+   * Desc : To get the featured artist slides show
+   * @param string $authenticationToken
+   * @param string $append
+   * @param string $featured_mobile_time
+	 * @return FreegalFeaturedAlbumType[]
+   */
+	function getFeaturedArtistSlides($authenticationToken, $append, $featured_mobile_time) {
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+
+    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    $library_terriotry = $this->getLibraryTerritory($libraryId);
+   
+    if ( ((Cache::read("ssartists_".$library_terriotry.'_EN')) === false)  || (Cache::read("ssartists_".$library_terriotry.'_EN') === null) ) {
+    
+      $Artist = $this->Artist->find('all',
+        array(
+          'fields'=>array(
+            'Artist.artist_name',
+            'Artist.artist_image',
+            'Artist.territory',
+            'Artist.language'
+          ),
+          'conditions'=>array(
+            'Artist.territory' => $library_terriotry,
+            'Artist.language'=> 'EN'
+          ),
+          'recursive' => -1,
+          'limit' => 6
+        )
+      );
+      
+      Cache::write("ssartists_".$library_terriotry.'_EN', $Artist);
+      
+    } else {
+      $Artist = Cache::read("ssartists_".$library_terriotry.'_EN');
+    } 
+     
+    
+
+    if ( ((Cache::read('update_ssdate_mobile')) === false)  || (Cache::read('update_ssdate_mobile') === null) ) {
+          
+      Cache::write('update_ssdate_mobile', date('d/m/Y/H/i/s',time()));
+    }
+    
+    
+
+    if('' == trim($featured_mobile_time)) {
+      
+      if(!(empty($Artist))) {
+
+        foreach($Artist AS $key1 => $val1) {
+
+          $obj = new FreegalFeaturedAlbumType;
+          $obj->ProdId          = '';
+          $obj->ProductId       = '';
+          $obj->AlbumTitle      = '';
+          $obj->Title           = '';
+          $obj->ArtistText      = $val1['Artist']['artist_name'];
+          $obj->Artist          = '';
+          $obj->ArtistURL       = '';
+          $obj->Label           = '';
+
+          if('' != trim($append)) {
+            list($name, $ext) = explode('.', $val1['Artist']['artist_image']);
+            $obj->FileURL = $this->artist_image_base_url . $name . '_' . $append . '.' . $ext;
+          } else {
+            $obj->FileURL = $this->artist_image_base_url . $val1['Artist']['artist_image'];
+          }
+          
+          $obj->FeaturedWebsiteTime = Cache::read('update_ssdate_mobile');
+  
+          
+          $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalAlbumDetailType');
+
+        }
+
+        $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalAlbumDetailType');
+
+        return $data;
+
+      } else {
+
+        throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
+      }
+      
+    }
+
+    
+    $arrTmp = explode('/', Cache::read('update_ssdate_mobile'));
+    $featured_website_timestamp = (int) strtotime($arrTmp[0].'-'.$arrTmp[1].'-'.$arrTmp[2].' '.$arrTmp[3].':'.$arrTmp[4].':'.$arrTmp[5]);
+    
+    $arrTmp = explode('/', $featured_mobile_time);
+    $featured_mobile_timestamp = (int) strtotime($arrTmp[0].'-'.$arrTmp[1].'-'.$arrTmp[2].' '.$arrTmp[3].':'.$arrTmp[4].':'.$arrTmp[5]);
+    
+    
+    
+
+    if($featured_mobile_timestamp == $featured_website_timestamp) {
+    
+      $obj = new FreegalFeaturedAlbumType;
+      $obj->ProdId          = '';
+      $obj->ProductId       = '';
+      $obj->AlbumTitle      = '';
+      $obj->Title           = '';
+      $obj->ArtistText      = '';
+      $obj->Artist          = '';
+      $obj->ArtistURL       = '';
+      $obj->Label           = '';
+      $obj->FileURL         = '';
+      $obj->FeaturedWebsiteTime = '';
+      $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalAlbumDetailType');
+      
+      return $data;
+    
+    }
+
+    
+
+    if($featured_mobile_timestamp < $featured_website_timestamp) {
+      
+      if(!(empty($Artist))) {
+
+        foreach($Artist AS $key1 => $val1) {
+
+          $obj = new FreegalFeaturedAlbumType;
+          $obj->ProdId          = '';
+          $obj->ProductId       = '';
+          $obj->AlbumTitle      = '';
+          $obj->Title           = '';
+          $obj->ArtistText      = $val1['Artist']['artist_name'];
+          $obj->Artist          = '';
+          $obj->ArtistURL       = '';
+          $obj->Label           = '';
+
+          if('' != trim($append)) {
+            list($name, $ext) = explode('.', $val1['Artist']['artist_image']);
+            $obj->FileURL = $this->artist_image_base_url . $name . '_' . $append . '.' . $ext;
+          } else {
+            $obj->FileURL = $this->artist_image_base_url . $val1['Artist']['artist_image'];
+          }
+
+          $obj->FeaturedWebsiteTime = Cache::read('update_ssdate_mobile');
+
+          $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalAlbumDetailType');
+
+        }
+
+        $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalAlbumDetailType');
+
+        return $data;
+
+      } else {
+
+        throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
+      }
+      
+    }
+
+	}
 
 
   /**
@@ -1155,7 +1322,10 @@ class SoapsController extends AppController {
       }
       break;
 
-
+      case '18':  {
+        $resp = $this->mndloginAuthinticate($card, $library_id, $agent);
+      }
+      break;
 
       default:
     }
@@ -3085,6 +3255,94 @@ class SoapsController extends AppController {
     }
   }
   
+  /**
+   * Authenticates user by mndlogin_referrance method
+   * @param $card
+   * @param $library_id
+   * @param $agent
+   * @return AuthenticationResponseDataType[]
+   */
+
+	private function mndloginAuthinticate($card, $library_id, $agent){
+
+   
+    $data['wrongReferral'] = '';
+    
+    $card = str_replace(" ","",$card);
+    $card = strtolower($card);			
+		$data['card'] = $card;
+  
+    $patronId = $card; 
+		$data['patronId'] = $patronId;
+      
+    
+    if($card == ''){
+
+      $response_msg = 'Card number not provided';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+    }
+    else{
+    
+      $library_data = $this->Library->find('first', array(
+                        'fields' => array('library_authentication_num'),
+                        'conditions' => array('id' => $library_id),
+                        'recursive' => -1
+                        
+                      ));
+    
+    
+      $cardNo = substr($card,0,5);
+      $data['cardNo'] = $cardNo;
+
+      $this->Library->recursive = -1;
+      $this->Library->Behaviors->attach('Containable');
+      
+      $data['library_cond'] = $library_id; 
+      $existingLibraries = $this->Library->find('all',array(
+        'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
+                              'library_authentication_method' => 'mndlogin_reference'),
+				'fields' => array('Library.id','Library.library_authentication_method','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit', 'library_subdomain','Library.library_block_explicit_content','Library.library_language'))
+			);
+
+      $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
+      $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
+      $data['referral'] = '';
+
+      if(count($existingLibraries) == 0){
+
+        $response_msg = 'Invalid credentials provided.';
+        return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+      }
+			else{
+     
+        $login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.library_id' =>  $library_id) , 'fields' => array('id')));
+                
+					if(isset($login_res['Card']['id'])) {
+				
+            $token = md5(time());
+            $insertArr['patron_id'] = $data['patronId'];
+            $insertArr['library_id'] = $library_id;
+            $insertArr['token'] = $token;
+            $insertArr['auth_time'] = time();
+            $insertArr['agent'] = $agent;
+            $insertArr['auth_method'] = $library_authentication_method;
+            $this->AuthenticationToken->save($insertArr);
+
+            $patron_id = $insertArr['patron_id'];
+            $response_msg = 'Login Successfull.';
+            return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+            
+					} else {
+            
+            $response_msg = 'Login Failed.';
+            return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+          }
+      
+      }
+    }
+
+	}
+  
   
   /**
    * Function Name : updateUserDetails
@@ -3899,6 +4157,166 @@ class SoapsController extends AppController {
   }
 
   /**
+   * Function Name : getLiveSearchSongList
+   * Desc : To get the songs searched
+   * @param string $authenticationToken
+   * @param string $searchKey
+   * @param string $searchType
+	 * @return SearchDataType[]
+   */
+	function getLiveSearchSongList($authenticationToken, $searchKey, $searchType) {
+
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libraryId),
+      'fields' => array('library_territory'),
+      'recursive' => -1
+      )
+    );
+    $library_territory = $libraryDetails['Library']['library_territory'];
+     
+    $searchText = $searchKey;
+    
+    $searchKey = str_replace("^", " ", $searchKey);
+		$searchKey = str_replace("$", " ", $searchKey);
+		$searchKey = '"^'.addslashes($searchKey).'"';
+		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
+    
+    switch($searchType){
+      case '1': {
+        $searchParam = "@ArtistText " . $searchKey . " | @Title " . $searchKey . " | @SongTitle " . $searchKey;
+      }
+      break;
+      case '2': {
+        $searchParam = "@ArtistText ".$searchKey;
+      }
+      break;
+      case '3': {
+        $searchParam = "@Title ".$searchKey;
+      }
+      break;
+      case '4': {
+        $searchParam = "@SongTitle ".$searchKey;
+      }
+      break;
+      default:
+
+    }
+      
+    $sphinxFinalCondition = $searchParam." & "."@Territory '".$library_territory."' & @DownloadStatus 1"; 
+    
+    $condSphinx = '';
+		$sphinxSort = "";
+		$sphinxDirection = "";
+		$this->paginate = array('Song' => array(
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
+					));
+
+		$searchResults = $this->paginate('Song');
+    $array_uniques = array();
+    
+    if(!empty($searchResults)){
+      
+      switch($searchType){
+        case '1': {
+          foreach($searchResults AS $key => $val) { 
+            $array_test[$key] = trim($val['Song']['ArtistText']);
+          }
+                    
+          $array_uniques_keys_artist = array_keys(array_unique($array_test));
+          
+          foreach($searchResults AS $key => $val) { 
+            $array_test[$key] = trim($val['Song']['Title']);
+          }
+        
+          $array_uniques_keys_album = array_keys(array_unique($array_test));
+          
+          foreach($searchResults AS $key => $val) { 
+            $array_test[$key] = trim($val['Song']['SongTitle']);
+          }
+          
+          $array_uniques_keys_SongTitle = array_keys(array_unique($array_test));
+          
+          $array_uniques = array_unique(array_merge($array_uniques_keys_artist, $array_uniques_keys_album, $array_uniques_keys_SongTitle));
+          
+        }
+        break;
+        case '2': {
+          foreach($searchResults AS $key => $val) { 
+            $array_uniques[$key] = trim($val['Song']['ArtistText']);
+          }
+          
+          $array_uniques = array_keys(array_unique($array_uniques));
+        }
+        break;
+        case '3': {
+          foreach($searchResults AS $key => $val) { 
+            $array_uniques[$key] = trim($val['Song']['Title']);
+          }
+          
+          $array_uniques = array_keys(array_unique($array_uniques));
+        }
+        break;
+        case '4': {
+          foreach($searchResults AS $key => $val) { 
+            $array_uniques[$key] = trim($val['Song']['SongTitle']);
+          }
+          
+          $array_uniques = array_keys(array_unique($array_uniques));
+        }
+        break;
+        default:
+
+      }
+    
+      foreach($searchResults AS $key => $val){
+        
+        if(true === in_array( $key, $array_uniques) ) {
+        
+          $sobj = new SearchDataType;
+          $sobj->SongProdID           = $val['Song']['ProdID'];
+          $sobj->SongTitle            = $val['Song']['SongTitle'];
+          $sobj->Title                = $val['Song']['Title'];
+          $sobj->SongArtist           = $val['Song']['Artist'];
+          $sobj->ArtistText           = $val['Song']['ArtistText'];
+          $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
+          $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
+          $sobj->ISRC                 = $val['Song']['ISRC'];
+
+          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
+
+          $albumData = $this->Album->find('first',
+            array(
+              'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
+              'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
+              'recursive' => -1,
+            )
+          );
+          
+          $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
+          $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
+          $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+
+          $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+        }
+      }
+
+      $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
+      
+      return $data;
+    }
+    else {
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any song containing the provided keyword.');
+    }
+    
+  }  
+  
+  /**
    * Function Name : getSearchAllList
    * Desc : To get the libraries searched
    * @param string $searchText
@@ -3909,6 +4327,7 @@ class SoapsController extends AppController {
    * @param string $library_terriotry
 	 * @return SearchDataType[]
    */
+   
 	private function getSearchAllList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
   
     
@@ -4304,6 +4723,7 @@ class SoapsController extends AppController {
       'curl_method' => '15',
       'referral_url' => '16',
       'innovative_var' => '17',
+      'mndlogin_reference' => '18',
 
     );
 
