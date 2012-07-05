@@ -19,10 +19,10 @@
 	echo '<fieldset>';	
 	echo $form->create('User', array( 'action' => 'ilhdlogin', 'id' => 'login'));
 		echo '<div class="row">';
-		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));
+		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card, 'alt'=>__('Card Number', true)));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('name', array('label' => 'Last Name','value' => $name, 'type'=>'password'));
+		echo $form->input('name', array('label' => 'Last Name','value' => $name, 'type'=>'password', 'alt'=>__('Last Name', true)));
 		echo '</div>';
 	echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));		
 	echo '</fieldset>';
