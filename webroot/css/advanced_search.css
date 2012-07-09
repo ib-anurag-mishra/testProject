@@ -1,0 +1,193 @@
+body {
+	color: #666666;;
+}
+
+a{
+	text-decoration: none;
+	cursor:pointer;
+}
+
+a:hover{
+	text-decoration: underline;
+}
+
+#leftCol{
+	display: inline;
+	margin-right: -330px;
+	overflow: hidden;
+	width: 100%;
+}
+#leftColWrapper{
+	margin-right: 330px;
+	overflow: hidden;
+	padding: 15px 0 15px 15px;
+}
+#leftColWrapper H1{
+	margin: 0 0 15px 44px;text-align: center;width: 60%;
+}
+#search_query{
+	border: 1px solid #CCCCCC;font-size: 12px;line-height: 1.33333;margin: 0 5px 7px 10%;width: 60%;
+}
+#searchfilter{
+	margin: 0 0 10px 10%; text-align: center;width: 62%;
+	
+}
+#searchfilter li {
+	display: inline;
+}
+#searchfilter li a{
+	border-right: 1px solid #B7B7B7;font-size: 12px;line-height: 1.18182;padding: 0 0.5em 0 0.2em;	
+}
+
+#hide_blocks{
+	width:50px;height:30px;float:right;
+}
+
+#leftColblock{
+	line-height: 1.5em;display: inline;float: left;margin-right: -330px;overflow: hidden;width: 100%;margin-top:10px;
+}
+#leftColblockWrapper{
+	margin-right: 330px;overflow: hidden;padding: 15px 0 15px 15px;
+}
+#albumblock{
+	height: 213px;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;
+}
+
+#albumblock  h2{
+	border-top: medium none;margin-top: -10px;
+}
+
+#albumblockR1{
+	margin-top:10px;float:left;
+}
+
+.albumblockC1{
+	float:left;width:320px;height:92px;
+}
+.albumblockC2{
+	float:left;width:320px;
+}
+
+
+#albumblock    img.art{
+	width: 65px;
+	border:1px solid #A2A2A2;
+	float:left;
+	
+}
+.albumblockArtistexts{
+	margin-left: 10px;
+	float: left;
+}
+.playbutton img{
+	width: 13px;
+	height: 13px;
+}
+
+.more_link  a{
+	float: right;font-size: 11px;font-weight: bold;line-height: 1.18182em; margin-top: 20px;padding-right: 18px;text-decoration: none;
+}
+
+#ComposersWrapper{
+	float:left;width:300px;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;
+}
+
+#ComposersWrapper h2{
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+}
+
+#ComposersWrapper ul{
+	float:left;width:100%;line-height:2;list-style: none;
+}
+#ComposersWrapper  ul  li{
+	color:#0080FF;font-weight: bold;border-bottom: 1px solid #CCCCCC; padding: 3px 0;list-style: none;
+}
+
+.albumblockArtisLink{
+	font-weight: bold;
+}
+
+.right_text{
+	color: #666666;
+	font-size: 11px;
+	margin-left: 5px;
+}
+
+
+#GenreWrapper{
+	float:right;margin:-260px 0 15px;width:300px;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;
+}
+
+#GenreWrapper h2{
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+}
+
+#GenreWrapper ul{
+	float:left;width:100%;line-height:2;list-style: none;
+}
+#GenreWrapper  ul  li{
+	color:#0080FF;font-weight: bold;border-bottom: 1px solid #CCCCCC; padding: 3px 0;list-style: none;
+}
+
+
+#ArtistWrapper{
+	float:right;margin:-260px 0 15px;width:268px;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;height: 214px;
+}
+
+#ArtistWrapper h2{
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+}
+
+#ArtistWrapper ul{
+	float:left;width:100%;line-height:2;list-style: none;
+}
+#ArtistWrapper  ul  li{
+	color:#0080FF;font-weight: bold;border-bottom: 1px solid #CCCCCC; padding: 3px 0;list-style: none;
+}
+
+#LabelWrapper{
+	float:right;margin:-260px 0 15px;width:268px;border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;
+}
+
+#LabelWrapper h2{
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+}
+
+#LabelWrapper ul{
+	float:left;width:100%;line-height:2;list-style: none;
+}
+#LabelWrapper  ul  li{
+	color:#0080FF;font-weight: bold;border-bottom: 1px solid #CCCCCC; padding: 3px 0;list-style: none;
+}
+
+#rightCol{
+	float: right;padding: 15px;width: 300px;margin-top:10px;
+}
+
+#resultsSummary{
+margin-left: 15px; padding-top: 0px; position: absolute; width: 998px;
+}
+.search_result_text{
+	float:left;
+}
+
+#genreArtist{
+	width:215px;
+	float:left;
+}
+#genreAlbum{
+	width:215px;
+	float:left;
+}
+#genreTrack{
+	width:291px;
+	float:left;
+}
+#genreDownload{
+	width:215px;
+	
+}
+
+
+
+
