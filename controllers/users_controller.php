@@ -59,6 +59,7 @@ Class UsersController extends AppController
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+			$this->get_login_layout_name($library_data);
 			if(!empty($library_data))
 			{
 				if($this->Session->read('library') == '' && $this->Session->read('patron')== '')
@@ -72,6 +73,11 @@ Class UsersController extends AppController
 					{
 						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
 						//$this->redirect(array('controller' => 'users', 'action' => $action));
+            if($action != 'login'){
+              $this->Session->write("layout_option", 'login_new');
+            } else {
+              $this->Session->write("layout_option", 'login');
+            }
 						$this->redirect('https://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
 					}
 				}
@@ -230,7 +236,14 @@ Class UsersController extends AppController
    */
    
 	function login($library = null){
+    $this->Session->write("layout_option", 'login');
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
@@ -249,6 +262,13 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
+				if($this->Session->read('layout_option') == 'login_new'){
+					$this->layout = 'login_new';
+				}
+				else{
+					$this->layout = 'login';
+				}
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -1027,6 +1047,7 @@ Class UsersController extends AppController
    */
    
 	function ilogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1054,6 +1075,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -1068,7 +1090,12 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -1248,6 +1275,7 @@ Class UsersController extends AppController
    */
    
    function idlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1275,6 +1303,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -1289,7 +1318,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -1467,6 +1502,7 @@ Class UsersController extends AppController
    */
    
    function mdlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1494,6 +1530,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -1508,7 +1545,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -1645,6 +1688,7 @@ Class UsersController extends AppController
    */
    
    function mndlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1672,6 +1716,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -1686,7 +1731,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -1819,6 +1870,7 @@ Class UsersController extends AppController
    */
    
    function ildlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1846,6 +1898,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -1860,7 +1913,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -2037,6 +2096,7 @@ Class UsersController extends AppController
    */
    
 	function inlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2064,6 +2124,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -2078,7 +2139,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';     
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -2241,6 +2308,7 @@ Class UsersController extends AppController
    */
    
    function indlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2268,6 +2336,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -2282,7 +2351,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -2441,6 +2516,7 @@ Class UsersController extends AppController
 	   
 	   
 	function slogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2468,6 +2544,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -2482,7 +2559,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -2659,6 +2742,7 @@ Class UsersController extends AppController
 	   
 	   
 	function snlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2686,6 +2770,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -2700,7 +2785,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -2861,6 +2952,7 @@ Class UsersController extends AppController
 	*/
  
 	function sdlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2888,6 +2980,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -2903,7 +2996,13 @@ Class UsersController extends AppController
 			}
 		}
 		
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -3081,6 +3180,7 @@ Class UsersController extends AppController
 	*/ 	   
 	   
 	function sndlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3108,6 +3208,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -3122,7 +3223,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -3305,7 +3412,13 @@ Class UsersController extends AppController
 					}
 				}
 			}
+			if($this->Session->read('layout_option') == 'login_new'){
+				$this->layout = 'login_new';
+			}
+			else{
 			$this->layout = 'login';
+			}
+
 			$referral = $this->Session->read('referral');
 			$ref = explode("url=",$referral);
 			$this->Library->recursive = -1;
@@ -3408,6 +3521,7 @@ Class UsersController extends AppController
    */
    
    function inhlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3435,6 +3549,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -3449,7 +3564,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
       $this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -3626,6 +3747,7 @@ Class UsersController extends AppController
    */
    
    function ihdlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3653,6 +3775,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -3667,7 +3790,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -3845,6 +3974,7 @@ Class UsersController extends AppController
    */
    
    function inhdlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3872,6 +4002,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -3887,7 +4018,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4049,6 +4186,7 @@ Class UsersController extends AppController
    */
    
 	function plogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4076,6 +4214,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -4090,7 +4229,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4265,6 +4410,7 @@ Class UsersController extends AppController
     Desc : For patron ilhdlogin(Innovative Var HTTPS with Name) login method
    */
    function ilhdlogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4292,6 +4438,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -4307,7 +4454,13 @@ Class UsersController extends AppController
 			}
 		}
 
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4487,6 +4640,7 @@ Class UsersController extends AppController
    */
    
 	function clogin($library = null){
+    $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4514,6 +4668,7 @@ Class UsersController extends AppController
 			else if($library != null)
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+				$this->get_login_layout_name($library_data);
 				if(count($library_data) > 0)
 				{
 					if($this->Session->read('lId') == '')
@@ -4528,7 +4683,13 @@ Class UsersController extends AppController
 				}	
 			}
 		}
+		if($this->Session->read('layout_option') == 'login_new'){
+			$this->layout = 'login_new';
+		}
+		else{
 		$this->layout = 'login';
+		}
+
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -4663,6 +4824,19 @@ Class UsersController extends AppController
 		}
 	}
 	
+	function get_login_layout_name($library_data){
+		$mobile_auth = $library_data['Library']['mobile_auth'];
+		$library_territory = $library_data['Library']['library_territory'];
+		$library_authentication_method = $library_data['Library']['library_authentication_method'];
+
+		if(  ($library_territory == 'IT' || $library_authentication_method == 'ezproxy' || $library_authentication_method == 'referral_url')   && ($mobile_auth == '' || $mobile_auth == null) ){
+			$this->Session->write("layout_option", 'login');
+		}
+		else{
+			$this->Session->write("layout_option", 'login_new');
+		}
+	}
+
 	
 }
 ?>

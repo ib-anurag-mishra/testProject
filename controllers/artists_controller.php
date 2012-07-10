@@ -50,6 +50,8 @@ Class ArtistsController extends AppController
 	 Desc : action for displaying the add/edit featured artist form
         */
 	function admin_artistform() {
+    ini_set('memory_limit','1024M');
+		set_time_limit(0);
 		if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
@@ -227,6 +229,8 @@ Class ArtistsController extends AppController
 	 Desc : assigns artists with images
         */
 	function admin_createartist() {
+    ini_set('memory_limit','1024M');
+		set_time_limit(0);
 		$errorMsg = '';
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
