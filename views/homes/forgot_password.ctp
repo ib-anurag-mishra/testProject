@@ -9,7 +9,7 @@
 		echo $this->Form->label(null, __('Forgot Password', true));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('email', array('label' => __('Email', true),'div' => false));
+		echo $form->input('email', array('label' => __('Email', true),'div' => false, 'alt'=>__('Email', true)));
 		echo '</div>';
 	echo $form->end(array('label' => __('Submit', true),'div' => false, 'class' => 'submit'));		
 	echo '</fieldset>';
