@@ -19,10 +19,10 @@
 	echo '<fieldset>';	
 	echo $form->create('User', array( 'action' => 'slogin', 'id' => 'login'));
 		echo '<div class="row">';
-		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card));
+		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card, 'alt'=>__('Card Number', true)));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('pin', array('label' => 'Pin','value' => $pin, 'type'=>'password'));
+		echo $form->input('pin', array('label' => 'Pin','value' => $pin, 'type'=>'password', 'alt'=>'PIN'));
 		echo '</div>';
 	echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));		
 	echo '</fieldset>';

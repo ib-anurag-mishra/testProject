@@ -14,10 +14,10 @@
 		echo '<fieldset>';
 		echo $form->create('User', array( 'action' => 'login', 'id' => 'login'));
 		echo '<div class="row">';
-		echo $form->input('email', array('label' => __('Email', true),'div' => false));
+		echo $form->input('email', array('label' => __('Email', true),'div' => false,'alt' => __('Email', true)));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('password', array('label' => __('Password', true),'div' => false));
+		echo $form->input('password', array('label' => __('Password', true),'div' => false, 'alt' => __('Password', true)));
 		echo '</div>';
 		echo '<span class="forgot">';
 			echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
@@ -60,7 +60,7 @@
 if($this->Session->read('Config.language') == 'es' || $this->Session->read('Config.language') == 'it'){
 ?>
 	<script type="text/javascript">
-	$(".popup .login-box .holder").css('padding': '46px 9px 45px');
+	$(".popup .login-box .holder").css('padding', '46px 9px 45px');
 	</script>
 <?php	
 }
