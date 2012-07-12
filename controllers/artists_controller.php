@@ -715,7 +715,8 @@ Class ArtistsController extends AppController
 								'Song.FullLength_Duration',
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
-								'Song.provider_type'
+								'Song.provider_type',
+                						'Song.sequence_number'
 
 								),
 						'contain' => array(
@@ -743,7 +744,7 @@ Class ArtistsController extends AppController
 										)
 									),
 
-						),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
+						),'group' => 'Song.ProdID','order' => array('Song.sequence_number','Song.ProdID')
 						  ));
 			}
 		}
