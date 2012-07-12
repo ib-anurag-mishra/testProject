@@ -52,7 +52,7 @@ Class ArtistsController extends AppController
 	function admin_artistform() {
     ini_set('memory_limit','1024M');
 		set_time_limit(0);
-		if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
+    if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
 				$this -> set( 'formAction', 'admin_updatefeaturedartist/id:' . $artistId );
@@ -713,7 +713,8 @@ Class ArtistsController extends AppController
 								'Song.FullLength_Duration',
 								'Song.Sample_FileID',
 								'Song.FullLength_FIleID',
-								'Song.provider_type'
+								'Song.provider_type',
+                						'Song.sequence_number'
 
 								),
 						'contain' => array(
@@ -741,7 +742,7 @@ Class ArtistsController extends AppController
 										)
 									),
 
-						),'group' => 'Song.ProdID','order' => 'Song.ReferenceID'
+						),'group' => 'Song.ProdID','order' => array('Song.sequence_number','Song.ProdID')
 						  ));
 			}
 		}
