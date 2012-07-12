@@ -67,8 +67,6 @@ class SearchController extends AppController
      $error = $response->getHttpStatusMessage();
      echo $error;
     }
-    print_r($docs);
-    die;
     $this->set('results', $docs);
   }
 }
