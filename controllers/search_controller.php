@@ -26,16 +26,49 @@ class SearchController extends AppController
 				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 			}
         }
-		$this->Cookie->name = 'baker_id';
+    $this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
 		$this->Cookie->domain = 'freegalmusic.com';
 
     }
 
-  
+
   function advanced_search($arg1, $startFrom = null, $recordCount = null) {
-	$this->layout = 'home';
-  } 
-  
+
+  $this->layout = 'home';
+  $docs = array();
+
+  $queryVar = $_GET['q'];
+
+  App::import("Vendor","solr",array('file' => "Apache".DS."Solr".DS."Service.php"));
+
+  $solr = new Apache_Solr_Service( '192.168.2.178', '8080', '/solr/freegalmusic/' );
+
+	if ( ! $solr->ping() ) {
+		$error = 'Solr service not responding.';
+    echo $error;
+	}
+
+  $offset = 0;
+  $limit = 10;
+
+  $query = 'SongTitle: '.$queryVar.'*';
+
+  $response = $solr->search( $query, $offset, $limit );
+  if ( $response->getHttpStatus() == 200 ) {
+     if ( $response->response->numFound > 0 ) {
+      foreach ( $response->response->docs as $doc ) {
+       $docs[] = $doc;
+      }
+     }
+    }
+    else {
+     $error = $response->getHttpStatusMessage();
+     echo $error;
+    }
+    print_r($docs);
+    die;
+    $this->set('results', $docs);
+  }
 }
