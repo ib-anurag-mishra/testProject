@@ -21,7 +21,7 @@ while ($line = mysql_fetch_array($result, MYSQL_ASSOC)) {
 			$status = "active";
 		}
 		else {
-			$status = "inactive";
+			$status = "active";
 		}
 		$sql = "UPDATE libraries SET library_status='$status' WHERE id=".$line['id'];
 		$result2 = mysql_query($sql) or die('Query failed: ' . mysql_error());

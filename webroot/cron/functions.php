@@ -140,7 +140,8 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 
 function resetDownloads()
 {
-    $currentDate = date('Y-m-d');
+    date_default_timezone_set("America/New_York");
+	$currentDate = date('Y-m-d');
     $nextDayTS = strtotime($currentDate); 
     $nextDay = date('Y-m-d', strtotime('+1 day', $nextDayTS));    
     $date = date('y-m-d');
