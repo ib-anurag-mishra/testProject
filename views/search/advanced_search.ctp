@@ -51,83 +51,115 @@
 				<h2  class="heading">
 					<span class="h2Wrapper">Albums</span>
 				</h2>
-					<div  id ="albumblockR1">
-						<div  class ="albumblockC1">
+        <?php
+          $counter=0;
+          if(!empty($albumData)){
+          foreach($albumData as $album){
+            if($counter%2==0){
+              $class = 'albumblockC1';
+            } else {
+              $class = 'albumblockC2';
+            }
+            if($counter%2==0){
+              if($counter==0){
+                ?>
+                <div  id ="albumblockR1">
+                <?php }
+                else {
+                ?>
+                <div  id ="albumblockR2">
+                <?php
+                }
+            }
+            ?>
+						<div  class ="<?php echo $class; ?>">
 							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
 							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink">Discover Beyond</a>
+								<a class="albumblockArtisLink"><?php echo $album->Title; ?></a>
 								<br />
-								<a  href="#">Genre: Rock</a>
-								<a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
+								<a  href="#">Genre: <?php echo str_replace('"','',$album->Genre); ?></a>
 								<br />
-								<span  class="stats">Label: Columbia/Legacy(2007)</span>
+								<span  class="stats">Label: <?php echo (($album->Label!='false')?$album->Label:''); ?>(2007)</span>
 							</div>
 						</div>
 
-						<div  class ="albumblockC2">
-							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
-							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink">Discover Beyond</a>
-								<br />
-								<a  href="#">Genre: Rock</a>
-								<a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
-								<br />
-								<span  class="stats">Label: Columbia/Legacy(2007)</span>
-							</div>
-						</div>
-					</div>
 
-					<div  id ="albumblockR2">
-						<div  class ="albumblockC1">
-							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
-							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink">Discover Beyond</a>
-								<br />
-								<a  href="#">Genre: Rock</a>
-								<a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
-								<br />
-								<span  class="stats">Label: Columbia/Legacy(2007)</span>
-							</div>
-						</div>
+          <?php
+            $counter++;
+            if($counter%2==0){
+              ?>
+             </div>
+             <?php
+            }
+            if($counter%4==0){
+              ?>
+              <span class="more_link">
+                <a  href="#">See more albums</a>
+              </span>
+             <?php
+            }
+          }
+          } else {
+            ?>
+            <ul>
+              <li style='color:red'>No Composers Found</li>
+            </ul>
+            <?php
+          }
+          ?>
 
-						<div  class ="albumblockC2">
-							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
-							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink">Discover Beyond</a>
-								<br />
-								<a  href="#">Genre: Rock</a>
-								<a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
-								<br />
-								<span  class="stats">Label: Columbia/Legacy(2007)</span>
-							</div>
-						</div>
-					</div>
-
-					<span class="more_link">
-						<a  href="#">See more albums</a>
-					</span>
 			</div>
 
             <div  id="ComposersWrapper">
 					<h2>Composers</h2>
+          <?php
+          if(!empty($composers)){
+          ?>
 					<ul >
-						<li ><span class="left_text"><a>Bob Dylan</a></span><span class="right_text">(48)</span></li>
-						<li ><span class="left_text"><a>Bob Dylan</a></span><span class="right_text">(48)</span></li>
-						<li ><span class="left_text"><a>Bob Dylan</a></span><span class="right_text">(48)</span></li>
-						<li ><span class="left_text"><a>Bob Dylan</a></span><span class="right_text">(48)</span></li>
-					</ul>
-					<span class="more_link"><a  href="#">See more Composers</a></span>
+            <?php foreach($composers as $composer=>$count)
+            {
+            ?>
+						<li ><span class="left_text"><a><?php echo str_replace('"','',$composer); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+            <?php
+            }
+            ?>
+          </ul>
+          <span class="more_link"><a  href="#">See more Composers</a></span>
+          <?php
+          } else {
+            ?>
+            <ul>
+              <li style='color:red'>No Composers Found</li>
+            </ul>
+            <?php
+          }
+          ?>
             </div>
 
 			<div id="GenreWrapper">
 					<h2>Genres</h2>
-					<ul >
-						<li ><span class="left_text"><a>Chinese Pop/Rock</a></span><span class="right_text">(48)</span></li>
-						<li ><span class="left_text"><a>Chinese Pop/Rock</a></span><span class="right_text">(48)</span></li>
-						<li ><span class="left_text"><a>Chinese Pop/Rock</a></span><span class="right_text">(48)</span></li>
-						<li ><span class="left_text"><a>Chinese Pop/Rock</a></span><span class="right_text">(48)</span></li>
-					</ul>
+					<?php
+          if(!empty($genres)){
+          ?>
+          <ul>
+					<?php foreach($genres as $genre=>$count)
+          {
+          ?>
+            <li ><span class="left_text"><a><?php echo str_replace('"','',$genre); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+					<?php
+            }
+          ?>
+          </ul>
 					<span class="more_link"><a  href="#">See more Genres</a></span>
+          <?php
+          } else {
+            ?>
+            <ul>
+              <li style='color:red'>No Genres Found</li>
+            </ul>
+            <?php
+          }
+          ?>
             </div>
         </div>
     </div>
@@ -138,25 +170,54 @@
 	<div  id="rightCol">
         <div   id="ArtistWrapper">
   				<h2>Artists</h2>
-				<ul >
-					<li ><span class="left_text"><a>Bob Wills & His Texas Playboys... </a></span><span class="right_text">(48)</span></li>
-					<li ><span class="left_text"><a>Bob Wills & His Texas Playboys... </a></span><span class="right_text">(48)</span></li>
-					<li ><span class="left_text"><a>Bob Wills & His Texas Playboys... </a></span><span class="right_text">(48)</span></li>
-					<li ><span class="left_text"><a>Bob Wills & His Texas Playboys... </a></span><span class="right_text">(48)</span></li>
-					<li ><span class="left_text"><a>Bob Wills & His Texas Playboys... </a></span><span class="right_text">(48)</span></li>
-				</ul>
+				<?php
+          if(!empty($artists)){
+          ?>
+          <ul>
+					<?php foreach($artists as $artist=>$count)
+          {
+          ?>
+            <li ><span class="left_text"><a><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+					<?php
+            }
+          ?>
+          </ul>
 				<span class="more_link"><a  href="#">See more Artists</a></span>
+        <?php
+          } else {
+            ?>
+            <ul>
+              <li style='color:red'>No Artists Found</li>
+            </ul>
+            <?php
+          }
+          ?>
 		</div>
 
 		 <div  id="LabelWrapper">
 			<h2>Labels</h2>
-			<ul >
-				<li ><span class="left_text"><a>Legacy/Columbia</a></span><span class="right_text">(48)</span></li>
-				<li ><span class="left_text"><a>Legacy/Columbia</a></span><span class="right_text">(48)</span></li>
-				<li ><span class="left_text"><a>Legacy/Columbia</a></span><span class="right_text">(48)</span></li>
-				<li ><span class="left_text"><a>Legacy/Columbia</a></span><span class="right_text">(48)</span></li>
-			</ul>
+			<?php
+          if(!empty($labels)){
+          ?>
+          <ul>
+					<?php foreach($labels as $label=>$count)
+          {
+          ?>
+            <li ><span class="left_text"><a><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+					<?php
+            }
+          ?>
+          </ul>
 			<span class="more_link"><a  href="#">See more Labels</a></span>
+      <?php
+          } else {
+            ?>
+            <ul>
+              <li style='color:red'>No Labels Found</li>
+            </ul>
+            <?php
+          }
+          ?>
 		</div>
     </div>
 
@@ -170,22 +231,22 @@
 	<div  id="genreDownload">Download</div>
 <br class="clr">
 <div id="genreResults">
-	<?php if(!empty($results)){ ?>
+	<?php if(!empty($songs)){ ?>
   <table cellspacing="0" cellpadding="0" style="margin-left: 53px;">
 	      <tbody>
-	<?php foreach($results as $doc) { ?>
+	<?php foreach($songs as $song) { ?>
   		<tr >
 				<td width="210" valign="top" style="padding-left: 5px;">
 					<p>
-						<span title=""><a href="#"><?php echo $doc->ArtistText; ?></a></span>
+						<span title=""><a href="#"><?php echo str_replace('"','',$song->ArtistText); ?></a></span>
 					</p>
 				</td>
 				<td width="210" valign="top" style="padding-left: 10px;">
-					<p><a href="#"><?php echo $doc->Genre; ?></a></p>
+					<p><a href="#"><?php echo str_replace('"','',$song->Genre); ?></a></p>
 				</td>
 				<td valign="top" style="width: 274px; padding-left: 10px;">
 					<p>
-						<?php echo $doc->SongTitle; ?>
+						<?php echo $song->SongTitle; ?><a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
 					</p>
 				</td>
 				<td width="196" valign="top" align="center" style="padding-left: 10px;">
@@ -206,8 +267,3 @@
 		<span><a href="#">4</a></span> | &nbsp;
 		<span><a class="next" href="#">next >></a></span></div>
 </div>
-
-
-
-
-
