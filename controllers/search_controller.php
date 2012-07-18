@@ -7,7 +7,7 @@ class SearchController extends AppController
 {
     var $name = 'Search';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Solr','Session');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
 
     /*
@@ -34,39 +34,35 @@ class SearchController extends AppController
     }
 
 
-  function advanced_search($arg1, $startFrom = null, $recordCount = null) {
+  function advanced_search() {
+    $this->layout = 'home';
+    $docs = array();
+    $queryVar = $_GET['q'];
+    $typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
 
-  $this->layout = 'home';
-  $docs = array();
-
-  $queryVar = $_GET['q'];
-
-  App::import("Vendor","solr",array('file' => "Apache".DS."Solr".DS."Service.php"));
-
-  $solr = new Apache_Solr_Service( '192.168.2.178', '8080', '/solr/freegalmusic/' );
-
-	if ( ! $solr->ping() ) {
-		$error = 'Solr service not responding.';
-    echo $error;
-	}
-
-  $offset = 0;
-  $limit = 10;
-
-  $query = 'SongTitle: '.$queryVar.'*';
-
-  $response = $solr->search( $query, $offset, $limit );
-  if ( $response->getHttpStatus() == 200 ) {
-     if ( $response->response->numFound > 0 ) {
-      foreach ( $response->response->docs as $doc ) {
-       $docs[] = $doc;
-      }
-     }
+    $songs = $this->Solr->search($queryVar, $typeVar);
+    $albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
+    $queryArr = null;
+    $albumData = array();
+    $albumsCheck = array_keys($albums);
+    for($i=0;$i<=3;$i++)
+    {
+      $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
+      $albumData[] = $queryArr[0];
     }
-    else {
-     $error = $response->getHttpStatusMessage();
-     echo $error;
-    }
-    $this->set('results', $docs);
+    
+    $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
+    $genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
+    $composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
+    $labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
+
+    $this->set('songs', $songs);
+    $this->set('albums', $albums);
+    $this->set('albumData',$albumData);
+    $this->set('artists', $artists);
+    $this->set('genres', $genres);
+    $this->set('composers', $composers);
+    $this->set('labels', $labels);
+
   }
 }
