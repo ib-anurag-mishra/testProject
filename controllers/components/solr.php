@@ -34,29 +34,31 @@ class SolrComponent extends Object {
           }
           switch($type){
             case 'song':
-              $query = 'CSongTitle:*'.$keyword.'*';
+              $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
               break;
             case 'genre':
-              $query = 'CGenre:*'.$keyword.'*';
+              $query = 'CGenre:(*'.strtolower($keyword).'*)';
               break;
             case 'album':
-              $query = 'CTitle:*'.$keyword.'*';
+              $query = 'CTitle:(*'.strtolower($keyword).'*)';
               break;
             case 'artist':
-              $query = 'CArtistText:*'.$keyword.'*';
+              $query = 'CArtistText:(*'.strtolower($keyword).'*)';
               break;
             case 'label':
-              $query = 'CLabel:*'.$keyword.'*';
+              $query = 'CLabel:(*'.strtolower($keyword).'*)';
               break;
             case 'composer':
-              $query = 'CComposer:*'.$keyword.'*';
+              $query = 'CComposer:(*'.strtolower($keyword).'*)';
               break;
             default:
-              $query = 'CSongTitle:*'.$keyword.'*';
+              $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
               break;
           }
 
           $query = $query.' AND Territory:'.$country;
+
+          //echo $query; die;
 
           if($page == 1){
             $start = 0;
@@ -92,36 +94,37 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = 'CSongTitle:*'.$keyword.'*';
+            $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = 'CGenre:*'.$keyword.'*';
+            $query = 'CGenre:(*'.strtolower($keyword).'*)';
             $field = 'Genre';
             break;
           case 'album':
-            $query = 'CTitle:*'.$keyword.'*';
+            $query = 'CTitle:(*'.strtolower($keyword).'*)';
             $field = 'Title';
             break;
           case 'artist':
-            $query = 'CArtistText:*'.$keyword.'*';
+            $query = 'CArtistText:(*'.strtolower($keyword).'*)';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = 'CLabel:*'.$keyword.'*';
+            $query = 'CLabel:(*'.strtolower($keyword).'*)';
             $field = 'Label';
             break;
           case 'composer':
-            $query = 'CComposer:*'.$keyword.'*';
+            $query = 'CComposer:(*'.strtolower($keyword).'*)';
             $field = 'Composer';
             break;
           default:
-            $query = 'CSongTitle:*'.$keyword.'*';
+            $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
             $field = 'SongTitle';
             break;
         }
 
         $query = $query.' AND Territory:'.$country;
+
 
         if($page == 1){
             $start = 0;
@@ -158,7 +161,6 @@ class SolrComponent extends Object {
     }
 
     function query($query, $limit){
-      echo $query;
       $response = self::$solr->search($query, 0, $limit);
       if ( $response->getHttpStatus() == 200 ) {
         if ( $response->response->numFound > 0 ) {
