@@ -1,6 +1,10 @@
 
-show_blocksdiv = document.getElementById('show_blocks');	
-show_blocksdiv.style.display="none";
+
+show_blocksdiv = document.getElementById('show_blocks');
+if(show_blocksdiv){	
+	show_blocksdiv.style.display="none";
+}
+
 function advanced_search_show_hide(id){	
 
 	leftColblockdiv = document.getElementById('leftColblock');
