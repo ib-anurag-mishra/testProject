@@ -18,7 +18,7 @@
 <div id="leftCol">
 	<div id="leftColWrapper">
 		<form method="get"><h1 ><label for="search_query">Search music on freegal.com</label></h1>
-			<input type="text"  id="search_query" value="<?php echo $_GET['q']?>" class="query" name="q">
+			<input type="text"  id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
 			<input type="hidden" value="all" name="type">
 			<input type="submit" value="search">
 			<ul  class="clearit" id="searchfilter">
@@ -34,12 +34,12 @@
 	 </div>
 </div>
 <?php
-if('' != $_GET['q']){	
+if('' != $keyword){
 ?>
 
 	<div  class="fullWidth" id="resultsSummary">
 		<div class="search_result_text">
-			<h3>Results for your search "<?php echo $_GET['q']?>" </h3>
+			<h3>Results for your search "<?php echo $keyword; ?>" </h3>
 		</div>
 		<div  id="hide_blocks">
 			<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide blocks</a>
@@ -100,7 +100,7 @@ if('' != $_GET['q']){
 				if($counter%4==0){
 				  ?>
 				  <span class="more_link">
-					<a  href="/search/advanced_search?q=<?php echo $_GET['q']?>&type=album">See more albums</a>
+					<a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">See more albums</a>
 				  </span>
 				 <?php
 				}
@@ -130,7 +130,7 @@ if('' != $_GET['q']){
 				}
 				?>
 			  </ul>
-			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $_GET['q']?>&type=composer">See more Composers</a></span>
+			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
 			  <?php
 			  } else {
 				?>
@@ -156,7 +156,7 @@ if('' != $_GET['q']){
 				}
 			  ?>
 			  </ul>
-						<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $_GET['q']?>&type=genre">See more Genres</a></span>
+						<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">See more Genres</a></span>
 			  <?php
 			  } else {
 				?>
@@ -188,7 +188,7 @@ if('' != $_GET['q']){
 				}
 			  ?>
 			  </ul>
-					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $_GET['q']?>&type=artist">See more Artists</a></span>
+					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
 			<?php
 			  } else {
 				?>
@@ -214,7 +214,7 @@ if('' != $_GET['q']){
 				}
 			  ?>
 			  </ul>
-				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $_GET['q']?>&type=lebel">See more Labels</a></span>
+				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=lebel">See more Labels</a></span>
 		  <?php
 			  } else {
 				?>
@@ -277,4 +277,3 @@ if('' != $_GET['q']){
 <?php
 	}
 ?>
-
