@@ -6,7 +6,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.2.178', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');
+    static $_defaults = array('server' => '108.166.39.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');
 
     /**
      * Solr client object
@@ -124,7 +124,6 @@ class SolrComponent extends Object {
         }
 
         $query = $query.' AND Territory:'.$country;
-
 
         if($page == 1){
             $start = 0;
