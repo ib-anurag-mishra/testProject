@@ -50,34 +50,83 @@ class SearchController extends AppController
       $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
       $docs = array();
 
-      $songs = $this->Solr->search($queryVar, $typeVar);
-      $albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
-      $queryArr = null;
-      $albumData = array();
-      $albumsCheck = array_keys($albums);
-      for($i=0;$i<=3;$i++)
-      {
-        $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
-        $albumData[] = $queryArr[0];
-      }
+			$patId = $this->Session->read('patron');
+			$libId = $this->Session->read('library');
+			$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+			$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+			$docs = array();
+			
+			$songs = $this->Solr->search($queryVar, $typeVar);
+			$this->set('songs', $songs);
+			// Added code for all functionality
+			$check_all = $_GET['check_all'];
+			if('true' == $check_all){
+				switch($typeVar){
+					case 'album':
+						$from_limit = 1;
+						$to_limit = 4;
+						$albums = $this->Solr->facetSearch($queryVar, 'album', $from_limit, $to_limit);
+						$queryArr = null;
+						$albumData = array();
+						$albumsCheck = array_keys($albums);
+						for($i=0; $i<=count($albumsCheck) -1; $i++)
+						{
+						  $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
+						  $albumData[] = $queryArr[0];
+						}
+						$this->set('albums', $albums);	
+						$this->set('albumData',$albumData);					
+						
+					break;		
+					case 'genre':
+						$from_limit = 1;
+						$to_limit = 4;
+						$genres = $this->Solr->facetSearch($queryVar, 'genre', $from_limit, $to_limit);
+						$this->set('genres', $genres);
+						
+					break;		
+					case 'label':
+						$from_limit = 1;
+						$to_limit = 4;
+						$labels = $this->Solr->facetSearch($queryVar, 'label', $from_limit, $to_limit);
+						$this->set('labels', $labels);
+					break;		
+					case 'artist':
+						$from_limit = 1;
+						$to_limit = 4;
+						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
+						$this->set('artists', $artists);
+					break;		
+				}			
+			}
+			else{			
+				$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
+				$queryArr = null;
+				$albumData = array();
+				$albumsCheck = array_keys($albums);
+				for($i=0;$i<=3;$i++)
+				{
+					$queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
+					$albumData[] = $queryArr[0];
+				}
 
-      $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
-      $genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
-      $composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
-      $labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
-      $total = 0;
+				$artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
+				$genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
+				$composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
+				$labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
+				$total = 0;
 
-      $this->set('libraryDownload',$libraryDownload);
-      $this->set('patronDownload',$patronDownload);
-      $this->set('songs', $songs);
-      $this->set('albums', $albums);
-      $this->set('albumData',$albumData);
-      $this->set('artists', $artists);
-      $this->set('genres', $genres);
-      $this->set('composers', $composers);
-      $this->set('labels', $labels);
-      $this->set('total', $total);
-    }
-    $this->set('keyword', $queryVar);
-  }
+				$this->set('libraryDownload',$libraryDownload);
+				$this->set('patronDownload',$patronDownload);			
+				$this->set('albums', $albums);
+				$this->set('albumData',$albumData);
+				$this->set('artists', $artists);
+				$this->set('genres', $genres);
+				$this->set('composers', $composers);
+				$this->set('labels', $labels);				
+			}
+			$this->set('total', $total);
+		}
+		$this->set('keyword', $queryVar);
+	}
 }
