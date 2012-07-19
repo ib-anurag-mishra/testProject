@@ -36,8 +36,13 @@ class SearchController extends AppController
 
   function advanced_search() {
     $this->layout = 'home';
-    $queryVar = $_GET['q'];
-    $typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
+    $queryVar = null;
+    if(isset($_GET['q'])){
+      $queryVar = $_GET['q'];
+    }
+    if(isset($_GET['type'])){
+      $typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
+    }
     if(!empty($queryVar)){
       $patId = $this->Session->read('patron');
       $libId = $this->Session->read('library');
