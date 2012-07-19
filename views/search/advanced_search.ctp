@@ -87,6 +87,7 @@ if('' != $_GET['q']){
 								<br />
 								<span  class="stats">Label: <?php echo (($album->Label!='false')?$album->Label:''); ?>(2007)</span>
 							</div>
+						</div>
 
 
 			  <?php
