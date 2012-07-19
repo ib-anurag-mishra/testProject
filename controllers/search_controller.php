@@ -50,11 +50,12 @@ class SearchController extends AppController
       $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
       $albumData[] = $queryArr[0];
     }
-    
+
     $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
     $genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
     $composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
     $labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
+    $total = 0;
 
     $this->set('songs', $songs);
     $this->set('albums', $albums);
@@ -63,6 +64,7 @@ class SearchController extends AppController
     $this->set('genres', $genres);
     $this->set('composers', $composers);
     $this->set('labels', $labels);
-
+    $this->set('keyword', $queryVar);
+    $this->set('total', $total);
   }
 }
