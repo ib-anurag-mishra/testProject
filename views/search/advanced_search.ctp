@@ -248,7 +248,7 @@ if('' != $keyword){
 						</p>
 					</td>
 					<td width="210" valign="top" style="padding-left: 10px;">
-						<p><a href="#"><?php echo str_replace('"','',$song->Genre); ?></a></p>
+						<p><a href="#"><?php echo str_replace('"','',$song->Title); ?></a></p>
 					</td>
 					<td valign="top" style="width: 274px; padding-left: 10px;">
 						<p>
