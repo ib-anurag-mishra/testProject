@@ -36,41 +36,43 @@ class SearchController extends AppController
 
   function advanced_search() {
     $this->layout = 'home';
-    $patId = $this->Session->read('patron');
-    $libId = $this->Session->read('library');
-    $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-    $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-    $docs = array();
     $queryVar = $_GET['q'];
     $typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
+    if(!empty($queryVar)){
+      $patId = $this->Session->read('patron');
+      $libId = $this->Session->read('library');
+      $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+      $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+      $docs = array();
 
-    $songs = $this->Solr->search($queryVar, $typeVar);
-    $albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
-    $queryArr = null;
-    $albumData = array();
-    $albumsCheck = array_keys($albums);
-    for($i=0;$i<=3;$i++)
-    {
-      $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
-      $albumData[] = $queryArr[0];
+      $songs = $this->Solr->search($queryVar, $typeVar);
+      $albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
+      $queryArr = null;
+      $albumData = array();
+      $albumsCheck = array_keys($albums);
+      for($i=0;$i<=3;$i++)
+      {
+        $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
+        $albumData[] = $queryArr[0];
+      }
+
+      $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
+      $genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
+      $composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
+      $labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
+      $total = 0;
+
+      $this->set('libraryDownload',$libraryDownload);
+      $this->set('patronDownload',$patronDownload);
+      $this->set('songs', $songs);
+      $this->set('albums', $albums);
+      $this->set('albumData',$albumData);
+      $this->set('artists', $artists);
+      $this->set('genres', $genres);
+      $this->set('composers', $composers);
+      $this->set('labels', $labels);
+      $this->set('keyword', $queryVar);
+      $this->set('total', $total);
     }
-
-    $artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
-    $genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
-    $composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
-    $labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
-    $total = 0;
-
-    $this->set('libraryDownload',$libraryDownload);
-    $this->set('patronDownload',$patronDownload);
-    $this->set('songs', $songs);
-    $this->set('albums', $albums);
-    $this->set('albumData',$albumData);
-    $this->set('artists', $artists);
-    $this->set('genres', $genres);
-    $this->set('composers', $composers);
-    $this->set('labels', $labels);
-    $this->set('keyword', $queryVar);
-    $this->set('total', $total);
   }
 }
