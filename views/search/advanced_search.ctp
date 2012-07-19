@@ -21,13 +21,13 @@
 			<input type="hidden" value="all" name="type">
 			<input type="submit" value="search">
 			<ul  class="clearit" id="searchfilter">
-				<li  class=" current  first "><a  href="/search?q=boby">All Music</a></li>
-				<li ><a  href="#">Albums</a></li>
-				<li ><a  href="#">Artists</a></li>
-				<li ><a  href="#">Composers</a></li>
-				<li ><a href="#">Genres</a></li>
-				<li ><a href="#">Label</a></li>
-				<li ><a href="#">Songs</a></li>
+				<li  class=" current  first "><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
 			</ul>
 		</form>
 	 </div>
@@ -75,7 +75,7 @@
 						<div  class ="<?php echo $class; ?>">
 							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
 							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink"><?php echo $album->Title; ?></a>
+								<a class="albumblockArtisLink"><?php echo substr($album->Title,0,30)."..."; ?></a>
 								<br />
 								<a  href="#">Genre: <?php echo str_replace('"','',$album->Genre); ?></a>
 								<br />
@@ -102,7 +102,7 @@
           } else {
             ?>
             <ul>
-              <li style='color:red'>No Composers Found</li>
+              <li style='color:red'>No Albums Found</li>
             </ul>
             <?php
           }
@@ -177,7 +177,7 @@
 					<?php foreach($artists as $artist=>$count)
           {
           ?>
-            <li ><span class="left_text"><a><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+            <li ><span class="left_text"><a><?php echo substr(str_replace('"','',$artist),0,30)."..."; ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 					<?php
             }
           ?>
@@ -242,7 +242,7 @@
 					</p>
 				</td>
 				<td width="210" valign="top" style="padding-left: 10px;">
-					<p><a href="#"><?php echo str_replace('"','',$song->Genre); ?></a></p>
+					<p><a href="#"><?php echo str_replace('"','',$song->Title); ?></a></p>
 				</td>
 				<td valign="top" style="width: 274px; padding-left: 10px;">
 					<p>
