@@ -71,8 +71,8 @@ class SearchController extends AppController
       $this->set('genres', $genres);
       $this->set('composers', $composers);
       $this->set('labels', $labels);
-      $this->set('keyword', $queryVar);
       $this->set('total', $total);
     }
+    $this->set('keyword', $queryVar);
   }
 }
