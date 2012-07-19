@@ -60,12 +60,13 @@ if('' != $keyword){
         <?php
           $counter=0;
           if(!empty($albumData)){
-          foreach($albumData as $album){
+          foreach($albumData as $palbum){
             if($counter%2==0){
               $class = 'albumblockC1';
             } else {
               $class = 'albumblockC2';
             }
+            //$album = $album->getAlbum($palbum->ReferenceID);
             if($counter%2==0){
               if($counter==0){
                 ?>
@@ -81,11 +82,11 @@ if('' != $keyword){
 						<div  class ="<?php echo $class; ?>">
 							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
 							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink"><?php echo substr($album->Title,0,30)."..."; ?></a>
+								<a class="albumblockArtisLink"><?php echo substr($palbum->Title,0,30)."..."; ?></a>
 								<br />
-								<a  href="#">Genre: <?php echo str_replace('"','',$album->Genre); ?></a>
+								<a  href="#">Genre: <?php echo str_replace('"','',$palbum->Genre); ?></a>
 								<br />
-								<span  class="stats">Label: <?php echo (($album->Label!='false')?$album->Label:''); ?>(2007)</span>
+								<span  class="stats">Label: <?php echo (($palbum->Label!='false')?$palbum->Label:''); ?>(2007)</span>
 							</div>
 						</div>
 
@@ -231,34 +232,93 @@ if('' != $keyword){
 	<!-- Added for track Songs -->
 
 	<div >
-		<div  class="links" id="genreArtist">Artist<a href="#"></a></div>
-		<div  class="links" id="genreAlbum">Album<a href="#"></a></div>
-		<div  class="links"  id="genreTrack">Track<a href="#"></a></div>
-		<div  id="genreDownload">Download</div>
+		<div  class="links" id="genreArtist" style="width:192px;">Artist<a href="#"></a></div>
+    <div  class="links" id="genreComposer" style="width:180px;">Composer<a href="#"></a></div>
+		<div  class="links" id="genreAlbum" style="width:192px;">Album<a href="#"></a></div>
+		<div  class="links"  id="genreTrack" style="width:215px;">Track<a href="#"></a></div>
+		<div  id="genreDownload" style="width:180px;">Download</div>
 	<br class="clr">
 	<div id="genreResults">
 		<?php if(!empty($songs)){ ?>
-	  <table cellspacing="0" cellpadding="0" style="margin-left: 53px;">
+	  <table cellspacing="0" cellpadding="0" style="margin-left: 45px;">
 			  <tbody>
-		<?php foreach($songs as $song) { ?>
-			<tr >
-					<td width="210" valign="top" style="padding-left: 5px;">
+		<?php $i = 0;
+    foreach($songs as $song) {
+
+      $class = null;
+			if ($i++ % 2 == 0) {
+				$class = ' class="altrow"';
+			}
+
+      ?>
+			<tr <?php echo $class; ?> style="margin-left:0px;">
+					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
 							<span title=""><a href="#"><?php echo str_replace('"','',$song->ArtistText); ?></a></span>
 						</p>
 					</td>
-					<td width="210" valign="top" style="padding-left: 10px;">
+          <td width="170" valign="top" style="padding-left: 10px;">
+						<p><a href="#"><?php echo str_replace('"','',$song->Composer); ?></a></p>
+					</td>
+					<td width="182" valign="top" style="padding-left: 10px;">
 						<p><a href="#"><?php echo str_replace('"','',$song->Title); ?></a></p>
 					</td>
-					<td valign="top" style="width: 274px; padding-left: 10px;">
+					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
 							<?php echo $song->SongTitle; ?><a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
 						</p>
 					</td>
-					<td width="196" valign="top" align="center" style="padding-left: 10px;">
-						<span id="song_3748486" class="beforeClick">
-							<a href="#">Download Now</a>
-						</span>
+					<td width="170" valign="top" align="center" style="padding-left: 10px;">
+            <?php
+						if($libraryDownload == '1' && $patronDownload == '1') {
+								if($song->status != 'avail'){
+						 ?>
+									<p>
+										<form method="Post" id="form<?php echo $song->ProdID; ?>" action="/homes/userDownload">
+											<input type="hidden" name="ProdID" value="<?php echo $song->ProdID; ?>" />
+											<input type="hidden" name="ProviderType" value="<?php echo $song->provider_type; ?>" />
+											<span class="beforeClick" id="song_<?php echo $song->ProdID; ?>">
+												<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $searchResult["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+											</span>
+											<span class="afterClick" id="downloading_<?php echo $song->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+											<span id="download_loader_<?php echo $song->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+										</form>
+									</p>
+					<?php		}else {
+									?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
+								}
+							}
+                            else {
+								if($libraryDownload != '1'){
+									$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                                    $wishlistCount = $wishlist->getWishlistCount();
+                                    if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
+                    ?>
+										<p><?php __("Limit Met");?></p>
+					<?php
+									}
+                                    else{
+										$wishlistInfo = $wishlist->getWishlistData($song->ProdID);
+										if($wishlistInfo == 'Added to Wishlist'){
+									?>
+											<p><?php __("Added to Wishlist");?></p>
+								<?php 	}
+										else { ?>
+											<p>
+											<span class="beforeClick" id="wishlist<?php echo $song->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $song->ProdID; ?>","<?php echo $song->provider_type; ?>");'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
+
+											</p>
+								<?php
+										}
+                                    }
+							}
+							else { ?>
+								<p><?php __("Limit Met");?></p>
+							<?php
+							}
+						}
+            ?>
 					</td>
 				</tr>
 		<?php } ?>
