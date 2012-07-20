@@ -23,12 +23,12 @@
 			<input type="submit" value="search">
 			<ul  class="clearit" id="searchfilter">
 				<li  class=" current  first "><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album&check_all=true">Albums</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist&check_all=true">Artists</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer&check_all=true">Composers</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre&check_all=true">Genres</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label&check_all=true">Label</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song&check_all=true">Songs</a></li>
 			</ul>
 		</form>
 	 </div>
@@ -224,7 +224,7 @@ STR;
 					if($counter%4==0){
 						$album_outer_div .=<<<STR
 					  <span class="more_link">
-						<a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">See more albums</a>
+						<a  href="/search/advanced_search?q=$keyword&type=album&check_all=true">See more albums</a>
 					  </span>
 STR;
 					}
@@ -263,7 +263,7 @@ STR;
 				}
 				?>
 			  </ul>
-			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
+			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer&check_all=true">See more Composers</a></span>
 			  <?php
 			  } else {
 				?>
@@ -289,7 +289,7 @@ STR;
 				}
 			  ?>
 			  </ul>
-						<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">See more Genres</a></span>
+						<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre&check_all=true">See more Genres</a></span>
 			  <?php
 			  } else {
 				?>
@@ -321,7 +321,7 @@ STR;
 				}
 			  ?>
 			  </ul>
-					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
+					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist&check_all=true">See more Artists</a></span>
 			<?php
 			  } else {
 				?>
@@ -347,7 +347,7 @@ STR;
 				}
 			  ?>
 			  </ul>
-				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=lebel">See more Labels</a></span>
+				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=lebel&check_all=true">See more Labels</a></span>
 		  <?php
 			  } else {
 				?>
