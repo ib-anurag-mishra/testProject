@@ -19,7 +19,7 @@
 	<div id="leftColWrapper">
 		<form method="get"><h1 ><label for="search_query">Search music on freegal.com</label></h1>
 			<input type="text"  id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
-			<input type="hidden" value="all" name="type">
+			<input type="hidden" value="<?php echo ($type)?$type:'all' ?>" name="type">
 			<input type="submit" value="search">
 			<ul  class="clearit" id="searchfilter">
 				<li  class=" current  first "><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
@@ -286,8 +286,136 @@ STR;
 
 		break;
 		case 'artist':
+				$artist_wrapper_div =<<<STR
+					<div id="artistallWrapper">
+							<h2>Artists</h2>
+STR;
+
+				if(!empty($artists)){
+
+					$no_of_artist = count($artists);
+					$number_of_column = 3;
+					$number_of_rows = ceil($no_of_artist / $number_of_column);				
+
+					$index = 0;
+					$column = 1;
+					$artist_no = 0;
+					foreach($artists as $artist=>$count){						
+						$column = 1;
+						$artist_no++;
+						if($index == 0){
+							$class = 'artist_all_block' . $column;
+							$artist_str .=<<<STR
+								<div class="$class">
+								<ul>
+STR;
+						}
+
+						$artist_name = str_replace('"','',$artist);
+						$artist_list .=<<<STR
+						<li ><span class="left_text"><a>$artist_name</a></span><span class="right_text">($count)</span></li>
+STR;
+
+						$index++;
+						if($index  == $number_of_rows || $no_of_artist == $artist_no){
+							$artist_str .=<<<STR
+								$artist_list
+								</ul>
+								</div>
+STR;
+							$index = 0;
+							$artist_list = '';
+							$column++;						
+						}
+						
+					}
+				}
+				else {
+					$artist_str  =<<<STR
+					<ul>
+					  <li style='color:red'>No Artist Found</li>
+					</ul>
+STR;
+
+				}
+				$artist_wrapper_div .=<<<STR
+					$artist_str
+					</div> <!-- Div GenreWrapper End-->
+STR;
+
+				echo $str_all_blocks .=<<<STR
+							$artist_wrapper_div
+							</div>
+						
+STR;
+		break;
+		
+		case 'composer':
+				$composer_wrapper_div =<<<STR
+					<div id="GenreallWrapper">
+							<h2>Composers</h2>
+STR;
+
+				if(!empty($composers)){
+
+					$no_of_composer = count($composers);
+					$number_of_column = 3;
+					$number_of_rows = ceil($no_of_composer / $number_of_column);
+
+					$index = 0;
+					$column = 1;
+					$composer_no = 0;
+					foreach($composers as $composer=>$count){
+						$column = 1;
+						$composer_no++;
+						if($index == 0){
+							$class = 'composer_all_block' . $column;
+							$composer_str .=<<<STR
+								<div class="$class">
+								<ul>
+STR;
+						}
+
+						$composer_name = str_replace('"','',$composer);
+						$composer_list .=<<<STR
+						<li ><span class="left_text"><a>$composer_name</a></span><span class="right_text">($count)</span></li>
+STR;
+
+						$index++;
+						if($index  == $number_of_rows || $no_of_composer == $composer_no){
+							$composer_str .=<<<STR
+								$composer_list
+								</ul>
+								</div>
+STR;
+							$index = 0;
+							$composer_list = '';
+							$column++;
+						}
+
+					}
+				}
+				else {
+					$composer_str  =<<<STR
+					<ul>
+					  <li style='color:red'>No composer Found</li>
+					</ul>
+STR;
+
+				}
+				$composer_wrapper_div .=<<<STR
+					$composer_str
+					</div> <!-- Div GenreWrapper End-->
+STR;
+
+				echo $str_all_blocks .=<<<STR
+							$composer_wrapper_div
+							</div>
+
+STR;
 
 		break;
+
 	}
 
 ?>
