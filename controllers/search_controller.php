@@ -37,6 +37,7 @@ class SearchController extends AppController
   function advanced_search() {
     $this->layout = 'home';
     $queryVar = null;
+    $check_all = null;
     if(isset($_GET['q'])){
       $queryVar = $_GET['q'];
     }
@@ -55,11 +56,13 @@ class SearchController extends AppController
 			$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 			$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 			$docs = array();
-			
+
 			$songs = $this->Solr->search($queryVar, $typeVar);
 			$this->set('songs', $songs);
 			// Added code for all functionality
-			$check_all = $_GET['check_all'];
+      if(isset($_GET['check_all'])){
+        $check_all = $_GET['check_all'];
+      }
 			if('true' == $check_all){
 				switch($typeVar){
 					case 'album':
@@ -74,32 +77,32 @@ class SearchController extends AppController
 						  $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
 						  $albumData[] = $queryArr[0];
 						}
-						$this->set('albums', $albums);	
-						$this->set('albumData',$albumData);					
-						
-					break;		
+						$this->set('albums', $albums);
+						$this->set('albumData',$albumData);
+
+					break;
 					case 'genre':
 						$from_limit = 1;
 						$to_limit = 4;
 						$genres = $this->Solr->facetSearch($queryVar, 'genre', $from_limit, $to_limit);
 						$this->set('genres', $genres);
-						
-					break;		
+
+					break;
 					case 'label':
 						$from_limit = 1;
 						$to_limit = 4;
 						$labels = $this->Solr->facetSearch($queryVar, 'label', $from_limit, $to_limit);
 						$this->set('labels', $labels);
-					break;		
+					break;
 					case 'artist':
 						$from_limit = 1;
 						$to_limit = 4;
 						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
 						$this->set('artists', $artists);
-					break;		
-				}			
+					break;
+				}
 			}
-			else{			
+			else{
 				$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
 				$queryArr = null;
 				$albumData = array();
@@ -117,13 +120,13 @@ class SearchController extends AppController
 				$total = 0;
 
 				$this->set('libraryDownload',$libraryDownload);
-				$this->set('patronDownload',$patronDownload);			
+				$this->set('patronDownload',$patronDownload);
 				$this->set('albums', $albums);
 				$this->set('albumData',$albumData);
 				$this->set('artists', $artists);
 				$this->set('genres', $genres);
 				$this->set('composers', $composers);
-				$this->set('labels', $labels);				
+				$this->set('labels', $labels);
 			}
 			$this->set('total', $total);
 		}
