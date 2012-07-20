@@ -215,6 +215,70 @@ STR;
 
 		break;		
 		case 'label':
+		
+				$label_wrapper_div =<<<STR
+					<div id="labelallWrapper">
+							<h2>Labels</h2>
+STR;
+
+				if(!empty($labels)){
+
+					$no_of_label = count($labels);
+					$number_of_column = 3;
+					$number_of_rows = ceil($no_of_label / $number_of_column);				
+
+					$index = 0;
+					$column = 1;
+					$label_no = 0;
+					foreach($labels as $label=>$count){						
+						$column = 1;
+						$label_no++;
+						if($index == 0){
+							$class = 'label_all_block' . $column;
+							$label_str .=<<<STR
+								<div class="$class">
+								<ul>
+STR;
+						}
+
+						$label_name = str_replace('"','',$label);
+						$label_list .=<<<STR
+						<li ><span class="left_text"><a>$label_name</a></span><span class="right_text">($count)</span></li>
+STR;
+
+						$index++;
+						if($index  == $number_of_rows || $no_of_label == $label_no){
+							$label_str .=<<<STR
+								$label_list
+								</ul>
+								</div>
+STR;
+							$index = 0;
+							$label_list = '';
+							$column++;						
+						}
+						
+					}
+				}
+				else {
+					$label_str  =<<<STR
+					<ul>
+					  <li style='color:red'>No Label Found</li>
+					</ul>
+STR;
+
+				}
+				$label_wrapper_div .=<<<STR
+					$label_str
+					</div> <!-- Div GenreWrapper End-->
+STR;
+
+				echo $str_all_blocks .=<<<STR
+							$label_wrapper_div
+							</div>
+						
+STR;
+		
 
 		break;
 		case 'artist':
@@ -382,6 +446,7 @@ STR;
 					$genre_str .=<<<STR
 						$genre_list
 						</ul>
+						<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre&check_all=true">See more Genre</a></span>
 STR;
 				}
 				else {
@@ -392,9 +457,11 @@ STR;
 STR;
 
 				}
+				
+
 				echo $genre_wrapper_div .=<<<STR
 					$genre_str
-					<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre&check_all=true">See more Genre</a></span>
+
 					</div> <!-- Div GenreWrapper End-->
 STR;
 /********************************************Genre block end*********************************************************************************/
