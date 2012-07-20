@@ -155,7 +155,7 @@ STR;
 		break;
 		case 'genre':
 				$genre_wrapper_div =<<<STR
-					<div id="GenreWrapper">
+					<div id="GenreallWrapper">
 							<h2>Genres</h2>
 STR;
 
@@ -163,11 +163,14 @@ STR;
 
 					$no_of_genre = count($genres);
 					$number_of_column = 3;
-					$number_of_row = ceil($no_of_genre / $number_of_column);
+					$number_of_rows = ceil($no_of_genre / $number_of_column);				
 
 					$index = 0;
-					foreach($genres as $genre=>$count){
+					$column = 1;
+					$genre_no = 0;
+					foreach($genres as $genre=>$count){						
 						$column = 1;
+						$genre_no++;
 						if($index == 0){
 							$class = 'genre_all_block' . $column;
 							$genre_str .=<<<STR
@@ -182,15 +185,17 @@ STR;
 STR;
 
 						$index++;
-						if($index  == $number_of_row){
+						if($index  == $number_of_rows || $no_of_genre == $genre_no){
 							$genre_str .=<<<STR
 								$genre_list
 								</ul>
 								</div>
 STR;
 							$index = 0;
-							$column++;
+							$genre_list = '';
+							$column++;						
 						}
+						
 					}
 				}
 				else {
@@ -201,11 +206,18 @@ STR;
 STR;
 
 				}
-				echo $genre_wrapper_div .=<<<STR
+				$genre_wrapper_div .=<<<STR
 					$genre_str
 					</div> <!-- Div GenreWrapper End-->
 STR;
-		break;
+
+				echo $str_all_blocks .=<<<STR
+							$genre_wrapper_div
+							</div>
+						
+STR;
+
+		break;		
 		case 'label':
 
 		break;
