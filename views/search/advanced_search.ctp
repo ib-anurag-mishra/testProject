@@ -523,7 +523,7 @@ STR;
 				}
 			  ?>
 			  </ul>
-				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=lebel&check_all=true">See more Labels</a></span>
+				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label&check_all=true">See more Labels</a></span>
 		  <?php
 			  } else {
 				?>
