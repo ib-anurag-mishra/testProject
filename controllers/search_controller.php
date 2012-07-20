@@ -6,7 +6,7 @@
 class SearchController extends AppController
 {
     var $name = 'Search';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language', 'Album');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Solr','Session');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
 
@@ -41,7 +41,7 @@ class SearchController extends AppController
     if(isset($_GET['q'])){
       $queryVar = $_GET['q'];
     }
-    if(isset($_GET['type'])){		
+    if(isset($_GET['type'])){
 		$typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
 		$this->set('type', $typeVar);
     }
