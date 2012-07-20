@@ -149,7 +149,7 @@ STR;
 
 					$no_of_genre = count($genres);
 					$number_of_column = 3;
-					$number_of_row = ceil($no_of_genre / $number_of_column);				
+					$number_of_rows = ceil($no_of_genre / $number_of_column);				
 
 					$index = 0;
 					foreach($genres as $genre=>$count){						
@@ -168,13 +168,14 @@ STR;
 STR;
 
 						$index++;
-						if($index  == $number_of_row){
+						if($index  == $number_of_rows){
 							$genre_str .=<<<STR
 								$genre_list
 								</ul>
 								</div>
 STR;
 							$index = 0;
+							$genre_list = '';
 							$column++;						
 						}
 					}
