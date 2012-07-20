@@ -243,6 +243,29 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 }
 
 
+#labelallWrapper{
+		border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;float: left; width: 958px;
+}
+.labelallWrapper  h2{
+	border-top: medium none;margin-top: -10px;
+}
+.label_all_block1{
+	float:left;width:290px;
+}
+.label_all_block2, .label_all_block3{
+	float:left;width:290px;
+}
+#labelallWrapper ul li{
+	border-bottom: 1px solid #CCCCCC;
+    color: #0080FF;
+    font-size: 14px;
+    list-style: none outside none;
+    padding: 3px 0;
+    width: 267px;
+}
+
+
+
 
 
 
