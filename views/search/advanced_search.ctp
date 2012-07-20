@@ -140,8 +140,7 @@ STR;
 STR;
 			  }
 
-
-	echo $str_all_blocks .=<<<STR
+			echo $str_all_blocks .=<<<STR
 						$album_div
 							$album_outer_div
 							</div>
@@ -152,8 +151,58 @@ STR;
 
 		break;
 		case 'genre':
+				$genre_wrapper_div =<<<STR
+					<div id="GenreWrapper">
+							<h2>Genres</h2>
+STR;
+						
+				if(!empty($genres)){
 
-		break;
+					$no_of_genre = count($genres);
+					$number_of_column = 3;
+					$number_of_row = ceil($no_of_genre / $number_of_column);				
+
+					$index = 0;
+					foreach($genres as $genre=>$count){						
+						$column = 1;
+						if($index == 0){
+							$class = 'genre_all_block' . $column;
+							$genre_str .=<<<STR
+								<div class="$class">
+								<ul>
+STR;
+						}					
+
+						$genre_name = str_replace('"','',$genre);
+						$genre_list .=<<<STR
+						<li ><span class="left_text"><a>$genre_name</a></span><span class="right_text">($count)</span></li>
+STR;
+
+						$index++;
+						if($index  == $number_of_row){
+							$genre_str .=<<<STR
+								$genre_list
+								</ul>
+								</div>
+STR;
+							$index = 0;
+							$column++;						
+						}
+					}
+				} 
+				else {
+					$genre_str  =<<<STR
+					<ul>
+					  <li style='color:red'>No Genres Found</li>
+					</ul>
+STR;
+
+				}
+				echo $genre_wrapper_div .=<<<STR
+					$genre_str 
+					</div> <!-- Div GenreWrapper End-->
+STR;
+		break;		
 		case 'label':
 
 		break;
@@ -176,6 +225,8 @@ else{
 <div  id="leftColblock">
         <div  id="leftColblockWrapper">
 <?php
+/********************************************Album block started*********************************************************************************/
+
 	$str_all_blocks = '';
 
 			$counter=0;
@@ -268,6 +319,7 @@ STR;
 							</div>
 
 STR;
+/********************************************Album block end*********************************************************************************/
 
 ?>
 
@@ -297,33 +349,48 @@ STR;
 			  }
 			  ?>
 				</div>
+<?php
+/********************************************Genre block started*********************************************************************************/
+				$genre_wrapper_div =<<<STR
+					<div id="GenreWrapper">
+							<h2>Genres</h2>
+STR;
+						
+				if(!empty($genres)){
+					$genre_str .=<<<STR
+						<ul>
+STR;
 
-				<div id="GenreWrapper">
-						<h2>Genres</h2>
-						<?php
-			  if(!empty($genres)){
-			  ?>
-			  <ul>
-						<?php foreach($genres as $genre=>$count)
-			  {
-			  ?>
-				<li ><span class="left_text"><a><?php echo str_replace('"','',$genre); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
-						<?php
+					foreach($genres as $genre=>$count){
+						$genre_name = str_replace('"','',$genre);
+						$genre_list .=<<<STR
+						<li ><span class="left_text"><a>$genre_name</a></span><span class="right_text">($count)</span></li>
+STR;
+					}
+
+					$genre_str .=<<<STR
+						$genre_list
+						</ul>
+STR;
+				} 
+				else {
+					$genre_str  =<<<STR
+					<ul>
+					  <li style='color:red'>No Genres Found</li>
+					</ul>
+STR;
+
 				}
-			  ?>
-			  </ul>
-						<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre&check_all=true">See more Genres</a></span>
-			  <?php
-			  } else {
-				?>
-				<ul>
-				  <li style='color:red'>No Genres Found</li>
-				</ul>
-				<?php
-			  }
-			  ?>
-				</div>
-			</div>
+				echo $genre_wrapper_div .=<<<STR
+					$genre_str 
+					<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre&check_all=true">See more Genre</a></span>
+					</div> <!-- Div GenreWrapper End-->
+STR;
+/********************************************Genre block end*********************************************************************************/
+
+?>
+
+			</div><!-- End leftColblockWrapper -->
 		</div>
 	<!-- leftColblock End -->
 
