@@ -85,7 +85,7 @@ class SearchController extends AppController
 					break;
 					case 'genre':
 						$from_limit = 1;
-						$to_limit = 16;
+						$to_limit = 32;
 						$genres = $this->Solr->facetSearch($queryVar, 'genre', $from_limit, $to_limit);
 						$this->set('genres', $genres);
 

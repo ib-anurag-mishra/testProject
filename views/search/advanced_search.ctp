@@ -151,7 +151,7 @@ STR;
 		break;
 		case 'genre':
 				$genre_wrapper_div =<<<STR
-					<div id="GenreWrapper">
+					<div id="GenreallWrapper">
 							<h2>Genres</h2>
 STR;
 
