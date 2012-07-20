@@ -193,6 +193,34 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 	
 }
 
+#all_block{
+	float:left;
+	width: 940px;
+	margin-left: 44px;
+}
+#album_all_block{
+	border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;
+}
+.albumblockR{
+	border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;height: 59px;
+}
+.albumblockR  h2{
+	border-top: medium none;margin-top: -10px;
+}
+
+.album_all_blockC1{
+	float:left;width:290px;height:92px;
+}
+.album_all_blockC2, .album_all_blockC3{
+	float:left;width:290px;
+}
+.albumblockR    img.art{
+	width: 65px;
+	border:1px solid #A2A2A2;
+	float:left;
+	
+}
+
 
 
 

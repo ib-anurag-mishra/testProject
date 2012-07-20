@@ -41,8 +41,9 @@ class SearchController extends AppController
     if(isset($_GET['q'])){
       $queryVar = $_GET['q'];
     }
-    if(isset($_GET['type'])){
-      $typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
+    if(isset($_GET['type'])){		
+		$typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
+		$this->set('type', $typeVar);
     }
     if(!empty($queryVar)){
       $patId = $this->Session->read('patron');
@@ -64,10 +65,11 @@ class SearchController extends AppController
         $check_all = $_GET['check_all'];
       }
 			if('true' == $check_all){
+				$this->set('check_all', $check_all);
 				switch($typeVar){
 					case 'album':
 						$from_limit = 1;
-						$to_limit = 4;
+						$to_limit = 24;
 						$albums = $this->Solr->facetSearch($queryVar, 'album', $from_limit, $to_limit);
 						$queryArr = null;
 						$albumData = array();
@@ -83,20 +85,20 @@ class SearchController extends AppController
 					break;
 					case 'genre':
 						$from_limit = 1;
-						$to_limit = 4;
+						$to_limit = 16;
 						$genres = $this->Solr->facetSearch($queryVar, 'genre', $from_limit, $to_limit);
 						$this->set('genres', $genres);
 
 					break;
 					case 'label':
 						$from_limit = 1;
-						$to_limit = 4;
+						$to_limit = 16;
 						$labels = $this->Solr->facetSearch($queryVar, 'label', $from_limit, $to_limit);
 						$this->set('labels', $labels);
 					break;
 					case 'artist':
 						$from_limit = 1;
-						$to_limit = 4;
+						$to_limit = 16;
 						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
 						$this->set('artists', $artists);
 					break;
@@ -107,7 +109,7 @@ class SearchController extends AppController
 				$queryArr = null;
 				$albumData = array();
 				$albumsCheck = array_keys($albums);
-				for($i=0;$i<=3;$i++)
+				for($i=0;$i<=count($albumsCheck) -1;$i++)
 				{
 					$queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
 					$albumData[] = $queryArr[0];

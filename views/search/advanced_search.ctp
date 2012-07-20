@@ -41,81 +41,213 @@ if('' != $keyword){
 		<div class="search_result_text">
 			<h3>Results for your search "<?php echo $keyword; ?>" </h3>
 		</div>
-		<div  id="hide_blocks">
-			<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide blocks</a>
-		</div>
-		<div  id="show_blocks" >
-			<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show blocks</a>
-		</div>
+<?php
+		if('true' != $check_all){
+		echo $str =<<<STR
+			<div  id="hide_blocks">
+				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide blocks</a>
+			</div>
+			<div  id="show_blocks" >
+				<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show blocks</a>
+			</div>
+STR;
+		}
+?>
 	</div>
 	<!-- Search Form End-->
+	
+<!-- Added code for all search-->
+<?php 
+if('true' == $check_all){
+	$str_all_blocks = '';
+	$str_all_blocks =<<<STR
+						<div  id="all_block">
+STR;
+	switch($type){
+		case 'album':
+			$counter=0;
+			$album_div =<<<STR
+				 <div  class="results" id="album_all_block">
+					<h2  class="heading">
+						<span class="h2Wrapper">Albums</span>
+					</h2>			
+STR;
+				  
+			if(!empty($albumData)){
+				foreach($albumData as $palbum){
+					if($counter%3==0){
+					  $class = 'album_all_blockC1';
+					} else  if($counter%3==1){
+					  $class = 'album_all_blockC2';
+					}else{
+						$class = 'album_all_blockC3';
+					}
 
-<!-- leftColblock Start -->
-<div  id="leftColblock">
-        <div  id="leftColblockWrapper">
-             <div  class="results" id="albumblock">
-				<h2  class="heading">
-					<span class="h2Wrapper">Albums</span>
-				</h2>
-        <?php
-          $counter=0;
-          if(!empty($albumData)){
-          foreach($albumData as $palbum){
-            if($counter%2==0){
-              $class = 'albumblockC1';
-            } else {
-              $class = 'albumblockC2';
-            }
-            //$album = $album->getAlbum($palbum->ReferenceID);
-            if($counter%2==0){
-              if($counter==0){
-                ?>
-                <div  id ="albumblockR1">
-                <?php }
-                else {
-                ?>
-                <div  id ="albumblockR2">
-                <?php
-                }
-            }
-            ?>
-						<div  class ="<?php echo $class; ?>">
-							<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
-							<div class="albumblockArtistexts">
-								<a class="albumblockArtisLink"><?php echo substr($palbum->Title,0,30)."..."; ?></a>
-								<br />
-								<a  href="#">Genre: <?php echo str_replace('"','',$palbum->Genre); ?></a>
-								<br />
-								<span  class="stats">Label: <?php echo (($palbum->Label!='false')?$palbum->Label:''); ?>(2007)</span>
+					if($counter%3==0){
+						$album_outer_div .=<<<STR
+							<div  class ="albumblockR">
+STR;
+						
+						$album_inner_div = '';
+
+					}
+					
+					$album_title = substr($palbum->Title,0,30)."...";
+					$album_genre = str_replace('"','',$palbum->Genre);
+					$album_label = $palbum->Label;
+					
+					$album_inner_div .=<<<STR
+					<div  class ="$class">
+						<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
+						<div class="albumblockArtistexts">
+							<a class="albumblockArtisLink">$album_title</a>
+							<br />
+							<a  href="#">Genre: $album_genre</a>
+							<br />
+							<span  class="stats">Label: $album_label</span>
+						</div>
+					</div>
+STR;
+
+					$counter++;
+					if($counter%3==0){
+						$album_outer_div =<<<STR
+							$album_outer_div
+							$album_inner_div
+						</div>
+STR;
+					}
+
+				}
+			  } 
+			  else {
+				$album_outer_div .=<<<STR
+				<ul>
+				  <li style='color:red'>No Album Found</li>
+				</ul>
+STR;
+			  }
+			  
+
+	echo $str_all_blocks .=<<<STR
+						$album_div
+							$album_outer_div
 							</div>
 						</div>
 
+STR;
 
-			  <?php
-				$counter++;
-				if($counter%2==0){
-				  ?>
-				 </div>
-				 <?php
+
+		break;		
+		case 'genre':
+
+		break;		
+		case 'label':
+	
+		break;		
+		case 'artist':
+
+		break;		
+	}
+	
+?>
+</div>
+<!-- All blocks div end-->
+<?php	
+
+}
+else{
+
+
+?>
+<!-- leftColblock Start -->
+<div  id="leftColblock">
+        <div  id="leftColblockWrapper">
+<?php
+	$str_all_blocks = '';
+
+			$counter=0;
+			$album_div =<<<STR
+				 <div  class="results" id="albumblock">
+					<h2  class="heading">
+						<span class="h2Wrapper">Albums</span>
+					</h2>			
+STR;
+				  
+			if(!empty($albumData)){
+				foreach($albumData as $palbum){
+					if($counter%2==0){
+					  $class = 'albumblockC1';
+					} else {
+					  $class = 'albumblockC2';
+					}
+
+					if($counter%2==0){
+					  if($counter==0){
+						$album_outer_div =<<<STR
+							<div  id ="albumblockR1">
+STR;
+						}
+						else {
+							$album_inner_div = '';
+							$album_outer_div .=<<<STR
+							<div  id ="albumblockR2">
+STR;
+						}
+					}
+					
+					$album_title = substr($palbum->Title,0,30)."...";
+					$album_genre = str_replace('"','',$palbum->Genre);
+					$album_label = $palbum->Label;
+					
+					$album_inner_div .=<<<STR
+					<div  class ="$class">
+						<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
+						<div class="albumblockArtistexts">
+							<a class="albumblockArtisLink">$album_title</a>
+							<br />
+							<a  href="#">Genre: $album_genre</a>
+							<br />
+							<span  class="stats">Label: $album_label</span>
+						</div>
+					</div>
+STR;
+
+					$counter++;
+					if($counter%2==0){
+						$album_outer_div =<<<STR
+							$album_outer_div
+							$album_inner_div
+						</div>
+STR;
+					}
+					if($counter%4==0){
+						$album_outer_div .=<<<STR
+					  <span class="more_link">
+						<a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">See more albums</a>
+					  </span>
+STR;
+					}
 				}
-				if($counter%4==0){
-				  ?>
-				  <span class="more_link">
-					<a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">See more albums</a>
-				  </span>
-				 <?php
-				}
-			  }
-			  } else {
-				?>
+			  } 
+			  else {
+				$album_outer_div .=<<<STR
 				<ul>
-				  <li style='color:red'>No Composers Found</li>
+				  <li style='color:red'>No Album Found</li>
 				</ul>
-				<?php
+STR;
 			  }
-			  ?>
+			  
 
-				</div>
+	echo $str_all_blocks .=<<<STR
+						    $album_div
+							$album_outer_div
+							</div>
+
+STR;
+
+?>
+
 
 				<div  id="ComposersWrapper">
 						<h2>Composers</h2>
@@ -227,7 +359,8 @@ if('' != $keyword){
 			  ?>
 			</div>
 		</div>
-
+<?php } ?>
+<!-- End left and right blocks -->
 
 	<!-- Added for track Songs -->
 
