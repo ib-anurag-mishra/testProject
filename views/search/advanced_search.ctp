@@ -163,12 +163,12 @@ STR;
 
 					$no_of_genre = count($genres);
 					$number_of_column = 3;
-					$number_of_rows = ceil($no_of_genre / $number_of_column);				
+					$number_of_rows = ceil($no_of_genre / $number_of_column);
 
 					$index = 0;
 					$column = 1;
 					$genre_no = 0;
-					foreach($genres as $genre=>$count){						
+					foreach($genres as $genre=>$count){
 						$column = 1;
 						$genre_no++;
 						if($index == 0){
@@ -193,9 +193,9 @@ STR;
 STR;
 							$index = 0;
 							$genre_list = '';
-							$column++;						
+							$column++;
 						}
-						
+
 					}
 				}
 				else {
@@ -214,10 +214,10 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$genre_wrapper_div
 							</div>
-						
+
 STR;
 
-		break;		
+		break;
 		case 'label':
 
 		break;
@@ -496,18 +496,18 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title=""><a href="#"><?php echo str_replace('"','',$psong->ArtistText); ?></a></span>
-						</p>
+							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><a href="#"><?php echo str_replace('"','',$psong->ArtistText); ?></a></span>
+          	</p>
 					</td>
           <td width="170" valign="top" style="padding-left: 10px;">
-						<p><a href="#"><?php echo str_replace('"','',$psong->Composer); ?></a></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><a href="#"><?php echo str_replace('"','',$psong->Composer); ?></a></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><a href="#"><?php echo str_replace('"','',$psong->Title); ?></a></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="#"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-							<?php echo $psong->SongTitle; ?>
+							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo $psong->SongTitle; ?></span>
               <?php
               $sampleFile = $song->getSampleFile($psong->Sample_FileID);
               $songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
@@ -578,13 +578,27 @@ STR;
 	<!-- End Added for track Songs -->
 	</div>
 	<div class="paging">
-			<span class="disabled">&lt;&lt; previous</span>&nbsp;<span class="current">1</span> |
-			<span><a href="#">2</a></span> |
-			<span><a href="#">3</a></span> |
-			<span><a href="#">4</a></span> | &nbsp;
-			<span><a class="next" href="#">next >></a></span></div>
-	</div>
-
+			<?php
+		/*if(isset($type)){
+			$keyword = "q=".$keyword."&type=".$type;
+		}
+        $paginator->options(array('url' => array("?"=>$searchKey)));
+    ?>
+	<?php
+		echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
+		echo "&nbsp;";
+		echo $paginator->numbers();
+		echo "&nbsp;";
+		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
+    */
+	?>
+</div>
 <?php
 	}
+	else {
+		echo '<table><tr><td width="180" valign="top"><p><div class="paging">';
+		echo __("No records found");
+		echo '</div><br class="clr"></td></tr></table>';
+	}
 ?>
+	</div>
