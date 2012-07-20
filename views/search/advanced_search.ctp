@@ -23,12 +23,12 @@
 			<input type="submit" value="search">
 			<ul  class="clearit" id="searchfilter">
 				<li  class=" current  first "><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album&check_all=true">Albums</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist&check_all=true">Artists</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer&check_all=true">Composers</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre&check_all=true">Genres</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label&check_all=true">Label</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song&check_all=true">Songs</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
+				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a></li>
+				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
 			</ul>
 		</form>
 	 </div>
@@ -42,8 +42,8 @@ if('' != $keyword){
 			<h3>Results for your search "<?php echo $keyword; ?>" </h3>
 		</div>
 <?php
-		if('true' != $check_all){
-		echo $str =<<<STR
+	if(($type == 'all' )){
+			echo $str =<<<STR
 			<div  id="hide_blocks">
 				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide blocks</a>
 			</div>
@@ -58,7 +58,8 @@ STR;
 
 <!-- Added code for all search-->
 <?php
-if('true' == $check_all){
+if(!empty($type) && !($type == 'all' )){
+
 	$str_all_blocks = '';
 	$str_all_blocks =<<<STR
 						<div  id="all_block">
@@ -75,14 +76,14 @@ STR;
 
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
-          $albumDetails = $album->getImage($palbum->ReferenceID);
-          $albumDetails = $album->getImage($palbum->ReferenceID);
-          if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
-            $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
-            $image = Configure::read('App.Music_Path').$albumArtwork;
-          } else {
-            $image = 'no-image.jpg';
-          }
+					$albumDetails = $album->getImage($palbum->ReferenceID);
+					$albumDetails = $album->getImage($palbum->ReferenceID);
+					if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
+						$albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+						$image = Configure::read('App.Music_Path').$albumArtwork;
+					} else {
+						$image = 'no-image.jpg';
+					}
 					if($page->isImage($image)) {
 						//Image is a correct one
 					}
@@ -509,7 +510,7 @@ STR;
 					if($counter%4==0){
 						$album_outer_div .=<<<STR
 					  <span class="more_link">
-						<a  href="/search/advanced_search?q=$keyword&type=album&check_all=true">See more albums</a>
+						<a  href="/search/advanced_search?q=$keyword&type=album">See more albums</a>
 					  </span>
 STR;
 					}
@@ -549,7 +550,7 @@ STR;
 				}
 				?>
 			  </ul>
-			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer&check_all=true">See more Composers</a></span>
+			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
 			  <?php
 			  } else {
 				?>
@@ -582,7 +583,7 @@ STR;
 					$genre_str .=<<<STR
 						$genre_list
 						</ul>
-						<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre&check_all=true">See more Genre</a></span>
+						<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre">See more Genre</a></span>
 STR;
 				}
 				else {
@@ -625,7 +626,7 @@ STR;
 				}
 			  ?>
 			  </ul>
-					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist&check_all=true">See more Artists</a></span>
+					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
 			<?php
 			  } else {
 				?>
@@ -651,7 +652,7 @@ STR;
 				}
 			  ?>
 			  </ul>
-				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label&check_all=true">See more Labels</a></span>
+				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">See more Labels</a></span>
 		  <?php
 			  } else {
 				?>
@@ -769,7 +770,13 @@ STR;
 				</tr>
 		<?php } ?>
 		</tbody></table>
-		<?php } ?>
+		<?php } 
+			else {
+				echo '<table><tr><td width="180" valign="top"><p><div class="paging">';
+				echo __("No records found");
+				echo '</div><br class="clr"></td></tr></table>';
+			}
+		?>
 	<!-- End Added for track Songs -->
 	</div>
 	<div class="paging">
@@ -789,11 +796,8 @@ STR;
 	?>
 </div>
 <?php
+
 	}
-	else {
-		echo '<table><tr><td width="180" valign="top"><p><div class="paging">';
-		echo __("No records found");
-		echo '</div><br class="clr"></td></tr></table>';
-	}
+
 ?>
 	</div>

@@ -42,8 +42,10 @@ class SearchController extends AppController
       $queryVar = $_GET['q'];
     }
     if(isset($_GET['type'])){
-		$typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
-		$this->set('type', $typeVar);
+		$this->set('type', $_GET['type']);
+		$type = $_GET['type'];
+		$typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'song');
+
     }
     if(!empty($queryVar)){
       $patId = $this->Session->read('patron');
@@ -71,11 +73,9 @@ class SearchController extends AppController
 
 			$this->set('songs', $songs);
 			// Added code for all functionality
-      if(isset($_GET['check_all'])){
-        $check_all = $_GET['check_all'];
-      }
-			if('true' == $check_all){
-				$this->set('check_all', $check_all);
+
+			if(!empty($type) && !($type == 'all')){
+
 				switch($typeVar){
 					case 'album':
 						$from_limit = 1;
