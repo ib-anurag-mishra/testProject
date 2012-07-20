@@ -195,21 +195,36 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 
 #all_block{
 	float: left;
-	margin-left: 17px;
+	margin: 15px;
 	width: 988px;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px 4px 4px 4px;
+	font-size: 11px;padding: 15px;
+	float: left; 
+	width: 958px;
 }
+#all_block h2{
+	border-top: medium none;margin-top: -10px;
+}
+
+#all_block  li{
+	border-bottom: 1px solid #ADADAD;
+    color: #0080FF;
+    font-size: 14px;
+    list-style: none outside none;
+    padding: 3px 0;
+    width: 267px;
+}
+
 #album_all_block{
-	border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;
+	font-size: 11px;margin: 0 0 15px;padding: 15px;
 }
 .albumblockR{
 	border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;height: 59px;
 }
-.albumblockR  h2{
-	border-top: medium none;margin-top: -10px;
-}
 
 .album_all_blockC1{
-	float:left;width:290px;height:92px;
+	float:left;width:318px;height:92px;
 }
 .album_all_blockC2, .album_all_blockC3{
 	float:left;width:290px;
@@ -217,52 +232,26 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 .albumblockR    img.art{
 	width: 65px;
 	border:1px solid #A2A2A2;
-	float:left;
-	
-}
-
-#GenreallWrapper{
-		border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;float: left; width: 958px;
-}
-.GenreallWrapper  h2{
-	border-top: medium none;margin-top: -10px;
-}
-.genre_all_block1{
-	float:left;width:290px;
-}
-.genre_all_block2, .genre_all_block3{
-	float:left;width:290px;
-}
-#GenreallWrapper ul li{
-	border-bottom: 1px solid #CCCCCC;
-    color: #0080FF;
-    font-size: 14px;
-    list-style: none outside none;
-    padding: 3px 0;
-    width: 267px;
+	float:left;	
 }
 
 
-#labelallWrapper{
-		border: 1px solid #DDDDDD;border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;float: left; width: 958px;
+.genre_all_block1, .genre_all_block2, .genre_all_block3{
+	float:left;width:318px;
 }
-.labelallWrapper  h2{
-	border-top: medium none;margin-top: -10px;
+
+.label_all_block1, .label_all_block2, .label_all_block3{
+	float:left;width:318px;
 }
-.label_all_block1{
-	float:left;width:290px;
+
+.artist_all_block1, .artist_all_block2, .artist_all_block3{
+	float:left;width:318px;
 }
-.label_all_block2, .label_all_block3{
-	float:left;width:290px;
+.composer_all_block1, .composer_all_block2, .composer_all_block3{
+	float:left;width:318px;
 }
-#labelallWrapper ul li{
-	border-bottom: 1px solid #CCCCCC;
-    color: #0080FF;
-    font-size: 14px;
-    list-style: none outside none;
-    padding: 3px 0;
-    width: 267px;
-}
+
+
 
 
 
