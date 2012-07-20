@@ -55,9 +55,9 @@ STR;
 ?>
 	</div>
 	<!-- Search Form End-->
-	
+
 <!-- Added code for all search-->
-<?php 
+<?php
 if('true' == $check_all){
 	$str_all_blocks = '';
 	$str_all_blocks =<<<STR
@@ -70,11 +70,23 @@ STR;
 				 <div  class="results" id="album_all_block">
 					<h2  class="heading">
 						<span class="h2Wrapper">Albums</span>
-					</h2>			
+					</h2>
 STR;
-				  
+
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
+          print_r($palbum);
+          $albumDetails = $album->getImage($palbum->ReferenceID);
+          $albumDetails = $album->getImage($palbum->ReferenceID);
+          $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+          $image = Configure::read('App.Music_Path').$albumArtwork;
+					if($page->isImage($image)) {
+						//Image is a correct one
+					}
+					else {
+
+					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+					}
 					if($counter%3==0){
 					  $class = 'album_all_blockC1';
 					} else  if($counter%3==1){
@@ -87,18 +99,18 @@ STR;
 						$album_outer_div .=<<<STR
 							<div  class ="albumblockR">
 STR;
-						
+
 						$album_inner_div = '';
 
 					}
-					
+
 					$album_title = substr($palbum->Title,0,30)."...";
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
-					
+
 					$album_inner_div .=<<<STR
 					<div  class ="$class">
-						<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
+						<a  href="#"><img   class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink">$album_title</a>
 							<br />
@@ -119,7 +131,7 @@ STR;
 					}
 
 				}
-			  } 
+			  }
 			  else {
 				$album_outer_div .=<<<STR
 				<ul>
@@ -127,7 +139,7 @@ STR;
 				</ul>
 STR;
 			  }
-			  
+
 
 	echo $str_all_blocks .=<<<STR
 						$album_div
@@ -138,22 +150,22 @@ STR;
 STR;
 
 
-		break;		
+		break;
 		case 'genre':
 
-		break;		
+		break;
 		case 'label':
-	
-		break;		
+
+		break;
 		case 'artist':
 
-		break;		
+		break;
 	}
-	
+
 ?>
 </div>
 <!-- All blocks div end-->
-<?php	
+<?php
 
 }
 else{
@@ -171,12 +183,23 @@ else{
 				 <div  class="results" id="albumblock">
 					<h2  class="heading">
 						<span class="h2Wrapper">Albums</span>
-					</h2>			
+					</h2>
 STR;
-				  
+
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
-					if($counter%2==0){
+          $albumDetails = $album->getImage($palbum->ReferenceID);
+          $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+          $image = Configure::read('App.Music_Path').$albumArtwork;
+					if($page->isImage($image)) {
+						//Image is a correct one
+					}
+					else {
+
+					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+					}
+
+          if($counter%2==0){
 					  $class = 'albumblockC1';
 					} else {
 					  $class = 'albumblockC2';
@@ -195,14 +218,14 @@ STR;
 STR;
 						}
 					}
-					
+
 					$album_title = substr($palbum->Title,0,30)."...";
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
-					
+
 					$album_inner_div .=<<<STR
 					<div  class ="$class">
-						<a  href="#"><img   class="art" src="/img/discover-beyond.jpg"> </a>
+						<a  href="#"><img class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink">$album_title</a>
 							<br />
@@ -229,7 +252,7 @@ STR;
 STR;
 					}
 				}
-			  } 
+			  }
 			  else {
 				$album_outer_div .=<<<STR
 				<ul>
@@ -237,7 +260,7 @@ STR;
 				</ul>
 STR;
 			  }
-			  
+
 
 	echo $str_all_blocks .=<<<STR
 						    $album_div
