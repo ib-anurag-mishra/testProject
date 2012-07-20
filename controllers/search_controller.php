@@ -6,7 +6,7 @@
 class SearchController extends AppController
 {
     var $name = 'Search';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language', 'Album');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Solr','Session');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
 
@@ -37,10 +37,11 @@ class SearchController extends AppController
   function advanced_search() {
     $this->layout = 'home';
     $queryVar = null;
+    $check_all = null;
     if(isset($_GET['q'])){
       $queryVar = $_GET['q'];
     }
-    if(isset($_GET['type'])){		
+    if(isset($_GET['type'])){
 		$typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer') ? $_GET['type'] : 'song');
 		$this->set('type', $typeVar);
     }
@@ -56,11 +57,13 @@ class SearchController extends AppController
 			$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 			$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 			$docs = array();
-			
+
 			$songs = $this->Solr->search($queryVar, $typeVar);
 			$this->set('songs', $songs);
 			// Added code for all functionality
-			$check_all = $_GET['check_all'];
+      if(isset($_GET['check_all'])){
+        $check_all = $_GET['check_all'];
+      }
 			if('true' == $check_all){
 				$this->set('check_all', $check_all);
 				switch($typeVar){
@@ -76,32 +79,32 @@ class SearchController extends AppController
 						  $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
 						  $albumData[] = $queryArr[0];
 						}
-						$this->set('albums', $albums);	
-						$this->set('albumData',$albumData);					
-						
-					break;		
+						$this->set('albums', $albums);
+						$this->set('albumData',$albumData);
+
+					break;
 					case 'genre':
 						$from_limit = 1;
 						$to_limit = 16;
 						$genres = $this->Solr->facetSearch($queryVar, 'genre', $from_limit, $to_limit);
 						$this->set('genres', $genres);
-						
-					break;		
+
+					break;
 					case 'label':
 						$from_limit = 1;
 						$to_limit = 16;
 						$labels = $this->Solr->facetSearch($queryVar, 'label', $from_limit, $to_limit);
 						$this->set('labels', $labels);
-					break;		
+					break;
 					case 'artist':
 						$from_limit = 1;
 						$to_limit = 16;
 						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
 						$this->set('artists', $artists);
-					break;		
-				}			
+					break;
+				}
 			}
-			else{			
+			else{
 				$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
 				$queryArr = null;
 				$albumData = array();
@@ -119,13 +122,13 @@ class SearchController extends AppController
 				$total = 0;
 
 				$this->set('libraryDownload',$libraryDownload);
-				$this->set('patronDownload',$patronDownload);			
+				$this->set('patronDownload',$patronDownload);
 				$this->set('albums', $albums);
 				$this->set('albumData',$albumData);
 				$this->set('artists', $artists);
 				$this->set('genres', $genres);
 				$this->set('composers', $composers);
-				$this->set('labels', $labels);				
+				$this->set('labels', $labels);
 			}
 			$this->set('total', $total);
 		}
