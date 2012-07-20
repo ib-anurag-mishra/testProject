@@ -57,8 +57,18 @@ class SearchController extends AppController
 			$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 			$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 			$docs = array();
-
+      $total = 0;
 			$songs = $this->Solr->search($queryVar, $typeVar);
+      $total = $this->Solr->total;
+      foreach($songs as $key=>$song){
+        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $song->ProdID,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+				if(count($downloadsUsed) > 0){
+					$songs[$key]->status = 'avail';
+				} else{
+					$songs[$key]->status = 'not';
+				}
+      }
+
 			$this->set('songs', $songs);
 			// Added code for all functionality
       if(isset($_GET['check_all'])){
@@ -119,7 +129,7 @@ class SearchController extends AppController
 				$genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
 				$composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
 				$labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
-				$total = 0;
+
 
 				$this->set('libraryDownload',$libraryDownload);
 				$this->set('patronDownload',$patronDownload);

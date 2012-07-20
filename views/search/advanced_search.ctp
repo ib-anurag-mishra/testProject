@@ -77,8 +77,12 @@ STR;
 				foreach($albumData as $palbum){
           $albumDetails = $album->getImage($palbum->ReferenceID);
           $albumDetails = $album->getImage($palbum->ReferenceID);
-          $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
-          $image = Configure::read('App.Music_Path').$albumArtwork;
+          if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
+            $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+            $image = Configure::read('App.Music_Path').$albumArtwork;
+          } else {
+            $image = 'no-image.jpg';
+          }
 					if($page->isImage($image)) {
 						//Image is a correct one
 					}
@@ -109,7 +113,7 @@ STR;
 
 					$album_inner_div .=<<<STR
 					<div  class ="$class">
-						<a  href="#"><img   class="art" src="$image"> </a>
+						<a  href="#"><img height="75" width="100" class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink">$album_title</a>
 							<br />
@@ -159,12 +163,12 @@ STR;
 
 					$no_of_genre = count($genres);
 					$number_of_column = 3;
-					$number_of_rows = ceil($no_of_genre / $number_of_column);				
+					$number_of_rows = ceil($no_of_genre / $number_of_column);
 
 					$index = 0;
 					$column = 1;
 					$genre_no = 0;
-					foreach($genres as $genre=>$count){						
+					foreach($genres as $genre=>$count){
 						$column = 1;
 						$genre_no++;
 						if($index == 0){
@@ -189,9 +193,9 @@ STR;
 STR;
 							$index = 0;
 							$genre_list = '';
-							$column++;						
+							$column++;
 						}
-						
+
 					}
 				}
 				else {
@@ -210,10 +214,10 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$genre_wrapper_div
 							</div>
-						
+
 STR;
 
-		break;		
+		break;
 		case 'label':
 		
 				$label_wrapper_div =<<<STR
@@ -315,9 +319,13 @@ STR;
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
           $albumDetails = $album->getImage($palbum->ReferenceID);
-          $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
-          $image = Configure::read('App.Music_Path').$albumArtwork;
-					if($page->isImage($image)) {
+          if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
+            $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+            $image = Configure::read('App.Music_Path').$albumArtwork;
+          } else {
+            $image = 'no-image.jpg';
+          }
+          if($page->isImage($image)) {
 						//Image is a correct one
 					}
 					else {
@@ -351,7 +359,7 @@ STR;
 
 					$album_inner_div .=<<<STR
 					<div  class ="$class">
-						<a  href="#"><img class="art" src="$image"> </a>
+						<a  href="#"><img class="art" height="75" width="100" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink">$album_title</a>
 							<br />
@@ -544,7 +552,7 @@ STR;
 	  <table cellspacing="0" cellpadding="0" style="margin-left: 45px;">
 			  <tbody>
 		<?php $i = 0;
-    foreach($songs as $song) {
+    foreach($songs as $psong) {
 
       $class = null;
 			if ($i++ % 2 == 0) {
@@ -555,34 +563,43 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title=""><a href="#"><?php echo str_replace('"','',$song->ArtistText); ?></a></span>
-						</p>
+							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><a href="#"><?php echo str_replace('"','',$psong->ArtistText); ?></a></span>
+          	</p>
 					</td>
           <td width="170" valign="top" style="padding-left: 10px;">
-						<p><a href="#"><?php echo str_replace('"','',$song->Composer); ?></a></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><a href="#"><?php echo str_replace('"','',$psong->Composer); ?></a></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><a href="#"><?php echo str_replace('"','',$song->Title); ?></a></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="#"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-							<?php echo $song->SongTitle; ?><a href="#" class="playbutton "><img   src="http://cdn.last.fm/flatness/preview/play_indicator.png" alt="Play" class="transparent_png play_icon"></a>
+							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo $psong->SongTitle; ?></span>
+              <?php
+              $sampleFile = $song->getSampleFile($psong->Sample_FileID);
+              $songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
+							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$psong->ProdID.', "'.$this->webroot.'");'));
+							echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i));
+							echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");'));
+              ?>
 						</p>
 					</td>
 					<td width="170" valign="top" align="center" style="padding-left: 10px;">
             <?php
 						if($libraryDownload == '1' && $patronDownload == '1') {
-								if($song->status != 'avail'){
+								if($psong->status != 'avail'){
 						 ?>
 									<p>
-										<form method="Post" id="form<?php echo $song->ProdID; ?>" action="/homes/userDownload">
-											<input type="hidden" name="ProdID" value="<?php echo $song->ProdID; ?>" />
-											<input type="hidden" name="ProviderType" value="<?php echo $song->provider_type; ?>" />
-											<span class="beforeClick" id="song_<?php echo $song->ProdID; ?>">
-												<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $song->ProdID; ?>);'><?php __('Download Now');?></a>
+										<form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
+											<input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
+											<input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
+											<span class="beforeClick" id="song_<?php echo $psong->ProdID; ?>">
+												<a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not.");?>' onclick='userDownloadAll(<?php echo $psong->ProdID; ?>);'><?php __('Download Now');?></a>
 											</span>
-											<span class="afterClick" id="downloading_<?php echo $song->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
-											<span id="download_loader_<?php echo $song->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+											<span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+											<span id="download_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 										</form>
 									</p>
 					<?php		}else {
@@ -599,14 +616,14 @@ STR;
 					<?php
 									}
                                     else{
-										$wishlistInfo = $wishlist->getWishlistData($song->ProdID);
+										$wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
 										if($wishlistInfo == 'Added to Wishlist'){
 									?>
 											<p><?php __("Added to Wishlist");?></p>
 								<?php 	}
 										else { ?>
 											<p>
-											<span class="beforeClick" id="wishlist<?php echo $song->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $song->ProdID; ?>","<?php echo $song->provider_type; ?>");'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+											<span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>","<?php echo $song->provider_type; ?>");'><?php __("Add to wishlist");?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 											<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 
 											</p>
@@ -628,13 +645,27 @@ STR;
 	<!-- End Added for track Songs -->
 	</div>
 	<div class="paging">
-			<span class="disabled">&lt;&lt; previous</span>&nbsp;<span class="current">1</span> |
-			<span><a href="#">2</a></span> |
-			<span><a href="#">3</a></span> |
-			<span><a href="#">4</a></span> | &nbsp;
-			<span><a class="next" href="#">next >></a></span></div>
-	</div>
-
+			<?php
+		/*if(isset($type)){
+			$keyword = "q=".$keyword."&type=".$type;
+		}
+        $paginator->options(array('url' => array("?"=>$searchKey)));
+    ?>
+	<?php
+		echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
+		echo "&nbsp;";
+		echo $paginator->numbers();
+		echo "&nbsp;";
+		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
+    */
+	?>
+</div>
 <?php
 	}
+	else {
+		echo '<table><tr><td width="180" valign="top"><p><div class="paging">';
+		echo __("No records found");
+		echo '</div><br class="clr"></td></tr></table>';
+	}
 ?>
+	</div>

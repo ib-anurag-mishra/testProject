@@ -6,7 +6,7 @@
  */
 class SongHelper extends AppHelper {
     var $uses = array('Song');
-    
+
     function getDownloadData($id) {
         $songInstance = ClassRegistry::init('Song');
         $details = $songInstance->find('all', array(
@@ -19,15 +19,21 @@ class SongHelper extends AppHelper {
 			'Song.Artist',
 			'Song.ISRC'
 		),
-		'contain' => array(										
+		'contain' => array(
 			'Full_Files' => array(
 				'fields' => array(
 					'Full_Files.CdnPath',
 					'Full_Files.SaveAsName'
-					),                             
+					),
 			)
 	)));
         return  $details;
+    }
+
+    function getSampleFile($id){
+      $songInstance = ClassRegistry::init('Files');
+      $details = $songInstance->find('first',array('conditions'=>array('Files.FileID'=>$id)));
+      return $details;
     }
 }
 

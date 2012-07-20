@@ -6,7 +6,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '108.166.39.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');
+    static $_defaults = array('server' => '192.168.2.178', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24
 
     /**
      * Solr client object
@@ -14,6 +14,13 @@ class SolrComponent extends Object {
      * @var SolrClient
      */
     static $solr = null;
+
+    /**
+     * Solr client object
+     *
+     * @var SolrClient
+     */
+    var $total = null;
 
     function initialize($config = array()){
         $settings = array_merge((array)$config,self::$_defaults);
@@ -68,6 +75,7 @@ class SolrComponent extends Object {
           $response = self::$solr->search( $query, $start, $limit);
           if ( $response->getHttpStatus() == 200 ) {
             if ( $response->response->numFound > 0 ) {
+              $this->total = $response->response->numFound;
               foreach ( $response->response->docs as $doc ) {
                 $docs[] = $doc;
               }
