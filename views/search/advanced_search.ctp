@@ -75,7 +75,6 @@ STR;
 
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
-          print_r($palbum);
           $albumDetails = $album->getImage($palbum->ReferenceID);
           $albumDetails = $album->getImage($palbum->ReferenceID);
           $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
@@ -155,15 +154,15 @@ STR;
 					<div id="GenreWrapper">
 							<h2>Genres</h2>
 STR;
-						
+
 				if(!empty($genres)){
 
 					$no_of_genre = count($genres);
 					$number_of_column = 3;
-					$number_of_row = ceil($no_of_genre / $number_of_column);				
+					$number_of_row = ceil($no_of_genre / $number_of_column);
 
 					$index = 0;
-					foreach($genres as $genre=>$count){						
+					foreach($genres as $genre=>$count){
 						$column = 1;
 						if($index == 0){
 							$class = 'genre_all_block' . $column;
@@ -171,7 +170,7 @@ STR;
 								<div class="$class">
 								<ul>
 STR;
-						}					
+						}
 
 						$genre_name = str_replace('"','',$genre);
 						$genre_list .=<<<STR
@@ -186,10 +185,10 @@ STR;
 								</div>
 STR;
 							$index = 0;
-							$column++;						
+							$column++;
 						}
 					}
-				} 
+				}
 				else {
 					$genre_str  =<<<STR
 					<ul>
@@ -199,10 +198,10 @@ STR;
 
 				}
 				echo $genre_wrapper_div .=<<<STR
-					$genre_str 
+					$genre_str
 					</div> <!-- Div GenreWrapper End-->
 STR;
-		break;		
+		break;
 		case 'label':
 
 		break;
@@ -355,7 +354,7 @@ STR;
 					<div id="GenreWrapper">
 							<h2>Genres</h2>
 STR;
-						
+
 				if(!empty($genres)){
 					$genre_str .=<<<STR
 						<ul>
@@ -372,7 +371,7 @@ STR;
 						$genre_list
 						</ul>
 STR;
-				} 
+				}
 				else {
 					$genre_str  =<<<STR
 					<ul>
@@ -382,7 +381,7 @@ STR;
 
 				}
 				echo $genre_wrapper_div .=<<<STR
-					$genre_str 
+					$genre_str
 					<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre&check_all=true">See more Genre</a></span>
 					</div> <!-- Div GenreWrapper End-->
 STR;
