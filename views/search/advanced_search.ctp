@@ -146,21 +146,38 @@ STR;
 STR;
 						
 				if(!empty($genres)){
-					$genre_str .=<<<STR
-						<ul>
-STR;
 
-					foreach($genres as $genre=>$count){
+					$no_of_genre = count($genres);
+					$number_of_column = 3;
+					$number_of_row = ceil($no_of_genre / $number_of_column);				
+
+					$index = 0;
+					foreach($genres as $genre=>$count){						
+						$column = 1;
+						if($index == 0){
+							$class = 'genre_all_block' . $column;
+							$genre_str .=<<<STR
+								<div class="$class">
+								<ul>
+STR;
+						}					
+
 						$genre_name = str_replace('"','',$genre);
 						$genre_list .=<<<STR
 						<li ><span class="left_text"><a>$genre_name</a></span><span class="right_text">($count)</span></li>
 STR;
-					}
 
-					$genre_str .=<<<STR
-						$genre_list
-						</ul>
+						$index++;
+						if($index  == $number_of_row){
+							$genre_str .=<<<STR
+								$genre_list
+								</ul>
+								</div>
 STR;
+							$index = 0;
+							$column++;						
+						}
+					}
 				} 
 				else {
 					$genre_str  =<<<STR
