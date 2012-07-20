@@ -111,6 +111,12 @@ class SearchController extends AppController
 						$to_limit = 16;
 						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
 						$this->set('artists', $artists);
+					break;					
+					case 'composer':
+						$from_limit = 1;
+						$to_limit = 16;
+						$composers = $this->Solr->facetSearch($queryVar, 'composer', $from_limit, $to_limit);
+						$this->set('composers', $composers);
 					break;
 				}
 			}
