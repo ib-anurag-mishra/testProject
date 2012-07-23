@@ -111,12 +111,13 @@ STR;
 					$album_title = substr($palbum->Title,0,30)."...";
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
+					$tilte = urlencode($palbum->Title);
 
 					$album_inner_div .=<<<STR
 					<div  class ="$class">
 						<a  href="#"><img height="75" width="100" class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
-							<a class="albumblockArtisLink">$album_title</a>
+							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
 							<a  href="#">Genre: $album_genre</a>
 							<br />
@@ -181,8 +182,9 @@ STR;
 						}
 
 						$genre_name = str_replace('"','',$genre);
+						$tilte = urlencode($genre);
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a>$genre_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre">$genre_name</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -247,8 +249,9 @@ STR;
 						}
 
 						$label_name = str_replace('"','',$label);
+						$tilte = urlencode($label);
 						$label_list .=<<<STR
-						<li ><span class="left_text"><a>$label_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=label" title="$label">$label_name</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -313,8 +316,9 @@ STR;
 						}
 
 						$artist_name = str_replace('"','',$artist);
+						$tilte = urlencode($artist);
 						$artist_list .=<<<STR
-						<li ><span class="left_text"><a>$artist_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=artist" title="$artist">$artist_name</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -378,8 +382,9 @@ STR;
 						}
 
 						$composer_name = str_replace('"','',$composer);
+						$tilte = urlencode($composer);
 						$composer_list .=<<<STR
-						<li ><span class="left_text"><a>$composer_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=composer" title='$composer'>$composer_name</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -500,18 +505,18 @@ STR;
 STR;
 
 					$counter++;
-					if($counter%2==0){
+					if($counter%2==0 || $counter == count($albumData)){
 						$album_outer_div =<<<STR
 							$album_outer_div
 							$album_inner_div
 						</div>
 STR;
 					}
-					if($counter%4==0){
+					if($counter%4==0 || $counter == count($albumData)){
 						$album_outer_div .=<<<STR
-					  <span class="more_link">
+					  <div><span class="more_link">
 						<a  href="/search/advanced_search?q=$keyword&type=album">See more albums</a>
-					  </span>
+					  </span></div>
 STR;
 					}
 				}
