@@ -99,7 +99,7 @@ STR;
 						$class = 'album_all_blockC3';
 					}
 
-					if($counter%3==0){
+					if($counter%3==0 ){
 						$album_outer_div .=<<<STR
 							<div  class ="albumblockR">
 STR;
@@ -119,7 +119,7 @@ STR;
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
-							<a  href="#">Genre: $album_genre</a>
+							Genre: $album_genre
 							<br />
 							<span  class="stats">Label: $album_label</span>
 						</div>
@@ -127,7 +127,7 @@ STR;
 STR;
 
 					$counter++;
-					if($counter%3==0){
+					if($counter%3==0 || $counter == count($albumData)){
 						$album_outer_div =<<<STR
 							$album_outer_div
 							$album_inner_div
@@ -136,6 +136,23 @@ STR;
 					}
 
 				}
+				
+				$pagination_str =<<<STR
+				<div class="paging_all_block">
+					<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+					| <span><a href="#">2</a></span> 
+					| <span><a href="#">3</a></span> 
+					| <span><a href="#">4</a></span> 
+					| <span><a href="#">5</a></span>
+					| <span><a href="#">6</a></span> 
+					| <span><a href="#">7</a></span>
+					| <span><a href="#">8</a></span> 
+					| <span><a href="#">9</a></span>	
+					<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+				</div>
+STR;
+					
+				
 			  }
 			  else {
 				$album_outer_div .=<<<STR
@@ -150,6 +167,7 @@ STR;
 							$album_outer_div
 							</div>
 						</div>
+						$pagination_str
 
 STR;
 
@@ -200,6 +218,23 @@ STR;
 						}
 
 					}
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
+					
+					
 				}
 				else {
 					$genre_str  =<<<STR
@@ -214,9 +249,14 @@ STR;
 					</div> <!-- Div GenreWrapper End-->
 STR;
 
+
+
+
+
 				echo $str_all_blocks .=<<<STR
 							$genre_wrapper_div
 							</div>
+							$pagination_str 
 
 STR;
 
@@ -267,6 +307,22 @@ STR;
 						}
 						
 					}
+					
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
 				}
 				else {
 					$label_str  =<<<STR
@@ -284,6 +340,7 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$label_wrapper_div
 							</div>
+							$pagination_str
 						
 STR;
 		
@@ -334,6 +391,22 @@ STR;
 						}
 						
 					}
+					
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
 				}
 				else {
 					$artist_str  =<<<STR
@@ -351,6 +424,7 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$artist_wrapper_div
 							</div>
+							$pagination_str
 						
 STR;
 		break;
@@ -400,6 +474,21 @@ STR;
 						}
 
 					}
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
 				}
 				else {
 					$composer_str  =<<<STR
@@ -417,6 +506,7 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$composer_wrapper_div
 							</div>
+							$pagination_str
 
 STR;
 
@@ -488,16 +578,18 @@ STR;
 					}
 
 					$album_title = substr($palbum->Title,0,30)."...";
+					$title = urlencode($palbum->Title);
 					$album_genre = str_replace('"','',$palbum->Genre);
+					$tilte = urlencode($palbum->Title);
 					$album_label = $palbum->Label;
 
 					$album_inner_div .=<<<STR
 					<div  class ="$class">
 						<a  href="#"><img class="art" height="75" width="100" src="$image"> </a>
 						<div class="albumblockArtistexts">
-							<a class="albumblockArtisLink">$album_title</a>
+							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
-							<a  href="#">Genre: $album_genre</a>
+							Genre: $album_genre
 							<br />
 							<span  class="stats">Label: $album_label</span>
 						</div>
@@ -540,7 +632,7 @@ STR;
 
 ?>
 
-
+				
 				<div  id="ComposersWrapper">
 						<h2>Composers</h2>
 			  <?php
@@ -549,8 +641,9 @@ STR;
 						<ul >
 				<?php foreach($composers as $composer=>$count)
 				{
+					$tilte = urlencode($composer);
 				?>
-							<li ><span class="left_text"><a><?php echo str_replace('"','',$composer); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer?>'><?php echo str_replace('"','',$composer); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 				<?php
 				}
 				?>
@@ -580,8 +673,9 @@ STR;
 
 					foreach($genres as $genre=>$count){
 						$genre_name = str_replace('"','',$genre);
+						$tilte = urlencode($genre_name);
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a>$genre_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name</a></span><span class="right_text">($count)</span></li>
 STR;
 					}
 
@@ -625,8 +719,9 @@ STR;
 			  <ul>
 						<?php foreach($artists as $artist=>$count)
 			  {
+								$tilte = urlencode($artist);
 			  ?>
-				<li ><span class="left_text"><a><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=artist" title='<?php echo $artist?>'><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 			  ?>
@@ -651,8 +746,9 @@ STR;
 			  <ul>
 						<?php foreach($labels as $label=>$count)
 			  {
+								$tilte = urlencode($label);
 			  ?>
-				<li ><span class="left_text"><a><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $label?>'><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 			  ?>
