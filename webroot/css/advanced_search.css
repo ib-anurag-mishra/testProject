@@ -64,9 +64,15 @@ a:hover{
 #albumblockR1{
 	margin-top:10px;float:left;
 }
+#albumblockR2{
+   display: block;
+    float: left;
+    width: 646px;
+
+}
 
 .albumblockC1{
-	float:left;width:320px;height:92px;
+	float:left;width:320px;height:86px;
 }
 .albumblockC2{
 	float:left;width:320px;
@@ -249,6 +255,13 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 }
 .composer_all_block1, .composer_all_block2, .composer_all_block3{
 	float:left;width:318px;
+}
+
+div.pagination {
+    float: right;
+    font-size: 11px;
+    line-height: 2.5;
+    margin: 0.5em 0;
 }
 
 
