@@ -257,12 +257,37 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 	float:left;width:318px;
 }
 
-div.pagination {
+
+
+
+div.paging_all_block{
+    background: none repeat scroll 0 0 #FFFFFF;
+    clear: both;
+    color: #000000;
     float: right;
-    font-size: 11px;
-    line-height: 2.5;
-    margin: 0.5em 0;
+    font-size: 13px;
+    margin-right: 19px;
+    padding-bottom: 10px;
 }
+
+div.paging_all_block span.disabled {
+    color: #DDDDDD;
+    display: inline;
+}
+div.paging_all_block span.disabled {
+    color: #DDDDDD;
+    display: inline;
+}
+div.paging_all_block span.current {
+    color: #000000;
+}
+div.paging_all_block span a {
+    color: #0080FF;
+    text-decoration: underline;
+}
+
+
+
 
 
 
