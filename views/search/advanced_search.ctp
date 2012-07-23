@@ -136,6 +136,23 @@ STR;
 					}
 
 				}
+				
+				$pagination_str =<<<STR
+				<div class="paging_all_block">
+					<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+					| <span><a href="#">2</a></span> 
+					| <span><a href="#">3</a></span> 
+					| <span><a href="#">4</a></span> 
+					| <span><a href="#">5</a></span>
+					| <span><a href="#">6</a></span> 
+					| <span><a href="#">7</a></span>
+					| <span><a href="#">8</a></span> 
+					| <span><a href="#">9</a></span>	
+					<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+				</div>
+STR;
+					
+				
 			  }
 			  else {
 				$album_outer_div .=<<<STR
@@ -150,6 +167,7 @@ STR;
 							$album_outer_div
 							</div>
 						</div>
+						$pagination_str
 
 STR;
 
@@ -200,6 +218,23 @@ STR;
 						}
 
 					}
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
+					
+					
 				}
 				else {
 					$genre_str  =<<<STR
@@ -214,9 +249,14 @@ STR;
 					</div> <!-- Div GenreWrapper End-->
 STR;
 
+
+
+
+
 				echo $str_all_blocks .=<<<STR
 							$genre_wrapper_div
 							</div>
+							$pagination_str 
 
 STR;
 
@@ -267,6 +307,22 @@ STR;
 						}
 						
 					}
+					
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
 				}
 				else {
 					$label_str  =<<<STR
@@ -284,6 +340,7 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$label_wrapper_div
 							</div>
+							$pagination_str
 						
 STR;
 		
@@ -334,6 +391,22 @@ STR;
 						}
 						
 					}
+					
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
 				}
 				else {
 					$artist_str  =<<<STR
@@ -351,6 +424,7 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$artist_wrapper_div
 							</div>
+							$pagination_str
 						
 STR;
 		break;
@@ -400,6 +474,21 @@ STR;
 						}
 
 					}
+					$pagination_str =<<<STR
+					<div class="paging_all_block">
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
+						| <span><a href="#">2</a></span> 
+						| <span><a href="#">3</a></span> 
+						| <span><a href="#">4</a></span> 
+						| <span><a href="#">5</a></span>
+						| <span><a href="#">6</a></span> 
+						| <span><a href="#">7</a></span>
+						| <span><a href="#">8</a></span> 
+						| <span><a href="#">9</a></span>	
+						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
+					</div>
+STR;
+					
 				}
 				else {
 					$composer_str  =<<<STR
@@ -417,6 +506,7 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$composer_wrapper_div
 							</div>
+							$pagination_str
 
 STR;
 
