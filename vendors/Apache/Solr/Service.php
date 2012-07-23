@@ -774,7 +774,7 @@ print_r($response); die;
   {
     $curl_req = curl_init($request);
     curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($curl_req, CURLOPT_HEADER, FALSE);
+    curl_setopt($curl_req, CURLOPT_HEADER, TRUE);
     $contents = curl_exec($curl_req);
     curl_close($curl_req);
     return $contents;
