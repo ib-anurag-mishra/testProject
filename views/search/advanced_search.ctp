@@ -119,7 +119,7 @@ STR;
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
-							<a  href="#">Genre: $album_genre</a>
+							Genre: $album_genre
 							<br />
 							<span  class="stats">Label: $album_label</span>
 						</div>
@@ -578,6 +578,7 @@ STR;
 					}
 
 					$album_title = substr($palbum->Title,0,30)."...";
+					$title = urlencode($palbum->Title);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$tilte = urlencode($palbum->Title);
 					$album_label = $palbum->Label;
@@ -586,9 +587,9 @@ STR;
 					<div  class ="$class">
 						<a  href="#"><img class="art" height="75" width="100" src="$image"> </a>
 						<div class="albumblockArtistexts">
-							<a class="albumblockArtisLink">$album_title</a>
+							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
-							<a  href="#">Genre: $album_genre</a>
+							Genre: $album_genre
 							<br />
 							<span  class="stats">Label: $album_label</span>
 						</div>
