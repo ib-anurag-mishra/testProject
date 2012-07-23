@@ -239,11 +239,11 @@ class Apache_Solr_Service
 	{
 		//$http_response_header is set by file_get_contents
 		$response = new Apache_Solr_Response($this->curl_file_get_contents($url), $http_response_header);
-print_r($response); die;
+    /*print_r($response); die;
 		if ($response->getHttpStatus() != 200)
 		{
 			throw new Exception('"' . $response->getHttpStatus() . '" Status: ' . $response->getHttpStatusMessage());
-		}
+		}*/
 
 		return $response;
 	}
@@ -774,7 +774,7 @@ print_r($response); die;
   {
     $curl_req = curl_init($request);
     curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($curl_req, CURLOPT_HEADER, TRUE);
+    curl_setopt($curl_req, CURLOPT_HEADER, FALSE);
     $contents = curl_exec($curl_req);
     curl_close($curl_req);
     return $contents;
