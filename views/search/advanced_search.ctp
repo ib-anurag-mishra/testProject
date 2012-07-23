@@ -579,6 +579,7 @@ STR;
 
 					$album_title = substr($palbum->Title,0,30)."...";
 					$album_genre = str_replace('"','',$palbum->Genre);
+					$tilte = urlencode($palbum->Title);
 					$album_label = $palbum->Label;
 
 					$album_inner_div .=<<<STR
@@ -630,7 +631,7 @@ STR;
 
 ?>
 
-
+				
 				<div  id="ComposersWrapper">
 						<h2>Composers</h2>
 			  <?php
@@ -639,8 +640,9 @@ STR;
 						<ul >
 				<?php foreach($composers as $composer=>$count)
 				{
+					$tilte = urlencode($composer);
 				?>
-							<li ><span class="left_text"><a><?php echo str_replace('"','',$composer); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer?>'><?php echo str_replace('"','',$composer); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 				<?php
 				}
 				?>
@@ -670,8 +672,9 @@ STR;
 
 					foreach($genres as $genre=>$count){
 						$genre_name = str_replace('"','',$genre);
+						$tilte = urlencode($genre_name);
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a>$genre_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name</a></span><span class="right_text">($count)</span></li>
 STR;
 					}
 
@@ -715,8 +718,9 @@ STR;
 			  <ul>
 						<?php foreach($artists as $artist=>$count)
 			  {
+								$tilte = urlencode($artist);
 			  ?>
-				<li ><span class="left_text"><a><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=artist" title='<?php echo $artist?>'><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 			  ?>
@@ -741,8 +745,9 @@ STR;
 			  <ul>
 						<?php foreach($labels as $label=>$count)
 			  {
+								$tilte = urlencode($label);
 			  ?>
-				<li ><span class="left_text"><a><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $label?>'><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 			  ?>
