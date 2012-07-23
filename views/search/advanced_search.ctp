@@ -99,7 +99,7 @@ STR;
 						$class = 'album_all_blockC3';
 					}
 
-					if($counter%3==0){
+					if($counter%3==0 ){
 						$album_outer_div .=<<<STR
 							<div  class ="albumblockR">
 STR;
@@ -127,7 +127,7 @@ STR;
 STR;
 
 					$counter++;
-					if($counter%3==0){
+					if($counter%3==0 || $counter == count($albumData)){
 						$album_outer_div =<<<STR
 							$album_outer_div
 							$album_inner_div
