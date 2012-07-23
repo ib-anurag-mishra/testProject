@@ -238,7 +238,7 @@ class Apache_Solr_Service
 	private function _sendRawGet($url)
 	{
 		//$http_response_header is set by file_get_contents
-		$response = new Apache_Solr_Response(@file_get_contents($url), $http_response_header);
+		$response = new Apache_Solr_Response($this->curl_file_get_contents($url), $http_response_header);
 
 		if ($response->getHttpStatus() != 200)
 		{
@@ -267,7 +267,7 @@ class Apache_Solr_Service
 		stream_context_set_option($this->_postContext, 'http', 'content', $rawPost);
 
 		//$http_response_header is set by file_get_contents
-		$response = new Apache_Solr_Response(@file_get_contents($url, false, $this->_postContext), $http_response_header);
+		$response = new Apache_Solr_Response($this->curl_file_get_contents($url, false, $this->_postContext), $http_response_header);
 
 		if ($response->getHttpStatus() != 200)
 		{
@@ -769,4 +769,14 @@ class Apache_Solr_Service
 
 		return $this->_sendRawGet($this->_searchUrl . $this->_queryDelimiter . implode($this->_queryStringDelimiter, $escapedParams));
 	}
+
+  private function curl_file_get_contents($request)
+  {
+    $curl_req = curl_init($request);
+    curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, TRUE);
+    curl_setopt($curl_req, CURLOPT_HEADER, FALSE);
+    $contents = curl_exec($curl_req);
+    curl_close($curl_req);
+    return $contents;
+  }///end of functn curl File get contents
 }
