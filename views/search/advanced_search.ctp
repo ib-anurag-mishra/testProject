@@ -45,10 +45,10 @@ if('' != $keyword){
 	if(($type == 'all' )){
 			echo $str =<<<STR
 			<div  id="hide_blocks">
-				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide blocks</a>
+				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide</a>
 			</div>
 			<div  id="show_blocks" >
-				<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show blocks</a>
+				<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show</a>
 			</div>
 STR;
 		}
