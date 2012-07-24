@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
 
     /*
      Function Name : beforeFilter
@@ -740,9 +740,59 @@ STR;
 
 
 				}
+				
 				$this->set('searchResults', $searchResults);
+
+				//Added code for log search data
+				$insertArr['search_type'] = 'advance_search';
+				$insertArr['artist'] =  $this->data['Home']['artist'];
+				$insertArr['label'] =  $this->data['Home']['label'];
+				$insertArr['composer'] =  $this->data['Home']['composer'];
+				$insertArr['song'] =  $this->data['Home']['song'];
+				$insertArr['album'] =  $this->data['Home']['album'];
+				$insertArr['genre_id'] =  $this->data['Home']['genre_id'];
+				$insertArr['match'] =  $this->data['Home']['Match'];
+				$insertArr['searchedOn'] = date('Y-m-d H:i:s');
+				$insertArr['country'] = $country;
+				$insertArr['patron_id'] = $patId;
+				$insertArr['library_id'] = $libId;
+				$this->Searchrecord->save($insertArr);	
+				//End Added code for log search data	
+				
+				
 			}
 			else {
+			
+				//Added code for log search data
+				$insertArr['search_type'] = 'search';
+				switch($_REQUEST['search_type']){
+					case 'artist':
+						$insertArr['artist'] = $_REQUEST['search'];
+						break;					
+					case 'label':
+						$insertArr['label'] = $_REQUEST['search'];
+						break;					
+					case 'composer':
+						$insertArr['composer'] = $_REQUEST['search'];
+						break;					
+					case 'song':
+						$insertArr['song'] = $_REQUEST['search'];
+						break;					
+					case 'album':
+						$insertArr['album'] = $_REQUEST['search'];
+						break;	
+					case 'genre_id':
+						$insertArr['genre_id'] = $_REQUEST['search'];
+						break;				
+				}
+				
+				$insertArr['searchedOn'] = date('Y-m-d H:i:s');
+				$insertArr['country'] = $country;
+				$insertArr['patron_id'] = $patId;
+				$insertArr['library_id'] = $libId;				
+				$this->Searchrecord->save($insertArr);	
+				//End Added code for log search data
+				
 				if($_REQUEST['search_type'] == 'composer'){
 					$this->set('composer', "composer");
 				}
