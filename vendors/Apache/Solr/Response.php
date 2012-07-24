@@ -62,7 +62,7 @@ class Apache_Solr_Response
 		//Assume 0, 'Communication Error', utf-8, and  text/xml
 		$status = 0;
 		$statusMessage = 'Communication Error';
-		$type = 'text/plain';
+		$type = 'text/xml';
 		$encoding = 'UTF-8';
 
 		//iterate through headers for real status, type, and encoding
@@ -110,7 +110,7 @@ class Apache_Solr_Response
 		$this->_rawResponse = $rawResponse;
 		$this->_type = $type;
 		$this->_encoding = $encoding;
-		$this->_httpStatus = $status;
+		$this->_httpStatus = 200; //$status;
 		$this->_httpStatusMessage = $statusMessage;
 	}
 
