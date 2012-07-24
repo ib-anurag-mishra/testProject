@@ -34,7 +34,7 @@ class SearchController extends AppController
     }
 
 
-  function advanced_search() {
+  function advanced_search($page=1) {
     $this->layout = 'home';
     $queryVar = null;
     $check_all = null;
@@ -60,8 +60,23 @@ class SearchController extends AppController
 			$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 			$docs = array();
       $total = 0;
-			$songs = $this->Solr->search($queryVar, $typeVar);
+      $limit = 10;
+
+      if(!isset($page) && $page < 1){
+        $page = 1;
+      } else {
+        $page = $page;
+      }
+
+			$songs = $this->Solr->search($queryVar, $typeVar, $page, $limit);
       $total = $this->Solr->total;
+      $totalPages = ceil($total/$limit);
+
+      if($page > $totalPages){
+        $page = $totalPages;
+        $this->redirect();
+      }
+
       foreach($songs as $key=>$song){
         $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $song->ProdID,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 				if(count($downloadsUsed) > 0){
@@ -111,7 +126,7 @@ class SearchController extends AppController
 						$to_limit = 16;
 						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
 						$this->set('artists', $artists);
-					break;					
+					break;
 					case 'composer':
 						$from_limit = 1;
 						$to_limit = 16;
@@ -147,7 +162,9 @@ class SearchController extends AppController
 				$this->set('labels', $labels);
 			}
 			$this->set('total', $total);
-		}
+      $this->set('totalPages', $totalPages);
+      $this->set('currentPage', $page);
+    }
 		$this->set('keyword', $queryVar);
 	}
 }
