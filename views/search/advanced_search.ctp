@@ -17,7 +17,7 @@
 <!-- Search Form -->
 <div id="leftCol">
 	<div id="leftColWrapper">
-		<form method="get"><h1 ><label for="search_query">Search music on freegal.com</label></h1>
+		<form method="get"><h1 ><label for="search_query">Search music on freegalmusic.com</label></h1>
 			<input type="text"  id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
 			<input type="hidden" value="<?php echo ($type)?$type:'all' ?>" name="type">
 			<input type="submit" value="search">
