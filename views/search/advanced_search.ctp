@@ -136,23 +136,23 @@ STR;
 					}
 
 				}
-				
+
 				$pagination_str =<<<STR
 				<div class="paging_all_block">
-					<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
-					| <span><a href="#">2</a></span> 
-					| <span><a href="#">3</a></span> 
-					| <span><a href="#">4</a></span> 
+					<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
+					| <span><a href="#">2</a></span>
+					| <span><a href="#">3</a></span>
+					| <span><a href="#">4</a></span>
 					| <span><a href="#">5</a></span>
-					| <span><a href="#">6</a></span> 
+					| <span><a href="#">6</a></span>
 					| <span><a href="#">7</a></span>
-					| <span><a href="#">8</a></span> 
-					| <span><a href="#">9</a></span>	
+					| <span><a href="#">8</a></span>
+					| <span><a href="#">9</a></span>
 					<span><a class="next" href="#">next &gt;&gt;</a></span><br>
 				</div>
 STR;
-					
-				
+
+
 			  }
 			  else {
 				$album_outer_div .=<<<STR
@@ -220,21 +220,21 @@ STR;
 					}
 					$pagination_str =<<<STR
 					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
-						| <span><a href="#">2</a></span> 
-						| <span><a href="#">3</a></span> 
-						| <span><a href="#">4</a></span> 
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
+						| <span><a href="#">2</a></span>
+						| <span><a href="#">3</a></span>
+						| <span><a href="#">4</a></span>
 						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span> 
+						| <span><a href="#">6</a></span>
 						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span> 
-						| <span><a href="#">9</a></span>	
+						| <span><a href="#">8</a></span>
+						| <span><a href="#">9</a></span>
 						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
 					</div>
 STR;
-					
-					
-					
+
+
+
 				}
 				else {
 					$genre_str  =<<<STR
@@ -256,13 +256,13 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$genre_wrapper_div
 							</div>
-							$pagination_str 
+							$pagination_str
 
 STR;
 
 		break;
 		case 'label':
-		
+
 				$label_wrapper_div =<<<STR
 					<div id="labelallWrapper">
 							<h2>Labels</h2>
@@ -272,12 +272,12 @@ STR;
 
 					$no_of_label = count($labels);
 					$number_of_column = 3;
-					$number_of_rows = ceil($no_of_label / $number_of_column);				
+					$number_of_rows = ceil($no_of_label / $number_of_column);
 
 					$index = 0;
 					$column = 1;
 					$label_no = 0;
-					foreach($labels as $label=>$count){						
+					foreach($labels as $label=>$count){
 						$column = 1;
 						$label_no++;
 						if($index == 0){
@@ -303,26 +303,26 @@ STR;
 STR;
 							$index = 0;
 							$label_list = '';
-							$column++;						
+							$column++;
 						}
-						
+
 					}
-					
+
 					$pagination_str =<<<STR
 					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
-						| <span><a href="#">2</a></span> 
-						| <span><a href="#">3</a></span> 
-						| <span><a href="#">4</a></span> 
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
+						| <span><a href="#">2</a></span>
+						| <span><a href="#">3</a></span>
+						| <span><a href="#">4</a></span>
 						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span> 
+						| <span><a href="#">6</a></span>
 						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span> 
-						| <span><a href="#">9</a></span>	
+						| <span><a href="#">8</a></span>
+						| <span><a href="#">9</a></span>
 						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
 					</div>
 STR;
-					
+
 				}
 				else {
 					$label_str  =<<<STR
@@ -341,9 +341,9 @@ STR;
 							$label_wrapper_div
 							</div>
 							$pagination_str
-						
+
 STR;
-		
+
 
 		break;
 		case 'artist':
@@ -356,12 +356,12 @@ STR;
 
 					$no_of_artist = count($artists);
 					$number_of_column = 3;
-					$number_of_rows = ceil($no_of_artist / $number_of_column);				
+					$number_of_rows = ceil($no_of_artist / $number_of_column);
 
 					$index = 0;
 					$column = 1;
 					$artist_no = 0;
-					foreach($artists as $artist=>$count){						
+					foreach($artists as $artist=>$count){
 						$column = 1;
 						$artist_no++;
 						if($index == 0){
@@ -387,26 +387,26 @@ STR;
 STR;
 							$index = 0;
 							$artist_list = '';
-							$column++;						
+							$column++;
 						}
-						
+
 					}
-					
+
 					$pagination_str =<<<STR
 					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
-						| <span><a href="#">2</a></span> 
-						| <span><a href="#">3</a></span> 
-						| <span><a href="#">4</a></span> 
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
+						| <span><a href="#">2</a></span>
+						| <span><a href="#">3</a></span>
+						| <span><a href="#">4</a></span>
 						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span> 
+						| <span><a href="#">6</a></span>
 						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span> 
-						| <span><a href="#">9</a></span>	
+						| <span><a href="#">8</a></span>
+						| <span><a href="#">9</a></span>
 						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
 					</div>
 STR;
-					
+
 				}
 				else {
 					$artist_str  =<<<STR
@@ -425,10 +425,10 @@ STR;
 							$artist_wrapper_div
 							</div>
 							$pagination_str
-						
+
 STR;
 		break;
-		
+
 		case 'composer':
 				$composer_wrapper_div =<<<STR
 					<div id="GenreallWrapper">
@@ -476,19 +476,19 @@ STR;
 					}
 					$pagination_str =<<<STR
 					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span> 
-						| <span><a href="#">2</a></span> 
-						| <span><a href="#">3</a></span> 
-						| <span><a href="#">4</a></span> 
+						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
+						| <span><a href="#">2</a></span>
+						| <span><a href="#">3</a></span>
+						| <span><a href="#">4</a></span>
 						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span> 
+						| <span><a href="#">6</a></span>
 						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span> 
-						| <span><a href="#">9</a></span>	
+						| <span><a href="#">8</a></span>
+						| <span><a href="#">9</a></span>
 						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
 					</div>
 STR;
-					
+
 				}
 				else {
 					$composer_str  =<<<STR
@@ -632,7 +632,7 @@ STR;
 
 ?>
 
-				
+
 				<div  id="ComposersWrapper">
 						<h2>Composers</h2>
 			  <?php
@@ -693,7 +693,7 @@ STR;
 STR;
 
 				}
-				
+
 
 				echo $genre_wrapper_div .=<<<STR
 					$genre_str
@@ -871,7 +871,7 @@ STR;
 				</tr>
 		<?php } ?>
 		</tbody></table>
-		<?php } 
+		<?php }
 			else {
 				echo '<table><tr><td width="180" valign="top"><p><div class="paging">';
 				echo __("No records found");
@@ -881,14 +881,42 @@ STR;
 	<!-- End Added for track Songs -->
 	</div>
 	<div class="paging">
-			<?php
-		/*if(isset($type)){
-			$keyword = "q=".$keyword."&type=".$type;
-		}
-        $paginator->options(array('url' => array("?"=>$searchKey)));
+		<?php
+      if(isset($type)){
+      	$keyword = "?q=".$keyword."&type=".$type;
+      }
     ?>
 	<?php
-		echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
+    $pageLimitToShow = 7;
+    $part = floor($pageLimitToShow/2);
+    echo $html->link('<<'.__('previous', true), array('controller'=>'search','action'=>'advanced_search',($currentPage-1)));
+    echo "&nbsp;";
+    if($currentPage <= $part){
+      $fromPage = 1;
+      $topage = $currentPage + ($pageLimitToShow - $currentPage);
+      $topage = (($topage <= $totalPages)?$topage:$totalPages);
+    } elseif($currentPage >= ($totalPages - $part)){
+      $fromPage = $currentPage - $pageLimitToShow;
+      $topage = $currentPage;
+      $fromPage = (($fromPage > 1)?$fromPage:1);
+    }
+    else{
+      $fromPage = $currentPage - $part;
+      $topage = $currentPage + $part;
+    }
+    for($pageCount=$fromPage;$pageCount<=$topage;$pageCount++){
+      if($currentPage == $pageCount){
+        echo $pageCount;
+      } else {
+        echo $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$keyword);
+      }
+      echo "&nbsp;";
+    }
+
+		echo "&nbsp;";
+    echo $html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$keyword);
+
+    /*echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
 		echo "&nbsp;";
 		echo $paginator->numbers();
 		echo "&nbsp;";
