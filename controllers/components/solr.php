@@ -6,7 +6,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24
+    static $_defaults = array('server' => '192.168.2.178', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24
 
     /**
      * Solr client object
@@ -35,31 +35,32 @@ class SolrComponent extends Object {
         $query = '';
         $docs = array();
         $country = $this->Session->read('territory');
+        $searchkeyword = $this->escapeSpace($keyword);
         if(!empty($country)){
           if(!isset(self::$solr)){
               self::initialize(null);
           }
           switch($type){
             case 'song':
-              $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
+              $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
               break;
             case 'genre':
-              $query = 'CGenre:(*'.strtolower($keyword).'*)';
+              $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
               break;
             case 'album':
-              $query = 'CTitle:(*'.strtolower($keyword).'*)';
+              $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
               break;
             case 'artist':
-              $query = 'CArtistText:(*'.strtolower($keyword).'*)';
+              $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
               break;
             case 'label':
-              $query = 'CLabel:(*'.strtolower($keyword).'*)';
+              $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
               break;
             case 'composer':
-              $query = 'CComposer:(*'.strtolower($keyword).'*)';
+              $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
               break;
             default:
-              $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
+              $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
               break;
           }
 
@@ -95,6 +96,7 @@ class SolrComponent extends Object {
     function facetSearch($keyword, $type='song', $page=1, $limit = 5){
       $query = '';
       $country = $this->Session->read('territory');
+      $searchkeyword = $this->escapeSpace($keyword);
       if(!empty($country)){
         if(!isset(self::$solr)){
           self::initialize(null);
@@ -102,31 +104,31 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = 'CGenre:(*'.strtolower($keyword).'*)';
+            $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
             $field = 'Genre';
             break;
           case 'album':
-            $query = 'CTitle:(*'.strtolower($keyword).'*)';
+            $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
             $field = 'Title';
             break;
           case 'artist':
-            $query = 'CArtistText:(*'.strtolower($keyword).'*)';
+            $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = 'CLabel:(*'.strtolower($keyword).'*)';
+            $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
             $field = 'Label';
             break;
           case 'composer':
-            $query = 'CComposer:(*'.strtolower($keyword).'*)';
+            $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
             $field = 'Composer';
             break;
           default:
-            $query = 'CSongTitle:(*'.strtolower($keyword).'*)';
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
             $field = 'SongTitle';
             break;
         }
@@ -148,7 +150,6 @@ class SolrComponent extends Object {
           'facet.mincount' => 1,
           'facet.limit' => $limit
         );
-
 
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
         if ( $response->getHttpStatus() == 200 ) {
@@ -182,6 +183,11 @@ class SolrComponent extends Object {
         return array();
       }
       return $docs;
+    }
+
+    function escapeSpace($keyword){
+      $keyword = str_replace(array(' ','(',')','"'), array('\ ','\(','\)','\"'), $keyword);
+      return $keyword;
     }
 }
 
