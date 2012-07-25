@@ -19,7 +19,7 @@
 	<div id="leftColWrapper">
 		<form method="get"><h1 ><label for="search_query">Search music on freegal.com</label></h1>
 			<input type="text"  id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
-			<input type="hidden" value="<?php echo ($type)?$type:'all' ?>" name="type">
+			<input type="hidden" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" value="search">
 			<ul  class="clearit" id="searchfilter">
 				<li  class=" current  first "><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
@@ -515,7 +515,7 @@ STR;
 	}
 
 ?>
-</div>
+<!-- </div> -->
 <!-- All blocks div end-->
 <?php
 
