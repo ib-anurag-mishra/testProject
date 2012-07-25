@@ -743,20 +743,30 @@ STR;
 				
 				$this->set('searchResults', $searchResults);
 
-				//Added code for log search data
-				$insertArr['search_type'] = 'advance_search';
-				$insertArr['artist'] =  $this->data['Home']['artist'];
-				$insertArr['label'] =  $this->data['Home']['label'];
-				$insertArr['composer'] =  $this->data['Home']['composer'];
-				$insertArr['song'] =  $this->data['Home']['song'];
-				$insertArr['album'] =  $this->data['Home']['album'];
-				$insertArr['genre_id'] =  $this->data['Home']['genre_id'];
-				$insertArr['match'] =  $this->data['Home']['Match'];
-				$insertArr['searchedOn'] = date('Y-m-d H:i:s');
-				$insertArr['country'] = $country;
-				$insertArr['patron_id'] = $patId;
-				$insertArr['library_id'] = $libId;
-				$this->Searchrecord->save($insertArr);	
+				//Added code for log search data			
+				if(isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= ''){
+					$insertArr[] = $this->searchrecords('artist', $this->data['Home']['artist']);
+				}
+				if(isset($this->data['Home']['label']) && $this->data['Home']['label']!= ''){
+					$insertArr[] = $this->searchrecords('label', $this->data['Home']['label']);			
+				}
+				if(isset($this->data['Home']['composer']) && $this->data['Home']['composer']!= ''){
+					$insertArr[] = $this->searchrecords('composer', $this->data['Home']['composer']);		
+				}
+				if(isset($this->data['Home']['song']) && $this->data['Home']['song']!= ''){
+					$insertArr[] = $this->searchrecords('song', $this->data['Home']['song']);			
+				}
+				if(isset($this->data['Home']['album']) && $this->data['Home']['album']!= ''){
+					$insertArr[] = $this->searchrecords('album', $this->data['Home']['album']);	
+				}
+				if(isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id']!= ''){
+					$insertArr[] = $this->searchrecords('genre_id', $this->data['Home']['genre_id']);	
+				}
+				
+				if(is_array($insertArr)){
+					$this->Searchrecord->saveAll($insertArr);	
+				}
+				
 				//End Added code for log search data	
 				
 				
@@ -764,33 +774,12 @@ STR;
 			else {
 			
 				//Added code for log search data
-				$insertArr['search_type'] = 'search';
-				switch($_REQUEST['search_type']){
-					case 'artist':
-						$insertArr['artist'] = $_REQUEST['search'];
-						break;					
-					case 'label':
-						$insertArr['label'] = $_REQUEST['search'];
-						break;					
-					case 'composer':
-						$insertArr['composer'] = $_REQUEST['search'];
-						break;					
-					case 'song':
-						$insertArr['song'] = $_REQUEST['search'];
-						break;					
-					case 'album':
-						$insertArr['album'] = $_REQUEST['search'];
-						break;	
-					case 'genre_id':
-						$insertArr['genre_id'] = $_REQUEST['search'];
-						break;				
+
+				if(isset($_REQUEST['search']) && $_REQUEST['search']!= ''){
+					$insertArr[] = $this->searchrecords($_REQUEST['search_type'], $_REQUEST['search']);					
 				}
+				$this->Searchrecord->saveAll($insertArr);				
 				
-				$insertArr['searchedOn'] = date('Y-m-d H:i:s');
-				$insertArr['country'] = $country;
-				$insertArr['patron_id'] = $patId;
-				$insertArr['library_id'] = $libId;				
-				$this->Searchrecord->save($insertArr);	
 				//End Added code for log search data
 				
 				if($_REQUEST['search_type'] == 'composer'){
@@ -921,6 +910,23 @@ STR;
 		}
         $this->layout = 'home';
     }
+	
+	function searchrecords($type, $search_text){
+		$search_text = strtolower(trim($search_text));
+		$search_text  = preg_replace('/\s\s+/', ' ', $search_text);
+		$insertArr['search_text'] = $search_text;
+		$insertArr['type'] = $type;	
+		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
+		if(count($genre_id_count_array) > 0){
+			$insertArr['count'] =$genre_id_count_array[0]['Searchrecord']['count'] + 1;
+			$insertArr['id'] =$genre_id_count_array[0]['Searchrecord']['id'];
+		}
+		else{
+			$insertArr['count'] = 1;
+		}
+
+		return $insertArr;
+	}
 
     /*
      Function Name : userDownload
