@@ -31,7 +31,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function search($keyword, $type = 'song', $page = 1, $limit = 10){
+    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10){
         $query = '';
         $docs = array();
         $country = $this->Session->read('territory');
@@ -59,8 +59,11 @@ class SolrComponent extends Object {
             case 'composer':
               $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
               break;
+            case 'all':
+              $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
+              break;
             default:
-              $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+              $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
               break;
           }
 
@@ -73,7 +76,13 @@ class SolrComponent extends Object {
           } else {
             $start = (($page - 1) * $limit);
           }
-          $response = self::$solr->search( $query, $start, $limit);
+          $additionalParams = array();
+
+          $additionalParams = array(
+            'sort' => array($sort." ".$sortOrder)
+          );
+
+          $response = self::$solr->search( $query, $start, $limit, $additionalParams);
           if ( $response->getHttpStatus() == 200 ) {
             if ( $response->response->numFound > 0 ) {
               $this->total = $response->response->numFound;
@@ -186,7 +195,7 @@ class SolrComponent extends Object {
     }
 
     function escapeSpace($keyword){
-      $keyword = str_replace(array(' ','(',')','"'), array('\ ','\(','\)','\"'), $keyword);
+      $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword);
       return $keyword;
     }
 }
