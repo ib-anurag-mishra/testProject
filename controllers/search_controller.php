@@ -38,15 +38,41 @@ class SearchController extends AppController
     $this->layout = 'home';
     $queryVar = null;
     $check_all = null;
+    $sortVar = 'SongTitle';
+    $sortOrder = 'asc';
+
     if(isset($_GET['q'])){
       $queryVar = $_GET['q'];
     }
     if(isset($_GET['type'])){
 		$this->set('type', $_GET['type']);
 		$type = $_GET['type'];
-		$typeVar = (($_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'song');
+		$typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
 
     }
+
+    if(isset($_GET['sort'])){
+      $this->set('sort', $_GET['sort']);
+      $sort = $_GET['sort'];
+      $sort = (($sort == 'song' || $sort == 'album' || $sort == 'genre' || $sort == 'label' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'song');
+
+      switch($sort){
+        case 'song':
+        case 'album':
+        case 'genre':
+        case 'label':
+        case 'artist':
+        case 'composer':
+        default:
+      }
+    }
+
+    if(isset($_GET['sortOrder'])){
+      $this->set('sortOrder', $_GET['sortOrder']);
+      $sortOrder = $_GET['sortOrder'];
+      $sortOrder = (($sortOrder=='asc' || $sortOrder=='desc')?$sortOrder:'asc');
+    }
+
     if(!empty($queryVar)){
       $patId = $this->Session->read('patron');
       $libId = $this->Session->read('library');
@@ -68,13 +94,15 @@ class SearchController extends AppController
         $page = $page;
       }
 
-			$songs = $this->Solr->search($queryVar, $typeVar, $page, $limit);
+			$songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit);
       $total = $this->Solr->total;
       $totalPages = ceil($total/$limit);
 
-      if($page > $totalPages){
-        $page = $totalPages;
-        $this->redirect();
+      if($total != 0){
+        /*if($page > $totalPages){
+          $page = $totalPages;
+          $this->redirect();
+        }*/
       }
 
       foreach($songs as $key=>$song){
