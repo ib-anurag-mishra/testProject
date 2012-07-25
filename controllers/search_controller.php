@@ -45,33 +45,54 @@ class SearchController extends AppController
       $queryVar = $_GET['q'];
     }
     if(isset($_GET['type'])){
-		$this->set('type', $_GET['type']);
-		$type = $_GET['type'];
-		$typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
-
+		 $type = $_GET['type'];
+		 $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
+    } else {
+      $typeVar = 'all';
     }
+    $this->set('type', $typeVar);
 
     if(isset($_GET['sort'])){
-      $this->set('sort', $_GET['sort']);
       $sort = $_GET['sort'];
-      $sort = (($sort == 'song' || $sort == 'album' || $sort == 'genre' || $sort == 'label' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'song');
-
+      $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'song');
       switch($sort){
         case 'song':
+          $sortVar = 'SongTitle';
+          break;
         case 'album':
+          $sortVar = 'Title';
+          break;
         case 'genre':
+          $sortVar = 'Genre';
+          break;
         case 'label':
+          $sortVar = 'Label';
+          break;
         case 'artist':
+          $sortVar = 'ArtistText';
+          break;
         case 'composer':
+          $sortVar = 'Composer';
+          break;
         default:
+          $sortVar = 'SongTitle';
+          break;
       }
+    } else {
+      $sort = 'song';
     }
 
+    $this->set('sort', $sort);
+
     if(isset($_GET['sortOrder'])){
-      $this->set('sortOrder', $_GET['sortOrder']);
       $sortOrder = $_GET['sortOrder'];
       $sortOrder = (($sortOrder=='asc' || $sortOrder=='desc')?$sortOrder:'asc');
+    } else {
+      $sortOrder='asc';
     }
+
+    $this->set('sortOrder', $sortOrder);
+
 
     if(!empty($queryVar)){
       $patId = $this->Session->read('patron');
