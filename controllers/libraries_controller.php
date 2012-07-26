@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist');
 
     /*
      Function Name : beforeFilter
@@ -535,6 +535,17 @@ Class LibrariesController extends AppController
 															$contract['id_library_purchases'] = $this->LibraryPurchase->id;
 															$contract['library_id'] = $this->Library->id;
 															$this->ContractLibraryPurchase->save($contract);
+                              
+                              //
+                              $currentDate = date('Y-m-d');
+                              $sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
+                              $wishlistResult = $this->Wishlist->query($sql);
+                              $count = $wishlistResult[0][0]['count'];		
+                              $sqlUpdateLibrary = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-".$count." Where id=".$libraryId;	
+                              $this->Library->query($sqlUpdateLibrary);
+                              //$sqlWishlistDelete = "Delete from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND library_id=".$libraryId;
+                              //$this->Wishlist->query($sqlWishlistDelete);                              
+                              
 															$message = __('You will be redirected to the next step shortly...', true);
                                                             $data = $this->data;
                                                             $this->set('success', compact('message', 'data'));
