@@ -34,7 +34,7 @@ class SearchController extends AppController
     }
 
 
-  function advanced_search($page=1) {
+  function advanced_search($page=1, $facetPage=1) {
     $this->layout = 'home';
     $queryVar = null;
     $check_all = null;
@@ -109,10 +109,16 @@ class SearchController extends AppController
       $total = 0;
       $limit = 10;
 
-      if(!isset($page) && $page < 1){
+      if(!isset($page) || $page < 1){
         $page = 1;
       } else {
         $page = $page;
+      }
+
+      if(!isset($facetPage) || $facetPage < 1){
+        $facetPage = 1;
+      } else {
+        $facetPage = $facetPage;
       }
 
 			$songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit);
@@ -142,9 +148,9 @@ class SearchController extends AppController
 
 				switch($typeVar){
 					case 'album':
-						$from_limit = 1;
-						$to_limit = 24;
-						$albums = $this->Solr->facetSearch($queryVar, 'album', $from_limit, $to_limit);
+						$limit = 24;
+            $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
+						$albums = $this->Solr->facetSearch($queryVar, 'album', $facetPage, $limit);
 						$queryArr = null;
 						$albumData = array();
 						$albumsCheck = array_keys($albums);
@@ -158,31 +164,34 @@ class SearchController extends AppController
 
 					break;
 					case 'genre':
-						$from_limit = 1;
-						$to_limit = 32;
-						$genres = $this->Solr->facetSearch($queryVar, 'genre', $from_limit, $to_limit);
+						$limit = 32;
+            $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
+						$genres = $this->Solr->facetSearch($queryVar, 'genre', $facetPage, $limit);
 						$this->set('genres', $genres);
 
 					break;
 					case 'label':
-						$from_limit = 1;
-						$to_limit = 16;
-						$labels = $this->Solr->facetSearch($queryVar, 'label', $from_limit, $to_limit);
+						$limit = 16;
+            $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
+						$labels = $this->Solr->facetSearch($queryVar, 'label', $facetPage, $limit);
 						$this->set('labels', $labels);
 					break;
 					case 'artist':
-						$from_limit = 1;
-						$to_limit = 16;
-						$artists = $this->Solr->facetSearch($queryVar, 'artist', $from_limit, $to_limit);
+						$limit = 16;
+            $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
+						$artists = $this->Solr->facetSearch($queryVar, 'artist', $facetPage, $limit);
 						$this->set('artists', $artists);
 					break;
 					case 'composer':
-						$from_limit = 1;
-						$to_limit = 16;
-						$composers = $this->Solr->facetSearch($queryVar, 'composer', $from_limit, $to_limit);
+						$limit = 16;
+            $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
+						$composers = $this->Solr->facetSearch($queryVar, 'composer', $facetPage, $limit);
 						$this->set('composers', $composers);
 					break;
 				}
+        $this->set('totalFacetFound',$totalFacetCount);
+        $this->set('totalFacetPages',ceil($totalFacetCount/$limit));
+
 			}
 			else{
 				$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
@@ -213,6 +222,7 @@ class SearchController extends AppController
 			$this->set('total', $total);
       $this->set('totalPages', $totalPages);
       $this->set('currentPage', $page);
+      $this->set('facetPage', $facetPage);
     }
 		$this->set('keyword', $queryVar);
 	}
