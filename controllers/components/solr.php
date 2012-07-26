@@ -157,6 +157,7 @@ class SolrComponent extends Object {
           ),
           'facet.query' => $query,
           'facet.mincount' => 1,
+          'facet.offset' => $start,
           'facet.limit' => $limit
         );
 
@@ -164,6 +165,81 @@ class SolrComponent extends Object {
         if ( $response->getHttpStatus() == 200 ) {
           if (!empty($response->facet_counts->facet_fields->$field)) {
             return $response->facet_counts->facet_fields->$field;
+          } else {
+            return array();
+          }
+        }
+        else {
+          return array();
+        }
+        return array();
+      } else {
+        return array();
+      }
+    }
+
+    function getFacetSearchTotal($keyword, $type='song'){
+      $query = '';
+      $country = $this->Session->read('territory');
+      $searchkeyword = $this->escapeSpace($keyword);
+      if(!empty($country)){
+        if(!isset(self::$solr)){
+          self::initialize(null);
+        }
+
+        switch($type){
+          case 'song':
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+            $field = 'SongTitle';
+            break;
+          case 'genre':
+            $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
+            $field = 'Genre';
+            break;
+          case 'album':
+            $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
+            $field = 'Title';
+            break;
+          case 'artist':
+            $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
+            $field = 'ArtistText';
+            break;
+          case 'label':
+            $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
+            $field = 'Label';
+            break;
+          case 'composer':
+            $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
+            $field = 'Composer';
+            break;
+          default:
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+            $field = 'SongTitle';
+            break;
+        }
+
+        $query = $query.' AND Territory:'.$country;
+
+        if($page == 1){
+            $start = 0;
+        } else {
+          $start = (($page - 1) * $limit);
+        }
+
+        $additionalParams = array(
+          'facet' => 'true',
+          'facet.field' => array(
+            $field
+          ),
+          'facet.query' => $query,
+          'facet.mincount' => 1,
+          'facet.limit' => -1
+        );
+
+        $response = self::$solr->search( $query, $start, $limit, $additionalParams);
+        if ( $response->getHttpStatus() == 200 ) {
+          if (!empty($response->facet_counts->facet_fields->$field)) {
+            return count($response->facet_counts->facet_fields->$field);
           } else {
             return array();
           }
