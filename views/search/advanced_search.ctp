@@ -4,6 +4,61 @@
 	 File Description : View page for advance search
 	 Author : m68interactive
  */
+function createPagination($html, $currentPage, $facetPage, $type='listing', $totalPages, $pageLimitToShow, $queryString=null){
+  $part = floor($pageLimitToShow/2);
+  if($type == 'listing'){
+    echo $html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
+  } else if($type == 'block'){
+    echo $html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
+  }
+  echo "&nbsp;";
+  if($type == 'listing'){
+    if($currentPage <= $part){
+      $fromPage = 1;
+      $topage = $currentPage + ($pageLimitToShow - $currentPage);
+      $topage = (($topage <= $totalPages)?$topage:$totalPages);
+    } elseif($currentPage >= ($totalPages - $part)){
+      $fromPage = $currentPage - $pageLimitToShow;
+      $topage = $currentPage;
+      $fromPage = (($fromPage > 1)?$fromPage:1);
+    } else {
+      $fromPage = $currentPage - $part;
+      $topage = $currentPage + $part;
+    }
+  } else if($type == 'block'){
+    if($facetPage <= $part){
+      $fromPage = 1;
+      $topage = $facetPage + ($pageLimitToShow - $facetPage);
+      $topage = (($topage <= $totalPages)?$topage:$totalPages);
+    } elseif($facetPage >= ($totalPages - $part)){
+      $fromPage = $facetPage - $pageLimitToShow;
+      $topage = $facetPage;
+      $fromPage = (($fromPage > 1)?$fromPage:1);
+    } else {
+      $fromPage = $facetPage - $part;
+      $topage = $facetPage + $part;
+    }
+  }
+
+  for($pageCount=$fromPage;$pageCount<=$topage;$pageCount++){
+    if($type == 'listing'){
+      if($currentPage == $pageCount){
+        echo $pageCount;
+      } else {
+        echo $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$facetPage.'/'.$queryString);
+      }
+    } else if($type == 'block'){
+      if($facetPage == $pageCount){
+        echo $pageCount;
+      } else {
+        echo $html->link($pageCount, '/search/advanced_search/'.$currentPage.'/'.$pageCount.'/'.$queryString);
+      }
+    }
+    echo "&nbsp;";
+  }
+  echo "&nbsp;";
+  echo $html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
+}
 ?>
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
 <script src="/js/advanced_search.js"></script>
@@ -108,7 +163,7 @@ STR;
 
 					}
 
-					$album_title = substr($palbum->Title,0,30)."...";
+					$album_title = ((strlen($palbum->Title) > 30)?substr($palbum->Title,0,30)."...":$palbum->Title);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
 					$tilte = urlencode($palbum->Title);
@@ -136,23 +191,10 @@ STR;
 					}
 
 				}
-
-				$pagination_str =<<<STR
-				<div class="paging_all_block">
-					<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
-					| <span><a href="#">2</a></span>
-					| <span><a href="#">3</a></span>
-					| <span><a href="#">4</a></span>
-					| <span><a href="#">5</a></span>
-					| <span><a href="#">6</a></span>
-					| <span><a href="#">7</a></span>
-					| <span><a href="#">8</a></span>
-					| <span><a href="#">9</a></span>
-					<span><a class="next" href="#">next &gt;&gt;</a></span><br>
-				</div>
-STR;
-
-
+        $searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+        echo '<div class="paging_all_block">';
+				createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
+        echo '</div>';
 			  }
 			  else {
 				$album_outer_div .=<<<STR
@@ -575,7 +617,7 @@ STR;
 						}
 					}
 
-					$album_title = substr($palbum->Title,0,30)."...";
+					$album_title = ((strlen($palbum->Title) > 30)?substr($palbum->Title,0,30)."...":$palbum->Title);
 					$title = urlencode($palbum->Title);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$tilte = urlencode($palbum->Title);
@@ -791,14 +833,14 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><a href="#"><?php echo str_replace('"','',$psong->ArtistText); ?></a></span>
+							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><?php echo $html->link(str_replace('"','',$psong->ArtistText), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
           	</p>
 					</td>
           <td width="170" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><a href="#"><?php echo str_replace('"','',$psong->Composer); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><?php echo str_replace('"','',$psong->Composer); ?></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="#"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;  ?>/<?php echo base64_encode($psong->provider_type);  ?>"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
@@ -881,45 +923,9 @@ STR;
 	<div class="paging">
 
 	<?php
-
     $keyword = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
-
-    $pageLimitToShow = 7;
-    $part = floor($pageLimitToShow/2);
-    echo $html->link('<<'.__('previous', true), array('controller'=>'search','action'=>'advanced_search',($currentPage-1)));
-    echo "&nbsp;";
-    if($currentPage <= $part){
-      $fromPage = 1;
-      $topage = $currentPage + ($pageLimitToShow - $currentPage);
-      $topage = (($topage <= $totalPages)?$topage:$totalPages);
-    } elseif($currentPage >= ($totalPages - $part)){
-      $fromPage = $currentPage - $pageLimitToShow;
-      $topage = $currentPage;
-      $fromPage = (($fromPage > 1)?$fromPage:1);
-    }
-    else{
-      $fromPage = $currentPage - $part;
-      $topage = $currentPage + $part;
-    }
-    for($pageCount=$fromPage;$pageCount<=$topage;$pageCount++){
-      if($currentPage == $pageCount){
-        echo $pageCount;
-      } else {
-        echo $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$keyword);
-      }
-      echo "&nbsp;";
-    }
-
-		echo "&nbsp;";
-    echo $html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$keyword);
-
-    /*echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));
-		echo "&nbsp;";
-		echo $paginator->numbers();
-		echo "&nbsp;";
-		echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));
-    */
-	?>
+    createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
+  ?>
 </div>
 <?php
 
