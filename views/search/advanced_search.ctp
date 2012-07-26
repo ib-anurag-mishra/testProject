@@ -563,6 +563,8 @@ STR;
 
 }
 else{
+
+
 ?>
 <!-- leftColblock Start -->
 <div  id="leftColblock">
@@ -809,12 +811,12 @@ STR;
 <!-- End left and right blocks -->
 
 	<!-- Added for track Songs -->
-<?php $reverseSort = (($sortOrder == 'asc')?'desc':'asc'); ?>
+
 	<div >
-		<div  class="links" id="genreArtist" style="width:192px;"><a href="<?php echo '/search/advanced_search/'.($currentPage).'/?q='.urlencode($keyword)."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSort:'asc'); ?>">Artist</a></div>
-    <div  class="links" id="genreComposer" style="width:180px;"><a href="<?php echo '/search/advanced_search/'.($currentPage).'/?q='.urlencode($keyword)."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSort:'asc'); ?>">Composer</a></div>
-		<div  class="links" id="genreAlbum" style="width:192px;"><a href="<?php echo '/search/advanced_search/'.($currentPage).'/?q='.urlencode($keyword)."&sort=album&sortOrder=".(($sort=='album')?$reverseSort:'asc'); ?>">Album</a></div>
-		<div  class="links"  id="genreTrack" style="width:215px;"><a href="<?php echo '/search/advanced_search/'.($currentPage).'/?q='.urlencode($keyword)."&sort=song&sortOrder=".(($sort=='song')?$reverseSort:'asc'); ?>">Track</a></div>
+		<div  class="links" id="genreArtist" style="width:192px;">Artist<a href="#"></a></div>
+    <div  class="links" id="genreComposer" style="width:180px;">Composer<a href="#"></a></div>
+		<div  class="links" id="genreAlbum" style="width:192px;">Album<a href="#"></a></div>
+		<div  class="links"  id="genreTrack" style="width:215px;">Track<a href="#"></a></div>
 		<div  id="genreDownload" style="width:180px;">Download</div>
 	<br class="clr">
 	<div id="genreResults">
@@ -921,7 +923,11 @@ STR;
 	<!-- End Added for track Songs -->
 	</div>
 	<div class="paging">
-
+		<?php
+      if(isset($type)){
+      	$keyword = "?q=".$keyword."&type=".$type;
+      }
+    ?>
 	<?php
     $keyword = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
     createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);

@@ -8,7 +8,7 @@ class SearchController extends AppController
     var $name = 'Search';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language', 'Album');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Solr','Session');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord' );
 
     /*
      Function Name : beforeFilter
@@ -41,73 +41,77 @@ class SearchController extends AppController
     $sortVar = 'SongTitle';
     $sortOrder = 'asc';
 
-    if(isset($_GET['q'])){
-      $queryVar = $_GET['q'];
-    }
-    if(isset($_GET['type'])){
-		 $type = $_GET['type'];
-		 $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
-    } else {
-      $typeVar = 'all';
-    }
-    $this->set('type', $typeVar);
+		if(isset($_GET['q'])){
+		  $queryVar = $_GET['q'];
+		}
+		if(isset($_GET['type'])){
+			 $type = $_GET['type'];
+			 $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
+		} else {
+			$typeVar = 'all';
+		}
+		$this->set('type', $typeVar);
 
-    if(isset($_GET['sort'])){
-      $sort = $_GET['sort'];
-      $sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'song');
-      switch($sort){
-        case 'song':
-          $sortVar = 'SongTitle';
-          break;
-        case 'album':
-          $sortVar = 'Title';
-          break;
-        case 'genre':
-          $sortVar = 'Genre';
-          break;
-        case 'label':
-          $sortVar = 'Label';
-          break;
-        case 'artist':
-          $sortVar = 'ArtistText';
-          break;
-        case 'composer':
-          $sortVar = 'Composer';
-          break;
-        default:
-          $sortVar = 'SongTitle';
-          break;
-      }
-    } else {
-      $sort = 'song';
-    }
+		if(isset($_GET['sort'])){
+			$sort = $_GET['sort'];
+			$sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'song');
+			switch($sort){
+				case 'song':
+				  $sortVar = 'SongTitle';
+				  break;
+				case 'album':
+				  $sortVar = 'Title';
+				  break;
+				case 'genre':
+				  $sortVar = 'Genre';
+				  break;
+				case 'label':
+				  $sortVar = 'Label';
+				  break;
+				case 'artist':
+				  $sortVar = 'ArtistText';
+				  break;
+				case 'composer':
+				  $sortVar = 'Composer';
+				  break;
+				default:
+				  $sortVar = 'SongTitle';
+				  break;
+			}
+		} else {
+			$sort = 'song';
+		}
 
-    $this->set('sort', $sort);
+		$this->set('sort', $sort);
 
-    if(isset($_GET['sortOrder'])){
-      $sortOrder = $_GET['sortOrder'];
-      $sortOrder = (($sortOrder=='asc' || $sortOrder=='desc')?$sortOrder:'asc');
-    } else {
-      $sortOrder='asc';
-    }
+		if(isset($_GET['sortOrder'])){
+			$sortOrder = $_GET['sortOrder'];
+			$sortOrder = (($sortOrder=='asc' || $sortOrder=='desc')?$sortOrder:'asc');
+		} else {
+			$sortOrder='asc';
+		}
 
-    $this->set('sortOrder', $sortOrder);
+		$this->set('sortOrder', $sortOrder);
 
 
-    if(!empty($queryVar)){
-      $patId = $this->Session->read('patron');
-      $libId = $this->Session->read('library');
-      $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-      $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-      $docs = array();
-
+		if(!empty($queryVar)){
+			//Added code for log search data
+			$insertArr[] = $this->searchrecords($typeVar, $queryVar);	
+			$this->Searchrecord->saveAll($insertArr);		
+			//End Added code for log search data
 			$patId = $this->Session->read('patron');
 			$libId = $this->Session->read('library');
 			$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 			$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 			$docs = array();
-      $total = 0;
-      $limit = 10;
+
+				$patId = $this->Session->read('patron');
+				$libId = $this->Session->read('library');
+				$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+				$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+				$docs = array();
+			$total = 0;
+			$limit = 10;
 
       if(!isset($page) || $page < 1){
         $page = 1;
@@ -122,24 +126,24 @@ class SearchController extends AppController
       }
 
 			$songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit);
-      $total = $this->Solr->total;
-      $totalPages = ceil($total/$limit);
+			$total = $this->Solr->total;
+			$totalPages = ceil($total/$limit);
 
-      if($total != 0){
-        /*if($page > $totalPages){
-          $page = $totalPages;
-          $this->redirect();
-        }*/
-      }
+			if($total != 0){
+			/*if($page > $totalPages){
+			  $page = $totalPages;
+			  $this->redirect();
+			}*/
+			}
 
-      foreach($songs as $key=>$song){
-        $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $song->ProdID,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+			foreach($songs as $key=>$song){
+				$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $song->ProdID,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
 				if(count($downloadsUsed) > 0){
 					$songs[$key]->status = 'avail';
 				} else{
 					$songs[$key]->status = 'not';
 				}
-      }
+			}
 
 			$this->set('songs', $songs);
 			// Added code for all functionality
@@ -225,5 +229,22 @@ class SearchController extends AppController
       $this->set('facetPage', $facetPage);
     }
 		$this->set('keyword', $queryVar);
+	}
+	
+	function searchrecords($type, $search_text){
+		$search_text = strtolower(trim($search_text));
+		$search_text  = preg_replace('/\s\s+/', ' ', $search_text);
+		$insertArr['search_text'] = $search_text;
+		$insertArr['type'] = $type;	
+		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
+		if(count($genre_id_count_array) > 0){
+			$insertArr['count'] =$genre_id_count_array[0]['Searchrecord']['count'] + 1;
+			$insertArr['id'] =$genre_id_count_array[0]['Searchrecord']['id'];
+		}
+		else{
+			$insertArr['count'] = 1;
+		}
+
+		return $insertArr;
 	}
 }
