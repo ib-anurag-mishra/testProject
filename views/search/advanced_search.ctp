@@ -5,66 +5,95 @@
 	 Author : m68interactive
  */
 function createPagination($html, $currentPage, $facetPage, $type='listing', $totalPages, $pageLimitToShow, $queryString=null){
-  if($totalPages > 1){
-  $part = floor($pageLimitToShow/2);
-  if($type == 'listing'){
-    $pagination_str =  $html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
-  } else if($type == 'block'){
-    $pagination_str .=  $html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
-  }
-  $pagination_str .= "&nbsp;";
-  if($type == 'listing'){
-    if($currentPage <= $part){
-      $fromPage = 1;
-      $topage = $currentPage + ($pageLimitToShow - $currentPage);
-      $topage = (($topage <= $totalPages)?$topage:$totalPages);
-    } elseif($currentPage >= ($totalPages - $part)){
-      $fromPage = $currentPage - $pageLimitToShow;
-      $topage = $currentPage;
-      $fromPage = (($fromPage > 1)?$fromPage:1);
-    } else {
-      $fromPage = $currentPage - $part;
-      $topage = $currentPage + $part;
-    }
-  } else if($type == 'block'){
-    if($facetPage <= $part){
-      $fromPage = 1;
-      $topage = $facetPage + ($pageLimitToShow - $facetPage);
-      $topage = (($topage <= $totalPages)?$topage:$totalPages);
-    } elseif($facetPage >= ($totalPages - $part)){
-      $fromPage = $facetPage - $pageLimitToShow;
-      $topage = $facetPage;
-      $fromPage = (($fromPage > 1)?$fromPage:1);
-    } else {
-      $fromPage = $facetPage - $part;
-      $topage = $facetPage + $part;
-    }
-  }
 
-  for($pageCount=$fromPage;$pageCount<=$topage;$pageCount++){
-    if($type == 'listing'){
-      if($currentPage == $pageCount){
-        $pagination_str .= $pageCount;
-      } else {
-        $pagination_str .= $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$facetPage.'/'.$queryString);
-      }
-    } else if($type == 'block'){
-      if($facetPage == $pageCount){
-        $pagination_str .= $pageCount;
-      } else {
-        $pagination_str .= $html->link($pageCount, '/search/advanced_search/'.$currentPage.'/'.$pageCount.'/'.$queryString);
-      }
-    }
-    $pagination_str .= "&nbsp;";
-  }
-  $pagination_str .= "&nbsp;";
-  $pagination_str .= $html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
-  }
-  else{
-	$pagination_str = '';
-  }
-  
-  return $pagination_str;
+	if($totalPages > 1){
+
+		$part = floor($pageLimitToShow/2);
+		if($type == 'listing'){
+			if(1 != $currentPage){
+				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
+			}
+			else{
+				$pagination_str .=	"&lt&ltprevious";		
+			}
+		} else if($type == 'block'){
+			if(1 != $facetPage){
+				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
+			}
+			else{
+				$pagination_str .=	"&lt&ltprevious";			
+			}
+		}
+		
+		$pagination_str .= "&nbsp;";
+		if($type == 'listing'){
+			if($currentPage <= $part){
+				$fromPage = 1;
+			$topage = $currentPage + ($pageLimitToShow - $currentPage);
+				$topage = (($topage <= $totalPages)?$topage:$totalPages);
+			} elseif($currentPage >= ($totalPages - $part)){
+				$fromPage = $currentPage - $pageLimitToShow;
+				$topage = $currentPage;
+				$fromPage = (($fromPage > 1)?$fromPage:1);
+			} else {
+				$fromPage = $currentPage - $part;
+				$topage = $currentPage + $part;
+			}
+		} else if($type == 'block'){
+			if($facetPage <= $part){
+				$fromPage = 1;
+				$topage = $facetPage + ($pageLimitToShow - $facetPage);
+				$topage = (($topage <= $totalPages)?$topage:$totalPages);
+			} elseif($facetPage >= ($totalPages - $part)){
+				$fromPage = $facetPage - $pageLimitToShow;
+				$topage = $facetPage;
+				$fromPage = (($fromPage > 1)?$fromPage:1);
+			} else {
+				$fromPage = $facetPage - $part;
+				$topage = $facetPage + $part;
+			}
+		}
+
+		for($pageCount=$fromPage;$pageCount<=$topage;$pageCount++){
+			if($type == 'listing'){
+				if($currentPage == $pageCount){
+					$pagination_str .= $pageCount;
+				} else {
+					$pagination_str .= $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$facetPage.'/'.$queryString);
+				}
+			} else if($type == 'block'){
+				if($facetPage == $pageCount){
+					$pagination_str .= $pageCount;
+				} else {
+					$pagination_str .= $html->link($pageCount, '/search/advanced_search/'.$currentPage.'/'.$pageCount.'/'.$queryString);
+				}
+			}
+			$pagination_str .= "&nbsp;";
+		}
+		$pagination_str .= "&nbsp;";
+		
+		if($type == 'listing'){
+			if($currentPage != $totalPages ){
+				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
+			}
+			else{
+				$pagination_str .=	"next&gt";		
+			}
+		} else if($type == 'block'){
+			if($facetPage != $totalPages ){
+				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.$currentPage.'/'.($facetPage+1).'/'.$queryString);
+			}
+			else{
+				$pagination_str .=	"next&gt";			
+			}
+		}		
+		
+	}
+	else{
+		$pagination_str = '';
+	}
+	
+	return $pagination_str;
 }
 ?>
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
@@ -80,14 +109,14 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 <div id="leftCol">
 	<div id="leftColWrapper">
 		<form method="get"><h1 ><label for="search_query">Search music on freegalmusic.com</label></h1>
-			<input type="text"  id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
+			<input type="text"	id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
 			<input type="hidden" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" value="search">
-			<ul  class="clearit" id="searchfilter">
-				<li  class=" current  first "><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
-				<li ><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
+			<ul	class="clearit" id="searchfilter">
+				<li	class=" current	first "><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
+				<li ><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a></li>
+				<li ><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
+				<li ><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
 				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a></li>
 				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a></li>
 				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
@@ -99,17 +128,17 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 if('' != $keyword){
 ?>
 
-	<div  class="fullWidth" id="resultsSummary">
+	<div	class="fullWidth" id="resultsSummary">
 		<div class="search_result_text">
 			<h3>Results for your search "<?php echo $keyword; ?>" </h3>
 		</div>
 <?php
 	if(($type == 'all' )){
 			echo $str =<<<STR
-			<div  id="hide_blocks">
+			<div	id="hide_blocks">
 				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide</a>
 			</div>
-			<div  id="show_blocks" >
+			<div	id="show_blocks" >
 				<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show</a>
 			</div>
 STR;
@@ -124,14 +153,14 @@ if(!empty($type) && !($type == 'all' )){
 
 	$str_all_blocks = '';
 	$str_all_blocks =<<<STR
-						<div  id="all_block">
+						<div	id="all_block">
 STR;
 	switch($type){
 		case 'album':
 			$counter=0;
 			$album_div =<<<STR
-				 <div  class="results" id="album_all_block">
-					<h2  class="heading">
+				 <div	class="results" id="album_all_block">
+					<h2	class="heading">
 						<span class="h2Wrapper">Albums</span>
 					</h2>
 STR;
@@ -154,16 +183,16 @@ STR;
 					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 					if($counter%3==0){
-					  $class = 'album_all_blockC1';
-					} else  if($counter%3==1){
-					  $class = 'album_all_blockC2';
+						$class = 'album_all_blockC1';
+					} else	if($counter%3==1){
+						$class = 'album_all_blockC2';
 					}else{
 						$class = 'album_all_blockC3';
 					}
 
 					if($counter%3==0 ){
 						$album_outer_div .=<<<STR
-							<div  class ="albumblockR">
+							<div	class ="albumblockR">
 STR;
 
 						$album_inner_div = '';
@@ -176,14 +205,14 @@ STR;
 					$tilte = urlencode($palbum->Title);
 
 					$album_inner_div .=<<<STR
-					<div  class ="$class">
-						<a  href="#"><img height="75" width="100" class="art" src="$image"> </a>
+					<div	class ="$class">
+						<a	href="#"><img height="75" width="100" class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
 							Genre: $album_genre
 							<br />
-							<span  class="stats">Label: $album_label</span>
+							<span	class="stats">Label: $album_label</span>
 						</div>
 					</div>
 STR;
@@ -200,14 +229,14 @@ STR;
 				}
 				$searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
 				$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
-			  }
-			  else {
+				}
+				else {
 				$album_outer_div .=<<<STR
 				<ul>
-				  <li style='color:red'>No Album Found</li>
+					<li style='color:red'>No Album Found</li>
 				</ul>
 STR;
-			  }
+				}
 
 			echo $str_all_blocks .=<<<STR
 						$album_div
@@ -255,7 +284,7 @@ STR;
 STR;
 
 						$index++;
-						if($index  == $number_of_rows || $no_of_genre == $genre_no){
+						if($index	== $number_of_rows || $no_of_genre == $genre_no){
 							$genre_str .=<<<STR
 								$genre_list
 								</ul>
@@ -271,9 +300,9 @@ STR;
 					$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
 				}
 				else {
-					$genre_str  =<<<STR
+					$genre_str	=<<<STR
 					<ul>
-					  <li style='color:red'>No Genres Found</li>
+						<li style='color:red'>No Genres Found</li>
 					</ul>
 STR;
 
@@ -331,7 +360,7 @@ STR;
 STR;
 
 						$index++;
-						if($index  == $number_of_rows || $no_of_label == $label_no){
+						if($index	== $number_of_rows || $no_of_label == $label_no){
 							$label_str .=<<<STR
 								$label_list
 								</ul>
@@ -350,9 +379,9 @@ STR;
 
 				}
 				else {
-					$label_str  =<<<STR
+					$label_str	=<<<STR
 					<ul>
-					  <li style='color:red'>No Label Found</li>
+						<li style='color:red'>No Label Found</li>
 					</ul>
 STR;
 
@@ -406,7 +435,7 @@ STR;
 STR;
 
 						$index++;
-						if($index  == $number_of_rows || $no_of_artist == $artist_no){
+						if($index	== $number_of_rows || $no_of_artist == $artist_no){
 							$artist_str .=<<<STR
 								$artist_list
 								</ul>
@@ -425,9 +454,9 @@ STR;
 
 				}
 				else {
-					$artist_str  =<<<STR
+					$artist_str	=<<<STR
 					<ul>
-					  <li style='color:red'>No Artist Found</li>
+						<li style='color:red'>No Artist Found</li>
 					</ul>
 STR;
 
@@ -480,7 +509,7 @@ STR;
 STR;
 
 						$index++;
-						if($index  == $number_of_rows || $no_of_composer == $composer_no){
+						if($index	== $number_of_rows || $no_of_composer == $composer_no){
 							$composer_str .=<<<STR
 								$composer_list
 								</ul>
@@ -498,9 +527,9 @@ STR;
 
 				}
 				else {
-					$composer_str  =<<<STR
+					$composer_str	=<<<STR
 					<ul>
-					  <li style='color:red'>No composer Found</li>
+						<li style='color:red'>No composer Found</li>
 					</ul>
 STR;
 
@@ -534,8 +563,8 @@ else{
 
 ?>
 <!-- leftColblock Start -->
-<div  id="leftColblock">
-        <div  id="leftColblockWrapper">
+<div	id="leftColblock">
+				<div	id="leftColblockWrapper">
 <?php
 /********************************************Album block started*********************************************************************************/
 
@@ -543,22 +572,22 @@ else{
 
 			$counter=0;
 			$album_div =<<<STR
-				 <div  class="results" id="albumblock">
-					<h2  class="heading">
+				 <div	class="results" id="albumblock">
+					<h2	class="heading">
 						<span class="h2Wrapper">Albums</span>
 					</h2>
 STR;
 
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
-          $albumDetails = $album->getImage($palbum->ReferenceID);
-          if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
-            $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
-            $image = Configure::read('App.Music_Path').$albumArtwork;
-          } else {
-            $image = 'no-image.jpg';
-          }
-          if($page->isImage($image)) {
+					$albumDetails = $album->getImage($palbum->ReferenceID);
+					if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
+						$albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+						$image = Configure::read('App.Music_Path').$albumArtwork;
+					} else {
+						$image = 'no-image.jpg';
+					}
+					if($page->isImage($image)) {
 						//Image is a correct one
 					}
 					else {
@@ -566,22 +595,22 @@ STR;
 					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 
-          if($counter%2==0){
-					  $class = 'albumblockC1';
+					if($counter%2==0){
+						$class = 'albumblockC1';
 					} else {
-					  $class = 'albumblockC2';
+						$class = 'albumblockC2';
 					}
 
 					if($counter%2==0){
-					  if($counter==0){
+						if($counter==0){
 						$album_outer_div =<<<STR
-							<div  id ="albumblockR1">
+							<div	id ="albumblockR1">
 STR;
 						}
 						else {
 							$album_inner_div = '';
 							$album_outer_div .=<<<STR
-							<div  id ="albumblockR2">
+							<div	id ="albumblockR2">
 STR;
 						}
 					}
@@ -593,14 +622,14 @@ STR;
 					$album_label = $palbum->Label;
 
 					$album_inner_div .=<<<STR
-					<div  class ="$class">
-						<a  href="#"><img class="art" height="75" width="100" src="$image"> </a>
+					<div	class ="$class">
+						<a	href="#"><img class="art" height="75" width="100" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
 							Genre: $album_genre
 							<br />
-							<span  class="stats">Label: $album_label</span>
+							<span	class="stats">Label: $album_label</span>
 						</div>
 					</div>
 STR;
@@ -615,24 +644,24 @@ STR;
 					}
 					if($counter%4==0 || $counter == count($albumData)){
 						$album_outer_div .=<<<STR
-					  <div><span class="more_link">
-						<a  href="/search/advanced_search?q=$keyword&type=album">See more albums</a>
-					  </span></div>
+						<div><span class="more_link">
+						<a	href="/search/advanced_search?q=$keyword&type=album">See more albums</a>
+						</span></div>
 STR;
 					}
 				}
-			  }
-			  else {
+				}
+				else {
 				$album_outer_div .=<<<STR
 				<ul>
-				  <li style='color:red'>No Album Found</li>
+					<li style='color:red'>No Album Found</li>
 				</ul>
 STR;
-			  }
+				}
 
 
 	echo $str_all_blocks .=<<<STR
-						    $album_div
+								$album_div
 							$album_outer_div
 							</div>
 
@@ -642,11 +671,11 @@ STR;
 ?>
 
 
-				<div  id="ComposersWrapper">
+				<div	id="ComposersWrapper">
 						<h2>Composers</h2>
-			  <?php
-			  if(!empty($composers)){
-			  ?>
+				<?php
+				if(!empty($composers)){
+				?>
 						<ul >
 				<?php foreach($composers as $composer=>$count)
 				{
@@ -656,17 +685,17 @@ STR;
 				<?php
 				}
 				?>
-			  </ul>
-			  <span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
-			  <?php
-			  } else {
+				</ul>
+				<span class="more_link"><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
+				<?php
+				} else {
 				?>
 				<ul>
-				  <li style='color:red'>No Composers Found</li>
+					<li style='color:red'>No Composers Found</li>
 				</ul>
 				<?php
-			  }
-			  ?>
+				}
+				?>
 				</div>
 <?php
 /********************************************Genre block started*********************************************************************************/
@@ -691,13 +720,13 @@ STR;
 					$genre_str .=<<<STR
 						$genre_list
 						</ul>
-						<span class="more_link"><a  href="/search/advanced_search?q=$keyword&type=genre">See more Genre</a></span>
+						<span class="more_link"><a	href="/search/advanced_search?q=$keyword&type=genre">See more Genre</a></span>
 STR;
 				}
 				else {
-					$genre_str  =<<<STR
+					$genre_str	=<<<STR
 					<ul>
-					  <li style='color:red'>No Genres Found</li>
+						<li style='color:red'>No Genres Found</li>
 					</ul>
 STR;
 
@@ -719,59 +748,59 @@ STR;
 
 	<!-- Right blocks -->
 
-		<div  id="rightCol">
-			<div   id="ArtistWrapper">
+		<div	id="rightCol">
+			<div	 id="ArtistWrapper">
 					<h2>Artists</h2>
 					<?php
-			  if(!empty($artists)){
-			  ?>
-			  <ul>
+				if(!empty($artists)){
+				?>
+				<ul>
 						<?php foreach($artists as $artist=>$count)
-			  {
+				{
 								$tilte = urlencode($artist);
-			  ?>
+				?>
 				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=artist" title='<?php echo $artist?>'><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
-			  ?>
-			  </ul>
-					<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
+				?>
+				</ul>
+					<span class="more_link"><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
 			<?php
-			  } else {
+				} else {
 				?>
 				<ul>
-				  <li style='color:red'>No Artists Found</li>
+					<li style='color:red'>No Artists Found</li>
 				</ul>
 				<?php
-			  }
-			  ?>
+				}
+				?>
 			</div>
 
-			 <div  id="LabelWrapper">
+			 <div	id="LabelWrapper">
 				<h2>Labels</h2>
 				<?php
-			  if(!empty($labels)){
-			  ?>
-			  <ul>
+				if(!empty($labels)){
+				?>
+				<ul>
 						<?php foreach($labels as $label=>$count)
-			  {
+				{
 								$tilte = urlencode($label);
-			  ?>
+				?>
 				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $label?>'><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
-			  ?>
-			  </ul>
-				<span class="more_link"><a  href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">See more Labels</a></span>
-		  <?php
-			  } else {
+				?>
+				</ul>
+				<span class="more_link"><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">See more Labels</a></span>
+			<?php
+				} else {
 				?>
 				<ul>
-				  <li style='color:red'>No Labels Found</li>
+					<li style='color:red'>No Labels Found</li>
 				</ul>
 				<?php
-			  }
-			  ?>
+				}
+				?>
 			</div>
 		</div>
 <?php } ?>
@@ -780,53 +809,53 @@ STR;
 	<!-- Added for track Songs -->
 
 	<div >
-		<div  class="links" id="genreArtist" style="width:192px;">Artist<a href="#"></a></div>
-    <div  class="links" id="genreComposer" style="width:180px;">Composer<a href="#"></a></div>
-		<div  class="links" id="genreAlbum" style="width:192px;">Album<a href="#"></a></div>
-		<div  class="links"  id="genreTrack" style="width:215px;">Track<a href="#"></a></div>
-		<div  id="genreDownload" style="width:180px;">Download</div>
+		<div	class="links" id="genreArtist" style="width:192px;">Artist<a href="#"></a></div>
+		<div	class="links" id="genreComposer" style="width:180px;">Composer<a href="#"></a></div>
+		<div	class="links" id="genreAlbum" style="width:192px;">Album<a href="#"></a></div>
+		<div	class="links"	id="genreTrack" style="width:215px;">Track<a href="#"></a></div>
+		<div	id="genreDownload" style="width:180px;">Download</div>
 	<br class="clr">
 	<div id="genreResults">
 		<?php if(!empty($songs)){ ?>
-	  <table cellspacing="0" cellpadding="0" style="margin-left: 45px;">
-			  <tbody>
+		<table cellspacing="0" cellpadding="0" style="margin-left: 45px;">
+				<tbody>
 		<?php $i = 0;
-    foreach($songs as $psong) {
+		foreach($songs as $psong) {
 
-      $class = null;
+			$class = null;
 			if ($i++ % 2 == 0) {
 				$class = ' class="altrow"';
 			}
 
-      ?>
+			?>
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
 							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><?php echo $html->link(str_replace('"','',$psong->ArtistText), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
-          	</p>
+						</p>
 					</td>
-          <td width="170" valign="top" style="padding-left: 10px;">
+					<td width="170" valign="top" style="padding-left: 10px;">
 						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><?php echo str_replace('"','',$psong->Composer); ?></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;  ?>/<?php echo base64_encode($psong->provider_type);  ?>"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
 							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo $psong->SongTitle; ?></span>
-              <?php
-              $sampleFile = $song->getSampleFile($psong->Sample_FileID);
-              $songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
+							<?php
+							$sampleFile = $song->getSampleFile($psong->Sample_FileID);
+							$songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
 							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$psong->ProdID.', "'.$this->webroot.'");'));
 							echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i));
 							echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");'));
-              ?>
+							?>
 						</p>
 					</td>
 					<td width="170" valign="top" align="center" style="padding-left: 10px;">
-            <?php
+						<?php
 						if($libraryDownload == '1' && $patronDownload == '1') {
 								if($psong->status != 'avail'){
 						 ?>
@@ -845,16 +874,16 @@ STR;
 									?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 								}
 							}
-                            else {
+														else {
 								if($libraryDownload != '1'){
 									$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                                    $wishlistCount = $wishlist->getWishlistCount();
-                                    if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
-                    ?>
+																		$wishlistCount = $wishlist->getWishlistCount();
+																		if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
+										?>
 										<p><?php __("Limit Met");?></p>
 					<?php
 									}
-                                    else{
+																		else{
 										$wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
 										if($wishlistInfo == 'Added to Wishlist'){
 									?>
@@ -868,14 +897,14 @@ STR;
 											</p>
 								<?php
 										}
-                                    }
+																		}
 							}
 							else { ?>
 								<p><?php __("Limit Met");?></p>
 							<?php
 							}
 						}
-            ?>
+						?>
 					</td>
 				</tr>
 		<?php } ?>
@@ -891,14 +920,14 @@ STR;
 	</div>
 	<div class="paging">
 		<?php
-      if(isset($type)){
-      	$keyword = "?q=".$keyword."&type=".$type;
-      }
-    ?>
+			if(isset($type)){
+				$keyword = "?q=".$keyword."&type=".$type;
+			}
+		?>
 	<?php
-    $keyword = urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
-    echo createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
-  ?>
+		$keyword = urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+		echo createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
+	?>
 </div>
 <?php
 
