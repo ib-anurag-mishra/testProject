@@ -6,4 +6,7 @@ echo $html->tableHeaders($headers);
 echo $html->tableCells($result);
 ?>
 </table>
-<?php Configure::write('debug', 0); ?>
+<?php
+// Consume and toss out the timers
+$timers = DebugKitDebugger::getTimers(true);
+?>

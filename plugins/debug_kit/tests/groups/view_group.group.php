@@ -5,12 +5,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.tests.groups
@@ -18,12 +18,12 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  **/
 /**
- * AllCoreHelpersGroupTest class
+ * DebugKitViewTestSuite class
  *
  * @package       cake
  * @subpackage    cake.tests.groups
  */
-class DebugKitViewGroupTest extends GroupTest {
+class DebugKitViewTestSuite extends TestSuite {
 /**
  * label property
  *
@@ -37,9 +37,8 @@ class DebugKitViewGroupTest extends GroupTest {
  * @access public
  * @return void
  */
-	function DebugKitViewGroupTest() {
+	function DebugKitViewTestSuite() {
 		$testDir = dirname(dirname(__FILE__));
 		TestManager::addTestCasesFromDirectory($this, $testDir . DS . 'cases' . DS . 'views');
 	}
 }
-?>

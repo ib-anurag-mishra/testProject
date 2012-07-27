@@ -16,12 +16,12 @@
 	}
 	echo '<div class="login-box">';
 	echo '<div class="holder">';
-	echo '<fieldset>';	
+	echo '<fieldset>';
 	echo $form->create('User', array( 'action' => 'mndlogin', 'id' => 'login'));
 		echo '<div class="row">';
 		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card, 'alt'=>__('Card Number', true)));
 		echo '</div>';
-	echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));		
+	echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));
 	echo '</fieldset>';
 	echo '</div>';
 	echo '</div>';
@@ -31,7 +31,7 @@
 	$language = $language->getLanguage();
 	if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
 		$lang = "English";
-	} 
+	}
 	elseif($this->Session->read('Config.language') == 'es'){
 		$lang = "Español";
 	}
@@ -65,7 +65,7 @@ if($this->Session->read('Config.language') == 'es' || $this->Session->read('Conf
 	.popup .row input {width:116px}
 	.popup .button {width:138px}
 	</style>
-<?php	
+<?php
 }
 ?>
 <div class="clr"></div>

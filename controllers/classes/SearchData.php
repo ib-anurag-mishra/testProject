@@ -30,10 +30,21 @@ class SearchDataType{
 	 */
   public $SongTitle;
   /**
+	 * Title
+	 * @var string
+	 */
+  public $Title;
+  /**
 	 * SongArtist
 	 * @var string
 	 */
   public $SongArtist;
+  
+  /**
+	 * ArtistText
+	 * @var string
+	 */
+  public $ArtistText;
   /**
 	 * AlbumArtist
 	 * @var string

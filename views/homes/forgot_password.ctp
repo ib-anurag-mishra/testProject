@@ -3,7 +3,7 @@
 //    echo $session->flash();
 	echo '<div class="login-box">';
 	echo '<div class="holder">';
-	echo '<fieldset>';	
+	echo '<fieldset>';
     echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'forgot_password', 'id' => 'login'));
 		echo '<div class="row_f">';
 		echo $this->Form->label(null, __('Forgot Password', true));
@@ -11,17 +11,17 @@
 		echo '<div class="row">';
 		echo $form->input('email', array('label' => __('Email', true),'div' => false, 'alt'=>__('Email', true)));
 		echo '</div>';
-	echo $form->end(array('label' => __('Submit', true),'div' => false, 'class' => 'submit'));		
+	echo $form->end(array('label' => __('Submit', true),'div' => false, 'class' => 'submit'));
 	echo '</fieldset>';
 	echo '</div>';
-	echo '</div>'; 
+	echo '</div>';
 ?>
 <ul class="lang">
 	<?php
 	$language = $language->getLanguage();
 	if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
 		$lang = "English";
-	} 
+	}
 	elseif($this->Session->read('Config.language') == 'es'){
 		$lang = "Español";
 	}

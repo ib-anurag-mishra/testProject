@@ -1,4 +1,3 @@
-
 <?php
 /*
 	 File Name : view.ctp
@@ -238,7 +237,7 @@ function sortText(a, b) {
 			$(this).next().remove();
 			$(this).remove();
 		}
-	}); 
+	});
  });
 
 function replaceText() {
@@ -274,7 +273,8 @@ jQuery("html").ajaxStop(replaceText);
 		<img src="/img/<?php echo $this->Session->read('Config.language'); ?>/genre.png" height="34px" width="195px" />
 	</div>
 	<br class="clr" />
-  <?php
+
+	  <?php
   if($isiPad = (bool) strpos($_SERVER['HTTP_USER_AGENT'],'iPad'))
   {
     ?><div style="height:520px; overflow:auto; overflow-y:scroll; overflow-x:scorll;-webkit-overflow-scrolling:touch"><?php

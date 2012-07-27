@@ -112,9 +112,9 @@ class HomesController extends AppController
 
 		//used for gettting top downloads for Pop Genre
 		if (($artists = Cache::read("pop".$country)) === false) {
-          
+
           $restoregenre_query =  "
-          SELECT 
+          SELECT
               COUNT(DISTINCT downloads.id) AS countProduct,
               Song.ProdID,
               Song.ReferenceID,
@@ -146,24 +146,24 @@ class HomesController extends AppController
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
           WHERE
-              downloads.ProdID = Song.ProdID 
-              AND downloads.provider_type = Song.provider_type 
+              downloads.ProdID = Song.ProdID
+              AND downloads.provider_type = Song.provider_type
               AND Song.Genre LIKE '%Pop%'
-              AND Country.Territory LIKE '%".$country."%' 
-              AND Country.SalesDate != '' 
-              AND Country.SalesDate < NOW() 
-              AND Song.DownloadStatus = '1' 
+              AND Country.Territory LIKE '%".$country."%'
+              AND Country.SalesDate != ''
+              AND Country.SalesDate < NOW()
+              AND Song.DownloadStatus = '1'
               AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
           GROUP BY downloads.ProdID
           ORDER BY countProduct DESC
           LIMIT 10
           ";
 
-          $data =   $this->Album->query($restoregenre_query); 
+          $data =   $this->Album->query($restoregenre_query);
           if(!empty($data)){
             Cache::write("pop".$country, $data);
-          }        			
-			
+          }
+
 		}
 		$genre_pop = Cache::read("pop".$country);
 		// Checking for download status
@@ -200,7 +200,7 @@ class HomesController extends AppController
 
 		if (($artists = Cache::read($genre.$territory)) === false) {
           $restoregenre_query =  "
-          SELECT 
+          SELECT
               COUNT(DISTINCT downloads.id) AS countProduct,
               Song.ProdID,
               Song.ReferenceID,
@@ -232,25 +232,25 @@ class HomesController extends AppController
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
           WHERE
-              downloads.ProdID = Song.ProdID 
-              AND downloads.provider_type = Song.provider_type 
+              downloads.ProdID = Song.ProdID
+              AND downloads.provider_type = Song.provider_type
               AND Song.Genre LIKE '%".$genre."%'
-              AND Country.Territory LIKE '%".$territory."%' 
-              AND Country.SalesDate != '' 
-              AND Country.SalesDate < NOW() 
-              AND Song.DownloadStatus = '1' 
+              AND Country.Territory LIKE '%".$territory."%'
+              AND Country.SalesDate != ''
+              AND Country.SalesDate < NOW()
+              AND Song.DownloadStatus = '1'
               AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
           GROUP BY downloads.ProdID
           ORDER BY countProduct DESC
           LIMIT 10
           ";
 
-      $data =   $this->Album->query($restoregenre_query); 
+      $data =   $this->Album->query($restoregenre_query);
       if(!empty($data)){
-          Cache::write($genre.$territory, $data);        
-      }      
-      
-			
+          Cache::write($genre.$territory, $data);
+      }
+
+
 		}
 		$genre_info = Cache::read($genre.$territory);
 		// Checking for download status
@@ -674,8 +674,8 @@ STR;
 					$sphinxTerritorySearch = '';
 				}
 
-				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxLabelSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch; 
-        if($sphinxTerritorySearch != ''){  
+				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxLabelSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
+        if($sphinxTerritorySearch != ''){
           $sphinxTempCondition = substr($sphinxTempCondition, 0, -2);
           $sphinxTempCondition = $sphinxTempCondition.' & '. $sphinxTerritorySearch;
         }
@@ -821,7 +821,7 @@ STR;
 				} else {
 					$sphinxDirection = "";
 				}
-        
+
 
 				$this->paginate = array('Song' => array(
 								'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'cont' => $country
@@ -1678,7 +1678,7 @@ STR;
 			$this->layout = 'login_new';
 		}
 		else{
-        $this->layout = 'login';
+			$this->layout = 'login';
 		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){

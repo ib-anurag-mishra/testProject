@@ -66,7 +66,11 @@ class FreegalFeaturedAlbumType{
 	 * @var string
 	 */
   public $FileURL;
-
+  /**
+	 * FeaturedWebsiteTime
+	 * @var string
+	 */
+  public $FeaturedWebsiteTime;
 
   /**
 	 * Constructor

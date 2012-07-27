@@ -737,8 +737,36 @@ class SphinxClient
 			$this->_maxmatches = $max;
 		if ( $cutoff>0 )
 			$this->_cutoff = $cutoff;
+      
+    /* Added for web service */    
+    $this->SetLimitsForSoapCall();  
+      
 	}
 
+  /// set offset & limit for web services
+  function SetLimitsForSoapCall() {
+    
+    App::import('Model', 'CakeSession');
+    $session = new CakeSession();
+    
+    if(1 == $session->read('webservice_slave')) {
+      $this->_offset = $session->read('webservice_startFrom'); 
+      $this->_limit = $session->read('webservice_recordCount'); 
+      $session->write('webservice_slave', 0);
+      $session->write('webservice_startFrom', 0);
+      $session->write('webservice_recordCount', 0);
+    }
+    
+    
+    if(1 == $session->read('webservice_master')) {
+      $this->_offset = $session->read('webservice_startFrom'); 
+      $this->_limit = $session->read('webservice_recordCount');
+      
+      $session->write('webservice_slave', 1);      
+      $session->write('webservice_master', 0);        
+    }
+  }
+  
 	/// set maximum query time, in milliseconds, per-index
 	/// integer, 0 means "do not limit"
 	function SetMaxQueryTime ( $max )

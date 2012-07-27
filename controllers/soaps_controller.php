@@ -439,9 +439,9 @@ class SoapsController extends AppController {
     }
 
 	}
-
-
-
+  
+  
+  
   /**
    * Function Name : getFeaturedArtistSlides
    * Desc : To get the featured artist slides show

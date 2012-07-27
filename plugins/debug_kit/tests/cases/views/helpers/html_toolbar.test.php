@@ -5,12 +5,12 @@
  * PHP versions 4 and 5
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
- * Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright 2005-2009, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @link          http://cakephp.org
  * @package       debug_kit
  * @subpackage    debug_kit.tests.views.helpers
@@ -35,7 +35,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Toolbar->HtmlToolbar->Html =& new HtmlHelper();
 		$this->Toolbar->HtmlToolbar->Form =& new FormHelper();
 		
-		$this->Controller =& ClassRegistry::init('Controller');
+		$this->Controller =& new Controller();
 		if (isset($this->_debug)) {
 			Configure::write('debug', $this->_debug);
 		}
@@ -46,12 +46,13 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function startCase() {
-		$this->_viewPaths = Configure::read('viewPaths');
-		Configure::write('viewPaths', array(
+		$this->_viewPaths = App::path('views');
+		App::build(array(
+			'views' => array(
 			TEST_CAKE_CORE_INCLUDE_PATH . 'tests' . DS . 'test_app' . DS . 'views'. DS,
 			APP . 'plugins' . DS . 'debug_kit' . DS . 'views'. DS, 
 			ROOT . DS . LIBS . 'view' . DS
-		));
+		)), true);
 		$this->_debug = Configure::read('debug');
 	}
 /**
@@ -223,7 +224,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 			'base' => null,
 			'here' => '/posts/index',
 		);
-		$this->Controller->helpers = array('Html', 'Javascript', 'DebugKit.Toolbar');
+		$this->Controller->helpers = array('Html', 'Javascript', 'Session', 'DebugKit.Toolbar');
 		$this->Controller->layout = 'default';
 		$this->Controller->uses = null;
 		$this->Controller->components = array('DebugKit.Toolbar');
@@ -233,7 +234,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div></body>#', $result);
+		$this->assertPattern('#<div id\="debug-kit-toolbar">.+</div>.*</body>#', $result);
 	}
 
 /**
@@ -253,7 +254,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 			'base' => '/',
 			'here' => '/posts/index',
 		);
-		$this->Controller->helpers = array('Javascript', 'Html');
+		$this->Controller->helpers = array('Javascript', 'Html', 'Session');
 		$this->Controller->components = array('DebugKit.Toolbar');
 		$this->Controller->layout = 'default';
 		$this->Controller->constructClasses();
@@ -262,7 +263,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		$this->Controller->Component->beforeRender($this->Controller);
 		$result = $this->Controller->render();
 		$result = str_replace(array("\n", "\r"), '', $result);
-		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js"\s*>\s?</script>#', $result);
+		$this->assertPattern('#<script\s*type="text/javascript"\s*src="/debug_kit/js/js_debug_toolbar.js(?:\?\d*?)?"\s*>\s?</script>#', $result);
 	}
 
 /**
@@ -334,7 +335,7 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
  * @return void
  **/
 	function endCase() {
-		Configure::write('viewPaths', $this->_viewPaths);
+		App::build();
 	}
 	
 /**
@@ -349,4 +350,3 @@ class HtmlToolbarHelperTestCase extends CakeTestCase {
 		ClassRegistry::flush();
 	}
 }
-?>

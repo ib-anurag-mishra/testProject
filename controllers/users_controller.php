@@ -4,7 +4,7 @@
  File Description : Controller page for the  login functionality.
  Author : m68interactive
  */
- 
+
 Class UsersController extends AppController
 {
 	var $name = 'Users';
@@ -12,7 +12,7 @@ Class UsersController extends AppController
 	var $layout = 'admin';
 	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie');
 	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium','Card');
-   
+
    /*
     Function Name : beforeFilter
     Desc : actions that needed before other functions are getting called
@@ -28,7 +28,7 @@ Class UsersController extends AppController
 	}
 	/*
     Function Name : beforeFilter
-    Desc : This function redirects the libraries to their corresponding login page basing on the 
+    Desc : This function redirects the libraries to their corresponding login page basing on the
 		   library subdomain name in the url.
    */
 	function method_action_mapper($method = null)
@@ -55,7 +55,7 @@ Class UsersController extends AppController
 	}
 	function redirection_manager($library = null)
 	{
-		
+
 		if($library != null)
 		{
 			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
@@ -81,30 +81,30 @@ Class UsersController extends AppController
 						$this->redirect('https://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
 					}
 				}
-				else 
+				else
 				{
 					$this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
 				}
 			}
-			else 
+			else
 			{
 				$this->Session->write('lib_status', 'invalid');
 				$this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/aboutus');
-			}	
+			}
 		}
 	}
-   
+
    /*
     Function Name : admin_index
     Desc : actions for welcome admin login
    */
-   
+
 	function admin_index($library = null) {
-		$userType = $this->Session->read('Auth.User.type_id'); 
+		$userType = $this->Session->read('Auth.User.type_id');
 		if($this->Session->read('Auth.User.user_status')=='inactive'){
-			$this->Session->destroy('user'); 
+			$this->Session->destroy('user');
 			$this -> Session -> setFlash("This account has been deactivated.  Please contact your administrator for further questions.");
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));	
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 		if($userType == '5' && $this->Session->read('Auth.User.sales') != 'yes'){
 			$this->redirect('/homes/index');
@@ -116,10 +116,10 @@ Class UsersController extends AppController
 			$x = memcache_get($memcache,"librarydownload");
 			if($library == 'special') {
 				foreach($x as $k => $v){
-					if(ord($v['library_name']{0}) > 122 ||  ord($v['library_name']{0}) < 65){					
+					if(ord($v['library_name']{0}) > 122 ||  ord($v['library_name']{0}) < 65){
 						$res[] = $v;
 					}
-				}			
+				}
 			}
 			elseif($library != '') {
 				foreach($x as $k => $v){
@@ -134,22 +134,22 @@ Class UsersController extends AppController
 			$this->set('x', $res);
 		}
 		if($userType == '4'){
-			$libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' => 
-			$this->Session->read("Auth.User.id")),'recursive' => -1)); 
+			$libraryDetail = $this->Library->find("first", array("conditions" => array('library_admin_id' =>
+			$this->Session->read("Auth.User.id")),'recursive' => -1));
 			if($libraryDetail['Library']['library_unlimited'] != '1'){
 				$this->set('libraryLimited', 1);
 			}
 		}
 		//takes to the default admin home page
-		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header 
+		$this->set('username', $this->Session->read('Auth.User.username'));  //setting the username to display on the header
 	}
 
    /*
     Function Name : admin_data
     Desc : method for jqgrid
-   */	
+   */
 	function admin_data($library = null) {
-		$userType = $this->Session->read('Auth.User.type_id'); 
+		$userType = $this->Session->read('Auth.User.type_id');
 		if($userType == '1'){
 			$memcache = new Memcache;
 			$memcache->addServer('10.181.59.64', 11211);
@@ -157,10 +157,10 @@ Class UsersController extends AppController
 			$x = memcache_get($memcache,"librarydownload");
 			if($library == 'special') {
 				foreach($x as $k => $v){
-					if(ord($v['library_name']{0}) > 122 ||  ord($v['library_name']{0}) < 65){					
+					if(ord($v['library_name']{0}) > 122 ||  ord($v['library_name']{0}) < 65){
 						$res[] = $v;
 					}
-				}			
+				}
 			}
 			elseif($library != '') {
 				foreach($x as $k => $v){
@@ -174,9 +174,9 @@ Class UsersController extends AppController
 			}
 			$this->autoRender=false;
 			header ("Content-type: text/xml;charset=utf-8");
-			$xml= "<?xml version='1.0' encoding='utf-8'?>"; 
-			$xml .= "<rows>"; 
-			if($res){						
+			$xml= "<?xml version='1.0' encoding='utf-8'?>";
+			$xml .= "<rows>";
+			if($res){
 				while(list($key,$value)= each($res)){
 						$xml = $xml. "<row id='".$row['id']."'>";
 						$xml = $xml. "<cell><![CDATA[".htmlentities($value['library_name'],ENT_QUOTES)."]]></cell>";
@@ -192,18 +192,18 @@ Class UsersController extends AppController
 			}
 			$xml .= "</rows>";
 			return $xml;
-			
+
 //			echo json_encode($library);
-			
+
 		}
 	}
 
-    
+
    /*
     Function Name : login
     Desc : Validates admin login credentials
    */
-   
+
 	function admin_login() {
 		$this->layout = 'admin';
 		$this->Auth->autoRedirect = false;
@@ -214,34 +214,34 @@ Class UsersController extends AppController
 			$userType = $this->Session->read('Auth.User.type_id');
 			if($userType == '5' && $this->Session->read('Auth.User.sales') != 'yes'){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 			$this->redirect(array('controller' => 'users', 'action' => 'index', 'admin' => true));
 			$this->Auth->autoRedirect = false;
 		}
 	}
-    
+
    /*
     Function Name : logout
     Desc : Logs admin out of the system
    */
-   
+
 	function admin_logout() {
-		$this->redirect($this->Auth->logout()); 
+		$this->redirect($this->Auth->logout());
 	}
-   
+
    /*
     Function Name : login
     Desc : Logs users/patrons in to the system
    */
-   
+
 	function login($library = null){
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
@@ -257,7 +257,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -277,12 +277,12 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
-		}		
+		}
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
@@ -291,40 +291,40 @@ Class UsersController extends AppController
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
-				$this->Auth->autoRedirect = false;   
+				$this->Auth->autoRedirect = false;
 				$this->redirect('/index');
-				  
+
 			}
 		}
 	}
-   
+
    /*
     Function Name : index
     Desc : Users index to allow/disallow valid users
    */
-   
+
 	function index(){
 		$this->autoRender = false;
-		$patronId = $this->Session->read('Auth.User.id');      
+		$patronId = $this->Session->read('Auth.User.id');
 		$typeId = $this->Session->read('Auth.User.type_id');
 		if($this->Session->read('Auth.User.user_status')=='inactive'){
-			$this->Session->destroy('user'); 
+			$this->Session->destroy('user');
 			$this -> Session -> setFlash("This account has been deactivated.  Please contact your administrator for further questions.");
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));	
-		}	  
+			$this->redirect(array('controller' => 'users', 'action' => 'login'));
+		}
 		if($typeId == '5'){
 			$libraryId = $this->Session->read('Auth.User.library_id');
 			$this->Library->recursive = -1;
-			$libraryArr = $this->Library->find('first',array(                                                
+			$libraryArr = $this->Library->find('first',array(
 										'conditions' => array('Library.id' => $libraryId)
 										)
 									);
 			if($libraryArr['Library']['library_status'] =='inactive'){
-				$this->Session->destroy('user'); 
+				$this->Session->destroy('user');
 				$this -> Session -> setFlash("Please see your Library Administrator for access to this Service.");
-				$this->redirect(array('controller' => 'users', 'action' => 'login'));	
-			}									
-			$authMethod = $libraryArr['Library']['library_authentication_method'];        
+				$this->redirect(array('controller' => 'users', 'action' => 'login'));
+			}
+			$authMethod = $libraryArr['Library']['library_authentication_method'];
 			if($authMethod == 'user_account'){
 				$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libraryId, 'patronid' => $patronId)));
 				if(count($currentPatron) > 0){
@@ -333,15 +333,15 @@ Class UsersController extends AppController
 					$insertArr['libid'] = $libraryId;
 					$insertArr['patronid'] = $patronId;
 					$insertArr['session_id'] = session_id();
-					$this->Currentpatron->save($insertArr);						
+					$this->Currentpatron->save($insertArr);
 				}
 				$date = time();
-				$values = array(0 => $date, 1 => session_id());			
-				Cache::write("login_".$libraryArr['Library']['library_territory']."_".$libraryId."_".$patronId, $values);				
+				$values = array(0 => $date, 1 => session_id());
+				Cache::write("login_".$libraryArr['Library']['library_territory']."_".$libraryId."_".$patronId, $values);
 				//writing to memcache and writing to both the memcached servers
 			/*	if (($currentPatron = Cache::read("login_".$libraryId.$patronId)) === false) {
 					$date = time();
-					$values = array(0 => $date, 1 => session_id());			
+					$values = array(0 => $date, 1 => session_id());
 					Cache::write("login_".$libraryId.$patronId, $values);
 				} else {
 					$userCache = Cache::read("login_".$libraryId.$patronId);
@@ -349,40 +349,40 @@ Class UsersController extends AppController
 					$modifiedTime = $userCache[0];
 					if(!($this->Session->read('patron'))){
 						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());	
-							Cache::write("login_".$libraryId.$patronId, $values);
-						}
-						else{
-							$this->Session->destroy('user');
-							//$this -> Session -> setFlash("This account is already active.");
-							$this->Cookie->write('msg','This account is already active.');							
-							//$this->autoRender = false;
-							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-						}
-					} else {
-						if(($date-$modifiedTime) > 60){
-							$values = array(0 => $date, 1 => session_id());	
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$libraryId.$patronId, $values);
 						}
 						else{
 							$this->Session->destroy('user');
 							//$this -> Session -> setFlash("This account is already active.");
 							$this->Cookie->write('msg','This account is already active.');
-							//$this->autoRender = false;							
+							//$this->autoRender = false;
 							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-						}		
+						}
+					} else {
+						if(($date-$modifiedTime) > 60){
+							$values = array(0 => $date, 1 => session_id());
+							Cache::write("login_".$libraryId.$patronId, $values);
+						}
+						else{
+							$this->Session->destroy('user');
+							//$this -> Session -> setFlash("This account is already active.");
+							$this->Cookie->write('msg','This account is already active.');
+							//$this->autoRender = false;
+							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
+						}
 					}
-					
-				}*/				
-		
+
+				}*/
+
 				$this->Session->write("library", $libraryId);
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("patronEmail", $this->Session->read('Auth.User.email'));
 				$this->Session->write("territory", $libraryArr['Library']['library_territory']);
 				if($this->Session->read('Auth.User.consortium') != ''){
 					$this->Session->write("consortium", $this->Session->read('Auth.User.consortium'));
-				}				
-				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));            
+				}
+				$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $libraryId,'patronid' => $patronId)));
 				$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 				$this->Session->write("downloadsAllotted", $libraryArr['Library']['library_user_download_limit']);
 				if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
@@ -390,7 +390,7 @@ Class UsersController extends AppController
 				}
 				$this->Download->recursive = -1;
 				$results =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-				$this ->Session->write("downloadsUsed", $results);            
+				$this ->Session->write("downloadsUsed", $results);
 				if($libraryArr['Library']['library_block_explicit_content'] == '1'){
 					$this ->Session->write("block", 'yes');
 				}
@@ -407,107 +407,107 @@ Class UsersController extends AppController
 		else{
 			$this->redirect($this->Auth->logout());
 		}
-		
+
 	}
-   
+
    /*
     Function Name : logout
     Desc : Logs users/patron out of the system
    */
-   
-	function logout() {      
+
+	function logout() {
 		$patronId = $this->Session->read('patron');
 		$libraryId = $this->Session->read('library');
 		$patronDetails = $this->Currentpatron->find('all',array('conditions' => array('patronid' => $patronId,'libid' => $libraryId)));
-		if(count($patronDetails) > 0){         
+		if(count($patronDetails) > 0){
 			$updateTime = date( "Y-m-d H:i:s", time()-60 );
-			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];        
+			$this->Currentpatron->id = $patronDetails[0]['Currentpatron']['id'];
 			$this->Currentpatron->saveField('modified',$updateTime, false);
 			//writing to memcache and writing to both the memcached servers
-			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);			
-			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){            
+			Cache::delete("login_".$this->Session->read('library')."_".$libraryId."_".$patronId);
+			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 				$redirectUrl = $this->Session->read('referral_url');
 				$this->Session->destroy();
 				$this->redirect($redirectUrl, null, true);
 			}
-			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){            
+			elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
 				}
 			}
-			elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){            
+			elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
 				}
 			}
-			elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){            
+			elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
 				}
 			}
-			elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){            
+			elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'ilhdlogin'));				
-				}
-			}			
-			elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){            
-				if($this->Session->read('referral')){
-					$redirectUrl = $this->Session->read('referral');
-					$this->Session->destroy();
-					$this->redirect($redirectUrl, null, true);
-				} else {
-					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'ilhdlogin'));
 				}
 			}
-			elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){            
+			elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
 				}
-			}			
-			elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){            
+			}
+			elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
 				}
-			}		 
-			elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){            
+			}
+			elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
+				}
+			}
+			elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
 				}
 			}
 			elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
@@ -517,97 +517,97 @@ Class UsersController extends AppController
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));				
-				}
-			}		 
-			elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){            
-				if($this->Session->read('referral')){
-					$redirectUrl = $this->Session->read('referral');
-					$this->Session->destroy();
-					$this->redirect($redirectUrl, null, true);
-				} else {
-					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
 				}
 			}
-			elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){            
+			elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
 				}
 			}
-			elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){            
+			elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 				}
 			}
-			elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){            
+			elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
 				}
 			}
-			elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){            
+			elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 				}
 			}
-			elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){            
+			elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'clogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));
+				}
+			}
+			elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'clogin'));
 				}
 			}
 
-			elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){            
+			elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'mndlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'mndlogin'));
 				}
 			}
-			
-			elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){            
+
+			elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
 				if($this->Session->read('referral')){
 					$redirectUrl = $this->Session->read('referral');
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				} else {
 					$this->Session->destroy();
-					$this->redirect(array('controller' => 'users', 'action' => 'mdlogin'));				
+					$this->redirect(array('controller' => 'users', 'action' => 'mdlogin'));
 				}
-			}		
-			
+			}
+
 			elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
 				if($this->Session->read('ezproxy_logout') != ''){
 					$redirectUrl = $this->Session->read('ezproxy_logout');
 					$this->Session->destroy();
-					$this->redirect($redirectUrl, null, true);				
+					$this->redirect($redirectUrl, null, true);
 				}
 				else{
 					$redirectUrl = $this->Session->read('referral');
@@ -615,24 +615,24 @@ Class UsersController extends AppController
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				}
-			}		
-			else{            
+			}
+			else{
 			$this->Session->destroy();
-			$this->redirect($this->Auth->logout());    
-			}         
+			$this->redirect($this->Auth->logout());
+			}
 		}else{
 			$this->redirect($this->Auth->logout());
-		}     
+		}
 	}
-   
+
    /*
     Function Name : admin_manageuser
     Desc : action for listing all the admin users
    */
-   
+
 	function admin_manageuser($user = null){
 		if($user == 'special') {
-			$condition = "type_id <> 5 AND last_name REGEXP '^[^A-Za-z]'";			
+			$condition = "type_id <> 5 AND last_name REGEXP '^[^A-Za-z]'";
 		}
 		elseif($user != '') {
 			$condition = "type_id <> 5 AND last_name LIKE '".$user."%'";
@@ -645,12 +645,12 @@ Class UsersController extends AppController
 		$this->paginate = array('conditions' => array($condition));
 		$this->set('admins', $this->paginate('User'));
 	}
-    
+
    /*
     Function Name : admin_userform
     Desc : action for displaying the add/edit user form
    */
-   
+
 	function admin_userform() {
 		if(!empty($this->params['named']['id'])){ //gets the values from the url in form  of array
 			$adminUserId = $this->params['named']['id'];
@@ -682,17 +682,17 @@ Class UsersController extends AppController
 					if($this->User->save()){
 						$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 						$this->redirect('manageuser');
-					}                
-				}               
+					}
+				}
 			}
 		}else{
 			$arr = array();
 			$this->set('getData',$arr);
 			$this->set('formAction','admin_userform');
-			$this->set('formHeader','Create User');               
+			$this->set('formHeader','Create User');
 			//insertion Operation
 			if(isset($this->data)){
-				$insertObj = new User();                    
+				$insertObj = new User();
 				$getData['User'] = $this->data['User'];
 			//	$this->data['User']['library_id'] = Configure::read('LibraryIdeas');
 				if($this->data['User']['type_id'] == 5){
@@ -705,33 +705,33 @@ Class UsersController extends AppController
 				}
 				$getData['Group']['id'] = $this->data['User']['type_id'];
 				$this->set('getData', $getData);
-				if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){                     
-					$this->data['User']['password'] = "";                      
-				}                  
-				$this->User->set($this->data['User']);                  
-				if($this->User->save()){                    
+				if($this->data['User']['password'] == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
+					$this->data['User']['password'] = "";
+				}
+				$this->User->set($this->data['User']);
+				if($this->User->save()){
 					$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 					$this->redirect('manageuser');
 				}
 				else{
 					$this->data['User']['password'] = '';
 					$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
-				}             
-			}               
+				}
+			}
 		}
 		$this->set('options',$this->Group->getallusertype());
 		$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
-		$this->set('consortium', $consortium); 
+		$this->set('consortium', $consortium);
 	}
-   
+
    /*
     Function Name : admin_managepatron
     Desc : action for listing all the patron users
    */
-   
+
 	function admin_managepatron($user = null){
 		if($user == 'special') {
-			$cond = "last_name REGEXP '^[^A-Za-z]'";			
+			$cond = "last_name REGEXP '^[^A-Za-z]'";
 		}
 		elseif($user != '') {
 			$cond = "last_name LIKE '".$user."%'";
@@ -755,12 +755,12 @@ Class UsersController extends AppController
 		$this->User->recursive = -1;
 		$this->set('patrons', $this->paginate('User'));
 	}
-   
+
    /*
     Function Name : admin_patronform
     Desc : action for displaying the add/edit patron form
    */
-   
+
 	function admin_patronform() {
 		if($this->Session->read("Auth.User.type_id") == 4 && $this->Library->getAuthenticationType($this->Session->read('Auth.User.id')) == "referral_url") {
 			$this->redirect('/admin/reports/index');
@@ -769,7 +769,7 @@ Class UsersController extends AppController
 			$patronUserId = $this->params['named']['id'];
 			if(trim($patronUserId) != "" && is_numeric($patronUserId)){
 				$this->set('formAction','admin_patronform/id:'.$patronUserId);
-				$this->set('formHeader','Edit Patron');     
+				$this->set('formHeader','Edit Patron');
 				$this->set('getData', $this->User->getuserdata($patronUserId));
 				//editting a value
 				if(isset($this->data)){
@@ -778,7 +778,7 @@ Class UsersController extends AppController
 					$getData['Group']['id'] = $this->data['User']['type_id'];
 					if(isset($this->data['Check']['sales'])){
 						$this->data['User']['sales'] = 'yes';
-					}					
+					}
 					$this->set('getData', $getData);
 					$this->User->id = $this->data['User']['id'];
 					$password = trim($this->data['User']['password']);
@@ -804,14 +804,14 @@ Class UsersController extends AppController
 					else {
 						$this->Session->setFlash('There was a problem saving this information', 'modal', array('class' => 'modal problem'));
 					}
-				}                
+				}
 			}
 		}
 		else{
 			$arr = array();
 			$this->set('getData',$arr);
 			$this->set('formAction','admin_patronform');
-			$this->set('formHeader','Create Patron');               
+			$this->set('formHeader','Create Patron');
 			//insertion Operation
 			if(isset($this->data)){
 				$insertObj = new User();
@@ -820,8 +820,8 @@ Class UsersController extends AppController
 				if(isset($this->data['Check']['sales'])){
 					$this->data['User']['sales'] = 'yes';
 				}
-				
-				$this->set('getData', $getData);                  
+
+				$this->set('getData', $getData);
 				$this->User->set($this->data['User']);
 				$this->User->setValidation('validate_patron_super_admin');
 				if($this->User->validates()){
@@ -833,7 +833,7 @@ Class UsersController extends AppController
 						if($receipt == '1'){
 							$this->Session->setFlash('Data has been saved successfully and the Email has been sent.', 'modal', array('class' => 'modal success'));
 						} else {
-							$this->Session->setFlash($receipt, 'modal', array('class' => 'modal problem'));					  
+							$this->Session->setFlash($receipt, 'modal', array('class' => 'modal problem'));
 						}
 						$this->redirect('managepatron');
 					}
@@ -858,14 +858,14 @@ Class UsersController extends AppController
 		}
 		$this->set('options',$this->Group->getallusertype());
 	}
-     
+
    /*
     Function Name : delete
     Desc : For deleting a user
    */
-   
+
 	function admin_delete() {
-		$deleteAdminUserId = $this->params['named']['id'];      
+		$deleteAdminUserId = $this->params['named']['id'];
 		if($this->User->delete($deleteAdminUserId)){
 			$this->Session->setFlash('Data deleted successfully!', 'modal', array('class' => 'modal success'));
 			$this->redirect('manageuser');
@@ -874,12 +874,12 @@ Class UsersController extends AppController
 			$this->redirect('manageuser');
 		}
 	}
- 
+
     /*
      Function Name : admin_user_activate
      Desc : For activating a User
     */
-	
+
     function admin_user_activate() {
         $userID = $this->params['named']['id'];
         if(trim($userID) != "" && is_numeric($userID)) {
@@ -897,12 +897,12 @@ Class UsersController extends AppController
             $this->redirect('manageuser');
         }
     }
-	
+
     /*
      Function Name : admin_user_deactivate
      Desc : For deactivating a User
     */
-	
+
     function admin_user_deactivate() {
         $userID = $this->params['named']['id'];
         if(trim($userID) != "" && is_numeric($userID)) {
@@ -920,12 +920,12 @@ Class UsersController extends AppController
             $this->redirect('manageuser');
         }
     }
-    
+
     /*
      Function Name : admin_patron_activate
      Desc : For activating a Patron
     */
-	
+
     function admin_patron_activate() {
         $userID = $this->params['named']['id'];
         if(trim($userID) != "" && is_numeric($userID)) {
@@ -943,12 +943,12 @@ Class UsersController extends AppController
             $this->redirect('managepatron');
         }
     }
-	
+
     /*
      Function Name : admin_patron_deactivate
      Desc : For deactivating a Patron
     */
-	
+
     function admin_patron_deactivate() {
         $userID = $this->params['named']['id'];
         if(trim($userID) != "" && is_numeric($userID)) {
@@ -966,13 +966,13 @@ Class UsersController extends AppController
             $this->redirect('managepatron');
         }
     }
-    
- 
+
+
    /*
     Function Name : _sendNewPatronMail
     Desc : For sending new patron email
    */
-   
+
 	function _sendNewPatronMail($id, $password) {
 		Configure::write('debug', 0);
 		$this->Email->template = 'email/newPatronEmail';
@@ -991,12 +991,12 @@ Class UsersController extends AppController
 		$result = $this->Email->send();
 		return $result;
 	}
-   
+
    /*
     Function Name : _sendModifyPatronMail
     Desc : For sending modified patron email
    */
-   
+
 	function _sendModifyPatronMail($id, $password) {
 		Configure::write('debug', 0);
 		$this->Email->template = 'email/modifyPatronEmail';
@@ -1012,14 +1012,14 @@ Class UsersController extends AppController
 		$this->Email->smtpAuth = Configure::read('App.SMTP_AUTH');
 		$this->Email->smtpUserName = Configure::read('App.SMTP_USERNAME');
 		$this->Email->smtpPassword = Configure::read('App.SMTP_PASSWORD');
-		$result = $this->Email->send(); 
+		$result = $this->Email->send();
 	}
-   
+
    /*
     Function Name : my_account
     Desc : For patron my acount page
    */
-   
+
 	function my_account(){
 		$this->layout = 'home';
 		$patronId = $this->Session->read('patron');
@@ -1027,25 +1027,25 @@ Class UsersController extends AppController
 		if(isset($this->data)){
 			$this->data['User']['type_id'] = 5;
 			$getData['User'] = $this->data['User'];
-			$getData['type_id'] = 5;        
-			$this->set('getData', $getData);        
-			if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){            
+			$getData['type_id'] = 5;
+			$this->set('getData', $getData);
+			if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
 				// do not update the password
 				$this->data['User']= $this->User->arrayremovekey($this->data['User'],'password');
-			}         
-			$this->User->set($this->data['User']);        
-			if($this->User->save()){         
+			}
+			$this->User->set($this->data['User']);
+			if($this->User->save()){
 				$this->Session->setFlash('Data has been saved successfully!');
 				$this->redirect($this->webroot.'users/my_account');
 			}
 		}
 	}
-   
+
    /*
     Function Name : ilogin
     Desc : For patron ilogin(Innovative) login method
    */
-   
+
 	function ilogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -1070,7 +1070,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -1084,61 +1084,61 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
 			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($pin != ''){
 					$this->set('pin',$pin);
 				}
 				else{
 					$this->set('pin',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
+				$this->Session->setFlash("Please provide a correct card number.");
 			}
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 					$this->set('card',$card);
 				}
 				else{
 					$this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -1154,7 +1154,7 @@ Class UsersController extends AppController
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative','id' => $library_cond),
 									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 									)
-								 );					
+								 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -1162,7 +1162,7 @@ Class UsersController extends AppController
 									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative'),
 									'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 									)
-								 );					
+								 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ilogin"){
@@ -1172,9 +1172,9 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'ilogin'));
-				}        
+				}
 				else{
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -1199,14 +1199,14 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -1214,30 +1214,30 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
 									$this->Session->destroy('user');
 									//$this -> Session -> setFlash("This account is already active.");
-									//$this->autoRender = false; 
+									//$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
 									$this->Session->destroy('user');
 									//$this -> Session -> setFlash("This account is already active.");
-									//$this->autoRender = false; 
-									$this->Cookie->write('msg','This account is already active.');                              
+									//$this->autoRender = false;
+									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -1249,7 +1249,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -1262,18 +1262,18 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-					
-					}					
+
+					}
 				}
-			}         
+			}
 		}
 	}
-   
+
    /*
     Function Name : idlogin
     Desc : For patron idlogin(Innovative pin) login method
    */
-   
+
    function idlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -1285,7 +1285,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -1298,7 +1298,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -1312,61 +1312,61 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}	
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card;        
-			if($card == ''){            
+			$patronId = $card;
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($pin != ''){
 				   $this->set('pin',$pin);
 				}
 				else{
 				   $this->set('pin',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5 && !$this->Session->read("subdomain")){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -1383,7 +1383,7 @@ Class UsersController extends AppController
 															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 															)
 													 );
-				} 
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -1392,7 +1392,7 @@ Class UsersController extends AppController
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );
-				}	
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/idlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -1401,10 +1401,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'idlogin'));
-				}        
+				}
 				else{
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest"; 
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."idlogin_validation";
@@ -1412,7 +1412,7 @@ Class UsersController extends AppController
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."idlogin_validation";
 					}
-					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);	
+					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//echo $result; echo "hiii";exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -1428,14 +1428,14 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -1443,7 +1443,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -1455,7 +1455,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -1464,7 +1464,7 @@ Class UsersController extends AppController
 									//$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
@@ -1477,8 +1477,8 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
 						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
@@ -1491,7 +1491,7 @@ Class UsersController extends AppController
 						}
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
-				}         
+				}
 			}
 		}
 	}
@@ -1500,7 +1500,7 @@ Class UsersController extends AppController
     Function Name : mdlogin
     Desc : For patron mdlogin login method
    */
-   
+
    function mdlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -1512,7 +1512,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -1525,7 +1525,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -1539,66 +1539,66 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($pin != ''){
 				   $this->set('pin',$pin);
 				}
 				else{
 				   $this->set('pin',"");
-				}            
+				}
 			}/*
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}*/		
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}*/
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
-				$data['cardNo'] = $cardNo; 
+				$data['cardNo'] = $cardNo;
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$data['referral'] = $this->Session->read('referral');
@@ -1611,7 +1611,7 @@ Class UsersController extends AppController
 															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 															)
 													 );
-				} 
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -1620,7 +1620,7 @@ Class UsersController extends AppController
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );
-				}	
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/mdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -1629,9 +1629,9 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'mdlogin'));
-				}        
+				}
 				else{
-				
+
 					$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.pin' => $pin , 'Card.library_id' => $existingLibraries['0']['Library']['id'] ) , 'fields' => array('id')));
 					if(isset($login_res['Card']['id'])) {
 						//writing to memcache and writing to both the memcached servers
@@ -1642,11 +1642,11 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);				
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1657,8 +1657,8 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
 						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
@@ -1676,17 +1676,17 @@ Class UsersController extends AppController
 						$this->Session->setFlash('Invalid Credentials');
 						$this->redirect(array('controller' => 'users', 'action' => 'mdlogin'));
 					}
-					
-				}         
+
+				}
 			}
 		}
 	}
-	
+
 	/*
     Function Name : mndlogin
     Desc : For patron mndlogin login method
    */
-   
+
    function mndlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -1698,7 +1698,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -1711,7 +1711,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -1725,61 +1725,61 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('name',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			if($card != ''){
 				   $this->set('card',$card);
 				}
 			else{
 				   $this->set('card',"");
-			}     
-			$patronId = $card; 
+			}
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($name != ''){
 				   $this->set('name',$name);
 				}
 				else{
 				   $this->set('name',"");
-				}            
+				}
 			}/*
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}*/			
+				$this->Session->setFlash("Please provide a correct card number.");
+			}*/
 			else{
 				$cardNo = substr($card,0,5);
-				$data['cardNo'] = $cardNo; 
+				$data['cardNo'] = $cardNo;
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$data['referral'] = $this->Session->read('referral');
@@ -1792,7 +1792,7 @@ Class UsersController extends AppController
 															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 															)
 													 );
-				} 
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -1801,7 +1801,7 @@ Class UsersController extends AppController
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );
-				}	
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/mndlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -1810,9 +1810,9 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'mndlogin'));
-				}        
+				}
 				else{
-				
+
 				$login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.library_id' => $existingLibraries['0']['Library']['id'] ) , 'fields' => array('id')));
 					if(isset($login_res['Card']['id'])) {
 						//writing to memcache and writing to both the memcached servers
@@ -1823,11 +1823,11 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);				
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -1838,8 +1838,8 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
 						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
@@ -1857,8 +1857,8 @@ Class UsersController extends AppController
 						$this->Session->setFlash('Invalid Credentials');
 						$this->redirect(array('controller' => 'users', 'action' => 'mndlogin'));
 					}
-					
-				}         
+
+				}
 			}
 		}
 	}
@@ -1868,7 +1868,7 @@ Class UsersController extends AppController
     Function Name : ildlogin
     Desc : For patron ildlogin(Innovative Var with Name) login method
    */
-   
+
    function ildlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -1880,7 +1880,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -1893,7 +1893,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -1907,66 +1907,66 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('name',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$name = $this->data['User']['name'];
 			$data['name'] = $name;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($name != ''){
 				   $this->set('name',$name);
 				}
 				else{
 				   $this->set('name',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($name == ''){            
-				$this -> Session -> setFlash("Please provide patron Last Name.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($name == ''){
+				$this -> Session -> setFlash("Please provide patron Last Name.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
-				$data['cardNo'] = $cardNo; 
+				$data['cardNo'] = $cardNo;
 				$this->Library->recursive = -1;
 				$this->Library->Behaviors->attach('Containable');
 				$data['referral'] = $this->Session->read('referral');
@@ -1979,7 +1979,7 @@ Class UsersController extends AppController
 															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 															)
 													 );
-				} 
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -1988,7 +1988,7 @@ Class UsersController extends AppController
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );
-				}	
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ildlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -1997,10 +1997,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'ildlogin'));
-				}        
+				}
 				else{
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-					$url = $authUrl."/PATRONAPI/".$card."/dump";  
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+					$url = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['url'] = $url;
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -2024,13 +2024,13 @@ Class UsersController extends AppController
 						$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 						$insertArr['patronid'] = $patronId;
 						$insertArr['session_id'] = session_id();
-						$this->Currentpatron->save($insertArr);						
+						$this->Currentpatron->save($insertArr);
 					}
 					$date = time();
-					$values = array(0 => $date, 1 => session_id());			
+					$values = array(0 => $date, 1 => session_id());
 					Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);				/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 					} else {
 						$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -2038,7 +2038,7 @@ Class UsersController extends AppController
 						$modifiedTime = $userCache[0];
 						if(!($this->Session->read('patron'))){
 							if(($date-$modifiedTime) > 60){
-								$values = array(0 => $date, 1 => session_id());	
+								$values = array(0 => $date, 1 => session_id());
 								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 							}
 							else{
@@ -2049,7 +2049,7 @@ Class UsersController extends AppController
 							}
 						} else {
 							if(($date-$modifiedTime) > 60){
-								$values = array(0 => $date, 1 => session_id());	
+								$values = array(0 => $date, 1 => session_id());
 								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 							}
 							else{
@@ -2057,9 +2057,9 @@ Class UsersController extends AppController
 								//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 								$this->Cookie->write('msg','This account is already active.');
 								$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-							}		
+							}
 						}
-						
+
 					}*/
 					$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					$this->Session->write("patron", $patronId);
@@ -2071,8 +2071,8 @@ Class UsersController extends AppController
 					if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 						$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 					}
-					$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-					$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
+					$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+					$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 					$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 					$this->Download->recursive = -1;
 					$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
@@ -2085,16 +2085,16 @@ Class UsersController extends AppController
 					}
 					$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
-				}         
+				}
 			}
 		}
 	}
-	
+
    /*
     Function Name : inlogin
     Desc : For patron inlogin(Innovative w/o PIN) login method
    */
-   
+
 	function inlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -2106,7 +2106,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -2119,7 +2119,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] =$wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -2133,17 +2133,17 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';     
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
@@ -2155,23 +2155,23 @@ Class UsersController extends AppController
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}     
-		$this->set('card',"");      
-		if($this->data){         
+		}
+		$this->set('card',"");
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");            
+			if($card == ''){
+				$this -> Session -> setFlash("Please provide card number.");
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -2185,9 +2185,9 @@ Class UsersController extends AppController
 												'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_wo_pin','id' => $library_cond),
 												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 												)
-											 );            
+											 );
 
-				} 
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -2195,9 +2195,9 @@ Class UsersController extends AppController
 												'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_wo_pin'),
 												'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 												)
-											 );            
-				}				
-				
+											 );
+				}
+
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -2206,10 +2206,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'inlogin'));
-				}        
+				}
 				else{
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump"; 
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."inlogin_validation";
@@ -2235,14 +2235,14 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -2250,7 +2250,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -2261,7 +2261,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -2269,9 +2269,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -2283,7 +2283,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
@@ -2298,7 +2298,7 @@ Class UsersController extends AppController
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
 				}
-			}         
+			}
 		}
 	}
 
@@ -2306,7 +2306,7 @@ Class UsersController extends AppController
     Function Name : indlogin
     Desc : For patron indlogin(Innovative Var w/o Pin) login method
    */
-   
+
    function indlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -2331,7 +2331,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -2345,46 +2345,46 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		} 
+		}
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$patronId = $card;
 			$data['patronId'] = $card;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			else{				
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
 				$this->Library->recursive = -1;
@@ -2397,7 +2397,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -2405,7 +2405,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_wo_pin'),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/indlogin"){
@@ -2415,9 +2415,9 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'indlogin'));
-				}        
+				}
 				else{
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -2425,7 +2425,7 @@ Class UsersController extends AppController
 					}
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."indlogin_validation";
-					}					
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					//echo $result;exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -2442,14 +2442,14 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -2457,7 +2457,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -2468,7 +2468,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -2476,9 +2476,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -2490,7 +2490,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -2503,18 +2503,18 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-					}					
-				}         
+					}
+				}
 			}
 		}
-	}	
-	
+	}
+
 	/*
 		Function Name : slogin
 		Desc : For patron slogin(SIP2 Authentication) login method
-	*/ 
-	   
-	   
+	*/
+
+
 	function slogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -2525,7 +2525,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('subdomain');
 				$this->Session->destroy('login_action');
 			}
-		}		
+		}
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => @$_SERVER['HTTP_REFERER'])));
@@ -2539,7 +2539,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = 1;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -2553,61 +2553,61 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}	            
-		if($this->data){  
+		}
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card;    
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");            
-		
+			if($card == ''){
+				$this -> Session -> setFlash("Please provide card number.");
+
 				if($pin != ''){
 				   $this->set('pin',$pin);
 				}
 				else{
 				   $this->set('pin',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -2622,7 +2622,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -2630,7 +2630,7 @@ Class UsersController extends AppController
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2'),
 													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
-												 );				
+												 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/slogin"){
@@ -2640,17 +2640,17 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'slogin'));
-				}        
+				}
 				else{
 						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 							$authUrl = Configure::read('App.AuthUrl_AU')."slogin_validation";
 						}
 						else{
 							$authUrl = Configure::read('App.AuthUrl')."slogin_validation";
-						}				
+						}
 						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-						
+
 						$resultAnalysis[0] = $result['Posts']['status'];
 						$resultAnalysis[1] = $result['Posts']['message'];
 						if($resultAnalysis[0] == "fail"){
@@ -2665,15 +2665,15 @@ Class UsersController extends AppController
 									$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
-									$this->Currentpatron->save($insertArr);						
+									$this->Currentpatron->save($insertArr);
 								}
 								$date = time();
-								$values = array(0 => $date, 1 => session_id());			
+								$values = array(0 => $date, 1 => session_id());
 								Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-								
+
 							/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 									$date = time();
-									$values = array(0 => $date, 1 => session_id());			
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								} else {
 									$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -2681,7 +2681,7 @@ Class UsersController extends AppController
 									$modifiedTime = $userCache[0];
 									if(!($this->Session->read('patron'))){
 										if(($date-$modifiedTime) > 60){
-											$values = array(0 => $date, 1 => session_id());	
+											$values = array(0 => $date, 1 => session_id());
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 										}
 										else{
@@ -2692,7 +2692,7 @@ Class UsersController extends AppController
 										}
 									} else {
 										if(($date-$modifiedTime) > 60){
-											$values = array(0 => $date, 1 => session_id());	
+											$values = array(0 => $date, 1 => session_id());
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 										}
 										else{
@@ -2700,9 +2700,9 @@ Class UsersController extends AppController
 											//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 											$this->Cookie->write('msg','This account is already active.');
 											$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-										}		
+										}
 									}
-									
+
 								}*/
 								$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 								$this->Session->write("patron", $patronId);
@@ -2714,7 +2714,7 @@ Class UsersController extends AppController
 								if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 									$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 								}
-								$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+								$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 								$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 								$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 								$this->Download->recursive = -1;
@@ -2733,14 +2733,14 @@ Class UsersController extends AppController
 				}
 			}
 		}
-	}		
+	}
 
 	/*
 		Function Name : snlogin
 		Desc : For patron snlogin(SIP2 Authentication) login method without the pin no
-	*/ 
-	   
-	   
+	*/
+
+
 	function snlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -2752,7 +2752,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -2765,7 +2765,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] =$wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -2779,44 +2779,44 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}	
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}	            
-		if($this->data){  
+		}
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
-			$patronId = $card;    
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");            
+			if($card == ''){
+				$this -> Session -> setFlash("Please provide card number.");
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -2830,7 +2830,7 @@ Class UsersController extends AppController
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_wo_pin','id' => $library_cond),
 													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
-												 );					
+												 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -2838,7 +2838,7 @@ Class UsersController extends AppController
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_wo_pin'),
 													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
-												 );				
+												 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/snlogin"){
@@ -2848,14 +2848,14 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
-				}        
+				}
 				else{
 						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 							$authUrl = Configure::read('App.AuthUrl_AU')."snlogin_validation";
 						}
 						else{
 							$authUrl = Configure::read('App.AuthUrl')."snlogin_validation";
-						}				
+						}
 						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						if($result){
@@ -2865,7 +2865,7 @@ Class UsersController extends AppController
 							$this->Session->setFlash($resultAnalysis[1]);
 							$this->redirect(array('controller' => 'users', 'action' => 'snlogin'));
 						}elseif($resultAnalysis[0] == "success"){
-							//writing to memcache and writing to both the memcached servers  
+							//writing to memcache and writing to both the memcached servers
 								$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 								if(count($currentPatron) > 0){
 								// do nothing
@@ -2873,15 +2873,15 @@ Class UsersController extends AppController
 									$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 									$insertArr['patronid'] = $patronId;
 									$insertArr['session_id'] = session_id();
-									$this->Currentpatron->save($insertArr);						
-								}										  
+									$this->Currentpatron->save($insertArr);
+								}
 								$date = time();
-								$values = array(0 => $date, 1 => session_id());			
+								$values = array(0 => $date, 1 => session_id());
 								Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-								  
+
 							/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 									$date = time();
-									$values = array(0 => $date, 1 => session_id());			
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								} else {
 									$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -2889,7 +2889,7 @@ Class UsersController extends AppController
 									$modifiedTime = $userCache[0];
 									if(!($this->Session->read('patron'))){
 										if(($date-$modifiedTime) > 60){
-											$values = array(0 => $date, 1 => session_id());	
+											$values = array(0 => $date, 1 => session_id());
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 										}
 										else{
@@ -2900,7 +2900,7 @@ Class UsersController extends AppController
 										}
 									} else {
 										if(($date-$modifiedTime) > 60){
-											$values = array(0 => $date, 1 => session_id());	
+											$values = array(0 => $date, 1 => session_id());
 											Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 										}
 										else{
@@ -2908,9 +2908,9 @@ Class UsersController extends AppController
 											//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 											$this->Cookie->write('msg','This account is already active.');
 											$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-										}		
+										}
 									}
-									
+
 								  }*/
 								  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 								  $this->Session->write("patron", $patronId);
@@ -2922,7 +2922,7 @@ Class UsersController extends AppController
 								  if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 									  $this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 								  }
-								  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+								  $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 								  $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 								  $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 								  $this->Download->recursive = -1;
@@ -2935,22 +2935,22 @@ Class UsersController extends AppController
 									  $this ->Session->write("block", 'no');
 								  }
 								  $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');;
-							
+
 						}
 						//echo $result;exit;
 					}else{
-						$this -> Session -> setFlash("Authentication server down.");                              
+						$this -> Session -> setFlash("Authentication server down.");
 						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-					}					
+					}
 				}
 			}
 		}
-	}	
+	}
 	/*
 		Function Name : sdlogin
 		Desc : For patron sdlogin(SIP2 Var) login method
 	*/
- 
+
 	function sdlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -2975,7 +2975,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = 1;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -2989,66 +2989,66 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
-		
+
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}            
-		if($this->data){  
+		}
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
-		//	$card = strtolower($card);			
+		//	$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");            
-		
+			if($card == ''){
+				$this -> Session -> setFlash("Please provide card number.");
+
 				if($pin != ''){
 				   $this->set('pin',$pin);
 				}
 				else{
 				   $this->set('pin',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
-				
+
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
 				$this->Library->recursive = -1;
@@ -3063,7 +3063,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -3071,7 +3071,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var'),
 														'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_authentication_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/sdlogin"){
@@ -3081,14 +3081,14 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 						}
 					$this->redirect(array('controller' => 'users', 'action' => 'sdlogin'));
-				}        
+				}
 				else{
 						if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 							$authUrl = Configure::read('App.AuthUrl_AU')."sdlogin_validation";
 						}
 						else{
 							$authUrl = Configure::read('App.AuthUrl')."sdlogin_validation";
-						}				
+						}
 						$data['database'] = 'freegal';
 						$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 						$resultAnalysis[0] = $result['Posts']['status'];
@@ -3106,15 +3106,15 @@ Class UsersController extends AppController
 								$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 								$insertArr['patronid'] = $patronId;
 								$insertArr['session_id'] = session_id();
-								$this->Currentpatron->save($insertArr);						
+								$this->Currentpatron->save($insertArr);
 							}
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-							
+
 						/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 								$date = time();
-								$values = array(0 => $date, 1 => session_id());			
+								$values = array(0 => $date, 1 => session_id());
 								Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 							} else {
 								$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -3122,7 +3122,7 @@ Class UsersController extends AppController
 								$modifiedTime = $userCache[0];
 								if(!($this->Session->read('patron'))){
 									if(($date-$modifiedTime) > 60){
-										$values = array(0 => $date, 1 => session_id());	
+										$values = array(0 => $date, 1 => session_id());
 										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 									}
 									else{
@@ -3133,7 +3133,7 @@ Class UsersController extends AppController
 									}
 								} else {
 									if(($date-$modifiedTime) > 60){
-										$values = array(0 => $date, 1 => session_id());	
+										$values = array(0 => $date, 1 => session_id());
 										Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 									}
 									else{
@@ -3141,9 +3141,9 @@ Class UsersController extends AppController
 										//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 										$this->Cookie->write('msg','This account is already active.');
 										$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-									}		
+									}
 								}
-								
+
 							}*/
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 							$this->Session->write("patron", $patronId);
@@ -3155,7 +3155,7 @@ Class UsersController extends AppController
 							if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 								$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 							}
-							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+							$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 							$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 							$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 							$this->Download->recursive = -1;
@@ -3177,8 +3177,8 @@ Class UsersController extends AppController
 	/*
 		Function Name : sndlogin
 		Desc : For patron sndlogin(SIP2 Var w/o Pin) login method
-	*/ 	   
-	   
+	*/
+
 	function sndlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -3190,7 +3190,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -3202,8 +3202,8 @@ Class UsersController extends AppController
 				}
 				else {
 					$wrongReferral = 1;
-					
-				}	
+
+				}
 			}
 			else if($library != null)
 			{
@@ -3217,45 +3217,45 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}            
+		}
 		if($this->data){
 			$card = $this->data['User']['card'];
 			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
 		//	$card = strtolower($card);
 			$data['card'] = $card;
-			$patronId = $card; 
-			$data['patronId'] = $patronId;			
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");            
+			$patronId = $card;
+			$data['patronId'] = $patronId;
+			if($card == ''){
+				$this -> Session -> setFlash("Please provide card number.");
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -3270,7 +3270,7 @@ Class UsersController extends AppController
 													'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin','id' => $library_cond),
 													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
-												 );				
+												 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -3278,9 +3278,9 @@ Class UsersController extends AppController
 													'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'sip2_var_wo_pin'),
 													'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 													)
-												 );				
-				}				
-	
+												 );
+				}
+
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/sndlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -3289,14 +3289,14 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
-				}        
+				}
 				else{
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."sndlogin_validation";
 					}
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."sndlogin_validation";
-					}				
+					}
 					$data['database'] = 'freegal';
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -3306,7 +3306,7 @@ Class UsersController extends AppController
 						$this->redirect(array('controller' => 'users', 'action' => 'sndlogin'));
 					}elseif($resultAnalysis[0] == "success"){
 					//cho $result;exit;
-					
+
 						//writing to memcache and writing to both the memcached servers
 						$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'], 'patronid' => $patronId)));
 						if(count($currentPatron) > 0){
@@ -3315,15 +3315,15 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
-						}									
+							$this->Currentpatron->save($insertArr);
+						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -3331,7 +3331,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -3342,7 +3342,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 									}
 								else{
@@ -3350,9 +3350,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -3364,7 +3364,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
@@ -3377,33 +3377,33 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-					
+
 					}
-					
+
 				}
 			}
 		}
 	}
 
-	
+
 	/*
 		Function Name : sso
 		Desc : For patron sso(EZProxy) login method
-	*/ 
-	   
-	   
+	*/
+
+
 	function sso(){
 		if(isset($_REQUEST['libname'])){
 			$libName = $_REQUEST['libname'];
 			$this->Library->recursive = -1;
-			$this->Library->Behaviors->attach('Containable');	
+			$this->Library->Behaviors->attach('Containable');
 			$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_ezproxy_name' => $libName,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
 												'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','library_ezproxy_logout','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 												)
 											 );
 			$this->Session->write("ezproxy_logout",$existingLibraries['0']['Library']['library_ezproxy_logout']);
-		} 
+		}
 		else {
 			if(!$this->Session->read('referral')){
 				if(isset($_SERVER['HTTP_REFERER'])){
@@ -3416,13 +3416,13 @@ Class UsersController extends AppController
 				$this->layout = 'login_new';
 			}
 			else{
-			$this->layout = 'login';
+				$this->layout = 'login';
 			}
 
 			$referral = $this->Session->read('referral');
 			$ref = explode("url=",$referral);
 			$this->Library->recursive = -1;
-			$this->Library->Behaviors->attach('Containable');	
+			$this->Library->Behaviors->attach('Containable');
 			$existingLibraries = $this->Library->find('all',array(
 												'conditions' => array('library_ezproxy_referral' => $referral,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
 												'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
@@ -3432,8 +3432,8 @@ Class UsersController extends AppController
 		if(count($existingLibraries) == 0){
 			$this -> Session -> setFlash("This is not a valid credential.");
 			$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-		}        
-		else{	
+		}
+		else{
 			$EZproxySSO = new EZproxySSOComponent($existingLibraries['0']['Library']['library_ezproxy_secret'],$existingLibraries['0']['Library']['library_ezproxy_referral']);
 			if (! $EZproxySSO->valid()) {
 				if ($EZproxySSO->expired()) {
@@ -3453,14 +3453,14 @@ Class UsersController extends AppController
 				$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 				$insertArr['patronid'] = $card;
 				$insertArr['session_id'] = session_id();
-				$this->Currentpatron->save($insertArr);						
+				$this->Currentpatron->save($insertArr);
 			}
 			$date = time();
 			$values = array(0 => $date, 1 => session_id());
 			Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$card, $values);
 		/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card)) === false) {
 				$date = time();
-				$values = array(0 => $date, 1 => session_id());			
+				$values = array(0 => $date, 1 => session_id());
 				Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
 			} else {
 				$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$card);
@@ -3468,7 +3468,7 @@ Class UsersController extends AppController
 				$modifiedTime = $userCache[0];
 				if(!($this->Session->read('patron'))){
 					if(($date-$modifiedTime) > 60){
-						$values = array(0 => $date, 1 => session_id());	
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
 					}
 					else{
@@ -3480,7 +3480,7 @@ Class UsersController extends AppController
 					}
 				} else {
 					if(($date-$modifiedTime) > 60){
-						$values = array(0 => $date, 1 => session_id());	
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['id'].$card, $values);
 					}
 					else{
@@ -3489,9 +3489,9 @@ Class UsersController extends AppController
 						//$this->autoRender = false;
 						$this->Cookie->write('msg','This account is already active.');
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-					}		
+					}
 				}
-				
+
 			}*/
 			$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 			$this->Session->write("patron", $user);
@@ -3519,7 +3519,7 @@ Class UsersController extends AppController
     Function Name : inhlogin
     Desc : For patron Innovative Https login method
    */
-   
+
    function inhlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -3531,7 +3531,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -3544,7 +3544,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -3558,62 +3558,62 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-      $this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}	  
+		}
 	  if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-	  }	
+	  }
       $this->set('pin',"");
       $this->set('card',"");
-      if($this->data){         
+      if($this->data){
          $card = $this->data['User']['card'];
 		 $card = str_replace(" ","",$card);
-		 $card = strtolower($card);		 
+		 $card = strtolower($card);
 		 $data['card'] = $card;
          $pin = $this->data['User']['pin'];
 		 $data['pin'] = $pin;
-         $patronId = $card; 
-		$data['patronId'] = $patronId;		 
-         if($card == ''){            
+         $patronId = $card;
+		$data['patronId'] = $patronId;
+         if($card == ''){
             $this -> Session -> setFlash("Please provide card number.");
             if($pin != ''){
                $this->set('pin',$pin);
             }
             else{
                $this->set('pin',"");
-            }            
+            }
          }
 		 elseif(strlen($card) < 5){
-			$this->Session->setFlash("Please provide a correct card number.");			
-		 }		 
-         elseif($pin == ''){            
-            $this -> Session -> setFlash("Please provide pin.");            
+			$this->Session->setFlash("Please provide a correct card number.");
+		 }
+         elseif($pin == ''){
+            $this -> Session -> setFlash("Please provide pin.");
             if($card != ''){
                $this->set('card',$card);
             }
             else{
                $this->set('card',"");
-            }            
+            }
          }
          else{
 				$cardNo = substr($card,0,5);
@@ -3629,15 +3629,15 @@ Class UsersController extends AppController
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_https','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );				
-					
+													 );
+
 				} else {
 					$existingLibraries = $this->Library->find('all',array(
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_https'),
 														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );
-				}		
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inhlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -3646,10 +3646,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'inhlogin'));
-				}        
+				}
 				else{
 					$matches = array();
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -3657,7 +3657,7 @@ Class UsersController extends AppController
 					}
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."inhlogin_validation";
-					}					
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
 					$resultAnalysis[1] = $result['Posts']['message'];
@@ -3673,14 +3673,14 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -3688,7 +3688,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -3700,7 +3700,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -3709,9 +3709,9 @@ Class UsersController extends AppController
 									//$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -3723,7 +3723,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -3738,14 +3738,14 @@ Class UsersController extends AppController
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
 				}
-			}         
+			}
 		}
    }
    /*
     Function Name : ihdlogin
     Desc : For patron ihdlogin(Innovative Var with HTTPS) login method
    */
-   
+
    function ihdlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -3757,7 +3757,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -3770,7 +3770,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] =$wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -3784,62 +3784,62 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}	
+		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($pin != ''){
 				   $this->set('pin',$pin);
 				}
 				else{
 				   $this->set('pin',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -3855,8 +3855,8 @@ Class UsersController extends AppController
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
-				} 
+													 );
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -3864,7 +3864,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https'),
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ihdlogin"){
@@ -3874,10 +3874,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'ihdlogin'));
-				}        
+				}
 				else{
 					$matches = array();
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -3901,15 +3901,15 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-						
+
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -3917,7 +3917,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -3928,7 +3928,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -3936,9 +3936,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					   $this->Session->write("patron", $patronId);
@@ -3950,7 +3950,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-					   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+					   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 					   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 					   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 					   $this->Download->recursive = -1;
@@ -3964,7 +3964,7 @@ Class UsersController extends AppController
 					   }
 					   $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
-				}         
+				}
 			}
 		}
 	}
@@ -3972,7 +3972,7 @@ Class UsersController extends AppController
     Function Name : inhdlogin
     Desc : For patron inhdlogin(Innovative Var with HTTPS and without PIN) login method
    */
-   
+
    function inhdlogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -3984,7 +3984,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -3997,7 +3997,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -4007,51 +4007,51 @@ Class UsersController extends AppController
 				{
 					if($this->Session->read('lId') == '')
 					{
-						
+
 						$this->Session->write("subdomain",$library);
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
-		}	
+		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
 			$card = strtolower($card);
 			$data['card'] = $card;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
-				$this -> Session -> setFlash("Please provide card number.");          
+			if($card == ''){
+				$this -> Session -> setFlash("Please provide card number.");
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -4066,8 +4066,8 @@ Class UsersController extends AppController
 														'conditions' => array('library_status' => 'active','library_authentication_method' => 'innovative_var_https_wo_pin','id' => $library_cond),
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
-				} 
+													 );
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -4075,7 +4075,7 @@ Class UsersController extends AppController
 														'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'innovative_var_https_wo_pin'),
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
-													 );					
+													 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/inhdlogin"){
@@ -4085,10 +4085,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'inhdlogin'));
-				}        
+				}
 				else{
 					$matches = array();
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -4112,15 +4112,15 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
-						
+
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -4128,7 +4128,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -4139,7 +4139,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -4147,9 +4147,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
 					   $this->Session->write("patron", $patronId);
@@ -4161,7 +4161,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-					   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+					   $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 					   $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 					   $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 					   $this->Download->recursive = -1;
@@ -4175,16 +4175,16 @@ Class UsersController extends AppController
 					   }
 					   $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
-				}         
+				}
 			}
 		}
 	}
- 
+
    /*
     Function Name : plogin
     Desc : For patron login(Using SOAP web services) login method
    */
-   
+
 	function plogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -4196,7 +4196,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -4209,7 +4209,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -4223,17 +4223,17 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
@@ -4245,40 +4245,40 @@ Class UsersController extends AppController
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($pin != ''){
 					$this->set('pin',$pin);
 				}
 				else{
 					$this->set('pin',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 					$this->set('card',$card);
 				}
 				else{
 					$this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -4294,7 +4294,7 @@ Class UsersController extends AppController
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'soap','id' => $library_cond),
 									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 									)
-								 );					
+								 );
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -4302,7 +4302,7 @@ Class UsersController extends AppController
 									'conditions' => array('library_authentication_num LIKE "%'.$cardNo.'%"','library_status' => 'active','library_authentication_method' => 'soap'),
 									'fields' => array('Library.id','Library.library_territory','Library.library_soap_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 									)
-								 );					
+								 );
 				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/plogin"){
@@ -4312,7 +4312,7 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'plogin'));
-				}        
+				}
 				else{
 					$data['soapUrl'] = $existingLibraries['0']['Library']['library_soap_url'];
 					$data['database'] = 'freegal';
@@ -4321,7 +4321,7 @@ Class UsersController extends AppController
 					}
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."plogin_validation";
-					}					
+					}
 
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -4338,15 +4338,15 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
-						}					
+							$this->Currentpatron->save($insertArr);
+						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -4354,7 +4354,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -4365,7 +4365,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -4373,9 +4373,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -4387,7 +4387,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -4402,7 +4402,7 @@ Class UsersController extends AppController
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
 				}
-			}         
+			}
 		}
 	}
    /*
@@ -4420,7 +4420,7 @@ Class UsersController extends AppController
 				$this->Session->destroy('login_action');
 			}
 		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -4433,7 +4433,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -4447,10 +4447,10 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 
@@ -4458,52 +4458,52 @@ Class UsersController extends AppController
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}	
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('name',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
-			$card = strtolower($card);			
+			$card = strtolower($card);
 			$data['card'] = $card;
 			$name = $this->data['User']['name'];
 			$data['name'] = $name;
 			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($name != ''){
 				   $this->set('name',$name);
 				}
 				else{
 				   $this->set('name',"");
-				}            
+				}
 			}
 			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
-			elseif($name == ''){            
-				$this -> Session -> setFlash("Please provide patron Last Name.");            
+				$this->Session->setFlash("Please provide a correct card number.");
+			}
+			elseif($name == ''){
+				$this -> Session -> setFlash("Please provide patron Last Name.");
 				if($card != ''){
 				   $this->set('card',$card);
 				}
 				else{
 				   $this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -4520,7 +4520,7 @@ Class UsersController extends AppController
 															'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 															)
 													 );
-				} 
+				}
 				else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -4529,7 +4529,7 @@ Class UsersController extends AppController
 														'fields' => array('Library.id','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 														)
 													 );
-				}	
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/ilhdlogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -4538,10 +4538,10 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 				   $this->redirect(array('controller' => 'users', 'action' => 'ilhdlogin'));
-				}        
+				}
 				else{
 					$matches = array();
-					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
+					$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 					$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -4549,7 +4549,7 @@ Class UsersController extends AppController
 					}
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."ilhdlogin_validation";
-					}					
+					}
 					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 		//			echo $result;echo "hello";exit;
 					$resultAnalysis[0] = $result['Posts']['status'];
@@ -4566,15 +4566,15 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
-						}						
+							$this->Currentpatron->save($insertArr);
+						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
+						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 
 					/*	if (($currentPatron = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId)) === false) {
 							$date = time();
-							$values = array(0 => $date, 1 => session_id());			
+							$values = array(0 => $date, 1 => session_id());
 							Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 						} else {
 							$userCache = Cache::read("login_".$existingLibraries['0']['Library']['id'].$patronId);
@@ -4582,7 +4582,7 @@ Class UsersController extends AppController
 							$modifiedTime = $userCache[0];
 							if(!($this->Session->read('patron'))){
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -4593,7 +4593,7 @@ Class UsersController extends AppController
 								}
 							} else {
 								if(($date-$modifiedTime) > 60){
-									$values = array(0 => $date, 1 => session_id());	
+									$values = array(0 => $date, 1 => session_id());
 									Cache::write("login_".$existingLibraries['0']['Library']['id'].$patronId, $values);
 								}
 								else{
@@ -4601,9 +4601,9 @@ Class UsersController extends AppController
 									//$this -> Session -> setFlash("This account is already active.");$this->autoRender = false;
 									$this->Cookie->write('msg','This account is already active.');
 									$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/homes/aboutus');
-								}		
+								}
 							}
-							
+
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
@@ -4615,8 +4615,8 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
-						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);						
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
+						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
 						$this->Download->recursive = -1;
 						$results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
@@ -4629,16 +4629,16 @@ Class UsersController extends AppController
 						}
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 					}
-				}         
+				}
 			}
 		}
-	} 
-	
+	}
+
    /*
     Function Name : clogin
     Desc : For patron clogin(Curl) login method
    */
-   
+
 	function clogin($library = null){
     $this->Session->write("layout_option", 'login_new');
 		if($this->Session->read('login_action'))
@@ -4663,7 +4663,7 @@ Class UsersController extends AppController
 				else {
 					$wrongReferral = 1;
 					$data['wrongReferral'] = $wrongReferral;
-				}	
+				}
 			}
 			else if($library != null)
 			{
@@ -4677,59 +4677,59 @@ Class UsersController extends AppController
 						$this->Session->write("lId",$library_data['Library']['id']);
 					}
 				}
-				else 
+				else
 				{
 					$wrongReferral = 1;
-				}	
+				}
 			}
 		}
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-		$this->layout = 'login';
+			$this->layout = 'login';
 		}
 
 		if(isset($_POST['lang'])){
 			$language = $_POST['lang'];
 			$langDetail = $this->Language->find('first', array('conditions' => array('id' => $language)));
 			$this->Session->write('Config.language', $langDetail['Language']['short_name']);
-		}		
+		}
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
 				$this->redirect('/homes/index');
-				$this->Auth->autoRedirect = false;     
+				$this->Auth->autoRedirect = false;
 			}
 		}
 		$this->set('pin',"");
 		$this->set('card',"");
-		if($this->data){         
+		if($this->data){
 			$card = $this->data['User']['card'];
 			$card = str_replace(" ","",$card);
 			$card = strtolower($card);
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
-			$patronId = $card; 
+			$patronId = $card;
 			$data['patronId'] = $patronId;
-			if($card == ''){            
+			if($card == ''){
 				$this -> Session -> setFlash("Please provide card number.");
 				if($pin != ''){
 					$this->set('pin',$pin);
 				}
 				else{
 					$this->set('pin',"");
-				}            
+				}
 			}
-			elseif($pin == ''){            
-				$this -> Session -> setFlash("Please provide pin.");            
+			elseif($pin == ''){
+				$this -> Session -> setFlash("Please provide pin.");
 				if($card != ''){
 					$this->set('card',$card);
 				}
 				else{
 					$this->set('card',"");
-				}            
+				}
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -4746,7 +4746,7 @@ Class UsersController extends AppController
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'curl_method','id' => $library_cond),
 									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 									)
-								 );					
+								 );
 				}
 				else {
 					$library_cond = '';
@@ -4755,8 +4755,8 @@ Class UsersController extends AppController
 									'conditions' => array('library_status' => 'active','library_authentication_method' => 'curl_method','id' => $library_cond),
 									'fields' => array('Library.id','Library.library_territory','Library.library_logout_url','Library.library_territory','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
 									)
-								 );					
-				}				
+								 );
+				}
 				if(count($existingLibraries) == 0){
 					if(isset($wrongReferral) && $_SERVER['HTTP_REFERER'] != "https://".$_SERVER['HTTP_HOST']."/users/clogin"){
 						$this->Session->setFlash("You are not authorized to view this location.");
@@ -4765,7 +4765,7 @@ Class UsersController extends AppController
 						$this->Session->setFlash("This is not a valid credential.");
 					}
 					$this->redirect(array('controller' => 'users', 'action' => 'clogin'));
-				}        
+				}
 				else{
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
@@ -4789,11 +4789,11 @@ Class UsersController extends AppController
 							$insertArr['libid'] = $existingLibraries['0']['Library']['id'];
 							$insertArr['patronid'] = $patronId;
 							$insertArr['session_id'] = session_id();
-							$this->Currentpatron->save($insertArr);						
+							$this->Currentpatron->save($insertArr);
 						}
 						$date = time();
-						$values = array(0 => $date, 1 => session_id());			
-						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);						
+						$values = array(0 => $date, 1 => session_id());
+						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -4804,7 +4804,7 @@ Class UsersController extends AppController
 						if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 							$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
 						}
-						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
+						$isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));
 						$this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
 						$this->Download->recursive = -1;
 						$this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
@@ -4817,13 +4817,13 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-					
-					}					
+
+					}
 				}
-			}         
+			}
 		}
 	}
-	
+
 	function get_login_layout_name($library_data){
 		$mobile_auth = $library_data['Library']['mobile_auth'];
 		$library_territory = $library_data['Library']['library_territory'];
@@ -4837,6 +4837,6 @@ Class UsersController extends AppController
 		}
 	}
 
-	
+
 }
 ?>
