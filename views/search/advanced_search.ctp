@@ -5,13 +5,14 @@
 	 Author : m68interactive
  */
 function createPagination($html, $currentPage, $facetPage, $type='listing', $totalPages, $pageLimitToShow, $queryString=null){
+  if($totalPages > 1){
   $part = floor($pageLimitToShow/2);
   if($type == 'listing'){
-    echo $html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
+    $pagination_str =  $html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
   } else if($type == 'block'){
-    echo $html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
+    $pagination_str .=  $html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
   }
-  echo "&nbsp;";
+  $pagination_str .= "&nbsp;";
   if($type == 'listing'){
     if($currentPage <= $part){
       $fromPage = 1;
@@ -43,21 +44,27 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
   for($pageCount=$fromPage;$pageCount<=$topage;$pageCount++){
     if($type == 'listing'){
       if($currentPage == $pageCount){
-        echo $pageCount;
+        $pagination_str .= $pageCount;
       } else {
-        echo $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$facetPage.'/'.$queryString);
+        $pagination_str .= $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$facetPage.'/'.$queryString);
       }
     } else if($type == 'block'){
       if($facetPage == $pageCount){
-        echo $pageCount;
+        $pagination_str .= $pageCount;
       } else {
-        echo $html->link($pageCount, '/search/advanced_search/'.$currentPage.'/'.$pageCount.'/'.$queryString);
+        $pagination_str .= $html->link($pageCount, '/search/advanced_search/'.$currentPage.'/'.$pageCount.'/'.$queryString);
       }
     }
-    echo "&nbsp;";
+    $pagination_str .= "&nbsp;";
   }
-  echo "&nbsp;";
-  echo $html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
+  $pagination_str .= "&nbsp;";
+  $pagination_str .= $html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
+  }
+  else{
+	$pagination_str = '';
+  }
+  
+  return $pagination_str;
 }
 ?>
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
@@ -191,10 +198,8 @@ STR;
 					}
 
 				}
-        $searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
-        echo '<div class="paging_all_block">';
-				createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
-        echo '</div>';
+				$searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+				$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
 			  }
 			  else {
 				$album_outer_div .=<<<STR
@@ -209,7 +214,9 @@ STR;
 							$album_outer_div
 							</div>
 						</div>
+						<div class="paging_all_block">
 						$pagination_str
+						</div>
 
 STR;
 
@@ -260,23 +267,8 @@ STR;
 						}
 
 					}
-					$pagination_str =<<<STR
-					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
-						| <span><a href="#">2</a></span>
-						| <span><a href="#">3</a></span>
-						| <span><a href="#">4</a></span>
-						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span>
-						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span>
-						| <span><a href="#">9</a></span>
-						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
-					</div>
-STR;
-
-
-
+					$searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+					$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
 				}
 				else {
 					$genre_str  =<<<STR
@@ -298,7 +290,9 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$genre_wrapper_div
 							</div>
+							<div class="paging_all_block">
 							$pagination_str
+							</div>
 
 STR;
 
@@ -350,20 +344,9 @@ STR;
 
 					}
 
-					$pagination_str =<<<STR
-					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
-						| <span><a href="#">2</a></span>
-						| <span><a href="#">3</a></span>
-						| <span><a href="#">4</a></span>
-						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span>
-						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span>
-						| <span><a href="#">9</a></span>
-						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
-					</div>
-STR;
+					$searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+					$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
+
 
 				}
 				else {
@@ -382,7 +365,9 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$label_wrapper_div
 							</div>
+							<div class="paging_all_block">
 							$pagination_str
+							</div>
 
 STR;
 
@@ -434,20 +419,9 @@ STR;
 
 					}
 
-					$pagination_str =<<<STR
-					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
-						| <span><a href="#">2</a></span>
-						| <span><a href="#">3</a></span>
-						| <span><a href="#">4</a></span>
-						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span>
-						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span>
-						| <span><a href="#">9</a></span>
-						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
-					</div>
-STR;
+					$searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+					$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
+
 
 				}
 				else {
@@ -466,7 +440,9 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$artist_wrapper_div
 							</div>
+							<div class="paging_all_block">
 							$pagination_str
+							</div>
 
 STR;
 		break;
@@ -516,20 +492,9 @@ STR;
 						}
 
 					}
-					$pagination_str =<<<STR
-					<div class="paging_all_block">
-						<span class="disabled">&lt;&lt; previous</span> | 	<span class="current">1</span>
-						| <span><a href="#">2</a></span>
-						| <span><a href="#">3</a></span>
-						| <span><a href="#">4</a></span>
-						| <span><a href="#">5</a></span>
-						| <span><a href="#">6</a></span>
-						| <span><a href="#">7</a></span>
-						| <span><a href="#">8</a></span>
-						| <span><a href="#">9</a></span>
-						<span><a class="next" href="#">next &gt;&gt;</a></span><br>
-					</div>
-STR;
+					$searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+					$pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
+
 
 				}
 				else {
@@ -548,7 +513,9 @@ STR;
 				echo $str_all_blocks .=<<<STR
 							$composer_wrapper_div
 							</div>
+							<div class="paging_all_block">
 							$pagination_str
+							</div>
 
 STR;
 
@@ -929,8 +896,8 @@ STR;
       }
     ?>
 	<?php
-    $keyword = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
-    createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
+    $keyword = urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+    echo createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
   ?>
 </div>
 <?php
