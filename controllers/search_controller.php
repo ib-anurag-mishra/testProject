@@ -96,8 +96,8 @@ class SearchController extends AppController
 
 		if(!empty($queryVar)){
 			//Added code for log search data
-			$insertArr[] = $this->searchrecords($typeVar, $queryVar);	
-			$this->Searchrecord->saveAll($insertArr);		
+			$insertArr[] = $this->searchrecords($typeVar, $queryVar);
+			$this->Searchrecord->saveAll($insertArr);
 			//End Added code for log search data
 			$patId = $this->Session->read('patron');
 			$libId = $this->Session->read('library');
@@ -194,7 +194,12 @@ class SearchController extends AppController
 					break;
 				}
         $this->set('totalFacetFound',$totalFacetCount);
-        $this->set('totalFacetPages',ceil($totalFacetCount/$limit));
+        if(!empty($totalFacetCount)){
+          $this->set('totalFacetPages',ceil($totalFacetCount/$limit));
+        } else {
+          $this->set('totalFacetPages',0);
+        }
+
 
 			}
 			else{
@@ -230,12 +235,12 @@ class SearchController extends AppController
     }
 		$this->set('keyword', $queryVar);
 	}
-	
+
 	function searchrecords($type, $search_text){
 		$search_text = strtolower(trim($search_text));
 		$search_text  = preg_replace('/\s\s+/', ' ', $search_text);
 		$insertArr['search_text'] = $search_text;
-		$insertArr['type'] = $type;	
+		$insertArr['type'] = $type;
 		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
 		if(count($genre_id_count_array) > 0){
 			$insertArr['count'] =$genre_id_count_array[0]['Searchrecord']['count'] + 1;
