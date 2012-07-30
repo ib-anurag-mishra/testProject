@@ -35,6 +35,12 @@ class SolrComponent extends Object {
         $query = '';
         $docs = array();
         $country = $this->Session->read('territory');
+        $cond="";
+
+        if($this->Session->read('block') == 'yes') {
+          $cond = "AND Advisory:F";
+        }
+
         $searchkeyword = $this->escapeSpace($keyword);
         if(!empty($country)){
           if(!isset(self::$solr)){
@@ -67,7 +73,7 @@ class SolrComponent extends Object {
               break;
           }
 
-          $query = $query.' AND Territory:'.$country;
+          $query = $query.' AND Territory:'.$country.$cond;
 
           //echo $query; die;
 
@@ -105,6 +111,12 @@ class SolrComponent extends Object {
     function facetSearch($keyword, $type='song', $page=1, $limit = 5){
       $query = '';
       $country = $this->Session->read('territory');
+      $cond="";
+
+      if($this->Session->read('block') == 'yes') {
+        $cond = "AND Advisory:F";
+      }
+
       $searchkeyword = $this->escapeSpace($keyword);
       if(!empty($country)){
         if(!isset(self::$solr)){
@@ -181,6 +193,11 @@ class SolrComponent extends Object {
     function getFacetSearchTotal($keyword, $type='song'){
       $query = '';
       $country = $this->Session->read('territory');
+      $cond = "";
+      
+      if($this->Session->read('block') == 'yes') {
+        $cond = "AND Advisory:F";
+      }
       $searchkeyword = $this->escapeSpace($keyword);
       if(!empty($country)){
         if(!isset(self::$solr)){
@@ -218,7 +235,7 @@ class SolrComponent extends Object {
             break;
         }
 
-        $query = $query.' AND Territory:'.$country;
+        $query = $query.' AND Territory:'.$country.$cond;
 
         if($page == 1){
             $start = 0;
