@@ -29,6 +29,13 @@ function advanced_search_show_hide(id){
 }
 
 $(document).ready(function() {
+  $('#search_query').keypress(function(event) {
+		//auto_check();
+		if (event.which == '13') {
+      //$('#search_query').val();
+      $('#searchQueryForm').submit();
+		}
+	});
   $("#search_query").autocomplete(webroot+"search/autocomplete",
   {
 		minChars: 1,
