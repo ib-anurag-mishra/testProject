@@ -108,7 +108,7 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 <!-- Search Form -->
 <div id="leftCol">
 	<div id="leftColWrapper">
-		<form method="get"><h1 ><label for="search_query">Search music on freegalmusic.com</label></h1>
+		<form method="get" id="searchQueryForm"><h1 ><label for="search_query">Search music on freegalmusic.com</label></h1>
 			<input type="text"	id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
 			<input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" value="search">
