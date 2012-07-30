@@ -193,14 +193,13 @@ class SearchController extends AppController
 						$this->set('composers', $composers);
 					break;
 				}
+
         $this->set('totalFacetFound',$totalFacetCount);
         if(!empty($totalFacetCount)){
           $this->set('totalFacetPages',ceil($totalFacetCount/$limit));
         } else {
           $this->set('totalFacetPages',0);
         }
-
-
 			}
 			else{
 				$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
@@ -217,10 +216,6 @@ class SearchController extends AppController
 				$genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
 				$composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
 				$labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
-
-
-				$this->set('libraryDownload',$libraryDownload);
-				$this->set('patronDownload',$patronDownload);
 				$this->set('albums', $albums);
 				$this->set('albumData',$albumData);
 				$this->set('artists', $artists);
@@ -228,6 +223,8 @@ class SearchController extends AppController
 				$this->set('composers', $composers);
 				$this->set('labels', $labels);
 			}
+      $this->set('libraryDownload',$libraryDownload);
+			$this->set('patronDownload',$patronDownload);
 			$this->set('total', $total);
       $this->set('totalPages', $totalPages);
       $this->set('currentPage', $page);
@@ -252,4 +249,73 @@ class SearchController extends AppController
 
 		return $insertArr;
 	}
+
+  function autocomplete() {
+      Configure::write('debug', 0);
+      $this->autoRender = false;
+      $country = $this->Session->read('territory');
+      if(isset($_GET['q'])){
+        $queryVar = $_GET['q'];
+      }
+      if(isset($_GET['type'])){
+        $type = $_GET['type'];
+        $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
+      } else {
+      	$typeVar = 'all';
+      }
+      if($type!='all'){
+        $data = $this->Solr->facetSearch($queryVar, $type, 0, -1);
+      }
+
+      switch($typeVar){
+        case 'all':
+          echo "all"; die;
+          break;
+        case 'artist':
+          foreach($data as $record=>$count){
+            if(stripos($record,$queryVar) !== false){
+              $record = trim($record, '"');
+              echo $record."|".$record."\n";
+            }
+          }
+          break;
+        case 'album':
+          foreach($data as $record=>$count){
+            if(stripos($record,$queryVar) !== false){
+              echo $record."|".$record."\n";
+            }
+          }
+          break;
+        case 'composer':
+          foreach($data as $record=>$count){
+            if(stripos($record,$queryVar) !== false){
+              echo $record."|".$record."\n";
+            }
+          }
+          break;
+        case 'song':
+          foreach($data as $record=>$count){
+            if(stripos($record,$queryVar) !== false){
+              echo $record."|".$record."\n";
+            }
+          }
+          break;
+        case 'label':
+          foreach($data as $record=>$count){
+            if(stripos($record,$queryVar) !== false){
+              echo $record."|".$record."\n";
+            }
+          }
+          break;
+        case 'genre':
+          foreach($data as $record=>$count){
+            if(stripos($record,$queryVar) !== false){
+              $record = trim($record, '"');
+              echo $record."|".$record."\n";
+            }
+          }
+          break;
+      }
+
+    }
 }
