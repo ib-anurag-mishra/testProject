@@ -14,17 +14,17 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"&lt&ltprevious";		
+				$pagination_str .=	"&lt&ltprevious";
 			}
 		} else if($type == 'block'){
 			if(1 != $facetPage){
 				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"&lt&ltprevious";			
+				$pagination_str .=	"&lt&ltprevious";
 			}
 		}
-		
+
 		$pagination_str .= "&nbsp;";
 		if($type == 'listing'){
 			if($currentPage <= $part){
@@ -71,28 +71,28 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 			$pagination_str .= "&nbsp;";
 		}
 		$pagination_str .= "&nbsp;";
-		
+
 		if($type == 'listing'){
 			if($currentPage != $totalPages ){
 				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"next&gt";		
+				$pagination_str .=	"next&gt";
 			}
 		} else if($type == 'block'){
 			if($facetPage != $totalPages ){
 				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.$currentPage.'/'.($facetPage+1).'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"next&gt";			
+				$pagination_str .=	"next&gt";
 			}
-		}		
-		
+		}
+
 	}
 	else{
 		$pagination_str = '';
 	}
-	
+
 	return $pagination_str;
 }
 ?>
@@ -110,16 +110,97 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 	<div id="leftColWrapper">
 		<form method="get"><h1 ><label for="search_query">Search music on freegalmusic.com</label></h1>
 			<input type="text"	id="search_query" value="<?php echo $keyword ?>" class="query" name="q">
-			<input type="hidden" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
+			<input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" value="search">
 			<ul	class="clearit" id="searchfilter">
-				<li	class=" current	first "><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a></li>
-				<li ><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a></li>
-				<li ><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
-				<li ><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a></li>
-				<li ><a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
+				<li	class=" current	first ">
+          <?php
+          if($type != 'all'){
+            ?>
+          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a>
+          <?php
+          } else {
+            ?>
+            <a	href="#" style="color:#000">All Music</a>
+            <?php
+          }
+          ?>
+        </li>
+				<li >
+        <?php
+          if($type != 'album'){
+            ?>
+          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a>
+          <?php
+          } else {
+            ?>
+          <a	href="#" style="color:#000">Albums</a>
+            <?php
+          }
+          ?>
+        </li>
+				<li >
+          <?php
+          if($type != 'artist'){
+          ?>
+          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
+          <?php
+          } else {
+            ?>
+          <a	href="#" style="color:#000">Artists</a>
+            <?php
+          }
+          ?>
+        <li >
+          <?php
+          if($type != 'composer'){
+          ?>
+          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
+          <?php
+          } else {
+            ?>
+          <a	href="#" style="color:#000">Composers</a>
+            <?php
+          }
+          ?>
+        <li >
+          <?php
+          if($type != 'genre'){
+          ?>
+          <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a>
+          <?php
+          } else {
+            ?>
+          <a	href="#" style="color:#000">Genres</a>
+            <?php
+          }
+          ?>
+        </li>
+				<li >
+          <?php
+          if($type != 'label'){
+          ?>
+          <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a>
+          <?php
+          } else {
+            ?>
+          <a	href="#" style="color:#000">Label</a>
+            <?php
+          }
+          ?>
+        </li>
+				<li >
+          <?php
+          if($type != 'song'){
+          ?>
+            <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
+            <?php
+          } else {
+            ?>
+          <a	href="#" style="color:#000">Songs</a>
+            <?php
+          }
+          ?>
 			</ul>
 		</form>
 	 </div>
@@ -807,12 +888,58 @@ STR;
 <!-- End left and right blocks -->
 
 	<!-- Added for track Songs -->
-
+  <?php
+    $reverseSortOrder = (($sortOrder=='asc')?'desc':'asc');
+  ?>
 	<div >
-		<div	class="links" id="genreArtist" style="width:192px;">Artist<a href="#"></a></div>
-		<div	class="links" id="genreComposer" style="width:180px;">Composer<a href="#"></a></div>
-		<div	class="links" id="genreAlbum" style="width:192px;">Album<a href="#"></a></div>
-		<div	class="links"	id="genreTrack" style="width:215px;">Track<a href="#"></a></div>
+		<div	class="links" id="genreArtist" style="width:192px;">
+        <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>">Artist</a>
+        <?php
+          if($sort=='artist'){
+            if($sortOrder=='asc'){
+              echo "<img src='/img/arrow_asc.png' />";
+            } else {
+              echo "<img src='/img/arrow_desc.png' />";
+            }
+          }
+        ?>
+    </div>
+		<div	class="links" id="genreComposer" style="width:180px;">
+      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>">Composer</a>
+      <?php
+        if($sort=='composer'){
+          if($sortOrder=='asc'){
+            echo "<img src='/img/arrow_asc.png' />";
+          } else {
+            echo "<img src='/img/arrow_desc.png' />";
+          }
+        }
+      ?>
+    </div>
+		<div	class="links" id="genreAlbum" style="width:192px;">
+      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>">Album</a>
+      <?php
+        if($sort=='album'){
+          if($sortOrder=='asc'){
+            echo "<img src='/img/arrow_asc.png' />";
+          } else {
+            echo "<img src='/img/arrow_desc.png' />";
+          }
+        }
+      ?>
+    </div>
+		<div	class="links"	id="genreTrack" style="width:215px;">
+      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>">Track</a>
+      <?php
+        if($sort=='song'){
+          if($sortOrder=='asc'){
+            echo "<img src='/img/arrow_asc.png' />";
+          } else {
+            echo "<img src='/img/arrow_desc.png' />";
+          }
+        }
+      ?>
+    </div>
 		<div	id="genreDownload" style="width:180px;">Download</div>
 	<br class="clr">
 	<div id="genreResults">
@@ -856,7 +983,7 @@ STR;
 					</td>
 					<td width="170" valign="top" align="center" style="padding-left: 10px;">
 						<?php
-						if($libraryDownload == '1' && $patronDownload == '1') {
+  					if($libraryDownload == '1' && $patronDownload == '1') {
 								if($psong->status != 'avail'){
 						 ?>
 									<p>
