@@ -275,35 +275,44 @@ class SearchController extends AppController
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
-              echo $record."|".$record."\n";
+              $record = preg_replace("/\n/",'',$record);
+              echo "$record|$record\n";
             }
           }
           break;
         case 'album':
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
-              echo $record."|".$record."\n";
+              $record = trim($record, '"');
+              $record = preg_replace("/\n/",'',$record);
+              echo "$record|$record\n";
             }
           }
           break;
         case 'composer':
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
-              echo $record."|".$record."\n";
+              $record = trim($record, '"');
+              $record = preg_replace("/\n/",'',$record);
+              echo "$record|$record\n";
             }
           }
           break;
         case 'song':
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
-              echo $record."|".$record."\n";
+              $record = trim($record, '"');
+              $record = preg_replace("/\n/",'',$record);
+              echo "$record|$record\n";
             }
           }
           break;
         case 'label':
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
-              echo $record."|".$record."\n";
+              $record = trim($record, '"');
+              $record = preg_replace("/\n/",'',$record);
+              echo "$record|$record\n";
             }
           }
           break;
@@ -311,7 +320,8 @@ class SearchController extends AppController
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
-              echo $record."|".$record."\n";
+              $record = preg_replace("/\n/",'',$record);
+              echo "$record|$record\n";
             }
           }
           break;
