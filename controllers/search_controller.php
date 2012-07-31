@@ -264,7 +264,7 @@ class SearchController extends AppController
       	$typeVar = 'all';
       }
       if($type!='all'){
-        $data = $this->Solr->facetSearch($queryVar, $type, 0, -1);
+        $data = $this->Solr->facetSearch($queryVar, $type, 0, 10);
       }
 
       switch($typeVar){
