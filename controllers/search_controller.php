@@ -252,7 +252,7 @@ class SearchController extends AppController
 
   function autocomplete() {
       Configure::write('debug', 0);
-      $this->autoRender = false;
+      $this->layout = 'ajax';
       $country = $this->Session->read('territory');
       if(isset($_GET['q'])){
         $queryVar = $_GET['q'];
@@ -266,7 +266,7 @@ class SearchController extends AppController
       if($type!='all'){
         $data = $this->Solr->facetSearch($queryVar, $type, 0, 10);
       }
-
+      $records = array();
       switch($typeVar){
         case 'all':
           echo "";
@@ -276,7 +276,7 @@ class SearchController extends AppController
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
               $record = preg_replace("/\n/",'',$record);
-              echo "$record|$record\n";
+              $records[] = $record;
             }
           }
           break;
@@ -285,7 +285,7 @@ class SearchController extends AppController
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
               $record = preg_replace("/\n/",'',$record);
-              echo "$record|$record\n";
+              $records[] = $record;
             }
           }
           break;
@@ -294,7 +294,7 @@ class SearchController extends AppController
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
               $record = preg_replace("/\n/",'',$record);
-              echo "$record|$record\n";
+              $records[] = $record;
             }
           }
           break;
@@ -303,7 +303,7 @@ class SearchController extends AppController
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
               $record = preg_replace("/\n/",'',$record);
-              echo "$record|$record\n";
+              $records[] = $record;
             }
           }
           break;
@@ -312,7 +312,7 @@ class SearchController extends AppController
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
               $record = preg_replace("/\n/",'',$record);
-              echo "$record|$record\n";
+              $records[] = $record;
             }
           }
           break;
@@ -321,11 +321,11 @@ class SearchController extends AppController
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
               $record = preg_replace("/\n/",'',$record);
-              echo "$record|$record\n";
+              $records[] = $record;
             }
           }
           break;
       }
-
+      $this->set('records',$records);
     }
 }
