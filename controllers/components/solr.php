@@ -6,7 +6,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.2.178', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24
+    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24
 
     /**
      * Solr client object
@@ -194,7 +194,7 @@ class SolrComponent extends Object {
       $query = '';
       $country = $this->Session->read('territory');
       $cond = "";
-      
+
       if($this->Session->read('block') == 'yes') {
         $cond = "AND Advisory:F";
       }
