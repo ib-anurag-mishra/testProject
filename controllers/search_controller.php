@@ -253,7 +253,6 @@ class SearchController extends AppController
   function autocomplete() {
       Configure::write('debug', 0);
       $this->layout = 'ajax';
-      $country = $this->Session->read('territory');
       if(isset($_GET['q'])){
         $queryVar = $_GET['q'];
       }
@@ -264,12 +263,13 @@ class SearchController extends AppController
       	$typeVar = 'all';
       }
       if($type!='all'){
-        $data = $this->Solr->facetSearch($queryVar, $type, 0, 10);
+        $data = $this->Solr->facetSearch($queryVar, $type, 1, 10);
       }
       $records = array();
+
       switch($typeVar){
         case 'all':
-          echo "";
+          $records = array();
           break;
         case 'artist':
           foreach($data as $record=>$count){
@@ -326,6 +326,7 @@ class SearchController extends AppController
           }
           break;
       }
+      //print_r($records); die;
       $this->set('records',$records);
     }
 }
