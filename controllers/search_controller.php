@@ -269,7 +269,7 @@ class SearchController extends AppController
 
       switch($typeVar){
         case 'all':
-          echo "all"; die;
+          echo "";
           break;
         case 'artist':
           foreach($data as $record=>$count){
