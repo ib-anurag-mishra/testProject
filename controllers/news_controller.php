@@ -49,13 +49,13 @@ class NewsController extends AppController
 		
 		if($news_count != 0){
 			$this->paginate = array(   
-				'conditions' => array('AND' => array('language' => $this->Session->read('Config.language'))),
+				'conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
 				'order' => 'News.created DESC','limit' => '3','cache' => 'yes'
 			);
 		}
 		else{
 			$this->paginate = array(   
-				'conditions' => array('AND' => array('language' => 'en')),
+				'conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
 				'order' => 'News.created DESC','limit' => '3','cache' => 'yes'
 			);		
 		}
