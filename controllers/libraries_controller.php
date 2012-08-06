@@ -738,9 +738,20 @@ Class LibrariesController extends AppController
             $dst = Configure::read('App.CDN_PATH').'libraryimg/'.$fileName;
             $success = $this->CdnUpload->sendFile($src, $dst, true);
             //$success = "FILE Sucessfully sent";
-            unlink($upload_Path);
-            $this->Library->id = $_REQUEST['LibraryID'];
-            $this->Library->saveField('library_image_name', $fileName);
+            // If file is successfully uploaded on CDN server then update database and delete file from server.
+            if($success != "error")
+            {
+              // Delete file from server.
+              unlink($upload_Path);
+
+              // Update database.
+              $this->Library->id = $_REQUEST['LibraryID'];            
+              $this->Library->saveField('library_image_name', $fileName);
+            }
+            else
+            {
+              $error = "File is not uploaded on CDN server. Please try again.";
+            }
           }
         }
       }
