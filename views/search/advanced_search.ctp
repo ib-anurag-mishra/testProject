@@ -979,18 +979,18 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><?php echo $html->link(str_replace('"','',$psong->ArtistText), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
+							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
 						</p>
 					</td>
 					<td width="170" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><?php echo str_replace('"','',$psong->Composer); ?></span></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30); ?></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',$psong->Title); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30)); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo $psong->SongTitle; ?>
+							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo truncate_text($psong->SongTitle,30); ?>
               <?php if ($psong->Advisory == 'T') {
             		echo '<font class="explicit"> (Explicit)</font>';
             	}
