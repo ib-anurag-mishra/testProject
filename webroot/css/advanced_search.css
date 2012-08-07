@@ -291,6 +291,7 @@ div.paging {
     margin-right: 10px;
     padding-bottom: 10px;
     text-align: right;
+	width: 98%;
 }
 
 div.paging{
