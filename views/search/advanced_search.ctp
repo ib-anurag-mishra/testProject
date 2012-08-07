@@ -914,7 +914,7 @@ STR;
   ?>
 	<div >
 		<div	class="links" id="genreArtist" style="width:192px;">
-        <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>">Artist</a>
+        <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>">Artist
         <?php
           if($sort=='artist'){
             if($sortOrder=='asc'){
@@ -924,9 +924,10 @@ STR;
             }
           }
         ?>
+		</a>
     </div>
 		<div	class="links" id="genreComposer" style="width:180px;">
-      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>">Composer</a>
+      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>">Composer
       <?php
         if($sort=='composer'){
           if($sortOrder=='asc'){
@@ -936,9 +937,10 @@ STR;
           }
         }
       ?>
+	  </a>
     </div>
 		<div	class="links" id="genreAlbum" style="width:192px;">
-      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>">Album</a>
+      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>">Album
       <?php
         if($sort=='album'){
           if($sortOrder=='asc'){
@@ -948,9 +950,10 @@ STR;
           }
         }
       ?>
+	  </a>
     </div>
 		<div	class="links"	id="genreTrack" style="width:215px;">
-      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>">Track</a>
+      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>">Track
       <?php
         if($sort=='song'){
           if($sortOrder=='asc'){
@@ -960,6 +963,7 @@ STR;
           }
         }
       ?>
+	  </a>
     </div>
 		<div	id="genreDownload" style="width:180px;">Download</div>
 	<br class="clr">
@@ -990,7 +994,7 @@ STR;
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo truncate_text($psong->SongTitle,30); ?>
+							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28); ?>
               <?php if ($psong->Advisory == 'T') {
             		echo '<font class="explicit"> (Explicit)</font>';
             	}
