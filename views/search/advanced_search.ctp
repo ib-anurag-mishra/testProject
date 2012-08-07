@@ -96,9 +96,17 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 	return $pagination_str;
 }
 
-function truncate_text($str, $length){
-	$truncated_str = ((strlen($str) > $length)?substr($str,0, $length)."...":$str);
-	return $truncated_str;	
+function truncate_text($text, $char_count){
+	if(strlen($text) > $char_count) {
+		$modified_text = substr($text, 0, $char_count);
+		$modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
+		$modified_text = substr($modified_text, 0, $char_count) . "...";
+	}
+	else {
+		$modified_text = $text;
+	}		 
+
+	return $modified_text;	
 }
 ?>
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
@@ -364,9 +372,10 @@ STR;
 						}
 
 						$genre_name = str_replace('"','',$genre);
+						$genre_name_text = truncate_text($genre_name, 30);
 						$tilte = urlencode($genre);
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre">$genre_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -440,9 +449,10 @@ STR;
 						}
 
 						$label_name = str_replace('"','',$label);
+						$label_name_text = truncate_text($label_name, 30);
 						$tilte = urlencode($label);
 						$label_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=label" title="$label">$label_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=label" title="$label">$label_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -515,9 +525,10 @@ STR;
 						}
 
 						$artist_name = str_replace('"','',$artist);
+						$artist_name_text = truncate_text($artist_name, 30);
 						$tilte = urlencode($artist);
 						$artist_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=artist" title="$artist">$artist_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=artist" title="$artist">$artist_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -589,6 +600,7 @@ STR;
 						}
 
 						$composer_name = str_replace('"','',$composer);
+						$composer_name = truncate_text($composer_name, 30);
 						$tilte = urlencode($composer);
 						$composer_list .=<<<STR
 						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=composer" title='$composer'>$composer_name</a></span><span class="right_text">($count)</span></li>
@@ -766,8 +778,9 @@ STR;
 				<?php foreach($composers as $composer=>$count)
 				{
 					$tilte = urlencode($composer);
+					$composer_name = truncate_text($composer, 30);
 				?>
-							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer?>'><?php echo str_replace('"','',$composer); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 				<?php
 				}
 				?>
@@ -798,8 +811,9 @@ STR;
 					foreach($genres as $genre=>$count){
 						$genre_name = str_replace('"','',$genre);
 						$tilte = urlencode($genre_name);
+						$genre_name_text = truncate_text($genre_name, 30);
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 					}
 
@@ -844,8 +858,9 @@ STR;
 						<?php foreach($artists as $artist=>$count)
 				{
 								$tilte = urlencode($artist);
+								$artist_name_text = truncate_text($artist, 30);
 				?>
-				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=artist" title='<?php echo $artist?>'><?php echo str_replace('"','',$artist); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=artist" title='<?php echo $artist?>'><?php echo str_replace('"','',$artist_name_text); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 				?>
@@ -871,8 +886,9 @@ STR;
 						<?php foreach($labels as $label=>$count)
 				{
 								$tilte = urlencode($label);
+								$label_name_text = truncate_text($label, 30);
 				?>
-				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $label?>'><?php echo (($label!="false")?$label:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $label?>'><?php echo (($label!="false")?$label_name_text:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 				?>
