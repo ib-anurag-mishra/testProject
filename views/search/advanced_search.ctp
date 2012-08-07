@@ -969,7 +969,12 @@ STR;
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo $psong->SongTitle; ?></span>
+							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo $psong->SongTitle; ?>
+              <?php if ($psong->Advisory == 'T') {
+            		echo '<font class="explicit"> (Explicit)</font>';
+            	}
+              ?>
+              </span>
 							<?php
 							$sampleFile = $song->getSampleFile($psong->Sample_FileID);
 							$songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
