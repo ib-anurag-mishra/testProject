@@ -95,6 +95,11 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 
 	return $pagination_str;
 }
+
+function truncate_text($str, $length){
+	$truncated_str = ((strlen($str) > $length)?substr($str,0, $length)."...":$str);
+	return $truncated_str;	
+}
 ?>
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
 <script src="/js/advanced_search.js"></script>
@@ -280,7 +285,7 @@ STR;
 
 					}
 
-					$album_title = ((strlen($palbum->Title) > 30)?substr($palbum->Title,0,30)."...":$palbum->Title);
+					$album_title = truncate_text($palbum->Title, 30);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
 					$tilte = urlencode($palbum->Title);
@@ -696,7 +701,7 @@ STR;
 						}
 					}
 
-					$album_title = ((strlen($palbum->Title) > 30)?substr($palbum->Title,0,30)."...":$palbum->Title);
+					$album_title = truncate_text($palbum->Title, 30);
 					$title = urlencode($palbum->Title);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$tilte = urlencode($palbum->Title);
