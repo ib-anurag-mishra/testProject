@@ -68,6 +68,8 @@ $(".adjust").toggle(
           <?php
           foreach($news as $newx)
           {
+            $newsText = str_replace('<div', '<p', $newx['News']['body']);
+            $newsText = str_replace('</div>', '</p>', $newsText);
             ?>
             <tr>
 				<td valign = 'top' class="left"> <img src ='<?php echo $cdnPath. 'news_image/' . $newx['News']['image_name'];?>' style="width:180px;height:180px;" /></td>
@@ -76,16 +78,16 @@ $(".adjust").toggle(
 					<label><b><?php echo $newx['News']['place'] . " : " . date( "F d, Y", strtotime($newx['News']['created']))  ;?></b></label>
 					<div style = "padding-top:3px;">
 						<div id="shortNews<?php echo $newx['News']['id']; ?>">
-              <?php echo substr($newx['News']['body'],0, strpos($newx['News']['body'], "</p>")+4);?>
+              <?php echo substr($newsText,0, strpos($newsText, "</p>")+4);?>
               <?php
-              if(strlen($newx['News']['body']) > strpos($newx['News']['body'], "</p>")+4)
+              if(strlen($newsText) > strpos($newsText, "</p>")+4)
               {
                 ?><a href="#" onClick="showhide('detail', '<?php echo $newx['News']['id']; ?>')">+ See more</a><?php
               }
               ?>
 						</div>
             <div id="detailsNews<?php echo $newx['News']['id']; ?>" style="display:none">
-							<?php echo $newx['News']['body'];?>
+							<?php echo $newsText;?>
               <a href="#" onClick="showhide('short', '<?php echo $newx['News']['id']; ?>')">- See Less</a>
 						</div>
 					</div>
