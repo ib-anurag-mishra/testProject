@@ -68,8 +68,6 @@ $(".adjust").toggle(
           <?php
           foreach($news as $newx)
           {
-            echo "<br>string length-".strlen($newx['News']['body']);
-            echo "<br>pragraph position-".strpos($newx['News']['body'], "</p>");
             ?>
             <tr>
 				<td valign = 'top' class="left"> <img src ='<?php echo $cdnPath. 'news_image/' . $newx['News']['image_name'];?>' style="width:180px;height:180px;" /></td>
