@@ -68,6 +68,8 @@ $(".adjust").toggle(
           <?php
           foreach($news as $newx)
           {
+            echo "<br>string length-".strlen($newx['News']['body']);
+            echo "<br>pragraph position-".strpos($newx['News']['body'], "</p>");
             ?>
             <tr>
 				<td valign = 'top' class="left"> <img src ='<?php echo $cdnPath. 'news_image/' . $newx['News']['image_name'];?>' style="width:180px;height:180px;" /></td>
@@ -77,7 +79,12 @@ $(".adjust").toggle(
 					<div style = "padding-top:3px;">
 						<div id="shortNews<?php echo $newx['News']['id']; ?>">
               <?php echo substr($newx['News']['body'],0, strpos($newx['News']['body'], "</p>")+4);?>
-              <a href="#" onClick="showhide('detail', '<?php echo $newx['News']['id']; ?>')">+ See more</a>
+              <?php
+              if(strlen($newx['News']['body']) > strpos($newx['News']['body'], "</p>")+4)
+              {
+                ?><a href="#" onClick="showhide('detail', '<?php echo $newx['News']['id']; ?>')">+ See more</a><?php
+              }
+              ?>
 						</div>
             <div id="detailsNews<?php echo $newx['News']['id']; ?>" style="display:none">
 							<?php echo $newx['News']['body'];?>
