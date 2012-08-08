@@ -1,5 +1,5 @@
 <?php
-      
+
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
@@ -20,7 +20,8 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumDataByArtist
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
-  private $uri = 'http://www.freegalmusic.com/';
+
+  private $uri = 'http://www.freegaltest.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
 
@@ -40,7 +41,7 @@ class SoapsController extends AppController {
 
 
   function wsdl(){
-    
+
     Configure::write('debug',0);
     $this->autoRender = false;
     $siteUrl = Configure::read('App.base_url');
@@ -118,7 +119,7 @@ class SoapsController extends AppController {
         'joins' => array(	array('table' => 'zipusstates','alias' => 'zipus','type' => 'inner', 'conditions' => array('library_zipcode = zipus.zip'))),
         'conditions' => array(
             'library_status'=>'active', 'library_zipcode != ""', 'library_authentication_method != "ezproxy"'
-        ),      
+        ),
         'group' => 'id HAVING distance < ' . $this->library_search_radius,
         'order' => array('distance' => 'ASC', 'Library.library_name' => 'ASC'),
         ));
@@ -133,14 +134,14 @@ class SoapsController extends AppController {
 
             $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
             $obj->LibraryAuthenticationMethod = $identifier;
-            
-            $auth_url = trim(strtolower($library['Library']['mobile_auth'])); 
+
+            $auth_url = trim(strtolower($library['Library']['mobile_auth']));
             if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
               $obj->LibraryAuthenticationNum = 1;
             } else {
               $obj->LibraryAuthenticationNum = 0;
             }
-            
+
             $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
 
             $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
@@ -162,7 +163,7 @@ class SoapsController extends AppController {
         throw new SOAPFault('Soap:client', 'Invalid Zip Code. Please provide a valid code.');
       }
     } else {
-      
+
       $data = strtolower(trim($data));
 
       if( 5 > strlen($data)) {
@@ -174,7 +175,7 @@ class SoapsController extends AppController {
         throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
       }
 
-   
+
       $libraries = $this->Library->find('all',
         array('fields' =>
           array(
@@ -215,14 +216,14 @@ class SoapsController extends AppController {
         $obj->LibraryApiKey = $library['Library']['library_apikey'];
         $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
         $obj->LibraryAuthenticationMethod = $identifier;
-        
-        $auth_url = trim(strtolower($library['Library']['mobile_auth'])); 
+
+        $auth_url = trim(strtolower($library['Library']['mobile_auth']));
         if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
           $obj->LibraryAuthenticationNum = 1;
         } else {
           $obj->LibraryAuthenticationNum = 0;
         }
-        
+
         $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
 
         $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
@@ -236,7 +237,7 @@ class SoapsController extends AppController {
 
   }
 
-  
+
   /**
    * Function Name : getAlbumsFromArtistText
    * Desc : To get the albums list from artistText
@@ -249,18 +250,18 @@ class SoapsController extends AppController {
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-  
+
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-      
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
       'recursive' => -1
       )
     );
-    
+
     $library_territory = $libraryDetails['Library']['library_territory'];
-      
+
     $songs = $this->Song->find('all', array(
       'fields' => array('DISTINCT Song.ReferenceID'),
       'conditions' => array(
@@ -272,14 +273,14 @@ class SoapsController extends AppController {
       ),
       'contain' => array(
         'Country' => array('fields' => array('Country.Territory'))
-      ), 
+      ),
       'recursive' => 0,
       'order' => array('Song.ReferenceID' => 'DESC'),
       'limit' => $startFrom . ', ' . $recordCount
     )
     );
 
-    
+
     $val = '';
     $index = 1;
     $cnt = count($songs);
@@ -287,15 +288,15 @@ class SoapsController extends AppController {
       $val = $val . $v['Song']['ReferenceID'];
       if($cnt != $index) {
         $val .= ',';
-      }      
+      }
       $index++;
     }
-      
-    $str_songids = str_replace(',', "','", $val); 
-    
+
+    $str_songids = str_replace(',', "','", $val);
+
     $albumData = $this->Album->find('all',array('conditions' =>
                                   array('and' =>
-                                    array(  
+                                    array(
                                       array("Album.ProdID IN ('".$str_songids."')")
                                     ), "1 = 1 GROUP BY Album.ProdID"
                                   ),
@@ -324,28 +325,28 @@ class SoapsController extends AppController {
                                         'Files.SourceURL'
                                       ),
                                     )
-                                  ), 
+                                  ),
                                   'order' => array(
                                     'Country.SalesDate' => 'desc'
-                                  )                                 
-                                  
-                              ));  
-                            
-    
+                                  )
+
+                              ));
+
+
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
-    }    
-      
+    }
+
     foreach($albumData AS $key => $val) {
-    
+
         $obj = new AlbumDataByArtistType;
-        
-        $obj->ProdID         = $val['Album']['ProdID']; 
+
+        $obj->ProdID         = $val['Album']['ProdID'];
         $obj->Genre          = $val['Genre']['Genre'];
         $obj->AlbumTitle     = $val['Album']['AlbumTitle'];
         $obj->Title          = $val['Album']['Title'];
         $obj->Label          = $val['Album']['Label'];
-         
+
         $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Files']['CdnPath']."/".$val['Files']['SourceURL']);
         $fileURL = Configure::read('App.Music_Path').$fileURL;
         $obj->FileURL = $fileURL;
@@ -354,11 +355,11 @@ class SoapsController extends AppController {
     }
 
     return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfAlbumDataByArtistType');
-    
-      
+
+
   }
-  
-  
+
+
   /**
    * Function Name : getFeaturedAlbum
    * Desc : To get the featured artist
@@ -367,7 +368,7 @@ class SoapsController extends AppController {
 	 * @return FreegalFeaturedAlbumType[]
    */
 	function getFeaturedAlbum($authenticationToken, $append) {
-    
+
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -375,9 +376,9 @@ class SoapsController extends AppController {
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_terriotry = $this->getLibraryTerritory($libraryId);
 
-   
+
     if ( ((Cache::read("ssartists_".$library_terriotry.'_EN')) === false)  || (Cache::read("ssartists_".$library_terriotry.'_EN') === null) ) {
-    
+
       $Artist = $this->Artist->find('all',
         array(
           'fields'=>array(
@@ -394,13 +395,13 @@ class SoapsController extends AppController {
           'limit' => 6
         )
       );
-      
+
       Cache::write("ssartists_".$library_terriotry.'_EN', $Artist);
-      
+
     } else {
       $Artist = Cache::read("ssartists_".$library_terriotry.'_EN');
-    } 
-     
+    }
+
 
     if(!(empty($Artist))) {
 
@@ -451,16 +452,16 @@ class SoapsController extends AppController {
 	 * @return FreegalFeaturedAlbumType[]
    */
 	function getFeaturedArtistSlides($authenticationToken, $append, $featured_mobile_time) {
-    
+
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     $library_terriotry = $this->getLibraryTerritory($libraryId);
-   
+
     if ( ((Cache::read("ssartists_".$library_terriotry.'_EN')) === false)  || (Cache::read("ssartists_".$library_terriotry.'_EN') === null) ) {
-    
+
       $Artist = $this->Artist->find('all',
         array(
           'fields'=>array(
@@ -477,24 +478,24 @@ class SoapsController extends AppController {
           'limit' => 6
         )
       );
-      
+
       Cache::write("ssartists_".$library_terriotry.'_EN', $Artist);
-      
+
     } else {
       $Artist = Cache::read("ssartists_".$library_terriotry.'_EN');
-    } 
-     
-    
+    }
+
+
 
     if ( ((Cache::read('update_ssdate_mobile')) === false)  || (Cache::read('update_ssdate_mobile') === null) ) {
-          
+
       Cache::write('update_ssdate_mobile', date('d/m/Y/H/i/s',time()));
     }
-    
-    
+
+
 
     if('' == trim($featured_mobile_time)) {
-      
+
       if(!(empty($Artist))) {
 
         foreach($Artist AS $key1 => $val1) {
@@ -515,10 +516,10 @@ class SoapsController extends AppController {
           } else {
             $obj->FileURL = $this->artist_image_base_url . $val1['Artist']['artist_image'];
           }
-          
+
           $obj->FeaturedWebsiteTime = Cache::read('update_ssdate_mobile');
-  
-          
+
+
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalAlbumDetailType');
 
         }
@@ -531,21 +532,21 @@ class SoapsController extends AppController {
 
         throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
       }
-      
+
     }
 
-    
+
     $arrTmp = explode('/', Cache::read('update_ssdate_mobile'));
     $featured_website_timestamp = (int) strtotime($arrTmp[0].'-'.$arrTmp[1].'-'.$arrTmp[2].' '.$arrTmp[3].':'.$arrTmp[4].':'.$arrTmp[5]);
-    
+
     $arrTmp = explode('/', $featured_mobile_time);
     $featured_mobile_timestamp = (int) strtotime($arrTmp[0].'-'.$arrTmp[1].'-'.$arrTmp[2].' '.$arrTmp[3].':'.$arrTmp[4].':'.$arrTmp[5]);
-    
-    
-    
+
+
+
 
     if($featured_mobile_timestamp == $featured_website_timestamp) {
-    
+
       $obj = new FreegalFeaturedAlbumType;
       $obj->ProdId          = '';
       $obj->ProductId       = '';
@@ -558,15 +559,15 @@ class SoapsController extends AppController {
       $obj->FileURL         = '';
       $obj->FeaturedWebsiteTime = '';
       $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalAlbumDetailType');
-      
+
       return $data;
-    
+
     }
 
-    
+
 
     if($featured_mobile_timestamp < $featured_website_timestamp) {
-      
+
       if(!(empty($Artist))) {
 
         foreach($Artist AS $key1 => $val1) {
@@ -602,7 +603,7 @@ class SoapsController extends AppController {
 
         throw new SOAPFault('Soap:client', 'No featured albums found for your library.');
       }
-      
+
     }
 
 	}
@@ -616,7 +617,7 @@ class SoapsController extends AppController {
 	 * @return NationalTopTenType[]
    */
 	function getNationalTopTen($authenticationToken, $libraryId) {
-  
+
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -626,11 +627,11 @@ class SoapsController extends AppController {
 
     $nationalTopDownloadTmp = Cache::read("national".$territory);
     $nationalTopDownload = array_splice($nationalTopDownloadTmp,0,10);
-    
+
     if(!(empty($nationalTopDownload))) {
-      
+
       foreach($nationalTopDownload as $key => $data) {
-      
+
           $obj = new NationalTopTenType;
           $obj->ProdId                    = (int)$data['Song']['ProdID'];
           $obj->ProductId                 = (string)'';
@@ -657,18 +658,18 @@ class SoapsController extends AppController {
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
 
       }
-      
+
       $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfNationalTopTenType');
 
       return $data;
-    
+
     } else {
-    
+
       throw new SOAPFault('Soap:client', 'NationalTopTen list is empty');
     }
-    
-    
-    
+
+
+
   }
 
   /**
@@ -683,7 +684,7 @@ class SoapsController extends AppController {
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -691,9 +692,9 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
-    
+
     if (($libDownload = Cache::read("lib".$libraryId)) === false) {
-    
+
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '10'));
 			$prodIds = '';
 
@@ -754,11 +755,11 @@ class SoapsController extends AppController {
 			}
 			Cache::write("lib".$libraryId, $topDownload);
 		}
-		$topDownload = Cache::read("lib".$libraryId);    
-    
-    
+		$topDownload = Cache::read("lib".$libraryId);
+
+
     if(!(empty($topDownload))) {
-   
+
       foreach($topDownload as $data) {
 
           $obj = new LibraryTopTenType;
@@ -786,17 +787,17 @@ class SoapsController extends AppController {
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
 
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'LibraryTopTenType');
-       
+
       }
 
       $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfLibraryTopTenType');
 
       return $data;
-    
+
     } else {
 
       throw new SOAPFault('Soap:client', 'LibraryTopTen list is empty.');
-    }    
+    }
 
 	}
 
@@ -816,15 +817,15 @@ class SoapsController extends AppController {
     }
 
     $library_territory = $this->getLibraryTerritory($libraryId);
-    
+
     $data = array();
     $albumData = $this->Album->find('first',
       array(
         'conditions' => array('Album.ProdId' => $prodId, 'Country.Territory' => $library_territory),
       )
     );
-    
-    
+
+
     if(!empty($albumData)){
 
       $info_data = Array();
@@ -856,7 +857,7 @@ class SoapsController extends AppController {
       foreach($data['Song'] AS $val){
         if(1 == $val['DownloadStatus']) {
           if($this->IsTerrotiry($val['ProdID'], $libraryId)) {
-            
+
             $sobj = new SongDataType;
             $sobj->ProdID                = (int)$val['ProdID'];
             $sobj->ProductID             = (string)$val['ProductID'];
@@ -870,7 +871,9 @@ class SoapsController extends AppController {
             $sobj->Composer              = (string)$val['Composer'];
             $sobj->Genre                 = (string)$val['Genre'];
             $sobj->Territory             = (string)$val['Territory'];
-            $sobj->DownloadStatus        = (int)$val['DownloadStatus'];
+                      
+            $sobj->DownloadStatus        = $this->IsDownloadable($val['ProdID'], $library_territory, $val['provider_type']);       
+            
             $sobj->TrackBundleCount      = (int)$val['TrackBundleCount'];
             $sobj->Sample_Duration       = (string)$val['Sample_Duration'];
             $sobj->FullLength_Duration   = (string)$val['FullLength_Duration'];
@@ -883,7 +886,7 @@ class SoapsController extends AppController {
             $sobj->UpdateOn              = (string)$val['UpdateOn'];
 
             $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
-            
+
           }
         }
 
@@ -1316,7 +1319,7 @@ class SoapsController extends AppController {
         $resp = $this->referralAuthinticate($card, $pin, $library_id, $agent);
       }
       break;
-      
+
       case '17':  {
         $resp = $this->idloginAuthinticate($card, $pin, $library_id, $agent);
       }
@@ -1445,7 +1448,7 @@ class SoapsController extends AppController {
     $data['pin'] = $pin;
     $patronId = $card;
     $data['patronId'] = $patronId;
-    
+
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
@@ -1470,28 +1473,28 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
       $this->Library->recursive = -1;
       $this->Library->Behaviors->attach('Containable');
-      
+
       $data['library_cond'] = $library_id;
-      
+
       $existingLibraries = $this->Library->find('all',array(
                     'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
                                           'library_authentication_method' => 'innovative'),
@@ -1502,7 +1505,7 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
       if(count($existingLibraries) == 0){
 
 
@@ -1510,18 +1513,18 @@ class SoapsController extends AppController {
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
       else{
-       
+
         $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
         $data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
         $data['database'] = 'freegal';
-        
+
         if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 					$authUrl1 = Configure::read('App.AuthUrl_AU')."ilogin_validation";
         }
         else{
 					$authUrl1 = Configure::read('App.AuthUrl')."ilogin_validation";
 				}
-          
+
         $result = $this->AuthRequest->getAuthResponse($data,$authUrl1);
 
         $resultAnalysis[0] = $result['Posts']['status'];
@@ -1567,10 +1570,10 @@ class SoapsController extends AppController {
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
-    
+
     $data['wrongReferral'] = '';
-    
-    
+
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -1583,20 +1586,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
@@ -1604,7 +1607,7 @@ class SoapsController extends AppController {
       $this->Library->Behaviors->attach('Containable');
 
       $data['library_cond'] = $library_id;
-      
+
       $existingLibraries = $this->Library->find('all',array(
                       'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
                                             'library_authentication_method' => 'innovative_wo_pin'),
@@ -1624,10 +1627,10 @@ class SoapsController extends AppController {
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
 			else{
- 
+
         $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
         $data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-        
+
         $data['database'] = 'freegal';
         if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 					$authUrl = Configure::read('App.AuthUrl_AU')."inlogin_validation";
@@ -1684,7 +1687,7 @@ class SoapsController extends AppController {
 		$data['pin'] = $pin;
     $patronId = $card;
 		$data['patronId'] = $patronId;
-		
+
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
@@ -1708,20 +1711,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -1740,11 +1743,11 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
 		}
 
     if(count($existingLibraries) == 0){
-    
+
       $response_msg = 'Invalid credentials provided.';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
@@ -1752,7 +1755,7 @@ class SoapsController extends AppController {
 			$matches = array();
 			$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 			$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-                
+
 			$data['database'] = 'freegal';
       if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
         $authUrl = Configure::read('App.AuthUrl_AU')."inhlogin_validation";
@@ -1828,21 +1831,21 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
-      
+
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -1858,10 +1861,10 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
-      
+
+
 			if(count($existingLibraries) == 0){
-      
+
         $response_msg = 'Invalid credentials provided.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
@@ -1869,7 +1872,7 @@ class SoapsController extends AppController {
 				$matches = array();
 				$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 				$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
-          
+
 				$data['database'] = 'freegal';
         if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 					$authUrl = Configure::read('App.AuthUrl_AU')."ihdlogin_validation";
@@ -1946,27 +1949,27 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
-      
+
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
       $this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');
-      
+
       $data['library_cond'] = $library_id;
       $existingLibraries = $this->Library->find('all',array(
         'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
@@ -1978,7 +1981,7 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
 			if(count($existingLibraries) == 0){
 
         $response_msg = 'Invalid credentials provided.';
@@ -1991,14 +1994,14 @@ class SoapsController extends AppController {
 
 				$data['url'] = $url;
 				$data['database'] = 'freegal';
-        
+
         if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 					$authUrl = Configure::read('App.AuthUrl_AU')."ildlogin_validation";
 				}
 				else{
 					$authUrl = Configure::read('App.AuthUrl')."ildlogin_validation";
 				}
-          
+
 				$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 
         $resultAnalysis[0] = $result['Posts']['status'];
@@ -2048,7 +2051,7 @@ class SoapsController extends AppController {
     $data['name'] = $last_name;
 		$patronId = $card;
 		$data['patronId'] = $patronId;
-           
+
     $data['wrongReferral'] = '';
     $data['referral'] = '';
 
@@ -2070,21 +2073,21 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
-      
+
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -2092,7 +2095,7 @@ class SoapsController extends AppController {
 			$this->Library->Behaviors->attach('Containable');
 
       $data['library_cond'] = $library_id;
-      
+
       $existingLibraries = $this->Library->find('all',array(
         'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
                               'library_authentication_method' => 'innovative_var_https_name'),
@@ -2115,16 +2118,16 @@ class SoapsController extends AppController {
 				$matches = array();
 				$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 				$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-				
+
         $data['database'] = 'freegal';
-				
+
         if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 					$authUrl = Configure::read('App.AuthUrl_AU')."ilhdlogin_validation";
         }
 				else{
 					$authUrl = Configure::read('App.AuthUrl')."ilhdlogin_validation";
 				}
-          
+
 				$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 
         $resultAnalysis[0] = $result['Posts']['status'];
@@ -2175,8 +2178,8 @@ class SoapsController extends AppController {
 		$data['patronId'] = $patronId;
 
     $data['wrongReferral'] = '';
-    
-    
+
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2195,20 +2198,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -2223,7 +2226,7 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
 			if(count($existingLibraries) == 0){
 
 
@@ -2280,13 +2283,13 @@ class SoapsController extends AppController {
   private function sdloginAuthinticate($card, $pin, $library_id, $agent) {
 
     $data['card_orig'] = $card;
-    
+
     $card = str_replace(" ","",$card);
 		$data['card'] = $card;
 		$data['pin'] = $pin;
 		$patronId = $card;
 		$data['patronId'] = $patronId;
-    
+
 
 
     if($card == ''){
@@ -2308,21 +2311,21 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
-      
+
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -2340,7 +2343,7 @@ class SoapsController extends AppController {
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
       $data['referral'] = '';
       $data['wrongReferral'] = '';
-      
+
 			if(count($existingLibraries) == 0){
 
         $response_msg = 'Invalid credentials provided.';
@@ -2408,7 +2411,7 @@ class SoapsController extends AppController {
 
     $data['wrongReferral'] = '';
     $data['referral'] = '';
-    
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2427,20 +2430,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -2455,7 +2458,7 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
 			if(count($existingLibraries) == 0){
 
         $response_msg = 'Invalid credentials provided.';
@@ -2514,9 +2517,9 @@ class SoapsController extends AppController {
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
-    
+
     $data['wrongReferral'] = '';
-    
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2529,20 +2532,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-  
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
@@ -2571,14 +2574,14 @@ class SoapsController extends AppController {
 
         $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 				$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-          
+
 				$data['database'] = 'freegal';
 				if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
           $authUrl = Configure::read('App.AuthUrl_AU')."indlogin_validation";
 				}
 				else{
 					$authUrl = Configure::read('App.AuthUrl')."indlogin_validation";
-				}	
+				}
 				$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 
         $resultAnalysis[0] = $result['Posts']['status'];
@@ -2626,10 +2629,10 @@ class SoapsController extends AppController {
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
-    
+
     $data['wrongReferral'] = '';
     $data['referral'] = '';
-    
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2642,20 +2645,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-    
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
@@ -2684,7 +2687,7 @@ class SoapsController extends AppController {
         $matches = array();
 				$authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
 				$data['url'] = $authUrl."/PATRONAPI/".$card."/dump";
-          
+
 				$data['database'] = 'freegal';
 				if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 					$authUrl = Configure::read('App.AuthUrl_AU')."inhdlogin_validation";
@@ -2738,7 +2741,7 @@ class SoapsController extends AppController {
     $data['patronId'] = $patronId;
     $data['card'] = $card;
     $data['wrongReferral'] = '';
-    
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2751,20 +2754,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
- 
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
@@ -2789,14 +2792,14 @@ class SoapsController extends AppController {
 			else{
 
 				$data['database'] = 'freegal';
-        
+
         if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
           $authUrl = Configure::read('App.AuthUrl_AU')."snlogin_validation";
 				}
 				else{
 					$authUrl = Configure::read('App.AuthUrl')."snlogin_validation";
-				}	
-        
+				}
+
 				$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
 
         $resultAnalysis[0] = $result['Posts']['status'];
@@ -2839,13 +2842,13 @@ class SoapsController extends AppController {
 	private function sndloginAuthinticate($card, $library_id, $agent){
 
     $data['card_orig'] = $card;
-    
+
     $card = str_replace(" ","",$card);
     $patronId = $card;
     $data['patronId'] = $patronId;
     $data['card'] = $card;
-    
-    
+
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2857,28 +2860,28 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
-      } 
-    
-    
+      }
+
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
       $this->Library->recursive = -1;
       $this->Library->Behaviors->attach('Containable');
-      
-      $data['library_cond'] = $library_id; 
+
+      $data['library_cond'] = $library_id;
       $existingLibraries = $this->Library->find('all',array(
         'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
                               'library_authentication_method' => 'sip2_var_wo_pin'),
@@ -2948,7 +2951,7 @@ class SoapsController extends AppController {
     $data['patronId'] = $patronId;
     $data['card'] = $card;
     $data['wrongReferral'] = '';
-    
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
@@ -2960,13 +2963,13 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
- 
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
       $data['referral']='';
@@ -2983,9 +2986,9 @@ class SoapsController extends AppController {
               )
              );
 
-      
+
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
       if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 				$authUrl1 = Configure::read('App.AuthUrl_AU')."clogin_validation";
 			}
@@ -3051,21 +3054,21 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
-    
+
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num', 'mobile_auth'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim($library_data['Library']['mobile_auth'])) ) {
 
         $response_msg = 'Sorry, your library authentication is not supported at this time.  Please contact your library for further information.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
-      }            
-    
+      }
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
@@ -3083,10 +3086,10 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $mobile_auth = $existingLibraries[0]['Library']['mobile_auth'];
-      
+
       $auth_url = str_replace('CARDNUMBER', $data['patronId'], $mobile_auth);
       $auth_url = str_replace('PIN', $data['pin'], $auth_url);
- 
+
       if(count($existingLibraries) == 0){
 
         $response_msg = 'Invalid credentials provided.';
@@ -3099,15 +3102,15 @@ class SoapsController extends AppController {
         $resp = curl_exec ( $ch );
         curl_close($ch);
 
-        
+
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
-        
+
         if(false === strpos($resp, 'OK')) {
           $response_msg = 'Login Failed';
           return $this->createsAuthenticationResponseDataObject(false, $response_msg);
         } else {
-          
+
           $response_patron_id = array_pop(explode('OK:', $resp));
 
           $token = md5(time());
@@ -3172,20 +3175,20 @@ class SoapsController extends AppController {
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
 		else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-                      
+
       if( ('' == trim(Configure::read('App.AuthUrl'))) ) {
 
         $response_msg = 'Sorry, your libraries authentication is not currently support at this time.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
-      
+
 			$cardNo = substr($card,0,5);
 			$data['cardNo'] = $cardNo;
 
@@ -3200,20 +3203,20 @@ class SoapsController extends AppController {
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
-      
+
 			if(count($existingLibraries) == 0){
 
         $response_msg = 'Invalid credentials provided.';
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
 			else{
-      
+
 
 		  $data['library_cond'] = $library_id;
 
-          $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];               
-		  		$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest"; 
-          
+          $authUrl = $existingLibraries['0']['Library']['library_authentication_url'];
+		  		$data['url'] = $authUrl."/PATRONAPI/".$card."/".$pin."/pintest";
+
 					$data['database'] = 'freegal';
 					if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
 						$authUrl = Configure::read('App.AuthUrl_AU')."idlogin_validation";
@@ -3221,14 +3224,14 @@ class SoapsController extends AppController {
 					else{
 						$authUrl = Configure::read('App.AuthUrl')."idlogin_validation";
 					}
-          
-         
-          
-					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);	
-          
-       
-          
-          
+
+
+
+					$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+
+
+
+
         $resultAnalysis[0] = $result['Posts']['status'];
 				$resultAnalysis[1] = $result['Posts']['message'];
 
@@ -3254,7 +3257,7 @@ class SoapsController extends AppController {
 			}
     }
   }
-  
+
   /**
    * Authenticates user by mndlogin_referrance method
    * @param $card
@@ -3265,39 +3268,39 @@ class SoapsController extends AppController {
 
 	private function mndloginAuthinticate($card, $library_id, $agent){
 
-   
+
     $data['wrongReferral'] = '';
-    
+
     $card = str_replace(" ","",$card);
-    $card = strtolower($card);			
+    $card = strtolower($card);
 		$data['card'] = $card;
-  
-    $patronId = $card; 
+
+    $patronId = $card;
 		$data['patronId'] = $patronId;
-      
-    
+
+
     if($card == ''){
 
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
     }
     else{
-    
+
       $library_data = $this->Library->find('first', array(
                         'fields' => array('library_authentication_num'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
-                        
+
                       ));
-    
-    
+
+
       $cardNo = substr($card,0,5);
       $data['cardNo'] = $cardNo;
 
       $this->Library->recursive = -1;
       $this->Library->Behaviors->attach('Containable');
-      
-      $data['library_cond'] = $library_id; 
+
+      $data['library_cond'] = $library_id;
       $existingLibraries = $this->Library->find('all',array(
         'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
                               'library_authentication_method' => 'mndlogin_reference'),
@@ -3314,11 +3317,11 @@ class SoapsController extends AppController {
         return $this->createsAuthenticationResponseDataObject(false, $response_msg);
       }
 			else{
-     
+
         $login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.library_id' =>  $library_id) , 'fields' => array('id')));
-                
+
 					if(isset($login_res['Card']['id'])) {
-				
+
             $token = md5(time());
             $insertArr['patron_id'] = $data['patronId'];
             $insertArr['library_id'] = $library_id;
@@ -3331,19 +3334,19 @@ class SoapsController extends AppController {
             $patron_id = $insertArr['patron_id'];
             $response_msg = 'Login Successfull.';
             return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
-            
+
 					} else {
-            
+
             $response_msg = 'Login Failed.';
             return $this->createsAuthenticationResponseDataObject(false, $response_msg);
           }
-      
+
       }
     }
 
 	}
-  
-  
+
+
   /**
    * Function Name : updateUserDetails
    * Desc : To update users details
@@ -3518,8 +3521,8 @@ class SoapsController extends AppController {
     return $this->AuthenticationToken->find('count', array('conditions' => array('token' => $token)));
 
   }
-  
-  
+
+
   /**
    * Function Name : regenerateSongDownloadRequest
    * Desc : Actions that is used for regenerating download URL download
@@ -3530,11 +3533,11 @@ class SoapsController extends AppController {
    */
 
   function regenerateSongDownloadRequest($authentication_token, $prodId, $agent) {
-    
+
     if(!($this->isValidAuthenticationToken($authentication_token))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $data = $this->Song->find('first',
       array('joins' =>
         array(
@@ -3555,12 +3558,12 @@ class SoapsController extends AppController {
 
     $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-    
+
     return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
-    
-    
+
+
   }
-  
+
   /**
    * Function Name : songDownloadRequest
    * Desc : Actions that is used for updating user download
@@ -3572,7 +3575,7 @@ class SoapsController extends AppController {
 
   function songDownloadRequest($authentication_token, $prodId, $agent) {
 
-
+    
 
     if(!($this->isValidAuthenticationToken($authentication_token))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -3612,7 +3615,8 @@ class SoapsController extends AppController {
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC'
+            'Song.ISRC',
+            'Song.provider_type'
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
@@ -3620,7 +3624,7 @@ class SoapsController extends AppController {
           'recursive' => -1,
         )
       );
-
+  
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
     $insertArr['patron_id'] = $patId;
@@ -3653,10 +3657,19 @@ class SoapsController extends AppController {
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
-
-
 	  $this->Library->setDataSource('master');
-		$sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+		
+    if('sony' == $TrackData['Song']['provider_type']) {
+      
+      $sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+      
+    } else {
+    
+      $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$TrackData['Song']['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+    
+    }
+    
+    
     $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
@@ -3724,21 +3737,21 @@ class SoapsController extends AppController {
     $language = 'en';
 
     if ( ((Cache::read("getPageContentWebService")) === false) || (Cache::read("getPageContentWebService") === null) ) {
-     
+
       $pageInstance = ClassRegistry::init('Page');
       $pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $language)));
-      
-      
+
+
       Cache::write("getPageContentWebService", $pageDetails);
-      
+
     } else {
 
       $pageDetails = Cache::read("getPageContentWebService");
-    }    
+    }
 
-    
+
     if(count($pageDetails) != 0) {
-      
+
       $obj = new PageContentType;
       $obj->id = (int)$pageDetails[0]['Page']['id'];
       $obj->page_name = $pageDetails[0]['Page']['page_name'];
@@ -3747,7 +3760,7 @@ class SoapsController extends AppController {
       $obj->created = $pageDetails[0]['Page']['created'];
       $obj->modified = $pageDetails[0]['Page']['modified'];
       $data = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'PageContentType');
-      
+
       return $data;
     }
     else {
@@ -3800,7 +3813,7 @@ class SoapsController extends AppController {
 
   }
 
-  
+
   /**
    * Function Name : getAllGenre
    * Desc : To get all genre list
@@ -3809,14 +3822,14 @@ class SoapsController extends AppController {
    * @param int $count
 	 * @return GenreDataType[]
    */
-	function getAllGenre($authenticationToken, $startfrom, $count) {  
-    
+	function getAllGenre($authenticationToken, $startfrom, $count) {
+
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -3824,10 +3837,10 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
-    
-    
+
+
     if ( ((Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService')) === false) || (Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService') === null) )  {
-      
+
       $this->Genre->Behaviors->attach('Containable');
       $this->Genre->recursive = 2;
 
@@ -3851,56 +3864,56 @@ class SoapsController extends AppController {
           'group' => 'Genre.Genre',
           'limit' => $startfrom . ', ' . $count
       ));
-      
+
       Cache::write("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService', $genreAll);
-      
+
     } else {
-    
+
       $genreAll = Cache::read("genre_".$library_territory.'_'.$startfrom.'_'.$count . '_WebService');
     }
 
     foreach($genreAll AS $key => $val){
-    
+
       $obj = new GenreDataType;
       $obj->GenreTitle               = (string)$val['Genre']['Genre'];
-      
-      $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType'); 
+
+      $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType');
     }
-    
+
     $data = new SoapVar($genre_list,SOAP_ENC_OBJECT,null,null,'ArrayGenreDataType');
-    
+
     return $data;
-    
+
   }
-  
+
   /**
    * Function Name : getTopGenre
    * Desc : To get all genre list
    * @param string $authenticationToken
 	 * @return GenreDataType[]
    */
-	function getTopGenre($authenticationToken) {  
+	function getTopGenre($authenticationToken) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $genres = array('Pop' , 'Rock' , 'Country' , 'Classical' );
-    
+
     foreach($genres AS $val){
-    
+
       $obj = new GenreDataType;
       $obj->GenreTitle               = (string)$val;
-      
-      $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType'); 
+
+      $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType');
     }
-    
+
     $data = new SoapVar($genre_list,SOAP_ENC_OBJECT,null,null,'ArrayGenreDataType');
-    
+
     return $data;
-    
+
   }
-  
+
   /**
    * Function Name : getTopSongs
    * Desc : To get all top songs list (National Top 100)
@@ -3909,14 +3922,14 @@ class SoapsController extends AppController {
    * @param int $recordCount
 	 * @return SongDataType[]
    */
-	function getTopSongs($authenticationToken, $startFrom, $recordCount) {  
+	function getTopSongs($authenticationToken, $startFrom, $recordCount) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -3924,14 +3937,14 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
-    
-   
+
+
     if ( (( Cache::read("national".$library_territory)) !== false) && (Cache::read("national".$library_territory) !== null) ) {
-    
+
       $arrTemp = Cache::read("national".$library_territory);
-      
+
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-        if(!(empty($arrTemp[$cnt]))) { 
+        if(!(empty($arrTemp[$cnt]))) {
           $sobj = new SongDataType;
           $sobj->ProdID                = (int)    $arrTemp[$cnt]['Song']['ProdID'];
           $sobj->ProductID             = (string) '';
@@ -3944,36 +3957,38 @@ class SoapsController extends AppController {
           $sobj->ISRC                  = (string) '';
           $sobj->Composer              = (string) '';
           $sobj->Genre                 = (string) $arrTemp[$cnt]['Genre']['Genre'];
-          $sobj->Territory             = (string) $arrTemp[$cnt]['Country']['Territory'];
-          $sobj->DownloadStatus        = (int)    '';
+          $sobj->Territory             = (string) $arrTemp[$cnt]['Country']['Territory'];       
+          
+          ($arrTemp[$cnt]['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
+          
           $sobj->TrackBundleCount      = (int)    '';
           $sobj->Sample_Duration       = (string) $arrTemp[$cnt]['Song']['Sample_Duration'];
           $sobj->FullLength_Duration   = (string) $arrTemp[$cnt]['Song']['FullLength_Duration'];
           $sobj->Sample_FileID         = (int)    '';
-         
+
           $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Sample_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Sample_Files']['SaveAsName']);
-          $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;        
-          
+          $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
+
           $sobj->FullLength_FIleID     = (int)    '';
           $sobj->CreatedOn             = (string) '';
           $sobj->UpdateOn              = (string) '';
 
-          $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType'); 
-        } 
+          $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
+        }
       }
-      
+
       $data = new SoapVar($song_list,SOAP_ENC_OBJECT,null,null,'ArraySongDataType');
-    
+
       return $data;
-       
-      
+
+
     } else {
-    
+
       throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
     }
-    
+
   }
-  
+
   /**
    * Function Name : getTopArtist
    * Desc : To get all artist list
@@ -3982,14 +3997,14 @@ class SoapsController extends AppController {
    * @param int $recordCount
 	 * @return SongDataType[]
    */
-	function getTopArtist($authenticationToken, $startFrom, $recordCount) {  
+	function getTopArtist($authenticationToken, $startFrom, $recordCount) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -3997,32 +4012,32 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
-    
 
-    
+
+
     if ( (( Cache::read("national".$library_territory)) !== false) && (Cache::read("national".$library_territory) !== null) ) {
-   
+
 
         $arrTmp = $arrData = $arrFinal = $arrArtist = array();
-        
+
         $arrTmp = Cache::read("national".$library_territory);
-         
+
         foreach($arrTmp AS $key => $val){
           $arrData[] = trim($val['Song']['ArtistText']);
         }
 
-        $arrFinal = array_count_values($arrData); 
+        $arrFinal = array_count_values($arrData);
         arsort($arrFinal, SORT_NUMERIC);
-  
+
         foreach($arrFinal AS $key => $val){
-          $arrArtist[] = $key;   
+          $arrArtist[] = $key;
         }
-        
+
         $arrTemp = $arrArtist;
 
         for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-          if(!(empty($arrTemp[$cnt]))) { 
-          
+          if(!(empty($arrTemp[$cnt]))) {
+
             $sobj = new SongDataType;
             $sobj->ProdID                = (int)    '';
             $sobj->ProductID             = (string) '';
@@ -4041,25 +4056,25 @@ class SoapsController extends AppController {
             $sobj->Sample_Duration       = (string) '';
             $sobj->FullLength_Duration   = (string) '';
             $sobj->Sample_FileID         = (int)    '';
-            $sobj->Sample_FileURL         =(string) '';    
+            $sobj->Sample_FileURL         =(string) '';
             $sobj->FullLength_FIleID     = (int)    '';
             $sobj->CreatedOn             = (string) '';
             $sobj->UpdateOn              = (string) '';
 
-            $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType'); 
-          } 
+            $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
+          }
         }
-      
+
         $data = new SoapVar($song_list,SOAP_ENC_OBJECT,null,null,'ArraySongDataType');
-    
-        return $data;               
-      
+
+        return $data;
+
     } else {
       throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
-    }    
-    
+    }
+
   }
-  
+
   /**
    * Function Name : getGenreSongs
    * Desc : To get the genre song list
@@ -4067,14 +4082,14 @@ class SoapsController extends AppController {
    * @param string $genreTitle
 	 * @return array
    */
-	function getGenreSongs($authenticationToken, $genreTitle) {  
-    
+	function getGenreSongs($authenticationToken, $genreTitle) {
+  
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -4082,11 +4097,13 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    
 
     if ( (( Cache::read($genreTitle.$library_territory)) !== false) && (Cache::read($genreTitle.$library_territory) !== null) ) {
 
       foreach(Cache::read($genreTitle.$library_territory) AS $key => $val) {
-         
+
         $sobj = new SongDataType;
         $sobj->ProdID                = (int)    $val['Song']['ProdID'];
         $sobj->ProductID             = (string) '';
@@ -4100,36 +4117,38 @@ class SoapsController extends AppController {
         $sobj->Composer              = (string) '';
         $sobj->Genre                 = (string) $val['Genre']['Genre'];
         $sobj->Territory             = (string) $val['Country']['Territory'];
-        $sobj->DownloadStatus        = (int)    $val['Song']['DownloadStatus'];
+                        
+        ($val['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
+        
         $sobj->TrackBundleCount      = (int)    '';
         $sobj->Sample_Duration       = (string) $val['Song']['Sample_Duration'];
         $sobj->FullLength_Duration   = (string) $val['Song']['FullLength_Duration'];
         $sobj->Sample_FileID         = (int)    '';
-        
+
         $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
         $sobj->Sample_FileURL         = Configure::read('App.Music_Path').$sampleFileURL;
-        
+
         $sobj->FullLength_FIleID     = (int)    '';
         $sobj->CreatedOn             = (string) '';
         $sobj->UpdateOn              = (string) '';
 
-        $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType'); 
-         
+        $song_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SongDataType');
+
       }
-      
+
       $data = new SoapVar($song_list,SOAP_ENC_OBJECT,null,null,'ArraySongDataType');
-    
+
       return $data;
-       
-      
+
+
     } else {
-    
+
       throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
     }
-                           
+
   }
-   
-  
+
+
   /**
    * Function Name : logoutAuthinticate
    * Desc : Delete authenticationToken record
@@ -4169,9 +4188,9 @@ class SoapsController extends AppController {
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-    
+
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-    
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -4179,14 +4198,14 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
-     
+
     $searchText = $searchKey;
-    
+
     $searchKey = str_replace("^", " ", $searchKey);
 		$searchKey = str_replace("$", " ", $searchKey);
-		$searchKey = '"^'.addslashes($searchKey).'"';
+		$searchKey = '"'.addslashes($searchKey).'"';
 		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
-    
+
     switch($searchType){
       case '1': {
         $searchParam = "@ArtistText " . $searchKey . " | @Title " . $searchKey . " | @SongTitle " . $searchKey;
@@ -4207,9 +4226,9 @@ class SoapsController extends AppController {
       default:
 
     }
-      
-    $sphinxFinalCondition = $searchParam." & "."@Territory '".$library_territory."' & @DownloadStatus 1"; 
-    
+
+    $sphinxFinalCondition = $searchParam." & "."@Territory '".$library_territory."' & @DownloadStatus 1";
+
     $condSphinx = '';
 		$sphinxSort = "";
 		$sphinxDirection = "";
@@ -4218,66 +4237,68 @@ class SoapsController extends AppController {
 					));
 
 		$searchResults = $this->paginate('Song');
-    $array_uniques = array();
+
     
+    $array_uniques = array();
+
     if(!empty($searchResults)){
-      
+
       switch($searchType){
         case '1': {
-          foreach($searchResults AS $key => $val) { 
+          foreach($searchResults AS $key => $val) {
             $array_test[$key] = trim($val['Song']['ArtistText']);
           }
-                    
+
           $array_uniques_keys_artist = array_keys(array_unique($array_test));
-          
-          foreach($searchResults AS $key => $val) { 
+
+          foreach($searchResults AS $key => $val) {
             $array_test[$key] = trim($val['Song']['Title']);
           }
-        
+
           $array_uniques_keys_album = array_keys(array_unique($array_test));
-          
-          foreach($searchResults AS $key => $val) { 
+
+          foreach($searchResults AS $key => $val) {
             $array_test[$key] = trim($val['Song']['SongTitle']);
           }
-          
+
           $array_uniques_keys_SongTitle = array_keys(array_unique($array_test));
-          
+
           $array_uniques = array_unique(array_merge($array_uniques_keys_artist, $array_uniques_keys_album, $array_uniques_keys_SongTitle));
-          
+
         }
         break;
         case '2': {
-          foreach($searchResults AS $key => $val) { 
+          foreach($searchResults AS $key => $val) {
             $array_uniques[$key] = trim($val['Song']['ArtistText']);
           }
-          
+
           $array_uniques = array_keys(array_unique($array_uniques));
         }
         break;
         case '3': {
-          foreach($searchResults AS $key => $val) { 
+          foreach($searchResults AS $key => $val) {
             $array_uniques[$key] = trim($val['Song']['Title']);
           }
-          
+
           $array_uniques = array_keys(array_unique($array_uniques));
         }
         break;
         case '4': {
-          foreach($searchResults AS $key => $val) { 
+          foreach($searchResults AS $key => $val) {
             $array_uniques[$key] = trim($val['Song']['SongTitle']);
           }
-          
+
           $array_uniques = array_keys(array_unique($array_uniques));
         }
         break;
         default:
 
       }
-    
+
       foreach($searchResults AS $key => $val){
-        
+
         if(true === in_array( $key, $array_uniques) ) {
-        
+
           $sobj = new SearchDataType;
           $sobj->SongProdID           = $val['Song']['ProdID'];
           $sobj->SongTitle            = $val['Song']['SongTitle'];
@@ -4297,6 +4318,9 @@ class SoapsController extends AppController {
               'recursive' => -1,
             )
           );
+
+          $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_territory, $val['Song']['provider_type']);
+          
           
           $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
           $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
@@ -4307,15 +4331,15 @@ class SoapsController extends AppController {
       }
 
       $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
-      
+
       return $data;
     }
     else {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find any song containing the provided keyword.');
     }
-    
-  }  
-  
+
+  }
+
   /**
    * Function Name : getSearchAllList
    * Desc : To get the libraries searched
@@ -4327,10 +4351,10 @@ class SoapsController extends AppController {
    * @param string $library_terriotry
 	 * @return SearchDataType[]
    */
-   
+
 	private function getSearchAllList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
-  
-    
+
+
         $matchType = 'All';
         $artist = $searchText;
         $composer = '';
@@ -4341,21 +4365,21 @@ class SoapsController extends AppController {
         $sphinxSort = '';
         $sphinxDirection = '';
         $country = $library_terriotry;
-        
-        
+
+
         $_SESSION['webservice_startFrom'] = $startFrom;
         $_SESSION['webservice_recordCount'] = $recordCount;
         $_SESSION['webservice_master'] = 1;
         $_SESSION['webservice_slave'] = 0;
-				
+
 
 				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 
+          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
           'cont' => $country));
 
-				$AllData = $this->paginate('Song');  
-        
-        
+				$AllData = $this->paginate('Song');
+
+
 
     foreach($AllData AS $key => $val){
 
@@ -4369,6 +4393,8 @@ class SoapsController extends AppController {
 
         $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
         $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
@@ -4376,7 +4402,7 @@ class SoapsController extends AppController {
             'recursive' => -1,
           )
         );
-        
+
         $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
         $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist          = $albumData['Album']['Artist'];
@@ -4410,7 +4436,7 @@ class SoapsController extends AppController {
 	 * @return SearchDataType[]
    */
 	private function getSearchArtistList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
-    
+
         $matchType = 'All';
         $artist = $searchText;
         $composer = '';
@@ -4421,21 +4447,21 @@ class SoapsController extends AppController {
         $sphinxSort = '';
         $sphinxDirection = '';
         $country = $library_terriotry;
-        
+
         $_SESSION['webservice_startFrom'] = $startFrom;
         $_SESSION['webservice_recordCount'] = $recordCount;
         $_SESSION['webservice_master'] = 1;
         $_SESSION['webservice_slave'] = 0;
 
-				
+
 
 				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 
+          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
           'cont' => $country));
 
 				$ArtistData = $this->paginate('Song');
-        
-        
+
+
 
     foreach($ArtistData AS $key => $val){
 
@@ -4449,6 +4475,8 @@ class SoapsController extends AppController {
 
         $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
         $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
@@ -4456,7 +4484,7 @@ class SoapsController extends AppController {
             'recursive' => -1,
           )
         );
-        
+
         $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
         $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist          = $albumData['Album']['Artist'];
@@ -4491,7 +4519,7 @@ class SoapsController extends AppController {
    */
 	private function getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
-  
+
         $matchType = 'All';
         $artist = '';
         $composer = '';
@@ -4502,19 +4530,19 @@ class SoapsController extends AppController {
         $sphinxSort = '';
         $sphinxDirection = '';
         $country = $library_terriotry;
-        
-        
+
+
         $_SESSION['webservice_startFrom'] = $startFrom;
         $_SESSION['webservice_recordCount'] = $recordCount;
         $_SESSION['webservice_master'] = 1;
         $_SESSION['webservice_slave'] = 0;
-				
+
 
 				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 
+          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
           'cont' => $country));
 
-				$Albumlist = $this->paginate('Song'); 
+				$Albumlist = $this->paginate('Song');
 
     foreach($Albumlist AS $key => $val){
 
@@ -4528,14 +4556,16 @@ class SoapsController extends AppController {
 
         $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
-         $albumData = $this->Album->find('first',
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
+        $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
             'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
             'recursive' => -1,
           )
         );
-        
+
         $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
         $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist          = $albumData['Album']['Artist'];
@@ -4568,7 +4598,7 @@ class SoapsController extends AppController {
 	 * @return SearchDataType[]
    */
 	private function getSearchSongList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
-    
+
         $matchType = 'All';
         $artist = '';
         $composer = '';
@@ -4579,20 +4609,20 @@ class SoapsController extends AppController {
         $sphinxSort = '';
         $sphinxDirection = '';
         $country = $library_terriotry;
-        
-        
+
+
 				$_SESSION['webservice_startFrom'] = $startFrom;
         $_SESSION['webservice_recordCount'] = $recordCount;
         $_SESSION['webservice_master'] = 1;
         $_SESSION['webservice_slave'] = 0;
-				
+
 
 				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 
+          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
           'cont' => $country));
 
-				$SongData = $this->paginate('Song');        
-        
+				$SongData = $this->paginate('Song');
+
 
     foreach($SongData AS $key => $val){
 
@@ -4607,6 +4637,8 @@ class SoapsController extends AppController {
         $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
         $sobj->fileURL                = Configure::read('App.Music_Path').$sampleFileURL;
 
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
         $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
@@ -4769,7 +4801,7 @@ class SoapsController extends AppController {
       'recursive' => -1
       )
     );
-    
+
     $library_territory = $libraryDetails['Library']['library_territory'];
 
 
@@ -4779,7 +4811,7 @@ class SoapsController extends AppController {
             'recursive' => -1,
           )
         );
-  
+
     if(0 == $count) {
       return 0;
     } else {
@@ -4787,5 +4819,33 @@ class SoapsController extends AppController {
     }
 
   }
+  
+   /**
+   * return int (0,1)
+   * @param int $songProdID
+   * @param string $territory
+   * @param string $provider_type
+   * @return int
+   */
+
+	private function IsDownloadable($songProdID, $territory, $provider_type) {	
+		
+    $Country_array = $this->Country->find('first',
+			  array(
+				'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $territory, 'Country.provider_type' => $provider_type),
+				'recursive' => -1,
+			  )
+			);
+      
+    
+		$SalesDate = $Country_array['Country']['SalesDate'];
+		if($SalesDate <= date('Y-m-d')) {
+			$IsNotDownloadable = 0;
+		} else {
+			$IsNotDownloadable = 1;
+		}
+		
+		return $IsNotDownloadable;
+	}   
 
 }
