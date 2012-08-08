@@ -740,48 +740,9 @@ STR;
 
 
 				}
-				
 				$this->set('searchResults', $searchResults);
-
-				//Added code for log search data			
-				if(isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= ''){
-					$insertArr[] = $this->searchrecords('artist', $this->data['Home']['artist']);
-				}
-				if(isset($this->data['Home']['label']) && $this->data['Home']['label']!= ''){
-					$insertArr[] = $this->searchrecords('label', $this->data['Home']['label']);			
-				}
-				if(isset($this->data['Home']['composer']) && $this->data['Home']['composer']!= ''){
-					$insertArr[] = $this->searchrecords('composer', $this->data['Home']['composer']);		
-				}
-				if(isset($this->data['Home']['song']) && $this->data['Home']['song']!= ''){
-					$insertArr[] = $this->searchrecords('song', $this->data['Home']['song']);			
-				}
-				if(isset($this->data['Home']['album']) && $this->data['Home']['album']!= ''){
-					$insertArr[] = $this->searchrecords('album', $this->data['Home']['album']);	
-				}
-				if(isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id']!= ''){
-					$insertArr[] = $this->searchrecords('genre_id', $this->data['Home']['genre_id']);	
-				}
-				
-				if(is_array($insertArr)){
-					$this->Searchrecord->saveAll($insertArr);	
-				}
-				
-				//End Added code for log search data	
-				
-				
 			}
 			else {
-			
-				//Added code for log search data
-
-				if(isset($_REQUEST['search']) && $_REQUEST['search']!= ''){
-					$insertArr[] = $this->searchrecords($_REQUEST['search_type'], $_REQUEST['search']);					
-				}
-				$this->Searchrecord->saveAll($insertArr);				
-				
-				//End Added code for log search data
-				
 				if($_REQUEST['search_type'] == 'composer'){
 					$this->set('composer', "composer");
 				}
@@ -910,23 +871,6 @@ STR;
 		}
         $this->layout = 'home';
     }
-
-	function searchrecords($type, $search_text){
-		$search_text = strtolower(trim($search_text));
-		$search_text  = preg_replace('/\s\s+/', ' ', $search_text);
-		$insertArr['search_text'] = $search_text;
-		$insertArr['type'] = $type;	
-		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
-		if(count($genre_id_count_array) > 0){
-			$insertArr['count'] =$genre_id_count_array[0]['Searchrecord']['count'] + 1;
-			$insertArr['id'] =$genre_id_count_array[0]['Searchrecord']['id'];
-		}
-		else{
-			$insertArr['count'] = 1;
-		}
-
-		return $insertArr;
-	}
 
     /*
      Function Name : userDownload
@@ -1734,7 +1678,7 @@ STR;
 			$this->layout = 'login_new';
 		}
 		else{
-			$this->layout = 'login';
+        $this->layout = 'login';
 		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){
