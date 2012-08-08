@@ -3,40 +3,36 @@
    File Description: Displays the home page for each patron
    Author: Maycreate
 */
-class HomesController extends AppController
+App::import('Model', 'Searchrecord');
+class TestsController extends AppController
 {
-    var $name = 'Homes';
+    var $name = 'Tests';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language' );
+    var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
+
 
     /*
      Function Name : beforeFilter
      Desc : actions that needed before other functions are getting called
     */
     function beforeFilter() {
-		parent::beforeFilter();
-        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
-            $validPatron = $this->ValidatePatron->validatepatron();
-			if($validPatron == '0') {
-				//$this->Session->destroy();
-				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-			}
-			else if($validPatron == '2') {
-				//$this->Session->destroy();
-				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-			}
-        }
-		$this->Cookie->name = 'baker_id';
-		$this->Cookie->time = 3600; // or '1 hour'
-		$this->Cookie->path = '/';
-		$this->Cookie->domain = 'freegalmusic.com';
+		//echo "here123";
+
+	//	Configure::Write('debug',3);
+		//Configure::Write('debug',0);
+		//exit;
+
 		//$this->Cookie->key = 'qSI232qs*&sXOw!';
     }
 
 	function index() {
+
+		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => 'a', 'type' =>'a')));
+		print_r($genre_id_count_array);
+	echo "here";
+
+	exit;
 		  if($_SERVER['SERVER_PORT'] == 443){
 			$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 		 }
@@ -549,8 +545,8 @@ STR;
             $cond = "";
 			$condSphinx = "";
         }
-		if((isset($_REQUEST['artist']) && $_REQUEST['artist']!= '') || (isset($_REQUEST['label']) && $_REQUEST['label']!= '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) &&  $_REQUEST['genre_id'] != '') || (isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= '') || (isset($this->data['Home']['label']) && $this->data['Home']['label']!= '') || (isset($this->data['Home']['composer']) && $this->data['Home']['composer'] != '') || (isset($this->data['Home']['song']) && $this->data['Home']['song'] != '') || (isset($this->data['Home']['album']) && $this->data['Home']['album'] != '') || (isset($this->data['Home']['genre_id']) &&  $this->data['Home']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')){
-      if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '')) {
+		if((isset($_REQUEST['artist']) && $_REQUEST['artist']!= '') || (isset($_REQUEST['label']) && $_REQUEST['label']!= '') || (isset($_REQUEST['composer']) && $_REQUEST['composer'] != '') || (isset($_REQUEST['song']) && $_REQUEST['song'] != '') || (isset($_REQUEST['album']) && $_REQUEST['album'] != '') || (isset($_REQUEST['genre_id']) &&  $_REQUEST['genre_id'] != '') || (isset($this->data['Test']['artist']) && $this->data['Test']['artist']!= '') || (isset($this->data['Test']['label']) && $this->data['Test']['label']!= '') || (isset($this->data['Test']['composer']) && $this->data['Test']['composer'] != '') || (isset($this->data['Test']['song']) && $this->data['Test']['song'] != '') || (isset($this->data['Test']['album']) && $this->data['Test']['album'] != '') || (isset($this->data['Test']['genre_id']) &&  $this->data['Test']['genre_id'] != '' || isset($_REQUEST['search']) && $_REQUEST['search'] != '')){
+      if((isset($_REQUEST['match']) && $_REQUEST['match'] != '') || (isset($this->data['Test']['Match']) && $this->data['Test']['Match'] != '')) {
 				if(isset($_REQUEST['match']) && $_REQUEST['match'] != '') {
 					 if($_REQUEST['match'] == 'All') {
 						$condition = "and";
@@ -576,8 +572,8 @@ STR;
 					$album =  $_REQUEST['album'];
 					$genre =  $_REQUEST['genre_id'];
 				}
-				if(isset($this->data['Home']['Match']) && $this->data['Home']['Match'] != '') {
-					if($this->data['Home']['Match'] == 'All') {
+				if(isset($this->data['Test']['Match']) && $this->data['Test']['Match'] != '') {
+					if($this->data['Test']['Match'] == 'All') {
 						$condition = "and";
 						$preCondition1 = array('Song.DownloadStatus' => 1);
 						$preCondition2 = array('Song.TrackBundleCount' => 0);
@@ -593,12 +589,12 @@ STR;
 						$sphinxCheckCondition = "|";
 						$matchType = "Any";
 					}
-					$artist =  $this->data['Home']['artist'];
-          $label =  $this->data['Home']['label'];
-					$composer = $this->data['Home']['composer'];
-					$song =  $this->data['Home']['song'];
-					$album =  $this->data['Home']['album'];
-					$genre =  $this->data['Home']['genre_id'];
+					$artist =  $this->data['Test']['artist'];
+          $label =  $this->data['Test']['label'];
+					$composer = $this->data['Test']['composer'];
+					$song =  $this->data['Test']['song'];
+					$album =  $this->data['Test']['album'];
+					$genre =  $this->data['Test']['genre_id'];
 
 					$artist = str_replace("^", " ", $artist);
           $label = str_replace("^", " ", $label);
@@ -740,48 +736,48 @@ STR;
 
 
 				}
-				
+
 				$this->set('searchResults', $searchResults);
 
-				//Added code for log search data			
-				if(isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= ''){
-					$insertArr[] = $this->searchrecords('artist', $this->data['Home']['artist']);
+				//Added code for log search data
+				if(isset($this->data['Test']['artist']) && $this->data['Test']['artist']!= ''){
+					$insertArr[] = $this->searchrecords('artist', $this->data['Test']['artist']);
 				}
-				if(isset($this->data['Home']['label']) && $this->data['Home']['label']!= ''){
-					$insertArr[] = $this->searchrecords('label', $this->data['Home']['label']);			
+				if(isset($this->data['Test']['label']) && $this->data['Test']['label']!= ''){
+					$insertArr[] = $this->searchrecords('label', $this->data['Test']['label']);
 				}
-				if(isset($this->data['Home']['composer']) && $this->data['Home']['composer']!= ''){
-					$insertArr[] = $this->searchrecords('composer', $this->data['Home']['composer']);		
+				if(isset($this->data['Test']['composer']) && $this->data['Test']['composer']!= ''){
+					$insertArr[] = $this->searchrecords('composer', $this->data['Test']['composer']);
 				}
-				if(isset($this->data['Home']['song']) && $this->data['Home']['song']!= ''){
-					$insertArr[] = $this->searchrecords('song', $this->data['Home']['song']);			
+				if(isset($this->data['Test']['song']) && $this->data['Test']['song']!= ''){
+					$insertArr[] = $this->searchrecords('song', $this->data['Test']['song']);
 				}
-				if(isset($this->data['Home']['album']) && $this->data['Home']['album']!= ''){
-					$insertArr[] = $this->searchrecords('album', $this->data['Home']['album']);	
+				if(isset($this->data['Test']['album']) && $this->data['Test']['album']!= ''){
+					$insertArr[] = $this->searchrecords('album', $this->data['Test']['album']);
 				}
-				if(isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id']!= ''){
-					$insertArr[] = $this->searchrecords('genre_id', $this->data['Home']['genre_id']);	
+				if(isset($this->data['Test']['genre_id']) && $this->data['Test']['genre_id']!= ''){
+					$insertArr[] = $this->searchrecords('genre_id', $this->data['Test']['genre_id']);
 				}
-				
+
 				if(is_array($insertArr)){
-					$this->Searchrecord->saveAll($insertArr);	
+					$this->Searchrecord->saveAll($insertArr);
 				}
-				
-				//End Added code for log search data	
-				
-				
+
+				//End Added code for log search data
+
+
 			}
 			else {
-			
+
 				//Added code for log search data
 
 				if(isset($_REQUEST['search']) && $_REQUEST['search']!= ''){
-					$insertArr[] = $this->searchrecords($_REQUEST['search_type'], $_REQUEST['search']);					
+					$insertArr[] = $this->searchrecords($_REQUEST['search_type'], $_REQUEST['search']);
 				}
-				$this->Searchrecord->saveAll($insertArr);				
-				
+				$this->Searchrecord->saveAll($insertArr);
+
 				//End Added code for log search data
-				
+
 				if($_REQUEST['search_type'] == 'composer'){
 					$this->set('composer', "composer");
 				}
@@ -795,7 +791,7 @@ STR;
 					$auto = 1;
 				}
 				if($searchKey == '') {
-					$searchKey = $this->data['Home']['search'];
+					$searchKey = $this->data['Test']['search'];
 				}
 				$searchText = $searchKey;
 				//$searchKey = '"'.addslashes($searchKey).'"';
@@ -915,7 +911,7 @@ STR;
 		$search_text = strtolower(trim($search_text));
 		$search_text  = preg_replace('/\s\s+/', ' ', $search_text);
 		$insertArr['search_text'] = $search_text;
-		$insertArr['type'] = $type;	
+		$insertArr['type'] = $type;
 		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
 		if(count($genre_id_count_array) > 0){
 			$insertArr['count'] =$genre_id_count_array[0]['Searchrecord']['count'] + 1;
@@ -1217,43 +1213,43 @@ STR;
      Desc : actions used for admin about us form
     */
     function admin_aboutusform() {
-	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
-	    $language = $this->data['Home']['language'];
+	if(isset($this->data) && ($this->data['Test']['language_change']) == 1){
+	    $language = $this->data['Test']['language'];
 	    $this -> set( 'formAction', 'admin_aboutusform');
 	    $this -> set( 'formHeader', 'Manage About Us Page Content' );
-	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => $this->data['Home']['language'])));
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => $this->data['Test']['language'])));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $language;
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $language;
 		$this->set('getData', $getData );
 	    }
 	    else {
-		$getData['Home']['language'] = $language;
-		$getData['Home']['id'] = null;
-		$getData['Home']['page_name'] = null;
-		$getData['Home']['page_content'] = null;
+		$getData['Test']['language'] = $language;
+		$getData['Test']['id'] = null;
+		$getData['Test']['page_name'] = null;
+		$getData['Test']['page_content'] = null;
 		$this->set('getData', $getData);
 	    }
 	}
 	else{
 	    if(isset($this->data)) {
-		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => $this->data['Home']['language'])));
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => $this->data['Test']['language'])));
 		if(count($findData) == 0) {
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()){
 		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		}
 		elseif(count($findData) > 0){
-		    $this->Page->id = $this->data['Home']['id'];
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->id = $this->data['Test']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1267,10 +1263,10 @@ STR;
 	    $this->set('formHeader', 'Manage About Us Page Content' );
 	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'aboutus', 'language' => 'en')));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $getPageData[0]['Page']['language'];
 		$this -> set( 'getData', $getData );
 	    }
 	    else {
@@ -1287,43 +1283,43 @@ STR;
      Desc : actions used for admin terms form
     */
     function admin_termsform() {
-	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
-	    $language = $this->data['Home']['language'];
+	if(isset($this->data) && ($this->data['Test']['language_change']) == 1){
+	    $language = $this->data['Test']['language'];
 	    $this -> set( 'formAction', 'admin_termsform');
 	    $this -> set( 'formHeader', 'Manage Terms & Condition Page Content' );
-	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => $this->data['Home']['language'])));
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => $this->data['Test']['language'])));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $language;
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $language;
 		$this->set('getData', $getData );
 	    }
 	    else {
-		$getData['Home']['language'] = $language;
-		$getData['Home']['id'] = null;
-		$getData['Home']['page_name'] = null;
-		$getData['Home']['page_content'] = null;
+		$getData['Test']['language'] = $language;
+		$getData['Test']['id'] = null;
+		$getData['Test']['page_name'] = null;
+		$getData['Test']['page_content'] = null;
 		$this->set('getData', $getData);
 	    }
 	}
 	else{
 	    if(isset($this->data)) {
-		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => $this->data['Home']['language'])));
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => $this->data['Test']['language'])));
 		if(count($findData) == 0) {
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()){
 		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		}
 		elseif(count($findData) > 0){
-		    $this->Page->id = $this->data['Home']['id'];
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->id = $this->data['Test']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1337,10 +1333,10 @@ STR;
 	    $this->set('formHeader', 'Manage Terms & Condition Page Content' );
 	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'terms', 'language' => 'en')));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $getPageData[0]['Page']['language'];
 		$this->set('getData', $getData );
 	    }
 	    else {
@@ -1357,43 +1353,43 @@ STR;
      Desc : actions used for admin login form
     */
     function admin_loginform() {
-		if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
-			$language = $this->data['Home']['language'];
+		if(isset($this->data) && ($this->data['Test']['language_change']) == 1){
+			$language = $this->data['Test']['language'];
 			$this -> set( 'formAction', 'admin_loginform');
 			$this -> set( 'formHeader', 'Manage Login Page Text' );
-			$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $this->data['Home']['language'])));
+			$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $this->data['Test']['language'])));
 			if(count($getPageData) != 0) {
-			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$getData['Home']['language'] = $language;
+			$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+			$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+			$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+			$getData['Test']['language'] = $language;
 			$this->set('getData', $getData );
 			}
 			else {
-			$getData['Home']['language'] = $language;
-			$getData['Home']['id'] = null;
-			$getData['Home']['page_name'] = null;
-			$getData['Home']['page_content'] = null;
+			$getData['Test']['language'] = $language;
+			$getData['Test']['id'] = null;
+			$getData['Test']['page_name'] = null;
+			$getData['Test']['page_content'] = null;
 			$this->set('getData', $getData);
 			}
 		}
 		else{
 			if(isset($this->data)) {
-			$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $this->data['Home']['language'])));
+			$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => $this->data['Test']['language'])));
 			if(count($findData) == 0) {
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$pageData['Page']['language'] = $this->data['Home']['language'];
+				$pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+				$pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+				$pageData['Page']['language'] = $this->data['Test']['language'];
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()){
 				  $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 				}
 			}
 			elseif(count($findData) > 0){
-				$this->Page->id = $this->data['Home']['id'];
-				$pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-				$pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-				$pageData['Page']['language'] = $this->data['Home']['language'];
+				$this->Page->id = $this->data['Test']['id'];
+				$pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+				$pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+				$pageData['Page']['language'] = $this->data['Test']['language'];
 				$this->Page->set($pageData['Page']);
 				if($this->Page->save()) {
 				$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1407,10 +1403,10 @@ STR;
 			$this->set('formHeader', 'Manage Login Page Text' );
 			$getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'login', 'language' => 'en')));
 			if(count($getPageData) != 0) {
-			$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-			$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-			$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-			$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+			$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+			$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+			$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+			$getData['Test']['language'] = $getPageData[0]['Page']['language'];
 			$this->set('getData', $getData );
 			}
 			else {
@@ -1427,43 +1423,43 @@ STR;
      Desc : actions used for admin wishlist form
     */
     function admin_wishlistform() {
-	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
-	    $language = $this->data['Home']['language'];
+	if(isset($this->data) && ($this->data['Test']['language_change']) == 1){
+	    $language = $this->data['Test']['language'];
 	    $this -> set( 'formAction', 'admin_wishlistform');
 	    $this -> set( 'formHeader', 'Manage Wishlist Page Content' );
-	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => $this->data['Home']['language'])));
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => $this->data['Test']['language'])));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $language;
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $language;
 		$this->set('getData', $getData );
 	    }
 	    else {
-		$getData['Home']['language'] = $language;
-		$getData['Home']['id'] = null;
-		$getData['Home']['page_name'] = null;
-		$getData['Home']['page_content'] = null;
+		$getData['Test']['language'] = $language;
+		$getData['Test']['id'] = null;
+		$getData['Test']['page_name'] = null;
+		$getData['Test']['page_content'] = null;
 		$this->set('getData', $getData);
 	    }
 	}
 	else{
 	    if(isset($this->data)) {
-		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => $this->data['Home']['language'])));
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => $this->data['Test']['language'])));
 		if(count($findData) == 0) {
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()){
 		      $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		}
 		elseif(count($findData) > 0){
-		    $this->Page->id = $this->data['Home']['id'];
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->id = $this->data['Test']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1477,10 +1473,10 @@ STR;
 	    $this -> set( 'formHeader', 'Manage Wishlist Page Text' );
 	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'wishlist', 'language' => 'en')));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $getPageData[0]['Page']['language'];
 		$this -> set( 'getData', $getData );
 	    }
 	    else {
@@ -1498,43 +1494,43 @@ STR;
      Desc : actions used for admin limits form
     */
     function admin_limitsform(){
-	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
-	    $language = $this->data['Home']['language'];
+	if(isset($this->data) && ($this->data['Test']['language_change']) == 1){
+	    $language = $this->data['Test']['language'];
 	    $this -> set( 'formAction', 'admin_limitsform');
 	    $this -> set( 'formHeader', 'Manage Download Limits Page Content' );
-	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => $this->data['Home']['language'])));
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => $this->data['Test']['language'])));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $language;
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $language;
 		$this->set('getData', $getData );
 	    }
 	    else {
-		$getData['Home']['language'] = $language;
-		$getData['Home']['id'] = null;
-		$getData['Home']['page_name'] = null;
-		$getData['Home']['page_content'] = null;
+		$getData['Test']['language'] = $language;
+		$getData['Test']['id'] = null;
+		$getData['Test']['page_name'] = null;
+		$getData['Test']['page_content'] = null;
 		$this->set('getData', $getData);
 	    }
 	}
 	else{
 	    if(isset($this->data)) {
-		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => $this->data['Home']['language'])));
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => $this->data['Test']['language'])));
 		if(count($findData) == 0) {
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()){
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		}
 		elseif(count($findData) > 0){
-		    $this->Page->id = $this->data['Home']['id'];
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->id = $this->data['Test']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -1548,10 +1544,10 @@ STR;
 	    $this -> set( 'formHeader', 'Manage Download Limits Page Text' );
 	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'limits', 'language' => 'en')));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $getPageData[0]['Page']['language'];
 		$this -> set( 'getData', $getData );
 	    }
 	    else {
@@ -1734,7 +1730,7 @@ STR;
 			$this->layout = 'login_new';
 		}
 		else{
-			$this->layout = 'login';
+        $this->layout = 'login';
 		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){
@@ -1746,7 +1742,7 @@ STR;
 			$this->Session->write('Config.language', 'en');
 		}
         if($this->data){
-            $email = $this->data['Home']['email'];
+            $email = $this->data['Test']['email'];
             if($email == ''){
                 $errorMsg = "Please provide your email address.";
             }
@@ -2055,43 +2051,43 @@ STR;
     */
 
     function admin_historyform() {
-	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
-	    $language = $this->data['Home']['language'];
+	if(isset($this->data) && ($this->data['Test']['language_change']) == 1){
+	    $language = $this->data['Test']['language'];
 	    $this -> set( 'formAction', 'admin_historyform');
 	    $this -> set( 'formHeader', 'Manage History Page Text' );
-	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => $this->data['Home']['language'])));
+	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => $this->data['Test']['language'])));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $language;
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $language;
 		$this->set('getData', $getData );
 	    }
 	    else {
-		$getData['Home']['language'] = $language;
-		$getData['Home']['id'] = null;
-		$getData['Home']['page_name'] = null;
-		$getData['Home']['page_content'] = null;
+		$getData['Test']['language'] = $language;
+		$getData['Test']['id'] = null;
+		$getData['Test']['page_name'] = null;
+		$getData['Test']['page_content'] = null;
 		$this->set('getData', $getData);
 	    }
 	}
 	else{
 	    if(isset($this->data)) {
-		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => $this->data['Home']['language'])));
+		$findData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => $this->data['Test']['language'])));
 		if(count($findData) == 0) {
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()){
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
 		    }
 		}
 		elseif(count($findData) > 0){
-		    $this->Page->id = $this->data['Home']['id'];
-		    $pageData['Page']['page_name'] = $this->data['Home']['page_name'];
-		    $pageData['Page']['page_content'] = $this->data['Home']['page_content'];
-		    $pageData['Page']['language'] = $this->data['Home']['language'];
+		    $this->Page->id = $this->data['Test']['id'];
+		    $pageData['Page']['page_name'] = $this->data['Test']['page_name'];
+		    $pageData['Page']['page_content'] = $this->data['Test']['page_content'];
+		    $pageData['Page']['language'] = $this->data['Test']['language'];
 		    $this->Page->set($pageData['Page']);
 		    if($this->Page->save()) {
 			$this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
@@ -2105,10 +2101,10 @@ STR;
 	    $this -> set( 'formHeader', 'Manage History Page Text' );
 	    $getPageData = $this->Page->find('all', array('conditions' => array('page_name' => 'history', 'language' => 'en')));
 	    if(count($getPageData) != 0) {
-		$getData['Home']['id'] = $getPageData[0]['Page']['id'];
-		$getData['Home']['page_name'] = $getPageData[0]['Page']['page_name'];
-		$getData['Home']['page_content'] = $getPageData[0]['Page']['page_content'];
-		$getData['Home']['language'] = $getPageData[0]['Page']['language'];
+		$getData['Test']['id'] = $getPageData[0]['Page']['id'];
+		$getData['Test']['page_name'] = $getPageData[0]['Page']['page_name'];
+		$getData['Test']['page_content'] = $getPageData[0]['Page']['page_content'];
+		$getData['Test']['language'] = $getPageData[0]['Page']['language'];
 		$this -> set( 'getData', $getData );
 	    }
 	    else {
@@ -2230,8 +2226,8 @@ STR;
    function admin_language(){
 		if (!empty($this->data)) {
 			$data['Language']['id'] = '';
-			$data['Language']['short_name'] = $this->data['Homes']['short_name'];
-			$data['Language']['full_name'] = $this->data['Homes']['full_name'];
+			$data['Language']['short_name'] = $this->data['Tests']['short_name'];
+			$data['Language']['full_name'] = $this->data['Tests']['full_name'];
 		    if($this->Language->save($data['Language'])){
 				$this->Session->setFlash('Your Language has been saved.', 'modal', array('class' => 'modal success'));
 				$this->redirect('/admin/homes/language');
