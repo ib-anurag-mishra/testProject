@@ -1,5 +1,5 @@
 body {
-	color: #666666;;
+	color: #000000;
 }
 
 a{
@@ -23,7 +23,7 @@ a:hover{
 	padding: 15px 0 15px 15px;
 }
 #leftColWrapper H1{
-	margin: 0 0 15px 44px;text-align: center;width: 67%;
+	margin: 0 0 15px 44px;text-align: center;width: 67%;color:#666666;
 }
 #search_query{
 	border: 1px solid #CCCCCC;font-size: 12px;line-height: 1.33333;margin: 0 5px 7px 10%;width: 60%;
@@ -58,7 +58,7 @@ a:hover{
 }
 
 #albumblock  h2{
-	border-top: medium none;margin-top: -10px;
+	border-top: medium none;margin-top: -10px;color:#666666;
 }
 
 #albumblockR1{
@@ -103,7 +103,7 @@ a:hover{
 }
 
 #ComposersWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #ComposersWrapper ul{
@@ -129,7 +129,7 @@ a:hover{
 }
 
 #GenreWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #GenreWrapper ul{
@@ -145,7 +145,7 @@ a:hover{
 }
 
 #ArtistWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #ArtistWrapper ul{
@@ -160,7 +160,7 @@ a:hover{
 }
 
 #LabelWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #LabelWrapper ul{
@@ -175,7 +175,7 @@ a:hover{
 }
 
 #resultsSummary{
-margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
+margin-left: 15px; padding-top: 0px; position: relative; width: 998px;color:#666666;
 }
 .search_result_text{
 	float:left;
@@ -210,7 +210,7 @@ margin-left: 15px; padding-top: 0px; position: relative; width: 998px;
 	width: 958px;
 }
 #all_block h2{
-	border-top: medium none;margin-top: -10px;
+	border-top: medium none;margin-top: -10px;color:#666666;
 }
 
 #all_block  li{
@@ -284,6 +284,36 @@ div.paging_all_block span.current {
 div.paging_all_block span a {
     color: #0080FF;
     text-decoration: underline;
+}
+
+div.paging {
+    float: right;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    text-align: right;
+	width: 95%;
+}
+
+div.paging{
+    color: #000000;
+}
+
+div.paging span.disabled {
+    color: #DDDDDD;
+}
+div.paging span.disabled {
+    color: #DDDDDD;
+}
+div.paging span.current {
+    color: #000000;
+}
+div.paging span a {
+    color: #0080FF;
+}
+
+div.paging span a, div.paging a {
+    /*color: #0080FF;*/
+    text-decoration: none;
 }
 
 
