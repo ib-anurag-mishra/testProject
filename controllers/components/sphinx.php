@@ -3,7 +3,7 @@ class SphinxComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => 'localhost', 'port' => 3312);
+    static $_defaults = array('server' => '192.168.100.114', 'port' => 3312);
 
     /**
      * Spinx client object
