@@ -160,7 +160,7 @@ class SearchController extends AppController
 						$albumsCheck = array_keys($albums);
 						for($i=0; $i<=count($albumsCheck) -1; $i++)
 						{
-						  $queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
+              $queryArr = $this->Solr->query('Title:"'.utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'),$albumsCheck[$i])).'"', 1);
 						  $albumData[] = $queryArr[0];
 						}
 						$this->set('albums', $albums);
@@ -208,7 +208,7 @@ class SearchController extends AppController
 				$albumsCheck = array_keys($albums);
 				for($i=0;$i<=count($albumsCheck) -1;$i++)
 				{
-					$queryArr = $this->Solr->query('CTitle:"'.str_replace('-','\-',addslashes($albumsCheck[$i])).'"', 1);
+					$queryArr = $this->Solr->query('Title:"'.utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'),$albumsCheck[$i])).'"', 1);
 					$albumData[] = $queryArr[0];
 				}
 
