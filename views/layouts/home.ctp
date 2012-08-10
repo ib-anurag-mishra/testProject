@@ -27,7 +27,7 @@
 		echo $javascript->link('freegal');
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');*/
-	?>		
+	?>
                 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
 	<?php
 		//echo $javascript->link('jquery-1.3.2.min');
@@ -50,15 +50,18 @@
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					$('#autoComplete').keypress(function(event) {
 						//auto_check();
-						if (event.which != '13') {
-						 $('#auto').attr('value', 0);
+						if (event.which == '13') {
+						  $('#HomeSearchForm').submit();
 						}
-					});					
-					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
+					});
+					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
 					{
 						minChars: 1,
 						cacheLength: 10,
-						autoFill: false
+						autoFill: false,
+            extraParams: {
+              type:$('#type111').val()
+            }
 					}).result(function(e, item) {
 						$('#auto').attr('value', 1);
 					});
@@ -70,9 +73,9 @@
 					<?php }	?>
 				});
 				var languageSet = '<?php echo $setLang; ?>';
-				var webroot = '<?php echo $this->webroot; ?>';	
+				var webroot = '<?php echo $this->webroot; ?>';
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
-				var attributes = { id: "audioplayer" }; 
+				var attributes = { id: "audioplayer" };
 				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
 			</script>
 			<style>
@@ -138,12 +141,12 @@
 			chkcookie = (tmpcookie.getTime() + '');
 			document.cookie = "chkcookie=" + chkcookie;
 			if (document.cookie.indexOf(chkcookie,0) < 0) {
-				<?php if(!isset($this->params['pass']['0'])){ ?>				
+				<?php if(!isset($this->params['pass']['0'])){ ?>
 					location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
 				<?php } ?>
 			}
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<!--[if lt IE 7]>
@@ -186,9 +189,9 @@
 	<?php $session->flash(); ?>
 	<a class='upgradeFlash' href="#"></a>
 	<div style="display:none;">
-		<div id="upgradeFlash_div">   
+		<div id="upgradeFlash_div">
 			This site requires Flash player version 9 or more to play the sample audio files.
-			Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a> 
+			Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a>
 			to upgrade your Flash Player.<br /><br />
 		</div>
 	</div>
