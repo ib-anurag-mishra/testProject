@@ -5,7 +5,7 @@
 	 Author : m68interactive
  */
 function createPagination($html, $currentPage, $facetPage, $type='listing', $totalPages, $pageLimitToShow, $queryString=null){
-
+	$queryString = html_entity_decode($queryString);
 	if($totalPages > 1){
 
 		$part = floor($pageLimitToShow/2);
@@ -1114,7 +1114,7 @@ STR;
 			}
 		?>
 	<?php
-		$keyword = urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+		$keyword = $keyword."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
 		echo createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
 	?>
 </div>
