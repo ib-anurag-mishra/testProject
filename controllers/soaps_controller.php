@@ -21,7 +21,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
 
-  private $uri = 'http://www.freegaltest.com/';
+  private $uri = 'http://www.freegalmusic.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
 
@@ -3624,7 +3624,11 @@ class SoapsController extends AppController {
           'recursive' => -1,
         )
       );
-  
+    
+    if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $TrackData['Song']['provider_type'])) {
+      throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+    }
+    
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
     $insertArr['patron_id'] = $patId;
