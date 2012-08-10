@@ -6,7 +6,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24
+    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24//192.168.100.24
 
     /**
      * Solr client object
@@ -31,7 +31,7 @@ class SolrComponent extends Object {
         }
     }
 
-    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10){
+    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $perfect=false){
         $query = '';
         $docs = array();
         $country = $this->Session->read('territory');
@@ -46,31 +46,60 @@ class SolrComponent extends Object {
           if(!isset(self::$solr)){
               self::initialize(null);
           }
-          switch($type){
-            case 'song':
-              $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
-              break;
-            case 'genre':
-              $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
-              break;
-            case 'album':
-              $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
-              break;
-            case 'artist':
-              $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
-              break;
-            case 'label':
-              $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
-              break;
-            case 'composer':
-              $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
-              break;
-            case 'all':
-              $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
-              break;
-            default:
-              $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
-              break;
+          if($perfect == false){
+            switch($type){
+              case 'song':
+                $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+                break;
+              case 'genre':
+                $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
+                break;
+              case 'album':
+                $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
+                break;
+              case 'artist':
+                $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
+                break;
+              case 'label':
+                $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
+                break;
+              case 'composer':
+                $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
+                break;
+              case 'all':
+                $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
+                break;
+              default:
+                $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
+                break;
+            }
+          } else {
+            switch($type){
+              case 'song':
+                $query = 'SongTitle:'.$searchkeyword;
+                break;
+              case 'genre':
+                $query = 'Genre:'.$searchkeyword;
+                break;
+              case 'album':
+                $query = 'Title:'.$searchkeyword;
+                break;
+              case 'artist':
+                $query = 'ArtistText:'.$searchkeyword;
+                break;
+              case 'label':
+                $query = 'Label:'.$searchkeyword;
+                break;
+              case 'composer':
+                $query = 'Composer:'.$searchkeyword;
+                break;
+              case 'all':
+                $query = '(SongTitle:'.$searchkeyword.' OR Genre:'.$searchkeyword.' OR Title:'.$searchkeyword.' OR ArtistText:'.$searchkeyword.' OR Label:'.$searchkeyword.' OR Composer:'.$searchkeyword.')';
+                break;
+              default:
+                $query = '(SongTitle:'.$searchkeyword.' OR Genre:'.$searchkeyword.' OR Title:'.$searchkeyword.' OR ArtistText:'.$searchkeyword.' OR Label:'.$searchkeyword.' OR Composer:'.$searchkeyword.')';
+                break;
+            }
           }
 
           $query = $query.' AND Territory:'.$country.$cond;
@@ -176,6 +205,7 @@ class SolrComponent extends Object {
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
         if ( $response->getHttpStatus() == 200 ) {
           if (!empty($response->facet_counts->facet_fields->$field)) {
+            //print_r($response->facet_counts->facet_fields->$field); die;
             return $response->facet_counts->facet_fields->$field;
           } else {
             return array();
@@ -288,7 +318,7 @@ class SolrComponent extends Object {
     }
 
     function escapeSpace($keyword){
-      $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword);
+      $keyword = utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword));
       return $keyword;
     }
 }
