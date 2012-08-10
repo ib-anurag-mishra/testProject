@@ -318,7 +318,8 @@ class SolrComponent extends Object {
     }
 
     function escapeSpace($keyword){
-      $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword);
+      $keyword = mb_strtolower($keyword, 'UTF-8');
+      $keyword = utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword));
       return $keyword;
     }
 }
