@@ -55,7 +55,7 @@ class SolrComponent extends Object {
                 $query = 'CGenre:(*'.strtolower($searchkeyword).'*) OR Genre:*'.$searchkeyword.'*';
                 break;
               case 'album':
-                $query = 'CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'*';
+                $query = '(CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'* OR CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'* OR CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:*'.$searchkeyword.'*)';
                 break;
               case 'artist':
                 $query = 'CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'*';
@@ -162,7 +162,7 @@ class SolrComponent extends Object {
             $field = 'Genre';
             break;
           case 'album':
-            $query = 'CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'*';
+            $query = '(CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'* OR CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'* OR CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:*'.$searchkeyword.'*)';
             $field = 'Title';
             break;
           case 'artist':
@@ -236,31 +236,31 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:*'.$searchkeyword.'*';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CGenre:(*'.strtolower($searchkeyword).'*) OR Genre:*'.$searchkeyword.'*';
             $field = 'Genre';
             break;
           case 'album':
-            $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
+            $query = '(CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'* OR CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'* OR CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:*'.$searchkeyword.'*)';
             $field = 'Title';
             break;
           case 'artist':
-            $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'*';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CLabel:(*'.strtolower($searchkeyword).'*) OR Label:*'.$searchkeyword.'*';
             $field = 'Label';
             break;
           case 'composer':
-            $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:*'.$searchkeyword.'*';
             $field = 'Composer';
             break;
           default:
-            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:*'.$searchkeyword.'*';
             $field = 'SongTitle';
             break;
         }
