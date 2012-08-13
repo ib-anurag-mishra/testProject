@@ -49,28 +49,28 @@ class SolrComponent extends Object {
           if($perfect == false){
             switch($type){
               case 'song':
-                $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+                $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:*'.$searchkeyword.'*';
                 break;
               case 'genre':
-                $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
+                $query = 'CGenre:(*'.strtolower($searchkeyword).'*) OR Genre:*'.$searchkeyword.'*';
                 break;
               case 'album':
-                $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
+                $query = 'CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'*';
                 break;
               case 'artist':
-                $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
+                $query = 'CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'*';
                 break;
               case 'label':
-                $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
+                $query = 'CLabel:(*'.strtolower($searchkeyword).'*) OR Label:*'.$searchkeyword.'*';
                 break;
               case 'composer':
-                $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
+                $query = 'CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:*'.$searchkeyword.'*';
                 break;
               case 'all':
-                $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
+                $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*)) OR (SongTitle:(*'.$searchkeyword.'*) OR Genre:(*'.$searchkeyword.'*) OR Title:(*'.$searchkeyword.'*) OR ArtistText:(*'.$searchkeyword.'*) OR Label:(*'.$searchkeyword.'*) OR Composer:(*'.$searchkeyword.'*))';
                 break;
               default:
-                $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*))';
+                $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR CGenre:(*'.strtolower($searchkeyword).'*) OR CTitle:(*'.strtolower($searchkeyword).'*) OR CArtistText:(*'.strtolower($searchkeyword).'*) OR CLabel:(*'.strtolower($searchkeyword).'*) OR CComposer:(*'.strtolower($searchkeyword).'*)) OR (SongTitle:(*'.$searchkeyword.'*) OR Genre:(*'.$searchkeyword.'*) OR Title:(*'.$searchkeyword.'*) OR ArtistText:(*'.$searchkeyword.'*) OR Label:(*'.$searchkeyword.'*) OR Composer:(*'.$searchkeyword.'*))';
                 break;
             }
           } else {
@@ -104,7 +104,7 @@ class SolrComponent extends Object {
 
           $query = $query.' AND Territory:'.$country.$cond;
 
-          //echo $query; die;
+          //echo ($query); die;
 
           if($page == 1){
             $start = 0;
@@ -154,31 +154,31 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:*'.$searchkeyword.'*';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = 'CGenre:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CGenre:(*'.strtolower($searchkeyword).'*) OR Genre:*'.$searchkeyword.'*';
             $field = 'Genre';
             break;
           case 'album':
-            $query = 'CTitle:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CTitle:(*'.strtolower($searchkeyword).'*) OR Title:*'.$searchkeyword.'*';
             $field = 'Title';
             break;
           case 'artist':
-            $query = 'CArtistText:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:*'.$searchkeyword.'*';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = 'CLabel:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CLabel:(*'.strtolower($searchkeyword).'*) OR Label:*'.$searchkeyword.'*';
             $field = 'Label';
             break;
           case 'composer':
-            $query = 'CComposer:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:*'.$searchkeyword.'*';
             $field = 'Composer';
             break;
           default:
-            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*)';
+            $query = 'CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:*'.$searchkeyword.'*';
             $field = 'SongTitle';
             break;
         }
@@ -318,8 +318,10 @@ class SolrComponent extends Object {
     }
 
     function escapeSpace($keyword){
-      $keyword = mb_strtolower($keyword, 'UTF-8');
+      //$keyword = mb_strtolower($keyword, 'UTF-8');
       $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword);
+      $keyword = utf8_decode($keyword);
+      //$keyword = utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword));
       return $keyword;
     }
 }
