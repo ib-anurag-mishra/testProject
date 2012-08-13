@@ -42,7 +42,7 @@ class SearchController extends AppController
     $sortOrder = 'asc';
 
 		if(isset($_GET['q'])){
-		  $queryVar = str_replace('"','',$_GET['q']);
+		  $queryVar =html_entity_decode($_GET['q']);
 		}
 		if(isset($_GET['type'])){
 			 $type = $_GET['type'];
@@ -230,7 +230,7 @@ class SearchController extends AppController
       $this->set('currentPage', $page);
       $this->set('facetPage', $facetPage);
     }
-		$this->set('keyword', $queryVar);
+		$this->set('keyword', htmlentities($queryVar));
 	}
 
 	function searchrecords($type, $search_text){
