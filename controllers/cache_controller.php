@@ -179,9 +179,9 @@ STR;
 			echo Cache::write("featured".$territory, $featured);
       $this->log("cache written for featured artists for $territory",'debug');
 
-
-			$genres = array('Pop' , 'Rock' , 'Country' , 'Classical' );
-
+      $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
+                    "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
+      
 			foreach($genres as $genre)
 			{
 				$genre_data = array();

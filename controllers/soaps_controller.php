@@ -3657,7 +3657,7 @@ class SoapsController extends AppController {
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+    $insertArr['user_agent'] = $agent;
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
@@ -3902,7 +3902,8 @@ class SoapsController extends AppController {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
-    $genres = array('Pop' , 'Rock' , 'Country' , 'Classical' );
+    $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
+                    "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 
     foreach($genres AS $val){
 
