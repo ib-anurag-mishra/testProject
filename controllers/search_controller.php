@@ -230,7 +230,7 @@ class SearchController extends AppController
       $this->set('currentPage', $page);
       $this->set('facetPage', $facetPage);
     }
-		$this->set('keyword', htmlentities($queryVar));
+		$this->set('keyword', htmlspecialchars($queryVar));
 	}
 
 	function searchrecords($type, $search_text){
