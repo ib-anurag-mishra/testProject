@@ -104,12 +104,12 @@ function truncate_text($text, $char_count){
 	}
 	else {
 		$modified_text = $text;
-	}		 
+	}
 
-	return $modified_text;	
+	return $modified_text;
 }
 
-//Code for check Sales date	
+//Code for check Sales date
 function Get_Sales_date($sales_date_array, $country){
 	$Sales_date = '';
 	if(is_array($sales_date_array)){
@@ -117,16 +117,16 @@ function Get_Sales_date($sales_date_array, $country){
 			$Territory_date_array = explode("_", $TerritorySalesDate);
 			if(is_array($sales_date_array)){
 				$Territory = $Territory_date_array[0];
-				
+
 			}
-			
+
 			if($country == $Territory){
 				$Sales_date = $Territory_date_array[1];
-				break;					
-			}					
+				break;
+			}
 		}
 	}
-	
+
 	return $Sales_date ;
 }
 ?>
@@ -318,12 +318,14 @@ STR;
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
 					$tilte = urlencode($palbum->Title);
-
+          $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
+          $linkProviderType = base64_encode($palbum->provider_type);
+          $ReferenceId = $palbum->ReferenceID;
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
-						<a	href="#"><img height="75" width="100" class="art" src="$image"> </a>
+						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img height="75" width="100" class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
-							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
+							<a class="albumblockArtisLink" href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType" title="$palbum->Title">$album_title</a>
 							<br />
 							Genre: $album_genre
 							<br />
@@ -739,10 +741,12 @@ STR;
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$tilte = urlencode($palbum->Title);
 					$album_label = $palbum->Label;
-
+          $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
+          $linkProviderType = base64_encode($palbum->provider_type);
+          $ReferenceId = $palbum->ReferenceID;
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
-						<a	href="#"><img class="art" height="75" width="100" src="$image"> </a>
+						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img class="art" height="75" width="100" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
 							<br />
@@ -995,7 +999,7 @@ STR;
 		<?php $i = 0;
 		$country = $this->Session->read('territory');
 		foreach($songs as $psong) {
-		
+
 			$sales_date = Get_Sales_date($psong->TerritorySalesDate, $country);
 			$class = null;
 			if ($i++ % 2 == 0) {
@@ -1037,7 +1041,7 @@ STR;
 					<td width="170" valign="top" align="center" style="padding-left: 10px;">
 						<?php
 					if($sales_date <= date('Y-m-d'))
-						{					
+						{
 								if($libraryDownload == '1' && $patronDownload == '1') {
 									if($psong->status != 'avail'){
 									?>
@@ -1090,9 +1094,9 @@ STR;
 						else{
 							?>
 								<span title='<?php __("Coming Soon");?> ( <?php echo date("F d Y", strtotime($sales_date)); ?> )'><?php __("Coming Soon");?></span>
-							<?php											
+							<?php
 						}
-							
+
 						?>
 					</td>
 				</tr>
