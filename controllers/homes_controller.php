@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord', 'Country');
 
     /*
      Function Name : beforeFilter
@@ -714,7 +714,23 @@ STR;
 						} else{
 							$searchResults[$key]['Song']['status'] = 'not';
 						}
-
+						//Added code for Sales date issue
+							$songProdID = $value['Song']['ProdID'];
+							$songProvider_type = $value['Song']['provider_type'];
+							
+							$Country_array = $this->Country->find('first',
+							  array(
+								'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $country, 'Country.provider_type' => $songProvider_type),
+								'recursive' => -1,
+							  )
+							);
+							$SalesDate = $Country_array['Country']['SalesDate'];
+							
+							//overwrite the old issued Sales date with correct date
+							$searchResults[$key]['Country']['SalesDate'] = $SalesDate;
+							$searchResults[$key]['Country']['Territory'] = $country;	
+							$searchResults[$key]['Country']['provider_type'] = $songProvider_type;						
+						//End code for sales date
 						//Changed for show seached like composer name in composer search
 						if($composer != ''){
 							$composer_value = $searchResults[$key]['Song']['Composer'];
@@ -740,7 +756,7 @@ STR;
 
 
 				}
-				
+			
 				$this->set('searchResults', $searchResults);
 
 				//Added code for log search data			
@@ -772,7 +788,7 @@ STR;
 				
 			}
 			else {
-			
+		
 				//Added code for log search data
 
 				if(isset($_REQUEST['search']) && $_REQUEST['search']!= ''){
@@ -782,6 +798,7 @@ STR;
 				
 				//End Added code for log search data
 				
+	
 				if($_REQUEST['search_type'] == 'composer'){
 					$this->set('composer', "composer");
 				}
@@ -877,7 +894,23 @@ STR;
 							$searchResults[$key]['Song']['status'] = 'not';
 						}
 
-
+						//Added code for Sales date issue
+							$songProdID = $value['Song']['ProdID'];
+							$songProvider_type = $value['Song']['provider_type'];
+							
+							$Country_array = $this->Country->find('first',
+							  array(
+								'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $country, 'Country.provider_type' => $songProvider_type),
+								'recursive' => -1,
+							  )
+							);
+							$SalesDate = $Country_array['Country']['SalesDate'];
+							
+							//overwrite the old issued Sales date with correct date
+							$searchResults[$key]['Country']['SalesDate'] = $SalesDate;
+							$searchResults[$key]['Country']['Territory'] = $country;	
+							$searchResults[$key]['Country']['provider_type'] = $songProvider_type;						
+						//End code for sales date
 						//Changed for show seached like composer name in composer search
 						if($_REQUEST['search_type'] = 'composer'){
 							$composer_value = $searchResults[$key]['Song']['Composer'];
@@ -1734,7 +1767,7 @@ STR;
 			$this->layout = 'login_new';
 		}
 		else{
-			$this->layout = 'login';
+        $this->layout = 'login';
 		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){
