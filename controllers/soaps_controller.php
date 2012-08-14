@@ -20,6 +20,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumDataByArtist
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
+
   private $uri = 'http://www.freegalmusic.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
@@ -107,9 +108,10 @@ class SoapsController extends AppController {
     if(is_numeric($data)){
       $zipcode = trim($data);
       $Zipusstate_array = $this->Zipusstate->find('first', array('conditions'=>array('zip = ' . $zipcode)));
-      $Library_latitude = $Zipusstate_array['Zipusstate']['latitude'];
-      $Library_longitude = $Zipusstate_array['Zipusstate']['longitude'];
-
+      
+      $Library_latitude = substr($Zipusstate_array['Zipusstate']['latitude'], 0, (strpos($Zipusstate_array['Zipusstate']['latitude'], '.') + 5));
+      $Library_longitude = substr($Zipusstate_array['Zipusstate']['longitude'], 0, (strpos($Zipusstate_array['Zipusstate']['longitude'], '.') + 5));
+      
       if(strlen($data) == 5){
         $libraries = $this->Library->find('all',
         array('fields'=>array('id', 'library_name','library_zipcode', 'library_apikey','library_authentication_variable','library_authentication_method','library_authentication_num','library_authentication_url','mobile_auth','library_authentication_response', '(3959 * ACOS( COS( RADIANS(' . $Library_latitude . ') ) * COS( RADIANS( latitude) )
@@ -870,7 +872,9 @@ class SoapsController extends AppController {
             $sobj->Composer              = (string)$val['Composer'];
             $sobj->Genre                 = (string)$val['Genre'];
             $sobj->Territory             = (string)$val['Territory'];
-            $sobj->DownloadStatus        = (int)$val['DownloadStatus'];
+                      
+            $sobj->DownloadStatus        = $this->IsDownloadable($val['ProdID'], $library_territory, $val['provider_type']);       
+            
             $sobj->TrackBundleCount      = (int)$val['TrackBundleCount'];
             $sobj->Sample_Duration       = (string)$val['Sample_Duration'];
             $sobj->FullLength_Duration   = (string)$val['FullLength_Duration'];
@@ -3621,7 +3625,11 @@ class SoapsController extends AppController {
           'recursive' => -1,
         )
       );
-  
+    
+    if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $TrackData['Song']['provider_type'])) {
+      throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+    }
+    
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
     $insertArr['patron_id'] = $patId;
@@ -3650,7 +3658,7 @@ class SoapsController extends AppController {
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+    $insertArr['user_agent'] = $agent;
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
@@ -3895,7 +3903,8 @@ class SoapsController extends AppController {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
-    $genres = array('Pop' , 'Rock' , 'Country' , 'Classical' );
+    $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
+                    "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 
     foreach($genres AS $val){
 
@@ -3954,8 +3963,10 @@ class SoapsController extends AppController {
           $sobj->ISRC                  = (string) '';
           $sobj->Composer              = (string) '';
           $sobj->Genre                 = (string) $arrTemp[$cnt]['Genre']['Genre'];
-          $sobj->Territory             = (string) $arrTemp[$cnt]['Country']['Territory'];
-          $sobj->DownloadStatus        = (int)    '';
+          $sobj->Territory             = (string) $arrTemp[$cnt]['Country']['Territory'];       
+          
+          ($arrTemp[$cnt]['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
+          
           $sobj->TrackBundleCount      = (int)    '';
           $sobj->Sample_Duration       = (string) $arrTemp[$cnt]['Song']['Sample_Duration'];
           $sobj->FullLength_Duration   = (string) $arrTemp[$cnt]['Song']['FullLength_Duration'];
@@ -4078,7 +4089,7 @@ class SoapsController extends AppController {
 	 * @return array
    */
 	function getGenreSongs($authenticationToken, $genreTitle) {
-
+  
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -4092,6 +4103,8 @@ class SoapsController extends AppController {
       )
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    
 
     if ( (( Cache::read($genreTitle.$library_territory)) !== false) && (Cache::read($genreTitle.$library_territory) !== null) ) {
 
@@ -4110,7 +4123,9 @@ class SoapsController extends AppController {
         $sobj->Composer              = (string) '';
         $sobj->Genre                 = (string) $val['Genre']['Genre'];
         $sobj->Territory             = (string) $val['Country']['Territory'];
-        $sobj->DownloadStatus        = (int)    $val['Song']['DownloadStatus'];
+                        
+        ($val['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
+        
         $sobj->TrackBundleCount      = (int)    '';
         $sobj->Sample_Duration       = (string) $val['Song']['Sample_Duration'];
         $sobj->FullLength_Duration   = (string) $val['Song']['FullLength_Duration'];
@@ -4224,15 +4239,17 @@ class SoapsController extends AppController {
 		$sphinxSort = "";
 		$sphinxDirection = "";
 		$this->paginate = array('Song' => array(
-						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'webservice' => 1
+						'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection, 'extra' => 1
 					));
 
 		$searchResults = $this->paginate('Song');
+
+    
     $array_uniques = array();
 
     if(!empty($searchResults)){
 
-      /*switch($searchType){
+      switch($searchType){
         case '1': {
           foreach($searchResults AS $key => $val) {
             $array_test[$key] = trim($val['Song']['ArtistText']);
@@ -4282,11 +4299,11 @@ class SoapsController extends AppController {
         break;
         default:
 
-      }*/
+      }
 
       foreach($searchResults AS $key => $val){
 
-        //if(true === in_array( $key, $array_uniques) ) {
+        if(true === in_array( $key, $array_uniques) ) {
 
           $sobj = new SearchDataType;
           $sobj->SongProdID           = $val['Song']['ProdID'];
@@ -4308,12 +4325,15 @@ class SoapsController extends AppController {
             )
           );
 
+          $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_territory, $val['Song']['provider_type']);
+          
+          
           $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
           $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
           $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
           $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-        //}
+        }
       }
 
       $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -4379,6 +4399,8 @@ class SoapsController extends AppController {
 
         $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
         $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
@@ -4459,6 +4481,8 @@ class SoapsController extends AppController {
 
         $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
         $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
@@ -4538,7 +4562,9 @@ class SoapsController extends AppController {
 
         $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
-         $albumData = $this->Album->find('first',
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
+        $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
             'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
@@ -4617,6 +4643,8 @@ class SoapsController extends AppController {
         $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
         $sobj->fileURL                = Configure::read('App.Music_Path').$sampleFileURL;
 
+        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+        
         $albumData = $this->Album->find('first',
           array(
             'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
@@ -4797,5 +4825,33 @@ class SoapsController extends AppController {
     }
 
   }
+  
+   /**
+   * return int (0,1)
+   * @param int $songProdID
+   * @param string $territory
+   * @param string $provider_type
+   * @return int
+   */
+
+	private function IsDownloadable($songProdID, $territory, $provider_type) {	
+		
+    $Country_array = $this->Country->find('first',
+			  array(
+				'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $territory, 'Country.provider_type' => $provider_type),
+				'recursive' => -1,
+			  )
+			);
+      
+    
+		$SalesDate = $Country_array['Country']['SalesDate'];
+		if($SalesDate <= date('Y-m-d')) {
+			$IsNotDownloadable = 0;
+		} else {
+			$IsNotDownloadable = 1;
+		}
+		
+		return $IsNotDownloadable;
+	}   
 
 }

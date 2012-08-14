@@ -391,7 +391,8 @@ function restoreallgenretemp($country){
   }
 
 
-  function restoremobiletopartistforcountry($country){
+  function restoremobiletopartistforcountry($country){   
+    
     set_time_limit(0);
     $this->autoRender = false;
     $territoryNames = array('US','CA','AU','IT','NZ');
@@ -428,5 +429,127 @@ function restoreallgenretemp($country){
       }
     }
   }
+  
+  /**
+  * @restoreAllGenre
+  * set all genre with all territories
+  *
+  * $offset
+  *   starting point of array 
+  * $length
+  *   count of elemnets
+  */
+  function restoreAllGenre($offset, $length){
+    
+    set_time_limit(0);
+		Ignore_User_Abort(True);
+    $this->autoRender = false;
+    ini_set("memory_limit", "1G");
+    
+    $genresArray = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
+                    "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
+    
+    $genresArray = array_slice($genresArray, $offset, $length);
+    
+    $countriesArray = array('US' , 'AU' , 'CA' , 'IT' , 'NZ');
+    
+    if(!empty($genresArray)) {
+    
+      foreach($genresArray AS $genre ) {
+        foreach($countriesArray AS $territory ) {  
+          $restoregenre_query =  "
+            SELECT 
+              COUNT(DISTINCT downloads.id) AS countProduct,
+              Song.ProdID,
+              Song.ReferenceID,
+              Song.Title,
+              Song.ArtistText,
+              Song.DownloadStatus,
+              Song.SongTitle,
+              Song.Artist,
+              Song.Advisory,
+              Song.Sample_Duration,
+              Song.FullLength_Duration,
+              Song.provider_type,
+              Song.Genre,
+              Country.Territory,
+              Country.SalesDate,
+              Sample_Files.CdnPath,
+              Sample_Files.SaveAsName,
+              Full_Files.CdnPath,
+              Full_Files.SaveAsName,
+              Sample_Files.FileID,
+              Full_Files.FileID
+            FROM
+              downloads,
+              Songs AS Song
+                  LEFT JOIN
+              countries AS Country ON Country.ProdID = Song.ProdID
+                  LEFT JOIN
+              File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                  LEFT JOIN
+              File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+          WHERE
+              downloads.ProdID = Song.ProdID 
+              AND downloads.provider_type = Song.provider_type 
+              AND Song.Genre LIKE '%".$genre."%'
+              AND Country.Territory LIKE '%".$territory."%' 
+              AND Country.SalesDate != '' 
+              AND Country.SalesDate < NOW() 
+              AND Song.DownloadStatus = '1' 
+              AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+          GROUP BY downloads.ProdID
+          ORDER BY countProduct DESC
+          LIMIT 10
+          ";
+
+          $data =   $this->Album->query($restoregenre_query);
+                
+          if(!empty($data)){
+            Cache::write($genre.$territory, $data);    
+          } 
+          else {
+            echo $genre.$territory . " : Unable to update key";
+          }
+          
+        }
+      }
+    }
+    
+    exit("<br />DONE<br />");
+  }
+  
+  
+  function restoreAllGenrePrint($offset, $length){
+      
+    $genresArray = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
+                    "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
+    
+    $genresArray = array_slice($genresArray, $offset, $length);
+    
+    $countriesArray = array('US' , 'AU' , 'CA' , 'IT' , 'NZ');
+    
+    echo '<pre>';
+    
+    if(!empty($genresArray)) {
+    
+      foreach($genresArray AS $genre ) {
+        foreach($countriesArray AS $territory ) {  
+          
+          
+          echo "<br />  ==================================== $genre.$territory Start =============================================== <br />";   
+          print_r( Cache::read($genre.$territory) );
+          echo "<br /> ==================================== $genre.$territory End =============================================== <br />";  
+            
+        }
+      }  
+    }
+    
+    exit("<br />DONE<br />");
+  
+  }
+
+  
+  
 }
 ?>

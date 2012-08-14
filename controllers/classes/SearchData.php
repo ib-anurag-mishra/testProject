@@ -87,6 +87,12 @@ class SearchDataType{
   public $ISRC;
   
   /**
+	 * DownloadStatus
+	 * @var int
+	 */
+  public $DownloadStatus;
+  
+  /**
 	 * Constructor
 	 */
   public function __construct(){
