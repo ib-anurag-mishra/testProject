@@ -77,14 +77,14 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"next&gt";
+				$pagination_str .=	"next&gt&gt";
 			}
 		} else if($type == 'block'){
 			if($facetPage != $totalPages ){
 				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.$currentPage.'/'.($facetPage+1).'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"next&gt";
+				$pagination_str .=	"next&gt&gt";
 			}
 		}
 
