@@ -223,7 +223,7 @@ function Get_Sales_date($sales_date_array, $country){
           }
           ?>
         </li>
-				<li >
+				<li  id="list_last">
           <?php
           if($type != 'song'){
           ?>
@@ -990,11 +990,11 @@ STR;
       ?>
 	  </a>
     </div>
-		<div	id="genreDownload" style="width:180px;">Download</div>
+		<div	id="genreDownload" style="width:203px;">Download</div>
 	<br class="clr">
 	<div id="genreResults">
 		<?php if(!empty($songs)){ ?>
-		<table cellspacing="0" cellpadding="0" style="margin-left: 45px;">
+		<table cellspacing="0" cellpadding="0" style="margin-left: 15px;">
 				<tbody>
 		<?php $i = 0;
 		$country = $this->Session->read('territory');
@@ -1038,7 +1038,7 @@ STR;
 							?>
 						</p>
 					</td>
-					<td width="170" valign="top" align="center" style="padding-left: 10px;">
+					<td width="203" valign="top" align="center" style="padding-left: 10px;">
 						<?php
 					if($sales_date <= date('Y-m-d'))
 						{
