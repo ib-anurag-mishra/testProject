@@ -320,6 +320,12 @@ STR;
 					$tilte = urlencode($palbum->Title);
           $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
           $linkProviderType = base64_encode($palbum->provider_type);
+		  if(!empty($album_label)){
+			$album_label_str = "Label: " . truncate_text($album_label, 32);
+		  }
+		  else{
+			$album_label_str = "";
+		  }
           $ReferenceId = $palbum->ReferenceID;
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
@@ -329,7 +335,7 @@ STR;
 							<br />
 							Genre: $album_genre
 							<br />
-							<span	class="stats">Label: $album_label</span>
+							<span	class="stats">$album_label_str</span>
 						</div>
 					</div>
 STR;
@@ -744,6 +750,12 @@ STR;
           $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
           $linkProviderType = base64_encode($palbum->provider_type);
           $ReferenceId = $palbum->ReferenceID;
+		  if(!empty($album_label)){
+			$album_label_str = "Label: " . truncate_text($album_label, 32);
+		  }
+		  else{
+			$album_label_str = "";
+		  }
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
 						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img class="art" height="75" width="100" src="$image"> </a>
@@ -752,7 +764,7 @@ STR;
 							<br />
 							Genre: $album_genre
 							<br />
-							<span	class="stats">Label: $album_label</span>
+							<span	class="stats">$album_label_str</span>
 						</div>
 					</div>
 STR;
