@@ -168,26 +168,26 @@ class SearchController extends AppController
 
 					break;
 					case 'genre':
-						$limit = 32;
+						$limit = 30;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
 						$genres = $this->Solr->facetSearch($queryVar, 'genre', $facetPage, $limit);
 						$this->set('genres', $genres);
 
 					break;
 					case 'label':
-						$limit = 16;
+						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
 						$labels = $this->Solr->facetSearch($queryVar, 'label', $facetPage, $limit);
 						$this->set('labels', $labels);
 					break;
 					case 'artist':
-						$limit = 16;
+						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
 						$artists = $this->Solr->facetSearch($queryVar, 'artist', $facetPage, $limit);
 						$this->set('artists', $artists);
 					break;
 					case 'composer':
-						$limit = 16;
+						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
 						$composers = $this->Solr->facetSearch($queryVar, 'composer', $facetPage, $limit);
 						$this->set('composers', $composers);
