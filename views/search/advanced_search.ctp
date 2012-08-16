@@ -32,8 +32,8 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 			$topage = $currentPage + ($pageLimitToShow - $currentPage);
 				$topage = (($topage <= $totalPages)?$topage:$totalPages);
 			} elseif($currentPage >= ($totalPages - $part)){
-				$fromPage = $currentPage - $pageLimitToShow;
-				$topage = ($totalPages > $pageLimitToShow)?$currentPage:$totalPages;
+				$fromPage = ($currentPage >= $totalPages)?$totalPages-($pageLimitToShow-1):(($currentPage - ($pageLimitToShow - ($totalPages - $currentPage)))+1);
+				$topage = $totalPages;
 				$fromPage = (($fromPage > 1)?$fromPage:1);
 			} else {
 				$fromPage = $currentPage - $part;
@@ -45,8 +45,8 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				$topage = $facetPage + ($pageLimitToShow - $facetPage);
 				$topage = (($topage <= $totalPages)?$topage:$totalPages);
 			} elseif($facetPage >= ($totalPages - $part)){
-				$fromPage = $facetPage - $pageLimitToShow;
-				$topage = ($totalPages > $pageLimitToShow)?$facetPage:$totalPages;
+				$fromPage = ($facetPage >= $totalPages)?$totalPages-($pageLimitToShow-1):(($facetPage - ($pageLimitToShow - ($totalPages - $facetPage)))+1);
+				$topage = $totalPages;
 				$fromPage = (($fromPage > 1)?$fromPage:1);
 			} else {
 				$fromPage = $facetPage - $part;
