@@ -33,7 +33,7 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				$topage = (($topage <= $totalPages)?$topage:$totalPages);
 			} elseif($currentPage >= ($totalPages - $part)){
 				$fromPage = $currentPage - $pageLimitToShow;
-				$topage = ($totalPages > $pageLimitToShow)?$currentPage:$totalPages)
+				$topage = ($totalPages > $pageLimitToShow)?$currentPage:$totalPages);
 				$fromPage = (($fromPage > 1)?$fromPage:1);
 			} else {
 				$fromPage = $currentPage - $part;
