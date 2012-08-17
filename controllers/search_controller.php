@@ -38,7 +38,7 @@ class SearchController extends AppController
     $this->layout = 'home';
     $queryVar = null;
     $check_all = null;
-    $sortVar = 'SongTitle';
+    $sortVar = 'ArtistText';
     $sortOrder = 'asc';
 
 		if(isset($_GET['q'])){
@@ -54,7 +54,7 @@ class SearchController extends AppController
 
 		if(isset($_GET['sort'])){
 			$sort = $_GET['sort'];
-			$sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'song');
+			$sort = (($sort == 'song' || $sort == 'album' || $sort == 'artist' || $sort == 'composer')  ? $sort : 'artist');
 			switch($sort){
 				case 'song':
 				  $sortVar = 'SongTitle';
@@ -75,11 +75,11 @@ class SearchController extends AppController
 				  $sortVar = 'Composer';
 				  break;
 				default:
-				  $sortVar = 'SongTitle';
+				  $sortVar = 'ArtistText';
 				  break;
 			}
 		} else {
-			$sort = 'song';
+			$sort = 'artist';
 		}
 
 		$this->set('sort', $sort);
