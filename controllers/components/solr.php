@@ -114,7 +114,7 @@ class SolrComponent extends Object {
           $additionalParams = array();
 
           $additionalParams = array(
-            'sort' => array('provider_type desc, '.$sort." ".$sortOrder)
+            'sort' => 'provider_type desc, '.$sort." ".$sortOrder
           );
 
           $response = self::$solr->search( $query, $start, $limit, $additionalParams);
@@ -200,7 +200,7 @@ class SolrComponent extends Object {
           'facet.mincount' => 1,
           'facet.offset' => $start,
           'facet.limit' => $limit,
-          'sort' => array('provider_type desc')
+          'sort' => 'provider_type desc'
         );
 
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
