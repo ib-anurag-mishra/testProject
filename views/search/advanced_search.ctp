@@ -32,8 +32,8 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 			$topage = $currentPage + ($pageLimitToShow - $currentPage);
 				$topage = (($topage <= $totalPages)?$topage:$totalPages);
 			} elseif($currentPage >= ($totalPages - $part)){
-				$fromPage = $currentPage - $pageLimitToShow;
-				$topage = $currentPage;
+				$fromPage = ($currentPage >= $totalPages)?$totalPages-($pageLimitToShow-1):(($currentPage - ($pageLimitToShow - ($totalPages - $currentPage)))+1);
+				$topage = $totalPages;
 				$fromPage = (($fromPage > 1)?$fromPage:1);
 			} else {
 				$fromPage = $currentPage - $part;
@@ -45,8 +45,8 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				$topage = $facetPage + ($pageLimitToShow - $facetPage);
 				$topage = (($topage <= $totalPages)?$topage:$totalPages);
 			} elseif($facetPage >= ($totalPages - $part)){
-				$fromPage = $facetPage - $pageLimitToShow;
-				$topage = $facetPage;
+				$fromPage = ($facetPage >= $totalPages)?$totalPages-($pageLimitToShow-1):(($facetPage - ($pageLimitToShow - ($totalPages - $facetPage)))+1);
+				$topage = $totalPages;
 				$fromPage = (($fromPage > 1)?$fromPage:1);
 			} else {
 				$fromPage = $facetPage - $part;
@@ -77,14 +77,14 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"next&gt";
+				$pagination_str .=	"next&gt&gt";
 			}
 		} else if($type == 'block'){
 			if($facetPage != $totalPages ){
 				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.$currentPage.'/'.($facetPage+1).'/'.$queryString);
 			}
 			else{
-				$pagination_str .=	"next&gt";
+				$pagination_str .=	"next&gt&gt";
 			}
 		}
 
@@ -223,7 +223,7 @@ function Get_Sales_date($sales_date_array, $country){
           }
           ?>
         </li>
-				<li >
+				<li  id="list_last">
           <?php
           if($type != 'song'){
           ?>
@@ -320,6 +320,12 @@ STR;
 					$tilte = urlencode($palbum->Title);
           $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
           $linkProviderType = base64_encode($palbum->provider_type);
+		  if(!empty($album_label)){
+			$album_label_str = "Label: " . truncate_text($album_label, 32);
+		  }
+		  else{
+			$album_label_str = "";
+		  }
           $ReferenceId = $palbum->ReferenceID;
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
@@ -329,7 +335,7 @@ STR;
 							<br />
 							Genre: $album_genre
 							<br />
-							<span	class="stats">Label: $album_label</span>
+							<span	class="stats">$album_label_str</span>
 						</div>
 					</div>
 STR;
@@ -745,6 +751,12 @@ STR;
           $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
           $linkProviderType = base64_encode($palbum->provider_type);
           $ReferenceId = $palbum->ReferenceID;
+		  if(!empty($album_label)){
+			$album_label_str = "Label: " . truncate_text($album_label, 32);
+		  }
+		  else{
+			$album_label_str = "";
+		  }
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
 						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img class="art" height="75" width="100" src="$image"> </a>
@@ -753,7 +765,7 @@ STR;
 							<br />
 							Genre: $album_genre
 							<br />
-							<span	class="stats">Label: $album_label</span>
+							<span	class="stats">$album_label_str</span>
 						</div>
 					</div>
 STR;
@@ -992,11 +1004,11 @@ STR;
       ?>
 	  </a>
     </div>
-		<div	id="genreDownload" style="width:180px;">Download</div>
+		<div	id="genreDownload" style="width:203px;">Download</div>
 	<br class="clr">
 	<div id="genreResults">
 		<?php if(!empty($songs)){ ?>
-		<table cellspacing="0" cellpadding="0" style="margin-left: 45px;">
+		<table cellspacing="0" cellpadding="0" style="margin-left: 15px;">
 				<tbody>
 		<?php $i = 0;
 		$country = $this->Session->read('territory');
@@ -1040,7 +1052,7 @@ STR;
 							?>
 						</p>
 					</td>
-					<td width="170" valign="top" align="center" style="padding-left: 10px;">
+					<td width="203" valign="top" align="center" style="padding-left: 10px;">
 						<?php
 					if($sales_date <= date('Y-m-d'))
 						{
