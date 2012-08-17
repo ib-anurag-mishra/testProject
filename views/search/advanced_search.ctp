@@ -550,8 +550,9 @@ STR;
 						$artist_name = str_replace('"','',$artist);
 						$artist_name_text = truncate_text($artist_name, 30);
 						$tilte = urlencode($artist);
+            $link = $html->link(str_replace('"','',truncate_text($artist, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist))));
 						$artist_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=artist" title="$artist">$artist_name_text</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text">$link</span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -748,7 +749,7 @@ STR;
 					<div	class ="$class">
 						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img class="art" height="75" width="100" src="$image"> </a>
 						<div class="albumblockArtistexts">
-							<a class="albumblockArtisLink" href="/search/advanced_search?q=$tilte&type=album" title="$palbum->Title">$album_title</a>
+							<a class="albumblockArtisLink" href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType" title="$palbum->Title">$album_title</a>
 							<br />
 							Genre: $album_genre
 							<br />
@@ -884,8 +885,9 @@ STR;
 				{
 								$tilte = urlencode($artist);
 								$artist_name_text = truncate_text($artist, 30);
+                $link = $html->link(str_replace('"','',truncate_text($artist, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist))));
 				?>
-				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=artist" title='<?php echo $artist?>'><?php echo str_replace('"','',$artist_name_text); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><?php echo $link; ?></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 				?>
