@@ -114,7 +114,7 @@ class SolrComponent extends Object {
           $additionalParams = array();
 
           $additionalParams = array(
-            'sort' => array('provider_type desc', $sort." ".$sortOrder)
+            'sort' => array('provider_type desc, '.$sort." ".$sortOrder)
           );
 
           $response = self::$solr->search( $query, $start, $limit, $additionalParams);
