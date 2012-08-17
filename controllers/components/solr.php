@@ -200,7 +200,7 @@ class SolrComponent extends Object {
           'facet.mincount' => 1,
           'facet.offset' => $start,
           'facet.limit' => $limit,
-          'sort' => 'provider_type desc'
+          'facet.sort' => 'provider_type desc'
         );
 
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
