@@ -961,6 +961,8 @@ STR;
             } else {
               echo "<img src='/img/arrow_desc.png' />";
             }
+          } else {
+            echo "<img src='/img/arrow_updown_white.png' />";
           }
         ?>
 		</a>
@@ -974,6 +976,8 @@ STR;
           } else {
             echo "<img src='/img/arrow_desc.png' />";
           }
+        } else {
+          echo "<img src='/img/arrow_updown_white.png' />";
         }
       ?>
 	  </a>
@@ -987,6 +991,8 @@ STR;
           } else {
             echo "<img src='/img/arrow_desc.png' />";
           }
+        } else {
+          echo "<img src='/img/arrow_updown_white.png' />";
         }
       ?>
 	  </a>
@@ -1000,6 +1006,8 @@ STR;
           } else {
             echo "<img src='/img/arrow_desc.png' />";
           }
+        } else {
+          echo "<img src='/img/arrow_updown_white.png' />";
         }
       ?>
 	  </a>
