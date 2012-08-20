@@ -4209,7 +4209,7 @@ class SoapsController extends AppController {
 
     $searchKey = str_replace("^", " ", $searchKey);
 		$searchKey = str_replace("$", " ", $searchKey);
-		$searchKey = '"'.addslashes($searchKey).'"';
+		$searchKey = '"^'.addslashes($searchKey).'"';
 		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 
     switch($searchType){
