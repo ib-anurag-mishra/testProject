@@ -196,11 +196,10 @@ class SolrComponent extends Object {
           'facet.field' => array(
             $field
           ),
-          'facet.query' => $query,
+          'facet.query' => $query.' AND (provider_type:sony^2 OR provider_type:ioda^0.001)',
           'facet.mincount' => 1,
           'facet.offset' => $start,
           'facet.limit' => $limit,
-          'facet.sort' => 'provider_type desc'
         );
 
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
