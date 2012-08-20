@@ -3658,7 +3658,7 @@ class SoapsController extends AppController {
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $agent;
+    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
