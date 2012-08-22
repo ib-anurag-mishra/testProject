@@ -3658,7 +3658,7 @@ class SoapsController extends AppController {
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $agent;
+    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
@@ -4389,6 +4389,25 @@ class SoapsController extends AppController {
 
     foreach($AllData AS $key => $val){
 
+        //Added code for Sales date issue
+				$songProdID = $val['Song']['ProdID'];
+				$songProvider_type = $val['Song']['provider_type'];
+							
+				$Country_array = $this->Country->find('first',
+				  array(
+            'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $country, 'Country.provider_type' => $songProvider_type),
+						'recursive' => -1,
+					)
+        );
+				
+        $SalesDate = $Country_array['Country']['SalesDate'];
+							
+				//overwrite the old issued Sales date with correct date
+				$AllData[$key]['Country']['SalesDate'] = $SalesDate;
+				$AllData[$key]['Country']['Territory'] = $country;	
+				$AllData[$key]['Country']['provider_type'] = $songProvider_type;						
+				//End code for sales date
+    
         $sobj = new SearchDataType;
         $sobj->SongProdID           = $val['Song']['ProdID'];
         $sobj->SongTitle            = $val['Song']['SongTitle'];
