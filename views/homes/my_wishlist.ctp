@@ -15,7 +15,25 @@
     width: 228px;
 	background:url(../img/<?php echo $this->Session->read('Config.language'); ?>/my_wishlist.png) no-repeat;
 }
+
+#wishlist-table{
+  margin-left: 35px;
+}
+
+#wishlist-table th{
+  background-color: #3d3d3d;
+  color: #fff;
+  height: 20px;
+  text-align: center;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
+#wishlist-table td{
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
 </style>
+
 <div class="breadCrumb">
 <?php
 	$html->addCrumb('My Wishlist', '/homes/my_wishlist');
@@ -29,7 +47,7 @@
 </div>
 
 <div id="wishlistText"><?php echo $page->getPageContent('wishlist'); ?></div>
-<div id="genreArtist">
+<!--<div id="genreArtist">
 	<P><?php __("Artist");?></p>
 </div>
 <div id="genreAlbum">
@@ -41,9 +59,26 @@
 <div id="genreDownload">
 	<?php __("Download");?>
 </div>
-<br class="clr">
+<br class="clr">-->
 <div id="genreResults">
-	<table cellspacing="0" cellpadding="0">
+	<table cellspacing="0" cellpadding="0" id="wishlist-table">
+	<tr>
+    <th width="180">
+      <p><?php __("Artist");?></p>
+    </th>
+    <th width="200">
+      <p><?php __("Album");?></p>
+    </th "150px">
+    <th width="250">
+      <p><?php __("Track");?></p>
+    </th>
+    <th width="150">
+      <p><?php __("Download");?></p>
+    </th>
+    <th width="150">
+      <p><?php __("Remove");?></p>
+    </th>
+  </tr>
 	<?php
 	if(count($wishlistResults) != 0)
 	{
