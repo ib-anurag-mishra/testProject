@@ -1022,7 +1022,8 @@ class SoapsController extends AppController {
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC'
+            'Song.ISRC',
+            'Song.provider_type',
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
@@ -1042,7 +1043,7 @@ class SoapsController extends AppController {
       $insertArr['ISRC'] = $TrackData['Song']['ISRC'];
 			$insertArr['user_agent'] = $userAgent;
 			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-
+      $insertArr['provider_type'] = $TrackData['Song']['provider_type'];
 
       $row_save_status = $this->Wishlist->save($insertArr);
 
@@ -4389,25 +4390,6 @@ class SoapsController extends AppController {
 
     foreach($AllData AS $key => $val){
 
-        //Added code for Sales date issue
-				$songProdID = $val['Song']['ProdID'];
-				$songProvider_type = $val['Song']['provider_type'];
-							
-				$Country_array = $this->Country->find('first',
-				  array(
-            'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $country, 'Country.provider_type' => $songProvider_type),
-						'recursive' => -1,
-					)
-        );
-				
-        $SalesDate = $Country_array['Country']['SalesDate'];
-							
-				//overwrite the old issued Sales date with correct date
-				$AllData[$key]['Country']['SalesDate'] = $SalesDate;
-				$AllData[$key]['Country']['Territory'] = $country;	
-				$AllData[$key]['Country']['provider_type'] = $songProvider_type;						
-				//End code for sales date
-    
         $sobj = new SearchDataType;
         $sobj->SongProdID           = $val['Song']['ProdID'];
         $sobj->SongTitle            = $val['Song']['SongTitle'];
