@@ -492,7 +492,7 @@ function restoreallgenretemp($country){
           WHERE
               downloads.ProdID = Song.ProdID 
               AND downloads.provider_type = Song.provider_type 
-              AND Song.Genre LIKE '%".$genre."%'
+              AND Song.Genre LIKE '%".mysql_real_escape_string($genre)."%'
               AND Country.Territory LIKE '%".$territory."%' 
               AND Country.SalesDate != '' 
               AND Country.SalesDate < NOW() 
@@ -503,13 +503,15 @@ function restoreallgenretemp($country){
           LIMIT 10
           ";
 
+          echo $restoregenre_query . '<br />';
+          
           $data =   $this->Album->query($restoregenre_query);
                 
           if(!empty($data)){
             Cache::write($genre.$territory, $data);    
           } 
           else {
-            echo $genre.$territory . " : Unable to update key";
+            echo $genre.$territory . " : Unable to update key <br />";
           }
           
         }
