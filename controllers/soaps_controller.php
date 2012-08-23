@@ -1022,7 +1022,8 @@ class SoapsController extends AppController {
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC'
+            'Song.ISRC',
+            'Song.provider_type',
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
@@ -1042,7 +1043,7 @@ class SoapsController extends AppController {
       $insertArr['ISRC'] = $TrackData['Song']['ISRC'];
 			$insertArr['user_agent'] = $userAgent;
 			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-
+      $insertArr['provider_type'] = $TrackData['Song']['provider_type'];
 
       $row_save_status = $this->Wishlist->save($insertArr);
 
