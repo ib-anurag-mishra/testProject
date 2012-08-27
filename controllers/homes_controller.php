@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Country' );
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord', 'Country');
 
     /*
      Function Name : beforeFilter
@@ -361,16 +361,17 @@ class HomesController extends AppController
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
+			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
 			} else {
 			  $ids .= ','.$natTopSong['Download']['ProdID'];
+			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
 			}
 		  }
 		  $data = array();
 
 
-
-		  $sql_national_100 =<<<STR
-	SELECT
+	 $sql_national_100 =<<<STR
+	SELECT 
 		Song.ProdID,
 		Song.ReferenceID,
 		Song.Title,
@@ -390,7 +391,8 @@ class HomesController extends AppController
 		Full_Files.CdnPath,
 		Full_Files.SaveAsName,
 		Sample_Files.FileID,
-		Full_Files.FileID
+		Full_Files.FileID,
+		PRODUCT.pid
 	FROM
 		Songs AS Song
 			LEFT JOIN
@@ -401,14 +403,17 @@ class HomesController extends AppController
 		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 			LEFT JOIN
 		countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 	WHERE
-		( (Song.DownloadStatus = '1') AND (Song.ProdID IN ($ids)) AND (Song.provider_type = Genre.provider_type) )  AND (Country.Territory = '$country')  AND Country.SalesDate != ''  AND Country.SalesDate < NOW() AND 1 = 1
+		( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
 	GROUP BY Song.ProdID
 	ORDER BY FIELD(Song.ProdID,
 			$ids) ASC
-	LIMIT 100
-
+	LIMIT 100 
+	  
 STR;
+
 
 			$nationalTopDownload = $this->Album->query($sql_national_100);
 			// Checking for download status
@@ -756,9 +761,49 @@ STR;
 
 
 				}
+			
 				$this->set('searchResults', $searchResults);
+
+				//Added code for log search data			
+				if(isset($this->data['Home']['artist']) && $this->data['Home']['artist']!= ''){
+					$insertArr[] = $this->searchrecords('artist', $this->data['Home']['artist']);
+				}
+				if(isset($this->data['Home']['label']) && $this->data['Home']['label']!= ''){
+					$insertArr[] = $this->searchrecords('label', $this->data['Home']['label']);			
+				}
+				if(isset($this->data['Home']['composer']) && $this->data['Home']['composer']!= ''){
+					$insertArr[] = $this->searchrecords('composer', $this->data['Home']['composer']);		
+				}
+				if(isset($this->data['Home']['song']) && $this->data['Home']['song']!= ''){
+					$insertArr[] = $this->searchrecords('song', $this->data['Home']['song']);			
+				}
+				if(isset($this->data['Home']['album']) && $this->data['Home']['album']!= ''){
+					$insertArr[] = $this->searchrecords('album', $this->data['Home']['album']);	
+				}
+				if(isset($this->data['Home']['genre_id']) && $this->data['Home']['genre_id']!= ''){
+					$insertArr[] = $this->searchrecords('genre_id', $this->data['Home']['genre_id']);	
+				}
+				
+				if(is_array($insertArr)){
+					$this->Searchrecord->saveAll($insertArr);	
+				}
+				
+				//End Added code for log search data	
+				
+				
 			}
 			else {
+		
+				//Added code for log search data
+
+				if(isset($_REQUEST['search']) && $_REQUEST['search']!= ''){
+					$insertArr[] = $this->searchrecords($_REQUEST['search_type'], $_REQUEST['search']);					
+				}
+				$this->Searchrecord->saveAll($insertArr);				
+				
+				//End Added code for log search data
+				
+	
 				if($_REQUEST['search_type'] == 'composer'){
 					$this->set('composer', "composer");
 				}
@@ -903,6 +948,23 @@ STR;
 		}
         $this->layout = 'home';
     }
+
+	function searchrecords($type, $search_text){
+		$search_text = strtolower(trim($search_text));
+		$search_text  = preg_replace('/\s\s+/', ' ', $search_text);
+		$insertArr['search_text'] = $search_text;
+		$insertArr['type'] = $type;	
+		$genre_id_count_array = $this->Searchrecord->find('all', array('conditions' => array('search_text' => $search_text, 'type' => $type)));
+		if(count($genre_id_count_array) > 0){
+			$insertArr['count'] =$genre_id_count_array[0]['Searchrecord']['count'] + 1;
+			$insertArr['id'] =$genre_id_count_array[0]['Searchrecord']['id'];
+		}
+		else{
+			$insertArr['count'] = 1;
+		}
+
+		return $insertArr;
+	}
 
     /*
      Function Name : userDownload

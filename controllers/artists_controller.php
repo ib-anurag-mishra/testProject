@@ -52,7 +52,7 @@ Class ArtistsController extends AppController
 	function admin_artistform() {
     ini_set('memory_limit','1024M');
 		set_time_limit(0);
-		if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
+    if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
 				$this -> set( 'formAction', 'admin_updatefeaturedartist/id:' . $artistId );
@@ -87,14 +87,14 @@ Class ArtistsController extends AppController
 			$condition = 'add';
 			$artistName = '';
 		}
-		//$memcache = new Memcache;
-		//$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		//memcache_close($memcache);
+		$memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+		memcache_close($memcache);
 	}
 
 	/*
@@ -139,14 +139,14 @@ Class ArtistsController extends AppController
 			$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
 			$this -> redirect( 'artistform' );
 		}
-		//$memcache = new Memcache;
-		//$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		//memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		//memcache_close($memcache);
+		$memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+		memcache_close($memcache);
 	}
 
 	/*
@@ -283,16 +283,15 @@ Class ArtistsController extends AppController
               Configure::write('Cache.disable',false);
               $cacheKey = 'ssartists_'.$this->data['Artist']['territory'].'_'.Configure::read('App.LANGUAGE');
               if(Cache::delete($cacheKey) == true){
-                Cache::write('update_ssdate_mobile',date('d/m/Y/H/i/s',time()));
               	Configure::write('Cache.disable',true);
                 $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
-                $this -> redirect( 'manageartist' );
+              	$this -> redirect( 'manageartist' );
               } else {
                 Configure::write('Cache.disable',true);
                 $this -> Session -> setFlash( 'Data has been saved successfully, but the cache is not cleared!', 'modal', array( 'class' => 'modal success' ) );
                 $this -> redirect( 'manageartist' );
               }
-						}
+            }
 					}
 					else {
 						$this -> Session -> setFlash( $errorMsg, 'modal', array( 'class' => 'modal problem' ) );
@@ -347,7 +346,6 @@ Class ArtistsController extends AppController
             $cacheKey = 'ssartists_'.$this->data['Artist']['territory'].'_'.Configure::read('App.LANGUAGE');
             Configure::write('Cache.disable',false);
             if(Cache::delete($cacheKey) == true){
-              Cache::write('update_ssdate_mobile',date('d/m/Y/H/i/s',time()));
               Configure::write('Cache.disable',true);
               $this -> Session -> setFlash( 'Data has been saved successfully!', 'modal', array( 'class' => 'modal success' ) );
               $this -> redirect( 'manageartist' );
@@ -607,15 +605,16 @@ Class ArtistsController extends AppController
 
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
-				'fields' => array('Song.ReferenceID'),
+				'fields' => array('Song.ReferenceID', 'Song.provider_type'),
 				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
 			$val = '';
 
 			foreach($songs as $k => $v){
 				$val = $val.$v['Song']['ReferenceID'].",";
+				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
-			$condition = array("Album.ProdID IN (".rtrim($val,",").")");
+			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").")");
 		}
     $id = str_replace('@','/',$id);
 		$this->layout = 'home';
@@ -812,15 +811,16 @@ Class ArtistsController extends AppController
       $id = str_replace('@','/',$id);
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
-				'fields' => array('Song.ReferenceID'),
+				'fields' => array('Song.ReferenceID', 'Song.provider_type'),
 				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
 
 			$val = '';
 
 			foreach($songs as $k => $v){
-				$val = $val.$v['Song']['ReferenceID'].",";
+				$val .= $v['Song']['ReferenceID'].",";
+				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
-			$condition = array("Album.ProdID IN (".rtrim($val,",").") AND Album.provider_type = Genre.provider_type");
+			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
 		$this->layout = 'home';
 		$this->set('artisttext',base64_decode($id));
