@@ -135,7 +135,8 @@ class HomesController extends AppController
               Full_Files.CdnPath,
               Full_Files.SaveAsName,
               Sample_Files.FileID,
-              Full_Files.FileID
+              Full_Files.FileID,
+			  PRODUCT.pid
           FROM
               downloads,
               Songs AS Song
@@ -145,10 +146,13 @@ class HomesController extends AppController
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+				LEFT JOIN
+			  PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
           WHERE
               downloads.ProdID = Song.ProdID
               AND downloads.provider_type = Song.provider_type
               AND Song.Genre LIKE '%Pop%'
+			  AND (PRODUCT.provider_type = Song.provider_type)
               AND Country.Territory LIKE '%".$country."%'
               AND Country.SalesDate != ''
               AND Country.SalesDate < NOW()
@@ -221,7 +225,8 @@ class HomesController extends AppController
               Full_Files.CdnPath,
               Full_Files.SaveAsName,
               Sample_Files.FileID,
-              Full_Files.FileID
+              Full_Files.FileID,
+			  PRODUCT.pid
           FROM
               downloads,
               Songs AS Song
@@ -231,10 +236,13 @@ class HomesController extends AppController
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+				LEFT JOIN
+			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
           WHERE
               downloads.ProdID = Song.ProdID
               AND downloads.provider_type = Song.provider_type
               AND Song.Genre LIKE '%".$genre."%'
+			  AND (PRODUCT.provider_type = Song.provider_type)
               AND Country.Territory LIKE '%".$territory."%'
               AND Country.SalesDate != ''
               AND Country.SalesDate < NOW()
