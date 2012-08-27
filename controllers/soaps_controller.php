@@ -21,7 +21,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
 
-  private $uri = 'http://www.freegalmusic.com/';
+  private $uri = 'http://www.freegaltest.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
 
@@ -108,9 +108,10 @@ class SoapsController extends AppController {
     if(is_numeric($data)){
       $zipcode = trim($data);
       $Zipusstate_array = $this->Zipusstate->find('first', array('conditions'=>array('zip = ' . $zipcode)));
-      $Library_latitude = $Zipusstate_array['Zipusstate']['latitude'];
-      $Library_longitude = $Zipusstate_array['Zipusstate']['longitude'];
-
+      
+      $Library_latitude = substr($Zipusstate_array['Zipusstate']['latitude'], 0, (strpos($Zipusstate_array['Zipusstate']['latitude'], '.') + 5));
+      $Library_longitude = substr($Zipusstate_array['Zipusstate']['longitude'], 0, (strpos($Zipusstate_array['Zipusstate']['longitude'], '.') + 5));
+      
       if(strlen($data) == 5){
         $libraries = $this->Library->find('all',
         array('fields'=>array('id', 'library_name','library_zipcode', 'library_apikey','library_authentication_variable','library_authentication_method','library_authentication_num','library_authentication_url','mobile_auth','library_authentication_response', '(3959 * ACOS( COS( RADIANS(' . $Library_latitude . ') ) * COS( RADIANS( latitude) )
@@ -1021,7 +1022,8 @@ class SoapsController extends AppController {
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC'
+            'Song.ISRC',
+            'Song.provider_type',
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
@@ -1041,7 +1043,7 @@ class SoapsController extends AppController {
       $insertArr['ISRC'] = $TrackData['Song']['ISRC'];
 			$insertArr['user_agent'] = $userAgent;
 			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-
+      $insertArr['provider_type'] = $TrackData['Song']['provider_type'];
 
       $row_save_status = $this->Wishlist->save($insertArr);
 
@@ -3657,7 +3659,7 @@ class SoapsController extends AppController {
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $agent;
+    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
@@ -4208,7 +4210,7 @@ class SoapsController extends AppController {
 
     $searchKey = str_replace("^", " ", $searchKey);
 		$searchKey = str_replace("$", " ", $searchKey);
-		$searchKey = '"'.addslashes($searchKey).'"';
+		$searchKey = '"^'.addslashes($searchKey).'"';
 		App::import('vendor', 'sphinxapi', array('file' => 'sphinxapi.php'));
 
     switch($searchType){
