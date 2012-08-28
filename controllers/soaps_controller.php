@@ -3770,7 +3770,7 @@ STR;
               'type' => 'inner',
               'foreignKey' => false,
 
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $insertArr['ProdID'], 'Song.ProdID = ' . $insertArr['ProdID'])
+              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $insertArr['ProdID'], 'Song.provider_type = ' . $provider_type)
             )
           )
         )
