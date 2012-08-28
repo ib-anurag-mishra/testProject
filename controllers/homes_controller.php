@@ -279,6 +279,7 @@ class HomesController extends AppController
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
+		$ids_provider_type = '';
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
