@@ -15,7 +15,7 @@ class SphinxBehavior extends ModelBehavior
      * Used for runtime configuration of model
      */
     var $runtime = array();
-	  var $_defaults = array('server' => '192.168.100.114', 'port' => 9312);
+	  var $_defaults = array('server' => '192.168.2.178', 'port' => 9312);
 	//192.168.100.114
 
     /**
@@ -46,6 +46,14 @@ class SphinxBehavior extends ModelBehavior
      */
     function beforeFind(&$model, $query)
     {
+        $model->bindModel(
+          array('hasOne' => array('Product' => array(
+					'className' => 'Product',
+					'foreignKey' => 'ProdID'
+          )
+        ))
+        );
+
         if (empty($query['sphinx']) || empty($query['search']))
             return true;
 
@@ -100,7 +108,7 @@ class SphinxBehavior extends ModelBehavior
         $indexes = !empty($query['sphinx']['index']) ? implode(',' , $query['sphinx']['index']) : 'test1';
 
         $result = $this->runtime[$model->alias]['sphinx']->Query($query['search'], $indexes);
-        
+
         if ($result === false)
         {
             trigger_error("Search query failed: " . $this->runtime[$model->alias]['sphinx']->GetLastError());
@@ -131,16 +139,16 @@ class SphinxBehavior extends ModelBehavior
             else
                 $ids = array(0);
             $query['conditions'] = array($model->alias . '.'.$model->primaryKey => $ids);
-			
+
 			if(isset($query['cont'])){
 				$cond = array('Country.Territory' => $query['cont']);
 				$query['conditions'] = array_merge($query['conditions'], $cond);
 			}
-			
+
             $query['order'] = 'FIND_IN_SET('.$model->alias.'.'.$model->primaryKey.', \'' . implode(',', $ids) . '\')';
 
         }
-
+        $query['conditions'][] = array('Song.provider_type = Product.provider_type','Song.provider_type = Country.provider_type', 'Song.provider_type = Genre.provider_type');
         return $query;
     }
 }
