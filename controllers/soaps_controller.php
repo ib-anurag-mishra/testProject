@@ -1209,8 +1209,10 @@ STR;
           'Wishlist.delete_on',
           'Wishlist.week_start_date',
           'Wishlist.week_end_date',
+          'Wishlist.provider_type',
           'Song.Sample_Duration',
           'Song.FullLength_Duration',
+          'Song.ReferenceID',
           'Files.CdnPath',
           'Files.SaveAsName'
         ),
@@ -1226,6 +1228,7 @@ STR;
             'foreignKey' => false,
             'conditions'=> array(
               'Wishlist.ProdID = Song.ProdID',
+              'Wishlist.provider_type = Song.provider_type',
               'Song.DownloadStatus' => '1'
             )
           ),
@@ -1253,7 +1256,7 @@ STR;
       $obj->song_id               = (int)$val['Wishlist']['id'];
       $obj->library_id            = (int)$val['Wishlist']['library_id'];
       $obj->patron_id             = (int)$val['Wishlist']['patron_id'];
-      $obj->ProdID                = (int)$val['Wishlist']['ProdID'];
+      $obj->ProdID                = (int)$this->getProductAutoID($val['Wishlist']['ProdID'], $val['Wishlist']['provider_type']);
       $obj->ProductID             = (string)$val['Wishlist']['ProductID'];
       $obj->ISRC                  = (string)$val['Wishlist']['ISRC'];
       $obj->artist                = (string)$val['Wishlist']['artist'];
@@ -1272,19 +1275,7 @@ STR;
       $obj->SongUrl               = Configure::read('App.Music_Path') . shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $val['Files']['CdnPath'] . "/" . $val['Files']['SaveAsName']);
 
 
-      $SongData = $this->Song->find('first',
-        array(
-          'fields' => array(
-            'Song.ReferenceID',
-          ),
-          'conditions' => array(
-            'Song.ProdID' => $val['Wishlist']['ProdID'],
-          ),
-          'recursive' => -1,
-        )
-      );
-
-      $obj->AlbumProdID           = $SongData['Song']['ReferenceID'];
+      $obj->AlbumProdID           = $this->getProductAutoID($val['Song']['ReferenceID'], $val['Wishlist']['provider_type']);
 
       $wish_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'WishlistDataType');
 
@@ -3613,6 +3604,11 @@ STR;
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+    
+    
     $data = $this->Song->find('first',
       array('joins' =>
         array(
@@ -3622,7 +3618,7 @@ STR;
             'type' => 'inner',
             'foreignKey' => false,
 
-            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId)
+            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type = ' . $provider_type)
           )
         )
       )
@@ -3748,7 +3744,7 @@ STR;
       
     } else {
     
-      $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$TrackData['Song']['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+      $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
     
     }
     
@@ -3770,7 +3766,7 @@ STR;
               'type' => 'inner',
               'foreignKey' => false,
 
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $insertArr['ProdID'], 'Song.provider_type = ' . $provider_type)
+              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type = ' . $provider_type)
             )
           )
         )
@@ -4030,7 +4026,7 @@ STR;
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
         if(!(empty($arrTemp[$cnt]))) {
           $sobj = new SongDataType;
-          $sobj->ProdID                = (int)    $arrTemp[$cnt]['Song']['ProdID'];
+          $sobj->ProdID                = (int)    $arrTemp[$cnt]['PRODUCT']['pid'];
           $sobj->ProductID             = (string) '';
           $sobj->ReferenceID           = (int)    $arrTemp[$cnt]['Song']['ReferenceID'];
           $sobj->Title                 = (string) $arrTemp[$cnt]['Song']['Title'];
@@ -4189,7 +4185,7 @@ STR;
       foreach(Cache::read($genreTitle.$library_territory) AS $key => $val) {
 
         $sobj = new SongDataType;
-        $sobj->ProdID                = (int)    $val['Song']['ProdID'];
+        $sobj->ProdID                = (int)    $val['PRODUCT']['pid'];
         $sobj->ProductID             = (string) '';
         $sobj->ReferenceID           = (int)    $val['Song']['ReferenceID'];
         $sobj->Title                 = (string) $val['Song']['Title'];
