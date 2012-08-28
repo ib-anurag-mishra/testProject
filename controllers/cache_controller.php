@@ -131,54 +131,59 @@ STR;
 		$this->log("cache written for national top ten for $territory",'debug');
 			// Checking for download status
 			$featured = array();
-			$ids = '';
+			$ids = '';		
+			$ids_provider_type = '';
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
+			$ids_provider_type = '';
 			foreach($featured as $k => $v){
-				 if($v['Featuredartist']['album'] != 0){
-					$ids .= $v['Featuredartist']['album'].",";
-				 }
+				if(empty($ids_provider_type)){
+				  $ids .= $v['Featuredartist']['album'];
+				  $ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['Featuredartist']['album'];
+				   $ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+				}				 
+				 
 			}
-
 			if($ids != ''){
-				$this->Album->recursive = 2;
-				$featured =  $this->Album->find('all',array('conditions' =>
-							array('and' =>
-								array(
-									array("Album.ProdID IN (".rtrim($ids,",'").")"  , "Country.Territory" => $territory , "Album.provider_type = Country.provider_type"),
-								), "1 = 1 GROUP BY Album.ProdID"
-							),
-							'fields' => array(
-								'Album.ProdID',
-								'Album.Title',
-								'Album.ArtistText',
-								'Album.AlbumTitle',
-								'Album.Artist',
-								'Album.ArtistURL',
-								'Album.Label',
-								'Album.Copyright',
-								'Album.provider_type'
-								),
-							'contain' => array(
-								'Genre' => array(
-									'fields' => array(
-										'Genre.Genre'
-										)
-									),
-								'Country' => array(
-									'fields' => array(
-										'Country.Territory'
-										)
-									),
-								'Files' => array(
-									'fields' => array(
-										'Files.CdnPath' ,
-										'Files.SaveAsName',
-										'Files.SourceURL'
-								),
-							)
-						), 'order' => array('Country.SalesDate' => 'desc')
-					)
-				);
+				$this->Album->recursive = 2;	
+				
+				  $featured_query =<<<STR
+				SELECT 
+					Album.ProdID,
+					Album.Title,
+					Album.ArtistText,
+					Album.AlbumTitle,
+					Album.Artist,
+					Album.ArtistURL,
+					Album.Label,
+					Album.Copyright,
+					Album.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Files.CdnPath,
+					Files.SaveAsName,
+					Files.SourceURL,
+					Files.FileID,
+					PRODUCT.pid
+				FROM
+					Albums AS Album
+						LEFT JOIN
+					File AS Files ON (Album.FileID = Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Album.ProdID)
+						LEFT JOIN
+					countries AS Country ON (Country.ProdID = Album.ProdID)
+						LEFT JOIN
+					 PRODUCT ON (PRODUCT.ProdID = Album.ProdID) 
+				WHERE
+					(Country.Territory = '$territory') AND ((Album.ProdID,Album.provider_type) IN ($ids_provider_type) AND (Album.provider_type = Country.provider_type)) AND 1 = 1 AND (PRODUCT.provider_type = Album.provider_type)
+				GROUP BY Album.ProdID
+				ORDER BY Country.SalesDate desc  
+STR;
+
+				  $featured =   $this->Album->query($featured_query);					
+						
 			} else {
 				$featured = array();
 			}
