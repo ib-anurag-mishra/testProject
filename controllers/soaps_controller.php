@@ -26,7 +26,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -264,41 +264,47 @@ class SoapsController extends AppController {
     $library_territory = $libraryDetails['Library']['library_territory'];
 
     $songs = $this->Song->find('all', array(
-      'fields' => array('DISTINCT Song.ReferenceID'),
+      'fields' => array('DISTINCT (Song.ReferenceID)', 'Song.provider_type'),
+      'joins' => array(
+        array(
+          'table' => 'countries',
+          'alias' => 'country',
+          'type' => 'INNER',
+          'foreignKey' => false,
+          'conditions'=> array(
+            'country.ProdID = Song.ProdID',
+            'country.provider_type = Song.provider_type'
+          )
+        )
+      ),
       'conditions' => array(
         'Song.ArtistText' => $artistText,
         'Song.DownloadStatus' => 1,
         "Song.Sample_FileID != ''",
         "Song.FullLength_FIleID != ''",
-        'Country.Territory' => $library_territory,
+        'country.Territory' => $library_territory,
       ),
-      'contain' => array(
-        'Country' => array('fields' => array('Country.Territory'))
-      ),
-      'recursive' => 0,
+      'recursive' => -1,
       'order' => array('Song.ReferenceID' => 'DESC'),
       'limit' => $startFrom . ', ' . $recordCount
     )
     );
-
-
-    $val = '';
+    
+    $str_songids = '';
     $index = 1;
     $cnt = count($songs);
     foreach($songs as $k => $v){
-      $val = $val . $v['Song']['ReferenceID'];
+      $str_songids .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
       if($cnt != $index) {
-        $val .= ',';
+        $str_songids .= ', ';
       }
       $index++;
     }
 
-    $str_songids = str_replace(',', "','", $val);
-
     $albumData = $this->Album->find('all',array('conditions' =>
                                   array('and' =>
                                     array(
-                                      array("Album.ProdID IN ('".$str_songids."')")
+                                      array("((Album.ProdID, Album.provider_type) IN (".$str_songids."))")
                                     ), "1 = 1 GROUP BY Album.ProdID"
                                   ),
                                   'fields' => array(
@@ -307,33 +313,50 @@ class SoapsController extends AppController {
                                     'Album.ArtistText',
                                     'Album.AlbumTitle',
                                     'Album.Label',
+                                    'Album.provider_type',
+                                    'Genre.Genre',
+                                    'File.CdnPath',
+                                    'File.SourceURL' 
                                   ),
-                                  'contain' => array(
-                                    'Genre' => array(
-                                      'fields' => array(
-                                        'Genre.Genre'
+                                  'joins' => array(
+                                    array(
+                                      'table' => 'Genre',
+                                      'alias' => 'Genre',
+                                      'type' => 'INNER',
+                                      'foreignKey' => false,
+                                      'conditions'=> array(
+                                        'Genre.ProdID = Album.ProdID',
+                                        'Genre.provider_type = Album.provider_type'
                                       )
                                     ),
-                                    'Country' => array(
-                                      'fields' => array(
-                                        'Country.Territory'
+                                     array(
+                                      'table' => 'countries',
+                                      'alias' => 'countries',
+                                      'type' => 'INNER',
+                                      'foreignKey' => false,
+                                      'conditions'=> array(
+                                        'countries.ProdID = Album.ProdID',
+                                        'countries.provider_type = Album.provider_type'
                                       )
                                     ),
-                                    'Files' => array(
-                                      'fields' => array(
-                                        'Files.CdnPath' ,
-                                        'Files.SaveAsName',
-                                        'Files.SourceURL'
-                                      ),
+                                    array(
+                                      'table' => 'File',
+                                      'alias' => 'File',
+                                      'type' => 'INNER',
+                                      'foreignKey' => false,
+                                      'conditions'=> array(
+                                        'File.FileID = Album.FileID', 
+                                      )
                                     )
                                   ),
+                                  'recursive' => -1,
                                   'order' => array(
-                                    'Country.SalesDate' => 'desc'
+                                    'countries.SalesDate' => 'desc'
                                   )
 
                               ));
-
-
+                                    
+                              
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
     }
@@ -342,7 +365,7 @@ class SoapsController extends AppController {
 
         $obj = new AlbumDataByArtistType;
 
-        $obj->ProdID         = $val['Album']['ProdID'];
+        $obj->ProdID         = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
         $obj->Genre          = $val['Genre']['Genre'];
         $obj->AlbumTitle     = $val['Album']['AlbumTitle'];
         $obj->Title          = $val['Album']['Title'];
@@ -354,7 +377,7 @@ class SoapsController extends AppController {
 
         $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'AlbumDataByArtistType');
     }
-
+    
     return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfAlbumDataByArtistType');
 
 
@@ -634,7 +657,8 @@ class SoapsController extends AppController {
       foreach($nationalTopDownload as $key => $data) {
 
           $obj = new NationalTopTenType;
-          $obj->ProdId                    = (int)$data['Song']['ProdID'];
+          
+          $obj->ProdId                    = (int) $data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)'';
           $obj->ReferenceId               = (int)$data['Song']['ReferenceID'];
           $obj->Title                     = (string)$data['Song']['Title'];
@@ -648,7 +672,7 @@ class SoapsController extends AppController {
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
-          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array('ProdId' => $data['Song']['ReferenceID'])));
+          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type = ".$data['Song']['provider_type'])));
           $obj->AlbumTitle = $album['Album']['AlbumTitle'];
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -696,61 +720,66 @@ class SoapsController extends AppController {
 
     if (($libDownload = Cache::read("lib".$libraryId)) === false) {
 
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '10'));
-			$prodIds = '';
+			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+			$ids = '';
 
 			foreach($topDownloaded as $k => $v){
-				$prodIds .= $v['Download']['ProdID']."','";
+				if(empty($ids)){
+				  $ids .= $v['Download']['ProdID'];
+				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['Download']['ProdID'];
+				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				}				
 			}
 
-			if($prodIds != ''){
+			if($ids != ''){
 				$this->Song->recursive = 2;
-				$topDownload =  $this->Song->find('all',array('conditions' =>
-						array('and' =>
-							array(
-								array("Song.DownloadStatus" => 1,"Song.ProdID IN ('".rtrim($prodIds,",'")."')"  ,'Country.Territory' => $library_territory,"Song.provider_type = Genre.provider_type","Song.provider_type = Country.provider_type"),
-							), "1 = 1 GROUP BY Song.ProdID"
-						),
-						'fields' => array(
-							'Song.ProdID',
-							'Song.ReferenceID',
-							'Song.Title',
-							'Song.ArtistText',
-							'Song.DownloadStatus',
-							'Song.SongTitle',
-							'Song.Artist',
-							'Song.Advisory',
-							'Song.Sample_Duration',
-							'Song.FullLength_Duration',
-							'Song.provider_type'
-						),
-						'contain' => array(
-							'Genre' => array(
-								'fields' => array(
-									'Genre.Genre'
-								)
-							),
-							'Country' => array(
-								'fields' => array(
-									'Country.Territory',
-									'Country.SalesDate'
-								)
-							),
-							'Sample_Files' => array(
-								'fields' => array(
-											'Sample_Files.CdnPath' ,
-											'Sample_Files.SaveAsName'
-									)
-								),
-							'Full_Files' => array(
-								'fields' => array(
-											'Full_Files.CdnPath' ,
-											'Full_Files.SaveAsName'
-									)
-								),
-						), 'order' => array('Country.SalesDate' => 'desc'),'limit'=> '10'
-						)
-				);
+				 $topDownloaded_query =<<<STR
+				SELECT 
+					Song.ProdID,
+					Song.ReferenceID,
+					Song.Title,
+					Song.ArtistText,
+					Song.DownloadStatus,
+					Song.SongTitle,
+					Song.Artist,
+					Song.Advisory,
+					Song.Sample_Duration,
+					Song.FullLength_Duration,
+					Song.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+					Full_Files.SaveAsName,
+					Sample_Files.FileID,
+					Full_Files.FileID,
+					PRODUCT.pid
+				FROM
+					Songs AS Song
+						LEFT JOIN
+					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+						LEFT JOIN
+					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+				WHERE
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+				GROUP BY Song.ProdID
+				ORDER BY FIELD(Song.ProdID,
+						$ids) ASC
+				LIMIT 10
+STR;
+
+			$topDownload = $this->Album->query($topDownloaded_query);
+			
 			} else {
 				$topDownload = array();
 			}
@@ -764,7 +793,7 @@ class SoapsController extends AppController {
       foreach($topDownload as $data) {
 
           $obj = new LibraryTopTenType;
-          $obj->ProdId                    = (int)$data['Song']['ProdID'];
+          $obj->ProdId                    = (int)$data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)$data['Song']['ProductID'];
           $obj->ReferenceId               = (int)$data['Song']['ReferenceID'];
           $obj->Title                     = (string)$data['Song']['Title'];
@@ -778,7 +807,7 @@ class SoapsController extends AppController {
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
-          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'])));
+          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type = ".$data['Song']['provider_type'])));
           $obj->AlbumTitle = $album['Album']['AlbumTitle'];
 
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
@@ -811,20 +840,60 @@ class SoapsController extends AppController {
    */
 	function getAlbumDetail($authenticationToken, $prodId) {
 
-    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
-
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
+    
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+    
+    
+    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
 
     $library_territory = $this->getLibraryTerritory($libraryId);
 
     $data = array();
+    
     $albumData = $this->Album->find('first',
       array(
-        'conditions' => array('Album.ProdId' => $prodId, 'Country.Territory' => $library_territory),
-      )
+        'fields' => array(
+          'Album.ProdID',
+          'Album.ProductID',
+          'Album.AlbumTitle',
+          'Album.Title',
+          'Album.ArtistText',
+          'Album.Artist',
+          'Album.ArtistURL',
+          'Album.Label',
+          'Album.Copyright',
+          'Album.Advisory',
+          'Album.DownloadStatus',
+          'Album.TrackBundleCount',
+          'Album.provider_type'
+        ),
+        'joins' => array(
+          array(
+            'table' => 'Songs',
+            'alias' => 'Song',
+            'type' => 'INNER',
+            'foreignKey' => false,
+            'conditions'=> array(
+              'Song.ReferenceID = Album.ProdID',
+              'Song.provider_type = Album.provider_type',
+              'Song.DownloadStatus' => '1'
+            )
+          ),
+        ),
+        'conditions' => array(
+          'Album.ProdId' => $prodId,
+          'Album.provider_type' => $provider_type,
+          'Country.provider_type = Album.provider_type',
+          'Country.Territory' => $library_territory 
+        ),
+      )  
     );
+
 
 
     if(!empty($albumData)){
@@ -836,7 +905,7 @@ class SoapsController extends AppController {
       $data['Song'] = $albumData['Song'];
 
       $obj = new AlbumDataType;
-      $obj->ProdID                    = (int)$data['Album']['ProdID'];
+      $obj->ProdID                    = (int)$this->getProductAutoID($data['Album']['ProdID'], $data['Album']['provider_type']);
       $obj->ProductID                 = (string)$data['Album']['ProductID'];
       $obj->AlbumTitle                = (string)$data['Album']['AlbumTitle'];
       $obj->Title                     = (string)$data['Album']['Title'];
@@ -857,10 +926,10 @@ class SoapsController extends AppController {
 
       foreach($data['Song'] AS $val){
         if(1 == $val['DownloadStatus']) {
-          if($this->IsTerrotiry($val['ProdID'], $libraryId)) {
+          if($this->IsTerrotiry($val['ProdID'], $val['provider_type'], $libraryId)) {
 
             $sobj = new SongDataType;
-            $sobj->ProdID                = (int)$val['ProdID'];
+            $sobj->ProdID                = (int)$this->getProductAutoID($val['ProdID'], $val['provider_type']);
             $sobj->ProductID             = (string)$val['ProductID'];
             $sobj->ReferenceID           = (int)$val['ReferenceID'];
             $sobj->Title                 = (string)$val['Title'];
@@ -966,7 +1035,11 @@ class SoapsController extends AppController {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
-    if(0 == $this->getDownloadStatusOfSong($prodId)) {
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+    
+    if(0 == $this->getDownloadStatusOfSong($prodId, $provider_type)) {
       throw new SOAPFault('Soap:client', 'Requested song is not allowed to add.');
     }
 
@@ -974,7 +1047,7 @@ class SoapsController extends AppController {
 
     $cnt =  $this->Wishlist->find('count',
               array('conditions' =>
-                array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $prodId)
+                array('library_id' => $libraryId, 'patron_id' => $patronId, 'ProdID' => $prodId, 'provider_type' => $provider_type)
               )
             );
 
@@ -1002,7 +1075,7 @@ class SoapsController extends AppController {
       throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
     }
 
-    if(!($this->IsTerrotiry($prodId, $libraryId))) {
+    if(!($this->IsTerrotiry($prodId, $provider_type, $libraryId))) {
       throw new SOAPFault('Soap:client', 'Song does not belong to current library territory.');
     }
 
@@ -1022,11 +1095,11 @@ class SoapsController extends AppController {
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC',
-            'Song.provider_type',
+            'Song.ISRC'
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
+            'Song.provider_type' => $provider_type,
           ),
           'recursive' => -1,
         )
@@ -1043,7 +1116,7 @@ class SoapsController extends AppController {
       $insertArr['ISRC'] = $TrackData['Song']['ISRC'];
 			$insertArr['user_agent'] = $userAgent;
 			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-      $insertArr['provider_type'] = $TrackData['Song']['provider_type'];
+      $insertArr['provider_type'] = $provider_type;
 
       $row_save_status = $this->Wishlist->save($insertArr);
 
@@ -3577,13 +3650,17 @@ class SoapsController extends AppController {
 
   function songDownloadRequest($authentication_token, $prodId, $agent) {
 
-    
 
     if(!($this->isValidAuthenticationToken($authentication_token))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-
-    if(0 == $this->getDownloadStatusOfSong($prodId)) {
+    
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+    
+    
+    if(0 == $this->getDownloadStatusOfSong($prodId, $provider_type)) {
       throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
     }
 
@@ -3605,11 +3682,11 @@ class SoapsController extends AppController {
     }
 
 
-    if(!($this->IsTerrotiry($prodId, $libId))) {
+    if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
       throw new SOAPFault('Soap:client', 'Song does not belong to current library territory.');
     }
 
-	$TrackData = $this->Song->find('first',
+    $TrackData = $this->Song->find('first',
         array(
           'fields' => array(
             'Song.ProdID',
@@ -3617,17 +3694,17 @@ class SoapsController extends AppController {
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC',
-            'Song.provider_type'
+            'Song.ISRC'
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
+            'Song.provider_type' => $provider_type,
           ),
           'recursive' => -1,
         )
-      );
+    );
     
-    if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $TrackData['Song']['provider_type'])) {
+    if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $provider_type)) {
       throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
     }
     
@@ -3665,7 +3742,7 @@ class SoapsController extends AppController {
 
 	  $this->Library->setDataSource('master');
 		
-    if('sony' == $TrackData['Song']['provider_type']) {
+    if('sony' == $provider_type) {
       
       $sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
       
@@ -3693,7 +3770,7 @@ class SoapsController extends AppController {
               'type' => 'inner',
               'foreignKey' => false,
 
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $insertArr['ProdID'])
+              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $insertArr['ProdID'], 'Song.ProdID = ' . $insertArr['ProdID'])
             )
           )
         )
@@ -4307,7 +4384,7 @@ class SoapsController extends AppController {
         if(true === in_array( $key, $array_uniques) ) {
 
           $sobj = new SearchDataType;
-          $sobj->SongProdID           = $val['Song']['ProdID'];
+          $sobj->SongProdID           = $val['Product']['pid'];;
           $sobj->SongTitle            = $val['Song']['SongTitle'];
           $sobj->Title                = $val['Song']['Title'];
           $sobj->SongArtist           = $val['Song']['Artist'];
@@ -4318,18 +4395,17 @@ class SoapsController extends AppController {
 
           $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
 
+          $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_territory, $val['Song']['provider_type']);
+           
           $albumData = $this->Album->find('first',
             array(
-              'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
-              'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
+              'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+              'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
               'recursive' => -1,
             )
           );
 
-          $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_territory, $val['Song']['provider_type']);
-          
-          
-          $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
+          $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
           $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
           $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
@@ -4387,11 +4463,10 @@ class SoapsController extends AppController {
 				$AllData = $this->paginate('Song');
 
 
-
     foreach($AllData AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID           = $val['Song']['ProdID'];
+        $sobj->SongProdID           = $val['Product']['pid'];
         $sobj->SongTitle            = $val['Song']['SongTitle'];
         $sobj->SongArtist           = $val['Song']['Artist'];
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
@@ -4404,13 +4479,13 @@ class SoapsController extends AppController {
         
         $albumData = $this->Album->find('first',
           array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
+            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
             'recursive' => -1,
           )
         );
 
-        $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
+        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
         $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
@@ -4473,7 +4548,7 @@ class SoapsController extends AppController {
     foreach($ArtistData AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID           = $val['Song']['ProdID'];
+        $sobj->SongProdID           = $val['Product']['pid'];
         $sobj->SongTitle            = $val['Song']['SongTitle'];
         $sobj->SongArtist           = $val['Song']['Artist'];
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
@@ -4486,13 +4561,13 @@ class SoapsController extends AppController {
         
         $albumData = $this->Album->find('first',
           array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
+            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
             'recursive' => -1,
           )
         );
 
-        $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
+        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
         $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
@@ -4554,7 +4629,7 @@ class SoapsController extends AppController {
     foreach($Albumlist AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID           = $val['Song']['ProdID'];
+        $sobj->SongProdID           = $val['Product']['pid'];
         $sobj->SongTitle            = $val['Song']['SongTitle'];
         $sobj->SongArtist           = $val['Song']['Artist'];
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
@@ -4567,13 +4642,13 @@ class SoapsController extends AppController {
         
         $albumData = $this->Album->find('first',
           array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
+            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
             'recursive' => -1,
           )
         );
 
-        $sobj->AlbumProdID          = $albumData['Album']['ProdID'];
+        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
         $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
@@ -4634,7 +4709,7 @@ class SoapsController extends AppController {
     foreach($SongData AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID             = (int)$val['Song']['ProdID'];
+        $sobj->SongProdID             = (int)$val['Product']['pid'];
         $sobj->SongTitle              = (string)$val['Song']['SongTitle'];
         $sobj->SongArtist             = (string)$val['Song']['Artist'];
         $sobj->Sample_Duration        = (string)$val['Song']['Sample_Duration'];
@@ -4648,13 +4723,13 @@ class SoapsController extends AppController {
         
         $albumData = $this->Album->find('first',
           array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID']),
+            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
             'recursive' => -1,
           )
         );
 
-        $sobj->AlbumProdID            = (int)$albumData['Album']['ProdID'];
+        $sobj->AlbumProdID            = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
         $sobj->AlbumTitle             = (string)$albumData['Album']['AlbumTitle'];
         $sobj->AlbumArtist            = (string)$albumData['Album']['Artist'];
 
@@ -4719,16 +4794,17 @@ class SoapsController extends AppController {
 
   /**
    * return int (0,1)
-   * @param bool $ProdID
+   * @param int $ProdID
+   * @param string $provider_type
    * @return int
    */
 
-  private function getDownloadStatusOfSong($ProdID) {
+  private function getDownloadStatusOfSong($ProdID, $provider_type) {
 
     $DownloadStatus = $this->Song->find('first',
       array(
         'fields' => array('DownloadStatus'),
-        'conditions' => array('ProdID' => $ProdID),
+        'conditions' => array('ProdID' => $ProdID, 'provider_type' => $provider_type),
         'recursive' => -1,
       )
     );
@@ -4799,7 +4875,7 @@ class SoapsController extends AppController {
    * @return int
    */
 
-  private function IsTerrotiry($songProdID, $libraryId) {
+  private function IsTerrotiry($songProdID, $provider_type, $libraryId) {
 
 
     $libraryDetails = $this->Library->find('first',array(
@@ -4814,7 +4890,7 @@ class SoapsController extends AppController {
 
     $count = $this->Country->find('count',
           array(
-            'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $library_territory),
+            'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $library_territory, 'Country.provider_type' => $provider_type),
             'recursive' => -1,
           )
         );
@@ -4827,7 +4903,7 @@ class SoapsController extends AppController {
 
   }
   
-   /**
+  /**
    * return int (0,1)
    * @param int $songProdID
    * @param string $territory
@@ -4853,6 +4929,47 @@ class SoapsController extends AppController {
 		}
 		
 		return $IsNotDownloadable;
-	}   
+	} 
+
+  /**
+   * return int AutoID in Product table
+   * @param int $albumProdID
+   * @param string $albumProviderType
+   * @return int
+   */
+     
+  private function getProductAutoID($albumProdID, $albumProviderType) {	
+  
+    $productDetails = $this->Product->find('first',array(
+      'conditions' => array('Product.ProdID' => $albumProdID, 'Product.provider_type' => $albumProviderType),
+      'fields' => array('Product.pid'),
+      'recursive' => -1
+      )
+    );
+    
+    return $productDetails['Product']['pid'];
+    
+  }
+
+  
+  /**
+   * return Product detail
+   * @param int $AutoID
+   * @return array
+   */
+     
+  private function getProductDetail($AutoID) {	
+  
+    $productDetails = $this->Product->find('first',array(
+      'conditions' => array('Product.pid' => $AutoID),
+      'fields' => array('Product.ProdID', 'Product.provider_type'),
+      'recursive' => -1
+      )
+    );
+    
+    return $productDetails;
+    
+  }
+  
 
 }
