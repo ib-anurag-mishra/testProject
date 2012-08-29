@@ -660,7 +660,7 @@ class SoapsController extends AppController {
           
           $obj->ProdId                    = (int) $data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)'';
-          $obj->ReferenceId               = (int)$data['Song']['ReferenceID'];
+          $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
           $obj->Title                     = (string)$data['Song']['Title'];
           $obj->SongTitle                 = (string)$data['Song']['SongTitle'];
           $obj->ArtistText                = (string)$data['Song']['ArtistText'];
@@ -795,7 +795,7 @@ STR;
           $obj = new LibraryTopTenType;
           $obj->ProdId                    = (int)$data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)$data['Song']['ProductID'];
-          $obj->ReferenceId               = (int)$data['Song']['ReferenceID'];
+          $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
           $obj->Title                     = (string)$data['Song']['Title'];
           $obj->SongTitle                 = (string)$data['Song']['SongTitle'];
           $obj->ArtistText                = (string)$data['Song']['ArtistText'];
@@ -3618,7 +3618,7 @@ STR;
             'type' => 'inner',
             'foreignKey' => false,
 
-            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type = ' . $provider_type)
+            'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type' => $provider_type)
           )
         )
       )
@@ -3766,7 +3766,7 @@ STR;
               'type' => 'inner',
               'foreignKey' => false,
 
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type = ' . $provider_type)
+              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type' => $provider_type)
             )
           )
         )
@@ -4028,7 +4028,7 @@ STR;
           $sobj = new SongDataType;
           $sobj->ProdID                = (int)    $arrTemp[$cnt]['PRODUCT']['pid'];
           $sobj->ProductID             = (string) '';
-          $sobj->ReferenceID           = (int)    $arrTemp[$cnt]['Song']['ReferenceID'];
+          $sobj->ReferenceID           = (int)$this->getProductAutoID($arrTemp[$cnt]['Song']['ReferenceID'], $arrTemp[$cnt]['Song']['provider_type']);
           $sobj->Title                 = (string) $arrTemp[$cnt]['Song']['Title'];
           $sobj->SongTitle             = (string) $arrTemp[$cnt]['Song']['SongTitle'];
           $sobj->ArtistText            = (string) $arrTemp[$cnt]['Song']['ArtistText'];
@@ -4187,7 +4187,7 @@ STR;
         $sobj = new SongDataType;
         $sobj->ProdID                = (int)    $val['PRODUCT']['pid'];
         $sobj->ProductID             = (string) '';
-        $sobj->ReferenceID           = (int)    $val['Song']['ReferenceID'];
+        $sobj->ReferenceID           = (int)    $this->getProductAutoID($val['Song']['ReferenceID'], $val['Song']['provider_type']);
         $sobj->Title                 = (string) $val['Song']['Title'];
         $sobj->SongTitle             = (string) $val['Song']['SongTitle'];
         $sobj->ArtistText            = (string) $val['Song']['ArtistText'];
