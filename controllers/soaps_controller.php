@@ -4866,7 +4866,8 @@ STR;
 
   /**
    * return int (0,1)
-   * @param string $songProdID
+   * @param int $songProdID
+   * @param string $provider_type
    * @param string $libraryId
    * @return int
    */
