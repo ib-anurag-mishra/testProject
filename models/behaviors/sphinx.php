@@ -15,7 +15,8 @@ class SphinxBehavior extends ModelBehavior
      * Used for runtime configuration of model
      */
     var $runtime = array();
-	  var $_defaults = array('server' => '192.168.2.178', 'port' => 9312);
+    var $components = array('Session');
+	  var $_defaults = array('server' => '192.168.100.114', 'port' => 9312);
 	//192.168.100.114
 
     /**
@@ -46,6 +47,8 @@ class SphinxBehavior extends ModelBehavior
      */
     function beforeFind(&$model, $query)
     {
+      $model->recursive = -1;
+      //if(isset($_SESSION['webservice_master']) &&  $_SESSION['webservice_master'] == 1){
         $model->bindModel(
           array('hasOne' => array('Product' => array(
 					'className' => 'Product',
@@ -53,9 +56,9 @@ class SphinxBehavior extends ModelBehavior
           )
         ))
         );
-
-        if (empty($query['sphinx']) || empty($query['search']))
-            return true;
+      //}
+      if (empty($query['sphinx']) || empty($query['search']))
+        return true;
 
         if ($model->findQueryType == 'count')
         {
@@ -105,10 +108,10 @@ class SphinxBehavior extends ModelBehavior
         $this->runtime[$model->alias]['sphinx']->SetLimits(($query['page'] - 1) * $query['limit'],
                                                            $query['limit']);
 
-        $indexes = !empty($query['sphinx']['index']) ? implode(',' , $query['sphinx']['index']) : 'test1';
+        $indexes = !empty($query['sphinx']['index']) ? implode(',' , $query['sphinx']['index']) : 'test2';
 
         $result = $this->runtime[$model->alias]['sphinx']->Query($query['search'], $indexes);
-
+        //print_r($result); die;
         if ($result === false)
         {
             trigger_error("Search query failed: " . $this->runtime[$model->alias]['sphinx']->GetLastError());
@@ -135,10 +138,19 @@ class SphinxBehavior extends ModelBehavior
         else
         {
             if (isset($result['matches']))
-                $ids = array_keys($result['matches']);
+                //$ids[] = array_keys($result['matches']);
+                foreach($result['matches'] as $match){
+                  //$idsprod[] = "(".$match['attrs']['prodid'].",'".$match['attrs']['provider_type']."')";
+                  if($match['attrs']['provider_type'] == 'ioda'){
+                    $idsioda[] = $match['attrs']['prodid'];
+                  } else {
+                    $idssony[] = $match['attrs']['prodid'];
+                  }
+                  $ids[] = $match['attrs']['prodid'];
+                }
             else
                 $ids = array(0);
-            $query['conditions'] = array($model->alias . '.'.$model->primaryKey => $ids);
+            $query['conditions'] = array("((".$model->alias . '.'.$model->primaryKey." in (".implode(',',$idssony).") AND ".$model->alias . ".provider_type='sony') OR (".$model->alias . '.'.$model->primaryKey." in (".implode(',',$idsioda).") AND ".$model->alias . ".provider_type='ioda'))");
 
 			if(isset($query['cont'])){
 				$cond = array('Country.Territory' => $query['cont']);
@@ -148,7 +160,13 @@ class SphinxBehavior extends ModelBehavior
             $query['order'] = 'FIND_IN_SET('.$model->alias.'.'.$model->primaryKey.', \'' . implode(',', $ids) . '\')';
 
         }
-        $query['conditions'][] = array('Song.provider_type = Product.provider_type','Song.provider_type = Country.provider_type', 'Song.provider_type = Genre.provider_type');
+        //if(isset($_SESSION['webservice_master']) &&  $_SESSION['webservice_master'] == 1){
+          $query['conditions'][] = 'Song.provider_type = Product.provider_type';
+        //}
+
+        $query['conditions'][] = 'Song.provider_type = Country.provider_type';
+        $query['conditions'][] = 'Song.provider_type = Genre.provider_type';
+        //print_r($query); die;
         return $query;
     }
 }
