@@ -4381,7 +4381,7 @@ STR;
         if(true === in_array( $key, $array_uniques) ) {
 
           $sobj = new SearchDataType;
-          $sobj->SongProdID           = $val['Product']['pid'];;
+          $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
           $sobj->SongTitle            = $val['Song']['SongTitle'];
           $sobj->Title                = $val['Song']['Title'];
           $sobj->SongArtist           = $val['Song']['Artist'];
