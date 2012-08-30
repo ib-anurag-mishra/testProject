@@ -3859,7 +3859,8 @@ STR;
 	 * @return SearchDataType[]
    */
 	function searchLibrary($authentication_token, $searchText, $startFrom, $recordCount,  $searchType) {
-
+  
+  
     if(!($this->isValidAuthenticationToken($authentication_token))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -4462,7 +4463,7 @@ STR;
     foreach($AllData AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID           = $val['Product']['pid'];
+        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
         $sobj->SongTitle            = $val['Song']['SongTitle'];
         $sobj->SongArtist           = $val['Song']['Artist'];
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
@@ -4544,7 +4545,7 @@ STR;
     foreach($ArtistData AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID           = $val['Product']['pid'];
+        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
         $sobj->SongTitle            = $val['Song']['SongTitle'];
         $sobj->SongArtist           = $val['Song']['Artist'];
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
@@ -4625,7 +4626,7 @@ STR;
     foreach($Albumlist AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID           = $val['Product']['pid'];
+        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
         $sobj->SongTitle            = $val['Song']['SongTitle'];
         $sobj->SongArtist           = $val['Song']['Artist'];
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
@@ -4705,7 +4706,7 @@ STR;
     foreach($SongData AS $key => $val){
 
         $sobj = new SearchDataType;
-        $sobj->SongProdID             = (int)$val['Product']['pid'];
+        $sobj->SongProdID             = (int)$this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
         $sobj->SongTitle              = (string)$val['Song']['SongTitle'];
         $sobj->SongArtist             = (string)$val['Song']['Artist'];
         $sobj->Sample_Duration        = (string)$val['Song']['Sample_Duration'];
