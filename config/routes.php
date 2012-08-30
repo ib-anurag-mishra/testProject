@@ -64,6 +64,9 @@
 	
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
 	
-	Router::connect('/admin', array('controller' => 'users', 'action' => 'index', 'admin' => true));
+  Router::connect('/wsdl', array('controller' => 'soaps', 'action' => 'wsdl'));
+  //Router::connect('/soaps/*', array('controller' => 'soaps', 'action' => 'index'));
+	
+  Router::connect('/admin', array('controller' => 'users', 'action' => 'index', 'admin' => true));
 	
 	Router::connect('/:language/:controller/:action/*', array(), array('language' => '[a-z]{2}'));	
