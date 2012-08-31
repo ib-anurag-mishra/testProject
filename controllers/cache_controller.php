@@ -133,10 +133,17 @@ STR;
 			$featured = array();
 			$ids = '';
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-			foreach($featured as $k => $v){
-				 if($v['Featuredartist']['album'] != 0){
-					$ids .= $v['Featuredartist']['album'].",";
-				 }
+			foreach($featured as $k => $v){				 
+				if($v['Featuredartist']['album'] != 0){
+					if(empty($ids)){
+						$ids .= $v['Featuredartist']['album'];
+						$ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+					} else {
+						$ids .= ','.$v['Featuredartist']['album'];
+						$ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+					}	
+				}				
+				 
 			}
 
 			if($ids != ''){
@@ -144,7 +151,7 @@ STR;
 				$featured =  $this->Album->find('all',array('conditions' =>
 							array('and' =>
 								array(
-									array("Album.ProdID IN (".rtrim($ids,",'").")"  , "Country.Territory" => $territory , "Album.provider_type = Country.provider_type"),
+									array("(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"  , "Country.Territory" => $territory , "Album.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Album.ProdID"
 							),
 							'fields' => array(
