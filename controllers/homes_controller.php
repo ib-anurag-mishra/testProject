@@ -51,6 +51,7 @@ class HomesController extends AppController
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		$ids = '';
+		$ids_provider_type = '';
 		//featured artist slideshow
 		if (($artists = Cache::read("featured".$country)) === false) {
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
