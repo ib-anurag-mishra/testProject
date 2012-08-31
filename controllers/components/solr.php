@@ -6,7 +6,7 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24//192.168.100.24
+    static $_defaults = array('server' => '192.168.2.178', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24//192.168.100.24//192.168.100.24
 
     /**
      * Solr client object
@@ -49,7 +49,8 @@ class SolrComponent extends Object {
           if($perfect == false){
             switch($type){
               case 'song':
-                $query = '(CSongTitle:('.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.'*)';
+                //$query = '(CSongTitle:('.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.'*)';
+                $query = '((CSongTitle:('.strtolower($searchkeyword).'*) OR CTitle:('.strtolower($searchkeyword).'*) OR CArtistText:('.strtolower($searchkeyword).'*) OR CComposer:('.strtolower($searchkeyword).'*)) OR (SongTitle:('.$searchkeyword.'*) OR Title:('.$searchkeyword.'*) OR ArtistText:('.$searchkeyword.'*) OR Composer:('.$searchkeyword.'*)))';
                 break;
               case 'genre':
                 $query = '(CGenre:('.strtolower($searchkeyword).'*) OR Genre:'.$searchkeyword.'*)';
@@ -76,7 +77,8 @@ class SolrComponent extends Object {
           } else {
             switch($type){
               case 'song':
-                $query = 'SongTitle:'.$searchkeyword;
+                //$query = 'SongTitle:'.$searchkeyword;
+                $query = '(SongTitle:'.$searchkeyword.' OR Title:'.$searchkeyword.' OR ArtistText:'.$searchkeyword.' OR Composer:'.$searchkeyword.')';
                 break;
               case 'genre':
                 $query = 'Genre:'.$searchkeyword;
