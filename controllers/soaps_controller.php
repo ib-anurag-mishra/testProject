@@ -720,7 +720,7 @@ class SoapsController extends AppController {
 
     if (($libDownload = Cache::read("lib".$libraryId)) === false) {
 
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$ids = '';
 
 			foreach($topDownloaded as $k => $v){
@@ -730,13 +730,13 @@ class SoapsController extends AppController {
 				} else {
 				  $ids .= ','.$v['Download']['ProdID'];
 				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}				
+				}
 			}
 
 			if($ids != ''){
 				$this->Song->recursive = 2;
 				 $topDownloaded_query =<<<STR
-				SELECT 
+				SELECT
 					Song.ProdID,
 					Song.ReferenceID,
 					Song.Title,
@@ -767,19 +767,21 @@ class SoapsController extends AppController {
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
-					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$library_territory') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC
 				LIMIT 10
 STR;
 
+
+
 			$topDownload = $this->Album->query($topDownloaded_query);
-			
+
 			} else {
 				$topDownload = array();
 			}
