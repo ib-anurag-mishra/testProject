@@ -602,7 +602,79 @@ STR;
     
 
     exit("<br />DONE<br />");
-  }  
+  }
+
+
+	
+    function featured_albums($territory, $language) {
+		//featured artist slideshow
+		$ids_provider_type = '';
+		$ids = '';
+		$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => $language), 'recursive' => -1));
+		//	print "<pre>";print_r($featured);exit;
+		foreach($featured as $k => $v){
+			if($v['Featuredartist']['album'] != 0){
+				if(empty($ids)){
+					$ids .= $v['Featuredartist']['album'];
+					$ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+				} else {
+					$ids .= ','.$v['Featuredartist']['album'];
+					$ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+				}	
+			}
+		}
+		if($ids != ''){
+			$this->Album->recursive = 2;
+			$featured =  $this->Album->find('all',array('conditions' =>
+						array('and' =>
+							array(
+								array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
+							), "1 = 1 GROUP BY Album.ProdID"
+						),
+
+						'fields' => array(
+							'Album.ProdID',
+							'Album.Title',
+							'Album.ArtistText',
+							'Album.AlbumTitle',
+							'Album.Artist',
+							'Album.ArtistURL',
+							'Album.Label',
+							'Album.Copyright',
+							'Album.provider_type'
+
+							),
+						'contain' => array(
+							'Genre' => array(
+								'fields' => array(
+									'Genre.Genre'
+									)
+								),
+							'Country' => array(
+								'fields' => array(
+									'Country.Territory'
+									)
+								),
+							'Files' => array(
+								'fields' => array(
+									'Files.CdnPath' ,
+									'Files.SaveAsName',
+									'Files.SourceURL'
+							),
+						)
+					), 'order' => array('Country.SalesDate' => 'desc')
+				)
+			);
+		} else {
+			$featured = array();
+		}
+		  Cache::write("featured".$territory, $featured);
+		  echo "<pre><br />  ==================================== featured$territory Start =============================================== <br />";   
+		  print_r($featured);
+		  echo "<br /> ==================================== featured$territory End =============================================== <br />";  
+		  exit("<br />DONE<br />");
+
+	}    
     
 }
 ?>
