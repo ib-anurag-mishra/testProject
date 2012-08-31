@@ -56,16 +56,22 @@ class HomesController extends AppController
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 		//	print "<pre>";print_r($featured);exit;
 			foreach($featured as $k => $v){
-				 if($v['Featuredartist']['album'] != 0){
-					$ids .= $v['Featuredartist']['album'].",";
-				 }
+				if($v['Featuredartist']['album'] != 0){
+					if(empty($ids)){
+						$ids .= $v['Featuredartist']['album'];
+						$ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+					} else {
+						$ids .= ','.$v['Featuredartist']['album'];
+						$ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+					}	
+				}
 			}
 			if($ids != ''){
 				$this->Album->recursive = 2;
 				$featured =  $this->Album->find('all',array('conditions' =>
 							array('and' =>
 								array(
-									array("Country.Territory" => $territory, "Album.ProdID IN (".rtrim($ids,",'").")" ,"Album.provider_type = Country.provider_type"),
+									array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Album.ProdID"
 							),
 
