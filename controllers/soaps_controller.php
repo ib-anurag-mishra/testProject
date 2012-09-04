@@ -3735,7 +3735,7 @@ STR;
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+    $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
