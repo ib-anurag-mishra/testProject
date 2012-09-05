@@ -688,7 +688,30 @@ STR;
 		  echo "<br /> ==================================== ssartists_$territory End =============================================== <br />";  
 		  exit("<br />DONE<br />");
 
-	}   	
+	}
+
+
+    function generatePageContent($type, $language) {
+		if($language == ''){
+			$page = 'en';
+		} 
+		else {
+			$page = $language;
+		}
+        $pageInstance = ClassRegistry::init('Page');
+        $pageInstance = ClassRegistry::init('Page');
+
+		$pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $page)));
+		Cache::write("page".$page.$type, $pageDetails);
+		
+        $pageDetails = Cache::read("page".$page.$type);
+
+		  echo "<pre><br />  ==================================== ssartists_$territory Start =============================================== <br />";   
+		  print_r($pageDetails);
+		  echo "<br /> ==================================== ssartists_$territory End =============================================== <br />";  
+		  exit("<br />DONE<br />");		
+		
+    }	   	
 	
     
 }
