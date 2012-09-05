@@ -605,15 +605,16 @@ Class ArtistsController extends AppController
 
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
-				'fields' => array('Song.ReferenceID'),
+				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
 				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
 			$val = '';
 
 			foreach($songs as $k => $v){
 				$val = $val.$v['Song']['ReferenceID'].",";
+				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
-			$condition = array("Album.ProdID IN (".rtrim($val,",").")");
+			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").")");
 		}
     $id = str_replace('@','/',$id);
 		$this->layout = 'home';
@@ -810,15 +811,19 @@ Class ArtistsController extends AppController
       $id = str_replace('@','/',$id);
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
-				'fields' => array('Song.ReferenceID'),
+				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
 				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
 
 			$val = '';
+			$val_provider_type = '';
 
 			foreach($songs as $k => $v){
-				$val = $val.$v['Song']['ReferenceID'].",";
+				$val .= $v['Song']['ReferenceID'].",";
+				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
-			$condition = array("Album.ProdID IN (".rtrim($val,",").") AND Album.provider_type = Genre.provider_type");
+			
+
+			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
 		$this->layout = 'home';
 		$this->set('artisttext',base64_decode($id));

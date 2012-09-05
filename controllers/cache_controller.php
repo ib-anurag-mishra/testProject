@@ -60,21 +60,23 @@ class CacheController extends AppController {
 	  
 		$country = $territory;
 		if(!empty($country)){
-		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
+			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
 			} else {
 			  $ids .= ','.$natTopSong['Download']['ProdID'];
+			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
 			}
 		  }
 		  $data = array();
 		  
 		  
 		  
-		  $sql_national_100 =<<<STR
+	 $sql_national_100 =<<<STR
 	SELECT 
 		Song.ProdID,
 		Song.ReferenceID,
@@ -95,7 +97,8 @@ class CacheController extends AppController {
 		Full_Files.CdnPath,
 		Full_Files.SaveAsName,
 		Sample_Files.FileID,
-		Full_Files.FileID
+		Full_Files.FileID,
+		PRODUCT.pid
 	FROM
 		Songs AS Song
 			LEFT JOIN
@@ -106,12 +109,15 @@ class CacheController extends AppController {
 		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 			LEFT JOIN
 		countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 	WHERE
-		( (Song.DownloadStatus = '1') AND (Song.ProdID IN ($ids)) AND (Song.provider_type = Genre.provider_type) )  AND (Country.Territory = '$country')  AND Country.SalesDate != '' AND  Country.SalesDate < NOW() AND 1 = 1
+		( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
 	GROUP BY Song.ProdID
 	ORDER BY FIELD(Song.ProdID,
 			$ids) ASC
 	LIMIT 100 
+	  
 STR;
 		  
 		 $data = $this->Album->query($sql_national_100); 
@@ -127,10 +133,17 @@ STR;
 			$featured = array();
 			$ids = '';
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
-			foreach($featured as $k => $v){
-				 if($v['Featuredartist']['album'] != 0){
-					$ids .= $v['Featuredartist']['album'].",";
-				 }
+			foreach($featured as $k => $v){				 
+				if($v['Featuredartist']['album'] != 0){
+					if(empty($ids)){
+						$ids .= $v['Featuredartist']['album'];
+						$ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+					} else {
+						$ids .= ','.$v['Featuredartist']['album'];
+						$ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+					}	
+				}				
+				 
 			}
 
 			if($ids != ''){
@@ -138,7 +151,7 @@ STR;
 				$featured =  $this->Album->find('all',array('conditions' =>
 							array('and' =>
 								array(
-									array("Album.ProdID IN (".rtrim($ids,",'").")"  , "Country.Territory" => $territory , "Album.provider_type = Country.provider_type"),
+									array("(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")"  , "Country.Territory" => $territory , "Album.provider_type = Country.provider_type"),
 								), "1 = 1 GROUP BY Album.ProdID"
 							),
 							'fields' => array(
@@ -208,7 +221,8 @@ STR;
             Full_Files.CdnPath,
             Full_Files.SaveAsName,
             Sample_Files.FileID,
-            Full_Files.FileID
+            Full_Files.FileID,
+			PRODUCT.pid
         FROM
             downloads,
             Songs AS Song
@@ -218,6 +232,8 @@ STR;
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+				LEFT JOIN
+			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
         WHERE
             downloads.ProdID = Song.ProdID 
             AND downloads.provider_type = Song.provider_type 
@@ -226,6 +242,7 @@ STR;
             AND Country.SalesDate != '' 
             AND Country.SalesDate < NOW() 
             AND Song.DownloadStatus = '1' 
+			AND (PRODUCT.provider_type = Song.provider_type)
             AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
         GROUP BY downloads.ProdID
         ORDER BY countProduct DESC
@@ -400,6 +417,96 @@ STR;
           )
         )
       );
+	  
+	  
+//		library top 10 cache set for all libraries	  
+	  
+    $libraryDetails = $this->Library->find('all',array(
+      'fields' => array('id', 'library_territory'),
+      'conditions' => array('library_status' => 'active','library_territory' => $territory),
+      'recursive' => -1
+      )
+    );  
+    
+    foreach($libraryDetails AS $key => $val ) {
+      
+      $libId = $val['Library']['id'];
+      $country = $territory;
+      
+			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+			$ids = '';
+      
+      
+      $ids_provider_type = '';
+			foreach($topDownloaded as $k => $v){
+				if(empty($ids)){
+				  $ids .= $v['Download']['ProdID'];
+				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['Download']['ProdID'];
+				  $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				}
+			}
+      
+			if($ids != ''){
+				$this->Song->recursive = 2;
+				 $topDownloaded_query =<<<STR
+				SELECT
+					Song.ProdID,
+					Song.ReferenceID,
+					Song.Title,
+					Song.ArtistText,
+					Song.DownloadStatus,
+					Song.SongTitle,
+					Song.Artist,
+					Song.Advisory,
+					Song.Sample_Duration,
+					Song.FullLength_Duration,
+					Song.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+					Full_Files.SaveAsName,
+					Sample_Files.FileID,
+					Full_Files.FileID,
+					PRODUCT.pid
+				FROM
+					Songs AS Song
+						LEFT JOIN
+					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+						LEFT JOIN
+					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
+				WHERE
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+				GROUP BY Song.ProdID
+				ORDER BY FIELD(Song.ProdID,
+						$ids) ASC
+				LIMIT 10
+STR;
+
+
+
+			$topDownload = $this->Album->query($topDownloaded_query);
+
+			} else {
+				$topDownload = array();
+			}
+
+			Cache::write("lib".$libId, $topDownload);
+//		library top 10 cache set
+	  
+	  
+	  }
+	  
     }
     
     exit;

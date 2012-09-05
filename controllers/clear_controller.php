@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist');
 
   function cachekey($key){
     if(!empty($key)){
@@ -602,7 +602,117 @@ STR;
     
 
     exit("<br />DONE<br />");
-  }  
+  }
+
+
+	
+    function featured_albums($territory, $language) {
+		//featured artist slideshow
+		$ids_provider_type = '';
+		$ids = '';
+		$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => $language), 'recursive' => -1));
+		//	print "<pre>";print_r($featured);exit;
+		foreach($featured as $k => $v){
+			if($v['Featuredartist']['album'] != 0){
+				if(empty($ids)){
+					$ids .= $v['Featuredartist']['album'];
+					$ids_provider_type .= "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+				} else {
+					$ids .= ','.$v['Featuredartist']['album'];
+					$ids_provider_type .= ','. "(" . $v['Featuredartist']['album'] .",'" . $v['Featuredartist']['provider_type'] ."')";
+				}	
+			}
+		}
+		if($ids != ''){
+			$this->Album->recursive = 2;
+			$featured =  $this->Album->find('all',array('conditions' =>
+						array('and' =>
+							array(
+								array("Country.Territory" => $territory, "(Album.ProdID, Album.provider_type) IN (".rtrim($ids_provider_type,",'").")" ,"Album.provider_type = Country.provider_type"),
+							), "1 = 1 GROUP BY Album.ProdID"
+						),
+
+						'fields' => array(
+							'Album.ProdID',
+							'Album.Title',
+							'Album.ArtistText',
+							'Album.AlbumTitle',
+							'Album.Artist',
+							'Album.ArtistURL',
+							'Album.Label',
+							'Album.Copyright',
+							'Album.provider_type'
+
+							),
+						'contain' => array(
+							'Genre' => array(
+								'fields' => array(
+									'Genre.Genre'
+									)
+								),
+							'Country' => array(
+								'fields' => array(
+									'Country.Territory'
+									)
+								),
+							'Files' => array(
+								'fields' => array(
+									'Files.CdnPath' ,
+									'Files.SaveAsName',
+									'Files.SourceURL'
+							),
+						)
+					), 'order' => array('Country.SalesDate' => 'desc')
+				)
+			);
+		} else {
+			$featured = array();
+		}
+		  Cache::write("featured".$territory, $featured);
+		  echo "<pre><br />  ==================================== featured$territory Start =============================================== <br />";   
+		  print_r($featured);
+		  echo "<br /> ==================================== featured$territory End =============================================== <br />";  
+		  exit("<br />DONE<br />");
+
+	}    
+	
+	
+	
+    function featured_artist($territory, $language) {
+		
+		  $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $territory, 'Artist.language'=> $language),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
+		  Cache::write('ssartists_'.$territory.'_'.$language, $ssartists);
+
+		  echo "<pre><br />  ==================================== ssartists_$territory Start =============================================== <br />";   
+		  print_r($ssartists);
+		  echo "<br /> ==================================== ssartists_$territory End =============================================== <br />";  
+		  exit("<br />DONE<br />");
+
+	}
+
+
+    function generatePageContent($type, $language) {
+		if($language == ''){
+			$page = 'en';
+		} 
+		else {
+			$page = $language;
+		}
+        $pageInstance = ClassRegistry::init('Page');
+        $pageInstance = ClassRegistry::init('Page');
+
+		$pageDetails = $pageInstance->find('all', array('conditions' => array('page_name' => $type, 'language' => $page)));
+		Cache::write("page".$page.$type, $pageDetails);
+		
+        $pageDetails = Cache::read("page".$page.$type);
+
+		  echo "<pre><br />  ==================================== ssartists_$territory Start =============================================== <br />";   
+		  print_r($pageDetails);
+		  echo "<br /> ==================================== ssartists_$territory End =============================================== <br />";  
+		  exit("<br />DONE<br />");		
+		
+    }	   	
+	
     
 }
 ?>
