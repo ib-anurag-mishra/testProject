@@ -371,7 +371,7 @@ class SoapsController extends AppController {
         $obj->Title          = $val['Album']['Title'];
         $obj->Label          = $val['Album']['Label'];
 
-        $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Files']['CdnPath']."/".$val['Files']['SourceURL']);
+        $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['File']['CdnPath']."/".$val['File']['SourceURL']);
         $fileURL = Configure::read('App.Music_Path').$fileURL;
         $obj->FileURL = $fileURL;
 
@@ -641,7 +641,7 @@ class SoapsController extends AppController {
 	 * @return NationalTopTenType[]
    */
 	function getNationalTopTen($authenticationToken, $libraryId) {
-
+  
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -672,7 +672,7 @@ class SoapsController extends AppController {
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
-          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type = ".$data['Song']['provider_type'])));
+          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $album['Album']['AlbumTitle'];
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -809,7 +809,7 @@ STR;
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
-          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type = ".$data['Song']['provider_type'])));
+          $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
           $obj->AlbumTitle = $album['Album']['AlbumTitle'];
 
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
@@ -872,7 +872,8 @@ STR;
           'Album.Advisory',
           'Album.DownloadStatus',
           'Album.TrackBundleCount',
-          'Album.provider_type'
+          'Album.provider_type',
+          'Album.FileID'
         ),
         'joins' => array(
           array(
@@ -3734,7 +3735,7 @@ STR;
     }
 
     $insertArr['user_login_type'] = $library_authentication_method;
-    $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+    $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
 
