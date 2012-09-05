@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist');
 
   function cachekey($key){
     if(!empty($key)){
@@ -675,6 +675,21 @@ STR;
 		  exit("<br />DONE<br />");
 
 	}    
+	
+	
+	
+    function featured_artist($territory, $language) {
+		
+		  $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $territory, 'Artist.language'=> $language),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
+		  Cache::write('ssartists_'.$territory.'_'.$language, $ssartists);
+
+		  echo "<pre><br />  ==================================== ssartists_$territory Start =============================================== <br />";   
+		  print_r($ssartists);
+		  echo "<br /> ==================================== ssartists_$territory End =============================================== <br />";  
+		  exit("<br />DONE<br />");
+
+	}   	
+	
     
 }
 ?>
