@@ -62,6 +62,7 @@ class CacheController extends AppController {
 		if(!empty($country)){
 		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
+          $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
@@ -132,6 +133,7 @@ STR;
 			// Checking for download status
 			$featured = array();
 			$ids = '';
+            $ids_provider_type = '';
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 			foreach($featured as $k => $v){				 
 				if($v['Featuredartist']['album'] != 0){
