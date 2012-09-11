@@ -298,9 +298,10 @@ Class ArtistsController extends AppController
 					}
 				}
 				$country = $getData[ 'Artist' ][ 'territory' ];
-				$getArtistDataObj = new Song();
-				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
-				$this -> set( 'getArtistData', $getArtistData );
+				//$getArtistDataObj = new Song();
+				//$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+				$getArtistData = array();
+        $this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
