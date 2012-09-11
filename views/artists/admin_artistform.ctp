@@ -72,6 +72,11 @@
 
 <script type="text/javascript">
     
+      $('#ArtistTerritory').change(function(){
+ 
+        $('#ArtistArtistName').val('');
+        $('#getAlbum select.select_fields option').remove();
+      });
 
       $("#ArtistArtistName").keyup(function(event) {
         
