@@ -981,7 +981,7 @@ Class ArtistsController extends AppController
 										array(
                       "find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory)",
                       'Song.provider_type' => 'sony',
-                      'Song.ArtistText LIKE' => "'".$_REQUEST['Name']."%'",
+                      'Song.ArtistText LIKE' => $_REQUEST['Name']."%",
                       'Song.downloadstatus' => 1
                     )
                   )
