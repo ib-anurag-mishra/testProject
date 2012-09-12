@@ -63,11 +63,17 @@ Class ArtistsController extends AppController
 				$condition = 'edit';
 				$artistName = $getData[ 'Featuredartist' ][ 'artist_name' ];
 				$country = $getData[ 'Featuredartist' ][ 'territory' ];
-				$getArtistDataObj = new Song();
-				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
-				$this->set( 'getArtistData', $getArtistData );
+				//$getArtistDataObj = new Song();
+				//$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+				
+        $getArtistData = array();
+        $this->set( 'getArtistData', $getArtistData );
 				$result = array();
-				$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name']), 'recursive' => -1));
+				$allAlbum = $this->Album->find('all', array(
+          'fields' => array('Album.ProdID','Album.AlbumTitle'),
+          'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name'], 'Album.provider_type' => $getData['Featuredartist']['provider_type']),
+          'recursive' => -1
+        ));
 				$val = '';
 				$this->Song->Behaviors->attach('Containable');
 				foreach($allAlbum as $k => $v){
