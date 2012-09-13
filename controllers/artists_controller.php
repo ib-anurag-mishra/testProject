@@ -19,7 +19,7 @@ Class ArtistsController extends AppController
         */
 	function beforeFilter() {
 		parent::beforeFilter();
-		$this->Auth->allowedActions = array('view','test','album','admin_getAlbums');
+		$this->Auth->allowedActions = array('view','test','album','admin_getAlbums','admin_getAutoArtist');
 		$libraryCheckArr = array("view");
 		if(in_array($this->action,$libraryCheckArr)) {
 			$validPatron = $this->ValidatePatron->validatepatron();
@@ -63,11 +63,17 @@ Class ArtistsController extends AppController
 				$condition = 'edit';
 				$artistName = $getData[ 'Featuredartist' ][ 'artist_name' ];
 				$country = $getData[ 'Featuredartist' ][ 'territory' ];
-				$getArtistDataObj = new Song();
-				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
-				$this->set( 'getArtistData', $getArtistData );
+				//$getArtistDataObj = new Song();
+				//$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+				
+        $getArtistData = array();
+        $this->set( 'getArtistData', $getArtistData );
 				$result = array();
-				$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name']), 'recursive' => -1));
+				$allAlbum = $this->Album->find('all', array(
+          'fields' => array('Album.ProdID','Album.AlbumTitle'),
+          'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name'], 'Album.provider_type' => $getData['Featuredartist']['provider_type']),
+          'recursive' => -1
+        ));
 				$val = '';
 				$this->Song->Behaviors->attach('Containable');
 				foreach($allAlbum as $k => $v){
@@ -298,9 +304,10 @@ Class ArtistsController extends AppController
 					}
 				}
 				$country = $getData[ 'Artist' ][ 'territory' ];
-				$getArtistDataObj = new Song();
-				$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
-				$this -> set( 'getArtistData', $getArtistData );
+				//$getArtistDataObj = new Song();
+				//$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
+				$getArtistData = array();
+        $this -> set( 'getArtistData', $getArtistData );
 			}
 		}
 		else {
@@ -959,5 +966,60 @@ Class ArtistsController extends AppController
 		print "<select class='select_fields' id='album' name='album'>".$data."</select>";exit;
 
 	}
+  
+  
+  /**
+   *@getAutoArtist
+   *  return top 5 artist names with ajax call
+   *
+   *$name
+   *  string to be searchedin atrist name
+   *
+   *@return
+   *  
+   **/
+   
+  function admin_getAutoArtist() {
+    
+    $artist = $this->Song->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										array(
+                      "find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory)",
+                      'Song.provider_type' => 'sony',
+                      'Song.ArtistText LIKE' => $_REQUEST['Name']."%",
+                      'Song.downloadstatus' => '1'
+                    )
+                  )
+								),
+							'fields' => array(
+									'DISTINCT Song.ArtistText',
+									),
+              'recursive' => -1,
+              'limit' => '0,20',
+							'order' => 'Song.ArtistText'
+						));
+    
+    
+    $html = '<ul style="max-height: 180px; overflow: auto;">';
+    if(!empty($artist)){
+      
+      
+      foreach($artist AS $key => $val){
+        $html .= '<li>' . $val['Song']['ArtistText'] . '</li>'; 
+      }
+      
+    }else{
+      $html .= '<li>No record found</li>';
+    }    
+    $html .= '</ul>';
+    
+   
+    
+    print $html; exit;
   }
+  
+}
+
 ?>
