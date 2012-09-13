@@ -22,3 +22,6 @@ webroot/suggestion_xml/*
 /config/core.php
 webroot/uploads/*.xls
 webroot/uploads/*.csv
+webroot/uploads/*.txt
+
+
