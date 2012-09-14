@@ -727,7 +727,33 @@ STR;
 		print_r($libraryDetails);
 		echo "<br /> ==================================== library$id End =============================================== <br />";  
 		exit("<br />DONE<br />");	
-    }   	
+    } 
+
+
+	function setAllLibraryDetails() {
+  
+		echo '<pre>';
+
+		$libraryDetails = $this->Library->find('all',array(
+			'fields' => array('id', 'library_territory'),
+			'conditions' => array('library_status' => 'active'),
+			'recursive' => -1
+			)
+		);  
+
+		foreach($libraryDetails AS $key => $val ) {
+			$libId = $val['Library']['id'];
+			$libraryDetails = Cache::read("library".$libId);
+			if((isset($libraryDetails) and (count($libraryDetails) > 0) and is_array($libraryDetails))){ 
+				echo "<pre><br />  ==================================== library$id Start =============================================== <br />";   
+				print_r($libraryDetails);
+				echo "<br /> ==================================== library$id End =============================================== <br />";  
+				break;
+			}
+			
+		}
+		exit("<br />DONE<br />");
+	}	  
 	
     
 }
