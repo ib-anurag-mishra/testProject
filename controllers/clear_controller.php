@@ -711,7 +711,23 @@ STR;
 		  echo "<br /> ==================================== ssartists_$territory End =============================================== <br />";  
 		  exit("<br />DONE<br />");		
 		
-    }	   	
+    }	
+
+    
+    function setLibraryDetails($id) {
+        $libraryInstance = ClassRegistry::init('Library');
+        $libraryInstance->recursive = -1;
+		$libraryDetails  = array();
+
+		$libraryDetails = $libraryInstance->find('first', array('conditions' => array('id' => $id)));
+		Cache::write("library".$id, $libraryDetails);
+
+		$libraryDetails = Cache::read("library".$id);
+		echo "<pre><br />  ==================================== library$id Start =============================================== <br />";   
+		print_r($libraryDetails);
+		echo "<br /> ==================================== library$id End =============================================== <br />";  
+		exit("<br />DONE<br />");	
+    }   	
 	
     
 }
