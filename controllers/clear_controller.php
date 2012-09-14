@@ -745,7 +745,7 @@ STR;
 			$libId = $val['Library']['id'];
 			$libraryDetails = Cache::read("library".$libId);
 			if(!(isset($libraryDetails) and (count($libraryDetails) > 0) and is_array($libraryDetails))){ 
-				this->setLibraryDetails($libId);
+				$this->setLibraryDetails($libId);
 				break;
 			}
 			
