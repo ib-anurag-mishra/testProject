@@ -728,6 +728,21 @@ STR;
 		echo "<br /> ==================================== library$id End =============================================== <br />";  
 		exit("<br />DONE<br />");	
     } 
+	
+    function setLibraryforALLDetails($id) {
+        $libraryInstance = ClassRegistry::init('Library');
+        $libraryInstance->recursive = -1;
+		$libraryDetails  = array();
+
+		$libraryDetails = $libraryInstance->find('first', array('conditions' => array('id' => $id)));
+		Cache::write("library".$id, $libraryDetails);
+
+		$libraryDetails = Cache::read("library".$id);
+		echo "<pre><br />  ==================================== library$id Start =============================================== <br />";   
+		print_r($libraryDetails);
+		echo "<br /> ==================================== library$id End =============================================== <br />";  
+
+    } 
 
 
 	function setAllLibraryDetails() {
@@ -740,15 +755,21 @@ STR;
 			'recursive' => -1
 			)
 		);  
+		
+		$reset_lib_array = array();
 
 		foreach($libraryDetails AS $key => $val ) {
 			$libId = $val['Library']['id'];
 			$libraryDetails = Cache::read("library".$libId);
 			if(!(isset($libraryDetails) and (count($libraryDetails) > 0) and is_array($libraryDetails))){ 
-				$this->setLibraryDetails($libId);
+				$this->setLibraryforALLDetails($libId);
 			}
+			$reset_lib_array[] = $libId;
 			
 		}
+		
+		echo "Reset LIB IDS";
+		print_r($reset_lib_array);
 		exit("<br />DONE<br />");
 	}	  
 	
