@@ -154,8 +154,8 @@ class SearchController extends AppController
 					case 'album':
 						$limit = 24;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'album');
-						$albums = $this->Solr->facetSearch($queryVar, 'album', $facetPage, $limit);
-						$queryArr = null;
+						$albums = $this->Solr->groupSearch($queryVar, 'album', $facetPage, $limit);
+						/*$queryArr = null;
 						$albumData = array();
 						$albumsCheck = array_keys($albums);
 						for($i=0; $i<=count($albumsCheck) -1; $i++)
@@ -164,32 +164,37 @@ class SearchController extends AppController
 						  $albumData[] = $queryArr[0];
 						}
 						$this->set('albums', $albums);
-						$this->set('albumData',$albumData);
+						$this->set('albumData',$albumData);*/
+            $this->set('albumData',$albums);
 
 					break;
-					case 'genre':
+
+          case 'genre':
 						$limit = 30;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'genre');
-						$genres = $this->Solr->facetSearch($queryVar, 'genre', $facetPage, $limit);
+						$genres = $this->Solr->groupSearch($queryVar, 'genre', $facetPage, $limit);
+						//print_r($genres); die;
 						$this->set('genres', $genres);
-
 					break;
-					case 'label':
+
+          case 'label':
 						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'label');
-						$labels = $this->Solr->facetSearch($queryVar, 'label', $facetPage, $limit);
+						$labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
 						$this->set('labels', $labels);
 					break;
-					case 'artist':
+
+          case 'artist':
 						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
-						$artists = $this->Solr->facetSearch($queryVar, 'artist', $facetPage, $limit);
+						$artists = $this->Solr->groupSearch($queryVar, 'artist', $facetPage, $limit);
 						$this->set('artists', $artists);
 					break;
-					case 'composer':
+
+          case 'composer':
 						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'composer');
-						$composers = $this->Solr->facetSearch($queryVar, 'composer', $facetPage, $limit);
+						$composers = $this->Solr->groupSearch($queryVar, 'composer', $facetPage, $limit);
 						$this->set('composers', $composers);
 					break;
 				}
@@ -202,7 +207,8 @@ class SearchController extends AppController
         }
 			}
 			else{
-				$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
+				//$albums = $this->Solr->facetSearch($queryVar, 'album', 1, 4);
+        $albums = $this->Solr->groupSearch($queryVar, 'album', 1, 4);
 				$queryArr = null;
 				$albumData = array();
 				$albumsCheck = array_keys($albums);
@@ -212,14 +218,16 @@ class SearchController extends AppController
 					$albumData[] = $queryArr[0];
 				}
 
-				$artists = $this->Solr->facetSearch($queryVar, 'artist', 1, 5);
-				$genres = $this->Solr->facetSearch($queryVar, 'genre', 1, 5);
-				$composers = $this->Solr->facetSearch($queryVar, 'composer', 1, 5);
-				$labels = $this->Solr->facetSearch($queryVar, 'label', 1, 5);
+				$artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
+				$genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
+				$composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
+				$labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
 				$this->set('albums', $albums);
-				$this->set('albumData',$albumData);
+				//$this->set('albumData',$albumData);
+        $this->set('albumData',$albums);
 				$this->set('artists', $artists);
 				$this->set('genres', $genres);
+        //print_r($genres);die;
 				$this->set('composers', $composers);
 				$this->set('labels', $labels);
 			}
@@ -263,13 +271,40 @@ class SearchController extends AppController
       	$typeVar = 'all';
       }
       if($type!='all'){
-        $data = $this->Solr->facetSearch($queryVar, $type, 1, 10);
+        $data = $this->Solr->getAutoCompleteData($queryVar, $type, 10);
       }
       $records = array();
 
       switch($typeVar){
         case 'all':
           $records = array();
+          $data1 = array();
+          $data2 = array();
+          $data3 = array();
+
+          $data1 = $this->Solr->getAutoCompleteData($queryVar, 'artist', 10);
+          $data2 = $this->Solr->getAutoCompleteData($queryVar, 'album', 10);
+          $data3 = $this->Solr->getAutoCompleteData($queryVar, 'song', 10);
+          //die;
+          foreach($data1 as $record=>$count){
+            if(preg_match("/^".$queryVar."/i",$record)){
+              //$records[] = $record."|".$record;
+              $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Artist</div><div style='float:right;width:300px;text-align:left;'>".$record."</div>|".$record."|1";
+            }
+          }
+          foreach($data2 as $record=>$count){
+            if(preg_match("/^".$queryVar."/i",$record)){
+              //$records[] = $record."|".$record;
+              $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Album</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|2";
+            }
+          }
+          foreach($data3 as $record=>$count){
+            if(preg_match("/^".$queryVar."/i",$record)){
+              //$records[] = $record."|".$record;
+              $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Track</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|3";
+            }
+          }
+          $records = array_slice($records,0,10);
           break;
         case 'artist':
           foreach($data as $record=>$count){
@@ -327,6 +362,7 @@ class SearchController extends AppController
           break;
       }
       //print_r($records); die;
+      $this->set('type',$typeVar);
       $this->set('records',$records);
     }
 }
