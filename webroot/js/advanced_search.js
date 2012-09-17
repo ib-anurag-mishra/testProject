@@ -32,7 +32,7 @@ $(document).ready(function() {
   $('#search_query').keypress(function(event) {
 		//auto_check();
 		if (event.which == '13') {
-      //$('#search_query').val();
+      //alert($('#search_query').val());
       $('#searchQueryForm').submit();
 		}
 	});
@@ -43,8 +43,21 @@ $(document).ready(function() {
 		autoFill: false,
     extraParams: {
       type:$('#search_type').val()
+    },
+    formatItem:function(data){
+      return data[0];
+    },
+    formatResult:function(data){
+      return data[1];
     }
 	}).result(function(e, item) {
     $('#auto').attr('value', 1);
+    if(item[2]==1){
+      $('#search_type').val('artist');
+    } else if(item[2]==2){
+      $('#search_type').val('album');
+    } else if(item[2]==3){
+      $('#search_type').val('song');
+    }
   });
 });
