@@ -4,6 +4,12 @@
 	 File Description : View page for auto_complete
 	 Author : m68interactive
  */
-  foreach($records as $record){
-    echo "$record|$record\n";
+  if($type != 'all'){
+    foreach($records as $record){
+      echo "$record|$record\n";
+    }
+  } else {
+    foreach($records as $record){
+      echo "$record\n";
+    }
   }
