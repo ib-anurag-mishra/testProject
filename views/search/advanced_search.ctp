@@ -389,7 +389,7 @@ STR;
 					$index = 0;
 					$column = 1;
 					$genre_no = 0;
-					foreach($genres as $genre=>$count){
+					foreach($genres as $genre){
 						$column = 1;
 						$genre_no++;
 						if($index == 0){
@@ -400,9 +400,11 @@ STR;
 STR;
 						}
 
-						$genre_name = str_replace('"','',$genre);
+						$genre_name = str_replace('"','',$genre->Genre);
 						$genre_name_text = truncate_text($genre_name, 30);
-						$tilte = urlencode($genre);
+						$tilte = urlencode($genre->Genre);
+            $name = $genre->Genre;
+            $count = $genre->numFound;
 						$genre_list .=<<<STR
 						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
@@ -466,7 +468,7 @@ STR;
 					$index = 0;
 					$column = 1;
 					$label_no = 0;
-					foreach($labels as $label=>$count){
+					foreach($labels as $label){
 						$column = 1;
 						$label_no++;
 						if($index == 0){
@@ -477,11 +479,13 @@ STR;
 STR;
 						}
 
-						$label_name = str_replace('"','',$label);
+						$label_name = str_replace('"','',$label->Label);
 						$label_name_text = truncate_text($label_name, 30);
-						$tilte = urlencode($label);
+						$tilte = urlencode($label->Label);
+            $name = $label->Label;
+            $count = $label->numFound;
 						$label_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=label" title="$label">$label_name_text</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=label" title="$name">$label_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -542,7 +546,7 @@ STR;
 					$index = 0;
 					$column = 1;
 					$artist_no = 0;
-					foreach($artists as $artist=>$count){
+					foreach($artists as $artist){
 						$column = 1;
 						$artist_no++;
 						if($index == 0){
@@ -553,11 +557,12 @@ STR;
 STR;
 						}
 
-						$artist_name = str_replace('"','',$artist);
+						$artist_name = str_replace('"','',$artist->ArttistText);
 						$artist_name_text = truncate_text($artist_name, 30);
-						$tilte = urlencode($artist);
-            $link = $html->link(str_replace('"','',truncate_text($artist, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist))));
-						$artist_list .=<<<STR
+						$tilte = urlencode($artist->ArtistText);
+            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+						$count = $artist->numFound;
+            $artist_list .=<<<STR
 						<li ><span class="left_text">$link</span><span class="right_text">($count)</span></li>
 STR;
 
@@ -618,7 +623,7 @@ STR;
 					$index = 0;
 					$column = 1;
 					$composer_no = 0;
-					foreach($composers as $composer=>$count){
+					foreach($composers as $composer){
 						$column = 1;
 						$composer_no++;
 						if($index == 0){
@@ -629,11 +634,13 @@ STR;
 STR;
 						}
 
-						$composer_name = str_replace('"','',$composer);
+						$composer_name = str_replace('"','',$composer->Composer);
 						$composer_name = truncate_text($composer_name, 30);
-						$tilte = urlencode($composer);
+						$tilte = urlencode($composer->Composer);
+            $name = $composer->Composer;
+            $count = $composer->numFound;
 						$composer_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=composer" title='$composer'>$composer_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=composer" title='$name'>$composer_name</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -813,12 +820,12 @@ STR;
 				if(!empty($composers)){
 				?>
 						<ul >
-				<?php foreach($composers as $composer=>$count)
+				<?php foreach($composers as $composer)
 				{
 					$tilte = urlencode($composer);
-					$composer_name = truncate_text($composer, 30);
+					$composer_name = truncate_text($composer->Composer, 30);
 				?>
-							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $composer->numFound; ?>)</span></li>
 				<?php
 				}
 				?>
@@ -846,10 +853,12 @@ STR;
 						<ul>
 STR;
 
-					foreach($genres as $genre=>$count){
-						$genre_name = str_replace('"','',$genre);
+					foreach($genres as $genre){
+						$genre_name = str_replace('"','',$genre->Genre);
 						$tilte = urlencode($genre_name);
 						$genre_name_text = truncate_text($genre_name, 30);
+            $name = $genre->Genre;
+            $count = $genre->numFound;
 						$genre_list .=<<<STR
 						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
@@ -893,13 +902,13 @@ STR;
 				if(!empty($artists)){
 				?>
 				<ul>
-						<?php foreach($artists as $artist=>$count)
+						<?php foreach($artists as $artist)
 				{
-								$tilte = urlencode($artist);
-								$artist_name_text = truncate_text($artist, 30);
-                $link = $html->link(str_replace('"','',truncate_text($artist, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist))));
+								$tilte = urlencode($artist->ArtistText);
+								$artist_name_text = truncate_text($artist->ArtistText, 30);
+                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 				?>
-				<li ><span class="left_text"><?php echo $link; ?></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><?php echo $link; ?></span><span class="right_text">(<?php echo $artist->numFound; ?>)</span></li>
 						<?php
 				}
 				?>
@@ -922,12 +931,14 @@ STR;
 				if(!empty($labels)){
 				?>
 				<ul>
-						<?php foreach($labels as $label=>$count)
+						<?php foreach($labels as $label)
 				{
-								$tilte = urlencode($label);
-								$label_name_text = truncate_text($label, 30);
+								$tilte = urlencode($label->Label);
+								$label_name_text = truncate_text($label->Label, 30);
+                $name = $label->Label;
+                $count = $label->numFound;
 				?>
-				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $label?>'><?php echo (($label!="false")?$label_name_text:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $name; ?>'><?php echo (($name!="false")?$label_name_text:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 				?>
