@@ -358,6 +358,7 @@ class SolrComponent extends Object {
           'group' => 'true',
           'group.field' => $field,
           'group.query' => $query,
+          'sort' => 'provider_type desc',
           'group.sort' => 'provider_type desc'
         );
 
