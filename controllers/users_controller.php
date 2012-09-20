@@ -10,7 +10,7 @@ Class UsersController extends AppController
 	var $name = 'Users';
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
-	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie');
+	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie');//
 	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium','Card');
    
    /*
@@ -18,14 +18,14 @@ Class UsersController extends AppController
     Desc : actions that needed before other functions are getting called
    */
 	function beforeFilter(){
-		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin');
+            	parent::beforeFilter();
+		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
 		$this->Cookie->domain = 'freegalmusic.com';
 		//$this->Cookie->key = 'qSI232qs*&sXOw!';
-	}
+        }
 	/*
     Function Name : beforeFilter
     Desc : This function redirects the libraries to their corresponding login page basing on the 
@@ -4839,21 +4839,22 @@ Class UsersController extends AppController
 	}
         
         function admin_addmultipleusers($libId,$fromCount,$toCount){
-            Configure::write('debug',0);
+            
+            Configure::write('debug',2);
             $this->autoRender = false;
             $userType = $this->Session->read('Auth.User.type_id');
             if($userType != 1){
                 die('You are not allowed to use this section.');
             }
+            
             $counter = 0;
-            $file = APP_PATH.'/../userslist/users_libraryideas.txt';
+            $file = '../../userslist/users_libraryideas.txt';
             $fp = fopen($file,'w');
             for($counter=$fromCount;$counter<=$toCount;$counter++){
                 $email = 'user'.$counter.'@libraryideas.com';
                 $temp_password = $this->PasswordHelper->generatePassword(6);
                 $encyptedPassword = Security::hash(Configure::read('Security.salt').$temp_password);
                 $data = array(
-                    'User'=>array(
                         'id'=>'',
                         'password'=>$encyptedPassword,
                         'type_id'=>'5',
@@ -4861,15 +4862,14 @@ Class UsersController extends AppController
                         'last_name'=>'LastName'.$counter,
                         'email'=>$email,
                         'library_id'=>$libId,
-                        'consortium'=>null,
+                        'consortium'=>'',
                         'user_status'=>'active',
                         'sales'=>'no',
                         'created'=>date('Y-m-d h:i:s',time()),
-                        'modified'=>date('Y-m-d h:i:s',time()),
-                    )
+                        'modified'=>date('Y-m-d h:i:s',time())
                 );
-                $this->data = $data;
-                if($this->User->save()){
+                
+                if($this->User->save($data)){
                     fwrite($fp,$email.",".$temp_password."\n");
                 }
             }
