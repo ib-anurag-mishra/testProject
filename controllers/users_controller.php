@@ -4838,7 +4838,7 @@ Class UsersController extends AppController
 		}
 	}
         
-        function addMultipleUsers($libId,$fromCount,$toCount){
+        function admin_addMultipleUsers($libId,$fromCount,$toCount){
             Configure::write('debug',0);
             $this->autoRender = false;
             $userType = $this->Session->read('Auth.User.type_id');
