@@ -4846,7 +4846,7 @@ Class UsersController extends AppController
                 die('You are not allowed to use this section.');
             }
             $counter = 0;
-            $file = '../../users_libraryideas.txt';
+            $file = APP_PATH.'/../userslist/users_libraryideas.txt';
             $fp = fopen($file,'w');
             for($counter=$fromCount;$counter<=$toCount;$counter++){
                 $email = 'user'.$counter.'@libraryideas.com';
