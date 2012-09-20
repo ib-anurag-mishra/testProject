@@ -4837,7 +4837,45 @@ Class UsersController extends AppController
 			$this->Session->write("layout_option", 'login_new');
 		}
 	}
-
+        
+        function addMultipleUsers($libId,$fromCount,$toCount){
+            Configure::write('debug',0);
+            $this->autoRender = false;
+            $userType = $this->Session->read('Auth.User.type_id');
+            if($userType != 1){
+                die('You are not allowed to use this section.');
+            }
+            $counter = 0;
+            $file = '../../users_libraryideas.txt';
+            $fp = fopen($file,'w');
+            for($counter=$fromCount;$counter<=$toCount;$counter++){
+                $email = 'user'.$counter.'@libraryideas.com';
+                $temp_password = $this->PasswordHelper->generatePassword(6);
+                $encyptedPassword = Security::hash(Configure::read('Security.salt').$temp_password);
+                $data = array(
+                    'User'=>array(
+                        'id'=>'',
+                        'password'=>$encyptedPassword,
+                        'type_id'=>'5',
+                        'first_name'=>'FirstName'.$counter,
+                        'last_name'=>'LastName'.$counter,
+                        'email'=>$email,
+                        'library_id'=>$libId,
+                        'consortium'=>null,
+                        'user_status'=>'active',
+                        'sales'=>'no',
+                        'created'=>date('Y-m-d h:i:s',time()),
+                        'modified'=>date('Y-m-d h:i:s',time()),
+                    )
+                );
+                $this->data = $data;
+                if($this->User->save()){
+                    fwrite($fp,$email.",".$temp_password."\n");
+                }
+            }
+            fclose($fp);
+            echo "Users Created";
+        }
 	
 }
 ?>
