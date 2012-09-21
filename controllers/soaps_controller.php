@@ -685,10 +685,6 @@ class SoapsController extends AppController {
             $obj->fileURL                 = (string)$fileURL;
           }
           
-          
-
-          
-          
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
 
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
@@ -825,7 +821,13 @@ STR;
 
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
-          $obj->fileURL                   = (string)$fileURL;
+          
+          
+          if($this->IsDownloadable($data['Song']['ProdID'], $library_territory, $data['Song']['provider_type'])) {
+            $obj->fileURL                 =  'nostring';
+          } else {
+            $obj->fileURL                 = (string)$fileURL;
+          }
 
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
 
