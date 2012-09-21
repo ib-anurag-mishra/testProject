@@ -966,7 +966,14 @@ STR;
             $sobj->Sample_FileID         = (int)$val['Sample_FileID'];
             $sampFileData = $this->Files->find('first',array('conditions' => array('FileID' => $val['Sample_FileID'])));
             $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $sampFileData['Files']['CdnPath']."/".$sampFileData['Files']['SaveAsName']);
-            $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
+            
+            if($sobj->DownloadStatus) {
+              $sobj->Sample_FileURL        = 'nostring';
+            }else{
+              $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
+            }
+            
+            
             $sobj->FullLength_FIleID     = (int)$val['FullLength_FIleID'];
             $sobj->CreatedOn             = (string)$val['CreatedOn'];
             $sobj->UpdateOn              = (string)$val['UpdateOn'];
