@@ -21,7 +21,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
 
-  private $uri = 'http://www.freegaltest.com/';
+  private $uri = 'http://www.freegalmusic.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
 
@@ -641,7 +641,7 @@ class SoapsController extends AppController {
 	 * @return NationalTopTenType[]
    */
 	function getNationalTopTen($authenticationToken, $libraryId) {
-  
+
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -651,7 +651,9 @@ class SoapsController extends AppController {
 
     $nationalTopDownloadTmp = Cache::read("national".$territory);
     $nationalTopDownload = array_splice($nationalTopDownloadTmp,0,10);
+    
 
+    
     if(!(empty($nationalTopDownload))) {
 
       foreach($nationalTopDownload as $key => $data) {
@@ -676,8 +678,17 @@ class SoapsController extends AppController {
           $obj->AlbumTitle = $album['Album']['AlbumTitle'];
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
-          $obj->fileURL                   = (string)$fileURL;
+          
+          if($this->IsDownloadable($data['Song']['ProdID'], $territory, $data['Song']['provider_type'])) {
+            $obj->fileURL                 =  'nostring';
+          } else {
+            $obj->fileURL                 = (string)$fileURL;
+          }
+          
+          
 
+          
+          
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
 
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
