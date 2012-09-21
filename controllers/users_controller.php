@@ -4848,7 +4848,7 @@ Class UsersController extends AppController
             $this->Library->recursive = -1;
             $libraryData = $this->Library->find('first',array('conditions'=>array('id'=>$libId)));
             $fromCount = $libraryData['Library']['generic_count']+1;
-            $toCount = $fromCount+$noOfUsers;
+            $toCount = $libraryData['Library']['generic_count']+$noOfUsers;
             $counter = 0;
             $file = '../../userslist/users_libraryideas'.$libId.'-'.date('Y-m-d-h-i-s',time()).'.txt';
             $fp = fopen($file,'w');
