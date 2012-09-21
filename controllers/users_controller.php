@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin');
+		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -4836,6 +4836,51 @@ Class UsersController extends AppController
 			$this->Session->write("layout_option", 'login_new');
 		}
 	}
+
+	function admin_addmultipleusers($noOfUsers){
+            //Configure::write('debug',2);
+            $this->autoRender = false;
+            $userType = $this->Session->read('Auth.User.type_id');
+            if($userType != 1){
+                $this->redirect('/home/aboutus');
+		die('You are not allowed to use this section.');
+            }
+            $this->Library->recursive = -1;
+            $libId = 2;
+            $libraryData = $this->Library->find('first',array('conditions'=>array('id'=>$libId)));
+            $fromCount = $libraryData['Library']['generic_count']+1;
+            $toCount = $libraryData['Library']['generic_count']+$noOfUsers;
+            $counter = 0;
+            $file = '../../userslist/users_libraryideas'.$libId.'-'.date('Y-m-d-h-i-s',time()).'.txt';
+            $fp = fopen($file,'w');
+            for($counter=$fromCount;$counter<=$toCount;$counter++){
+                $email = 'library'.$counter.'@libraryideas.com';
+                $temp_password = $this->PasswordHelper->generatePasswordWithout10(6);
+                $encyptedPassword = Security::hash(Configure::read('Security.salt').$temp_password);
+                $data = array(
+                        'id'=>'',
+                        'password'=>$encyptedPassword,
+                        'type_id'=>'5',
+                        'first_name'=>'FirstName'.$counter,
+                        'last_name'=>'LastName'.$counter,
+                        'email'=>$email,
+                        'library_id'=>$libId,
+                        'consortium'=>'',
+                        'user_status'=>'active',
+                        'sales'=>'no',
+                        'created'=>date('Y-m-d h:i:s',time()),
+                        'modified'=>date('Y-m-d h:i:s',time())
+                );
+                
+                if($this->User->save($data)){
+                    fwrite($fp,$email.",".$temp_password."\n");
+                }
+            }
+            fclose($fp);
+            $libraryData['Library']['generic_count']=$toCount;
+            $this->Library->save($libraryData['Library']);
+            echo "Users Created";
+        }
 
 
 }
