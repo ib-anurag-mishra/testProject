@@ -4838,14 +4838,15 @@ Class UsersController extends AppController
 		}
 	}
         
-        function admin_addmultipleusers($libId,$noOfUsers){
-            Configure::write('debug',2);
+        function admin_addmultipleusers($noOfUsers){
+            //Configure::write('debug',2);
             $this->autoRender = false;
             $userType = $this->Session->read('Auth.User.type_id');
             if($userType != 1){
                 die('You are not allowed to use this section.');
             }
             $this->Library->recursive = -1;
+            $libId = 2;
             $libraryData = $this->Library->find('first',array('conditions'=>array('id'=>$libId)));
             $fromCount = $libraryData['Library']['generic_count']+1;
             $toCount = $libraryData['Library']['generic_count']+$noOfUsers;
@@ -4853,8 +4854,8 @@ Class UsersController extends AppController
             $file = '../../userslist/users_libraryideas'.$libId.'-'.date('Y-m-d-h-i-s',time()).'.txt';
             $fp = fopen($file,'w');
             for($counter=$fromCount;$counter<=$toCount;$counter++){
-                $email = 'user'.$counter.'@libraryideas.com';
-                $temp_password = $this->PasswordHelper->generatePassword(6);
+                $email = 'library'.$counter.'@libraryideas.com';
+                $temp_password = $this->PasswordHelper->generatePasswordWithout10(6);
                 $encyptedPassword = Security::hash(Configure::read('Security.salt').$temp_password);
                 $data = array(
                         'id'=>'',
