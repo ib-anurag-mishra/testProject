@@ -822,7 +822,7 @@ STR;
 						<ul >
 				<?php foreach($composers as $composer)
 				{
-					$tilte = urlencode($composer);
+					$tilte = urlencode($composer->Composer);
 					$composer_name = truncate_text($composer->Composer, 30);
 				?>
 							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $composer->numFound; ?>)</span></li>
