@@ -326,7 +326,8 @@ class SolrComponent extends Object {
             break;
           case 'album':
             $query = '(CTitle:('.strtolower($searchkeyword).')^400 OR Title:'.$searchkeyword.'^400 OR CArtistText:('.strtolower($searchkeyword).')^200 OR ArtistText:'.$searchkeyword.'^200 OR CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-            $field = 'Title';
+            //$field = 'Title';
+            $field = 'rpjoin';
             break;
           case 'artist':
             $query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.')';
@@ -353,7 +354,7 @@ class SolrComponent extends Object {
         } else {
           $start = (($page - 1) * $limit);
         }
-
+        
         $additionalParams = array(
           'group' => 'true',
           'group.field' => $field,
