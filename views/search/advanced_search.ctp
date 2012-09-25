@@ -327,12 +327,18 @@ STR;
 			$album_label_str = "";
 		  }
           $ReferenceId = $palbum->ReferenceID;
+          if($palbum->AAdvisory == 'T'){
+              $explicit = '<font class="explicit"> (Explicit)</font><br />';
+          } else {
+              $explicit = '';
+          }
 					$album_inner_div .=<<<STR
 					<div	class ="$class">
 						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img height="75" width="100" class="art" src="$image"> </a>
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType" title="$palbum->Title">$album_title</a>
 							<br />
+                                                        $explicit
 							Genre: $album_genre
 							<br />
 							<span	class="stats">$album_label_str</span>
@@ -758,6 +764,11 @@ STR;
           $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
           $linkProviderType = base64_encode($palbum->provider_type);
           $ReferenceId = $palbum->ReferenceID;
+          if($palbum->AAdvisory == 'T'){
+              $explicit = '<font class="explicit"> (Explicit)</font><br />';
+          } else {
+              $explicit = '';
+          }
 		  if(!empty($album_label)){
 			$album_label_str = "Label: " . truncate_text($album_label, 32);
 		  }
@@ -770,6 +781,7 @@ STR;
 						<div class="albumblockArtistexts">
 							<a class="albumblockArtisLink" href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType" title="$palbum->Title">$album_title</a>
 							<br />
+                                                        $explicit
 							Genre: $album_genre
 							<br />
 							<span	class="stats">$album_label_str</span>
