@@ -106,7 +106,7 @@ function truncate_text($text, $char_count){
 		$modified_text = $text;
 	}
 
-	return $modified_text;
+	return utf8_encode($modified_text);
 }
 
 //Code for check Sales date
