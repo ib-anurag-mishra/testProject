@@ -7,7 +7,10 @@ class AppController extends Controller
 	
 	function beforeFilter()
 	{
-		
+		ini_set('session.cookie_domain', env('HTTP_BASE')); 
+    Configure::write('Session.checkAgent', false);
+    Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
+    
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
