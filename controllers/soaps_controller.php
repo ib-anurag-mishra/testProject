@@ -820,7 +820,7 @@ STR;
    * @param int $prodId
 	 * @return AlbumDataType[]
    */
-	function getAlbumDetail($authenticationToken, $prodId) {
+	function getAlbumDetail($authenticationToken, $prodId) { 
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -829,12 +829,20 @@ STR;
     $product_detail = $this->getProductDetail($prodId);
     $prodId = $product_detail['Product']['ProdID'];
     $provider_type = $product_detail['Product']['provider_type'];
-    
-    
+       
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+ 
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libraryId),
+      'fields' => array('library_territory', 'library_block_explicit_content'),
+      'recursive' => -1
+      )
+    );
 
-    $library_territory = $this->getLibraryTerritory($libraryId);
-
+    $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    //$library_territory = $this->getLibraryTerritory($libraryId);
+    
     $data = array();
     
     $albumData = $this->Album->find('first',
@@ -855,7 +863,7 @@ STR;
           'Album.provider_type',
           'Album.FileID'
         ),
-        'joins' => array(
+       /*  'joins' => array(
           array(
             'table' => 'Songs',
             'alias' => 'Song',
@@ -867,25 +875,88 @@ STR;
               'Song.DownloadStatus' => '1'
             )
           ),
-        ),
+        ), */
         'conditions' => array(
           'Album.ProdId' => $prodId,
           'Album.provider_type' => $provider_type,
-          'Country.provider_type = Album.provider_type',
-          'Country.Territory' => $library_territory 
+/*           'Country.provider_type = Album.provider_type',
+          'Country.Territory' => $library_territory  */
         ),
+        'recursive' => -1
       )  
     );
+   
 
+    
+    if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
+			$cond = array('Song.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}
+    
+    $Song =  $this->Song->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Song.ReferenceID' => $prodId),
+									array('Song.provider_type = Country.provider_type'),
+									array('Song.DownloadStatus' => 1),
+									array("Song.Sample_FileID != ''"),
+									array("Song.FullLength_FIleID != ''"),
+									array("Song.provider_type" => $provider_type),
+									array('Country.Territory' => $library_territory),$cond
+								)
+							),
+						'fields' => array(
+								'Song.ProdID',
+								'Song.ProductID',
+								'Song.ReferenceID',
+								'Song.Title',
+								'Song.SongTitle',
+								'Song.ArtistText',
+								'Song.Artist',
+								'Song.Advisory',
+								'Song.ISRC',
+								'Song.Composer',
+								'Song.Genre',
+								'Song.Territory',
+                'Song.DownloadStatus',
+                'Song.Sample_Duration',
+                'Song.FullLength_Duration',
+                'Song.Sample_FileID',
+                'Song.FullLength_FIleID',
+                'Song.CreatedOn',
+                'Song.UpdateOn',
+                'Song.provider_type',
+                'Song.sequence_number'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory',
+											'Country.SalesDate'
+										)
+									),
+						), 'order' => array('Song.sequence_number','Song.ProdID')
+				));
+    
 
-
+    $arr_album_songs = array();
+    foreach($Song AS $key => $val) {
+      
+      $arr_album_songs[$key] = $val['Song'];
+    }
+    
+    
     if(!empty($albumData)){
 
       $info_data = Array();
       $album_list = Array();
       $song_list = Array();
       $data['Album'] = $albumData['Album'];
-      $data['Song'] = $albumData['Song'];
+      //$data['Song'] = $albumData['Song'];
+      $data['Song'] = $arr_album_songs;
 
       $obj = new AlbumDataType;
       $obj->ProdID                    = (int)$this->getProductAutoID($data['Album']['ProdID'], $data['Album']['provider_type']);
