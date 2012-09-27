@@ -21,7 +21,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
 
-  private $uri = 'http://www.freegalmusic.com/';
+  private $uri = 'http://www.freegalmusic.com/'; 
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
 
