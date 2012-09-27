@@ -320,7 +320,7 @@ class SoapsController extends AppController {
 								'Files.SourceURL'
 							),
 						)
-					), 'order' => array('Country.SalesDate' => 'desc'), 'cache' => 'yes', 'chk' => 2
+					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2
 				));
       
                          
