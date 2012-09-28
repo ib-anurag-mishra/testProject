@@ -841,7 +841,6 @@ STR;
 
     $library_territory = $libraryDetails['Library']['library_territory'];
     
-    //$library_territory = $this->getLibraryTerritory($libraryId);
     
     $data = array();
     
@@ -863,24 +862,9 @@ STR;
           'Album.provider_type',
           'Album.FileID'
         ),
-       /*  'joins' => array(
-          array(
-            'table' => 'Songs',
-            'alias' => 'Song',
-            'type' => 'INNER',
-            'foreignKey' => false,
-            'conditions'=> array(
-              'Song.ReferenceID = Album.ProdID',
-              'Song.provider_type = Album.provider_type',
-              'Song.DownloadStatus' => '1'
-            )
-          ),
-        ), */
         'conditions' => array(
           'Album.ProdId' => $prodId,
           'Album.provider_type' => $provider_type,
-/*           'Country.provider_type = Album.provider_type',
-          'Country.Territory' => $library_territory  */
         ),
         'recursive' => -1
       )  
@@ -956,7 +940,6 @@ STR;
       $album_list = Array();
       $song_list = Array();
       $data['Album'] = $albumData['Album'];
-      //$data['Song'] = $albumData['Song'];
       $data['Song'] = $arr_album_songs;
 
       $obj = new AlbumDataType;
