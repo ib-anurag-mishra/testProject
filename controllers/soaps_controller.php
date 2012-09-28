@@ -271,7 +271,7 @@ class SoapsController extends AppController {
   
     $songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
+				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => $startFrom . ', ' . $recordCount));
 
     $val = '';
 		$val_provider_type = '';
@@ -280,7 +280,7 @@ class SoapsController extends AppController {
       $val .= $v['Song']['ReferenceID'].",";
 			$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 		}
-    
+      
     $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
     		
     $albumData = $this->Album->find('all',array('conditions' =>
@@ -291,7 +291,7 @@ class SoapsController extends AppController {
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
-						'Album.ProdID_nayan',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -322,11 +322,7 @@ class SoapsController extends AppController {
 					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2
 				));
       
-    echo '<pre>';          
-    print_r($albumData);
-    exit;
-
-              
+                         
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
     }

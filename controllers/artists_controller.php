@@ -829,7 +829,6 @@ Class ArtistsController extends AppController
 				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
 			
-      
 
 			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
@@ -858,7 +857,7 @@ Class ArtistsController extends AppController
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
-						'Album.ProdID_nayan',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -897,10 +896,6 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
-    
-    echo '<pre>';          
-    print_r($albumData);
-    exit;
 
 
 		$albumSongs = array();
