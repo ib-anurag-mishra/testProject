@@ -271,7 +271,7 @@ class SoapsController extends AppController {
   
     $songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => $startFrom . ', ' . $recordCount));
+				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
 
     $val = '';
 		$val_provider_type = '';
