@@ -291,7 +291,7 @@ class SoapsController extends AppController {
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
-						'Album.ProdID_nayan',
+						'Album.ProdID',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
