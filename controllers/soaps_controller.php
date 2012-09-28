@@ -289,7 +289,7 @@ class SoapsController extends AppController {
 						array(
 							array('Album.provider_type = Country.provider_type'),
 						    $condition
-						), "1 = 1 GROUP BY Album.ProdID"
+						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
 						'Album.ProdID',
@@ -929,7 +929,8 @@ STR;
                 'Song.CreatedOn',
                 'Song.UpdateOn',
                 'Song.provider_type',
-                'Song.sequence_number'
+                'Song.sequence_number',
+                'Song.TrackBundleCount'
 								),
 						'contain' => array(
 							'Country' => array(
@@ -938,7 +939,7 @@ STR;
 											'Country.SalesDate'
 										)
 									),
-						), 'order' => array('Song.sequence_number','Song.ProdID')
+						), 'group' => 'Song.ProdID, Song.provider_type', 'order' => array('Song.sequence_number','Song.ProdID')
 				));
     
 
