@@ -280,8 +280,6 @@ class SoapsController extends AppController {
       $val .= $v['Song']['ReferenceID'].",";
 			$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 		}
-      
-    echo $val_provider_type; exit; 
     
     $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
     		
@@ -324,7 +322,11 @@ class SoapsController extends AppController {
 					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2
 				));
       
-                         
+    echo '<pre>';          
+    print_r($albumData);
+    exit;
+
+              
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
     }

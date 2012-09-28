@@ -829,7 +829,7 @@ Class ArtistsController extends AppController
 				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
 			
-      echo $val_provider_type; exit; 
+      
 
 			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
@@ -897,6 +897,10 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
+    
+    echo '<pre>';          
+    print_r($albumData);
+    exit;
 
 
 		$albumSongs = array();
