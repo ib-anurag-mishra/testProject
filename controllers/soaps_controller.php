@@ -361,11 +361,11 @@ class SoapsController extends AppController {
 					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
 				);  
       
-    $albumData = $this->paginate('Album');
+    $album = $this->paginate('Album');
     
     echo '<pre>';          
-    print_r($albumData);
-    exit;
+    print_r($album);
+    exit('soap');
 
               
     if(empty($albumData)) {
