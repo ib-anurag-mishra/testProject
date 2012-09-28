@@ -291,7 +291,7 @@ class SoapsController extends AppController {
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
-						'Album.ProdID',
+						'Album.ProdID_nayan',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -322,7 +322,12 @@ class SoapsController extends AppController {
 					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2
 				));
       
-                         
+            
+    echo '<pre>';
+    print_r($albumData);
+    exit;
+    
+          
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
     }
