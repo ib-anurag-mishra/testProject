@@ -256,107 +256,74 @@ class SoapsController extends AppController {
 
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
-      'fields' => array('library_territory'),
+      'fields' => array('library_territory', 'library_block_explicit_content'),
       'recursive' => -1
       )
     );
 
     $library_territory = $libraryDetails['Library']['library_territory'];
 
+    if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
+			$cond = array('Song.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}
+  
     $songs = $this->Song->find('all', array(
-      'fields' => array('DISTINCT (Song.ReferenceID)', 'Song.provider_type'),
-      'joins' => array(
-        array(
-          'table' => 'countries',
-          'alias' => 'country',
-          'type' => 'INNER',
-          'foreignKey' => false,
-          'conditions'=> array(
-            'country.ProdID = Song.ProdID',
-            'country.provider_type = Song.provider_type'
-          )
-        )
-      ),
-      'conditions' => array(
-        'Song.ArtistText' => $artistText,
-        'Song.DownloadStatus' => 1,
-        "Song.Sample_FileID != ''",
-        "Song.FullLength_FIleID != ''",
-        'country.Territory' => $library_territory,
-      ),
-      'recursive' => -1,
-      'order' => array('Song.ReferenceID' => 'DESC'),
-      'limit' => $startFrom . ', ' . $recordCount
-    )
-    );
-    
-    $str_songids = '';
-    $index = 1;
-    $cnt = count($songs);
-    foreach($songs as $k => $v){
-      $str_songids .= "(" . $v['Song']['ReferenceID'] . ",'" . $v['Song']['provider_type'] . "')";
-      if($cnt != $index) {
-        $str_songids .= ', ';
-      }
-      $index++;
-    }
+				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
+				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => $startFrom . ', ' . $recordCount));
 
+    $val = '';
+		$val_provider_type = '';
+
+		foreach($songs as $k => $v){
+      $val .= $v['Song']['ReferenceID'].",";
+			$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
+		}
+      
+    $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
+    		
     $albumData = $this->Album->find('all',array('conditions' =>
-                                  array('and' =>
-                                    array(
-                                      array("((Album.ProdID, Album.provider_type) IN (".$str_songids."))")
-                                    ), "1 = 1 GROUP BY Album.ProdID"
-                                  ),
-                                  'fields' => array(
-                                    'Album.ProdID',
-                                    'Album.Title',
-                                    'Album.ArtistText',
-                                    'Album.AlbumTitle',
-                                    'Album.Label',
-                                    'Album.provider_type',
-                                    'Genre.Genre',
-                                    'File.CdnPath',
-                                    'File.SourceURL' 
-                                  ),
-                                  'joins' => array(
-                                    array(
-                                      'table' => 'Genre',
-                                      'alias' => 'Genre',
-                                      'type' => 'INNER',
-                                      'foreignKey' => false,
-                                      'conditions'=> array(
-                                        'Genre.ProdID = Album.ProdID',
-                                        'Genre.provider_type = Album.provider_type'
-                                      )
-                                    ),
-                                     array(
-                                      'table' => 'countries',
-                                      'alias' => 'countries',
-                                      'type' => 'INNER',
-                                      'foreignKey' => false,
-                                      'conditions'=> array(
-                                        'countries.ProdID = Album.ProdID',
-                                        'countries.provider_type = Album.provider_type'
-                                      )
-                                    ),
-                                    array(
-                                      'table' => 'File',
-                                      'alias' => 'File',
-                                      'type' => 'INNER',
-                                      'foreignKey' => false,
-                                      'conditions'=> array(
-                                        'File.FileID = Album.FileID', 
-                                      )
-                                    )
-                                  ),
-                                  'recursive' => -1,
-                                  'order' => array(
-                                    'countries.SalesDate' => 'desc'
-                                  )
-
-                              ));
-                                    
-                              
+					array('and' =>
+						array(
+							array('Album.provider_type = Country.provider_type'),
+						    $condition
+						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
+					),
+					'fields' => array(
+						'Album.ProdID',
+						'Album.Title',
+						'Album.ArtistText',
+						'Album.AlbumTitle',
+						'Album.Artist',
+						'Album.ArtistURL',
+						'Album.Label',
+						'Album.Copyright',
+						'Album.provider_type'
+						),
+					'contain' => array(
+						'Genre' => array(
+							'fields' => array(
+								'Genre.Genre'
+								)
+							),
+						'Country' => array(
+							'fields' => array(
+								'Country.Territory'
+								)
+							),
+						'Files' => array(
+							'fields' => array(
+								'Files.CdnPath' ,
+								'Files.SaveAsName',
+								'Files.SourceURL'
+							),
+						)
+					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2
+				));
+      
+                         
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
     }
@@ -371,7 +338,7 @@ class SoapsController extends AppController {
         $obj->Title          = $val['Album']['Title'];
         $obj->Label          = $val['Album']['Label'];
 
-        $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['File']['CdnPath']."/".$val['File']['SourceURL']);
+        $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Files']['CdnPath']."/".$val['Files']['SourceURL']);
         $fileURL = Configure::read('App.Music_Path').$fileURL;
         $obj->FileURL = $fileURL;
 
@@ -853,7 +820,7 @@ STR;
    * @param int $prodId
 	 * @return AlbumDataType[]
    */
-	function getAlbumDetail($authenticationToken, $prodId) {
+	function getAlbumDetail($authenticationToken, $prodId) { 
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -862,12 +829,20 @@ STR;
     $product_detail = $this->getProductDetail($prodId);
     $prodId = $product_detail['Product']['ProdID'];
     $provider_type = $product_detail['Product']['provider_type'];
-    
-    
+       
     $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+ 
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libraryId),
+      'fields' => array('library_territory', 'library_block_explicit_content'),
+      'recursive' => -1
+      )
+    );
 
-    $library_territory = $this->getLibraryTerritory($libraryId);
-
+    $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    //$library_territory = $this->getLibraryTerritory($libraryId);
+    
     $data = array();
     
     $albumData = $this->Album->find('first',
@@ -888,7 +863,7 @@ STR;
           'Album.provider_type',
           'Album.FileID'
         ),
-        'joins' => array(
+       /*  'joins' => array(
           array(
             'table' => 'Songs',
             'alias' => 'Song',
@@ -900,25 +875,89 @@ STR;
               'Song.DownloadStatus' => '1'
             )
           ),
-        ),
+        ), */
         'conditions' => array(
           'Album.ProdId' => $prodId,
           'Album.provider_type' => $provider_type,
-          'Country.provider_type = Album.provider_type',
-          'Country.Territory' => $library_territory 
+/*           'Country.provider_type = Album.provider_type',
+          'Country.Territory' => $library_territory  */
         ),
+        'recursive' => -1
       )  
     );
+   
 
+    
+    if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
+			$cond = array('Song.Advisory' => 'F');
+		}
+		else{
+			$cond = "";
+		}
+    
+    $Song =  $this->Song->find('all',array(
+						'conditions' =>
+							array('and' =>
+								array(
+									array('Song.ReferenceID' => $prodId),
+									array('Song.provider_type = Country.provider_type'),
+									array('Song.DownloadStatus' => 1),
+									array("Song.Sample_FileID != ''"),
+									array("Song.FullLength_FIleID != ''"),
+									array("Song.provider_type" => $provider_type),
+									array('Country.Territory' => $library_territory),$cond
+								)
+							),
+						'fields' => array(
+								'Song.ProdID',
+								'Song.ProductID',
+								'Song.ReferenceID',
+								'Song.Title',
+								'Song.SongTitle',
+								'Song.ArtistText',
+								'Song.Artist',
+								'Song.Advisory',
+								'Song.ISRC',
+								'Song.Composer',
+								'Song.Genre',
+								'Song.Territory',
+                'Song.DownloadStatus',
+                'Song.Sample_Duration',
+                'Song.FullLength_Duration',
+                'Song.Sample_FileID',
+                'Song.FullLength_FIleID',
+                'Song.CreatedOn',
+                'Song.UpdateOn',
+                'Song.provider_type',
+                'Song.sequence_number',
+                'Song.TrackBundleCount'
+								),
+						'contain' => array(
+							'Country' => array(
+									'fields' => array(
+											'Country.Territory',
+											'Country.SalesDate'
+										)
+									),
+						), 'group' => 'Song.ProdID, Song.provider_type', 'order' => array('Song.sequence_number','Song.ProdID')
+				));
+    
 
-
+    $arr_album_songs = array();
+    foreach($Song AS $key => $val) {
+      
+      $arr_album_songs[$key] = $val['Song'];
+    }
+    
+    
     if(!empty($albumData)){
 
       $info_data = Array();
       $album_list = Array();
       $song_list = Array();
       $data['Album'] = $albumData['Album'];
-      $data['Song'] = $albumData['Song'];
+      //$data['Song'] = $albumData['Song'];
+      $data['Song'] = $arr_album_songs;
 
       $obj = new AlbumDataType;
       $obj->ProdID                    = (int)$this->getProductAutoID($data['Album']['ProdID'], $data['Album']['provider_type']);
