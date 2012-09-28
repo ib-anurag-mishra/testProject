@@ -829,6 +829,7 @@ Class ArtistsController extends AppController
 				$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 			}
 			
+      echo $val_provider_type; exit; 
 
 			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
@@ -885,7 +886,7 @@ Class ArtistsController extends AppController
 								'Files.SourceURL'
 							),
 						)
-					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15', 'chk' => 2
+					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');

@@ -281,6 +281,8 @@ class SoapsController extends AppController {
 			$val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
 		}
       
+    echo $val_provider_type; exit; 
+    
     $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
     		
     $albumData = $this->Album->find('all',array('conditions' =>
