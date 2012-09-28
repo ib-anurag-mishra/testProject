@@ -647,7 +647,7 @@ Class ArtistsController extends AppController
 						//	array('Album.provider_type = Genre.provider_type'),
 						//	array('Album.provider_type = Country.provider_type'),
 						    $condition
-						), "1 = 1 GROUP BY Album.ProdID"
+						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
 						'Album.ProdID',

@@ -20,7 +20,6 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumDataByArtist
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'GenreData.php');
 class SoapsController extends AppController {
 
-
   private $uri = 'http://www.freegalmusic.com/';
   private $artist_image_base_url = 'http://music.libraryideas.com/freegalmusic/prod/EN/artistimg/';
   private $library_search_radius = 60;
@@ -841,7 +840,6 @@ STR;
 
     $library_territory = $libraryDetails['Library']['library_territory'];
     
-    //$library_territory = $this->getLibraryTerritory($libraryId);
     
     $data = array();
     
@@ -863,24 +861,9 @@ STR;
           'Album.provider_type',
           'Album.FileID'
         ),
-       /*  'joins' => array(
-          array(
-            'table' => 'Songs',
-            'alias' => 'Song',
-            'type' => 'INNER',
-            'foreignKey' => false,
-            'conditions'=> array(
-              'Song.ReferenceID = Album.ProdID',
-              'Song.provider_type = Album.provider_type',
-              'Song.DownloadStatus' => '1'
-            )
-          ),
-        ), */
         'conditions' => array(
           'Album.ProdId' => $prodId,
           'Album.provider_type' => $provider_type,
-/*           'Country.provider_type = Album.provider_type',
-          'Country.Territory' => $library_territory  */
         ),
         'recursive' => -1
       )  
@@ -956,7 +939,6 @@ STR;
       $album_list = Array();
       $song_list = Array();
       $data['Album'] = $albumData['Album'];
-      //$data['Song'] = $albumData['Song'];
       $data['Song'] = $arr_album_songs;
 
       $obj = new AlbumDataType;
