@@ -316,6 +316,14 @@ Class GenresController extends AppController
     }
     $this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
+    $allArtistsNew = $allArtists;
+    for($i=0;$i<count($allArtistsNew);$i++)
+    {
+      if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+      {
+        $allArtists[$i] = $allArtistsNew[$i];
+      }
+    }
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
@@ -422,6 +430,14 @@ Class GenresController extends AppController
     }
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
+    $allArtistsNew = $allArtists;
+    for($i=0;$i<count($allArtistsNew);$i++)
+    {
+      if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+      {
+        $allArtists[$i] = $allArtistsNew[$i];
+      }
+    }
     $this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
