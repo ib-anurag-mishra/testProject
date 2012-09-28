@@ -283,7 +283,7 @@ class SoapsController extends AppController {
     
     $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
     		
-    /*$albumData = $this->Album->find('all',array('conditions' =>
+    $albumData = $this->Album->find('all',array('conditions' =>
 					array('and' =>
 						array(
 							array('Album.provider_type = Country.provider_type'),
@@ -291,7 +291,7 @@ class SoapsController extends AppController {
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
-						'Album.ProdID',
+						'Album.ProdID_nayan',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
@@ -320,52 +320,11 @@ class SoapsController extends AppController {
 							),
 						)
 					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2
-				));*/
-        
-        $this->paginate =  array('conditions' =>
-					array('and' =>
-						array(
-							array('Album.provider_type = Country.provider_type'),
-						    $condition
-						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
-					),
-					'fields' => array(
-						'Album.ProdID',
-						'Album.Title',
-						'Album.ArtistText',
-						'Album.AlbumTitle',
-						'Album.Artist',
-						'Album.ArtistURL',
-						'Album.Label',
-						'Album.Copyright',
-						'Album.provider_type'
-						),
-					'contain' => array(
-						'Genre' => array(
-							'fields' => array(
-								'Genre.Genre'
-								)
-							),
-						'Country' => array(
-							'fields' => array(
-								'Country.Territory'
-								)
-							),
-						'Files' => array(
-							'fields' => array(
-								'Files.CdnPath' ,
-								'Files.SaveAsName',
-								'Files.SourceURL'
-							),
-						)
-					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
-				);  
+				));
       
-    $album = $this->paginate('Album');
-    
     echo '<pre>';          
-    print_r($album);
-    exit('soap');
+    print_r($albumData);
+    exit;
 
               
     if(empty($albumData)) {

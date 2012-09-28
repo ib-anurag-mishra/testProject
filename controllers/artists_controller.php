@@ -858,7 +858,7 @@ Class ArtistsController extends AppController
 						), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
 					),
 					'fields' => array(
-						'Album.ProdID',
+						'Album.ProdID_nayan',
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
