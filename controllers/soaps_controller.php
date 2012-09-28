@@ -323,9 +323,7 @@ class SoapsController extends AppController {
 				));
       
             
-    echo '<pre>';
-    print_r($albumData);
-    exit;
+
     
           
     if(empty($albumData)) {
