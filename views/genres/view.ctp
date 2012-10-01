@@ -364,13 +364,13 @@ jQuery("html").ajaxStop(replaceText);
 
 					echo "<td width='250'><p>";
 					if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
-						$ArtistName = substr(utf8_encode($genres[$counter]['Song']['ArtistText']), 0, 30) . '...';
+						$ArtistName = substr(utf8_decode($genres[$counter]['Song']['ArtistText']), 0, 30) . '...';
 						echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
 							$ArtistName,
 							array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])). '/'. base64_encode($genre))) . '</span>'; ?>
 					<?php
 					} else {
-						$ArtistName = utf8_encode($genres[$counter]['Song']['ArtistText']);
+						$ArtistName = utf8_decode($genres[$counter]['Song']['ArtistText']);
 						echo $html->link(
 							$ArtistName,
 							array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])).  '/'.base64_encode($genre)));
