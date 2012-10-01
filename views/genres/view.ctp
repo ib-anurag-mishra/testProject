@@ -364,7 +364,7 @@ jQuery("html").ajaxStop(replaceText);
 
 					echo "<td width='250'><p>";
 					if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
-						$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
+						$ArtistName = utf8_encode(substr(utf8_decode($genres[$counter]['Song']['ArtistText']), 0, 30)) . '...';
 						echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">';
                                                 echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' >";
                                                 echo $ArtistName;
