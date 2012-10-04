@@ -777,8 +777,14 @@ STR;
   function printVariable($var) {
   
     echo '<pre>';
-    echo "<br />  =================================== $var Start =============================================== <br />";   
-		print_r( Cache::read($var) );
+    echo "<br />  =================================== $var Start =============================================== <br />"; 
+    echo "<br />  =============Content================= <br />"; 
+    var_dump( Cache::read($var) );
+    echo "<br />  =============IS Empty================= <br />"; 
+    var_dump(is_empty(Cache::read($var)));
+    echo "<br />  =============IS Array================= <br />"; 
+    var_dump(is_array(Cache::read($var)));
+    echo "<br />  ============================== <br />";
 		echo "<br /> ====================================  $var End   ============================================= <br />";  
     exit;
   }
