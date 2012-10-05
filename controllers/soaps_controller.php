@@ -1442,7 +1442,12 @@ STR;
         $resp = $this->mndloginAuthinticate($card, $library_id, $agent);
       }
       break;
-
+      
+      case '19':  {
+        $resp = $this->mdloginAuthinticate($card, $pin, $library_id, $agent);
+      }
+      break;
+      
       default:
     }
 
@@ -3459,7 +3464,96 @@ STR;
 
 	}
 
+  /**
+   * Authenticates user by mdlogin_reference method
+   * @param $card
+   * @param $pin
+   * @param $library_id
+   * @param $agent
+   * @return AuthenticationResponseDataType[]
+   */
 
+	private function mdloginAuthinticate($card, $pin, $library_id, $agent){
+
+   
+    $data['wrongReferral'] = '';
+    
+    $card = str_replace(" ","",$card);
+    $card = strtolower($card);			
+		$data['card'] = $card;
+    
+    $data['pin'] = $pin;
+  
+    $patronId = $card; 
+		$data['patronId'] = $patronId;
+      
+    
+    if($card == ''){
+
+      $response_msg = 'Card number not provided';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+    }
+    else {
+    
+      if($pin == ''){
+
+        $response_msg = 'Pin not provided';
+        return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+      }
+      else{    
+      
+        $cardNo = substr($card,0,5);
+        $data['cardNo'] = $cardNo;
+
+        $this->Library->recursive = -1;
+        $this->Library->Behaviors->attach('Containable');
+        
+        $data['library_cond'] = $library_id; 
+        $existingLibraries = $this->Library->find('all',array(
+          'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
+                                'library_authentication_method' => 'mdlogin_reference'),
+          'fields' => array('Library.id','Library.library_authentication_method','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit', 'library_subdomain','Library.library_block_explicit_content','Library.library_language'))
+        );
+
+        $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
+        $data['subdomain'] = $existingLibraries[0]['Library']['library_subdomain'];
+        $data['referral'] = '';
+
+        if(count($existingLibraries) == 0){
+
+          $response_msg = 'Invalid credentials provided.';
+          return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+        }
+        else{
+       
+          $login_res = $this->Card->find('first',array('conditions' => array('Card.card_number' => $card , 'Card.pin' => $pin , 'Card.library_id' =>  $library_id) , 'fields' => array('id')));
+                  
+            if(isset($login_res['Card']['id'])) {
+          
+              $token = md5(time());
+              $insertArr['patron_id'] = $data['patronId'];
+              $insertArr['library_id'] = $library_id;
+              $insertArr['token'] = $token;
+              $insertArr['auth_time'] = time();
+              $insertArr['agent'] = $agent;
+              $insertArr['auth_method'] = $library_authentication_method;
+              $this->AuthenticationToken->save($insertArr);
+
+              $patron_id = $insertArr['patron_id'];
+              $response_msg = 'Login Successfull.';
+              return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+              
+            } else {
+              
+              $response_msg = 'Login Failed.';
+              return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+            }
+        
+        }
+      }
+    }
+	}  
+  
   /**
    * Function Name : updateUserDetails
    * Desc : To update users details
@@ -4925,6 +5019,7 @@ STR;
       'referral_url' => '16',
       'innovative_var' => '17',
       'mndlogin_reference' => '18',
+      'mdlogin_reference' => '19'
 
     );
 
