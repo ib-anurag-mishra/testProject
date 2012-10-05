@@ -93,8 +93,8 @@ class ResetcacheController extends AppController
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
 
-	echo "src" . $src = WWW_ROOT. 'uploads/allCache.txt';
-	echo "dst" . $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
+	$src = WWW_ROOT. 'uploads/allCache.txt';
+	$dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
 	$error = $this->CdnUpload->sendFile($src, $dst);    
     exit;	
 	} //genrateXML end
