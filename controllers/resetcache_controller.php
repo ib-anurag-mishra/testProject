@@ -10,7 +10,7 @@ class ResetcacheController extends AppController
 {
   var $name = 'Resetcache';
   var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-  var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
+  var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
   private $filename = '../webroot/uploads/allCache.txt';
 
@@ -92,7 +92,10 @@ class ResetcacheController extends AppController
     $handle = fopen($this->filename, 'w+');
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
-    
+
+	$src = WWW_ROOT. 'uploads/allCache.txt';
+	$dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
+	$error = $this->CdnUpload->sendFile($src, $dst);    
     exit;	
 	} //genrateXML end
   
