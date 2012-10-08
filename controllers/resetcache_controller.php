@@ -101,8 +101,11 @@ class ResetcacheController extends AppController
     
     ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
     $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
-    $sent = mail($this->email, 'Cache Update (' .date('Y-m-d h:i:s') . ')', $message);
-    ($sent) ? echo 'Email Sent Successfully' : echo 'Email Sent Failed'; 
+    if(mail($this->email, 'Cache Update (' .date('Y-m-d h:i:s') . ')', $message)) {
+      echo 'Email Sent Successfully';
+    } else {
+      echo 'Email Sent Failed'; 
+    }
     
     exit;	
 	} //genrateXML end
