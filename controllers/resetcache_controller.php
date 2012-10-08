@@ -102,13 +102,7 @@ class ResetcacheController extends AppController
     $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
     
 
-    $this->Email->to = $this->email;
-    $this->Email->subject = 'Cache Update (' .date('Y-m-d h:i:s') . ')';
-    $this->Email->template = 'simple_message'; // note no '.ctp'
-    //Send as 'html', 'text' or 'both' (default is 'text')
-    $this->Email->sendAs = 'both'; // because we like to send pretty mail
-
-    if( $this->Email->send()) {
+    if( $this->sendCardImoprtErrorEmail($message) ) {
       echo 'Email Sent Successfully';
     } else {
       echo 'Email Sent Failed'; 
@@ -238,6 +232,41 @@ class ResetcacheController extends AppController
     return json_decode($contents, true);
   }
     
+    
+  /*
+    Function Name : _sendCardImportErrorEmail
+    Desc : For sending Card Import Error Email
+   */
+
+	function sendCardImoprtErrorEmail($body) {
+	  
+    Configure::write('debug', 0);
+    App::import('vendor', 'PHPMailer', array('file' => 'phpmailer/class.phpmailer.php'));
+    $mail = new PHPMailer();
+
+
+    $mail->IsSMTP();            // set mailer to use SMTP
+    $mail->SMTPAuth = 'true';     // turn on SMTP authentication
+    $mail->Host     =  Configure::read('App.SMTP');
+    $mail->Username = Configure::read('App.SMTP_USERNAME');
+    $mail->Password = Configure::read('App.SMTP_PASSWORD');
+
+    $mail->From     = Configure::read('App.adminEmail');
+    $mail->FromName = Configure::read('App.fromName');
+    $mail->AddAddress($this->email);
+	  
+	  $mail->ConfirmReadingTo = '';
+    $mail->CharSet  = 'UTF-8';
+    $mail->WordWrap = 50;  // set word wrap to 50 characters
+    $mail->IsHTML(true);  // set email format to HTML
+
+    $mail->Subject = 'Cache Update (' .date('Y-m-d h:i:s') . ')';
+    $mail->Body    = $body;
+    $result = $mail->Send();
+
+    return $result;
+
+	}  
   
 }
 ?>
