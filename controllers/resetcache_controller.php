@@ -26,6 +26,14 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
 
+  
+    $this->Email->from    = 'Somebody <somebody@example.com>';
+    $this->Email->to      = 'nayan225@gmail.com';
+    $this->Email->subject = 'Test';
+    $this->Email->send('Hello message body!');
+    exit;
+    
+    
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
 		
