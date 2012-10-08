@@ -93,13 +93,21 @@ class ResetcacheController extends AppController
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
 
-    echo "src" . $src = WWW_ROOT. 'uploads/allCache.txt';
-    echo "dst" . $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
+    $src = WWW_ROOT. 'uploads/allCache.txt';
+    $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
     $error = $this->CdnUpload->sendFile($src, $dst); 
 
     ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
     $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
-    if(mail($this->email, 'Cache Update (' .date('Y-m-d h:i:s') . ')', $message)) {
+    
+
+    $this->Email->to = $this->email;
+    $this->Email->subject = 'Cache Update (' .date('Y-m-d h:i:s') . ')';
+    $this->Email->template = 'simple_message'; // note no '.ctp'
+    //Send as 'html', 'text' or 'both' (default is 'text')
+    $this->Email->sendAs = 'both'; // because we like to send pretty mail
+
+    if( $this->Email->send()) {
       echo 'Email Sent Successfully';
     } else {
       echo 'Email Sent Failed'; 
