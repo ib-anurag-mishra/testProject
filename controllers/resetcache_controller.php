@@ -10,7 +10,7 @@ class ResetcacheController extends AppController
 {
   var $name = 'Resetcache';
   var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-  var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
+  var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
   private $filename = '../webroot/uploads/allCache.txt';
 
@@ -92,7 +92,18 @@ class ResetcacheController extends AppController
     $handle = fopen($this->filename, 'w+');
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
-    
+
+    echo "src" . $src = WWW_ROOT. 'uploads/allCache.txt';
+    echo "dst" . $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
+    $error = $this->CdnUpload->sendFile($src, $dst); 
+
+    ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
+    $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
+    if(mail($this->email, 'Cache Update (' .date('Y-m-d h:i:s') . ')', $message)) {
+      echo 'Email Sent Successfully';
+    } else {
+      echo 'Email Sent Failed'; 
+    }  
     exit;	
 	} //genrateXML end
   
