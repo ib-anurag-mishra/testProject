@@ -104,7 +104,7 @@ class ResetcacheController extends AppController
     } else {
       echo 'Email Sent Failed'; 
     }  
-    exit;	
+    exit;	 
 	} //genrateXML end
   
   
