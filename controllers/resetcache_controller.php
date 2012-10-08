@@ -13,7 +13,7 @@ class ResetcacheController extends AppController
   var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
   private $filename = '../webroot/uploads/allCache.txt';
-  private $email = 'nayan.more@infobeans.com';
+  private $email = 'nayan225@gmail.com'; 
 
 
   /*
@@ -97,17 +97,23 @@ class ResetcacheController extends AppController
     $src = WWW_ROOT. 'uploads/allCache.txt';
     $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
     $error = $this->CdnUpload->sendFile($src, $dst); 
-    
-    
+
     ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
     $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
-    if(mail($this->email, 'Cache Update (' .date('Y-m-d h:i:s') . ')', $message)) {
+    
+
+    $this->Email->to = $this->email;
+    $this->Email->subject = 'Cache Update (' .date('Y-m-d h:i:s') . ')';
+    $this->Email->template = 'simple_message'; // note no '.ctp'
+    //Send as 'html', 'text' or 'both' (default is 'text')
+    $this->Email->sendAs = 'both'; // because we like to send pretty mail
+
+    if( $this->Email->send()) {
       echo 'Email Sent Successfully';
     } else {
       echo 'Email Sent Failed'; 
-    }
-    
-    exit;	
+    }  
+    exit;	 
 	} //genrateXML end
   
   
