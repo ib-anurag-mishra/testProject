@@ -104,9 +104,9 @@ class ResetcacheController extends AppController
 
     $this->Email->to = $this->email;
     $this->Email->subject = 'Cache Update (' .date('Y-m-d h:i:s') . ')';
-    $this->Email->template = 'no'; // note no '.ctp'
+    //$this->Email->template = 'no'; // note no '.ctp'
     //Send as 'html', 'text' or 'both' (default is 'text')
-    $this->Email->sendAs = 'both'; // because we like to send pretty mail
+    $this->Email->sendAs = 'text'; // because we like to send pretty mail
 
     if( $this->Email->send()) {
       echo 'Email Sent Successfully';
