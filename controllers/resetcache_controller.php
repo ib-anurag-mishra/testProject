@@ -98,7 +98,7 @@ class ResetcacheController extends AppController
     $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
     $error = $this->CdnUpload->sendFile($src, $dst); 
 
-    ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
+/*     ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
     $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
     
 
@@ -106,7 +106,7 @@ class ResetcacheController extends AppController
       echo 'Email Sent Successfully';
     } else {
       echo 'Email Sent Failed'; 
-    }  
+    } */  
     exit;	 
 	} //genrateXML end
   
