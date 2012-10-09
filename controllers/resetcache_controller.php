@@ -13,7 +13,7 @@ class ResetcacheController extends AppController
   var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
   private $filename = '../webroot/uploads/allCache.txt';
-  private $email = 'nayan225@gmail.com'; 
+  private $email = ''; 
 
 
   /*
