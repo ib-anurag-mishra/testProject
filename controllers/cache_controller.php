@@ -563,6 +563,7 @@ STR;
 	  
     }
     
+    $this->requestAction('/Resetcache/genrateXML');
     exit;
   }
   
