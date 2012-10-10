@@ -10,9 +10,10 @@ class ResetcacheController extends AppController
 {
   var $name = 'Resetcache';
   var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-  var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
+  var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
   private $filename = '../webroot/uploads/allCache.txt';
+  private $email = ''; 
 
 
   /*
@@ -92,8 +93,21 @@ class ResetcacheController extends AppController
     $handle = fopen($this->filename, 'w+');
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
+
+    $src = WWW_ROOT. 'uploads/allCache.txt';
+    $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
+    $error = $this->CdnUpload->sendFile($src, $dst); 
+
+/*     ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
+    $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
     
-    exit;	
+
+    if( $this->sendCardImoprtErrorEmail($message) ) {
+      echo 'Email Sent Successfully';
+    } else {
+      echo 'Email Sent Failed'; 
+    } */  
+    exit;	 
 	} //genrateXML end
   
   
@@ -218,6 +232,41 @@ class ResetcacheController extends AppController
     return json_decode($contents, true);
   }
     
+    
+  /*
+    Function Name : _sendCardImportErrorEmail
+    Desc : For sending Card Import Error Email
+   */
+
+	function sendCardImoprtErrorEmail($body) {
+	  
+    Configure::write('debug', 0);
+    App::import('vendor', 'PHPMailer', array('file' => 'phpmailer/class.phpmailer.php'));
+    $mail = new PHPMailer();
+
+
+    $mail->IsSMTP();            // set mailer to use SMTP
+    $mail->SMTPAuth = 'true';     // turn on SMTP authentication
+    $mail->Host     =  Configure::read('App.SMTP');
+    $mail->Username = Configure::read('App.SMTP_USERNAME');
+    $mail->Password = Configure::read('App.SMTP_PASSWORD');
+
+    $mail->From     = Configure::read('App.adminEmail');
+    $mail->FromName = Configure::read('App.fromName');
+    $mail->AddAddress($this->email);
+	  
+	  $mail->ConfirmReadingTo = '';
+    $mail->CharSet  = 'UTF-8';
+    $mail->WordWrap = 50;  // set word wrap to 50 characters
+    $mail->IsHTML(true);  // set email format to HTML
+
+    $mail->Subject = 'Cache Update (' .date('Y-m-d h:i:s') . ')';
+    $mail->Body    = $body;
+    $result = $mail->Send();
+
+    return $result;
+
+	}  
   
 }
 ?>

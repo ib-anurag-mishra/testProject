@@ -1258,7 +1258,7 @@ STR;
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];
 		$patronid = $_REQUEST['patronid'];
-		$patronid = str_replace("_","+",$_REQUEST['patronid']);
+		$patronid = $_REQUEST['patronid'];
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));
 		if(count($currentPatron) > 0){
 			$updateArr = array();

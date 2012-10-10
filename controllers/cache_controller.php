@@ -57,12 +57,29 @@ class CacheController extends AppController {
 					));
 			Cache::write("genre".$territory, $genreAll);
       $this->log("cache written for genre for $territory",'debug');
+      
+      if(count($genreAll) > 0)
+      {
+        $this->log( "cache written for genre for $territory", "cache");
+      }
+      else
+      {
+        $this->log( "no data available for genre".$territory, "cache");
+      }
 	  
 		$country = $territory;
 		if(!empty($country)){
-		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		  $ids = '';
-          $ids_provider_type = '';
+		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '".$country."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+      $ids = '';
+      $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
@@ -73,9 +90,12 @@ class CacheController extends AppController {
 			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
 			}
 		  }
+      
+      if(count($natTopDownloaded) < 1) 
+      {
+        $this->log( "download data not recevied for ".$territory, "cache");
+      }
 		  $data = array();
-		  
-		  
 		  
 	 $sql_national_100 =<<<STR
 	SELECT 
@@ -121,12 +141,19 @@ class CacheController extends AppController {
 	  
 STR;
 		  
-		 $data = $this->Album->query($sql_national_100); 
+		 $data = $this->Album->query($sql_national_100);
+     
+      if($ids_provider_type == "")
+      {
+        $this->log( "ids_provider_type is set blank for ".$territory, "cache");
+      }
 			  
 		  if(!empty($data)){
 			Cache::write("national".$country, $data);
+      $this->log("cache written for national top ten for $territory", "cache");
 		  } else {
 			echo "Unable to update key";
+      $this->log("Unable to update national 100 for ".$territory, "cache");
 		  }
 		}
 		$this->log("cache written for national top ten for $territory",'debug');
@@ -147,6 +174,11 @@ STR;
 				}				
 				 
 			}
+      
+      if(count($featured) < 1)
+      {
+        $this->log("featured artist data is not available for".$territory, "cache");
+      }
 
 			if($ids != ''){
 				$this->Album->recursive = 2;
@@ -193,7 +225,8 @@ STR;
 			}
 			echo Cache::write("featured".$territory, $featured);
       $this->log("cache written for featured artists for $territory",'debug');
-
+      $this->log("cache written for featured artists for: $territory", "cache");
+      
       $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
                     "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
       
@@ -255,8 +288,10 @@ STR;
 			
         if(!empty($data)){
           	echo Cache::write($genre.$territory, $data);
+            $this->log("cache written for: $genre $territory", "cache");
         } else {
           echo "Unable to update key";
+            $this->log("Unable to update key for: $genre $territory", "cache");
         }       
 
 			}
@@ -322,6 +357,7 @@ STR;
         );
         $allArtists = $this->paginate('Song');
         $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
+        $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
       }
 
       $this->Song->bindmodel(array('hasOne'=>array(
@@ -397,6 +433,7 @@ STR;
           $this->Song->unbindModel(array('hasOne' => array('Participant')));
           $allArtists = $this->paginate('Song');
           $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
+          $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
         }
       }
       $this->Song->bindmodel(array('hasOne'=>array(
@@ -449,6 +486,11 @@ STR;
 				  $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
 				}
 			}
+      
+      if(count($topDownloaded) < 1)
+      {
+        $this->log("top download is not available for library: $libId - $territory", "cache");
+      }
       
 			if($ids != ''){
 				$this->Song->recursive = 2;
@@ -505,12 +547,23 @@ STR;
 
 			Cache::write("lib".$libId, $topDownload);
 //		library top 10 cache set
+      
+      if(count($topDownload) < 1)
+      {
+        $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
+      }
+      else
+      {        
+        //library top 10 cache set
+        $this->log("library top 10 cache set for lib: $libId $country", "cache");
+      }
 	  
 	  
 	  }
 	  
     }
     
+    $this->requestAction('/Resetcache/genrateXML');
     exit;
   }
   
