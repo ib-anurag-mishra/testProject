@@ -65,7 +65,7 @@ Class DownloadsComponent extends Object
                         return array(false,'The library has reached the download limit.');
                     }
                 } else {
-                    $this->log("Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".$this->Session->read('territory'));
+                    $this->log("Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory));
                     return array(false,'The song is not available for this Country.');
                 }
             } else {
