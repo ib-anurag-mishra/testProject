@@ -772,15 +772,7 @@ STR;
 		echo "Reset LIB IDS";
 		print_r($reset_lib_array);
 		exit("<br />DONE<br />");
-	}	  
-	
-  function printVariable($var) {
+	}
   
-    echo '<pre>';
-    echo "<br />  =================================== $var Start =============================================== <br />";
-    var_dump( Cache::read($var) );
-		echo "<br /> ====================================  $var End   ============================================= <br />";  
-    exit;
-  }
 }
 ?>
