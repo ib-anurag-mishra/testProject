@@ -45,14 +45,14 @@ Class DownloadsComponent extends Object
         }
     }
     
-    function validateDownload($prodId, $providerType){
+    function validateDownload($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null){
         $user = $this->Auth->user();
         $uid = (int)$user['User']['id'];
         $ip = $_SERVER['REMOTE_ADDR'];
         if($uid > 0){
             $libId = $this->Session->read('library');
             if($this->checkSongExists($prodId, $providerType)){
-                if($this->checkAllowedCountry($prodId, $providerType)){
+                if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
                     if($this->checkLibraryDownload($libId)){
                         if($this->checkPatronDownload($uid,$libId)){
                             return array(true,'');
@@ -89,10 +89,14 @@ Class DownloadsComponent extends Object
         }
     }
     
-    function checkAllowedCountry($prodId, $providerType){
+    function checkAllowedCountry($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null){
         $countryInstance = ClassRegistry::init('Country');
         $countryInstance->recursive = -1;
-        $territory = $this->Session->read('territory');
+        if(!$isMobileDownload){
+            $territory = $this->Session->read('territory');
+        } else {
+            $territory = $mobileTerritory;
+        }
         $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
         if(!empty($country['Country'])){
             return true;
