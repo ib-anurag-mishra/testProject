@@ -6,9 +6,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','Block');
 
     /*
      Function Name : beforeFilter
@@ -52,7 +52,10 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$ids = '';
 		//featured artist slideshow
-		if (($artists = Cache::read("featured".$country)) === false) {
+		$data = $this->Block->find('first',array('conditions'=>array('id'=>'6')));
+                if($data['Block']['value'] == 1){
+                    $this->set('showFeaturedAlbums',true);
+                if (($artists = Cache::read("featured".$country)) === false) {
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 		//	print "<pre>";print_r($featured);exit;
 			foreach($featured as $k => $v){
@@ -106,11 +109,25 @@ class HomesController extends AppController
 				$featured = array();
 			}
 			Cache::write("featured".$territory, $featured);
-		}
-		$featured = Cache::read("featured".$country);
-		$this->set('featuredArtists', $featured);
-
-		//used for gettting top downloads for Pop Genre
+		}                
+                    $featured = Cache::read("featured".$country);
+                    $this->set('featuredArtists', $featured);
+		} else {
+                    $this->set('featuredArtists', array());
+                    $this->set('showFeaturedAlbums',false);
+                }
+                
+          $data = $this->Block->find('first',array('conditions'=>array('id'=>'7')));
+          if($data['Block']['value'] == 1){
+            $this->set('showSearch', true);
+          } else {
+            $this->set('showSearch', false);  
+          }
+          
+          $data = $this->Block->find('first',array('conditions'=>array('id'=>'4')));
+          if($data['Block']['value'] == 1){
+              $this->set('showTopGenre', true);
+                //used for gettting top downloads for Pop Genre
 		if (($artists = Cache::read("pop".$country)) === false) {
 
           $restoregenre_query =  "
@@ -177,11 +194,23 @@ class HomesController extends AppController
 			}
 		}*/
 		$this->set('genre_pop', $genre_pop);
-    if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
-      $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
-      Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
-    }
-    $this->set('artists',$ssartists);
+          } else {
+              $this->set('genre_pop', array());
+              $this->set('showTopGenre', false);
+          }
+    $data = $this->Block->find('first',array('conditions'=>array('id'=>'5')));
+    if($data['Block']['value'] == 1){
+        $this->set('showSSArtists',true);
+        if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
+            $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
+            Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
+        }
+        $this->set('artists',$ssartists);
+    } else{
+       $this->set('artists',array());
+       $this->set('showSSArtists',false);
+    } 
+        
     $this->layout = 'home';
     }
 
@@ -197,7 +226,9 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('patronDownload',$patronDownload);
 		$this->set('tab_no',$tab_no);
-
+$data = $this->Block->find('first',array('conditions'=>array('id'=>'4')));
+          if($data['Block']['value'] == 1){
+              $this->set('showTopGenre', true);
 		if (($artists = Cache::read($genre.$territory)) === false) {
           $restoregenre_query =  "
           SELECT
@@ -249,7 +280,7 @@ class HomesController extends AppController
       if(!empty($data)){
           Cache::write($genre.$territory, $data);
       }
-
+      
 
 		}
 		$genre_info = Cache::read($genre.$territory);
@@ -264,6 +295,10 @@ class HomesController extends AppController
 			}
 		}*/
 		$this->set('genre_info', $genre_info);
+          } else {
+              $this->set('genre_info', array());
+              $this->set('showTopGenre', false);
+          }
 	}
 	function my_lib_top_10()
 	{
@@ -275,7 +310,10 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		if (($libDownload = Cache::read("lib".$libId)) === false) {
+		$data = $this->Block->find('first',array('conditions'=>array('id'=>'2')));
+                if($data['Block']['value'] == 1){
+                    $this->set('showLibraryTopTen',true);
+                if (($libDownload = Cache::read("lib".$libId)) === false) {
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$prodIds = '';
 
@@ -339,6 +377,10 @@ class HomesController extends AppController
 		}
 		$topDownload = Cache::read("lib".$libId);
 		$this->set('songs',$topDownload);
+                } else {
+                    $this->set('songs',array());
+                    $this->set('showLibraryTopTen',false);
+                }
 	}
 
 
@@ -352,7 +394,11 @@ class HomesController extends AppController
 		$patId = $this->Session->read('patron');
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('patronDownload',$patronDownload);
-		// National Top Downloads functionality
+		
+                $data = $this->Block->find('first',array('conditions'=>array('id'=>'1')));
+                if($data['Block']['value'] == 1){
+                    $this->set('showNationalTopSongs',true);
+                // National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false) {
 		 $country = $territory;
 		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
@@ -426,6 +472,10 @@ STR;
 			}
 		}*/
 		$this->set('nationalTopDownload',$nationalTopDownload);
+                } else {
+                    $this->set('nationalTopDownload',array());
+                    $this->set('showNationalTopSongs',false);
+                }
 	}
 
     /*
@@ -935,50 +985,54 @@ STR;
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
+        $provider = $_POST['ProviderType'];
+        $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+        if($validationResult[0] == true){
+            $libId = $this->Session->read('library');
+            $patId = $this->Session->read('patron');
+            $prodId = $_POST['ProdID'];
 		if($prodId == '' || $prodId == 0){
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
 		$downloadsDetail = array();
-/*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+            /*        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 
-        if($libraryDownload != '1' || $patronDownload != '1') {
-            echo "error";
-            exit;
-        }
+            if($libraryDownload != '1' || $patronDownload != '1') {
+                echo "error";
+                exit;
+            }
 		$this->Download->recursive = -1;
 		$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $prodId,'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-        if(count($downloadsUsed) > 0) {
-            echo "incld";
-            exit;
-        }*/
+            if(count($downloadsUsed) > 0) {
+                echo "incld";
+                exit;
+            }*/
 
-		$provider = $_POST['ProviderType'];
-        $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
-        $insertArr = Array();
-        $insertArr['library_id'] = $libId;
-        $insertArr['patron_id'] = $patId;
-        $insertArr['ProdID'] = $prodId;
-        $insertArr['artist'] = addslashes($trackDetails['0']['Song']['Artist']);
-        $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
+            $provider = $_POST['ProviderType'];
+            $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
+            $insertArr = Array();
+            $insertArr['library_id'] = $libId;
+            $insertArr['patron_id'] = $patId;
+            $insertArr['ProdID'] = $prodId;
+            $insertArr['artist'] = addslashes($trackDetails['0']['Song']['Artist']);
+            $insertArr['track_title'] = addslashes($trackDetails['0']['Song']['SongTitle']);
 
 		if($provider != 'sony'){
 			$provider = 'ioda';
 		}
 		$insertArr['provider_type'] = $provider;
 
-        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
-		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-        if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
+            $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+            $songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
+            $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+            if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'referral_url';
-        }
-        elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
+                $insertArr['user_login_type'] = 'referral_url';
+            }
+            elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative';
 		}
@@ -1095,6 +1149,10 @@ STR;
             echo "error";
             exit;
 		}*/
+        } else {
+            $this->Session->setFlash($validationResult[1]);
+            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+        }
     }
     /*
      Function Name : advance_search
