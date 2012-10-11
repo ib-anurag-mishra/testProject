@@ -1000,6 +1000,9 @@ STR;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
+        $provider = $_POST['ProviderType'];
+        $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+        if($validationResult[0] == true){
 		if($prodId == '' || $prodId == 0){
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
@@ -1018,7 +1021,7 @@ STR;
             exit;
         }*/
 
-		$provider = $_POST['ProviderType'];
+		
         $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
@@ -1157,6 +1160,10 @@ STR;
             echo "error";
             exit;
 		}*/
+        } else {
+            $this->Session->setFlash($validationResult[1]);
+            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+        }
     }
     /*
      Function Name : advance_search
