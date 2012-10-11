@@ -152,6 +152,10 @@ $i = 0;
 							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
 						}
+                        if($album['Album']['Advisory'] == 'T'){
+                        	echo '<font class="explicit"> (Explicit)</font>';
+                            echo '<br />';
+                        }
 						if ($album['Album']['Label'] != '') {
 							echo __("Label").': ' . $album['Album']['Label'];
 							echo '<br />';
