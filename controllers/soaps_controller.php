@@ -3916,7 +3916,7 @@ STR;
       $CdnPath = $data['Full_Files']['CdnPath'];
       $SaveAsName = $data['Full_Files']['SaveAsName'];
 
-      echo $CdnPath . '<br />'; echo $SaveAsName . '<br />';  var_dump($data); exit;  
+      echo $CdnPath . '<br />'; echo $SaveAsName . '<br />';  print_r($data); exit;  
       
       $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
