@@ -3842,7 +3842,8 @@ STR;
           'recursive' => -1,
         )
     );
-    
+
+print_r($TrackData);    
 var_dump($TrackData['FullLength_FIleID']); exit;
     
     $insertArr = Array();
