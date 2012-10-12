@@ -3843,7 +3843,7 @@ STR;
         )
     );
     
-    print_r(); exit;
+
     
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
