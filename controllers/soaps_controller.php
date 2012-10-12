@@ -3832,7 +3832,8 @@ STR;
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC'
+            'Song.ISRC',
+            'Song.FullLength_FIleID'
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
