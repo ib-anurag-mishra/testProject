@@ -3897,7 +3897,7 @@ STR;
               'type' => 'inner',
               'foreignKey' => false,
 
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type' => $provider_type)
+              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID' => $prodId, 'Song.provider_type' => $provider_type)
             )
           )
         )
