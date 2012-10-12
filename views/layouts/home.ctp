@@ -47,6 +47,7 @@
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<script type="text/javascript">
 				$(document).ready(function() {
+                                    $('#flashMessage').insertBefore('#main');
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					$('#autoComplete').keypress(function(event) {
 						//auto_check();
@@ -183,7 +184,7 @@
   	</div>
 	<![endif]-->
 	<div id="audioPixel"><div id="audioflash"></div></div>
-	<?php $session->flash(); ?>
+	<?php echo $session->flash(); ?>
 	<a class='upgradeFlash' href="#"></a>
 	<div style="display:none;">
 		<div id="upgradeFlash_div">   
