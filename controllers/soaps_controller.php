@@ -3786,7 +3786,7 @@ STR;
    */
 
   function songDownloadRequest($authentication_token, $prodId, $agent) {
-
+      
     if(!($this->isValidAuthenticationToken($authentication_token))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -3843,7 +3843,7 @@ STR;
         )
     );
     
-
+var_dump($TrackData['FullLength_FIleID']); exit;
     
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
