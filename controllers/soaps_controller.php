@@ -3843,7 +3843,7 @@ STR;
         )
     );
     
-    print_r($TrackData); exit;
+    print_r(); exit;
     
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
@@ -3888,24 +3888,28 @@ STR;
 		$this->Library->setDataSource('default');
     $wishlist = 0;
 		if(is_numeric($return)){
-
-      $data = $this->Song->find('first',
-        array('joins' =>
-          array(
-            array(
-              'table' => 'File',
-              'alias' => 'f',
-              'type' => 'inner',
-              'foreignKey' => false,
-
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type' => $provider_type)
-            )
-          )
+      
+      $data = $this->Files->find('first',
+        array(
+          'fields' => array(
+            'CdnPath',
+            'SaveAsName'
+          ),
+          'conditions' => array(
+            'FileID' => $TrackData['FullLength_FIleID']
+          ),
+          'recursive' => -1
         )
       );
 
       $CdnPath = $data['Full_Files']['CdnPath'];
       $SaveAsName = $data['Full_Files']['SaveAsName'];
+      
+      var_dump($TrackData['FullLength_FIleID']); echo '<br />';
+      var_dump($CdnPath); echo '<br />';
+      var_dump($SaveAsName); echo '<br />';
+      print_r($data);
+      exit;
 
       $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
