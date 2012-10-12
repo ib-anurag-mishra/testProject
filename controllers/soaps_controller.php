@@ -3842,7 +3842,7 @@ STR;
         )
     );
     
-
+    print_r($TrackData); exit;
     
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
