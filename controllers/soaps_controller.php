@@ -3842,9 +3842,6 @@ STR;
           'recursive' => -1,
         )
     );
-
-print_r($TrackData);    
-var_dump($TrackData['FullLength_FIleID']); exit;
     
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
@@ -3897,7 +3894,7 @@ var_dump($TrackData['FullLength_FIleID']); exit;
             'SaveAsName'
           ),
           'conditions' => array(
-            'FileID' => $TrackData['FullLength_FIleID']
+            'FileID' => $TrackData['Song']['FullLength_FIleID']
           ),
           'recursive' => -1
         )
@@ -3906,7 +3903,7 @@ var_dump($TrackData['FullLength_FIleID']); exit;
       $CdnPath = $data['Full_Files']['CdnPath'];
       $SaveAsName = $data['Full_Files']['SaveAsName'];
       
-      var_dump($TrackData['FullLength_FIleID']); echo '<br />';
+      var_dump($TrackData['Song']['FullLength_FIleID']); echo '<br />';
       var_dump($CdnPath); echo '<br />';
       var_dump($SaveAsName); echo '<br />';
       print_r($data);
