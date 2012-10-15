@@ -13,7 +13,7 @@ class ResetcacheController extends AppController
   var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
   private $filename = '../webroot/uploads/allCache.txt';
-  private $email = ''; 
+  private $email = 'nayan225@gmail.com'; 
 
 
   /*
@@ -26,6 +26,14 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
 
+    $this->Email->delivery = 'debug';
+    $this->Email->from    = 'nayan225@yahoo.com';
+    $this->Email->to      = 'nayan225@gmail.com';
+    $this->Email->subject = 'Test';
+    $this->Email->send('Hello message body!');
+    exit;
+    
+    
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
 		
@@ -98,7 +106,7 @@ class ResetcacheController extends AppController
     $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
     $error = $this->CdnUpload->sendFile($src, $dst); 
 
-/*     ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
+    ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
     $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
     
 
@@ -106,7 +114,7 @@ class ResetcacheController extends AppController
       echo 'Email Sent Successfully';
     } else {
       echo 'Email Sent Failed'; 
-    } */  
+    }  
     exit;	 
 	} //genrateXML end
   
@@ -271,12 +279,12 @@ class ResetcacheController extends AppController
 /**
   Function Name : printAllEmptyCacheVariables
   Desc : prints empty cache varaibles 
-  */ 
+*/ 
   
   function printAllEmptyCacheVariables(){
     
     $territoryNames = array('US','CA','AU','IT','NZ');
-		$xml_data = array();
+		$data = array();
 		
 		//loop for all country
 		for($i=0;$i<count($territoryNames);$i++){
@@ -287,18 +295,26 @@ class ResetcacheController extends AppController
 			$genresArray = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
                     "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
 			foreach($genresArray as $topgenrekey=>$topgenrevalue){
-				$genredata = Cache::read($topgenrevalue.$territory);
-				$xml_data[$territory]['top_ten_genre'][$topgenrevalue] = $genredata;	
+        $set = Cache::read($topgenrevalue.$territory);  
+				if( (true === empty($set)) || (( Cache::read($topgenrevalue.$territory)) === false) || (Cache::read($topgenrevalue.$territory) === null) ) {
+          $data['top_ten_genre'][] = $topgenrevalue.$territory;
+        }
+				
 			}
-			
+      
 			//Restore all Genre
-			$genrealldata = Cache::read('genre'.$territory);
-			$xml_data[$territory]['genre_all'] = $genrealldata;	
-			
+      $set = Cache::read('genre'.$territory);
+      if( (true === empty($set)) || (( Cache::read('genre'.$territory)) === false) || (Cache::read('genre'.$territory) === null) ) {
+        $data['all_genre'][] = 'genre'.$territory;
+      }
+      
+      
 			//Restore National top 100
-			$NationalTop100data = Cache::read('national'.$territory);
-			$xml_data[$territory]['nationaltop100'] = $NationalTop100data;	
-			
+			$set = Cache::read('national'.$territory);
+      if( (true === empty($set)) || (( Cache::read('national'.$territory)) === false) || (Cache::read('national'.$territory) === null) ) {
+        $data['national_top_100'][] = 'national'.$territory;
+      }
+      
 			//Restore Library top 10
 			$libraryDetails = array();
 			$libraryDetails = $this->Library->find('all',array(
@@ -309,39 +325,112 @@ class ResetcacheController extends AppController
 			); 
 			
 			foreach($libraryDetails AS $key => $val ) {
-				 $libId = $val['Library']['id'];
-				 $librarytop10Data = Cache::read("lib".$libId);
-				 $xml_data['librarytop10'][$libId] = $librarytop10Data;					 
+        $libId = $val['Library']['id'];
+        $set = Cache::read("lib".$libId);
+        if( (true === empty($set)) || (( Cache::read("lib".$libId)) === false) || (Cache::read("lib".$libId) === null) ) {
+          $data['library_top_10'][] = "lib".$libId;
+        }				 
 			}
-			
+      
+      
 			//Restore featured artist slide show
 			$languageArray = array('EN', 'ES', 'IT', 'FR');
 			foreach($languageArray as $languagekey=>$languagevalue){
-				$featured_artist_slide_show_data = Cache::read('ssartists_'.$territory.'_'.$languagevalue);
-				$xml_data[$territory]['top_artist_slide_show'][$languagevalue] = $featured_artist_slide_show_data;	
+        $set = Cache::read('ssartists_'.$territory.'_'.$languagevalue);
+        if( (true === empty($set)) || (( Cache::read('ssartists_'.$territory.'_'.$languagevalue)) === false) || (Cache::read('ssartists_'.$territory.'_'.$languagevalue) === null) ) {
+          $data['featured_artist'][] = 'ssartists_'.$territory.'_'.$languagevalue;
+        }  	
 			}
-
+      
+      
+  
 			//Restore featured albums
-			$featured_albumsdata = Cache::read('featured'.$territory);
-			$xml_data[$territory]['featured_albums'] = $featured_albumsdata;			
-			
-			//Need to comment this line
-			//break;
+      $set = Cache::read('featured'.$territory);
+      if( (true === empty($set)) || (( Cache::read('featured'.$territory)) === false) || (Cache::read('featured'.$territory) === null) ) {
+        $data['featured_album'][] = 'featured'.$territory;
+      }   
 		}
-		
+    
 		//About us page
 		$languageArray = array('en', 'es', 'it', 'fr');
 		foreach($languageArray as $languagekey=>$languagevalue){
-			$AboutUsPageData = Cache::read("page".$languagevalue.'aboutus');
-			$xml_data['AboutUsPage'][$languagevalue] = $AboutUsPageData;	
+      $set = Cache::read("page".$languagevalue.'aboutus');
+			if( (true === empty($set)) || (( Cache::read("page".$languagevalue.'aboutus')) === false) || (Cache::read("page".$languagevalue.'aboutus') === null) ) {
+        $data['page'][] = "page".$languagevalue.'aboutus';
+      }  
 		}
+    
+    
+      echo '<pre>';
+      //print_r($data); 
+      
+      
+      
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= Top Ten Genre  ===============================================<br />";
+    echo "<br />============================================================================================================<br />";  
+    foreach($data['top_ten_genre'] AS $val) {
+      echo $val . '<br />';
+    } 
+    echo "<br />*********************************************  END  ********************************************************<br />";  
+      
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= All Genre  ===================================================<br />";
+    echo "<br />============================================================================================================<br />";  
+    foreach($data['all_genre'] AS $val) {
+      echo $val . '<br />';
+    }
+    echo "<br />*********************************************  END  ********************************************************<br />";    
+      
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= National top 100  ============================================<br />";
+    echo "<br />============================================================================================================<br />";  
+    foreach($data['national_top_100'] AS $val) {
+        echo $val . '<br />';
+
+    }
+    echo "<br />*********************************************  END  ********************************************************<br />";
+      
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= Library top 10  ==============================================<br />";
+    echo "<br />============================================================================================================<br />";  
+    foreach($data['library_top_10'] AS $val) {
+      echo $val . '<br />';
+    }  
+    echo "<br />*********************************************  END  ********************************************************<br />";
+    
+    
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= Featured Artist ==============================================<br />";
+    echo "<br />============================================================================================================<br />";  
+    foreach($data['featured_artis'] AS $val) {
+      echo $val . '<br />';
+    }  
+    echo "<br />*********************************************  END  ********************************************************<br />";
+
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= Featured Album ===============================================<br />";
+    echo "<br />============================================================================================================<br />";
+    foreach($data['featured_album'] AS  $val) {
+      echo $val . '<br />';
+    }
+    echo "<br />*********************************************  END  ********************************************************<br />";
+    
+    echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= About Us Page ================================================<br />";
+    echo "<br />============================================================================================================<br />";
+    foreach($data['page'] AS $val) {
+      echo $val . '<br />';
+    }    
+    echo "<br />*********************************************  END  ********************************************************<br />";  
+      
+      
+    exit;
+  }
 
   
-  echo '<pre>';
-  print_r($xml_data);
-  exit;
   
-  }
+  
   
 }
 ?>
