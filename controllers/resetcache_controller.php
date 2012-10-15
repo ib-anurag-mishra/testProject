@@ -328,7 +328,7 @@ class ResetcacheController extends AppController
         $libId = $val['Library']['id'];
         $set = Cache::read("lib".$libId);
         if( (true === empty($set)) || (( Cache::read("lib".$libId)) === false) || (Cache::read("lib".$libId) === null) ) {
-          $data['library_top_10'][] = "lib".$libId;
+          $data['library_top_10'][] = $libId;
         }				 
 			}
       
@@ -360,10 +360,11 @@ class ResetcacheController extends AppController
       }  
 		}
     
+      sort($data['library_top_10'], SORT_NUMERIC);
     
       echo '<pre>';
       //print_r($data); 
-      
+      //exit;
       
       
     echo "<br />============================================================================================================<br />";
@@ -395,7 +396,7 @@ class ResetcacheController extends AppController
     echo "<br />============================================= Library top 10  ==============================================<br />";
     echo "<br />============================================================================================================<br />";  
     foreach($data['library_top_10'] AS $val) {
-      echo $val . '<br />';
+      echo 'lib'.$val . '<br />';
     }  
     echo "<br />*********************************************  END  ********************************************************<br />";
     
