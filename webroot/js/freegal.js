@@ -786,6 +786,13 @@ function wishlistDownloadIE(prodId,id,provider)
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 			}
+      else if(msg == 'inval')
+      {
+        var result = response.split("|");
+        alert(result[1]);
+				location.reload();
+				return false;
+      }
 			else
 			{
 				alert("You have been logged out from the system. Please login again.");
@@ -931,6 +938,13 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 			}
+      else if(msg == 'inval')
+      {
+        var result = response.split("|");
+        alert(result[1]);
+				location.reload();
+				return false;
+      }
 			else
 			{
 				alert("You have been logged out from the system. Please login again.");
