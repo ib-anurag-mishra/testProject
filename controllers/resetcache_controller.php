@@ -12,8 +12,8 @@ class ResetcacheController extends AppController
   var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
   var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie', 'CdnUpload');
   var $uses = array('User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord');
-  private $filename = '../webroot/uploads/allCache.txt';
-  private $email = 'nayan225@gmail.com'; 
+  private $filename = '../webroot/uploads/allCache.txt'; 
+  private $filenamedate = '../webroot/uploads/allCacheDate.txt'; 
 
 
   /*
@@ -25,15 +25,7 @@ class ResetcacheController extends AppController
   }
 
 	function genrateXML() {
-
-    $this->Email->delivery = 'debug';
-    $this->Email->from    = 'nayan225@yahoo.com';
-    $this->Email->to      = 'nayan225@gmail.com';
-    $this->Email->subject = 'Test';
-    $this->Email->send('Hello message body!');
-    exit;
-    
-    
+  
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
 		
@@ -96,25 +88,27 @@ class ResetcacheController extends AppController
 		}
 		
     /**
-     * writes array into file
+     * writes array into file (local)
     **/
     $handle = fopen($this->filename, 'w+');
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
 
+    $handle = fopen($this->filenamedate, 'w+');
+    fwrite($handle, DATE("Y_m_d", time()));
+    fclose($handle);
+    
+    /**
+     * transfer file to CDN
+    **/
     $src = WWW_ROOT. 'uploads/allCache.txt';
     $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCache.txt';
     $error = $this->CdnUpload->sendFile($src, $dst); 
-
-    ('error' == $error) ? $status = 'Failed' : $status = 'Success'; 
-    $message = 'SRC : ' . $_SERVER['HTTP_HOST'] . ':' . $src . "\n" . 'DST : ' . $dst . "\n" . 'Status : ' . $status . "\n";
     
-
-    if( $this->sendCardImoprtErrorEmail($message) ) {
-      echo 'Email Sent Successfully';
-    } else {
-      echo 'Email Sent Failed'; 
-    }  
+    $src = WWW_ROOT. 'uploads/allCacheDate.txt';
+    $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCacheDate.txt';
+    $error = $this->CdnUpload->sendFile($src, $dst);
+  
     exit;	 
 	} //genrateXML end
   
