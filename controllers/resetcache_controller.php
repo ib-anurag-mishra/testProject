@@ -95,7 +95,7 @@ class ResetcacheController extends AppController
     fclose($handle);
 
     $handle = fopen($this->filenamedate, 'w+');
-    fwrite($handle, DATE("Y_m_d", time()));
+    fwrite($handle, DATE("Y_m_d_H_i", time()));
     fclose($handle);
     
     /**
