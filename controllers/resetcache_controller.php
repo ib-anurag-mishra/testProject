@@ -390,7 +390,9 @@ class ResetcacheController extends AppController
     echo "<br />============================================= Library top 10  ==============================================<br />";
     echo "<br />============================================================================================================<br />";  
     foreach($data['library_top_10'] AS $val) {
-      echo 'lib'.$val . '<br />';
+      $set = Cache::read('lib'.$val);
+      (true === empty($set)) ? $empty = ' (Empty)' : $empty = ''; 
+      echo 'lib'.$val . $empty . '<br />';
     }  
     echo "<br />*********************************************  END  ********************************************************<br />";
     
