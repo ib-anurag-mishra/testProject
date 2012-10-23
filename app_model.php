@@ -116,7 +116,7 @@ class AppModel extends Model {
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
-                    if($v === "1 = 1 GROUP BY Album.ProdID"){
+                    if($v === "1 = 1 GROUP BY Album.ProdID" || "1 = 1 GROUP BY Album.ProdID, Album.provider_type"){
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
