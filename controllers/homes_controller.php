@@ -1000,6 +1000,9 @@ STR;
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
+        $provider = $_POST['ProviderType'];
+        $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+        if($validationResult[0] == true){
 		if($prodId == '' || $prodId == 0){
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
@@ -1018,7 +1021,7 @@ STR;
             exit;
         }*/
 
-		$provider = $_POST['ProviderType'];
+		
         $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
@@ -1157,6 +1160,10 @@ STR;
             echo "error";
             exit;
 		}*/
+        } else {
+            $this->Session->setFlash($validationResult[1]);
+            $this->redirect(array('controller' => 'homes', 'action' => 'index'));
+        }
     }
     /*
      Function Name : advance_search
@@ -1258,7 +1265,7 @@ STR;
 		$this->layout = false;
 		$libid = $_REQUEST['libid'];
 		$patronid = $_REQUEST['patronid'];
-		$patronid = str_replace("_","+",$_REQUEST['patronid']);
+		$patronid = $_REQUEST['patronid'];
 		$currentPatron = $this->Currentpatron->find('all',array('conditions' => array('libid' => $libid,'patronid' => $patronid)));
 		if(count($currentPatron) > 0){
 			$updateArr = array();
@@ -1954,135 +1961,154 @@ STR;
      Desc : For downloading a song in wishlist page
     */
     function wishlistDownload() {
-        Configure::write('debug', 0);
-        $this->layout = false;
+      Configure::write('debug', 0);
+      $this->layout = false;
 
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
-		$prodId = $_REQUEST['prodId'];
-		$downloadsDetail = array();
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-        //check for download availability
-        if($libraryDownload != '1' || $patronDownload != '1'){
-            echo "error";
-            exit;
-        }
-        $id = $_REQUEST['id'];
-		$provider = $_REQUEST['provider'];;
-        //get details for this song
-        $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
-        $insertArr = Array();
-        $insertArr['library_id'] = $libId;
-        $insertArr['patron_id'] = $patId;
-        $insertArr['ProdID'] = $prodId;
-        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+      $libId = $this->Session->read('library');
+      $patId = $this->Session->read('patron');
+      $prodId = $_REQUEST['prodId'];
+      $downloadsDetail = array();
+      $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+      $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+      
+      //check for download availability
+      if($libraryDownload != '1' || $patronDownload != '1'){
+          echo "error";
+          exit;
+      }
+      
+      $id = $_REQUEST['id'];
+      $provider = $_REQUEST['provider'];
+      $provider="";
+      
+      //get details for this song
+      $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
+      $insertArr = Array();
+      $insertArr['library_id'] = $libId;
+      $insertArr['patron_id'] = $patId;
+      $insertArr['ProdID'] = $prodId;
+      $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+      $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+      $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+      $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+
+      $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+
+      if($validationResult[0] == true){
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
-			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'referral_url';
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'referral_url';
         }
         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative';
-		}
-		elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'mdlogin_reference';
-		}
-		elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'mndlogin_reference';
-		}
-		elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var';
-		}
-		elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_name';
-		}
-		elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_https_name';
-		}
-		elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_https';
-		}
-		elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
-		}
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative';
+        }
+        elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'mdlogin_reference';
+        }
+        elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'mndlogin_reference';
+        }
+        elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var';
+        }
+        elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_name';
+        }
+        elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_https_name';
+        }
+        elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_https';
+        }
+        elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
+        }
         elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_https';
-		}
-		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_wo_pin';
-		}
-		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2';
-		}
-		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
-			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'sip';
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_https';
         }
-		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_wo_pin';
-		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var';
-		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
-		}
-		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
-		}
-		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'ezproxy';
-		}
-		elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'soap';
-		}
-		elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'curl_method';
-		}
+        elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_wo_pin';
+        }
+        elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2';
+        }
+        elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip';
+        }
+        elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_wo_pin';
+        }
+        elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2_var';
+        }
+        elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2_var_wo_pin';
+        }
+        elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2_var_wo_pin';
+        }
+        elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'ezproxy';
+        }
+        elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'soap';
+        }
+        elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'curl_method';
+        }
         else{
-			$insertArr['email'] = $this->Session->read('patronEmail');
-			$insertArr['user_login_type'] = 'user_account';
+          $insertArr['email'] = $this->Session->read('patronEmail');
+          $insertArr['user_login_type'] = 'user_account';
         }
-		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
+        $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
         //save to downloads table
         if($this->Download->save($insertArr)){
-        //update library table
-			$this->Library->setDataSource('master');
-			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
-			$this->Library->query($sql);
-			$this->Library->setDataSource('default');
-		}
+          //update library table
+          $this->Library->setDataSource('master');
+          $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
+          $this->Library->query($sql);
+          $this->Library->setDataSource('default');
+        }
+
         //delete from wishlist table
         $deleteSongId = $id;
         $this->Wishlist->delete($deleteSongId);
         //get no of downloads for this week
-		$this->Download->recursive = -1;
+        $this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+
         echo "suces|".$downloadsUsed;
-		exit;
+        exit;
+      }
+      else
+      {
+        echo "invalid|".$validationResult[1];
+        exit;
+      }
     }
+    
     /*
      Function Name : historyDownload
      Desc : For getting download count on My History

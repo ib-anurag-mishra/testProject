@@ -280,7 +280,7 @@ Class GenresController extends AppController
       $this->Song->unbindModel(array('hasOne' => array('Country')));
       $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
       $this->Song->Behaviors->attach('Containable');
-      $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.ArtistText != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
       $this->paginate = array(
 		      'conditions' => $gcondition,
 		      'fields' => array('DISTINCT Song.ArtistText'),
@@ -315,8 +315,16 @@ Class GenresController extends AppController
       );
     }
     $this->Song->unbindModel(array('hasOne' => array('Participant')));
-		$allArtists = $this->paginate('Song');
-		$this->set('genres', $allArtists);
+		$allArtists = $this->paginate('Song');		
+    $allArtistsNew = $allArtists;
+    for($i=0;$i<count($allArtistsNew);$i++)
+    {
+      if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+      {
+        $allArtists[$i] = $allArtistsNew[$i];
+      }
+    }
+    $this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
 
@@ -386,7 +394,7 @@ Class GenresController extends AppController
       $this->Song->unbindModel(array('hasOne' => array('Country')));
       $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
       $this->Song->Behaviors->attach('Containable');
-      $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.ArtistText != ''","Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
       $this->paginate = array(
 		      'conditions' => $gcondition,
 		      'fields' => array('DISTINCT Song.ArtistText'),
@@ -409,7 +417,8 @@ Class GenresController extends AppController
       $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
       $this->paginate = array(
         'conditions' => $gcondition,
-        'fields' => array('DISTINCT Song.ArtistText'),
+        'fields' => array('DISTINCT Song.ArtistText'),
+
         'extra' => array('chk' => 1),
         'order' => 'TRIM(Song.ArtistText) ASC',
         'limit' => '60',
@@ -422,6 +431,14 @@ Class GenresController extends AppController
     }
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
 		$allArtists = $this->paginate('Song');
+    $allArtistsNew = $allArtists;
+    for($i=0;$i<count($allArtistsNew);$i++)
+    {
+      if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+      {
+        $allArtists[$i] = $allArtistsNew[$i];
+      }
+    }
     $this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
