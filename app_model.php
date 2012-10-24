@@ -143,6 +143,7 @@ class AppModel extends Model {
                         }
 
 
+                    }
                 }
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
