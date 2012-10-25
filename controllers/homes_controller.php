@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
     var $components = array('Auth','Acl','RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload');
 
     /*
      Function Name : beforeFilter
@@ -2067,7 +2067,7 @@ STR;
       
       $id = $_REQUEST['id'];
       $provider = $_REQUEST['provider'];
-      $provider="";
+      //$provider="";
       
       //get details for this song
       $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
@@ -2079,10 +2079,25 @@ STR;
       $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
       $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
       $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+        
+      $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
+      $checkValidation = $Setting['Siteconfig']['svalue'];
+      if($checkValidation == 1){
+          $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+          $checked = "true";
+          $validationPassed = $validationResult[0];
+          $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');
+          $validationMessage = $validationResult[1];
+      } else {
+          $checked = "false";
+          $validationPassed = true;
+          $validationPassedMessage = "Not Checked";
+          $validationMessage = '';
+      }
+      $user = $this->Auth->user();
+      if($validationPassed == true){
+        $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user['User']['id'],'download');
 
-      $validationResult = $this->Downloads->validateDownload($prodId, $provider);
-
-      if($validationResult[0] == true){
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
           $insertArr['email'] = '';
           $insertArr['user_login_type'] = 'referral_url';
@@ -2173,6 +2188,7 @@ STR;
 
         //save to downloads table
         if($this->Download->save($insertArr)){
+          $this->LatestDownload->save($insertArr);
           //update library table
           $this->Library->setDataSource('master');
           $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
