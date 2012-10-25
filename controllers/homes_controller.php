@@ -1214,8 +1214,19 @@ STR;
 		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 		$this->Library->setDataSource('master');
-		$sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
-		$this->Library->query($sql);
+    
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		if($maintainLatestDownload){    
+      $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+    }
+    else
+    {
+      $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";      
+    }
+    
+    $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
@@ -2188,7 +2199,12 @@ STR;
 
         //save to downloads table
         if($this->Download->save($insertArr)){
-          $this->LatestDownload->save($insertArr);
+          $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+          $siteConfigData = $this->Album->query($siteConfigSQL);
+          $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+          if($maintainLatestDownload){
+            $this->LatestDownload->save($insertArr);
+          }
           //update library table
           $this->Library->setDataSource('master');
           $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
