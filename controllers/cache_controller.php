@@ -32,6 +32,9 @@ class CacheController extends AppController {
     set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
     $territoryNames = array('US','CA','AU','IT','NZ');
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
 			$this->log("Starting caching for $territory",'debug');
@@ -69,6 +72,7 @@ class CacheController extends AppController {
 	  
 		$country = $territory;
 		if(!empty($country)){
+		  if($maintainLatestDownload){
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `downloads` AS `Download` 
@@ -78,6 +82,16 @@ class CacheController extends AppController {
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
               LIMIT 110";
+         } else {
+         	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `latest_downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '".$country."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+         }
       $ids = '';
       $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
@@ -234,6 +248,55 @@ STR;
 			{
 				$genre_data = array();
 				echo $territory;
+				
+if($maintainLatestDownload){
+$restoregenre_query =  "
+        SELECT 
+            COUNT(DISTINCT latest_downloads.id) AS countProduct,
+            Song.ProdID,
+            Song.ReferenceID,
+            Song.Title,
+            Song.ArtistText,
+            Song.DownloadStatus,
+            Song.SongTitle,
+            Song.Artist,
+            Song.Advisory,
+            Song.Sample_Duration,
+            Song.FullLength_Duration,
+            Song.provider_type,
+            Song.Genre,
+            Country.Territory,
+            Country.SalesDate,
+            Sample_Files.CdnPath,
+            Sample_Files.SaveAsName,
+            Full_Files.CdnPath,
+            Full_Files.SaveAsName,
+            Sample_Files.FileID,
+            Full_Files.FileID,
+			PRODUCT.pid
+        FROM
+            latest_downloads,
+            Songs AS Song
+                LEFT JOIN
+            countries AS Country ON Country.ProdID = Song.ProdID
+                LEFT JOIN
+            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                LEFT JOIN
+            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+        WHERE
+            latest_downloads.ProdID = Song.ProdID 
+            AND latest_downloads.provider_type = Song.provider_type 
+            AND Song.Genre LIKE '%".$genre."%'
+            AND Country.Territory LIKE '%".$territory."%' 
+            AND Country.SalesDate != '' 
+            AND Country.SalesDate < NOW() 
+            AND Song.DownloadStatus = '1' 
+            AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+        GROUP BY latest_downloads.ProdID
+        ORDER BY countProduct DESC
+        LIMIT 10
+        ";
+} else {
         $restoregenre_query =  "
         SELECT 
             COUNT(DISTINCT downloads.id) AS countProduct,

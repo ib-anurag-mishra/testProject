@@ -6,9 +6,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord', 'Country');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
+    var $components = array('Auth','Acl','RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country');
 
     /*
      Function Name : beforeFilter
@@ -210,6 +210,60 @@ class HomesController extends AppController
 		$this->set('tab_no',$tab_no);
 
 		if (($artists = Cache::read($genre.$territory)) === false) {
+          $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
+	  if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){                    
+          $restoregenre_query =  "
+          SELECT
+              COUNT(DISTINCT latest_downloads.id) AS countProduct,
+              Song.ProdID,
+              Song.ReferenceID,
+              Song.Title,
+              Song.ArtistText,
+              Song.DownloadStatus,
+              Song.SongTitle,
+              Song.Artist,
+              Song.Advisory,
+              Song.Sample_Duration,
+              Song.FullLength_Duration,
+              Song.provider_type,
+              Song.Genre,
+              Country.Territory,
+              Country.SalesDate,
+              Sample_Files.CdnPath,
+              Sample_Files.SaveAsName,
+              Full_Files.CdnPath,
+              Full_Files.SaveAsName,
+              Sample_Files.FileID,
+              Full_Files.FileID,
+			  PRODUCT.pid
+          FROM
+              latest_downloads,
+              Songs AS Song
+                  LEFT JOIN
+              countries AS Country ON Country.ProdID = Song.ProdID
+                  LEFT JOIN
+              File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                  LEFT JOIN
+              File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+              	LEFT JOIN
+			  PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+          WHERE
+              latest_downloads.ProdID = Song.ProdID
+              AND latest_downloads.provider_type = Song.provider_type
+              AND Song.Genre LIKE '%".$genre."%'
+              AND (PRODUCT.provider_type = Song.provider_type)
+              AND Country.Territory LIKE '%".$territory."%'
+              AND Country.SalesDate != ''
+              AND Country.SalesDate < NOW()
+              AND Song.DownloadStatus = '1'
+              AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+          GROUP BY latest_downloads.ProdID
+          ORDER BY countProduct DESC
+          LIMIT 10
+          ";
+          }
+          else 
+          {
           $restoregenre_query =  "
           SELECT
               COUNT(DISTINCT downloads.id) AS countProduct,
@@ -259,6 +313,7 @@ class HomesController extends AppController
           ORDER BY countProduct DESC
           LIMIT 10
           ";
+          }
 
       $data =   $this->Album->query($restoregenre_query);
       if(!empty($data)){
@@ -292,18 +347,34 @@ class HomesController extends AppController
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		if (($libDownload = Cache::read("lib".$libId)) === false) {
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-			$ids = '';
+			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
+                        if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
+                            $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                        } else {
+                            $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                        }
+                        $prodIds = '';
 
 //			$topDownloaded = Cache::read("lib".$libId);
 			foreach($topDownloaded as $k => $v){
+			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
+			   	if(empty($ids)){
+				  $ids .= $v['LatestDownload']['ProdID'];
+				  $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['LatestDownload']['ProdID'];
+				   $ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				}
+			   } else {
+			
 				if(empty($ids)){
 				  $ids .= $v['Download']['ProdID'];
 				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
 				} else {
 				  $ids .= ','.$v['Download']['ProdID'];
 				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}				
+				}
+			  }				
 			}
 
 			if($ids != ''){
