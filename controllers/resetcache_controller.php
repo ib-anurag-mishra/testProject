@@ -26,7 +26,8 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
   
-  
+    exit;
+    
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
 		
