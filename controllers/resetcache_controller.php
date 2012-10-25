@@ -26,6 +26,19 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
   
+    $handle = fopen('../webroot/uploads/create_me.txt', 'w+');
+    $res = fwrite($handle, 'Create Me');
+    fclose($handle);
+    var_dump($res);
+    
+    
+    $sta = unlink('../webroot/uploads/remove_me.txt');
+    var_dump($sta);
+    
+    echo Configure::read('App.CDN_PATH').'restcacheXML/'. 'remove.txt';
+    $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'restcacheXML/'. 'remove.txt');
+    exit;
+  
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
 		
