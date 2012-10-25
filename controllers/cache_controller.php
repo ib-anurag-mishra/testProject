@@ -346,7 +346,7 @@ $restoregenre_query =  "
         ORDER BY countProduct DESC
         LIMIT 10
         ";
-
+	}
         $data =   $this->Album->query($restoregenre_query);
 			
         if(!empty($data)){
