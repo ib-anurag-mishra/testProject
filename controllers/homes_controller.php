@@ -1068,12 +1068,29 @@ STR;
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
+        $prodId = $_POST['ProdID'];
+        $provider = $_POST['ProviderType'];
+        
+        $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
+        $checkValidation = $Setting['Siteconfig']['svalue'];
+        if($checkValidation == 1){
+            $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+            $checked = "true";
+            $validationPassed = $validationResult[0];
+            $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');
+            $validationMessage = $validationResult[1];
+        } else {
+            $checked = "false";
+            $validationPassed = true;
+            $validationPassedMessage = "Not Checked";
+            $validationMessage = '';
+        }
+        $user = $this->Auth->user();
+        if($validationPassed == true){
+            $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user['User']['id'],'download');
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
-        $provider = $_POST['ProviderType'];
-        $validationResult = $this->Downloads->validateDownload($prodId, $provider);
-        if($validationResult[0] == true){
 		if($prodId == '' || $prodId == 0){
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
