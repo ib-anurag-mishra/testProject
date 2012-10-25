@@ -68,7 +68,7 @@ class ClearController extends AppController {
       if(!empty($genre) && in_array($genre,$genresArray)){             
         $restoregenre_query =  "
         SELECT 
-            COUNT(DISTINCT downloads.id) AS countProduct,
+            COUNT(DISTINCT latest_downloads.id) AS countProduct,
             Song.ProdID,
             Song.ReferenceID,
             Song.Title,
@@ -91,7 +91,7 @@ class ClearController extends AppController {
             Full_Files.FileID,
 			PRODUCT.pid
         FROM
-            downloads,
+            latest_downloads,
             Songs AS Song
                 LEFT JOIN
             countries AS Country ON Country.ProdID = Song.ProdID
@@ -102,8 +102,8 @@ class ClearController extends AppController {
 				LEFT JOIN
 			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
         WHERE
-            downloads.ProdID = Song.ProdID 
-            AND downloads.provider_type = Song.provider_type 
+            latest_downloads.ProdID = Song.ProdID 
+            AND latest_downloads.provider_type = Song.provider_type 
 			AND (PRODUCT.provider_type = Song.provider_type)
             AND Song.Genre LIKE '%".$genre."%'
             AND Country.Territory LIKE '%".$country."%' 
@@ -111,7 +111,7 @@ class ClearController extends AppController {
             AND Country.SalesDate < NOW() 
             AND Song.DownloadStatus = '1' 
             AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
-        GROUP BY downloads.ProdID
+        GROUP BY latest_downloads.ProdID
         ORDER BY countProduct DESC
         LIMIT 10
         ";
@@ -170,7 +170,7 @@ class ClearController extends AppController {
 	$this->autoRender = false;
     $countriesArray = array('US' , 'AU' , 'CA' , 'IT' , 'NZ');
 	if(!empty($country) && in_array($country,$countriesArray)){
-	  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+	  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `latest_downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 	  $ids = '';
 	  $ids_provider_type = '';
 	  
