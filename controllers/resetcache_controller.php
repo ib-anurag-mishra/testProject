@@ -26,18 +26,6 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
   
-    $handle = fopen('../webroot/uploads/create_me.txt', 'w+');
-    $res = fwrite($handle, 'Create Me');
-    fclose($handle);
-    var_dump($res);
-    
-    
-    $sta = unlink('../webroot/uploads/remove_me.txt');
-    var_dump($sta);
-    
-    echo Configure::read('App.CDN_PATH').'restcacheXML/'. 'remove.txt';
-    $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'restcacheXML/'. 'remove.txt');
-    exit;
   
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
@@ -104,10 +92,12 @@ class ResetcacheController extends AppController
     /**
      * writes array into file (local)
     **/
+    unlink($this->filename);
     $handle = fopen($this->filename, 'w+');
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
 
+    unlink($this->filenamedate);
     $handle = fopen($this->filenamedate, 'w+');
     fwrite($handle, DATE("Y_m_d_H_i", time()));
     fclose($handle);
@@ -121,6 +111,7 @@ class ResetcacheController extends AppController
     
     $src = WWW_ROOT. 'uploads/allCacheDate.txt';
     $dst = Configure::read('App.CDN_PATH').'restcacheXML/'. 'allCacheDate.txt';
+             $this->CdnUpload->deleteFile($dst);
     $error = $this->CdnUpload->sendFile($src, $dst);
   
     exit;	 
