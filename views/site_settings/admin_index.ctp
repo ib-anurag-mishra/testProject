@@ -31,6 +31,32 @@
                                 </tr>
                     <?php
                             }
+                             if($k == "single_channel") {
+                    ?>
+                                <tr><td colspan="2" align="center"><h1>Single Channel Downloads</h1></td></tr>
+                                <tr>
+                                    <td align="right" width="435"><?php echo $this->Form->label('Enable Single Channel Downloads'); ?></td>
+                                    <td align="left">
+                                        <?php
+                                            echo $this->Form->checkbox($k,array('label' => false ,'value' => $v, 'checked' => $v, 'div' => false, 'class' => 'form_fields'));
+                                        ?>
+                                    </td>
+                                </tr>
+                    <?php
+                            }
+                            if($k == "maintain_ldt") {
+                    ?>
+                                <tr><td colspan="2" align="center"><h1>Latest Downloads Table</h1></td></tr>
+                                <tr>
+                                    <td align="right" width="435"><?php echo $this->Form->label('Enable latest downloads table'); ?></td>
+                                    <td align="left">
+                                        <?php
+                                            echo $this->Form->checkbox($k,array('label' => false ,'value' => $v, 'checked' => $v, 'div' => false, 'class' => 'form_fields'));
+                                        ?>
+                                    </td>
+                                </tr>
+                    <?php
+                            }
                         }
                     ?>
                     <tr>
