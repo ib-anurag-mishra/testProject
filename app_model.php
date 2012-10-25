@@ -1,5 +1,5 @@
 <?php
-class AppModel extends Model {
+class AppModel extends Model { 
 
     function find($conditions = null, $fields = array(), $order = null, $recursive = null) {
         $doQuery = true;
