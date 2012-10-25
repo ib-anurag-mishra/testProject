@@ -116,17 +116,17 @@ class AppModel extends Model {
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
-                    if($v === "1 = 1 GROUP BY Album.ProdID" || "1 = 1 GROUP BY Album.ProdID, Album.provider_type"){
+                    if($v === "1 = 1 GROUP BY Album.ProdID"){
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
-                    else if($v === "1 = 1 GROUP BY Song.ProdID"){
+                    if($v === "1 = 1 GROUP BY Song.ProdID"){
                         $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                         $paginationcount = count($paginationcount);
                         $group = "yes";
                     }
-                    else if($v === "1 = 1 GROUP BY Song.ArtistText"){
+                    if($v === "1 = 1 GROUP BY Song.ArtistText"){
                         if(isset($extra['all_query']) && $extra['all_query'] == true){
                           $fields = array('count'=>'count(DISTINCT ArtistText)');
                           $paginationrow = $this->query("SELECT COUNT(Distinct ArtistText) FROM Songs AS Song WHERE Song.DownloadStatus = '1' AND Song.Sample_FileID != '' AND Song.FullLength_FIleID != '' AND ".$extra['all_country'].((!empty($extra['all_condition']))?" AND ".$extra['all_condition']:""));
@@ -141,13 +141,9 @@ class AppModel extends Model {
                           $paginationcount = count($paginationcount);
                           $group = "yes";
                         }
-                    }
-                    else{
-                        $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
-                        $paginationcount = count($paginationcount);
-                        $group = "yes";               
-                    }
 
+
+                    }
                 }
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
