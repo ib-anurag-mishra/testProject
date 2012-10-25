@@ -31,6 +31,7 @@ class CacheController extends AppController {
 	function cacheGenre(){
     set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
+    echo "============".date("Y-m-d H:i:s")."===============";
     $territoryNames = array('US','CA','AU','IT','NZ');
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
@@ -64,10 +65,12 @@ class CacheController extends AppController {
       if(count($genreAll) > 0)
       {
         $this->log( "cache written for genre for $territory", "cache");
+        echo "cache written for genre for $territory";
       }
       else
       {
         $this->log( "no data available for genre".$territory, "cache");
+        echo "no data available for genre".$territory;
       }
 	  
 		$country = $territory;
@@ -108,6 +111,7 @@ class CacheController extends AppController {
       if(count($natTopDownloaded) < 1) 
       {
         $this->log( "download data not recevied for ".$territory, "cache");
+        echo "download data not recevied for ".$territory;
       }
 		  $data = array();
 		  
@@ -160,14 +164,17 @@ STR;
       if($ids_provider_type == "")
       {
         $this->log( "ids_provider_type is set blank for ".$territory, "cache");
+        echo "ids_provider_type is set blank for ".$territory;
       }
 			  
 		  if(!empty($data)){
 			Cache::write("national".$country, $data);
       $this->log("cache written for national top ten for $territory", "cache");
+      echo "cache written for national top ten for $territory";
 		  } else {
 			echo "Unable to update key";
       $this->log("Unable to update national 100 for ".$territory, "cache");
+      echo "Unable to update national 100 for ".$territory;
 		  }
 		}
 		$this->log("cache written for national top ten for $territory",'debug');
@@ -192,6 +199,7 @@ STR;
       if(count($featured) < 1)
       {
         $this->log("featured artist data is not available for".$territory, "cache");
+        echo "featured artist data is not available for".$territory;
       }
 
 			if($ids != ''){
@@ -240,6 +248,7 @@ STR;
 			echo Cache::write("featured".$territory, $featured);
       $this->log("cache written for featured artists for $territory",'debug');
       $this->log("cache written for featured artists for: $territory", "cache");
+      echo "cache written for featured artists for: $territory";
       
       $genres = array("Pop", "Rock", "Country", "Alternative", "Classical", "Gospel/Christian", "R&B", "Jazz", "Soundtracks", "Rap", "Blues", "Folk",
                     "Latin", "Children's", "Dance", "Metal/Hard Rock", "Classic Rock", "Soundtrack", "Easy Listening", "New Age");
@@ -352,9 +361,11 @@ $restoregenre_query =  "
         if(!empty($data)){
           	echo Cache::write($genre.$territory, $data);
             $this->log("cache written for: $genre $territory", "cache");
+            echo "cache written for: $genre $territory";
         } else {
           echo "Unable to update key";
             $this->log("Unable to update key for: $genre $territory", "cache");
+            echo "Unable to update key for: $genre $territory";
         }       
 
 			}
@@ -614,11 +625,13 @@ STR;
       if(count($topDownload) < 1)
       {
         $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
+        echo "topDownloaded_query returns null for lib: $libId $country";
       }
       else
       {        
         //library top 10 cache set
         $this->log("library top 10 cache set for lib: $libId $country", "cache");
+        echo "library top 10 cache set for lib: $libId $country";
       }
 	  
 	  
@@ -626,6 +639,7 @@ STR;
 	  
     }
     
+    $this->requestAction('/Resetcache/genrateXML');
     exit;
   }
   
