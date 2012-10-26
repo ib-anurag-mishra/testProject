@@ -4662,7 +4662,7 @@ STR;
       return $data;
     }
     else {
-      throw new SOAPFault('Soap:client', 'Freegal is unable to find any song containing the provided keyword.');
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any information containing provided keyword.');
     }
 
   }
@@ -4749,7 +4749,7 @@ STR;
       return $data;
     }
     else {
-      throw new SOAPFault('Soap:client', 'Freegal is unable to find any song containing the provided keyword.');
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any Artist containing the provided keyword.');
     }
 
   }
@@ -4835,7 +4835,7 @@ STR;
       return $data;
     }
     else {
-      throw new SOAPFault('Soap:client', 'Freegal is unable to find any song containing the provided keyword.');
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any Album containing the provided keyword.');
     }
 
   }
