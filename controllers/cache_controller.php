@@ -78,7 +78,7 @@ class CacheController extends AppController {
 		  if($maintainLatestDownload){
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `downloads` AS `Download` 
+              FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
               AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
@@ -87,7 +87,7 @@ class CacheController extends AppController {
               LIMIT 110";
          } else {
          	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `latest_downloads` AS `Download` 
+              FROM `downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
               AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
@@ -282,7 +282,7 @@ $restoregenre_query =  "
             Full_Files.SaveAsName,
             Sample_Files.FileID,
             Full_Files.FileID,
-			PRODUCT.pid
+            PRODUCT.pid
         FROM
             latest_downloads,
             Songs AS Song
@@ -292,6 +292,8 @@ $restoregenre_query =  "
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+            LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
         WHERE
             latest_downloads.ProdID = Song.ProdID 
             AND latest_downloads.provider_type = Song.provider_type 
@@ -339,8 +341,8 @@ $restoregenre_query =  "
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-				LEFT JOIN
-			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                LEFT JOIN
+            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
         WHERE
             downloads.ProdID = Song.ProdID 
             AND downloads.provider_type = Song.provider_type 
