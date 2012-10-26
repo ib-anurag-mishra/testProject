@@ -258,106 +258,107 @@ STR;
 				$genre_data = array();
 				echo $territory;
 				
-if($maintainLatestDownload){
-$restoregenre_query =  "
-        SELECT 
-            COUNT(DISTINCT latest_downloads.id) AS countProduct,
-            Song.ProdID,
-            Song.ReferenceID,
-            Song.Title,
-            Song.ArtistText,
-            Song.DownloadStatus,
-            Song.SongTitle,
-            Song.Artist,
-            Song.Advisory,
-            Song.Sample_Duration,
-            Song.FullLength_Duration,
-            Song.provider_type,
-            Song.Genre,
-            Country.Territory,
-            Country.SalesDate,
-            Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            Sample_Files.FileID,
-            Full_Files.FileID,
-            PRODUCT.pid
-        FROM
-            latest_downloads,
-            Songs AS Song
-                LEFT JOIN
-            countries AS Country ON Country.ProdID = Song.ProdID
-                LEFT JOIN
-            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                LEFT JOIN
-            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-            LEFT JOIN
-              PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
-        WHERE
-            latest_downloads.ProdID = Song.ProdID 
-            AND latest_downloads.provider_type = Song.provider_type 
-            AND Song.Genre LIKE '%".$genre."%'
-            AND Country.Territory LIKE '%".$territory."%' 
-            AND Country.SalesDate != '' 
-            AND Country.SalesDate < NOW() 
-            AND Song.DownloadStatus = '1' 
-            AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
-        GROUP BY latest_downloads.ProdID
-        ORDER BY countProduct DESC
-        LIMIT 10
-        ";
-} else {
-        $restoregenre_query =  "
-        SELECT 
-            COUNT(DISTINCT downloads.id) AS countProduct,
-            Song.ProdID,
-            Song.ReferenceID,
-            Song.Title,
-            Song.ArtistText,
-            Song.DownloadStatus,
-            Song.SongTitle,
-            Song.Artist,
-            Song.Advisory,
-            Song.Sample_Duration,
-            Song.FullLength_Duration,
-            Song.provider_type,
-            Song.Genre,
-            Country.Territory,
-            Country.SalesDate,
-            Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            Sample_Files.FileID,
-            Full_Files.FileID,
-			PRODUCT.pid
-        FROM
-            downloads,
-            Songs AS Song
-                LEFT JOIN
-            countries AS Country ON Country.ProdID = Song.ProdID
-                LEFT JOIN
-            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                LEFT JOIN
-            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                LEFT JOIN
-            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
-        WHERE
-            downloads.ProdID = Song.ProdID 
-            AND downloads.provider_type = Song.provider_type 
-            AND Song.Genre LIKE '%".mysql_real_escape_string($genre)."%'
-            AND Country.Territory LIKE '%".$territory."%' 
-            AND Country.SalesDate != '' 
-            AND Country.SalesDate < NOW() 
-            AND Song.DownloadStatus = '1' 
-			AND (PRODUCT.provider_type = Song.provider_type)
-            AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
-        GROUP BY downloads.ProdID
-        ORDER BY countProduct DESC
-        LIMIT 10
-        ";
-	}
+        if($maintainLatestDownload){
+          $restoregenre_query =  "
+          SELECT 
+              COUNT(DISTINCT latest_downloads.id) AS countProduct,
+              Song.ProdID,
+              Song.ReferenceID,
+              Song.Title,
+              Song.ArtistText,
+              Song.DownloadStatus,
+              Song.SongTitle,
+              Song.Artist,
+              Song.Advisory,
+              Song.Sample_Duration,
+              Song.FullLength_Duration,
+              Song.provider_type,
+              Song.Genre,
+              Country.Territory,
+              Country.SalesDate,
+              Sample_Files.CdnPath,
+              Sample_Files.SaveAsName,
+              Full_Files.CdnPath,
+              Full_Files.SaveAsName,
+              Sample_Files.FileID,
+              Full_Files.FileID,
+              PRODUCT.pid
+          FROM
+              latest_downloads,
+              Songs AS Song
+                  LEFT JOIN
+              countries AS Country ON Country.ProdID = Song.ProdID
+                  LEFT JOIN
+              File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                  LEFT JOIN
+              File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                  LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+          WHERE
+              latest_downloads.ProdID = Song.ProdID 
+              AND latest_downloads.provider_type = Song.provider_type 
+              AND Song.Genre LIKE '%".mysql_real_escape_string($genre)."%'
+              AND Country.Territory LIKE '%".$territory."%' 
+              AND Country.SalesDate != '' 
+              AND Country.SalesDate < NOW() 
+              AND Song.DownloadStatus = '1' 
+              AND (PRODUCT.provider_type = Song.provider_type)
+              AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+          GROUP BY latest_downloads.ProdID
+          ORDER BY countProduct DESC
+          LIMIT 10
+          ";
+        } else {
+          $restoregenre_query =  "
+          SELECT 
+              COUNT(DISTINCT downloads.id) AS countProduct,
+              Song.ProdID,
+              Song.ReferenceID,
+              Song.Title,
+              Song.ArtistText,
+              Song.DownloadStatus,
+              Song.SongTitle,
+              Song.Artist,
+              Song.Advisory,
+              Song.Sample_Duration,
+              Song.FullLength_Duration,
+              Song.provider_type,
+              Song.Genre,
+              Country.Territory,
+              Country.SalesDate,
+              Sample_Files.CdnPath,
+              Sample_Files.SaveAsName,
+              Full_Files.CdnPath,
+              Full_Files.SaveAsName,
+              Sample_Files.FileID,
+              Full_Files.FileID,
+              PRODUCT.pid
+          FROM
+              downloads,
+              Songs AS Song
+                  LEFT JOIN
+              countries AS Country ON Country.ProdID = Song.ProdID
+                  LEFT JOIN
+              File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                  LEFT JOIN
+              File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                  LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+          WHERE
+              downloads.ProdID = Song.ProdID 
+              AND downloads.provider_type = Song.provider_type 
+              AND Song.Genre LIKE '%".mysql_real_escape_string($genre)."%'
+              AND Country.Territory LIKE '%".$territory."%' 
+              AND Country.SalesDate != '' 
+              AND Country.SalesDate < NOW() 
+              AND Song.DownloadStatus = '1' 
+              AND (PRODUCT.provider_type = Song.provider_type)
+              AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+          GROUP BY downloads.ProdID
+          ORDER BY countProduct DESC
+          LIMIT 10
+          ";
+        }
         $data =   $this->Album->query($restoregenre_query);
 			
         if(!empty($data)){

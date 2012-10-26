@@ -118,7 +118,8 @@ class HomesController extends AppController
 		$this->set('featuredArtists', $featured);
 
 		//used for gettting top downloads for Pop Genre
-		if (($artists = Cache::read("pop".$country)) === false) {
+		//if (($artists = Cache::read("pop".$country)) === false)
+                    {
       
           $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
           if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){ 
@@ -264,7 +265,8 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$this->set('tab_no',$tab_no);
 
-		if (($artists = Cache::read($genre.$territory)) === false) {
+		//if (($artists = Cache::read($genre.$territory)) === false)
+     {
           $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
 	  if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){                    
           $restoregenre_query =  "
@@ -401,7 +403,8 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		if (($libDownload = Cache::read("lib".$libId)) === false) {
+		//if (($libDownload = Cache::read("lib".$libId)) === false)
+                    {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
                             $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
@@ -503,7 +506,8 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
-		if (($national = Cache::read("national".$territory)) === false) {
+		//if (($national = Cache::read("national".$territory)) === false)
+                    {
       $country = $territory;
       
       $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
