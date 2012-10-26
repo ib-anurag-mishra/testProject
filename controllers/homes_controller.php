@@ -456,8 +456,8 @@ STR;
       $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
       
       if($maintainLatestDownload){
-      $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `downloads` AS `Download` 
+        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
               AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
@@ -466,7 +466,7 @@ STR;
               LIMIT 110";
          } else {
          	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `latest_downloads` AS `Download` 
+              FROM `downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
               AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
