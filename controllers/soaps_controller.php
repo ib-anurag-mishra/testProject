@@ -4924,7 +4924,7 @@ STR;
       return $data;
     }
     else {
-      throw new SOAPFault('Soap:client', 'Freegal is unable to find any song containing the provided keyword.');
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any Song containing the provided keyword.');
     }
 
   }
