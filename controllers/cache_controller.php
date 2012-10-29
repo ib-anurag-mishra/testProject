@@ -399,12 +399,12 @@ STR;
         'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
       );
       $allArtists = $this->paginate('Song');
-      for($i = 65;$i < 93;$i++){
-        $alphabet = chr($i);
+      for($j = 65;$j < 93;$j++){
+        $alphabet = chr($j);
         if($alphabet == '[') {
           $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
         }
-        elseif($i == 92) {
+        elseif($j == 92) {
           $condition = "";
         }
         elseif($alphabet != '') {
@@ -474,12 +474,12 @@ STR;
           );
         $allArtists = $this->paginate('Song');
         $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
-        for($i = 65;$i < 93;$i++){
-          $alphabet = chr($i);
+        for($k = 65;$k < 93;$k++){
+          $alphabet = chr($k);
           if($alphabet == '[') {
             $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
           }
-          elseif($i == 92) {
+          elseif($k == 92) {
             $condition = "";
           }
           elseif($alphabet != '') {
