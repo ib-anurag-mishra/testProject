@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product');
+  var $uses = array('User','Library','LatestDownload','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -696,7 +696,7 @@ class SoapsController extends AppController {
 
     if (($libDownload = Cache::read("lib".$libraryId)) === false) {
 
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+			$topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$ids = '';
 
 			foreach($topDownloaded as $k => $v){
@@ -1035,8 +1035,8 @@ STR;
 
     $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
 
-    $this->Download->recursive = -1;
-    $downloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+    $this->LatestDownload->recursive = -1;
+    $downloadCount =  $this->LatestDownload->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
 
     $this->Library->recursive = -1;
@@ -3806,8 +3806,8 @@ STR;
 
     $libId = $this->getLibraryIdFromAuthenticationToken($authentication_token);
 
-    $this->Download->recursive = -1;
-    $currentDownloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+    $this->LatestDownload->recursive = -1;
+    $currentDownloadCount =  $this->LatestDownload->find('count',array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
 
     $this->Library->recursive = -1;
