@@ -2416,7 +2416,7 @@ STR;
       $response_msg = 'Card number not provided';
       return $this->createsAuthenticationResponseDataObject(false, $response_msg);
 		}
-		elseif(strlen($card) < 5){
+		elseif(strlen($card) < 3){
 
 
       $response_msg = 'Invalid Card number';

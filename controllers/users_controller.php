@@ -3035,7 +3035,7 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}
 			}
-			elseif(strlen($card) < 4){
+			elseif(strlen($card) < 3){
 				$this->Session->setFlash("Please provide a correct card number.");
 			}
 			elseif($pin == ''){
