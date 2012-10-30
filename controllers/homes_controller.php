@@ -7,7 +7,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
-    var $components = array('Auth','Acl','RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload');
 
     /*
@@ -1167,7 +1167,8 @@ STR;
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-        $user = $this->Auth->user();
+        //$user = $this->Auth->user();
+        $user = $this->Session->read('Auth.User.id');
         if($validationPassed == true){
             $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user['User']['id'],'download');
         $libId = $this->Session->read('library');
@@ -2187,7 +2188,8 @@ STR;
           $validationPassedMessage = "Not Checked";
           $validationMessage = '';
       }
-      $user = $this->Auth->user();
+      //$user = $this->Auth->user();
+      $user = $this->Session->read('Auth.User.id');
       if($validationPassed == true){
         $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user['User']['id'],'download');
 

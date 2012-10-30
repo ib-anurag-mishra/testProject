@@ -641,7 +641,7 @@ STR;
 	  }
 	  
     }
-    
+    echo "============".date("Y-m-d H:i:s")."===============";
     $this->requestAction('/Resetcache/genrateXML');
     exit;
   }

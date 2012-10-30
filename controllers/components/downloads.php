@@ -7,7 +7,7 @@
  
 Class DownloadsComponent extends Object
 {
-    var $components = array('Auth','Session');
+    var $components = array('Session');
     
     /*
      Function Name : checkLibraryDownload
@@ -48,8 +48,8 @@ Class DownloadsComponent extends Object
     function validateDownload($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null, $patId = null, $agent = null, $library_id = null){
         
         if(!$isMobileDownload){
-          $user = $this->Auth->user();
-          $uid = (int)$user['User']['id'];
+          $uid = $this->Session->read('Auth.User.id');
+          //$uid = (int)$user['User']['id'];
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
           $libId = $this->Session->read('library');
