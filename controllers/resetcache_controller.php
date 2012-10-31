@@ -25,32 +25,7 @@ class ResetcacheController extends AppController
   }
 
 	function genrateXML() {
-  
-    echo '<pre>';
-    print_r(Cache::read("lib10"));
-    echo '<br />========================================================================<br />';
-    
-    Cache::write("lib10", false );
-    var_dump(Cache::read("lib10"));
-    echo '<br />========================================================================<br />';
-    
-    Cache::write("lib10", '' );
-    var_dump(Cache::read("lib10"));
-    echo '<br />========================================================================<br />';
-    
-    Cache::write("lib10", ' ' );
-    var_dump(Cache::read("lib10"));
-    echo '<br />========================================================================<br />';
-    
-    Cache::write("lib10", array() );
-    var_dump(Cache::read("lib10"));
-    echo '<br />========================================================================<br />';
-    
-    Cache::write("lib10", Cache::read("lib10") );
-    
-    echo '<br />========================================================================<br />';
-    print_r(Cache::read("lib10"));
-    exit;
+
     
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
@@ -110,7 +85,7 @@ class ResetcacheController extends AppController
 		foreach($libraryDetails AS $key => $val ) {
 			$libId = $val['Library']['id'];
 			$librarytop10Data = Cache::read("lib".$libId);
-			$xml_data['librarytop10'][$libId] = $librarytop10Data;					 
+			$xml_data['librarytop10'][$libId] = $librarytop10Data;				 
     }
       
     //echo '<pre>'; print_r($xml_data); exit;
