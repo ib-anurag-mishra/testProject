@@ -3776,6 +3776,7 @@ STR;
 
   }
 
+
   /**
    * Function Name : songDownloadRequest
    * Desc : Actions that is used for updating user download
@@ -3786,8 +3787,8 @@ STR;
    */
 
   function songDownloadRequest($authentication_token, $prodId, $agent) {
-
-
+    
+    
     if(!($this->isValidAuthenticationToken($authentication_token))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
@@ -3795,33 +3796,61 @@ STR;
     $product_detail = $this->getProductDetail($prodId);
     $prodId = $product_detail['Product']['ProdID'];
     $provider_type = $product_detail['Product']['provider_type'];
-    
-    
-    if(0 == $this->getDownloadStatusOfSong($prodId, $provider_type)) {
-      throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
-    }
-
 
     $patId = $this->getPatronIdFromAuthenticationToken($authentication_token);
-
     $libId = $this->getLibraryIdFromAuthenticationToken($authentication_token);
+    
+    $this->Library->recursive = -1;
+    $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libId)));
+    
+    
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		 
+    if($maintainLatestDownload){
+      
+      $validationResult = $this->Downloads->validateDownload($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
+      
+      if(false === $validationResult[0])  {
+        
+        if(5 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+        }
+            
+        if(4 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+        }
+        
+        if(3 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+        }        
+      }
+    } else {
+      
+      if(0 == $this->getDownloadStatusOfSong($prodId, $provider_type)) {
+        throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+      }
+      
+      if('inactive' == $libraryDetails['Library']['library_status']) {
+        throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
+      }   
+
+      if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
+        throw new SOAPFault('Soap:client', 'Song does not belong to current library territory.');
+      }
+      
+      if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $provider_type)) {
+        throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
+      }
+      
+    }
+
 
     $this->Download->recursive = -1;
     $currentDownloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
 
-
-    $this->Library->recursive = -1;
-    $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libId)));
     $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
-
-    if('inactive' == $libraryDetails['Library']['library_status']) {
-      throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
-    }
-
-
-    if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
-      throw new SOAPFault('Soap:client', 'Song does not belong to current library territory.');
-    }
 
     $TrackData = $this->Song->find('first',
         array(
@@ -3831,7 +3860,8 @@ STR;
             'Song.Title',
             'Song.SongTitle',
             'Song.Artist',
-            'Song.ISRC'
+            'Song.ISRC',
+            'Song.FullLength_FIleID'
           ),
           'conditions' => array(
             'Song.ProdID' => $prodId,
@@ -3840,10 +3870,6 @@ STR;
           'recursive' => -1,
         )
     );
-    
-    if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $provider_type)) {
-      throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
-    }
     
     $insertArr = Array();
     $insertArr['library_id'] = $libId;
@@ -3876,20 +3902,16 @@ STR;
     $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-
 	  $this->Library->setDataSource('master');
-		
-    if('sony' == $provider_type) {
-      
-      $sql = "CALL sonyproc('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
-      
-    } else {
     
+    if($maintainLatestDownload){
+      $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+      
+    }else{
       $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
-    
     }
     
-    
+
     $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
@@ -3897,24 +3919,22 @@ STR;
 		$this->Library->setDataSource('default');
     $wishlist = 0;
 		if(is_numeric($return)){
-
-      $data = $this->Song->find('first',
-        array('joins' =>
-          array(
-            array(
-              'table' => 'File',
-              'alias' => 'f',
-              'type' => 'inner',
-              'foreignKey' => false,
-
-              'conditions'=> array('f.FileID = Song.FullLength_FIleID', 'Song.ProdID = ' . $prodId, 'Song.provider_type' => $provider_type)
-            )
-          )
+      
+      $data = $this->Files->find('first',
+        array(
+          'fields' => array(
+            'CdnPath',
+            'SaveAsName'
+          ),
+          'conditions' => array(
+            'FileID' => $TrackData['Song']['FullLength_FIleID']
+          ),
+          'recursive' => -1
         )
       );
 
-      $CdnPath = $data['Full_Files']['CdnPath'];
-      $SaveAsName = $data['Full_Files']['SaveAsName'];
+      $CdnPath = $data['Files']['CdnPath'];
+      $SaveAsName = $data['Files']['SaveAsName'];
 
       $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
@@ -3934,7 +3954,7 @@ STR;
       } else {
         if('error' == $return) {
 
-           if(!($libraryDetails['Library']['library_download_limit'] > ($libraryDetails['Library']['library_current_downloads']+1))) {
+          if(!($libraryDetails['Library']['library_download_limit'] > ($libraryDetails['Library']['library_current_downloads']+1))) {
             $wishlist = 1;
           }
 
@@ -3945,7 +3965,7 @@ STR;
     }
 
   }
-
+  
  /**
  * Function Name : getPageContent
  * Desc : To get page content based on page type
