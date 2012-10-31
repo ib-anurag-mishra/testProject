@@ -3812,6 +3812,9 @@ STR;
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
+    var_dump($maintainLatestDownload);    
+    var_dump($checkValidation); 
+    exit;    
         
     if($checkValidation){
       
