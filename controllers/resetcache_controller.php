@@ -26,7 +26,9 @@ class ResetcacheController extends AppController
 
 	function genrateXML() {
   
-    //exit;
+    echo '<pre>';
+    print_r(Cache::read("lib10");
+    exit;
     
 		$territoryNames = array('US','CA','AU','IT','NZ');
 		$xml_data = array();
@@ -50,22 +52,7 @@ class ResetcacheController extends AppController
 			
 			//Restore National top 100
 			$NationalTop100data = Cache::read('national'.$territory);
-			$xml_data[$territory]['nationaltop100'] = $NationalTop100data;	
-			
-			//Restore Library top 10
-			$libraryDetails = array();
-			$libraryDetails = $this->Library->find('all',array(
-			  'fields' => array('id', 'library_territory'),
-			  'conditions' => array('library_status' => 'active','library_territory' => $territory),
-			  'recursive' => -1
-			  )
-			); 
-			
-			foreach($libraryDetails AS $key => $val ) {
-				 $libId = $val['Library']['id'];
-				 $librarytop10Data = Cache::read("lib".$libId);
-				 $xml_data['librarytop10'][$libId] = $librarytop10Data;					 
-			}
+			$xml_data[$territory]['nationaltop100'] = $NationalTop100data;
 			
 			//Restore featured artist slide show
 			$languageArray = array('EN', 'ES', 'IT', 'FR');
@@ -89,6 +76,21 @@ class ResetcacheController extends AppController
 			$xml_data['AboutUsPage'][$languagevalue] = $AboutUsPageData;	
 		}
 		
+    //Restore Library top 10
+    $libraryDetails = array();
+		$libraryDetails = $this->Library->find('all',array(
+      'fields' => array('id', 'library_territory'),
+			 'conditions' => array('library_status' => 'active'),
+			 'recursive' => -1
+      )
+    ); 
+			
+		foreach($libraryDetails AS $key => $val ) {
+			$libId = $val['Library']['id'];
+			$librarytop10Data = Cache::read("lib".$libId);
+			$xml_data['librarytop10'][$libId] = $librarytop10Data;					 
+    }
+      
     //echo '<pre>'; print_r($xml_data); exit;
     /**
      * writes array into file (local)
