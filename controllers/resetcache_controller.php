@@ -28,6 +28,10 @@ class ResetcacheController extends AppController
   
     echo '<pre>';
     print_r(Cache::read("lib10"));
+    
+    Cache::write("lib10", Cache::read("lib10") );
+    
+    print_r(Cache::read("lib10"));
     exit;
     
 		$territoryNames = array('US','CA','AU','IT','NZ');
