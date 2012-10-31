@@ -3808,7 +3808,12 @@ STR;
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 		 
-    if($maintainLatestDownload){
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'single_channel'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+
+        
+    if($checkValidation){
       
       $validationResult = $this->Downloads->validateDownload($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
       
