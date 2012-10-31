@@ -3807,7 +3807,7 @@ STR;
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-		
+		var_dump($maintainLatestDownload); exit;
     if($maintainLatestDownload){
       
       $validationResult = $this->Downloads->validateDownload($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
