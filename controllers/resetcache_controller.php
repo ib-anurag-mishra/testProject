@@ -27,25 +27,28 @@ class ResetcacheController extends AppController
 	function genrateXML() {
   
     echo '<pre>';
+    print_r(Cache::read("lib10"));
+    echo '<br />========================================================================<br />';
     
     Cache::write("lib10", false );
-    print_r(Cache::read("lib10"));
+    var_dump(Cache::read("lib10"));
     echo '<br />========================================================================<br />';
     
     Cache::write("lib10", '' );
-    print_r(Cache::read("lib10"));
+    var_dump(Cache::read("lib10"));
     echo '<br />========================================================================<br />';
     
     Cache::write("lib10", ' ' );
-    print_r(Cache::read("lib10"));
+    var_dump(Cache::read("lib10"));
     echo '<br />========================================================================<br />';
     
     Cache::write("lib10", array() );
-    print_r(Cache::read("lib10"));
+    var_dump(Cache::read("lib10"));
     echo '<br />========================================================================<br />';
     
     Cache::write("lib10", Cache::read("lib10") );
     
+    echo '<br />========================================================================<br />';
     print_r(Cache::read("lib10"));
     exit;
     
