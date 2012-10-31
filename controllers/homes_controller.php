@@ -6,9 +6,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord', 'Country');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload');
 
     /*
      Function Name : beforeFilter
@@ -118,57 +118,113 @@ class HomesController extends AppController
 		$this->set('featuredArtists', $featured);
 
 		//used for gettting top downloads for Pop Genre
-		if (($artists = Cache::read("pop".$country)) === false) {
-
-          $restoregenre_query =  "
-          SELECT
-              COUNT(DISTINCT downloads.id) AS countProduct,
-              Song.ProdID,
-              Song.ReferenceID,
-              Song.Title,
-              Song.ArtistText,
-              Song.DownloadStatus,
-              Song.SongTitle,
-              Song.Artist,
-              Song.Advisory,
-              Song.Sample_Duration,
-              Song.FullLength_Duration,
-              Song.provider_type,
-              Song.Genre,
-              Country.Territory,
-              Country.SalesDate,
-              Sample_Files.CdnPath,
-              Sample_Files.SaveAsName,
-              Full_Files.CdnPath,
-              Full_Files.SaveAsName,
-              Sample_Files.FileID,
-              Full_Files.FileID,
-			  PRODUCT.pid
-          FROM
-              downloads,
-              Songs AS Song
-                  LEFT JOIN
-              countries AS Country ON Country.ProdID = Song.ProdID
-                  LEFT JOIN
-              File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                  LEFT JOIN
-              File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-				LEFT JOIN
-			  PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
-          WHERE
-              downloads.ProdID = Song.ProdID
-              AND downloads.provider_type = Song.provider_type
-              AND Song.Genre LIKE '%Pop%'
-			  AND (PRODUCT.provider_type = Song.provider_type)
-              AND Country.Territory LIKE '%".$country."%'
-              AND Country.SalesDate != ''
-              AND Country.SalesDate < NOW()
-              AND Song.DownloadStatus = '1'
-              AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
-          GROUP BY downloads.ProdID
-          ORDER BY countProduct DESC
-          LIMIT 10
-          ";
+		if (($artists = Cache::read("pop".$country)) === false)
+                    {
+      
+          $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
+          if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){ 
+                $restoregenre_query =  "
+                SELECT
+                    COUNT(DISTINCT latest_downloads.id) AS countProduct,
+                    Song.ProdID,
+                    Song.ReferenceID,
+                    Song.Title,
+                    Song.ArtistText,
+                    Song.DownloadStatus,
+                    Song.SongTitle,
+                    Song.Artist,
+                    Song.Advisory,
+                    Song.Sample_Duration,
+                    Song.FullLength_Duration,
+                    Song.provider_type,
+                    Song.Genre,
+                    Country.Territory,
+                    Country.SalesDate,
+                    Sample_Files.CdnPath,
+                    Sample_Files.SaveAsName,
+                    Full_Files.CdnPath,
+                    Full_Files.SaveAsName,
+                    Sample_Files.FileID,
+                    Full_Files.FileID,
+              PRODUCT.pid
+                FROM
+                    latest_downloads,
+                    Songs AS Song
+                        LEFT JOIN
+                    countries AS Country ON Country.ProdID = Song.ProdID
+                        LEFT JOIN
+                    File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                        LEFT JOIN
+                    File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+              LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                WHERE
+                    latest_downloads.ProdID = Song.ProdID
+                    AND latest_downloads.provider_type = Song.provider_type
+                    AND Song.Genre LIKE '%Pop%'
+              AND (PRODUCT.provider_type = Song.provider_type)
+                    AND Country.Territory LIKE '%".$country."%'
+                    AND Country.SalesDate != ''
+                    AND Country.SalesDate < NOW()
+                    AND Song.DownloadStatus = '1'
+                    AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+                GROUP BY latest_downloads.ProdID
+                ORDER BY countProduct DESC
+                LIMIT 10
+                ";
+          }
+          else
+          {
+            $restoregenre_query =  "
+                SELECT
+                    COUNT(DISTINCT downloads.id) AS countProduct,
+                    Song.ProdID,
+                    Song.ReferenceID,
+                    Song.Title,
+                    Song.ArtistText,
+                    Song.DownloadStatus,
+                    Song.SongTitle,
+                    Song.Artist,
+                    Song.Advisory,
+                    Song.Sample_Duration,
+                    Song.FullLength_Duration,
+                    Song.provider_type,
+                    Song.Genre,
+                    Country.Territory,
+                    Country.SalesDate,
+                    Sample_Files.CdnPath,
+                    Sample_Files.SaveAsName,
+                    Full_Files.CdnPath,
+                    Full_Files.SaveAsName,
+                    Sample_Files.FileID,
+                    Full_Files.FileID,
+              PRODUCT.pid
+                FROM
+                    downloads,
+                    Songs AS Song
+                        LEFT JOIN
+                    countries AS Country ON Country.ProdID = Song.ProdID
+                        LEFT JOIN
+                    File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                        LEFT JOIN
+                    File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+              LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                WHERE
+                    downloads.ProdID = Song.ProdID
+                    AND downloads.provider_type = Song.provider_type
+                    AND Song.Genre LIKE '%Pop%'
+              AND (PRODUCT.provider_type = Song.provider_type)
+                    AND Country.Territory LIKE '%".$country."%'
+                    AND Country.SalesDate != ''
+                    AND Country.SalesDate < NOW()
+                    AND Song.DownloadStatus = '1'
+                    AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+                GROUP BY downloads.ProdID
+                ORDER BY countProduct DESC
+                LIMIT 10
+                ";
+          }
 
           $data =   $this->Album->query($restoregenre_query);
           if(!empty($data)){
@@ -209,7 +265,62 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$this->set('tab_no',$tab_no);
 
-		if (($artists = Cache::read($genre.$territory)) === false) {
+		if (($artists = Cache::read($genre.$territory)) === false)
+     {
+          $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
+	  if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){                    
+          $restoregenre_query =  "
+          SELECT
+              COUNT(DISTINCT latest_downloads.id) AS countProduct,
+              Song.ProdID,
+              Song.ReferenceID,
+              Song.Title,
+              Song.ArtistText,
+              Song.DownloadStatus,
+              Song.SongTitle,
+              Song.Artist,
+              Song.Advisory,
+              Song.Sample_Duration,
+              Song.FullLength_Duration,
+              Song.provider_type,
+              Song.Genre,
+              Country.Territory,
+              Country.SalesDate,
+              Sample_Files.CdnPath,
+              Sample_Files.SaveAsName,
+              Full_Files.CdnPath,
+              Full_Files.SaveAsName,
+              Sample_Files.FileID,
+              Full_Files.FileID,
+              PRODUCT.pid
+          FROM
+              latest_downloads,
+              Songs AS Song
+                  LEFT JOIN
+              countries AS Country ON Country.ProdID = Song.ProdID
+                  LEFT JOIN
+              File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                  LEFT JOIN
+              File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                  LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+          WHERE
+              latest_downloads.ProdID = Song.ProdID
+              AND latest_downloads.provider_type = Song.provider_type
+              AND Song.Genre LIKE '%".$genre."%'
+              AND (PRODUCT.provider_type = Song.provider_type)
+              AND Country.Territory LIKE '%".$territory."%'
+              AND Country.SalesDate != ''
+              AND Country.SalesDate < NOW()
+              AND Song.DownloadStatus = '1'
+              AND created BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'
+          GROUP BY latest_downloads.ProdID
+          ORDER BY countProduct DESC
+          LIMIT 10
+          ";
+          }
+          else 
+          {
           $restoregenre_query =  "
           SELECT
               COUNT(DISTINCT downloads.id) AS countProduct,
@@ -233,7 +344,7 @@ class HomesController extends AppController
               Full_Files.SaveAsName,
               Sample_Files.FileID,
               Full_Files.FileID,
-			  PRODUCT.pid
+              PRODUCT.pid
           FROM
               downloads,
               Songs AS Song
@@ -243,13 +354,13 @@ class HomesController extends AppController
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-				LEFT JOIN
-			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                  LEFT JOIN
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
           WHERE
               downloads.ProdID = Song.ProdID
               AND downloads.provider_type = Song.provider_type
               AND Song.Genre LIKE '%".$genre."%'
-			  AND (PRODUCT.provider_type = Song.provider_type)
+              AND (PRODUCT.provider_type = Song.provider_type)
               AND Country.Territory LIKE '%".$territory."%'
               AND Country.SalesDate != ''
               AND Country.SalesDate < NOW()
@@ -259,6 +370,7 @@ class HomesController extends AppController
           ORDER BY countProduct DESC
           LIMIT 10
           ";
+          }
 
       $data =   $this->Album->query($restoregenre_query);
       if(!empty($data)){
@@ -291,19 +403,35 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		if (($libDownload = Cache::read("lib".$libId)) === false) {
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+		if (($libDownload = Cache::read("lib".$libId)) === false)
+                    {
+			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
+                        if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
+                            $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                        } else {
+                            $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                        }
 			$ids = '';
-
 //			$topDownloaded = Cache::read("lib".$libId);
 			foreach($topDownloaded as $k => $v){
+			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
+			   	if(empty($ids)){
+				  $ids .= $v['LatestDownload']['ProdID'];
+				  $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['LatestDownload']['ProdID'];
+				   $ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				}
+			   } else {
+			
 				if(empty($ids)){
 				  $ids .= $v['Download']['ProdID'];
 				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
 				} else {
 				  $ids .= ','.$v['Download']['ProdID'];
 				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}				
+				}
+			  }				
 			}
 
 			if($ids != ''){
@@ -377,9 +505,34 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
-		if (($national = Cache::read("national".$territory)) === false) {
-		 $country = $territory;
-		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+		if (($national = Cache::read("national".$territory)) === false)
+                    {
+      $country = $territory;
+      
+      $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+      $siteConfigData = $this->Album->query($siteConfigSQL);
+      $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+      
+      if($maintainLatestDownload){
+        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `latest_downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '".$country."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+         } else {
+         	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `downloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '".$country."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+         }
+		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
 		  foreach($natTopDownloaded as $natTopSong){
@@ -997,12 +1150,34 @@ STR;
     function userDownload() {
         Configure::write('debug', 0);
         $this->layout = false;
+        $prodId = $_POST['ProdID'];
+        $provider = $_POST['ProviderType'];
+        
+        $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
+        $checkValidation = $Setting['Siteconfig']['svalue'];
+        if($checkValidation == 1){
+            $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+            $checked = "true";
+            $validationPassed = $validationResult[0];
+            $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');
+            $validationMessage = $validationResult[1];
+        } else {
+            $checked = "false";
+            $validationPassed = true;
+            $validationPassedMessage = "Not Checked";
+            $validationMessage = '';
+        }
+        //$user = $this->Auth->user();
+        $user = $this->Session->read('Auth.User.id');
+		if(empty($user)){
+			$user = $this->Session->read('patron');
+        }
+		
+		if($validationPassed == true){
+            $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
-        $provider = $_POST['ProviderType'];
-        $validationResult = $this->Downloads->validateDownload($prodId, $provider);
-        if($validationResult[0] == true){
 		if($prodId == '' || $prodId == 0){
 			$this->redirect(array('controller' => 'homes', 'action' => 'index'));
 		}
@@ -1021,7 +1196,7 @@ STR;
             exit;
         }*/
 
-		
+		$provider = $_POST['ProviderType'];
         $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
@@ -1126,8 +1301,20 @@ STR;
 		$insertArr['user_agent'] = str_replace(";","",$_SERVER['HTTP_USER_AGENT']);
 		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 		$this->Library->setDataSource('master');
-		$sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
-		$this->Library->query($sql);
+    
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		if($maintainLatestDownload){    
+      $this->log("sonyproc_new called",'download');
+      $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+    }
+    else
+    {
+      $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";      
+    }
+    
+    $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
@@ -1637,8 +1824,14 @@ STR;
      Function Name : aboutus
      Desc : actions used for User end checking for cookie and javascript enable
     */
-    function aboutus() {
-		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
+    function aboutus() { 
+    
+      //Cache::write("lib10", array('nayan', 'more')); 
+      var_dump(Cache::read("lib10"));  
+      exit;
+      //Cache::write("lib".$libId, Cache::read("lib".$libId) ); exit;
+		
+    if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
 				$url = $this->Session->read('referral_url');
 			}
@@ -1961,135 +2154,178 @@ STR;
      Desc : For downloading a song in wishlist page
     */
     function wishlistDownload() {
-        Configure::write('debug', 0);
-        $this->layout = false;
+      Configure::write('debug', 0);
+      $this->layout = false;
 
-        $libId = $this->Session->read('library');
-        $patId = $this->Session->read('patron');
-		$prodId = $_REQUEST['prodId'];
-		$downloadsDetail = array();
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-        //check for download availability
-        if($libraryDownload != '1' || $patronDownload != '1'){
-            echo "error";
-            exit;
+      $libId = $this->Session->read('library');
+      $patId = $this->Session->read('patron');
+      $prodId = $_REQUEST['prodId'];
+      $downloadsDetail = array();
+      $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+      $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+      
+      //check for download availability
+      if($libraryDownload != '1' || $patronDownload != '1'){
+          echo "error";
+          exit;
+      }
+      
+      $id = $_REQUEST['id'];
+      $provider = $_REQUEST['provider'];
+      
+      //get details for this song
+      $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
+      $insertArr = Array();
+      $insertArr['library_id'] = $libId;
+      $insertArr['patron_id'] = $patId;
+      $insertArr['ProdID'] = $prodId;
+      $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+      $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+      $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+      $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+        
+      $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
+      $checkValidation = $Setting['Siteconfig']['svalue'];
+      if($checkValidation == 1){
+          $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+          $checked = "true";
+          $validationPassed = $validationResult[0];
+          $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');
+          $validationMessage = $validationResult[1];
+      } else {
+          $checked = "false";
+          $validationPassed = true;
+          $validationPassedMessage = "Not Checked";
+          $validationMessage = '';
+      }
+      //$user = $this->Auth->user();
+      $user = $this->Session->read('Auth.User.id');
+		if(empty($user)){
+			$user = $this->Session->read('patron');
         }
-        $id = $_REQUEST['id'];
-		$provider = $_REQUEST['provider'];;
-        //get details for this song
-        $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
-        $insertArr = Array();
-        $insertArr['library_id'] = $libId;
-        $insertArr['patron_id'] = $patId;
-        $insertArr['ProdID'] = $prodId;
-        $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-        $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-        $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
-        $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+      if($validationPassed == true){
+        $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
+
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
-			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'referral_url';
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'referral_url';
         }
         elseif($this->Session->read('innovative') && ($this->Session->read('innovative') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative';
-		}
-		elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'mdlogin_reference';
-		}
-		elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'mndlogin_reference';
-		}
-		elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var';
-		}
-		elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_name';
-		}
-		elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_https_name';
-		}
-		elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_https';
-		}
-		elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
-		}
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative';
+        }
+        elseif($this->Session->read('mdlogin_reference') && ($this->Session->read('mdlogin_reference') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'mdlogin_reference';
+        }
+        elseif($this->Session->read('mndlogin_reference') && ($this->Session->read('mndlogin_reference') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'mndlogin_reference';
+        }
+        elseif($this->Session->read('innovative_var') && ($this->Session->read('innovative_var') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var';
+        }
+        elseif($this->Session->read('innovative_var_name') && ($this->Session->read('innovative_var_name') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_name';
+        }
+        elseif($this->Session->read('innovative_var_https_name') && ($this->Session->read('innovative_var_https_name') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_https_name';
+        }
+        elseif($this->Session->read('innovative_var_https') && ($this->Session->read('innovative_var_https') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_https';
+        }
+        elseif($this->Session->read('innovative_var_https_wo_pin') && ($this->Session->read('innovative_var_https_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
+        }
         elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_https';
-		}
-		elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_wo_pin';
-		}
-		elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2';
-		}
-		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
-			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'sip';
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_https';
         }
-		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'innovative_var_wo_pin';
-		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var';
-		}
-		elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
-		}
-		elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'sip2_var_wo_pin';
-		}
-		elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'ezproxy';
-		}
-		elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'soap';
-		}
-		elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
-			$insertArr['email'] = '';
-			$insertArr['user_login_type'] = 'curl_method';
-		}
+        elseif($this->Session->read('innovative_wo_pin') && ($this->Session->read('innovative_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_wo_pin';
+        }
+        elseif($this->Session->read('sip2') && ($this->Session->read('sip2') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2';
+        }
+        elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip';
+        }
+        elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'innovative_var_wo_pin';
+        }
+        elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2_var';
+        }
+        elseif($this->Session->read('sip2_var') && ($this->Session->read('sip2_var') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2_var_wo_pin';
+        }
+        elseif($this->Session->read('sip2_var_wo_pin') && ($this->Session->read('sip2_var_wo_pin') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'sip2_var_wo_pin';
+        }
+        elseif($this->Session->read('ezproxy') && ($this->Session->read('ezproxy') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'ezproxy';
+        }
+        elseif($this->Session->read('soap') && ($this->Session->read('soap') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'soap';
+        }
+        elseif($this->Session->read('curl_method') && ($this->Session->read('curl_method') != '')){
+          $insertArr['email'] = '';
+          $insertArr['user_login_type'] = 'curl_method';
+        }
         else{
-			$insertArr['email'] = $this->Session->read('patronEmail');
-			$insertArr['user_login_type'] = 'user_account';
+          $insertArr['email'] = $this->Session->read('patronEmail');
+          $insertArr['user_login_type'] = 'user_account';
         }
-		$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-		$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
+        $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+        $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
         //save to downloads table
         if($this->Download->save($insertArr)){
-        //update library table
-			$this->Library->setDataSource('master');
-			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
-			$this->Library->query($sql);
-			$this->Library->setDataSource('default');
-		}
+          $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+          $siteConfigData = $this->Album->query($siteConfigSQL);
+          $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+          if($maintainLatestDownload){
+            $this->LatestDownload->save($insertArr);
+          }
+          //update library table
+          $this->Library->setDataSource('master');
+          $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
+          $this->Library->query($sql);
+          $this->Library->setDataSource('default');
+        }
+
         //delete from wishlist table
         $deleteSongId = $id;
         $this->Wishlist->delete($deleteSongId);
         //get no of downloads for this week
-		$this->Download->recursive = -1;
+        $this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+
         echo "suces|".$downloadsUsed;
-		exit;
+        exit;
+      }
+      else
+      {
+        echo "invalid|".$validationResult[1];
+        exit;
+      }
     }
+    
     /*
      Function Name : historyDownload
      Desc : For getting download count on My History
