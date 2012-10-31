@@ -59,16 +59,18 @@ class CacheController extends AppController {
 									),
 						),'group' => 'Genre.Genre'
 					));
-			Cache::write("genre".$territory, $genreAll);
-      $this->log("cache written for genre for $territory",'debug');
+            
+      $this->log("cache written for genre for $territory",'debug');      
       
       if(count($genreAll) > 0)
       {
+        Cache::write("genre".$territory, $genreAll);
         $this->log( "cache written for genre for $territory", "cache");
         echo "cache written for genre for $territory";
       }
       else
-      {
+      {                                  
+        Cache::write("genre".$territory, Cache::read("genre".$territory) );
         $this->log( "no data available for genre".$territory, "cache");
         echo "no data available for genre".$territory;
       }
@@ -172,6 +174,7 @@ STR;
       $this->log("cache written for national top ten for $territory", "cache");
       echo "cache written for national top ten for $territory";
 		  } else {
+      Cache::write("national".$country, Cache::read("national".$country) ); 
 			echo "Unable to update key";
       $this->log("Unable to update national 100 for ".$territory, "cache");
       echo "Unable to update national 100 for ".$territory;
@@ -245,7 +248,13 @@ STR;
 			} else {
 				$featured = array();
 			}
-			echo Cache::write("featured".$territory, $featured);
+      
+      if(empty($featured)) {
+        Cache::write("featured".$territory, Cache::read("featured".$territory) );
+      }else{
+        Cache::write("featured".$territory, $featured);
+      }
+			
       $this->log("cache written for featured artists for $territory",'debug');
       $this->log("cache written for featured artists for: $territory", "cache");
       echo "cache written for featured artists for: $territory";
@@ -362,11 +371,12 @@ STR;
         $data =   $this->Album->query($restoregenre_query);
 			
         if(!empty($data)){
-          	echo Cache::write($genre.$territory, $data);
+          	Cache::write($genre.$territory, $data);
             $this->log("cache written for: $genre $territory", "cache");
             echo "cache written for: $genre $territory";
         } else {
-          echo "Unable to update key";
+            Cache::write($genre.$territory, Cache::read($genre.$territory) );
+            echo "Unable to update key";
             $this->log("Unable to update key for: $genre $territory", "cache");
             echo "Unable to update key for: $genre $territory";
         }       
@@ -621,17 +631,19 @@ STR;
 			} else {
 				$topDownload = array();
 			}
-
-			Cache::write("lib".$libId, $topDownload);
+      
+			
 //		library top 10 cache set
       
       if(count($topDownload) < 1)
       {
+        Cache::write("lib".$libId, Cache::read("lib".$libId) );
         $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
         echo "topDownloaded_query returns null for lib: $libId $country";
       }
       else
       {        
+        Cache::write("lib".$libId, $topDownload);
         //library top 10 cache set
         $this->log("library top 10 cache set for lib: $libId $country", "cache");
         echo "library top 10 cache set for lib: $libId $country";
