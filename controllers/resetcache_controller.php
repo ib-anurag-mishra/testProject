@@ -27,7 +27,7 @@ class ResetcacheController extends AppController
 	function genrateXML() {
   
     echo '<pre>';
-    print_r(Cache::read("lib10");
+    print_r(Cache::read("lib10"));
     exit;
     
 		$territoryNames = array('US','CA','AU','IT','NZ');
