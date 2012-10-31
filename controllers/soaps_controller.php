@@ -3810,11 +3810,7 @@ STR;
 		 
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'single_channel'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
-    $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-
-    var_dump($maintainLatestDownload);    
-    var_dump($checkValidation); 
-    exit;    
+    $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);  
         
     if($checkValidation){
       
