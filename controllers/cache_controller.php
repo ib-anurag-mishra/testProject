@@ -32,7 +32,111 @@ class CacheController extends AppController {
     set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
     echo "============".date("Y-m-d H:i:s")."===============";
-    $territoryNames = array('US','CA','AU','IT','NZ');
+    
+     //------------------------------------------------------------------------------------
+    
+    $libraryDetails = $this->Library->find('all',array(
+      'fields' => array('id', 'library_territory'),
+      'conditions' => array('library_status' => 'active'),
+      'recursive' => -1,
+      'limit' => 0,5
+      )
+    );  
+    
+    foreach($libraryDetails AS $key => $val ) {
+      
+      $libId = $val['Library']['id'];
+      $country = $val['Library']['library_territory'];
+      
+			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+			$ids = '';
+      
+      
+      $ids_provider_type = '';
+			foreach($topDownloaded as $k => $v){
+				if(empty($ids)){
+				  $ids .= $v['Download']['ProdID'];
+				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['Download']['ProdID'];
+				  $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				}
+			}
+      
+      if(count($topDownloaded) < 1)
+      {
+        $this->log("top download is not available for library: $libId - $country", "cache");
+      }
+      
+			if($ids != ''){
+				$this->Song->recursive = 2;
+				 $topDownloaded_query =<<<STR
+				SELECT
+					Song.ProdID,
+					Song.ReferenceID,
+					Song.Title,
+					Song.ArtistText,
+					Song.DownloadStatus,
+					Song.SongTitle,
+					Song.Artist,
+					Song.Advisory,
+					Song.Sample_Duration,
+					Song.FullLength_Duration,
+					Song.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+					Full_Files.SaveAsName,
+					Sample_Files.FileID,
+					Full_Files.FileID,
+					PRODUCT.pid
+				FROM
+					Songs AS Song
+						LEFT JOIN
+					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+						LEFT JOIN
+					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
+				WHERE
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+				GROUP BY Song.ProdID
+				ORDER BY FIELD(Song.ProdID,
+						$ids) ASC
+				LIMIT 10
+STR;
+			$topDownload = $this->Album->query($topDownloaded_query);
+
+			} else {
+				$topDownload = array();
+			}     
+			
+      //		library top 10 cache set
+      
+      if(count($topDownload) < 1)
+      {
+        Cache::write("lib".$libId, Cache::read("lib".$libId) );
+        $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
+        echo "<br /> library top 10 returns null for lib: $libId $country <br />";
+      }
+      else
+      {        
+        Cache::write("lib".$libId, $topDownload);
+        //library top 10 cache set
+        $this->log("library top 10 cache set for lib: $libId $country", "cache");
+        echo "<br />library top 10 cache set for lib: $libId $country <br />";
+      }
+	  }
+    
+    //------------------------------------------------------------------------------------
+    $territoryNames = array('US','CA','AU','NZ','IT');
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
@@ -484,6 +588,7 @@ STR;
           );
         $allArtists = $this->paginate('Song');
         $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'debug');
+        $this->log(count($allArtists)." ".$genre." ".$alphabet."-".$territory,'cache');
         for($k = 65;$k < 93;$k++){
           $alphabet = chr($k);
           if($alphabet == '[') {
@@ -547,7 +652,7 @@ STR;
 	  
 //		library top 10 cache set for all libraries	  
 	  
-    $libraryDetails = $this->Library->find('all',array(
+    /*$libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory'),
       'conditions' => array('library_status' => 'active','library_territory' => $territory),
       'recursive' => -1
@@ -650,7 +755,7 @@ STR;
       }
 	  
 	  
-	  }
+	  }*/
 	  
     }
     echo "============".date("Y-m-d H:i:s")."===============";
