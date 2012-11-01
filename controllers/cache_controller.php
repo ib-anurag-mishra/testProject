@@ -38,8 +38,7 @@ class CacheController extends AppController {
     $libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory'),
       'conditions' => array('library_status' => 'active'),
-      'recursive' => -1,
-      'limit' => 0,5
+      'recursive' => -1
       )
     );  
     
