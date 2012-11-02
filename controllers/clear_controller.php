@@ -943,7 +943,7 @@ STR;
 STR;
 echo "<br/>";
 echo "<br/>";
-echo topDownloaded_query;
+echo $topDownloaded_query;
 echo "<br/>";
 echo "<br/>";
 			$topDownload = $this->Album->query($topDownloaded_query);
