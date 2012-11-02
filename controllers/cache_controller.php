@@ -29,11 +29,12 @@ class CacheController extends AppController {
 
   //for caching data
 	function cacheGenre(){
+        
     set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
     echo "============".date("Y-m-d H:i:s")."===============";
     
-     //------------------------------------------------------------------------------------
+    //--------------------------------Library Top Ten Start----------------------------------------------------
     
     $libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory'),
@@ -134,7 +135,8 @@ STR;
       }
 	  }
     
-    //------------------------------------------------------------------------------------
+    //--------------------------------------Library Top Ten End----------------------------------------------
+    
     $territoryNames = array('US','CA','AU','NZ','IT');
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
@@ -181,7 +183,7 @@ STR;
 		$country = $territory;
 		if(!empty($country)){
 		  if($maintainLatestDownload){
-		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+
 		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -487,9 +489,11 @@ STR;
 			}
       $this->log("cache written for top 10 for different genres for $territory",'debug');
 
-
+    //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
+    try {
+     
       $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
-
+      
       $country = $territory;
       $condition = "";
       $this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -562,9 +566,9 @@ STR;
           )
         )
       );
-
+      
       foreach($genreAll as $genreRow){
-        $genre = addslashes($genreRow['Genre']['Genre']);
+        $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
         $condition = "";
         $this->Song->unbindModel(array('hasOne' => array('Participant')));
         $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -647,114 +651,16 @@ STR;
           )
         )
       );
-	  
-	  
-//		library top 10 cache set for all libraries	  
-	  
-    /*$libraryDetails = $this->Library->find('all',array(
-      'fields' => array('id', 'library_territory'),
-      'conditions' => array('library_status' => 'active','library_territory' => $territory),
-      'recursive' => -1
-      )
-    );  
-    
-    foreach($libraryDetails AS $key => $val ) {
       
-      $libId = $val['Library']['id'];
-      $country = $territory;
-      
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-			$ids = '';
-      
-      
-      $ids_provider_type = '';
-			foreach($topDownloaded as $k => $v){
-				if(empty($ids)){
-				  $ids .= $v['Download']['ProdID'];
-				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['Download']['ProdID'];
-				  $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}
-			}
-      
-      if(count($topDownloaded) < 1)
-      {
-        $this->log("top download is not available for library: $libId - $territory", "cache");
-      }
-      
-			if($ids != ''){
-				$this->Song->recursive = 2;
-				 $topDownloaded_query =<<<STR
-				SELECT
-					Song.ProdID,
-					Song.ReferenceID,
-					Song.Title,
-					Song.ArtistText,
-					Song.DownloadStatus,
-					Song.SongTitle,
-					Song.Artist,
-					Song.Advisory,
-					Song.Sample_Duration,
-					Song.FullLength_Duration,
-					Song.provider_type,
-					Genre.Genre,
-					Country.Territory,
-					Country.SalesDate,
-					Sample_Files.CdnPath,
-					Sample_Files.SaveAsName,
-					Full_Files.CdnPath,
-					Full_Files.SaveAsName,
-					Sample_Files.FileID,
-					Full_Files.FileID,
-					PRODUCT.pid
-				FROM
-					Songs AS Song
-						LEFT JOIN
-					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-						LEFT JOIN
-					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
-						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
-						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
-				WHERE
-					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
-				GROUP BY Song.ProdID
-				ORDER BY FIELD(Song.ProdID,
-						$ids) ASC
-				LIMIT 10
-STR;
+    } catch(Exception $e) {
 
-
-
-			$topDownload = $this->Album->query($topDownloaded_query);
-
-			} else {
-				$topDownload = array();
-			}
+      $this->log("Artist Pagenation Mesg : ".$e->getMessage(), "cache");
+      $this->log("Artist Pagenation      :   $country $alphabet $genre", "cache");
+      $this->log("Artist Pagenation Query: ".$this->Song->lastQuery(), "cache");
       
-			
-//		library top 10 cache set
-      
-      if(count($topDownload) < 1)
-      {
-        Cache::write("lib".$libId, Cache::read("lib".$libId) );
-        $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
-        echo "topDownloaded_query returns null for lib: $libId $country";
-      }
-      else
-      {        
-        Cache::write("lib".$libId, $topDownload);
-        //library top 10 cache set
-        $this->log("library top 10 cache set for lib: $libId $country", "cache");
-        echo "library top 10 cache set for lib: $libId $country";
-      }
+    }    
+	  //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
 	  
-	  
-	  }*/
 	  
     }
     echo "============".date("Y-m-d H:i:s")."===============";
