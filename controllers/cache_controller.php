@@ -65,12 +65,22 @@ class CacheController extends AppController {
       
       $ids_provider_type = '';
 			foreach($topDownloaded as $k => $v){
-				if(empty($ids)){
-				  $ids .= $v['Download']['ProdID'];
-				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+				if($maintainLatestDownload){
+					if(empty($ids)){
+						$ids .= $v['LatestDownload']['ProdID'];
+						$ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+					} else {
+						$ids .= ','.$v['LatestDownload']['ProdID'];
+						$ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+					}
 				} else {
-				  $ids .= ','.$v['Download']['ProdID'];
-				  $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+					if(empty($ids)){
+						$ids .= $v['Download']['ProdID'];
+						$ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+					} else {
+						$ids .= ','.$v['Download']['ProdID'];
+						$ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+					}
 				}
 			}
       
