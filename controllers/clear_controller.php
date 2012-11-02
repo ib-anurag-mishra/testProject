@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library','Artist');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist', 'LatestDownload');
 
   function cachekey($key){
     if(!empty($key)){
@@ -774,5 +774,184 @@ STR;
 		exit("<br />DONE<br />");
 	}
   
+  
+  function checkLibTopTen() {
+  
+		echo '<pre>';
+    
+		$libraryDetails = $this->Library->find('all',array(
+			'fields' => array('id', 'library_territory'),
+			'conditions' => array('id'=>1,'library_status' => 'active'),
+			'recursive' => -1
+		)
+		); 
+		
+		foreach($libraryDetails AS $key => $val ) {
+      
+    echo "<br />  ==================================== OLD Start =============================================== <br />";
+    
+		$libId = $val['Library']['id'];
+		$country = $val['Library']['library_territory'];
+      
+		$siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+		$siteConfigData = $this->Album->query($siteConfigSQL);
+		$maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		
+    echo "start time download = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
+		
+    $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+		
+    echo "end time download = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
+		
+    $ids = '';
+		$ioda_ids = array();
+		$sony_ids = array();
+		$sony_ids_str = '';
+		$ioda_ids_str = '';
+        $ids_provider_type = '';
+			foreach($topDownloaded as $k => $v){
+				if(empty($ids)){
+				  $ids .= $v['LatestDownload']['ProdID'];
+				  $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				} else {
+				  $ids .= ','.$v['LatestDownload']['ProdID'];
+				  $ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				}
+				if($v['LatestDownload']['provider_type'] == 'sony'){
+				  $sony_ids[] = $v['LatestDownload']['ProdID'];
+				} else {
+				  $ioda_ids[] = $v['LatestDownload']['ProdID'];
+				}
+			}
+        
+      if(count($topDownloaded) < 1){
+        $this->log("top download is not available for library: $libId - $country", "cache");
+      }
+      
+			if($ids != ''){
+				if(!empty($sony_ids)){
+					$sony_ids_str = implode(',',$sony_ids);
+				}
+				if(!empty($ioda_ids)){
+					$ioda_ids_str = implode(',',$ioda_ids);
+				}
+				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
+					$top_ten_condition = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND provider_type='ioda'))";
+				} else if(!empty($sony_ids_str)){
+					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";
+				} else if(!empty($ioda_ids_str)){
+					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='ioda')";
+				}
+        
+				echo "start time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
+        
+				$this->Song->recursive = 2;
+				 $topDownloaded_query =<<<STR
+				SELECT
+					Song.ProdID,
+					Song.ReferenceID,
+					Song.Title,
+					Song.ArtistText,
+					Song.DownloadStatus,
+					Song.SongTitle,
+					Song.Artist,
+					Song.Advisory,
+					Song.Sample_Duration,
+					Song.FullLength_Duration,
+					Song.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+					Full_Files.SaveAsName,
+					Sample_Files.FileID,
+					Full_Files.FileID,
+					PRODUCT.pid
+				FROM
+					Songs AS Song
+						LEFT JOIN
+					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+						LEFT JOIN
+					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
+				WHERE
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+				GROUP BY Song.ProdID
+				ORDER BY FIELD(Song.ProdID,
+						$ids) ASC
+				LIMIT 10
+STR;
+			$topDownload = $this->Album->query($topDownloaded_query);
+
+			echo "end time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
+      echo "<br />  ==================================== OLD END =============================================== <br />";
+      
+      echo "<br />  ==================================== NEW START =============================================== <br />";
+      echo "start time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
+      
+      $this->Song->recursive = 2;
+				 $topDownloaded_query =<<<STR
+				SELECT 
+					Song.ProdID,
+					Song.ReferenceID,
+					Song.Title,
+					Song.ArtistText,
+					Song.DownloadStatus,
+					Song.SongTitle,
+					Song.Artist,
+					Song.Advisory,
+					Song.Sample_Duration,
+					Song.FullLength_Duration,
+					Song.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+					Full_Files.SaveAsName,
+					Sample_Files.FileID,
+					Full_Files.FileID,
+					PRODUCT.pid
+				FROM
+					Songs AS Song
+						LEFT JOIN
+					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+						LEFT JOIN
+					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+				WHERE
+					((Song.DownloadStatus = '1') AND (($top_ten_condition) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+				GROUP BY Song.ProdID
+				ORDER BY FIELD(Song.ProdID,
+						$ids) ASC
+				LIMIT 10
+STR;
+
+			$topDownload = $this->Album->query($topDownloaded_query);
+		
+		
+		echo "end time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
+    echo "<br />  ==================================== NEW END =============================================== <br />";
+    
+		echo "</pre>";
+    
+	}
+  exit;
+  }
+  
+  }
 }
 ?>
