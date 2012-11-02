@@ -941,7 +941,11 @@ STR;
 						$ids) ASC
 				LIMIT 10
 STR;
-
+echo "<br/>";
+echo "<br/>";
+echo topDownloaded_query;
+echo "<br/>";
+echo "<br/>";
 			$topDownload = $this->Album->query($topDownloaded_query);
 		
       print_r($topDownload);
