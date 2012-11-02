@@ -68,22 +68,22 @@ Class DownloadsComponent extends Object
                 if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
                     if($this->checkLibraryDownload($libId)){
                         //if($this->checkPatronDownload($uid,$libId)){
-                            $this->log($channel." : allowed download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip,'download');
+                            $this->log($channel." : allowed download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip,'download');
                             return array(true,'', 1);
                         //} else {
-                            //$this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the patron download limit has been reached");
+                            //$this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the patron download limit has been reached");
                             //return array(false,'The patron has reached the download limit', 2);
                         //}
                     } else {
-                        $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the library download limit has been reached",'download');
+                        $this->log($channel." : Rejected download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the library download limit has been reached",'download');
                         return array(false,'The library has reached the download limit.', 3);
                     }
                 } else {
-                    $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory),'download');
+                    $this->log($channel." : Rejected download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory),'download');
                     return array(false,'The song is not available for this Country.', 4);
                 }
             } else {
-                $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'download');
+                $this->log($channel." : Rejected download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table",'download');
                 return array(false,'The song requested for download does not exist', 5);
             }
         
