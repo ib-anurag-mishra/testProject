@@ -2,7 +2,7 @@
 class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload');
 
     function cacheLogin() {
 			$libid = $_REQUEST['libid'];
@@ -48,9 +48,20 @@ class CacheController extends AppController {
       $libId = $val['Library']['id'];
       $country = $val['Library']['library_territory'];
       
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-			$ids = '';
+      $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+      $siteConfigData = $this->Album->query($siteConfigSQL);
+      $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
       
+      if($maintainLatestDownload) {
+
+        $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+      } else {
+  
+        $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+      }
+
+      
+			$ids = '';
       
       $ids_provider_type = '';
 			foreach($topDownloaded as $k => $v){
