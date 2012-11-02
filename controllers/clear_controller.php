@@ -832,19 +832,17 @@ STR;
 				if(!empty($sony_ids)){
 					$sony_ids_str = implode(',',$sony_ids);
 				}
-				echo $sony_ids_str;
 				if(!empty($ioda_ids)){
 					$ioda_ids_str = implode(',',$ioda_ids);
 				}
-				echo $ioda_ids_str;
 				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
-					$top_ten_condition = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND provider_type='ioda'))";
+					$top_ten_condition = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";
 				} else if(!empty($sony_ids_str)){
 					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";
 				} else if(!empty($ioda_ids_str)){
 					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='ioda')";
 				}
-				echo $top_ten_condition;
+        
 				echo "start time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
         
 				$this->Song->recursive = 2;
@@ -941,11 +939,7 @@ STR;
 						$ids) ASC
 				LIMIT 10
 STR;
-echo "<br/>";
-echo "<br/>";
-echo $topDownloaded_query;
-echo "<br/>";
-echo "<br/>";
+
 			$topDownload = $this->Album->query($topDownloaded_query);
 		
       print_r($topDownload);
