@@ -62,7 +62,10 @@ class CacheController extends AppController {
 
       
 			$ids = '';
-      
+			$ioda_ids = array();
+			$sony_ids = array();
+			$sony_ids_str = '';
+			$ioda_ids_str = '';
       $ids_provider_type = '';
 			foreach($topDownloaded as $k => $v){
 				if($maintainLatestDownload){
@@ -73,6 +76,11 @@ class CacheController extends AppController {
 						$ids .= ','.$v['LatestDownload']['ProdID'];
 						$ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
 					}
+					if($v['LatestDownload']['provider_type'] == 'sony'){
+						$sony_ids[] = $v['LatestDownload']['ProdID'];
+					} else {
+						$ioda_ids[] = $v['LatestDownload']['ProdID'];
+					}
 				} else {
 					if(empty($ids)){
 						$ids .= $v['Download']['ProdID'];
@@ -80,6 +88,11 @@ class CacheController extends AppController {
 					} else {
 						$ids .= ','.$v['Download']['ProdID'];
 						$ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+					}
+					if($v['Download']['provider_type'] == 'sony'){
+						$sony_ids[] = $v['Download']['ProdID'];
+					} else {
+						$ioda_ids[] = $v['Download']['ProdID'];
 					}
 				}
 			}
@@ -90,6 +103,20 @@ class CacheController extends AppController {
       }
       
 			if($ids != ''){
+				if(!empty($sony_ids)){
+					$sony_ids_str = implode(',',$sony_ids);
+				}
+				if(!empty($ioda_ids)){
+					$ioda_ids_str = implode(',',$ioda_ids);
+				}
+				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
+					$top_ten_condition = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";
+				} else if(!empty($sony_ids_str)){
+					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";
+				} else if(!empty($ioda_ids_str)){
+					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='ioda')";
+				}
+				
 				$this->Song->recursive = 2;
 				 $topDownloaded_query =<<<STR
 				SELECT
@@ -127,7 +154,7 @@ class CacheController extends AppController {
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
-					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+					((Song.DownloadStatus = '1') AND (($top_ten_condition) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC

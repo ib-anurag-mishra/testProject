@@ -412,6 +412,10 @@ class HomesController extends AppController
                             $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         }
 			$ids = '';
+			$ioda_ids = array();
+			$sony_ids = array();
+			$sony_ids_str = '';
+			$ioda_ids_str = '';
 //			$topDownloaded = Cache::read("lib".$libId);
 			foreach($topDownloaded as $k => $v){
 			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -420,10 +424,14 @@ class HomesController extends AppController
 				  $ids_provider_type .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
 				} else {
 				  $ids .= ','.$v['LatestDownload']['ProdID'];
-				   $ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+				  $ids_provider_type .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
 				}
-			   } else {
-			
+				if($v['LatestDownload']['provider_type'] == 'sony'){
+				  $sony_ids[] = $v['LatestDownload']['ProdID'];
+				} else {
+				  $ioda_ids[] = $v['LatestDownload']['ProdID'];
+				}
+			} else {
 				if(empty($ids)){
 				  $ids .= $v['Download']['ProdID'];
 				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
@@ -431,10 +439,30 @@ class HomesController extends AppController
 				  $ids .= ','.$v['Download']['ProdID'];
 				   $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
 				}
+				if($v['Download']['provider_type'] == 'sony'){
+				  $sony_ids[] = $v['Download']['ProdID'];
+				} else {
+				  $ioda_ids[] = $v['Download']['ProdID'];
+				}
 			  }				
 			}
 
 			if($ids != ''){
+				if(!empty($sony_ids)){
+					$sony_ids_str = implode(',',$sony_ids);
+				}
+				if(!empty($ioda_ids)){
+					$ioda_ids_str = implode(',',$ioda_ids);
+				}
+				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
+					$top_ten_condition = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";
+				} else if(!empty($sony_ids_str)){
+					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";
+				} else if(!empty($ioda_ids_str)){
+					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='ioda')";
+				}
+				
+				
 				$this->Song->recursive = 2;
 				 $topDownloaded_query =<<<STR
 				SELECT 
@@ -472,14 +500,12 @@ class HomesController extends AppController
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 				WHERE
-					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+					((Song.DownloadStatus = '1') AND (($top_ten_condition) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC
 				LIMIT 10
 STR;
-
-
 
 			$topDownload = $this->Album->query($topDownloaded_query);
 			
