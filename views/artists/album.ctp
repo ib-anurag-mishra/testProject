@@ -177,7 +177,9 @@ if($i == 3){
 ?>
 </table>
 </div>
-<?php if( $count_albums > 15 ) {?>
+<?php 
+$pages = $this->Paginator->counter(array('format' => '%pages%')); 
+if($pages > 1) { ?>
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
