@@ -775,13 +775,13 @@ STR;
 	}
   
   
-  function checkLibTopTen() {
+  function checkLibTopTen($lid) {
   
 		echo '<pre>';
     
 		$libraryDetails = $this->Library->find('all',array(
 			'fields' => array('id', 'library_territory'),
-			'conditions' => array('id'=>1,'library_status' => 'active'),
+			'conditions' => array('id'=>$lid,'library_status' => 'active'),
 			'recursive' => -1
 		)
 		); 
