@@ -889,7 +889,7 @@ STR;
 				LIMIT 10
 STR;
 			$topDownload = $this->Album->query($topDownloaded_query);
-      print_r($topDownload);
+      var_dump($topDownload);
 			echo "<br />end time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
       echo "<br />  ==================================== OLD END =============================================== <br />";
       
@@ -942,7 +942,7 @@ STR;
 
 			$topDownload = $this->Album->query($topDownloaded_query);
 		
-      print_r($topDownload);
+      var_dump($topDownload);
       
 		echo "<br />end time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
     echo "<br />  ==================================== NEW END =============================================== <br />";
