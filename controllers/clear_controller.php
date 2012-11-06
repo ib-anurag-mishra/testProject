@@ -840,7 +840,7 @@ STR;
 				} else if(!empty($sony_ids_str)){
 					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";
 				} else if(!empty($ioda_ids_str)){
-					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='ioda')";
+					$top_ten_condition = "(Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda')";
 				}
         
 				echo "start time songs = ".time()." datetime = ".date('Y-m-d h:i:s',time())."<br/>";
