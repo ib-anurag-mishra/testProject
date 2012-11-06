@@ -690,7 +690,7 @@ function addToWishlist(prodId , providerType)
 					if(languageSet == 'en'){
 						document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
 					}else{
-						document.getElementById('wishlist'+prodId).innerHTML = 'AÃ±adido a su Lista Deseos';
+						document.getElementById('wishlist'+prodId).innerHTML = 'Añadido a su Lista Deseos';
 					}
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}
@@ -736,7 +736,7 @@ function addToWishlist_top(prodId , providerType)
 					if(languageSet == 'en'){
 						document.getElementById('wishlist_top'+prodId).innerHTML = 'Added to Wishlist';
 					}else{
-						document.getElementById('wishlist_top'+prodId).innerHTML = 'AÃ±adido a su Lista Deseost';
+						document.getElementById('wishlist_top'+prodId).innerHTML = 'Añadido a su Lista Deseost';
 					}
 					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}
@@ -754,14 +754,14 @@ function addToWishlist_top(prodId , providerType)
 	return false; 
 }
 
-function wishlistDownloadIE(prodId,id,provider)
+function wishlistDownloadIE(prodId,id)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
 	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 	document.getElementById('downloading_'+prodId).style.display = 'block';
 	document.getElementById('wishlist_song_'+prodId).style.display = 'none';
-	var data = "prodId="+prodId+"&id="+id+"&provider="+provider;
+	var data = "prodId="+prodId+"&id="+id;
 	id = prodId;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -786,13 +786,6 @@ function wishlistDownloadIE(prodId,id,provider)
 				document.getElementById('downloading_'+prodId).style.display = 'none';
 				document.getElementById('wishlist_song_'+prodId).style.display = 'block';
 			}
-      else if(msg == 'inval')
-      {
-        var result = response.split("|");
-        alert(result[1]);
-				location.reload();
-				return false;
-      }
 			else
 			{
 				alert("You have been logged out from the system. Please login again.");
@@ -830,7 +823,7 @@ function historyDownload(id,libID,patronID)
 						if(languageSet == 'en'){
 							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
 						}else{
-							document.getElementById('download_song_'+id).innerHTML = 'LÃ­mite Excedido';
+							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}
 					}
 				document.getElementById('download_loader_'+id).style.display = 'none';
@@ -878,7 +871,7 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 						if(languageSet == 'en'){
 							document.getElementById('download_song_'+id).innerHTML = 'Limit Met';
 						}else{
-							document.getElementById('download_song_'+id).innerHTML = 'LÃ­mite Excedido';
+							document.getElementById('download_song_'+id).innerHTML = 'Límite Excedido';
 						}
 					}
 				$('.afterClick').hide();
@@ -898,7 +891,7 @@ function historyDownloadOthers(id,libID,patronID,downloadUrl1,downloadUrl2,downl
 	return false; 
 }
 
-function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3,provider)
+function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
@@ -908,7 +901,7 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 	var finalURL = downloadUrl1;
 	finalURL += downloadUrl2;
 	finalURL += downloadUrl3;
-	var data = "prodId="+prodId+"&id="+id+"&provider="+provider;
+	var data = "prodId="+prodId+"&id="+id;
 	id = prodId;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -938,13 +931,6 @@ function wishlistDownloadOthers(prodId,id,downloadUrl1,downloadUrl2,downloadUrl3
 				$('.afterClick').hide();
 				$('.beforeClick').show();				
 			}
-      else if(msg == 'inval')
-      {
-        var result = response.split("|");
-        alert(result[1]);
-				location.reload();
-				return false;
-      }
 			else
 			{
 				alert("You have been logged out from the system. Please login again.");

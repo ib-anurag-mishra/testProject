@@ -7,7 +7,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
-    var $components = array('Auth','Acl','RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload');
 
     /*
@@ -118,7 +118,7 @@ class HomesController extends AppController
 		$this->set('featuredArtists', $featured);
 
 		//used for gettting top downloads for Pop Genre
-		//if (($artists = Cache::read("pop".$country)) === false)
+		if (($artists = Cache::read("pop".$country)) === false)
                     {
       
           $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
@@ -265,7 +265,7 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$this->set('tab_no',$tab_no);
 
-		//if (($artists = Cache::read($genre.$territory)) === false)
+		if (($artists = Cache::read($genre.$territory)) === false)
      {
           $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
 	  if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){                    
@@ -403,16 +403,15 @@ class HomesController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		//if (($libDownload = Cache::read("lib".$libId)) === false)
+		if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
-                            $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                            $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         } else {
-                            $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+                            $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         }
-                        $prodIds = '';
-
+			$ids = '';
 //			$topDownloaded = Cache::read("lib".$libId);
 			foreach($topDownloaded as $k => $v){
 			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -506,7 +505,7 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('patronDownload',$patronDownload);
 		// National Top Downloads functionality
-		//if (($national = Cache::read("national".$territory)) === false)
+		if (($national = Cache::read("national".$territory)) === false)
                     {
       $country = $territory;
       
@@ -1168,9 +1167,14 @@ STR;
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-        $user = $this->Auth->user();
-        if($validationPassed == true){
-            $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user['User']['id'],'download');
+        //$user = $this->Auth->user();
+        $user = $this->Session->read('Auth.User.id');
+		if(empty($user)){
+			$user = $this->Session->read('patron');
+        }
+		
+		if($validationPassed == true){
+            $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
         $prodId = $_POST['ProdID'];
@@ -1192,7 +1196,7 @@ STR;
             exit;
         }*/
 
-		
+		$provider = $_POST['ProviderType'];
         $trackDetails = $this->Song->getdownloaddata($prodId , $provider );
         $insertArr = Array();
         $insertArr['library_id'] = $libId;
@@ -1302,6 +1306,7 @@ STR;
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 		if($maintainLatestDownload){    
+      $this->log("sonyproc_new called",'download');
       $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
     }
     else
@@ -1819,8 +1824,14 @@ STR;
      Function Name : aboutus
      Desc : actions used for User end checking for cookie and javascript enable
     */
-    function aboutus() {
-		if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
+    function aboutus() { 
+    
+      //Cache::write("lib10", array('nayan', 'more')); 
+      var_dump(Cache::read("lib10"));  
+      exit;
+      //Cache::write("lib".$libId, Cache::read("lib".$libId) ); exit;
+		
+    if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
 				$url = $this->Session->read('referral_url');
 			}
@@ -2161,7 +2172,6 @@ STR;
       
       $id = $_REQUEST['id'];
       $provider = $_REQUEST['provider'];
-      //$provider="";
       
       //get details for this song
       $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
@@ -2188,9 +2198,13 @@ STR;
           $validationPassedMessage = "Not Checked";
           $validationMessage = '';
       }
-      $user = $this->Auth->user();
+      //$user = $this->Auth->user();
+      $user = $this->Session->read('Auth.User.id');
+		if(empty($user)){
+			$user = $this->Session->read('patron');
+        }
       if($validationPassed == true){
-        $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user['User']['id'],'download');
+        $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
 
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
           $insertArr['email'] = '';

@@ -169,9 +169,8 @@ class AppModel extends Model {
                           $paginationcount = count($paginationcount);
                           $group = "yes";
                         }
-
-
                     }
+
                 }
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
