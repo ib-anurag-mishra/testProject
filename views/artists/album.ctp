@@ -55,7 +55,7 @@
 			echo $artisttext;
 		}
 	?>
-
+	
 	<?php
 	function ieversion()
 	{
@@ -67,7 +67,7 @@
 		  }
 	}
 	$ieVersion =  ieversion();
-	?>
+	?>	
 </div>
 <br class="clr">
 <?php
@@ -92,7 +92,7 @@ if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_
 else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encode($genre_crumb_name)) != trim($explodeUrl[1]))
 {
     echo $javascript->link('backfix.min.js');
-    ?>
+?>
     <script type="text/javascript">
     function goSomewhere () {
         document.location.href = '/genres/view/<?php echo base64_encode($genre_crumb_name); ?>';
@@ -125,13 +125,13 @@ $i = 0;
 						//Image is a correct one
 					}
 					else {
-
+						
 					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
 			</div>
-			</a>
+			</a>			
 			<div class="albumData" style="float:left">
 				<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 				<div class="albumlistBox">
@@ -141,7 +141,7 @@ $i = 0;
 						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
 					}
 					?>
-					<?php echo $album['Album']['AlbumTitle'];?>
+					<?php echo $album['Album']['AlbumTitle'];?>		
 					</b>
 				</div>
 				</a>
@@ -152,6 +152,10 @@ $i = 0;
 							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
 						}
+                        if($album['Album']['Advisory'] == 'T'){
+                        	echo '<font class="explicit"> (Explicit)</font>';
+                            echo '<br />';
+                        }
 						if ($album['Album']['Label'] != '') {
 							echo __("Label").': ' . $album['Album']['Label'];
 							echo '<br />';
@@ -161,7 +165,7 @@ $i = 0;
 						}
 					?>
 				</div>
-			</div>
+			</div>			
 		</div>
 		</td>
 <?php
@@ -173,9 +177,17 @@ if($i == 3){
 ?>
 </table>
 </div>
+
+
+<?php  $pages = $this->Paginator->counter(array('format' => '%pages%')); 
+if($pages > 1) {
+?>
+
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
+    
+ <?php } ?>
 <br class="clr">
