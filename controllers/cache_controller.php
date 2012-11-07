@@ -65,7 +65,7 @@ class CacheController extends AppController {
             
       $this->log("cache written for genre for $territory",'debug');      
       
-      if(count($genreAll) > 0)
+      if( (count($genreAll) > 0) && ($genreAll !== false) )
       {
         Cache::write("genre".$territory, $genreAll);
         $this->log( "cache written for genre for $territory", "cache");
@@ -113,7 +113,7 @@ class CacheController extends AppController {
 			}
 		  }
       
-      if(count($natTopDownloaded) < 1) 
+      if( (count($natTopDownloaded) < 1) || ($natTopDownloaded === false) ) 
       {
         $this->log( "download data not recevied for ".$territory, "cache");
         echo "download data not recevied for ".$territory;
@@ -202,7 +202,7 @@ STR;
 				 
 			}
       
-      if(count($featured) < 1)
+      if( (count($featured) < 1) || ($featured === false) )
       {
         $this->log("featured artist data is not available for".$territory, "cache");
         echo "featured artist data is not available for".$territory;
@@ -626,7 +626,7 @@ STR;
 				}
 			}
       
-      if(count($topDownloaded) < 1)
+      if( (count($topDownloaded) < 1) || ($topDownloaded === false) )
       {
         $this->log("top download is not available for library: $libId - $country", "cache");
       }
@@ -643,7 +643,7 @@ STR;
 				} else if(!empty($sony_ids_str)){
 					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";
 				} else if(!empty($ioda_ids_str)){
-					$top_ten_condition = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='ioda')";
+					$top_ten_condition = "(Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda')";
 				}
 				
 				$this->Song->recursive = 2;
@@ -697,7 +697,7 @@ STR;
 			
       //		library top 10 cache set
       
-      if(count($topDownload) < 1)
+      if( (count($topDownload) < 1) || ($topDownload === false) )
       {
         Cache::write("lib".$libId, Cache::read("lib".$libId) );
         $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
