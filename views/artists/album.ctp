@@ -177,13 +177,17 @@ if($i == 3){
 ?>
 </table>
 </div>
-<?php 
-$pages = $this->Paginator->counter(array('format' => '%pages%')); 
-if($pages > 1) { ?>
+
+
+<?php  $pages = $this->Paginator->counter(array('format' => '%pages%')); 
+if($pages > 1) {
+?>
+
 <div class="paging">
 	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
  | 	<?php echo $paginator->numbers();?>
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
-<?php } ?> 
+    
+ <?php } ?>
 <br class="clr">
