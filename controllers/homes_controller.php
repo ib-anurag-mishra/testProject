@@ -1992,8 +1992,8 @@ STR;
      Desc : To send mail to patrons with new password
     */
     function forgot_password() {
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
         $this->layout = 'login';
