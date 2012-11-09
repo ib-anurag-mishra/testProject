@@ -108,7 +108,11 @@ jQuery(document).ready(function() {
 	<div id="wrapper">
 		<div id="header">
 			<h1 class="logo"><a href="#">freegal music</a></h1>
-				</div>
+		</div>
+		<?php
+			echo $session->flash();
+			echo $session->flash('auth');
+		?>	
 	<div id="main">
 			<div style="width:321px;height:529px">
 				<?php echo $content_for_layout; ?>
