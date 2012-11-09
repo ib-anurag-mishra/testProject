@@ -207,4 +207,6 @@ div.message {
     padding: 5px;
     text-align: center;
     width: 100%;
+	top: -25px;
+	position:relative;
 }
