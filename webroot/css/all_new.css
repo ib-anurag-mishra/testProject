@@ -197,3 +197,14 @@ fieldset{
 }
 .ad li a,
 .ad li img{vertical-align:top;}
+div.message {
+    background: none repeat scroll 0 0 #C73E14;
+    clear: both;
+    color: #FFFFFF;
+    font-size: 100%;
+    font-weight: bold;
+    margin: 0 0 1em;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+}
