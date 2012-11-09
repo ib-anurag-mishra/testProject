@@ -140,6 +140,7 @@ fieldset{
 	display:inline;
 	background:url(../img/divider.gif) no-repeat 0 50%;
 	padding:0 4px 0 7px;
+	cursor:pointer;
 }
 .lang li:first-child{background:none;}
 .lang a{color:#fff;}
