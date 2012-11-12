@@ -97,6 +97,14 @@ jQuery(document).ready(function() {
 		jQuery('#lbOverlay').show();
 	});
 	jQuery("#loadingDiv").hide();
+	if(jQuery("#UserEmail").length > 0)
+	{
+		jQuery("#UserEmail").focus();
+	}
+	if(jQuery("#UserCard").length > 0)
+	{
+		jQuery("#UserCard").focus();
+	}
 });	
 
 
