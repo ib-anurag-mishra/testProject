@@ -544,7 +544,7 @@ STR;
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
-              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
               LIMIT 110";
@@ -553,7 +553,7 @@ STR;
               FROM `downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
-              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
               LIMIT 110";
