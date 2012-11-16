@@ -14,7 +14,7 @@
 	echo '<div class="login-box">';
 	echo '<div class="holder">';
 	echo '<fieldset>';	
-	echo $form->create('User', array( 'action' => 'snlogin', 'id' => 'login'));
+	echo $form->create('User', array( 'action' => 'snlogin', 'id' => 'login', 'class'=>'login-form'));
 		echo '<div class="row">';
 		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card, 'alt'=>__('Card Number', true)));
 		echo '</div>';

@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin');
+		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -74,7 +74,7 @@ Class UsersController extends AppController
 						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
 						//$this->redirect(array('controller' => 'users', 'action' => $action));
 						if($action != 'login'){
-              $this->Session->write("layout_option", 'login_new');
+              $this->Session->write("layout_option", 'login');
             } else {
               $this->Session->write("layout_option", 'login');
             }
@@ -236,10 +236,9 @@ Class UsersController extends AppController
    */
    
 	function login($library = null){
-    set_time_limit(0);
     $this->Session->write("layout_option", 'login');
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -264,8 +263,8 @@ Class UsersController extends AppController
 			{
 				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
 				$this->get_login_layout_name($library_data);
-				if($this->Session->read('layout_option') == 'login_new'){
-					$this->layout = 'login_new';
+				if($this->Session->read('layout_option') == 'login'){
+					$this->layout = 'login';
 				}
 				else{
 					$this->layout = 'login';
@@ -1048,7 +1047,7 @@ Class UsersController extends AppController
    */
    
 	function ilogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1091,8 +1090,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -1276,7 +1275,7 @@ Class UsersController extends AppController
    */
    
    function idlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1319,8 +1318,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -1503,7 +1502,7 @@ Class UsersController extends AppController
    */
    
    function mdlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1546,8 +1545,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -1689,7 +1688,7 @@ Class UsersController extends AppController
    */
    
    function mndlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1732,8 +1731,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -1871,7 +1870,7 @@ Class UsersController extends AppController
    */
    
    function ildlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1914,8 +1913,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -2097,7 +2096,7 @@ Class UsersController extends AppController
    */
    
 	function inlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2140,8 +2139,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';     
@@ -2309,7 +2308,7 @@ Class UsersController extends AppController
    */
    
    function indlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2352,8 +2351,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -2517,7 +2516,7 @@ Class UsersController extends AppController
 	   
 	   
 	function slogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2560,8 +2559,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -2743,7 +2742,7 @@ Class UsersController extends AppController
 	   
 	   
 	function snlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2786,8 +2785,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -2953,7 +2952,7 @@ Class UsersController extends AppController
 	*/
  
 	function sdlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2997,8 +2996,8 @@ Class UsersController extends AppController
 			}
 		}
 		
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -3036,7 +3035,7 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 4){
+			elseif(strlen($card) < 3){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}			
 			elseif($pin == ''){            
@@ -3181,7 +3180,7 @@ Class UsersController extends AppController
 	*/ 	   
 	   
 	function sndlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3224,8 +3223,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -3413,8 +3412,8 @@ Class UsersController extends AppController
 					}
 				}
 			}
-			if($this->Session->read('layout_option') == 'login_new'){
-				$this->layout = 'login_new';
+			if($this->Session->read('layout_option') == 'login'){
+				$this->layout = 'login';
 			}
 			else{
 			$this->layout = 'login';
@@ -3522,7 +3521,7 @@ Class UsersController extends AppController
    */
    
    function inhlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3565,8 +3564,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
       $this->layout = 'login';
@@ -3748,7 +3747,7 @@ Class UsersController extends AppController
    */
    
    function ihdlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -3791,8 +3790,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -3975,7 +3974,7 @@ Class UsersController extends AppController
    */
    
    function inhdlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4019,8 +4018,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -4187,7 +4186,7 @@ Class UsersController extends AppController
    */
    
 	function plogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4230,8 +4229,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -4411,7 +4410,7 @@ Class UsersController extends AppController
     Desc : For patron ilhdlogin(Innovative Var HTTPS with Name) login method
    */
    function ilhdlogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4455,8 +4454,8 @@ Class UsersController extends AppController
 			}
 		}
 
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -4641,7 +4640,7 @@ Class UsersController extends AppController
    */
    
 	function clogin($library = null){
-    $this->Session->write("layout_option", 'login_new');
+    $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4684,8 +4683,8 @@ Class UsersController extends AppController
 				}	
 			}
 		}
-		if($this->Session->read('layout_option') == 'login_new'){
-			$this->layout = 'login_new';
+		if($this->Session->read('layout_option') == 'login'){
+			$this->layout = 'login';
 		}
 		else{
 		$this->layout = 'login';
@@ -4834,8 +4833,53 @@ Class UsersController extends AppController
 			$this->Session->write("layout_option", 'login');
 		}
 		else{
-			$this->Session->write("layout_option", 'login_new');
+			$this->Session->write("layout_option", 'login');
 		}
+	}
+
+	function admin_addmultipleusers($noOfUsers){
+            //Configure::write('debug',2);
+            $this->autoRender = false;
+            $userType = $this->Session->read('Auth.User.type_id');
+            if($userType != 1){
+                $this->redirect('/home/aboutus');
+		die('You are not allowed to use this section.');
+            }
+            $this->Library->recursive = -1;
+            $libId = 2;
+            $libraryData = $this->Library->find('first',array('conditions'=>array('id'=>$libId)));
+            $fromCount = $libraryData['Library']['generic_count']+1;
+            $toCount = $libraryData['Library']['generic_count']+$noOfUsers;
+            $counter = 0;
+            $file = '../../userslist/users_libraryideas'.$libId.'-'.date('Y-m-d-h-i-s',time()).'.txt';
+            $fp = fopen($file,'w');
+            for($counter=$fromCount;$counter<=$toCount;$counter++){
+                $email = 'library'.$counter.'@libraryideas.com';
+                $temp_password = $this->PasswordHelper->generatePasswordWithout10(6);
+                $encyptedPassword = Security::hash(Configure::read('Security.salt').$temp_password);
+                $data = array(
+                        'id'=>'',
+                        'password'=>$encyptedPassword,
+                        'type_id'=>'5',
+                        'first_name'=>'FirstName'.$counter,
+                        'last_name'=>'LastName'.$counter,
+                        'email'=>$email,
+                        'library_id'=>$libId,
+                        'consortium'=>'',
+                        'user_status'=>'active',
+                        'sales'=>'no',
+                        'created'=>date('Y-m-d h:i:s',time()),
+                        'modified'=>date('Y-m-d h:i:s',time())
+                );
+                
+                if($this->User->save($data)){
+                    fwrite($fp,$email.",".$temp_password."\n");
+                }
+		}
+            fclose($fp);
+            $libraryData['Library']['generic_count']=$toCount;
+            $this->Library->save($libraryData['Library']);
+            echo "Users Created";
 	}
 
 	

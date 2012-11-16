@@ -12,7 +12,7 @@
 		echo '<div class="login-box">';
 		echo '<div class="holder">';
 		echo '<fieldset>';
-		echo $form->create('User', array( 'action' => 'login', 'id' => 'login'));
+		echo $form->create('User', array( 'action' => 'login', 'id' => 'login', 'class'=>'login-form'));
 		echo '<div class="row">';
 		echo $form->input('email', array('label' => __('Email', true),'div' => false,'alt' => __('Email', true)));
 		echo '</div>';
