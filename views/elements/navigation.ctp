@@ -224,7 +224,7 @@ form, fieldset {
 			<?php
       if($libraryInfo['Library']['library_home_url'] != "") {
       ?>
-        <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div></a>
+        <div id="lib_name"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank" style="color:#9A9A9A; text-decoration:none"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
       <?php
       }else{
       ?>
