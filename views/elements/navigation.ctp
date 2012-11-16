@@ -221,7 +221,17 @@ form, fieldset {
 		<?php
 		if(!$libraryInfo['Library']['show_library_name']) {
 		?>
-			<div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+			<?php
+      if($libraryInfo['Library']['library_home_url'] != "") {
+      ?>
+        <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div></a>
+      <?php
+      }else{
+      ?>
+        <div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+      <?php
+      }
+      ?>
 		<?php
 		}
 		?>		
