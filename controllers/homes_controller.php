@@ -1824,12 +1824,7 @@ STR;
      Function Name : aboutus
      Desc : actions used for User end checking for cookie and javascript enable
     */
-    function aboutus() { 
-    
-      //Cache::write("lib10", array('nayan', 'more')); 
-      var_dump(Cache::read("lib10"));  
-      exit;
-      //Cache::write("lib".$libId, Cache::read("lib".$libId) ); exit;
+    function aboutus() {
 		
     if(isset($this->params['pass'][0]) && $this->params['pass'][0] == "js_err") {
 			if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')) {
