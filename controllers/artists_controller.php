@@ -50,9 +50,9 @@ Class ArtistsController extends AppController
 	 Desc : action for displaying the add/edit featured artist form
         */
 	function admin_artistform() {
-    ini_set('memory_limit','1024M');
+                ini_set('memory_limit','1024M');
 		set_time_limit(0);
-    if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
+                if( !empty( $this -> params[ 'named' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
 				$this -> set( 'formAction', 'admin_updatefeaturedartist/id:' . $artistId );
@@ -66,14 +66,15 @@ Class ArtistsController extends AppController
 				//$getArtistDataObj = new Song();
 				//$getArtistData = $getArtistDataObj -> getallartistname( $condition, $artistName, $country );
 				
-        $getArtistData = array();
-        $this->set( 'getArtistData', $getArtistData );
-				$result = array();
-				$allAlbum = $this->Album->find('all', array(
-          'fields' => array('Album.ProdID','Album.AlbumTitle'),
-          'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name'], 'Album.provider_type' => $getData['Featuredartist']['provider_type']),
-          'recursive' => -1
-        ));
+                                $getArtistData = array();
+                                $this->set( 'getArtistData', $getArtistData );
+                                                        $result = array();
+                                                        $allAlbum = $this->Album->find('all', array(
+                                'fields' => array('Album.ProdID','Album.AlbumTitle'),
+                                'conditions' => array('Album.ArtistText' => $getData['Featuredartist']['artist_name'], 'Album.provider_type' => $getData['Featuredartist']['provider_type']),
+                                'recursive' => -1
+                                ));
+                                                        
 				$val = '';
 				$this->Song->Behaviors->attach('Containable');
 				foreach($allAlbum as $k => $v){
@@ -654,6 +655,7 @@ Class ArtistsController extends AppController
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
+                        'Album.Advisory',
 						'Album.Artist',
 						'Album.ArtistURL',
 						'Album.Label',
@@ -815,11 +817,11 @@ Class ArtistsController extends AppController
 				// }
 			// }
 			// $condition = array("Album.ProdID IN (".rtrim($val,",").")");
-      $id = str_replace('@','/',$id);
+                        $id = str_replace('@','/',$id);
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
-				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0));
+				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'order'=>array('Song.provider_type DESC')));
 
 			$val = '';
 			$val_provider_type = '';
@@ -861,6 +863,7 @@ Class ArtistsController extends AppController
 						'Album.Title',
 						'Album.ArtistText',
 						'Album.AlbumTitle',
+                        'Album.Advisory',
 						'Album.Artist',
 						'Album.ArtistURL',
 						'Album.Label',
@@ -885,7 +888,7 @@ Class ArtistsController extends AppController
 								'Files.SourceURL'
 							),
 						)
-					), 'order' => array('Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
+					), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
 				);
 		if($this->Session->read('block') == 'yes') {
 			$cond = array('Song.Advisory' => 'F');
@@ -896,15 +899,15 @@ Class ArtistsController extends AppController
 		$this->Album->recursive = 2;
 		$albumData = array();
 		$albumData = $this->paginate('Album'); //getting the Albums for the artist
-
+		//$this->set('count_albums',count($albumData)); 
 
 		$albumSongs = array();
-	    $this->set('albumData', $albumData);
-	    if(isset($albumData[0]['Song']['ArtistURL'])) {
-	       $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
-	    }else {
-	       $this->set('artistUrl', "N/A");
-	    }
+                $this->set('albumData', $albumData);
+                if(isset($albumData[0]['Song']['ArtistURL'])) {
+                    $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
+                }else {
+                    $this->set('artistUrl', "N/A");
+                }
 
 		// $array = array();
 		// $pre = '';

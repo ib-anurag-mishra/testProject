@@ -1,26 +1,23 @@
+// page init
+bindReady(function(){
+	initInputs();
+});
+
 // clear inputs on focus
 function initInputs() {
 	PlaceholderInput.replaceByOptions({
 		// filter options
 		clearInputs: true,
-		clearTextareas: true,
+		clearTextareas: false,
 		clearPasswords: true,
-		skipClass:'default',
-
+		skipClass: 'default',
+		
 		// input options
-		wrapWithElement:false,
-		showUntilTyping:false,
-		getParentByClass:false,
-		placeholderAttr: 'alt'
+		wrapWithElement: true,
+		showUntilTyping: false,
+		getParentByClass: false,
+		placeholderAttr: 'value'
 	});
-	if(jQuery("#UserEmail").length > 0)
-	{
-		jQuery("#UserEmail").focus();
-	}
-	if(jQuery("#UserCard").length > 0)
-	{
-		jQuery("#UserCard").focus();
-	}
 }
 
 // placeholder class
@@ -32,6 +29,7 @@ function initInputs() {
 			showUntilTyping:false,
 			wrapWithElement:false,
 			getParentByClass:false,
+			showPasswordBullets:false,
 			placeholderAttr:'value',
 			inputFocusClass:'focus',
 			inputActiveClass:'text-active',
@@ -40,17 +38,17 @@ function initInputs() {
 			labelFocusClass:'label-focus',
 			labelActiveClass:'label-active',
 			fakeElementClass:'input-placeholder-text'
-		}
+		};
 		placeholderCollection.push(this);
 		this.init.apply(this,arguments);
-	}
+	};
 	PlaceholderInput.refreshAllInputs = function(except) {
 		for(var i = 0; i < placeholderCollection.length; i++) {
 			if(except !== placeholderCollection[i]) {
 				placeholderCollection[i].refreshState();
 			}
 		}
-	}
+	};
 	PlaceholderInput.replaceByOptions = function(opt) {
 		var inputs = [].concat(
 			convertToArray(document.getElementsByTagName('input')),
@@ -68,12 +66,13 @@ function initInputs() {
 						wrapWithElement:opt.wrapWithElement,
 						showUntilTyping:opt.showUntilTyping,
 						getParentByClass:opt.getParentByClass,
+						showPasswordBullets:opt.showPasswordBullets,
 						placeholderAttr: inputs[i].getAttribute('placeholder') ? 'placeholder' : opt.placeholderAttr
 					});
 				}
 			}
 		}
-	}
+	};
 	PlaceholderInput.prototype = {
 		init: function(opt) {
 			this.setOptions(opt);
@@ -97,7 +96,11 @@ function initInputs() {
 			if(this.options.element) {
 				this.element = this.options.element;
 				this.elementType = getInputType(this.element);
-				this.wrapWithElement = (this.elementType === 'password' || this.options.showUntilTyping ? true : this.options.wrapWithElement);
+				if(this.elementType === 'password' && this.options.showPasswordBullets) {
+					this.wrapWithElement = false;
+				} else {
+					this.wrapWithElement = this.elementType === 'password' || this.options.showUntilTyping ? true : this.options.wrapWithElement;
+				}
 				this.setPlaceholderValue(this.options.placeholderAttr);
 			}
 		},
@@ -116,7 +119,7 @@ function initInputs() {
 				this.fakeElement.style.color = getStyle(this.element, 'color');
 				this.fakeElement.style.position = 'absolute';
 				this.element.parentNode.insertBefore(this.fakeElement, this.element);
-
+				
 				if(this.element.value === this.origValue || !this.element.value) {
 					this.element.value = '';
 					this.togglePlaceholderText(true);
@@ -160,10 +163,12 @@ function initInputs() {
 			if(this.wrapWithElement) this.fakeElement.onclick = bindScope(this.focusSetter, this);
 		},
 		togglePlaceholderText: function(state) {
-			if(this.wrapWithElement) {
-				this.fakeElement.style.display = state ? '' : 'none';
-			} else {
-				this.element.value = state ? this.origValue : '';
+			if(!this.element.readOnly) {
+				if(this.wrapWithElement) {
+					this.fakeElement.style.display = state ? '' : 'none';
+				} else {
+					this.element.value = state ? this.origValue : '';
+				}
 			}
 		},
 		focusSetter: function() {
@@ -227,8 +232,8 @@ function initInputs() {
 		setStateClass: function(el,cls,state) {
 			if(!el) return; else if(state) addClass(el,cls); else removeClass(el,cls);
 		}
-	}
-
+	};
+	
 	// utility functions
 	function convertToArray(collection) {
 		var arr = [];
@@ -250,7 +255,7 @@ function initInputs() {
 		if (hasClass(el,cls)) {el.className=el.className.replace(new RegExp('(\\s|^)'+cls+'(\\s|$)'),' ');}
 	}
 	function bindScope(f, scope) {
-		return function() {return f.apply(scope, arguments)}
+		return function() {return f.apply(scope, arguments);};
 	}
 	function getStyle(el, prop) {
 		if (document.defaultView && document.defaultView.getComputedStyle) {
@@ -263,5 +268,36 @@ function initInputs() {
 	}
 }());
 
-if (window.addEventListener) window.addEventListener("load", initInputs, false);
-else if (window.attachEvent) window.attachEvent("onload", initInputs);
+// DOM ready handler
+function bindReady(handler){
+	var called = false;
+	var ready = function() {
+		if (called) return;
+		called = true;
+		handler();
+	};
+	if (document.addEventListener) {
+		document.addEventListener('DOMContentLoaded', ready, false);
+	} else if (document.attachEvent) {
+		if (document.documentElement.doScroll && window == window.top) {
+			var tryScroll = function(){
+				if (called) return;
+				if (!document.body) return;
+				try {
+					document.documentElement.doScroll('left');
+					ready();
+				} catch(e) {
+					setTimeout(tryScroll, 0);
+				}
+			};
+			tryScroll();
+		}
+		document.attachEvent('onreadystatechange', function(){
+			if (document.readyState === 'complete') {
+				ready();
+			}
+		});
+	}
+	if (window.addEventListener) window.addEventListener('load', ready, false);
+	else if (window.attachEvent) window.attachEvent('onload', ready);
+}

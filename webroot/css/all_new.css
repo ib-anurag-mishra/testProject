@@ -1,0 +1,212 @@
+body{
+	margin:0;
+	color:#363942;
+	font:14px/25px Helvetica, Arial, sans-serif;
+	background:#fff;
+	min-width:980px;
+}
+img{border-style:none;}
+a{text-decoration:none; color:#a0a0a0;}
+a:hover{text-decoration:underline;}
+input,
+textarea,
+select{
+	font:100% Arial, Helvetica, sans-serif;
+	vertical-align:middle;
+	color:#000;
+}
+form,
+fieldset{
+	margin:0;
+	padding:0;
+	border-style:none;
+}
+#wrapper{
+	width:100%;
+	position:relative;
+	overflow:hidden;
+}
+#header{
+	width:940px;
+	margin:0 auto;
+	padding:47px 0 0 2px;
+	height:163px;
+}
+.logo{	background:url(../img/logo_new.gif) no-repeat;
+	width:229px;
+	height:114px;	text-indent:-9999px;	overflow:hidden;	margin:0 auto;}.logo a{	display:block;	height:100%;}
+#main{
+	width:940px;
+	margin:0 auto 15px;
+}
+.login-form{
+	padding:240px 9999px 0;
+	margin:0 -9999px 23px;
+	background:#2f323a url(../img/bg-login-form.jpg) repeat-x;
+	height:241px;
+	color:#fff;
+	width:321px;
+	position:relative;
+	line-height:24px;
+}
+.login-form:after{
+	content:'';	display:block;	clear:both;
+}
+.decor{
+	float:right;
+	margin:-557px -1px -30px 0;
+	position:relative;
+	/*top:-529px;*/
+	clear:both;
+}
+.form-area{
+	color:#fff;
+	width:321px;
+	position:relative;
+	top:-465px;
+}
+.form-area h2{
+	font-size:24px;
+	line-height:28px;
+	font-weight:normal;
+	margin:0 0 19px;
+}
+
+.form-area p{
+    line-height: 24px;
+}
+.login-form p{margin:0 0 30px;}
+.login-form .row label{
+	display:none;
+}
+.login-form .row{
+	display:block;
+	background:url(../img/bg-text.gif) no-repeat;
+	width:308px;
+	height:32px;
+	margin:0 0 8px;
+	padding:6px 6px 7px 5px;
+	overflow:hidden;
+	position:relative;
+}
+.login-form .row input{	float:left;	background:none;	border:none;	margin:0;	padding:8px 11px;	width:286px;
+	font-size:14px;
+	color:#a0a0a0;
+}
+.login-form .input-placeholder-text{
+	left:16px;
+	top:10px;
+}
+.login-form .btn-holder{
+	width:100%;
+	padding:4px 0 29px;
+}
+.login-form .btn-holder:after{
+	content:'';	display:block;	clear:both;
+}
+.login-form input[type=submit]{	background:url(../img/btn-submit_new.png) no-repeat;	border:none;	margin:0 0 0 -2px;	padding:0 0 3px;
+	float:left;
+	width:126px;
+	height:37px;
+	line-height:36px;
+	text-align:center;
+	vertical-align:middle;
+	text-transform:uppercase;
+	color:#04253e;
+	text-shadow:0 1px 0 #4cbaff;
+	font-weight:bold;}
+.login-form input[type=submit]:hover{
+	cursor:pointer;
+	background-position:0 -50px;
+}
+.login-form .forgot{
+	float:right;
+	font-size:12px;
+	margin:8px 0 0;
+}
+.login-form .forgot span{text-decoration:underline;}
+.login-form .forgot:hover span,
+.login-form .forgot:hover{text-decoration:none;}
+.lang{
+	padding:0;	margin:0;	list-style:none;
+	text-align:center;
+	font-size:12px;
+	width:321px;
+	color:#fff;
+	top: -90px;
+	position:relative;
+}
+.lang li{
+	display:inline;
+	background:url(../img/divider.gif) no-repeat 0 50%;
+	padding:0 4px 0 7px;
+	cursor:pointer;
+}
+.lang li:first-child{background:none;}
+.lang a{color:#fff;}
+.article{
+	height:1%;
+	overflow:hidden;
+	padding:0 25px 0 0;
+	width:100%;
+}
+.article .images{
+	float:right;
+	margin:24px 0 0 20px;
+}
+.article .btn-iphone,
+.article .btn-andriod{
+	display:inline-block;
+	margin:0 0 0 25px;
+	vertical-align:top;
+}
+.article .btn-iphone{margin:28px 0 0;}
+.article .images img{vertical-align:top;}
+.article  .info{
+	overflow:hidden;
+}
+.article p{margin:0 0 25px;}
+.article h3{
+	font-size:18px;
+	line-height:20px;
+	margin:0 0 29px;
+}
+.list{
+	padding:0;	margin:0;	list-style:none;
+}
+.list li{
+	background:url(../img/bullet.gif) no-repeat 0 10px;
+	text-indent:10px;
+	padding:0 0 25px;
+}
+#footer{
+	border-top:1px solid #989a9e;
+	width:940px;
+	margin:0 auto;
+	padding:32px 0 40px;
+	text-align:center;
+	font-size:10px;
+}
+#footer p{margin:0;}
+.ad{
+	padding:0;	margin:0 0 21px;	list-style:none;
+}
+.ad li{
+	display:inline;
+	padding:0 15px;
+}
+.ad li a,
+.ad li img{vertical-align:top;}
+div.message {
+    background: none repeat scroll 0 0 #C73E14;
+    clear: both;
+    color: #FFFFFF;
+    font-size: 100%;
+    font-weight: bold;
+    margin: 0 0 1em;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+	top: -25px;
+	position:relative;
+}

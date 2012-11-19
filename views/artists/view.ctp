@@ -54,7 +54,7 @@
 		  }
 	}
 	$ieVersion =  ieversion();
-	?>
+	?>	
 </div>
 <br class="clr">
 <?php
@@ -69,7 +69,7 @@
 						//Image is a correct one
 					}
 					else {
-
+						
 					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
@@ -90,6 +90,10 @@
 							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
 						}
+                        if($album['Album']['Advisory'] == 'T'){
+                        	echo '<font class="explicit"> (Explicit)</font>';
+                            echo '<br />';
+                        }
 						if ($album['Album']['Label'] != '') {
 							echo __("Label").': ' . $album['Album']['Label'];
 							echo '<br />';
@@ -108,7 +112,7 @@
 				<div id="songResults">
 					<?php
 					$i = 1;
-					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):
+					foreach($albumSongs[$album['Album']['ProdID']] as  $key => $albumSong):			
 						$class = null;
 						if ($i++ % 2 == 0) {
 							$class = ' class="altrow"';
@@ -160,26 +164,26 @@
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
-											{
+											{	
 												if($albumSong['Song']['status'] != 'avail'){
 										?>
 													<p>
 														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
 															<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
 															<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
-
+															
 															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
  																<a href='#' title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 															</span>
 															<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
 															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-														</form>
-													</p>
-									<?php
+														</form>													
+													</p>													
+									<?php	
 												} else {
 													?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 												}
-											}
+											}											
 											else{
 												if($libraryDownload != '1'){
 													$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
@@ -197,23 +201,23 @@
 																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 																<span class="afterClick" style="display:none;float:left;">Please Wait...</span>
 															</p>
-														<?php
+														<?php	
 														}
 													}
-
+													
 												}
 												else{ ?>
 													<p><?php __("Limit Met");?></p>
-												<?php
-												}
+												<?php	
+												}												
 											}
 										}else{
 									?>
-											<span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo
+											<span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
 												date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span>
 									<?php
 										}
-									?>
+									?>	
 								</td>
 							</tr>
 						</table>
@@ -226,9 +230,12 @@
 <?php
 	endforeach;
 ?>
+
+<!--
 <div class="paging">
-	<?php echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
- | 	<?php echo $paginator->numbers();?>
-	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
+	<?php /* echo $paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled')); */?>
+ | 	<?php /* echo $paginator->numbers(); */ ?>
+	<?php /* echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled')); */?>
 </div>
+-->
 <br class="clr">
