@@ -64,8 +64,14 @@ class ClearController extends AppController {
     ini_set("memory_limit", "1G");
     $genresArray = array('Pop' , 'Rock' , 'Country' , 'Classical' );
     $countriesArray = array('US' , 'AU' , 'CA' , 'IT' , 'NZ');
+    $multiple_countries = $this->getCurrentCountryTable();
     if(!empty($country) && in_array($country,$countriesArray)){
-      if(!empty($genre) && in_array($genre,$genresArray)){             
+      if(!empty($genre) && in_array($genre,$genresArray)){
+        if(0 == $multiple_countries){
+            $countryPrefix = '';
+        } else {
+            $countryPrefix = strtolower($country)."_";
+        }  
         $restoregenre_query =  "
         SELECT 
             COUNT(DISTINCT downloads.id) AS countProduct,
@@ -94,7 +100,7 @@ class ClearController extends AppController {
             downloads,
             Songs AS Song
                 LEFT JOIN
-            countries AS Country ON Country.ProdID = Song.ProdID
+            {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
                 LEFT JOIN
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
@@ -115,7 +121,7 @@ class ClearController extends AppController {
         ORDER BY countProduct DESC
         LIMIT 10
         ";
-
+echo $restoregenre_query; die;
         $data =   $this->Album->query($restoregenre_query);
               
         if(!empty($data)){
@@ -185,8 +191,12 @@ class ClearController extends AppController {
 		}
 	  }
 	  $data = array();
-	  
-	  
+	  $multiple_countries = $this->getCurrentCountryTable();
+	  if(0 == $multiple_countries){
+            $countryPrefix = '';
+          } else {
+            $countryPrefix = strtolower($country)."_";
+          } 
 	  
 	 $sql_national_100 =<<<STR
 SELECT 
@@ -220,7 +230,7 @@ FROM
         LEFT JOIN
     Genre AS Genre ON (Genre.ProdID = Song.ProdID)
         LEFT JOIN
-    countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+    {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 		LEFT JOIN
 	PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 WHERE
@@ -289,7 +299,13 @@ function restoreallgenretemp($country){
     if(!empty($genresArray)) {
     
       foreach($genresArray AS $genre ) {
-        foreach($countriesArray AS $territory ) {  
+        foreach($countriesArray AS $territory ) {
+          $multiple_countries = $this->getCurrentCountryTable();
+	  if(0 == $multiple_countries){
+            $countryPrefix = '';
+          } else {
+            $countryPrefix = strtolower($territory)."_";
+          } 
           $restoregenre_query =  "
             SELECT 
               COUNT(DISTINCT downloads.id) AS countProduct,
@@ -318,7 +334,7 @@ function restoreallgenretemp($country){
               downloads,
               Songs AS Song
                   LEFT JOIN
-              countries AS Country ON Country.ProdID = Song.ProdID
+              {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
                   LEFT JOIN
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
@@ -340,8 +356,6 @@ function restoreallgenretemp($country){
           LIMIT 10
           ";
 
-          echo $restoregenre_query . '<br />';
-          
           $data =   $this->Album->query($restoregenre_query);
                 
           if(!empty($data)){
@@ -422,6 +436,12 @@ function restoreallgenretemp($country){
       
 			if($ids != ''){
 				$this->Song->recursive = 2;
+                                $multiple_countries = $this->getCurrentCountryTable();
+                                if(0 == $multiple_countries){
+                                    $countryPrefix = '';
+                                } else {
+                                    $countryPrefix = strtolower($country)."_";
+                                }
 				 $topDownloaded_query =<<<STR
 				SELECT
 					Song.ProdID,
@@ -454,7 +474,7 @@ function restoreallgenretemp($country){
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+					{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
@@ -573,7 +593,7 @@ STR;
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+					{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
