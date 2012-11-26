@@ -409,7 +409,8 @@ class AppController extends Controller
         if(0 == $multiple_countries) {
             $this->Session->write('multiple_countries', '');
         }  
-
+        
+        return $multiple_countries;
 
       }
 
@@ -431,7 +432,7 @@ class AppController extends Controller
         //var_dump( $this->Session->read('multiple_countries') );
 
         // call function getCurrentCountrytable from app_controller 
-        $this->getCurrentCountryTable();
+        $multiple_countries = $this->getCurrentCountryTable();
         //var_dump( $this->Session->read('multiple_countries') );
 
         // switch to table  
