@@ -32,8 +32,19 @@ class CacheController extends AppController {
     set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
     $territoryNames = array('US','CA','AU','IT','NZ');
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 		for($i=0;$i<count($territoryNames);$i++){
 			$territory = $territoryNames[$i];
+                        if(0 == $multiple_countries){
+                            $countryPrefix = '';
+                        } else {
+                            $countryPrefix = strtolower($territory)."_";
+                        }
 			$this->log("Starting caching for $territory",'debug');
 			$this->Genre->Behaviors->attach('Containable');
 			$this->Genre->recursive = 2;
@@ -129,7 +140,7 @@ class CacheController extends AppController {
 			LEFT JOIN
 		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 			LEFT JOIN
-		countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 			LEFT JOIN
 		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 	WHERE
@@ -262,7 +273,7 @@ STR;
             downloads,
             Songs AS Song
                 LEFT JOIN
-            countries AS Country ON Country.ProdID = Song.ProdID
+            {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
                 LEFT JOIN
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
@@ -526,7 +537,7 @@ STR;
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+					{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE

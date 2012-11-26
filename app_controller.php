@@ -3,14 +3,14 @@ class AppController extends Controller
 {
 	var $components = array( 'Session', 'DebugKit.Toolbar' );
 	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download' );
-	var $uses = array('Genre','Featuredartist','Newartist','Category');
+	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country');
 	
 	function beforeFilter()
 	{
 		ini_set('session.cookie_domain', env('HTTP_BASE')); 
-    Configure::write('Session.checkAgent', false);
-    Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
-    
+                Configure::write('Session.checkAgent', false);
+                Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
+                $this->switchCpuntriesTable();
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
@@ -395,5 +395,48 @@ class AppController extends Controller
 		$this->Acl->deny( $adminType, 'controllers/users/admin_patronform');
 		$this->Acl->deny( $adminType, 'controllers/libraries/libraryform');
 	}
+        
+      /**
+        @ getCurrentCountryTable
+        set tablePrefix attribute in countries model  
+      */
+      function getCurrentCountryTable(){
+
+        $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+        $siteConfigData = $this->Album->query($siteConfigSQL);
+
+        $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+        if(0 == $multiple_countries) {
+            $this->Session->write('multiple_countries', '');
+        }  
+
+
+      }
+
+      /**
+        @ switchCpuntriesTable
+        set session raviable for table switching  
+      */
+      function switchCpuntriesTable() {
+
+        // set session variable multiple_countries
+        $tmp_territory = $this->Session->read('territory');    
+        if ( !(empty($tmp_territory) )) {
+
+          $this->Session->write('multiple_countries', strtolower($this->Session->read('territory')).'_' );
+        } else {
+          $this->Session->write('multiple_countries', '');
+        }
+        //$this->Session->write('multiple_countries','nz_' );
+        //var_dump( $this->Session->read('multiple_countries') );
+
+        // call function getCurrentCountrytable from app_controller 
+        $this->getCurrentCountryTable();
+        //var_dump( $this->Session->read('multiple_countries') );
+
+        // switch to table  
+        $this->Country->setTablePrefix($this->Session->read('multiple_countries'));
+
+      }
 }
 ?>
