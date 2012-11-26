@@ -121,7 +121,7 @@ class ClearController extends AppController {
         ORDER BY countProduct DESC
         LIMIT 10
         ";
-echo $restoregenre_query; die;
+
         $data =   $this->Album->query($restoregenre_query);
               
         if(!empty($data)){
