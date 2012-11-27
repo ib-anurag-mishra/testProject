@@ -2,7 +2,7 @@
 class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download');
+    var $uses = array('Song', 'Album', 'Library', 'Download','Country');
 
     function cacheLogin() {
 			$libid = $_REQUEST['libid'];
@@ -42,8 +42,11 @@ class CacheController extends AppController {
 			$territory = $territoryNames[$i];
                         if(0 == $multiple_countries){
                             $countryPrefix = '';
+                            $this->Country->setTablePrefix('');
+
                         } else {
                             $countryPrefix = strtolower($territory)."_";
+                            $this->Country->setTablePrefix($countryPrefix);
                         }
 			$this->log("Starting caching for $territory",'debug');
 			$this->Genre->Behaviors->attach('Containable');
