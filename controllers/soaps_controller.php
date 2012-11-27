@@ -130,7 +130,7 @@ class SoapsController extends AppController {
 
             if( ('referral_url' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
 
-            } else {
+            } else { 
 
               $obj = new FreegalLibraryType;
               $obj->LibraryId = (int)$library['Library']['id'];
