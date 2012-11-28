@@ -174,9 +174,8 @@ class CacheController extends AppController {
 	LIMIT 100 
 	  
 STR;
-		  
-		 $data = $this->Album->query($sql_national_100);
-     
+		$data = $this->Album->query($sql_national_100);
+		$this->log( $sql_national_100, "cachequery");
       if($ids_provider_type == "")
       {
         $this->log( "ids_provider_type is set blank for ".$territory, "cache");
@@ -383,7 +382,7 @@ STR;
         ";
         }
         $data =   $this->Album->query($restoregenre_query);
-			
+		$this->log( $restoregenre_query, "cachequery");	
         if(!empty($data)){
           	Cache::write($genre.$territory, $data);
             $this->log("cache written for: $genre $territory", "cache");
