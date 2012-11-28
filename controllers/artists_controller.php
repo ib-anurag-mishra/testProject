@@ -380,7 +380,9 @@ Class ArtistsController extends AppController
 	 Desc : manages new artists with images
         */
 	function admin_manageartist() {
+            
 		$artists = $this->paginate('Artist',array('language' => Configure::read('App.LANGUAGE')));
+               
 		$this -> set( 'artists', $artists );
 	}
 
@@ -388,24 +390,44 @@ Class ArtistsController extends AppController
 	 Function Name : admin_deleteartists
 	 Desc : For deleting a new artist
         */
-	function admin_deleteartists() {
-		$deleteArtistUserId = $this -> params[ 'named' ][ 'id' ];
-		$deleteObj = new Artist();
-		$data = $this->Artist->find('all', array('conditions' => array('id' => $deleteArtistUserId)));
-		$fileName = $data[0]['Artist']['artist_image'];
-		$error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
-		if( $deleteObj -> del( $deleteArtistUserId ) ) {
-			$this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
-			$this -> redirect( 'manageartist' );
-		}
-		else {
-			$this -> Session -> setFlash( 'Error occured while deleteting the record', 'modal', array( 'class' => 'modal problem' ) );
-			$this -> redirect( 'manageartist' );
-		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
-		memcache_close($memcache);
+	function admin_deleteartists() {                
+            
+            ob_start();
+            $deleteArtistIdArray = $this -> data[ 'Info' ];          
+            $deleteOption = $this -> data[ 'artist' ]['selectedOpt']; 
+            
+            //if admin want to remove selected records then
+            if($deleteOption == 1){
+                if( count($deleteArtistIdArray) > 0 ){                    
+                    for( $i=0; $i < count($deleteArtistIdArray); $i++ ){                  
+                        $deleteArtistId = $deleteArtistIdArray[$i];                      
+                        $deleteObj = new Artist();
+                        $data = $this->Artist->find('all', array('conditions' => array('id' => $deleteArtistId)));
+                        $fileName = $data[0]['Artist']['artist_image'];
+                        $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);
+                        $deleteObj -> del( $deleteArtistId );
+                    }
+                    
+                    $this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
+                    $this -> redirect( 'manageartist' );
+                }                
+            }
+            
+            //if admin want to remove all records then
+            if($deleteOption == 2){               
+                $deleteObj = new Artist();
+                $data = $this->Artist->find('all',array('conditions' => array('language' => Configure::read('App.LANGUAGE'))));
+                for( $i=0; $i < count($data); $i++ ){
+                    $fileName = $data[$i]['Artist']['artist_image'];
+                    $deleteArtistId = $data[$i]['Artist']['id'];
+                    $error = $this->CdnUpload->deleteFile(Configure::read('App.CDN_PATH').'artistimg/'.$fileName);  
+                    $deleteObj -> del( $deleteArtistId );
+                }                
+                $this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
+                $this -> redirect( 'manageartist' );
+            }
+            ob_flush();
+            $this -> redirect( 'manageartist' ); 
 	}
 
 	/*
