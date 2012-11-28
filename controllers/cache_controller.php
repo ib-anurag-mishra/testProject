@@ -310,7 +310,7 @@ STR;
               latest_downloads,
               Songs AS Song
                   LEFT JOIN
-              countries AS Country ON Country.ProdID = Song.ProdID
+              {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
                   LEFT JOIN
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
