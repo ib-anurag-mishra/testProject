@@ -426,6 +426,11 @@ Class ArtistsController extends AppController
                 $this -> Session -> setFlash( 'Data deleted successfully!', 'modal', array( 'class' => 'modal success' ) );
                 $this -> redirect( 'manageartist' );
             }
+            $memcache = new Memcache;
+            $memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+            memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
+            memcache_close($memcache);           
+            
             ob_flush();
             $this -> redirect( 'manageartist' ); 
 	}
