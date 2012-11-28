@@ -276,6 +276,13 @@ class SoapsController extends AppController {
     );
 
     $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    
+    $this->Session->write('territory', $library_territory);
+       
+    $this->switchCpuntriesTable();
+
+
 
     if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
 			$cond = array('Song.Advisory' => 'F');
@@ -287,7 +294,7 @@ class SoapsController extends AppController {
     $songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
 				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0 ));
-
+        
     $val = '';
 		$val_provider_type = '';
 
@@ -336,10 +343,7 @@ class SoapsController extends AppController {
 						)
 					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2, 'limit' => $startFrom . ', ' . $recordCount 
 				));
-      
-            
-
-    
+          
           
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
@@ -707,10 +711,15 @@ class SoapsController extends AppController {
       'recursive' => -1
       )
     );
-    $library_territory = $libraryDetails['Library']['library_territory'];
-
+    $library_territory = $libraryDetails['Library']['library_territory']; 
+    
+  
     if (($libDownload = Cache::read("lib".$libraryId)) === false) {
 
+      $this->Session->write('territory', $library_territory); 
+      $this->switchCpuntriesTable();
+      $breakdown_table = $this->Session->read('multiple_countries').'countries';
+    
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$ids = '';
 
@@ -758,7 +767,7 @@ class SoapsController extends AppController {
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
+					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
@@ -768,8 +777,6 @@ class SoapsController extends AppController {
 						$ids) ASC
 				LIMIT 10
 STR;
-
-
 
 			$topDownload = $this->Album->query($topDownloaded_query);
 
@@ -858,6 +865,9 @@ STR;
 
     $library_territory = $libraryDetails['Library']['library_territory'];
     
+    $this->Session->write('territory', $library_territory);
+       
+    $this->switchCpuntriesTable();
     
     $data = array();
     
@@ -944,6 +954,7 @@ STR;
 				));
     
 
+    
     $arr_album_songs = array();
     foreach($Song AS $key => $val) {
       
@@ -5097,8 +5108,7 @@ STR;
    */
 
   private function IsTerrotiry($songProdID, $provider_type, $libraryId) {
-
-
+    
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -5108,6 +5118,9 @@ STR;
 
     $library_territory = $libraryDetails['Library']['library_territory'];
 
+    $this->Session->write('territory', $library_territory);
+       
+    $this->switchCpuntriesTable();
 
     $count = $this->Country->find('count',
           array(
@@ -5134,6 +5147,10 @@ STR;
 
 	private function IsDownloadable($songProdID, $territory, $provider_type) {	
 		
+    $this->Session->write('territory', $territory);
+       
+    $this->switchCpuntriesTable();
+    
     $Country_array = $this->Country->find('first',
 			  array(
 				'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $territory, 'Country.provider_type' => $provider_type),
