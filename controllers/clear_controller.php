@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library','Artist');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist','Country');
 
   function cachekey($key){
     if(!empty($key)){
@@ -442,7 +442,7 @@ function restoreallgenretemp($country){
                                 } else {
                                     $countryPrefix = strtolower($country)."_";
                                 }
-				 $topDownloaded_query =<<<STR
+				echo $topDownloaded_query =<<<STR
 				SELECT
 					Song.ProdID,
 					Song.ReferenceID,
@@ -627,7 +627,15 @@ STR;
 
 	
     function featured_albums($territory, $language) {
-		//featured artist slideshow
+		
+                $multiple_countries = $this->getCurrentCountryTable();
+                if(0 == $multiple_countries){
+                    $this->Country->setTablePrefix('');
+                } else {  
+                    $this->Country->setTablePrefix(strtolower($territory)."_");
+                }
+          
+                //featured artist slideshow
 		$ids_provider_type = '';
 		$ids = '';
 		$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $territory,'Featuredartist.language' => $language), 'recursive' => -1));

@@ -1,3 +1,4 @@
+
 <?php
 /*
 	 File Name : index.ctp
@@ -7,7 +8,7 @@
 ?>
 
 
-<style>
+<style type="text/css">
 .main-holder {
 	width:100%;
 	overflow:hidden;
@@ -479,7 +480,9 @@ function ieversion()
 	  }
 }
 $ieVersion =  ieversion();
+
 ?>
+
 	<div id="main">
 		<div class="main-holder">
 			<div class="gallery">
