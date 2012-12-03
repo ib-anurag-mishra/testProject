@@ -28,7 +28,7 @@
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');*/
 	?>		
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
+                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,jquery.bgiframe.js,curvycorners.js,jquery.autocomplete.js"></script>
 	<?php
 		//echo $javascript->link('jquery-1.3.2.min');
 		echo $javascript->link('qtip');
@@ -47,14 +47,15 @@
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<script type="text/javascript">
 				$(document).ready(function() {
+                                     //$.noConflict();
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-					$('#autoComplete').keypress(function(event) {
+					jQuery('#autoComplete').keypress(function(event) {
 						//auto_check();
 						if (event.which != '13') {
 						 $('#auto').attr('value', 0);
 						}
 					});					
-					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
+					jQuery("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
 					{
 						minChars: 1,
 						cacheLength: 10,
