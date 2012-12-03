@@ -1,9 +1,13 @@
 <?php
+
+  Cache::delete('cake_model_default_variables');
+  Cache::delete('cake_model_default_libraries');
+  
 /*
  File Name : count_controller.php
  File Description : Controller page for writting the memcache key.
  Author : m68interactive
- */
+ */  
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
@@ -956,10 +960,10 @@ STR;
   
   
   function registerDevice(){
-  
-  Cache::delete('cake_model_default_variables');
-  Cache::delete('cake_model_default_libraries');
-    
+      
+      Cache::delete('cake_model_default_variables');
+      Cache::delete('cake_model_default_libraries');  
+      
     $device = $this->DeviceMaster->find('all',
 			  array(
 				'feilds' => array('id','patron_id','library_id','system_type','device_id','registration_id','user_language'),
