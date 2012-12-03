@@ -1,7 +1,4 @@
 <?php
-
-App::import('Model', 'DeviceMaster');
-
 /*
  File Name : count_controller.php
  File Description : Controller page for writting the memcache key.
