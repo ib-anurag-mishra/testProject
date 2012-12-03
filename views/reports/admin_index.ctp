@@ -367,7 +367,14 @@
 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=datepicker/jquery.ui.core.js,datepicker/jquery.ui.widget.js,datepicker/jquery.ui.datepicker.js"></script>
 <script type="text/javascript">
     $(function() {
-		report_load_page();
+		<?php 
+		if(empty($library_id))
+		{
+		?>
+			report_load_page();
+		<?php
+		}
+		?>
         $("#ReportDate").datepicker({showWeek: true, firstDay: 1, maxDate: '+0D', numberOfMonths: 3});
         var dates = $('#ReportDateFrom, #ReportDateTo').datepicker({
                 defaultDate: "-1w",
