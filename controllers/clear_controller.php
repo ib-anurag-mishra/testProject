@@ -1,4 +1,7 @@
 <?php
+
+App::import('Model', 'DeviceMaster');
+
 /*
  File Name : count_controller.php
  File Description : Controller page for writting the memcache key.
@@ -7,17 +10,9 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library','Artist', 'LatestDownload');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist', 'LatestDownload', 'DeviceMaster');
 
-  
-  
-  function beforeFilter(){
-    if ($this->action == 'registerDevice'){
-       $this->disableCache();
-    }
-
-  }
-  
+    
   function cachekey($key){
     if(!empty($key)){
       $this->autoRender = false;
@@ -966,7 +961,7 @@ STR;
   
   function registerDevice(){
       
-    $this->loadModel('DeviceMaster');
+    //$this->loadModel('DeviceMaster');
       
     $device = $this->DeviceMaster->find('all',
 			  array(
