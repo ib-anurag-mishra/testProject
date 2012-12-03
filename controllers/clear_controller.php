@@ -1,8 +1,4 @@
 <?php
-
-  Cache::delete('cake_model_default_variables');
-  Cache::delete('cake_model_default_libraries');
-  
 /*
  File Name : count_controller.php
  File Description : Controller page for writting the memcache key.
@@ -13,6 +9,15 @@ class ClearController extends AppController {
   var $autoLayout = false;
   var $uses = array('Album','Download','Song','Genre', 'Library','Artist', 'LatestDownload', 'DeviceMaster');
 
+  
+  
+  function beforeFilter(){
+    if ($this->action == 'registerDevice'){
+       $this->disableCache();
+    }
+
+  }
+  
   function cachekey($key){
     if(!empty($key)){
       $this->autoRender = false;
@@ -961,8 +966,7 @@ STR;
   
   function registerDevice(){
       
-      Cache::delete('cake_model_default_variables');
-      Cache::delete('cake_model_default_libraries');  
+    $this->loadModel('DeviceMaster');
       
     $device = $this->DeviceMaster->find('all',
 			  array(
