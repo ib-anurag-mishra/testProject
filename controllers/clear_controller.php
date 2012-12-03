@@ -956,6 +956,9 @@ STR;
   
   
   function registerDevice(){
+  
+  Cache::delete('cake_model_default_variables');
+  Cache::delete('cake_model_default_libraries');
     
     $device = $this->DeviceMaster->find('all',
 			  array(
