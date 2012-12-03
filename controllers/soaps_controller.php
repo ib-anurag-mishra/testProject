@@ -1352,18 +1352,44 @@ STR;
       $msg = 'Invalid request';
       return $this->createsSuccessResponseObject(false, $msg);
     }
+        
+    $arr_param = func_get_args();
     
-    $device = $this->DeviceMaster->find('all',
-			  array(
-				'feilds' => array('id','patron_id','library_id','system_type','device_id','registration_id','user_language'),
-				'recursive' => -1,
-			  )
-			);
+    $arr_param_values['device_id'] = $arr_param[0];
+    $arr_param_values['registration_id'] = $arr_param[1];
+    $arr_param_values['patron_id'] = $arr_param[2];
+    $arr_param_values['library_id'] = $arr_param[3];
+    $arr_param_values['user_language'] = $arr_param[4];
+    $arr_param_values['system_type'] = $arr_param[6];
     
-    print_r($device);
-    exit;
+    foreach($arr_param_values as $key => $val) {
     
-  
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'registration_id' => $registerID,
+      ));
+      $sta = $this->DeviceMaster->save();
+      
+    } else {
+      $sta = $this->DeviceMaster->save($arr_param_values);
+    }
+    
+    if(false !== $sta){
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+    }
+    
   }
   
   /**
