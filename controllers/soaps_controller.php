@@ -127,24 +127,31 @@ class SoapsController extends AppController {
         if(!empty($libraries)){
           $list = array();
           foreach($libraries as $library){
-            $obj = new FreegalLibraryType;
-            $obj->LibraryId = (int)$library['Library']['id'];
-            $obj->LibraryName = $library['Library']['library_name'];
-            $obj->LibraryApiKey = $library['Library']['library_apikey'];
 
-            $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
-            $obj->LibraryAuthenticationMethod = $identifier;
+            if( ('referral_url' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
 
-            $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-            if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
-              $obj->LibraryAuthenticationNum = 1;
-            } else {
-              $obj->LibraryAuthenticationNum = 0;
-            }
+            } else { 
 
-            $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
+              $obj = new FreegalLibraryType;
+              $obj->LibraryId = (int)$library['Library']['id'];
+              $obj->LibraryName = $library['Library']['library_name'];
+              $obj->LibraryApiKey = $library['Library']['library_apikey'];
 
-            $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
+              $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
+              $obj->LibraryAuthenticationMethod = $identifier;
+
+              $auth_url = trim(strtolower($library['Library']['mobile_auth']));
+              if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+                $obj->LibraryAuthenticationNum = 1;
+              } else {
+                $obj->LibraryAuthenticationNum = 0;
+              }
+
+              $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
+
+              $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
+            }                        
+            
           }
 
           if(!empty($list)){
@@ -210,23 +217,31 @@ class SoapsController extends AppController {
 
       $list = array();
       foreach($libraries as $library){
-        $obj = new FreegalLibraryType;
-        $obj->LibraryId = (int)$library['Library']['id'];
-        $obj->LibraryName = $library['Library']['library_name'];
-        $obj->LibraryApiKey = $library['Library']['library_apikey'];
-        $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
-        $obj->LibraryAuthenticationMethod = $identifier;
+        
+        if( ('referral_url' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
 
-        $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-        if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
-          $obj->LibraryAuthenticationNum = 1;
         } else {
-          $obj->LibraryAuthenticationNum = 0;
+        
+          $obj = new FreegalLibraryType;
+          $obj->LibraryId = (int)$library['Library']['id'];
+          $obj->LibraryName = $library['Library']['library_name'];
+          $obj->LibraryApiKey = $library['Library']['library_apikey'];
+          $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
+          $obj->LibraryAuthenticationMethod = $identifier;
+
+          $auth_url = trim(strtolower($library['Library']['mobile_auth']));
+          if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+            $obj->LibraryAuthenticationNum = 1;
+          } else {
+            $obj->LibraryAuthenticationNum = 0;
+          }
+
+          $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
+
+          $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
+        
         }
-
-        $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
-
-        $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
+        
       }
 
       return new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalLibraryType');
@@ -1352,18 +1367,44 @@ STR;
       $msg = 'Invalid request';
       return $this->createsSuccessResponseObject(false, $msg);
     }
+        
+    $arr_param = func_get_args();
     
-    $device = $this->DeviceMaster->find('all',
-			  array(
-				'feilds' => array('id','patron_id','library_id','system_type','device_id','registration_id','user_language'),
-				'recursive' => -1,
-			  )
-			);
+    $arr_param_values['device_id'] = $arr_param[0];
+    $arr_param_values['registration_id'] = $arr_param[1];
+    $arr_param_values['patron_id'] = $arr_param[2];
+    $arr_param_values['library_id'] = $arr_param[3];
+    $arr_param_values['user_language'] = $arr_param[4];
+    $arr_param_values['system_type'] = $arr_param[6];
     
-    print_r($device);
-    exit;
+    foreach($arr_param_values as $key => $val) {
     
-  
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'registration_id' => $registerID,
+      ));
+      $sta = $this->DeviceMaster->save();
+      
+    } else {
+      $sta = $this->DeviceMaster->save($arr_param_values);
+    }
+    
+    if(false !== $sta){
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+    }
+    
   }
   
   /**
