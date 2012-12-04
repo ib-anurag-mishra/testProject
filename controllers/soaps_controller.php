@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -1334,6 +1334,64 @@ STR;
     return $info_data;
   }
 
+  /**
+   * Function Name : registerDevice
+   * Desc : To register device
+   * @param string deviceID
+   * @param string registerID
+   * @param string userID
+   * @param string libID
+   * @param string lang
+   * @param string authenticationToken
+   * @param string systemType
+	 * @return SuccessResponseType[]
+   */
+  function registerDevice($deviceID, $registerID, $userID, $libID, $lang, $authenticationToken, $systemType){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+        
+    $arr_param = func_get_args();
+    
+    $arr_param_values['device_id'] = $arr_param[0];
+    $arr_param_values['registration_id'] = $arr_param[1];
+    $arr_param_values['patron_id'] = $arr_param[2];
+    $arr_param_values['library_id'] = $arr_param[3];
+    $arr_param_values['user_language'] = $arr_param[4];
+    $arr_param_values['system_type'] = $arr_param[6];
+    
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'registration_id' => $registerID,
+      ));
+      $sta = $this->DeviceMaster->save();
+      
+    } else {
+      $sta = $this->DeviceMaster->save($arr_param_values);
+    }
+    
+    if(false !== $sta){
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+    }
+    
+  }
+  
   /**
    * Function Name : loginByWebservice
    * Desc : To authnticate user by web service
