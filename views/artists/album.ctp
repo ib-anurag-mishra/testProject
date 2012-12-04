@@ -122,11 +122,10 @@ $i = 0;
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
 					if($page->isImage($image)) {
-						//Image is a correct one
+						// Image is a correct one
 					}
 					else {
-						
-					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+						mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
