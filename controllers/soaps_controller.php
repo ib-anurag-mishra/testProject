@@ -1407,6 +1407,49 @@ STR;
     
   }
   
+  
+  /**
+   * Function Name : deleteRegisterDevice
+   * Desc : To remove register device for given lib & patron
+   * @param string userID
+   * @param string libID
+   * @param string authenticationToken
+	 * @return SuccessResponseType[]
+   */
+  function deleteRegisterDevice($authenticationToken, $userID, $libID){
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['patron_id'] = $arr_param[0];
+    $arr_param_values['library_id'] = $arr_param[1];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    if('' != trim($data['DeviceMaster']['id'])) {
+      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
+      $msg = "Success: $userID & $libID";
+      return $this->createsSuccessResponseObject(true, $msg);
+    }else{
+      $msg = "No row found for $userID & $libID";
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+
+  
+  
+  }
+  
   /**
    * Function Name : loginByWebservice
    * Desc : To authnticate user by web service
