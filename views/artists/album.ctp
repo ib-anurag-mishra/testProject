@@ -118,6 +118,11 @@ $i = 0;
 		<div id="album_list_page" style="float:left">
 			<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 			<div class="album_lgAlbumArtwork" style="float:left">
+                                <?php    
+                                    if(empty($album['Files']['CdnPath']) || empty($album['Files']['SourceURL'])){
+                                        mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                    }
+                                ?>
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
