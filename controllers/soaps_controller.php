@@ -1504,7 +1504,7 @@ STR;
       }
     }
     
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('device_id' => $deviceID, 'registration_id' => $registration_id)));
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('device_id' => $deviceID, 'registration_id' => $registerID)));
 
     
     if('' != trim($data['DeviceMaster']['id'])) {
