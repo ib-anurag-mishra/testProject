@@ -1412,7 +1412,6 @@ STR;
     }
     
     $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $arr_param_values['patron_id'], 'library_id' => $libID)));
-
     
     if('' != trim($data['DeviceMaster']['id'])) {
       
@@ -1473,7 +1472,63 @@ STR;
   
   }
   
+  
   /**
+   * Function Name : updateRegisterDeviceLang
+   * Desc : To update language of given device & registration id
+   * @param string authenticationToken
+   * @param string deviceID
+   * @param string registerID
+   * @param string lang
+	 * @return SuccessResponseType[]
+   */
+
+  function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['device_id'] = $arr_param[1];
+    $arr_param_values['registration_id'] = $arr_param[2];
+    $arr_param_values['user_language'] = $arr_param[3];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('device_id' => $deviceID, 'registration_id' => $registration_id)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'user_language' => $lang,
+      ));
+      $this->DeviceMaster->save();
+      
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+      
+    } else {
+      $msg = "Not found DeviceID: $deviceID , RegisterID : $registerID ";
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+  
+  
+  }
+
+
+
+   /**
    * Function Name : loginByWebservice
    * Desc : To authnticate user by web service
    * @param string $authtype
