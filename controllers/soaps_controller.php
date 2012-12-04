@@ -1385,7 +1385,33 @@ STR;
       }
     }
     
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    $Library = $this->Library->find('first',array(
+      'fields' => array('Library.library_authentication_method'),
+      'conditions' => array('Library.id' => $libID),
+      'recursive' => -1,
+    )
+    );
+    
+    if('user_account' == $Library['Library']['library_authentication_method']) {
+      
+      $user = $this->User->find('first',array(
+        'fields' => array('id', 'email'),
+        'conditions' => array(
+          'email' =>  $userID,
+          'user_status' => 'active'
+        ),
+      ));
+      
+      if('' != trim($user['User']['id'])) {
+        $arr_param_values['patron_id'] = $user['User']['id'];
+      } else {
+        $msg = 'Invalid User : '.$userID;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $arr_param_values['patron_id'], 'library_id' => $libID)));
 
     
     if('' != trim($data['DeviceMaster']['id'])) {
@@ -1410,13 +1436,12 @@ STR;
   
   /**
    * Function Name : deleteRegisterDevice
-   * Desc : To remove register device for given lib & patron
-   * @param string userID
-   * @param string libID
+   * Desc : To remove register device for given registration id
    * @param string authenticationToken
+   * @param string registerID
 	 * @return SuccessResponseType[]
    */
-  function deleteRegisterDevice($authenticationToken, $userID, $libID){
+  function deleteRegisterDevice($authenticationToken, $registerID){
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       $msg = 'Invalid request';
@@ -1425,8 +1450,7 @@ STR;
     
     $arr_param = func_get_args();
 
-    $arr_param_values['patron_id'] = $arr_param[0];
-    $arr_param_values['library_id'] = $arr_param[1];
+    $arr_param_values['registration_id'] = $arr_param[1];
 
     foreach($arr_param_values as $key => $val) {
     
@@ -1436,17 +1460,16 @@ STR;
       }
     }
     
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('registration_id' => $registerID)));
     if('' != trim($data['DeviceMaster']['id'])) {
       $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
-      $msg = "Success: $userID & $libID";
+      $msg = "Success for registration id: ".$registerID;
       return $this->createsSuccessResponseObject(true, $msg);
     }else{
-      $msg = "No row found for $userID & $libID";
+      $msg = "Not found registration id: ".$registerID;
       return $this->createsSuccessResponseObject(false, $msg);
     }
 
-  
   
   }
   
