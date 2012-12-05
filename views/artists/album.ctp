@@ -120,6 +120,7 @@ $i = 0;
 			<div class="album_lgAlbumArtwork" style="float:left">
                                 <?php    
                                     if(empty($album['Files']['CdnPath']) || empty($album['Files']['SourceURL'])){
+                                        echo "HereMail";
                                         mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                     }
                                 ?>
