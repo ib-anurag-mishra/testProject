@@ -119,14 +119,11 @@ $i = 0;
 			<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 			<div class="album_lgAlbumArtwork" style="float:left">
                                 <?php
-                                print_r($album);
                                     if(empty($album['Files']['CdnPath'])){
                                         if(empty($album['Files']['SourceURL'])){
-                                            echo "heremail-cdnpath and sourceurl missing";
-                                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                            mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." is missing",Configure::read('HEADERS'));
                                         } else {
-                                            echo "heremail-cdnpath missing";
-                                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                            mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." is missing",Configure::read('HEADERS'));
                                         }
                                     }
                                 ?>
