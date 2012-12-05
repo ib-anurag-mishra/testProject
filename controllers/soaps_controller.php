@@ -1354,20 +1354,21 @@ STR;
    * Desc : To register device
    * @param string deviceID
    * @param string registerID
-   * @param string userID
-   * @param string libID
    * @param string lang
    * @param string authenticationToken
    * @param string systemType
 	 * @return SuccessResponseType[]
    */
-  function registerDevice($deviceID, $registerID, $userID, $libID, $lang, $authenticationToken, $systemType){
+  function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       $msg = 'Invalid request';
       return $this->createsSuccessResponseObject(false, $msg);
     }
-        
+    
+    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    
     $arr_param = func_get_args();
     
     $arr_param_values['device_id'] = $arr_param[0];
