@@ -121,13 +121,9 @@ $i = 0;
                                 <?php
                                     if(empty($album['Files']['CdnPath'])){
                                         if(empty($album['Files']['SourceURL'])){
-                                            echo Configure::read('TO');
-                                            echo Configure::read('HEADERS');
-                                            //mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." is missing",Configure::read('HEADERS'));
+                                            mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." is missing",Configure::read('HEADERS'));
                                         } else {
-                                            echo Configure::read('TO');
-                                            echo Configure::read('HEADERS');
-                                            //mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." is missing",Configure::read('HEADERS'));
+                                            mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." is missing",Configure::read('HEADERS'));
                                         }
                                     }
                                 ?>
