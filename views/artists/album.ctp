@@ -122,8 +122,10 @@ $i = 0;
                                 print_r($album);
                                     if(empty($album['Files']['CdnPath'])){
                                         if(empty($album['Files']['SourceURL'])){
+                                            echo "heremail-cdnpath and sourceurl missing";
                                             //mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                         } else {
+                                            echo "heremail-cdnpath missing";
                                             //mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
                                         }
                                     }
