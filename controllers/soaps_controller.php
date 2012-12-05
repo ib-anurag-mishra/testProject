@@ -1385,8 +1385,33 @@ STR;
       }
     }
     
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
-
+    $Library = $this->Library->find('first',array(
+      'fields' => array('Library.library_authentication_method'),
+      'conditions' => array('Library.id' => $libID),
+      'recursive' => -1,
+    )
+    );
+    
+    if('user_account' == $Library['Library']['library_authentication_method']) {
+      
+      $user = $this->User->find('first',array(
+        'fields' => array('id', 'email'),
+        'conditions' => array(
+          'email' =>  $userID,
+          'user_status' => 'active'
+        ),
+      ));
+      
+      if('' != trim($user['User']['id'])) {
+        $arr_param_values['patron_id'] = $user['User']['id'];
+      } else {
+        $msg = 'Invalid User : '.$userID;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $arr_param_values['patron_id'], 'library_id' => $libID)));
     
     if('' != trim($data['DeviceMaster']['id'])) {
       
@@ -1407,7 +1432,103 @@ STR;
     
   }
   
+  
   /**
+   * Function Name : deleteRegisterDevice
+   * Desc : To remove register device for given registration id
+   * @param string authenticationToken
+   * @param string registerID
+	 * @return SuccessResponseType[]
+   */
+  function deleteRegisterDevice($authenticationToken, $registerID){
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['registration_id'] = $arr_param[1];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('registration_id' => $registerID)));
+    if('' != trim($data['DeviceMaster']['id'])) {
+      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
+      $msg = "Success for registration id: ".$registerID;
+      return $this->createsSuccessResponseObject(true, $msg);
+    }else{
+      $msg = "Not found registration id: ".$registerID;
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+
+  
+  }
+  
+  
+  /**
+   * Function Name : updateRegisterDeviceLang
+   * Desc : To update language of given device & registration id
+   * @param string authenticationToken
+   * @param string deviceID
+   * @param string registerID
+   * @param string lang
+	 * @return SuccessResponseType[]
+   */
+
+  function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['device_id'] = $arr_param[1];
+    $arr_param_values['registration_id'] = $arr_param[2];
+    $arr_param_values['user_language'] = $arr_param[3];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('device_id' => $deviceID, 'registration_id' => $registerID)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'user_language' => $lang,
+      ));
+      $this->DeviceMaster->save();
+      
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+      
+    } else {
+      $msg = "Not found DeviceID: $deviceID , RegisterID : $registerID ";
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+  
+  
+  }
+
+
+
+   /**
    * Function Name : loginByWebservice
    * Desc : To authnticate user by web service
    * @param string $authtype
