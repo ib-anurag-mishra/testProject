@@ -118,10 +118,14 @@ $i = 0;
 		<div id="album_list_page" style="float:left">
 			<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 			<div class="album_lgAlbumArtwork" style="float:left">
-                                <?php    
-                                    if(empty($album['Files']['CdnPath']) || empty($album['Files']['SourceURL'])){
-                                        echo "HereMail";
-                                        mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                <?php
+                                print_r($album);
+                                    if(empty($album['Files']['CdnPath'])){
+                                        if(empty($album['Files']['SourceURL'])){
+                                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                        } else {
+                                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork record url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                        }
                                     }
                                 ?>
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
@@ -131,7 +135,7 @@ $i = 0;
 						// Image is a correct one
 					}
 					else {
-						mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+						//mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
