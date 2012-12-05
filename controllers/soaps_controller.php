@@ -277,6 +277,10 @@ class SoapsController extends AppController {
 
     $library_territory = $libraryDetails['Library']['library_territory'];
 
+    $this->Session->write('territory', $library_territory);
+       
+    $this->switchCpuntriesTable();
+    
     if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
 			$cond = array('Song.Advisory' => 'F');
 		}
@@ -710,7 +714,11 @@ class SoapsController extends AppController {
     $library_territory = $libraryDetails['Library']['library_territory'];
 
     if (($libDownload = Cache::read("lib".$libraryId)) === false) {
-
+      
+      $this->Session->write('territory', $library_territory); 
+      $this->switchCpuntriesTable();
+      $breakdown_table = $this->Session->read('multiple_countries').'countries';
+      
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$ids = '';
 
@@ -758,7 +766,7 @@ class SoapsController extends AppController {
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
+					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
@@ -858,6 +866,9 @@ STR;
 
     $library_territory = $libraryDetails['Library']['library_territory'];
     
+    $this->Session->write('territory', $library_territory);
+       
+    $this->switchCpuntriesTable();
     
     $data = array();
     
@@ -1385,8 +1396,33 @@ STR;
       }
     }
     
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
-
+    $Library = $this->Library->find('first',array(
+      'fields' => array('Library.library_authentication_method'),
+      'conditions' => array('Library.id' => $libID),
+      'recursive' => -1,
+    )
+    );
+    
+    if('user_account' == $Library['Library']['library_authentication_method']) {
+      
+      $user = $this->User->find('first',array(
+        'fields' => array('id', 'email'),
+        'conditions' => array(
+          'email' =>  $userID,
+          'user_status' => 'active'
+        ),
+      ));
+      
+      if('' != trim($user['User']['id'])) {
+        $arr_param_values['patron_id'] = $user['User']['id'];
+      } else {
+        $msg = 'Invalid User : '.$userID;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $arr_param_values['patron_id'], 'library_id' => $libID)));
     
     if('' != trim($data['DeviceMaster']['id'])) {
       
@@ -1407,7 +1443,103 @@ STR;
     
   }
   
+  
   /**
+   * Function Name : deleteRegisterDevice
+   * Desc : To remove register device for given registration id
+   * @param string authenticationToken
+   * @param string registerID
+	 * @return SuccessResponseType[]
+   */
+  function deleteRegisterDevice($authenticationToken, $registerID){
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['registration_id'] = $arr_param[1];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('registration_id' => $registerID)));
+    if('' != trim($data['DeviceMaster']['id'])) {
+      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
+      $msg = "Success for registration id: ".$registerID;
+      return $this->createsSuccessResponseObject(true, $msg);
+    }else{
+      $msg = "Not found registration id: ".$registerID;
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+
+  
+  }
+  
+  
+  /**
+   * Function Name : updateRegisterDeviceLang
+   * Desc : To update language of given device & registration id
+   * @param string authenticationToken
+   * @param string deviceID
+   * @param string registerID
+   * @param string lang
+	 * @return SuccessResponseType[]
+   */
+
+  function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['device_id'] = $arr_param[1];
+    $arr_param_values['registration_id'] = $arr_param[2];
+    $arr_param_values['user_language'] = $arr_param[3];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('device_id' => $deviceID, 'registration_id' => $registerID)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'user_language' => $lang,
+      ));
+      $this->DeviceMaster->save();
+      
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+      
+    } else {
+      $msg = "Not found DeviceID: $deviceID , RegisterID : $registerID ";
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+  
+  
+  }
+
+
+
+   /**
    * Function Name : loginByWebservice
    * Desc : To authnticate user by web service
    * @param string $authtype
@@ -5166,7 +5298,10 @@ STR;
 
     $library_territory = $libraryDetails['Library']['library_territory'];
 
-
+    $this->Session->write('territory', $library_territory);
+       
+    $this->switchCpuntriesTable();
+    
     $count = $this->Country->find('count',
           array(
             'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $library_territory, 'Country.provider_type' => $provider_type),
@@ -5192,6 +5327,10 @@ STR;
 
 	private function IsDownloadable($songProdID, $territory, $provider_type) {	
 		
+    $this->Session->write('territory', $territory);
+       
+    $this->switchCpuntriesTable();
+    
     $Country_array = $this->Country->find('first',
 			  array(
 				'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $territory, 'Country.provider_type' => $provider_type),
