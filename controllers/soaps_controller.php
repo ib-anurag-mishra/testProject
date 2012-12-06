@@ -1405,6 +1405,7 @@ STR;
       $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
       $this->DeviceMaster->set(array(
         'registration_id' => $registerID,
+        'device_id' => $deviceID,
       ));
       $sta = $this->DeviceMaster->save();
       
