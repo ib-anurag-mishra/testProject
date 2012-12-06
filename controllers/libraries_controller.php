@@ -9,7 +9,7 @@ Class LibrariesController extends AppController
 {
     var $name = 'Libraries';
     var $layout = 'admin';
-    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session','TimezoneSelect');
+    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist','LibrariesTimezone');
 
@@ -1288,8 +1288,8 @@ STR;
         if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
              $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
-        
-            
+      
+         $this->set('paction',$action);   
         
         if(isset($_POST) && !empty($_POST)){
          
@@ -1310,12 +1310,11 @@ STR;
                     if(isset($this->data['Library']['edit_id']) && $this->data['Library']['edit_id']!=''){
                         $id = $this->data['Library']['edit_id'];
                         $countSql ='select count(*) as total from libraries_timezone  where id = "'.$result['Library']['id'].'" and id!="'.$this->data['Library']['edit_id'].'"';                    
-                        $sql ='update libraries_timezone set id="'.$result['Library']['id'].'",libraries_timezone="'.$libTime.'"';
+                        $sql ='update libraries_timezone set id="'.$result['Library']['id'].'",libraries_timezone="'.$libTime.'" where id = "'.$this->data['Library']['edit_id'].'"';
                     }else{
                         $countSql ='select count(*) as total from libraries_timezone  where id = "'.$result['Library']['id'].'"';
                         $sql ='insert into libraries_timezone(id,libraries_timezone) values("'.$result['Library']['id'].'","'.$libTime.'")';
                     }
-                    
                     
                     
                     $data = $this->LibrariesTimezone->query($countSql);               

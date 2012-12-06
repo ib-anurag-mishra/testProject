@@ -47,7 +47,7 @@ echo $this->Html->css('jquery.autocomplete');
   
 </script>
 <fieldset>
-        <legend> Add Library Timezone</legend>
+        <legend> <?php if($paction) { echo ucfirst($paction); } ?> Library Timezone</legend>
         <div class="formFieldsContainer">               
                 <div class="form_steps">
                     <table cellspacing="10" cellpadding="0" border="0" width="100%">
