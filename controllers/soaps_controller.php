@@ -1413,36 +1413,7 @@ STR;
       $sta = $this->DeviceMaster->save($arr_param_values);
     }
   }
-  
-  
-  /**
-   * Function Name : deleteRegisterDevice
-   * Desc : To remove device id for given authenticationToken
-   * @param string authenticationToken
-	 * @return SuccessResponseType[]
-   */
-  private function deleteRegisterDevice($authenticationToken){
     
-    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
-    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);    
-        
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
-    
-    if('' != trim($data['DeviceMaster']['id'])) {
-      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
-      if(false !== $sta) {
-        return true;
-      }else{
-        return false;
-      }
-    }else{
-      return true; 
-    }
-
-  
-  }
-  
-  
   /**
    * Function Name : updateRegisterDeviceLang
    * Desc : To update language of given device & registration id
@@ -5354,6 +5325,35 @@ STR;
     return $productDetails;
     
   }
+  
+  /**
+   * Function Name : deleteRegisterDevice
+   * Desc : To remove device id for given authenticationToken
+   * @param string authenticationToken
+	 * @return SuccessResponseType[]
+   */
+  private function deleteRegisterDevice($authenticationToken){
+    
+    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);    
+        
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
+      if(false !== $sta) {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true; 
+    }
+
+  
+  }
+  
+  
   
 
 }
