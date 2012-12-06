@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -276,14 +276,11 @@ class SoapsController extends AppController {
     );
 
     $library_territory = $libraryDetails['Library']['library_territory'];
-    
-    
+
     $this->Session->write('territory', $library_territory);
        
     $this->switchCpuntriesTable();
-
-
-
+    
     if(1 == $libraryDetails['Library']['library_block_explicit_content']) {
 			$cond = array('Song.Advisory' => 'F');
 		}
@@ -294,7 +291,7 @@ class SoapsController extends AppController {
     $songs = $this->Song->find('all', array(
 				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
 				'conditions' => array('Song.ArtistText' => $artistText ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $library_territory, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0 ));
-        
+
     $val = '';
 		$val_provider_type = '';
 
@@ -343,7 +340,10 @@ class SoapsController extends AppController {
 						)
 					), 'order' => array('Country.SalesDate' => 'desc'), 'chk' => 2, 'limit' => $startFrom . ', ' . $recordCount 
 				));
-          
+      
+            
+
+    
           
     if(empty($albumData)) {
       throw new SOAPFault('Soap:client', 'Freegal is unable to find Album for the Artist.');
@@ -711,15 +711,14 @@ class SoapsController extends AppController {
       'recursive' => -1
       )
     );
-    $library_territory = $libraryDetails['Library']['library_territory']; 
-    
-  
-    if (($libDownload = Cache::read("lib".$libraryId)) === false) {
+    $library_territory = $libraryDetails['Library']['library_territory'];
 
+    if (($libDownload = Cache::read("lib".$libraryId)) === false) {
+      
       $this->Session->write('territory', $library_territory); 
       $this->switchCpuntriesTable();
       $breakdown_table = $this->Session->read('multiple_countries').'countries';
-    
+      
 			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libraryId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
 			$ids = '';
 
@@ -777,6 +776,8 @@ class SoapsController extends AppController {
 						$ids) ASC
 				LIMIT 10
 STR;
+
+
 
 			$topDownload = $this->Album->query($topDownloaded_query);
 
@@ -954,7 +955,6 @@ STR;
 				));
     
 
-    
     $arr_album_songs = array();
     foreach($Song AS $key => $val) {
       
@@ -1361,6 +1361,124 @@ STR;
   }
 
   /**
+   * Function Name : registerDevice
+   * Desc : To register device
+   * @param string deviceID
+   * @param string registerID
+   * @param string lang
+   * @param string authenticationToken
+   * @param string systemType
+	 * @return SuccessResponseType[]
+   */
+  function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+    
+    $arr_param = func_get_args();
+    
+    $arr_param_values['device_id'] = $arr_param[0];
+    $arr_param_values['registration_id'] = $arr_param[1];
+    $arr_param_values['patron_id'] = $userID;
+    $arr_param_values['library_id'] = $libID;
+    $arr_param_values['user_language'] = $arr_param[2];
+    $arr_param_values['system_type'] = $arr_param[4];
+    
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'registration_id' => $registerID,
+        'device_id' => $deviceID,
+      ));
+      $sta = $this->DeviceMaster->save();
+      
+    } else {
+      $sta = $this->DeviceMaster->save($arr_param_values);
+    }
+    
+    if(false !== $sta){
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+    } else {
+      $msg = 'Fail';
+      return $this->createsSuccessResponseObject(false, $msg); 
+    }
+    
+  }
+    
+  /**
+   * Function Name : updateRegisterDeviceLang
+   * Desc : To update language of given device & registration id
+   * @param string authenticationToken
+   * @param string deviceID
+   * @param string registerID
+   * @param string lang
+	 * @return SuccessResponseType[]
+   */
+
+  function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+    
+    $arr_param = func_get_args();
+
+    $arr_param_values['device_id'] = $arr_param[1];
+    $arr_param_values['registration_id'] = $arr_param[2];
+    $arr_param_values['user_language'] = $arr_param[3];
+
+    foreach($arr_param_values as $key => $val) {
+    
+      if('' == trim($val)){
+        $msg = 'Passed empty parameter : '.$key;
+        return $this->createsSuccessResponseObject(false, $msg);
+      }
+    }
+    
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('device_id' => $deviceID, 'registration_id' => $registerID)));
+
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      
+      $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
+      $this->DeviceMaster->set(array(
+        'user_language' => $lang,
+      ));
+      $this->DeviceMaster->save();
+      
+      $msg = 'Success';
+      return $this->createsSuccessResponseObject(true, $msg);  
+      
+    } else {
+      $msg = "Not found DeviceID: $deviceID , RegisterID : $registerID ";
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+  
+  
+  }
+
+
+
+   /**
    * Function Name : loginByWebservice
    * Desc : To authnticate user by web service
    * @param string $authtype
@@ -4449,16 +4567,23 @@ STR;
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
-    $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
+    if($this->deleteRegisterDevice($authenticationToken)) {
+    
+      $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
 
-    if($status) {
-      $message = 'Token deleted successfully';
-      return $this->createsSuccessResponseObject(true, $message);
-    }
-		else {
-      $message = 'Delete Token failed';
-      return $this->createsSuccessResponseObject(false, $message);
-		}
+      if($status) {
+        $message = 'Token deleted successfully';
+        return $this->createsSuccessResponseObject(true, $message);
+      }
+      else {
+        $message = 'Delete Token failed';
+        return $this->createsSuccessResponseObject(false, $message);
+      }
+    } else {
+        
+        $message = 'Fail to delete device row';
+        return $this->createsSuccessResponseObject(false, $message);
+    }    
 
   }
 
@@ -5108,7 +5233,8 @@ STR;
    */
 
   private function IsTerrotiry($songProdID, $provider_type, $libraryId) {
-    
+
+
     $libraryDetails = $this->Library->find('first',array(
       'conditions' => array('Library.id' => $libraryId),
       'fields' => array('library_territory'),
@@ -5121,7 +5247,7 @@ STR;
     $this->Session->write('territory', $library_territory);
        
     $this->switchCpuntriesTable();
-
+    
     $count = $this->Country->find('count',
           array(
             'conditions' => array('Country.ProdID' => $songProdID, 'Country.Territory' => $library_territory, 'Country.provider_type' => $provider_type),
@@ -5208,6 +5334,35 @@ STR;
     return $productDetails;
     
   }
+  
+  /**
+   * Function Name : deleteRegisterDevice
+   * Desc : To remove device id for given authenticationToken
+   * @param string authenticationToken
+	 * @return SuccessResponseType[]
+   */
+  private function deleteRegisterDevice($authenticationToken){
+    
+    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);    
+        
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
+      if(false !== $sta) {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true; 
+    }
+
+  
+  }
+  
+  
   
 
 }

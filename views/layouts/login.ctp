@@ -122,7 +122,7 @@ jQuery(document).ready(function() {
 				<div class="form-area">
 					<!--<h2>Welcome to the Freegal Music log in page.</h2>
 					<p><strong>Freegal Music gives you access to millions of songs from over 10,000 labels including the Sony Music catalog of your country.</strong></p> -->
-					<?php echo $page->getPageContent('login_upper'); ?>
+					<?php echo utf8_encode($page->getPageContent('login_upper')); ?>
 				</div>
 				</div>
 			<img class="decor" src="/img/img01.jpg" width="571" height="544" alt="image description" />

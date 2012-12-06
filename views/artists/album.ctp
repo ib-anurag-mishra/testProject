@@ -118,15 +118,23 @@ $i = 0;
 		<div id="album_list_page" style="float:left">
 			<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
 			<div class="album_lgAlbumArtwork" style="float:left">
+                                <?php
+                                    if(empty($album['Files']['CdnPath'])){
+                                        if(empty($album['Files']['SourceURL'])){
+                                            mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                                        } else {
+                                            mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                                        }
+                                    }
+                                ?>
 				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
 					if($page->isImage($image)) {
-						//Image is a correct one
+						// Image is a correct one
 					}
 					else {
-						
-					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+						//mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
 					}
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
