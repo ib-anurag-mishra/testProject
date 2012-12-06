@@ -1376,7 +1376,7 @@ STR;
       $msg = 'Invalid request';
       return $this->createsSuccessResponseObject(false, $msg);
     }
-        
+    
     $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
     $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
     
@@ -1384,10 +1384,10 @@ STR;
     
     $arr_param_values['device_id'] = $arr_param[0];
     $arr_param_values['registration_id'] = $arr_param[1];
-    $arr_param_values['patron_id'] = $arr_param[2];
-    $arr_param_values['library_id'] = $arr_param[3];
-    $arr_param_values['user_language'] = $arr_param[4];
-    $arr_param_values['system_type'] = $arr_param[6];
+    $arr_param_values['patron_id'] = $userID;
+    $arr_param_values['library_id'] = $libID;
+    $arr_param_values['user_language'] = $arr_param[2];
+    $arr_param_values['system_type'] = $arr_param[4];
     
     foreach($arr_param_values as $key => $val) {
     
@@ -1397,33 +1397,8 @@ STR;
       }
     }
     
-    $Library = $this->Library->find('first',array(
-      'fields' => array('Library.library_authentication_method'),
-      'conditions' => array('Library.id' => $libID),
-      'recursive' => -1,
-    )
-    );
     
-    if('user_account' == $Library['Library']['library_authentication_method']) {
-      
-      $user = $this->User->find('first',array(
-        'fields' => array('id', 'email'),
-        'conditions' => array(
-          'email' =>  $userID,
-          'user_status' => 'active'
-        ),
-      ));
-      
-      if('' != trim($user['User']['id'])) {
-        $arr_param_values['patron_id'] = $user['User']['id'];
-      } else {
-        $msg = 'Invalid User : '.$userID;
-        return $this->createsSuccessResponseObject(false, $msg);
-      }
-    
-    }
-    
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $arr_param_values['patron_id'], 'library_id' => $libID)));
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
     
     if('' != trim($data['DeviceMaster']['id'])) {
       
@@ -1436,6 +1411,7 @@ STR;
     } else {
       $sta = $this->DeviceMaster->save($arr_param_values);
     }
+    }
     
     if(false !== $sta){
       $msg = 'Success';
@@ -1447,38 +1423,26 @@ STR;
   
   /**
    * Function Name : deleteRegisterDevice
-   * Desc : To remove register device for given registration id
+   * Desc : To remove device id for given authenticationToken
    * @param string authenticationToken
-   * @param string registerID
 	 * @return SuccessResponseType[]
    */
-  function deleteRegisterDevice($authenticationToken, $registerID){
+  private function deleteRegisterDevice($authenticationToken){
     
-    if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
-      return $this->createsSuccessResponseObject(false, $msg);
-    }
+    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);    
+        
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
     
-    $arr_param = func_get_args();
-
-    $arr_param_values['registration_id'] = $arr_param[1];
-
-    foreach($arr_param_values as $key => $val) {
-    
-      if('' == trim($val)){
-        $msg = 'Passed empty parameter : '.$key;
-        return $this->createsSuccessResponseObject(false, $msg);
-      }
-    }
-    
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('registration_id' => $registerID)));
     if('' != trim($data['DeviceMaster']['id'])) {
       $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
-      $msg = "Success for registration id: ".$registerID;
-      return $this->createsSuccessResponseObject(true, $msg);
+      if(false !== $sta) {
+        return true;
+      }else{
+        return false;
+      }
     }else{
-      $msg = "Not found registration id: ".$registerID;
-      return $this->createsSuccessResponseObject(false, $msg);
+      return true; 
     }
 
   
@@ -4629,16 +4593,23 @@ STR;
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
-    $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
+    if($this->deleteRegisterDevice($authenticationToken)) {
+    
+      $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
 
-    if($status) {
-      $message = 'Token deleted successfully';
-      return $this->createsSuccessResponseObject(true, $message);
-    }
-		else {
-      $message = 'Delete Token failed';
-      return $this->createsSuccessResponseObject(false, $message);
-		}
+      if($status) {
+        $message = 'Token deleted successfully';
+        return $this->createsSuccessResponseObject(true, $message);
+      }
+      else {
+        $message = 'Delete Token failed';
+        return $this->createsSuccessResponseObject(false, $message);
+      }
+    } else {
+        
+        $message = 'Fail to delete device row';
+        return $this->createsSuccessResponseObject(false, $message);
+    }    
 
   }
 
