@@ -1405,19 +1405,13 @@ STR;
       $this->DeviceMaster->read('id', $data['DeviceMaster']['id']);
       $this->DeviceMaster->set(array(
         'registration_id' => $registerID,
+        'device_id' => $deviceID,
       ));
       $sta = $this->DeviceMaster->save();
       
     } else {
       $sta = $this->DeviceMaster->save($arr_param_values);
     }
-    }
-    
-    if(false !== $sta){
-      $msg = 'Success';
-      return $this->createsSuccessResponseObject(true, $msg);  
-    }
-    
   }
   
   
