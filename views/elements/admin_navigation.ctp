@@ -4,6 +4,7 @@
  File Description : View page for adfmin navigation
  Author : m68interactive
  */
+
 	if ($this->Session->read('Auth.User.type_id') == 4 && $this->Session->read('Auth.User.consortium') == '') {
 ?>
 		<ul id="menu" class="sf-menu">
@@ -59,6 +60,7 @@
 			</ul>
 <?php
 	} elseif ($this->Session->read('Auth.User.type_id') == 1) {
+           
 ?>
 		<ul id="menu" class="sf-menu">
 			<li>
@@ -86,6 +88,9 @@
 					</li>
 					<li>
 						<?php echo $html->link('Manage Library', array('controller' => 'libraries', 'action' => 'managelibrary'));?>
+					</li>
+                                        <li>
+						<?php echo $html->link('Manage Library Timezone', array('controller' => 'libraries', 'action' => 'librarytimezone'));?>
 					</li>
 					<li>
 						<?php echo $html->link('Add Consortium', array('controller' => 'libraries', 'action' => 'addconsortium'));?>
