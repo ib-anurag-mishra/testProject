@@ -44,7 +44,7 @@ echo '<br/>';
             }
            }else{
             ?>
-            <tr> <td class="center" colspan="3">No records found.</td></tr>    
+            <tr> <td class="center" colspan="4">No records found.</td></tr>    
           <?php     
            }
           ?>
