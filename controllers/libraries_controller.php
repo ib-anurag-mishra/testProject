@@ -1216,6 +1216,7 @@ STR;
     */
     function admin_librarytimezone(){
         
+             
         Configure::write('debug', 2);        
         
         if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
@@ -1374,15 +1375,14 @@ STR;
         $result = $this->Library->find('all', array(
                     'fields' => array('id','library_name'),'recursive'=>-1, 'conditions' => array("library_name LIKE '$searchKey%'")
              ));
-        //echo $this->Library->lastQuery();die;
-        if(!empty($result)){
+       
+        
         foreach($result as $row){
             echo $row['Library']['library_name']."|".$row['Library']['id']."\n";      
             
         }
-        }else {
-        echo '';
-        }
+        die;
+       
     }
 }
 ?>
