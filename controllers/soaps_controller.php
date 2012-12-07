@@ -4569,8 +4569,10 @@ STR;
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-
-    $this->deleteRegisterDevice($registerID);
+    
+    if('' != trim($registerID)) {
+      $this->deleteRegisterDevice($registerID);
+    }  
     
     $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
 
