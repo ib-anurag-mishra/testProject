@@ -1395,6 +1395,8 @@ STR;
       $this->DeviceMaster->set(array(
         'registration_id' => $registerID,
         'device_id' => $deviceID,
+        'user_language' => $lang,
+        'system_type' => $systemType,
       ));
       $sta = $this->DeviceMaster->save();
       
@@ -1411,47 +1413,7 @@ STR;
     }
     
   }
-  
-  
-  /**
-   * Function Name : deleteRegisterDevice
-   * Desc : To remove register device for given registration id
-   * @param string authenticationToken
-   * @param string registerID
-	 * @return SuccessResponseType[]
-   */
-  function deleteRegisterDevice($authenticationToken, $registerID){
     
-    if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
-      return $this->createsSuccessResponseObject(false, $msg);
-    }
-    
-    $arr_param = func_get_args();
-
-    $arr_param_values['registration_id'] = $arr_param[1];
-
-    foreach($arr_param_values as $key => $val) {
-    
-      if('' == trim($val)){
-        $msg = 'Passed empty parameter : '.$key;
-        return $this->createsSuccessResponseObject(false, $msg);
-      }
-    }
-    
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('registration_id' => $registerID)));
-    if('' != trim($data['DeviceMaster']['id'])) {
-      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
-      $msg = "Success for registration id: ".$registerID;
-      return $this->createsSuccessResponseObject(true, $msg);
-    }else{
-      $msg = "Not found registration id: ".$registerID;
-      return $this->createsSuccessResponseObject(false, $msg);
-    }
-
-  
-  }
-  
   
   /**
    * Function Name : updateRegisterDeviceLang
@@ -4597,17 +4559,19 @@ STR;
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
+    $this->deleteRegisterDevice($authenticationToken);
+    
     $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
 
     if($status) {
       $message = 'Token deleted successfully';
       return $this->createsSuccessResponseObject(true, $message);
     }
-		else {
+    else {
       $message = 'Delete Token failed';
       return $this->createsSuccessResponseObject(false, $message);
-		}
-
+    }
+      
   }
 
   /**
@@ -5349,6 +5313,33 @@ STR;
     
     return $productDetails;
     
+  }
+  
+  /**
+   * Function Name : deleteRegisterDevice
+   * Desc : To remove device id for given authenticationToken
+   * @param string authenticationToken
+	 * @return SuccessResponseType[]
+   */
+  private function deleteRegisterDevice($authenticationToken){
+    
+    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);    
+        
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    
+    if('' != trim($data['DeviceMaster']['id'])) {
+      $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
+      if(false !== $sta) {
+        return true;
+      }else{
+        return false;
+      }
+    }else{
+      return true; 
+    }
+
+  
   }
   
 
