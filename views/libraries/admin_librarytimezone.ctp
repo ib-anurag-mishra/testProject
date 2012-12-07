@@ -17,6 +17,10 @@ echo $paginator->counter(array(
 ));
 ?></p>
 
+
+
+
+
 <p><?php 
 echo '<br/>';
  echo $session->flash();
