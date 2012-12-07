@@ -16,6 +16,9 @@
             $getData[0]['lbs']['id'] = "";                     
     }
 echo $this->Html->css('jquery.autocomplete');
+
+
+
 ?>
 
 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.autocomplete.js"></script>
