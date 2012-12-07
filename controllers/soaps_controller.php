@@ -4550,16 +4550,19 @@ STR;
    * Function Name : logoutAuthinticate
    * Desc : Delete authenticationToken record
    * @param string $authenticationToken
+   * @param string $registerID
 	 * @return SuccessResponseType[]
    */
-
-	function logoutAuthinticate($authenticationToken) {
+  
+	function logoutAuthinticate($authenticationToken, $registerID = null) {
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
-
-    $this->deleteRegisterDevice($authenticationToken);
+    
+    if('' != trim($registerID)) {
+      $this->deleteRegisterDevice($registerID);
+    }  
     
     $status = $this->AuthenticationToken->deleteAll(array('token' => $authenticationToken));
 
@@ -5317,16 +5320,14 @@ STR;
   
   /**
    * Function Name : deleteRegisterDevice
-   * Desc : To remove device id for given authenticationToken
-   * @param string authenticationToken
+   * Desc : To remove device id for given registerID
+   * @param string registerID
 	 * @return SuccessResponseType[]
    */
-  private function deleteRegisterDevice($authenticationToken){
-    
-    $userID = $this->getPatronIdFromAuthenticationToken($authenticationToken);
-    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);    
+  private function deleteRegisterDevice($registerID){
+
         
-    $data = $this->DeviceMaster->find('first', array('conditions' => array('patron_id' => $userID, 'library_id' => $libID)));
+    $data = $this->DeviceMaster->find('first', array('conditions' => array('registration_id' => $registerID)));
     
     if('' != trim($data['DeviceMaster']['id'])) {
       $sta = $this->DeviceMaster->delete($data['DeviceMaster']['id']);
