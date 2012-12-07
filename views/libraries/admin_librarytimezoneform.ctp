@@ -33,9 +33,9 @@ echo $this->Html->css('jquery.autocomplete');
                     if (event.which != '13') {
                         $('#auto').attr('value', 0);
                             }
-                    });					
-                    jQuery("#LibraryLibraryName").autocomplete("<?php echo $this->webroot; ?>admin/libraries/libajax",{delay:10,minChars: 1,cacheLength: 10,autoFill: false
-                    }).result(function(e, item) {
+            });					
+                    jQuery("#LibraryLibraryName").autocomplete("<?php echo $this->webroot; ?>admin/libraries/libajax",
+                    { minChars: 1,cacheLength: 10,autoFill: false}).result(function(e, item) {
                             $('#auto').attr('value', 1);
                     });
         
