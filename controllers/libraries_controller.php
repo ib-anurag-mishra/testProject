@@ -1216,7 +1216,6 @@ STR;
     */
     function admin_librarytimezone(){
         
-                
         Configure::write('debug', 2);        
         
         if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
@@ -1245,9 +1244,7 @@ STR;
 					), 'order' => array('LibrariesTimezone.id'=>'desc'), 'limit' => '15','cache' => 'no'
 				);
         
-        $librariesTimezones = $this->paginate('LibrariesTimezone'); 
-        
-       
+        $librariesTimezones = $this->paginate('LibrariesTimezone');      
       
         $this->set('librariesTimezones', $librariesTimezones);
         

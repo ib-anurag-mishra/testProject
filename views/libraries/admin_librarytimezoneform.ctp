@@ -16,9 +16,6 @@
             $getData[0]['lbs']['id'] = "";                     
     }
 echo $this->Html->css('jquery.autocomplete');
-
-
-
 ?>
 
 <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.autocomplete.js"></script>
@@ -28,21 +25,22 @@ echo $this->Html->css('jquery.autocomplete');
     }
 </script>
 
-<script type="text/javascript">      
+  <script type="text/javascript">
+      
         $(document).ready(function() {
-            
-            jQuery('#LibraryLibraryName').keypress(function(event) {                                                    
-                if (event.which != '13') {
-                    $('#auto').attr('value', 0);
-                }                
-            });
-            
-            jQuery("#LibraryLibraryName").autocomplete("<?php echo $this->webroot; ?>admin/libraries/libajax",{delay:10,minChars: 1,cacheLength: 10,autoFill: false
-            }).result(function(e, item) {
-                    $('#auto').attr('value', 1);
-            });
-            
-        });  
+            jQuery('#LibraryLibraryName').keypress(function(event) {
+                                                    //auto_check();
+                    if (event.which != '13') {
+                        $('#auto').attr('value', 0);
+                            }
+                    });					
+                    jQuery("#LibraryLibraryName").autocomplete("<?php echo $this->webroot; ?>admin/libraries/libajax",{delay:10,minChars: 1,cacheLength: 10,autoFill: false
+                    }).result(function(e, item) {
+                            $('#auto').attr('value', 1);
+                    });
+        
+        });
+  
 </script>
 <fieldset>
         <legend> <?php if($paction) { echo ucfirst($paction); } ?> Library Timezone</legend>
