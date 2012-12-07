@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist','LibrariesTimezone');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist','LibrariesTimezone','Timezone');
 
     /*
      Function Name : beforeFilter
@@ -1245,7 +1245,9 @@ STR;
 					), 'order' => array('LibrariesTimezone.id'=>'desc'), 'limit' => '15','cache' => 'no'
 				);
         
-        $librariesTimezones = $this->paginate('LibrariesTimezone');      
+        $librariesTimezones = $this->paginate('LibrariesTimezone'); 
+        
+       
       
         $this->set('librariesTimezones', $librariesTimezones);
         
@@ -1346,6 +1348,11 @@ STR;
             $getData = $this->LibrariesTimezone->query($fetchSql);         
         }
         
+         $timezoneResults = $this->Timezone->find('all');
+        // print_r($timezoneResults);
+         $this->set('timezoneResults',$timezoneResults);         
+      
+        
         $this->set('getData',$getData);         
      
         
@@ -1362,16 +1369,23 @@ STR;
         if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
              $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
-        
-        $result = $this->Library->find('all', array(
-                    'fields' => array('id','library_name'),'recursive'=>0));
-        
-        foreach($result as $row){
-            echo $row['Library']['library_name']."|".$row['Library']['id']."\n";
-            
-            
+        $searchKey = '';
+        if(isset($_REQUEST['q']) && $_REQUEST['q'] != '') {
+                $searchKey = $_REQUEST['q'];
         }
         
+        $result = $this->Library->find('all', array(
+                    'fields' => array('id','library_name'),'recursive'=>-1, 'conditions' => array("library_name LIKE '$searchKey%'")
+             ));
+        //echo $this->Library->lastQuery();die;
+        if(!empty($result)){
+        foreach($result as $row){
+            echo $row['Library']['library_name']."|".$row['Library']['id']."\n";      
+            
+        }
+        }else {
+        echo '';
+        }
     }
 }
 ?>

@@ -22,7 +22,7 @@ echo '<br/>';
  echo $session->flash();
 ?></p>
 <div style="float:right;padding-right:25px;"><?php echo $html->link('Add New Timezone', array('controller'=>'libraries','action'=>'librarytimezoneform','add'));?></div>
-  <table id="list">
+  <table id="list" style="border:1px solid #E0E0E0;">
           <tr>            
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
             <th class="left" style="border-right:1px solid #E0E0E0">Library Timezone</th>
@@ -44,7 +44,7 @@ echo '<br/>';
             }
            }else{
             ?>
-            <tr> <td class="center">No records found.</td></tr>    
+            <tr> <td class="center" colspan="3">No records found.</td></tr>    
           <?php     
            }
           ?>
