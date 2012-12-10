@@ -958,9 +958,9 @@ STR;
   
   function registerDevice(){
       
-    $device = $this->LibrariesTimezone->find('all',
+    $device = $this->Timezone->find('all',
 			  array(
-				'feilds' => array('library_id', 'libraries_timezone'),
+				'feilds' => array('id', 'gmt'),
 				//'recursive' => -1,
 			  )
 			);
