@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library','Artist', 'LatestDownload', 'DeviceMaster');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist', 'LatestDownload', 'DeviceMaster', 'LibrariesTimezone');
 
     
   function cachekey($key){
@@ -958,9 +958,9 @@ STR;
   
   function registerDevice(){
       
-    $device = $this->DeviceMaster->find('all',
+    $device = $this->LibrariesTimezone->find('all',
 			  array(
-				'feilds' => array('id','patron_id','library_id','system_type','device_id','registration_id','user_language'),
+				'feilds' => array('library_id', 'libraries_timezone'),
 				'recursive' => -1,
 			  )
 			);
