@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -1468,6 +1468,34 @@ STR;
   
   }
 
+  /**
+   * Function Name : validateLibInTimezone
+   * Desc : To validate that given lib has its timezone recorded
+   * @param string authenticationToken
+	 * @return SuccessResponseType[]
+   */
+  
+  function validateLibInTimezone($authenticationToken){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Invalid request';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+   
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+      
+    $count = $this->LibrariesTimezone->find('count', array('conditions' => array('library_id' => $libID)));
+
+    
+    if($count) {
+      $message = '';
+      return $this->createsSuccessResponseObject(true, $message);
+    } else {
+      $message = '';
+      return $this->createsSuccessResponseObject(false, $message);
+    }
+     
+  }
 
 
    /**
