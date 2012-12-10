@@ -114,6 +114,9 @@ jQuery(document).ready(function() {
 			echo $session->flash('auth');
 		?>	
 		<div id="main">
+			<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
+				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+			</div>
 			<div style="width:321px;height:529px">
 				<?php echo $content_for_layout; ?>
 				<div class="form-area">
@@ -133,6 +136,7 @@ jQuery(document).ready(function() {
 				</div>
 			</div>
 		</div>
+	<div id="lbOverlay" style="opacity: 0.8;filter: alpha(opacity = 80); zoom:1;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Please wait. Login in progress...</div></div>
 		<div id="footer">
 			<ul class="ad">
 				<li><a target="_blank" href="http://www.iodalliance.com/"><img src="/img/ad01.gif" width="62" height="48" alt="image description" /></a></li>
