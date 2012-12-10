@@ -961,10 +961,10 @@ STR;
     $device = $this->LibrariesTimezone->find('all',
 			  array(
 				'feilds' => array('library_id', 'libraries_timezone'),
-				'recursive' => -1,
+				//'recursive' => -1,
 			  )
 			);
-    
+    echo '<pre>';
     print_r($device);
     exit;
     
