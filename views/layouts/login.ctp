@@ -6,12 +6,10 @@
 		<?php __('Freegal Music : The New Music Library :'); ?>
 		<?php echo $title_for_layout;;?>
 	</title>
-	<?php
-		echo $this->Html->meta('icon');
-		echo $this->Html->css('freegal_styles');
-		echo $scripts_for_layout;
-	?>
-<script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js"></script>	
+	<?php echo $this->Html->meta('icon'); ?>
+	<?php echo $this->Html->css('all_new'); ?>
+	<?php echo $scripts_for_layout; ?>
+<script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js,inputs.js"></script>
 <style>
 #lbOverlay {
     background-color: #000000;
@@ -51,9 +49,10 @@
 					if(navigator.appName == 'Microsoft Internet Explorer'){
 						location.reload();
 					}else{
-						$('#container').html('');
+						$('body').html('');
 						$('#footer').html('');
-						$('#container').html(response);
+						$('body').html(response);
+            initInputs();
 					}
 				}
 			},
@@ -81,124 +80,67 @@
 					if(navigator.appName == 'Microsoft Internet Explorer'){
 						location.reload();
 					}else{
-						$('#container').html('');
+						$('body').html('');
 						$('#footer').html('');
-						$('#container').html(response);
+						$('body').html(response);
+            initInputs();
 					}
 				}
 			},
 			error:function (XMLHttpRequest, textStatus, errorThrown) {}
 		});
 	}
-	
-	
+
+
 jQuery(document).ready(function() {
 	jQuery('form').submit(function() {
 		jQuery('#lbOverlay').show();
 	});
 	jQuery("#loadingDiv").hide();
-});	
+});
 
 
 
 
-</script>	
+</script>
 </head>
 <body>
-<div id="container">
-	<!--[if lt IE 7]>
-	  	<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
-	    	<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
-				<a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>
-					<img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/>
-				</a>
-			</div>
-	    	<div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
-	      		<div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
-	      		<div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
-	        		<div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
-	        		<div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
-	      		</div>
-	      		<div style='width: 75px; float: left;'>
-					<a href='http://www.firefox.com' target='_blank'>
-						<img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/>
-					</a>
-				</div>
-	      		<div style='width: 75px; float: left;'>
-					<a href='http://www.browserforthebetter.com/download.html' target='_blank'>
-						<img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/>
-					</a>
-				</div>
-	      		<div style='width: 73px; float: left;'>
-					<a href='http://www.apple.com/safari/download/' target='_blank'>
-						<img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/>
-					</a>
-				</div>
-	      		<div style='float: left;'>
-					<a href='http://www.google.com/chrome' target='_blank'>
-						<img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/>
-					</a>
-				</div>
-	    	</div>
-	  	</div>
-	<![endif]-->
-	<div id="main">
+	<div id="wrapper">
+		<div id="header">
+			<h1 class="logo"><a href="#">freegal music</a></h1>
+		</div>
 		<?php
 			echo $session->flash();
-			echo $session->flash('auth');				
+			echo $session->flash('auth');
 		?>	
-		<div class="main-holder">
-			<div class="visual">
-				<img src="/img/img1.png" alt="Kenny Chesney - Hemingway's Whiskey" class="decor pos1" width="161" height="158" />
-				<img src="/img/img2.png" alt="Pitbull - Planet Pit" class="decor pos2" width="153" height="148" />
-				<img src="/img/img3.png" alt="Pink - Greatest Hits...So Far" class="decor pos3" width="181" height="180" />
-				<img src="/img/img4.png" alt="Beyonce" class="decor pos4" width="184" height="180" />
-				<img src="/img/img5.png" alt="Kings of Leon - Come Around Sundown" class="decor pos5" width="153" height="150" />
-				<img src="/img/img6.png" alt="John Mayer - Battle Studies" class="decor pos6" width="170" height="167" />
-			</div>
-			<div id="content">
-				<div class="popup">
-					<div class="popup-t"></div>
-					<div class="popup-c">
-						<h1 class="logo"><a href="#">Freegal music</a></h1>
-				<!-- Main contents start here -->
+		<div id="main">
+			<div style="width:321px;height:529px">
 				<?php echo $content_for_layout; ?>
-				<div id="loginText">
-					<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
-						<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-					</div>
-
+				<div class="form-area">
+					<!--<h2>Welcome to the Freegal Music log in page.</h2>
+					<p><strong>Freegal Music gives you access to millions of songs from over 10,000 labels including the Sony Music catalog of your country.</strong></p> -->
+					<?php echo utf8_encode($page->getPageContent('login_upper')); ?>
 				</div>
-				<!-- Main contents end here -->
+			</div>
+			<img class="decor" src="/img/img01.jpg" width="571" height="544" alt="image description" />
+			<div class="article">
+				<div class="images">
+					<a class="btn-iphone" target="_blank" href="http://itunes.apple.com/us/app/freegal-music/id508036345?ls=1&mt=8"><img src="/img/btn-iphone.png" width="195" height="387" alt="image description" /></a>
+					<a class="btn-andriod"target="_blank" href="https://play.google.com/store/apps/details?id=com.libraryideas.freegalmusic&feature=nav_result#?t=W251bGwsMSwyLDNd"><img src="/img/btn-andriod.png" width="196" height="394" alt="image description" /></a>
 				</div>
-				<div class="popup-b"></div>
+				<div class="info">
+					<?php echo $page->getPageContent('login_new'); ?>
 				</div>
-				<?php echo $page->getPageContent('login'); ?>
-				<ul class="ad-list">
-					<li><a href="http://www.iodalliance.com/"><img src="/img/ad1.jpg" alt="image description" width="60" height="32" /></a></li>
-					<li><a href="http://www.sonymusic.com/"><img src="/img/ad2.jpg" alt="image description" width="43" height="47" /></a></li>
-					<li><a href="http://www.libraryideas.com/"><img src="/img/ad3.jpg" alt="image description" width="88" height="44" /></a></li>
-				</ul>
 			</div>
 		</div>
-	</div>
-	<div id="lbOverlay" style="opacity: 0.8;filter: alpha(opacity = 80); zoom:1;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Please wait. Login in progress...</div></div>
 		<div id="footer">
-			<div id="copyright">
-				&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;All Rights Reserved
-			</div>
+			<ul class="ad">
+				<li><a target="_blank" href="http://www.iodalliance.com/"><img src="/img/ad01.gif" width="62" height="48" alt="image description" /></a></li>
+				<li><a target="_blank" href="http://www.sonymusic.com/"><img src="/img/ad02.gif" width="44" height="48" alt="image description" /></a></li>
+				<li><a target="_blank" href="http://www.libraryideas.com/"><img src="/img/ad03.gif" width="89" height="48" alt="image description" /></a></li>
+			</ul>
+			<p>&copy; 2012 Library Ideas, LLC  All Rights Reserved</p>
 		</div>
 	</div>
-<!--[if IE 7]>	
-	<style>
-		.forgot_password a {
-			color:#666666;
-			float:right;
-			margin:2px 40px 0 57px !important;
-			text-decoration:none; 
-		}
-	</style>
-<![endif]-->
-</div>
 </body>
 </html>
