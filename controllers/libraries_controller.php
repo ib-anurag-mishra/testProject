@@ -1229,11 +1229,11 @@ STR;
         $this->paginate =  array('conditions' =>
 					array('and' =>
 						array(						    
-							array('Library.id = LibrariesTimezone.id')						   
+							array('Library.id = LibrariesTimezone.library_id')						   
 						)
 					),
 					'fields' => array(
-						'LibrariesTimezone.id',
+						'LibrariesTimezone.library_id',
 						'LibrariesTimezone.libraries_timezone'						
 						),
 					'contain' => array(
@@ -1242,7 +1242,7 @@ STR;
 								'Library.name'
 								)
 							)						
-					), 'order' => array('LibrariesTimezone.id'=>'desc'), 'limit' => '15','cache' => 'no'
+					), 'order' => array('LibrariesTimezone.library_id'=>'desc'), 'limit' => '15','cache' => 'no'
 				);
         
         $librariesTimezones = $this->paginate('LibrariesTimezone');      
@@ -1309,11 +1309,11 @@ STR;
                     
                     if(isset($this->data['Library']['edit_id']) && $this->data['Library']['edit_id']!=''){
                         $id = $this->data['Library']['edit_id'];
-                        $countSql ='select count(*) as total from libraries_timezone  where id = "'.$result['Library']['id'].'" and id!="'.$this->data['Library']['edit_id'].'"';                    
-                        $sql ='update libraries_timezone set id="'.$result['Library']['id'].'",libraries_timezone="'.$libTime.'" where id = "'.$this->data['Library']['edit_id'].'"';
+                        $countSql ='select count(*) as total from libraries_timezone  where library_id = "'.$result['Library']['id'].'" and library_id!="'.$this->data['Library']['edit_id'].'"';                    
+                        $sql ='update libraries_timezone set library_id="'.$result['Library']['id'].'",libraries_timezone="'.$libTime.'" where library_id = "'.$this->data['Library']['edit_id'].'"';
                     }else{
-                        $countSql ='select count(*) as total from libraries_timezone  where id = "'.$result['Library']['id'].'"';
-                        $sql ='insert into libraries_timezone(id,libraries_timezone) values("'.$result['Library']['id'].'","'.$libTime.'")';
+                        $countSql ='select count(*) as total from libraries_timezone  where library_id = "'.$result['Library']['id'].'"';
+                        $sql ='insert into libraries_timezone(library_id,libraries_timezone) values("'.$result['Library']['id'].'","'.$libTime.'")';
                     }
                     
                     
@@ -1342,7 +1342,7 @@ STR;
         
         if($id){
             $this->LibrariesTimezone->recursive = -1;        
-            $fetchSql ='select lbs.library_name,lt.libraries_timezone,lbs.id from libraries_timezone as lt,libraries lbs  where lbs.id = lt.id and lt.id="'.$id.'"';  
+            $fetchSql ='select lbs.library_name,lt.libraries_timezone,lbs.id from libraries_timezone as lt,libraries lbs  where lbs.id = lt.library_id and lt.library_id="'.$id.'"';  
             $getData = $this->LibrariesTimezone->query($fetchSql);         
         }
         

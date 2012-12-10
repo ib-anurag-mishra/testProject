@@ -41,7 +41,7 @@ echo '<br/>';
                 <tr>
                     <td class="left"><?php echo $librariesTimezone['Library']['library_name'];?></td>
                     <td class="left"><?php echo $librariesTimezone['LibrariesTimezone']['libraries_timezone'];?></td>
-                    <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'librarytimezoneform','edit',$librariesTimezone['LibrariesTimezone']['id']));?></td>		
+                    <td><?php echo $html->link('Edit', array('controller'=>'libraries','action'=>'librarytimezoneform','edit',$librariesTimezone['LibrariesTimezone']['library_id']));?></td>		
                     <td><?php echo $html->link('Delete', array('controller'=>'libraries','action'=>'removelibrarytimezone',$librariesTimezone['Library']['id']),array('confirm' => 'Are you sure you want to remove this record ?'));?></td>
                 </tr>            
                 <?php

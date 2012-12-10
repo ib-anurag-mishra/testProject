@@ -9,11 +9,12 @@ class LibrariesTimezone extends AppModel {
   
   var $name = 'LibrariesTimezone';
   var $useTable = 'libraries_timezone';
+  var $primaryKey = 'library_id';
   
-   var $hasOne = array(
+   var $belongsTo = array(
         'Library' => array(
                 'className' => 'Library',
-                'foreignKey' => 'id'
+                'foreignKey' => 'library_id'
         )        							
     );
    
