@@ -4,7 +4,7 @@
 	echo '<div class="login-box">';
 	echo '<div class="holder">';
 	echo '<fieldset>';
-    echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'forgot_password', 'id' => 'login'));
+    echo $this->Form->create('Home', array( 'controller' => 'Home','action' => 'forgot_password', 'id' => 'login', 'class'=>'login-form'));
 		echo '<div class="row_f">';
 		echo $this->Form->label(null, __('Forgot Password', true));
 		echo '</div>';
