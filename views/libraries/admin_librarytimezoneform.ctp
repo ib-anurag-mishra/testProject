@@ -67,7 +67,7 @@ $checkedValue = stripslashes($getData[0]['lt']['libraries_timezone']);
 echo '<select name="library_timezone" class="form_fields" style="width:305px;">';
 foreach($timezoneResults as $timezoneResult) {
   
-    $optionValue = $timezoneResult['Timezone']['gmt'].' '.$timezoneResult['Timezone']['timezone_location'];    
+    $optionValue = $timezoneResult['Timezone']['zone_name'];    
     $addString ='';
     if($optionValue === $checkedValue){
         $addString = 'selected="selected"';        
