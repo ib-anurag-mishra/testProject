@@ -1245,6 +1245,7 @@ STR;
              $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }        
            
+        $this->LibrariesTimezone->setDataSource('master');
         //remove record from database
         if ($this->LibrariesTimezone->delete($id)) {
             $this->Session->setFlash('Data has been removed successfully!', 'modal', array('class' => 'modal success'));
@@ -1295,7 +1296,7 @@ STR;
                         $sql ='insert into libraries_timezone(library_id,libraries_timezone) values("'.$result['Library']['id'].'","'.$libTime.'")';
                     }
                     
-                    
+                    $this->LibrariesTimezone->setDataSource('master');
                     $data = $this->LibrariesTimezone->query($countSql);               
                     $countRows = $data[0][0]['total'];          
 
