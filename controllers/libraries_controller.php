@@ -1156,7 +1156,7 @@ STR;
     Desc : For sending Card Import Error Email
    */
 
-	function sendCardImoprtErrorEmail($errorMsg, $library_id, $library_name) {
+    function sendCardImoprtErrorEmail($errorMsg, $library_id, $library_name) {
 	  Configure::write('debug', 0);
       App::import('vendor', 'PHPMailer', array('file' => 'phpmailer/class.phpmailer.php'));
       $mail = new PHPMailer();
@@ -1187,10 +1187,10 @@ STR;
       return $result;
 
 
-	}
+    }
 
 
-	function admin_get_libraries() {
+    function admin_get_libraries() {
 		Configure::write('debug', 0);
 		$this->layout = false;
 		if(isset($_POST['method']) && (!empty($_POST['method']))){
@@ -1266,6 +1266,7 @@ STR;
              $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }        
            
+        $this->LibrariesTimezone->setDataSource('master');
         //remove record from database
         if ($this->LibrariesTimezone->delete($id)) {
             $this->Session->setFlash('Data has been removed successfully!', 'modal', array('class' => 'modal success'));
@@ -1316,7 +1317,7 @@ STR;
                         $sql ='insert into libraries_timezone(library_id,libraries_timezone) values("'.$result['Library']['id'].'","'.$libTime.'")';
                     }
                     
-                    
+                    $this->LibrariesTimezone->setDataSource('master');
                     $data = $this->LibrariesTimezone->query($countSql);               
                     $countRows = $data[0][0]['total'];          
 
@@ -1332,8 +1333,7 @@ STR;
                     
                 }else{
                      $this->Session->setFlash('This library not exist.', 'modal', array('class' => 'modal problem'));                 
-                }
-                
+                } 
                 
                 
             }
