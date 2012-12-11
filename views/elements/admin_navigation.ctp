@@ -87,6 +87,9 @@
 					<li>
 						<?php echo $html->link('Manage Library', array('controller' => 'libraries', 'action' => 'managelibrary'));?>
 					</li>
+                                        <li>
+						<?php echo $html->link('Manage Library Timezone', array('controller' => 'libraries', 'action' => 'librarytimezone'));?>
+					</li>
 					<li>
 						<?php echo $html->link('Add Consortium', array('controller' => 'libraries', 'action' => 'addconsortium'));?>
 					</li>
