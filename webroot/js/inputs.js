@@ -9,18 +9,18 @@ function initInputs() {
 
 		// input options
 		wrapWithElement:false,
-		showUntilTyping:false,
+		showUntilTyping:true,
 		getParentByClass:false,
 		placeholderAttr: 'alt'
 	});
-	/*if(jQuery("#UserEmail").length > 0)
+	if(jQuery("#UserEmail").length > 0)
 	{
 		jQuery("#UserEmail").focus();
 	}
 	if(jQuery("#UserCard").length > 0)
 	{
 		jQuery("#UserCard").focus();
-	}*/
+	}
 }
 
 // placeholder class
