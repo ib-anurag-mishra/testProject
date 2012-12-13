@@ -18,6 +18,8 @@ class Library extends AppModel
       'condition' => 'User.type_id = 4'
       )
     );
+   
+   
     
     var $hasMany = array(
       'LibraryPurchase' => array(

@@ -11,7 +11,7 @@ Class LibrariesController extends AppController
     var $layout = 'admin';
     var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
-    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist');
+    var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist','LibrariesTimezone','Timezone');
 
     /*
      Function Name : beforeFilter
@@ -19,7 +19,7 @@ Class LibrariesController extends AppController
     */
     function beforeFilter() {
         parent::beforeFilter();
-        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron','admin_consortium', 'admin_consortiumform', 'admin_addconsortium' , 'admin_card' , 'admin_get_libraries', 'sendCardImoprtErrorEmail');
+        $this->Auth->allowedActions = array('patron', 'admin_ajax_preview','admin_libraryform','admin_managelibrary','admin_ajax_validate','admin_doajaxfileupload','admin_deactivate','admin_activate','patron','admin_consortium', 'admin_consortiumform', 'admin_addconsortium' , 'admin_card' , 'admin_get_libraries', 'sendCardImoprtErrorEmail', 'admin_librarytimezone','admin_removelibrarytimezone','admin_librarytimezoneform','admin_libajax');
     }
 
     /*
@@ -1156,7 +1156,7 @@ STR;
     Desc : For sending Card Import Error Email
    */
 
-	function sendCardImoprtErrorEmail($errorMsg, $library_id, $library_name) {
+    function sendCardImoprtErrorEmail($errorMsg, $library_id, $library_name) {
 	  Configure::write('debug', 0);
       App::import('vendor', 'PHPMailer', array('file' => 'phpmailer/class.phpmailer.php'));
       $mail = new PHPMailer();
@@ -1187,10 +1187,10 @@ STR;
       return $result;
 
 
-	}
+    }
 
 
-	function admin_get_libraries() {
+    function admin_get_libraries() {
 		Configure::write('debug', 0);
 		$this->layout = false;
 		if(isset($_POST['method']) && (!empty($_POST['method']))){
@@ -1208,6 +1208,181 @@ STR;
 			print "<select id='LibrariesLibrary' name='data[Libraries][Library]' ><option value='' >Select Library</option></select>";exit;
 			print "";
 		}
+    }
+    
+     /*
+     Function Name : admin_librarytimezone
+     Desc : action for listing all the libraries timezones
+    */
+    function admin_librarytimezone(){
+        
+             
+        Configure::write('debug', 2);        
+        
+        if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+        {
+             $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
+                
+        $this->LibrariesTimezone->recursive = 2;        
+        
+        $this->paginate =  array('conditions' =>
+					array('and' =>
+						array(						    
+							array('Library.id = LibrariesTimezone.library_id')						   
+						)
+					),
+					'fields' => array(
+						'LibrariesTimezone.library_id',
+						'LibrariesTimezone.libraries_timezone'						
+						),
+					'contain' => array(
+						'Library' => array(
+							'fields' => array(
+								'Library.name'
+								)
+							)						
+					), 'order' => array('LibrariesTimezone.library_id'=>'desc'), 'limit' => '15','cache' => 'no'
+				);
+        
+        $librariesTimezones = $this->paginate('LibrariesTimezone');      
+      
+        $this->set('librariesTimezones', $librariesTimezones);
+        
+    }
+    
+     /*
+     Function Name : removelibrarytimezone
+     Desc : action for removing libraries timezone entry
+    */
+    function admin_removelibrarytimezone($id = NULL){
+        
+        Configure::write('debug', 2);  
+        $this->layout = false;
+                
+        //redirect if user not set
+        if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+        {
+             $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }        
+           
+        $this->LibrariesTimezone->setDataSource('master');
+        //remove record from database
+        if ($this->LibrariesTimezone->delete($id)) {
+            $this->Session->setFlash('Data has been removed successfully!', 'modal', array('class' => 'modal success'));
+        }   
+            
+        $this->redirect(array('controller' => 'libraries','action' => 'librarytimezone'));
+        
+    }
+    
+    
+    /*
+     Function Name : admin_librarytimezoneform
+     Desc : add or edit the libraray according to the admin action
+    */
+    function admin_librarytimezoneform($action = NULL,$id = NULL) {
+        
+        Configure::write('debug', 2);     
+                
+        //redirect if user not set
+        if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
+             $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
+      
+         $this->set('paction',$action);   
+        
+        if(isset($_POST) && !empty($_POST)){
+         
+            if ( (isset($this->data['Library']['library_name']) && ($this->data['Library']['library_name']=='')) || (isset($_POST['library_timezone']) && ($_POST['library_timezone']=='')) ){
+                $this->Session->setFlash('Please enter valid inputs.', 'modal', array('class' => 'modal problem'));                       
+            }else{
+                
+                $libName = mysql_real_escape_string($this->data['Library']['library_name']);
+                $libTime = mysql_real_escape_string($_POST['library_timezone']);               
+                $result = $this->Library->find('first', array(
+                    'fields' => 'Library.id',                       
+                    'conditions' => array('Library.library_name' => $libName)
+                    ));        
+                
+                if(isset($result['Library']['id']) && $result['Library']['id']!=''){
+                    
+                    
+                    if(isset($this->data['Library']['edit_id']) && $this->data['Library']['edit_id']!=''){
+                        $id = $this->data['Library']['edit_id'];
+                        $countSql ='select count(*) as total from libraries_timezone  where library_id = "'.$result['Library']['id'].'" and library_id!="'.$this->data['Library']['edit_id'].'"';                    
+                        $sql ='update libraries_timezone set library_id="'.$result['Library']['id'].'",libraries_timezone="'.$libTime.'" where library_id = "'.$this->data['Library']['edit_id'].'"';
+                    }else{
+                        $countSql ='select count(*) as total from libraries_timezone  where library_id = "'.$result['Library']['id'].'"';
+                        $sql ='insert into libraries_timezone(library_id,libraries_timezone) values("'.$result['Library']['id'].'","'.$libTime.'")';
+                    }
+                    
+                    $this->LibrariesTimezone->setDataSource('master');
+                    $data = $this->LibrariesTimezone->query($countSql);               
+                    $countRows = $data[0][0]['total'];          
+
+                    if(!$countRows){
+                        
+                        $this->LibrariesTimezone->query($sql);
+                        $this->Session->setFlash('Data has been saved successfully!', 'modal', array('class' => 'modal success'));
+                        $this->redirect('librarytimezone');
+
+                    }else{
+                        $this->Session->setFlash('This library already added with timezone.', 'modal', array('class' => 'modal problem'));    
+                    }
+                    
+                }else{
+                     $this->Session->setFlash('This library not exist.', 'modal', array('class' => 'modal problem'));                 
+                } 
+                
+                
+            }
+        }
+        $getData = array();
+        
+        if($id){
+            $this->LibrariesTimezone->recursive = -1;        
+            $fetchSql ='select lbs.library_name,lt.libraries_timezone,lbs.id from libraries_timezone as lt,libraries lbs  where lbs.id = lt.library_id and lt.library_id="'.$id.'"';  
+            $getData = $this->LibrariesTimezone->query($fetchSql);         
+        }
+        
+         $timezoneResults = $this->Timezone->find('all');
+        // print_r($timezoneResults);
+         $this->set('timezoneResults',$timezoneResults);         
+      
+        
+        $this->set('getData',$getData);         
+     
+        
+    }
+    /*
+     Function Name : admin_libajax
+     Desc : get all library name for autocomplete
+    */
+    function admin_libajax(){
+        
+        Configure::write('debug', 0);    
+        $this->layout = false;       
+        //redirect if user not set
+        if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1)) {
+             $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
+        $searchKey = '';
+        if(isset($_REQUEST['q']) && $_REQUEST['q'] != '') {
+                $searchKey = $_REQUEST['q'];
+        }
+        
+        $result = $this->Library->find('all', array(
+                    'fields' => array('id','library_name'),'recursive'=>-1, 'conditions' => array("library_name LIKE '$searchKey%'")
+             ));
+       
+        
+        foreach($result as $row){
+            echo $row['Library']['library_name']."|".$row['Library']['id']."\n";      
+            
+        }
+        die;
+       
     }
 }
 ?>
