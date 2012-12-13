@@ -1362,7 +1362,7 @@ STR;
   function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
+      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
     
@@ -1381,7 +1381,7 @@ STR;
     foreach($arr_param_values as $key => $val) {
     
       if('' == trim($val)){
-        $msg = 'Passed empty parameter : '.$key;
+        $msg = 'Freegal is currently facing some difficulties. Please try again';
         return $this->createsSuccessResponseObject(false, $msg);
       }
     }
@@ -1405,10 +1405,10 @@ STR;
     }
     
     if(false !== $sta){
-      $msg = 'Success';
+      $msg = 'Freegal has registered you device successfully';
       return $this->createsSuccessResponseObject(true, $msg);  
     }else{
-      $msg = 'Fail';
+      $msg = 'Freegal is currently facing some difficulties. Please try again';
       return $this->createsSuccessResponseObject(false, $msg);  
     }
     
@@ -1428,7 +1428,7 @@ STR;
   function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
+      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
     
@@ -1441,7 +1441,7 @@ STR;
     foreach($arr_param_values as $key => $val) {
     
       if('' == trim($val)){
-        $msg = 'Passed empty parameter : '.$key;
+        $msg = 'Freegal is currently facing some difficulties. Please try again';
         return $this->createsSuccessResponseObject(false, $msg);
       }
     }
@@ -1457,11 +1457,11 @@ STR;
       ));
       $this->DeviceMaster->save();
       
-      $msg = 'Success';
+      $msg = 'You have updated language successfully';
       return $this->createsSuccessResponseObject(true, $msg);  
       
     } else {
-      $msg = "Not found DeviceID: $deviceID , RegisterID : $registerID ";
+      $msg = "Freegal is currently facing some difficulties. Please try again";
       return $this->createsSuccessResponseObject(false, $msg);
     }
   
@@ -1478,7 +1478,7 @@ STR;
   function validateLibInTimezone($authenticationToken){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
+      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
    
