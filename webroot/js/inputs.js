@@ -9,7 +9,7 @@ function initInputs() {
 
 		// input options
 		wrapWithElement:false,
-		showUntilTyping:false,
+		showUntilTyping:true,
 		getParentByClass:false,
 		placeholderAttr: 'alt'
 	});
