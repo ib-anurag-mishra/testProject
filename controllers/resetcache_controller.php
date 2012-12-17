@@ -495,6 +495,18 @@ class ResetcacheController extends AppController
     } else {
       echo 'query do not fired';
     }  
+    
+    echo "<br />================================================  Cache::delete  ========================================================<br />";
+
+    Cache::delete("lib".$libId);
+    var_dump( Cache::read("lib".$libId) );
+    if (($libDownload = Cache::read("lib".$libId)) === false){
+      echo 'query fired';
+    } else {
+      echo 'query do not fired';
+    } 
+    
+    
     echo "<br />================================================  reset  ============================================================<br />";  
     Cache::write("lib".$libId, false);
     var_dump( Cache::read("lib".$libId) );
