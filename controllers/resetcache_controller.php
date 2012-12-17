@@ -441,14 +441,64 @@ class ResetcacheController extends AppController
     exit;
   }
   
-  function printTemp($var){
+  function printTemp($libId){
     
-    echo "<br />============================================================================================================<br />";
-    echo "<br />============================================= $var ================================================<br />";
+/*     echo "<br />============================================================================================================<br />";
+    echo "<br />============================================= $var =========================================================<br />";
     echo "<br />============================================================================================================<br />";
     echo '<pre>';
     var_dump( Cache::read($var) );
-    echo "<br />*********************************************  END  ********************************************************<br />";  
+    echo "<br />*********************************************  END  ********************************************************<br />";  */ 
+    
+    echo "<br />================================================  ''  ============================================================<br />";
+    Cache::write("lib".$libId, '');
+    var_dump( Cache::read("lib".$libId) );
+    if (($libDownload = Cache::read("lib".$libId)) === false){
+      echo 'query fired';
+    } else {
+      echo 'query do not fired';
+    }
+    
+    echo "<br />================================================  null  ============================================================<br />";
+    Cache::write("lib".$libId, null);
+    var_dump( Cache::read("lib".$libId) );
+    if (($libDownload = Cache::read("lib".$libId)) === false){
+      echo 'query fired';
+    } else {
+      echo 'query do not fired';
+    }
+    
+    echo "<br />================================================  false  ============================================================<br />";
+    Cache::write("lib".$libId, false);
+    var_dump( Cache::read("lib".$libId) );
+    if (($libDownload = Cache::read("lib".$libId)) === false){
+      echo 'query fired';
+    } else {
+      echo 'query do not fired';
+    }
+    
+    echo "<br />================================================  array()  ============================================================<br />";
+    Cache::write("lib".$libId, array());
+    var_dump( Cache::read("lib".$libId) );
+    if (($libDownload = Cache::read("lib".$libId)) === false){
+      echo 'query fired';
+    } else {
+      echo 'query do not fired';
+    }
+    
+    echo "<br />================================================  array(content)  ========================================================<br />";
+    $arrTmp = array('a', 'b');
+    Cache::write("lib".$libId, $arrTmp);
+    var_dump( Cache::read("lib".$libId) );
+    if (($libDownload = Cache::read("lib".$libId)) === false){
+      echo 'query fired';
+    } else {
+      echo 'query do not fired';
+    }  
+    echo "<br />================================================  reset  ============================================================<br />";  
+    Cache::write("lib".$libId, false);
+    var_dump( Cache::read("lib".$libId) );
+    
     exit;
   }
   
