@@ -25,12 +25,12 @@
   color: #fff;
   height: 20px;
   text-align: center;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #fff;
+  /*border-left: 1px solid #fff;
+  border-right: 1px solid #fff;*/
 }
 #wishlist-table td{
-  border-left: 1px solid #fff;
-  border-right: 1px solid #fff;
+  /*border-left: 1px solid #fff;
+  border-right: 1px solid #fff;*/
 }
 </style>
 
@@ -61,7 +61,7 @@
 </div>
 <br class="clr">-->
 <div id="genreResults">
-	<table cellspacing="0" cellpadding="0" id="wishlist-table">
+	<table cellspacing="2" cellpadding="0" id="wishlist-table">
 	<tr>
     <th width="180">
       <p><?php __("Artist");?></p>
@@ -69,7 +69,7 @@
     <th width="200">
       <p><?php __("Album");?></p>
     </th "150px">
-    <th width="250">
+    <th width="240">
       <p><?php __("Track");?></p>
     </th>
     <th width="150">
@@ -114,7 +114,7 @@
 						
 					?>
 				</td>
-				<td width="250" valign="top">
+				<td width="240" valign="top">
 					<?php 
 						if (strlen($wishlistResult['Wishlist']['track_title']) >= 48) {
 							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['track_title']).'">' .substr($wishlistResult['Wishlist']['track_title'], 0, 48) . '...</span>';							
