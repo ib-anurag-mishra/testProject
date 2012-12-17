@@ -31,6 +31,7 @@
 #wishlist-table td{
   /*border-left: 1px solid #fff;
   border-right: 1px solid #fff;*/
+  padding: 0 5px;
 }
 </style>
 
@@ -91,7 +92,7 @@
 	?>
 			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
-				<td width="180" valign="top">
+				<td width="170" valign="top">
 
 					<?php
 						if (strlen($wishlistResult['Wishlist']['artist']) >= 19) {
@@ -104,7 +105,7 @@
 					?>
 
 				</td>
-				<td width="200" valign="top">
+				<td width="190" valign="top">
 					<?php
 						if (strlen($wishlistResult['Wishlist']['album']) >= 24) {
 							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['album']).'">' .substr($wishlistResult['Wishlist']['album'], 0, 24) . '...</span>';							
@@ -114,7 +115,7 @@
 						
 					?>
 				</td>
-				<td width="240" valign="top">
+				<td width="230" valign="top">
 					<?php 
 						if (strlen($wishlistResult['Wishlist']['track_title']) >= 48) {
 							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['track_title']).'">' .substr($wishlistResult['Wishlist']['track_title'], 0, 48) . '...</span>';							
@@ -123,7 +124,7 @@
 					 	}
 					?>
 				</td>
-				<td width="150" align="center">
+				<td width="140" align="center">
 					<?php										
 						$productInfo = $song->getDownloadData($wishlistResult['Wishlist']['ProdID']);
 						if($libraryDownload == '1' && $patronDownload == '1'){
@@ -150,7 +151,7 @@
 						}
 					?>
 				</td>
-				<td width="150" align="center">
+				<td width="140" align="center">
 					<?php echo $html->link('Remove', array('controller' => 'homes', 'action' => 'removeWishlistSong', 'id'=>$wishlistResult['Wishlist']['id'])); ?>
 				</td>	
 			</tr>
