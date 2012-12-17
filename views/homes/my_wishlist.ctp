@@ -25,8 +25,8 @@
   color: #fff;
   height: 20px;
   text-align: center;
-  border-left: 1px solid #fff;
-  border-right: 1px solid #fff;
+  /*border-left: 1px solid #fff;
+  border-right: 1px solid #fff;*/
 }
 #wishlist-table td{
   border-left: 1px solid #fff;
@@ -61,7 +61,7 @@
 </div>
 <br class="clr">-->
 <div id="genreResults">
-	<table cellspacing="0" cellpadding="0" id="wishlist-table">
+	<table cellspacing="2" cellpadding="0" id="wishlist-table">
 	<tr>
     <th width="180">
       <p><?php __("Artist");?></p>
