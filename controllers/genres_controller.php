@@ -280,9 +280,20 @@ Class GenresController extends AppController
       $this->Song->unbindModel(array('hasOne' => array('Country')));
       $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
       $this->Song->Behaviors->attach('Containable');
-      $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.ArtistText != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+      $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => '1',"Song.Sample_FileID != ''","Song.ArtistText != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+     
+     
+      
       $this->paginate = array(
 		      'conditions' => $gcondition,
+                        'joins' => array(
+                                array(
+                                    'alias' => 'Albums',
+                                    'table' => 'Albums',
+                                    'type' => 'LEFT',
+                                    'conditions' => '`Albums`.`ProdID` = `Song`.`ReferenceID`'
+                                )
+                        ),
 		      'fields' => array('DISTINCT Song.ArtistText'),
 			  'contain' => array(
 				'Genre' => array(
@@ -290,7 +301,7 @@ Class GenresController extends AppController
 							'Genre.Genre'
 						)),
 			  ),
-			  'extra' => array('chk' => 1),
+                      'extra' => array('chk' => 1),
 		      'order' => 'TRIM(Song.ArtistText) ASC',
 		      'limit' => '60', 'cache' => 'yes','check' => 2
 		      );
@@ -314,8 +325,9 @@ Class GenresController extends AppController
         'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
       );
     }
+    
     $this->Song->unbindModel(array('hasOne' => array('Participant')));
-		$allArtists = $this->paginate('Song');		
+    $allArtists = $this->paginate('Song');		
     $allArtistsNew = $allArtists;
     for($i=0;$i<count($allArtistsNew);$i++)
     {
@@ -429,8 +441,9 @@ Class GenresController extends AppController
         'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
       );
     }
-		$this->Song->unbindModel(array('hasOne' => array('Participant')));
-		$allArtists = $this->paginate('Song');
+    
+    $this->Song->unbindModel(array('hasOne' => array('Participant')));
+    $allArtists = $this->paginate('Song');
     $allArtistsNew = $allArtists;
     for($i=0;$i<count($allArtistsNew);$i++)
     {
