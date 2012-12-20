@@ -32,9 +32,23 @@ Class LibrariesController extends AppController
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
         $this->Library->recursive = -1;
-		$this->paginate = array('order' => 'id');
-		$this->paginate = array('cache' => 'no');
+	$searchKeyword="";
+        if(isset($this->params['url']['data']['library_name']))
+        {
+            $searchKeyword = $this->params['url']['data']['library_name'];
+            $this->paginate = array('conditions' => array("library_name Like"=>"%".$searchKeyword."%"), 'order' => 'id', 'cache' => 'no');
+        }
+        else if(isset($this->params['named']['alpha']))
+        {
+            $this->paginate = array('conditions' => array("library_name Like"=>$this->params['named']['alpha']."%"), 'order' => 'id', 'cache' => 'no');
+        }
+        else
+        {
+            $this->paginate = array('order' => 'id', 'cache' => 'no');
+        }
+        $this->set('searchKeyword', $searchKeyword);
         $this->set('libraries', $this->paginate('Library'));
+        $this->set('librarySelect', $this->Library->find('list', array('fields' => array('id','library_name'))));
     }
 
 	    /*
