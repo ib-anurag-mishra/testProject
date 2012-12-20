@@ -56,6 +56,7 @@ $ieVersion =  ieversion();
 </div>
 
 <div id="GenreText"><?php echo $page->getPageContent('history'); ?></div>
+<br class="clr">
 <div id="genreResults">
 <table cellspacing="2" cellpadding="0" id="recentdownloads-table">
 	<tr>
