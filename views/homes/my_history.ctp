@@ -95,7 +95,7 @@ $ieVersion =  ieversion();
 					?>
 
 				</td>
-				<td width="290" valign="top">
+				<td width="290" valign="top" style="max-width:290px;">
 					<?php 
 						if (strlen($downloadResult['Download']['track_title']) >= 48) {
 							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 48) . '...</span>';							
