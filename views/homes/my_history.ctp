@@ -15,6 +15,20 @@
     text-indent: -9999px;
     width: 228px;
 }
+#recentdownloads-table{
+  margin-left: 35px;
+}
+
+#recentdownloads-table th{
+  background-color: #3d3d3d;
+  color: #fff;
+  height: 20px;
+  text-align: center;
+}
+#recentdownloads-table td{
+    padding: 0 5px;
+}
+
 </style>
 <?php echo $session->flash();?>
 <?php
@@ -40,22 +54,22 @@ $ieVersion =  ieversion();
 	<?php __("Download History");?>
 </div>
 
-<div id="GenreText"><?php echo $page->getPageContent('history'); ?></div>
-<div id="genreArtist" style="width:200px;">
-	<P><?php __("Artist");?></p>
-</div>
-<div id="genreTrack" style="width:300px;">
-	<P><?php __("Track");?></p>
-</div>
-<div id="genreTrack" style="width:200px;">
-	<?php __("Date");?>
-</div>
-<div id="genreTrack" style="width:200px;">
-	<?php __("Download");?>
-</div>
-<br class="clr">
-<div id="genreResults" <?php if(count($downloadResults) == 0){ ?> style="margin-left: 36px;" <?php } else {?> style="margin-left: 45px;" <?php } ?>>
-	<table cellspacing="0" cellpadding="0">
+<div id="genreResults">
+<table cellspacing="2" cellpadding="0" id="recentdownloads-table">
+	<tr>
+    <th width="200">
+      <p><?php __("Artist");?><p>
+    </th>
+    <th width="300">
+      <p><?php __("Track");?><p>
+    </th>
+    <th width="200">
+      <p><?php __("Date");?><p>
+    </th>
+    <th width="200">
+      <p><?php __("Download");?><p>
+    </th>
+  </tr>
 	<?php
 	if(count($downloadResults) != 0)
 	{
@@ -68,7 +82,7 @@ $ieVersion =  ieversion();
 	?>
 			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
-				<td width="200" valign="top">
+				<td width="190" valign="top">
 
 					<?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
@@ -81,7 +95,7 @@ $ieVersion =  ieversion();
 					?>
 
 				</td>
-				<td width="300" valign="top">
+				<td width="290" valign="top">
 					<?php 
 						if (strlen($downloadResult['Download']['track_title']) >= 48) {
 							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 48) . '...</span>';							
@@ -90,12 +104,12 @@ $ieVersion =  ieversion();
 					 	}
 					?>
 				</td>
-				<td width="200" valign="top" align="center">
+				<td width="190" valign="top" align="center">
 					<?php 
 						echo date("Y-m-d",strtotime($downloadResult['Download']['created']));							
 					?>
 				</td>
-				<td width="200" align="center">
+				<td width="190" align="center">
 					<?php
 						$productInfo = $song->getDownloadData($downloadResult['Download']['ProdID']);
 						$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
@@ -120,9 +134,10 @@ $ieVersion =  ieversion();
 	<?php
 		endforeach;
 	}else{
-		echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+		echo 	'<tr><td valign="top" colspan="4"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
 	}
 	
 	?>
 </table>
+</div>
 </div>
