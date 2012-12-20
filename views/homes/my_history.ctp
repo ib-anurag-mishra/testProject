@@ -85,7 +85,7 @@ $ieVersion =  ieversion();
 	?>
 			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
 			<tr <?php echo $class; ?>>
-				<td width="200" valign="top">
+				<td width="190" valign="top">
 
 					<?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
@@ -98,7 +98,7 @@ $ieVersion =  ieversion();
 					?>
 
 				</td>
-				<td width="300" valign="top">
+				<td width="290" valign="top" style="max-width:290px;">
 					<?php 
 						if (strlen($downloadResult['Download']['track_title']) >= 48) {
 							echo '<span title="'.htmlentities($downloadResult['Download']['track_title']).'">' .substr($downloadResult['Download']['track_title'], 0, 48) . '...</span>';							
@@ -107,12 +107,12 @@ $ieVersion =  ieversion();
 					 	}
 					?>
 				</td>
-				<td width="200" valign="top" align="center">
+				<td width="190" valign="top" align="center">
 					<?php 
 						echo date("Y-m-d",strtotime($downloadResult['Download']['created']));							
 					?>
 				</td>
-				<td width="200" align="center">
+				<td width="190" align="center">
 					<?php
 						$productInfo = $song->getDownloadData($downloadResult['Download']['ProdID']);
 						$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
