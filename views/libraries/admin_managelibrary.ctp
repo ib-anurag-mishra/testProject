@@ -15,6 +15,18 @@ echo $paginator->counter(array(
 'format' => __('Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%', true)
 ));
 ?></p>
+<p><br>
+<?php echo $this->Form->input('library_name', array('label' => 'Search Library', 'value' => $searchKeyword, 'div' => false, 'class' => 'form_fields ac_input','width'=>'50','style'=>'width:304px;') ); ?>
+</p>
+<p>
+    <br>
+    <?php
+    for($j = 65;$j < 91;$j++){
+        echo $html->link(chr($j), array('controller'=>'libraries', 'action'=>'managelibrary', 'alpha'=>chr($j)));
+        echo " | ";
+    }
+    ?>
+</p>
   <table id="list">
           <tr>            
             <th class="left" style="border-right:1px solid #E0E0E0">Library Name</th>
