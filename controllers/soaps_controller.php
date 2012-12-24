@@ -3393,12 +3393,14 @@ STR;
           return $this->createsAuthenticationResponseDataObject(false, $response_msg);
         } else {
           
-          
-       
+   
           switch($library_id) {
               
             case '187': {
-              $response_patron_id = '1000601023756';
+              if( '1000601023756' == $card ){
+                $response_patron_id = '1000601023756';
+              }
+              
             }break;
               
             default: {
