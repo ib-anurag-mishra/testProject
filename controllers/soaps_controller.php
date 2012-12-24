@@ -5373,7 +5373,7 @@ STR;
   
   /**
    * Function Name : getTmpPatronID
-   * Desc : To send hard code PatronID for given library & CardNumber
+   * Desc : To send hard code PatronID for given library
    * @param string library_id
    * @param string card
    * @param string resp
@@ -5385,20 +5385,11 @@ STR;
     switch($library_id) {
               
       case '187': {
-        
-        if( '1000601023756' == $card ){
-          $response_patron_id = '1000601023756';
-        }
-        
+      
+        $response_patron_id = $card;
+   
       }break;
-            
-      case '612': {
-        if( '21690000000037' == $card ){
-          $response_patron_id = '21690000000037';
-        }
-              
-      }break;
-            
+                        
       default: {
         $response_patron_id = str_ireplace('OK:', '', $resp);
       }
