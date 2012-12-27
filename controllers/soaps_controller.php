@@ -3290,7 +3290,7 @@ STR;
 
 
 
-    /**
+  /**
    * Authenticates user by referral_url method
    * @param $card
    * @param $pin
@@ -3349,10 +3349,10 @@ STR;
 
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
-      $mobile_auth = $existingLibraries[0]['Library']['mobile_auth'];
+      $mobile_auth = trim($existingLibraries[0]['Library']['mobile_auth']);
 
-      $auth_url = str_replace('CARDNUMBER', $data['patronId'], $mobile_auth);
-      $auth_url = str_replace('PIN', $data['pin'], $auth_url);
+      $auth_url = str_replace(strtolower('CARDNUMBER'), $data['patronId'], strtolower($mobile_auth));
+      $auth_url = str_replace(strtolower('PIN'), $data['pin'], strtolower($auth_url));
 
       if(count($existingLibraries) == 0){
 
@@ -3366,19 +3366,18 @@ STR;
         $resp = curl_exec ( $ch );
         curl_close($ch);
 
-
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
-
-        if(false === strpos($resp, 'OK')) {
+        
+        if(false === strpos(strtolower($resp), 'ok')) {
           $response_msg = 'Login Failed';
           return $this->createsAuthenticationResponseDataObject(false, $response_msg);
         } else {
-
-          $response_patron_id = array_pop(explode('OK:', $resp));
-
+          
+          $response_patron_id = $this->getTmpPatronID($library_id, $card, $resp);
+                    
           $token = md5(time());
-          $insertArr['patron_id'] = $response_patron_id;
+          $insertArr['patron_id'] = trim($response_patron_id);
 					$insertArr['library_id'] = $library_id;
 					$insertArr['token'] = $token;
 					$insertArr['auth_time'] = time();
@@ -5360,6 +5359,49 @@ STR;
   
   }
   
+  /**
+   * Function Name : getTmpPatronID
+   * Desc : To send hard code PatronID for given library
+   * @param string library_id
+   * @param string card
+   * @param string resp
+	 * @return string
+   */
+   
+  private function getTmpPatronID($library_id, $card, $resp){
+    
+    switch($library_id) {
+              
+      case '187': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      case '269': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      
+      case '297': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      case '612': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      
+      default: {
+        $response_patron_id = str_ireplace('OK:', '', $resp);
+      }
+    }
+    
+    return $response_patron_id;
+          
+  }
   
   
 
