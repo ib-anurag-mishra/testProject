@@ -956,19 +956,117 @@ STR;
   }
   
   
-  function registerDevice(){
-      
-    $device = $this->Timezone->find('all',
-			  array(
-				'feilds' => array('id', 'gmt'),
-				//'recursive' => -1,
-			  )
-			);
-    echo '<pre>';
-    print_r($device);
-    exit;
-    
-  
+  /**
+   * Authenticates user by referral_url method
+   * @param $card
+   * @param $pin
+   * @param $library_id
+   * @param $agent
+   * @return AuthenticationResponseDataType[]
+   */
+	function referralAuthinticateTest($card, $pin, $library_id, $agent){
+
+    $card = trim($card);
+    $data['card'] = $card;
+    $data['pin'] = $pin;
+    $patronId = $card;
+    $data['patronId'] = $patronId;
+
+
+    if($card == ''){
+
+      $response_msg = 'Card number not provided';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+    }
+    elseif(strlen($card) < 5){
+
+      $response_msg = 'Invalid Card number';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+    }
+    else{
+
+
+      $library_data = $this->Library->find('first', array(
+                        'fields' => array('library_authentication_num', 'mobile_auth'),
+                        'conditions' => array('id' => $library_id),
+                        'recursive' => -1
+
+                      ));
+
+      if( ('' == trim($library_data['Library']['mobile_auth'])) ) {
+
+        $response_msg = 'Sorry, your library authentication is not supported at this time.  Please contact your library for further information.';
+        return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+      }
+
+      $cardNo = substr($card,0,5);
+      $data['cardNo'] = $cardNo;
+
+      $this->Library->recursive = -1;
+      $this->Library->Behaviors->attach('Containable');
+
+      $existingLibraries = $this->Library->find('all',array(
+                    'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
+                                          'library_authentication_method' => 'referral_url'),
+                    'fields' => array('Library.id','Library.library_authentication_method','Library.library_territory','Library.library_authentication_url',
+                                      'Library.library_logout_url','Library.library_territory','Library.library_user_download_limit',
+                                      'Library.library_block_explicit_content','Library.library_language', 'mobile_auth'))
+      );
+
+
+      $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
+      $mobile_auth = trim($existingLibraries[0]['Library']['mobile_auth']);
+
+      $auth_url = str_replace(strtolower('CARDNUMBER'), $data['patronId'], strtolower($mobile_auth));
+      $auth_url = str_replace(strtolower('PIN'), $data['pin'], strtolower($auth_url));
+
+      if(count($existingLibraries) == 0){
+
+        $response_msg = 'Invalid credentials provided.';
+        return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+      }
+      else{
+
+        $ch = curl_init($auth_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        $resp = curl_exec ( $ch );
+        curl_close($ch);
+
+        var_dump($auth_url);  
+        echo '<br />';
+        var_dump($resp);
+        exit;
+        
+        $resp = trim(strip_tags($resp));
+        $resp = preg_replace("/\s+/", "", $resp);
+        
+        if(false === strpos(strtolower($resp), 'ok')) {
+          $response_msg = 'Login Failed';
+          return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+        } else {
+          
+          $response_patron_id = $this->getTmpPatronID($library_id, $card, $resp);
+                    
+          $token = md5(time());
+          $insertArr['patron_id'] = trim($response_patron_id);
+					$insertArr['library_id'] = $library_id;
+					$insertArr['token'] = $token;
+					$insertArr['auth_time'] = time();
+					$insertArr['agent'] = $agent;
+					$insertArr['auth_method'] = $library_authentication_method;
+					$this->AuthenticationToken->save($insertArr);
+
+          $patron_id = $insertArr['patron_id'];
+          $response_msg = 'Login Successfull';
+          return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+
+        }
+
+
+
+      }
+    }
+
   }
   
   
