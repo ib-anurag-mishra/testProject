@@ -3369,8 +3369,8 @@ STR;
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
       $mobile_auth = trim($existingLibraries[0]['Library']['mobile_auth']);
 
-      $auth_url = str_ireplace('CARDNUMBER', $data['patronId'], $mobile_auth);
-      $auth_url = str_ireplace('PIN', $data['pin'], $auth_url);
+      $auth_url = str_ireplace('=CARDNUMBER', '='.$data['patronId'], $mobile_auth);
+      $auth_url = str_ireplace('=PIN', '='.$data['pin'], $auth_url);
 
       if(count($existingLibraries) == 0){
 
