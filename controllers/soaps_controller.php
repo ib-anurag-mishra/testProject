@@ -1,5 +1,5 @@
 <?php
-
+        
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
@@ -3381,6 +3381,11 @@ STR;
 
         $ch = curl_init($auth_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        
+        if(0 === stripos($auth_url, 'https')) {
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+        }
+        
         $resp = curl_exec ( $ch );
         curl_close($ch);
 
@@ -5389,7 +5394,23 @@ STR;
         $response_patron_id = $card;
    
       }break;
-                        
+      case '269': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      
+      case '297': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      case '612': {
+      
+        $response_patron_id = $card;
+   
+      }break;
+      
       default: {
         $response_patron_id = str_ireplace('OK:', '', $resp);
       }
