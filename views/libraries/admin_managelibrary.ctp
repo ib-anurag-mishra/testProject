@@ -22,8 +22,10 @@ echo $paginator->counter(array(
     <br>
     <?php
     for($j = 65;$j < 91;$j++){
-        echo $html->link(chr($j), array('controller'=>'libraries', 'action'=>'managelibrary', 'alpha'=>chr($j)));
-        echo " | ";
+       if (in_array(chr($j), $libraryFilter)) {
+           echo $html->link(chr($j), array('controller'=>'libraries', 'action'=>'managelibrary', 'alpha'=>chr($j)));
+           echo " | ";           
+       }        
     }
     ?>
 </p>

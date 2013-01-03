@@ -27,10 +27,30 @@ Class LibrariesController extends AppController
      Desc : action for listing all the libraries
     */
     function admin_managelibrary() {
-	if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
-		{
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));
-		}
+        
+	
+        if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+        {
+                $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
+       
+        
+        $librarySelect = $this->Library->find('list', array('fields' => array('id','library_name'))); 
+    
+        
+        
+        
+        $libraryFilter = array();
+        for($i=1; $i<=count($librarySelect); $i++){
+            if(isset($librarySelect[$i][0]))
+                $libraryFilter[] = strtoupper(trim($librarySelect[$i][0]));            
+        }
+     
+        $libraryFilter = array_unique($libraryFilter);
+        $this->set('libraryFilter',$libraryFilter);
+        
+        
+        
         $this->Library->recursive = -1;
 	$searchKeyword="";
         if(isset($this->params['url']['data']['library_name']))
@@ -48,7 +68,12 @@ Class LibrariesController extends AppController
         }
         $this->set('searchKeyword', $searchKeyword);
         $this->set('libraries', $this->paginate('Library'));
-        $this->set('librarySelect', $this->Library->find('list', array('fields' => array('id','library_name'))));
+        
+        
+        
+     
+        
+       
     }
 
 	    /*
