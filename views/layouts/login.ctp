@@ -112,7 +112,14 @@ jQuery(document).ready(function() {
 		<?php
 			echo $session->flash();
 			echo $session->flash('auth');
-		?>	
+                        if(isset($show_inactivelib) &&  $show_inactivelib == 1){
+		?>
+        </div>
+            
+            <?php
+                        }else{
+            ?>
+            
 	<div id="main">
 			<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
 				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
@@ -146,5 +153,8 @@ jQuery(document).ready(function() {
 			<p>&copy; 2012 Library Ideas, LLC  All Rights Reserved</p>
 		</div>
 	</div>
+             <?php
+                        }
+            ?>
 </body>
 </html>
