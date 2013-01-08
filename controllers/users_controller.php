@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -58,8 +58,17 @@ Class UsersController extends AppController
 
 		if($library != null)
 		{
-			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-			$this->get_login_layout_name($library_data);
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
+                        
+                                               
+                        if($library_data['Library']['library_status'] == 'inactive'){
+                           $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                           exit;                           
+                        }                        
+                        
+			$this->get_login_layout_name($library_data);                       
+                        
+                        
 			if(!empty($library_data))
 			{
 				if($this->Session->read('library') == '' && $this->Session->read('patron')== '')
@@ -93,7 +102,17 @@ Class UsersController extends AppController
 			}
 		}
 	}
-
+        
+     /*
+    Function Name : libinactive
+    Desc : actions for set message whenever a inative app call
+   */
+        function libinactive(){
+            $this->layout = 'login';
+            $this->set('show_inactivelib',1); 
+            $this -> Session -> setFlash("This page is no longer available.");
+        }
+   
    /*
     Function Name : admin_index
     Desc : actions for welcome admin login
