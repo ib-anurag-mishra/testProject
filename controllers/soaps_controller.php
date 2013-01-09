@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -1373,7 +1373,7 @@ STR;
   function registerDevice($deviceID, $registerID, $lang, $authenticationToken, $systemType){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
+      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
     
@@ -1392,7 +1392,7 @@ STR;
     foreach($arr_param_values as $key => $val) {
     
       if('' == trim($val)){
-        $msg = 'Passed empty parameter : '.$key;
+        $msg = 'Freegal is currently facing some difficulties. Please try again';
         return $this->createsSuccessResponseObject(false, $msg);
       }
     }
@@ -1416,10 +1416,10 @@ STR;
     }
     
     if(false !== $sta){
-      $msg = 'Success';
+      $msg = 'Freegal has registered you device successfully';
       return $this->createsSuccessResponseObject(true, $msg);  
     }else{
-      $msg = 'Fail';
+      $msg = 'Freegal is currently facing some difficulties. Please try again';
       return $this->createsSuccessResponseObject(false, $msg);  
     }
     
@@ -1438,7 +1438,7 @@ STR;
   function updateRegisterDeviceLang($authenticationToken, $deviceID, $registerID, $lang){
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      $msg = 'Invalid request';
+      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
       return $this->createsSuccessResponseObject(false, $msg);
     }
     
@@ -1451,7 +1451,7 @@ STR;
     foreach($arr_param_values as $key => $val) {
     
       if('' == trim($val)){
-        $msg = 'Passed empty parameter : '.$key;
+        $msg = 'Freegal is currently facing some difficulties. Please try again';
         return $this->createsSuccessResponseObject(false, $msg);
       }
     }
@@ -1467,17 +1467,45 @@ STR;
       ));
       $this->DeviceMaster->save();
       
-      $msg = 'Success';
+      $msg = 'You have updated language successfully';
       return $this->createsSuccessResponseObject(true, $msg);  
       
     } else {
-      $msg = "Not found DeviceID: $deviceID , RegisterID : $registerID ";
+      $msg = "Freegal is currently facing some difficulties. Please try again";
       return $this->createsSuccessResponseObject(false, $msg);
     }
   
   
   }
 
+  /**
+   * Function Name : validateLibInTimezone
+   * Desc : To validate that given lib has its timezone recorded
+   * @param string authenticationToken
+	 * @return SuccessResponseType[]
+   */
+  
+  function validateLibInTimezone($authenticationToken){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      $msg = 'Your credentials seems to be changed or expired. Please logout and login again.';
+      return $this->createsSuccessResponseObject(false, $msg);
+    }
+   
+    $libID = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+      
+    $count = $this->LibrariesTimezone->find('count', array('conditions' => array('library_id' => $libID)));
+
+    
+    if($count) {
+      $message = '';
+      return $this->createsSuccessResponseObject(true, $message);
+    } else {
+      $message = '';
+      return $this->createsSuccessResponseObject(false, $message);
+    }
+     
+  }
 
 
    /**
