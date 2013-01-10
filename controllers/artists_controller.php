@@ -770,19 +770,13 @@ Class ArtistsController extends AppController
 									'fields' => array(
 												'Sample_Files.CdnPath' ,
 												'Sample_Files.SaveAsName'
-										),
-                                     'conditions' => array(
-                                         array('Sample_Files.provider_type' => $provider)
-                                     ),
+										)
 									),
 							'Full_Files' => array(
 									'fields' => array(
 												'Full_Files.CdnPath' ,
 												'Full_Files.SaveAsName'
-										),
-                                        'conditions' => array(
-                                         array('Sample_Files.provider_type' => $provider)
-                                     ),
+										)
 									),
 
 						),'group' => 'Song.ProdID, Song.provider_type','order' => array('Song.sequence_number','Song.ProdID')
