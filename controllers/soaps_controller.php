@@ -1623,8 +1623,12 @@ STR;
       break;
       
       default:
-    }
-
+    } 
+    
+    
+    $this->log('Method = "'.$authtype.'", Email = "'.$email.'", Password = "'.$password.'", Card = "'.$card.'", Pin = "'.$pin.'", Last_name = "'.$last_name.'", Library_id = "'.$library_id.'", Agent = "'.$agent.'", Response = "'.$resp->enc_value->enc_value->response.'", Response_msg = "'.$resp->enc_value->enc_value->response_msg.'", Authentication_token = "'.$resp->enc_value->enc_value->authentication_token.'", Patron_id = "'.$resp->enc_value->enc_value->patron_id.'"', 'app_auth');
+              
+              
     return $resp;
   }
 
