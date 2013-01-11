@@ -1060,6 +1060,7 @@ Class ReportsController extends AppController
 		$this->set('downloadResult', $downloadResult);
 	}
 	function admin_consortium(){
+		ini_set('memory_limit','512M');
 		set_time_limit(0);
 		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
 		{
