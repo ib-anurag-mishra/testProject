@@ -1,4 +1,5 @@
 <?php
+echo $this->Session->flash('email');
     $this->pageTitle = __('Forgot Password', true);
 //    echo $session->flash();
 	echo '<div class="login-box">';
@@ -23,7 +24,7 @@
 		$lang = "English";
 	} 
 	elseif($this->Session->read('Config.language') == 'es'){
-		$lang = "EspaÒol";
+		$lang = "EspaÔøΩol";
 	}
 	elseif($this->Session->read('Config.language') == 'fr'){
 		$lang = "Fran√ßais";
