@@ -653,7 +653,7 @@ $ieVersion =  ieversion();
 												}?>
 										</span>
 											<span style="float:left;margin-left:25px;">
-											<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", '.$genre_pop[$i]['Song']['ProdID'].', "'.$this->webroot.'");')); ?>
+											<?php echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", '.$genre_pop[$i]['Song']['ProdID'].', "'.base64_encode($genre_pop[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); ?>
 											<?php echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$k)); ?>
 											<?php echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$k, "onClick" => 'stopThis(this, "'.$k.'");')); ?>
 											</span>
