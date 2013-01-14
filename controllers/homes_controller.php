@@ -2650,8 +2650,9 @@ STR;
 		Configure::write('debug', 0);
 		$this->layout = false;
 		$prodId = $_POST['prodId'];
+		$pt = base64_decode($_POST['pt']);
 		$this->Song->recursive = 2;
-		$data =  $this->Song->find('first',array('conditions' => array('Song.ProdID' =>$prodId),
+		$data =  $this->Song->find('first',array('conditions' => array('Song.ProdID' =>$prodId, 'Song.provider_type' => $pt),
 												'contain' => array(
 													'Sample_Files' => array(
 														'fields' => array(
