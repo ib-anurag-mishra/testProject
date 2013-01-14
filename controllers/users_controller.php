@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -58,8 +58,17 @@ Class UsersController extends AppController
 
 		if($library != null)
 		{
-			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-			$this->get_login_layout_name($library_data);
+			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));                      
+                        
+                                               
+                        if($library_data['Library']['library_status'] == 'inactive'){
+                           $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                           exit;                           
+                        }                        
+                        
+			$this->get_login_layout_name($library_data);                       
+                        
+                        
 			if(!empty($library_data))
 			{
 				if($this->Session->read('library') == '' && $this->Session->read('patron')== '')
@@ -93,7 +102,17 @@ Class UsersController extends AppController
 			}
 		}
 	}
-
+        
+     /*
+    Function Name : libinactive
+    Desc : actions for set message whenever a inative app call
+   */
+        function libinactive(){
+            $this->layout = 'login';
+            $this->set('show_inactivelib',1); 
+            $this -> Session -> setFlash("This page is no longer available.");
+        }
+   
    /*
     Function Name : admin_index
     Desc : actions for welcome admin login
@@ -1047,7 +1066,22 @@ Class UsersController extends AppController
    */
 
 	function ilogin($library = null){
-    $this->Session->write("layout_option", 'login');
+            
+            
+             //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+            if($library){            
+                $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+                if(count($library_data) > 0)
+                {
+                    if($library_data['Library']['library_status'] == 'inactive'){
+                        $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                        exit;                           
+                    }
+                }
+            }
+            
+                        
+            $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -1275,49 +1309,64 @@ Class UsersController extends AppController
    */
 
    function idlogin($library = null){
-    $this->Session->write("layout_option", 'login');
-		if($this->Session->read('login_action'))
-		{
-			if($this->action != $this->Session->read('login_action'))
-			{
-				$this->Session->destroy('referral');
-				$this->Session->destroy('subdomain');
-				$this->Session->destroy('login_action');
-			}
-		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
-			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
-				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
-				if(count($url) > 0){
-					if($this->Session->read('referral') == ''){
-						$this->Session->write("referral",$_SERVER['HTTP_REFERER']);
-						$this->Session->write("lId",$url[0]['Url']['library_id']);
-						$this->Session->write("login_action",'idlogin');
-					}
-				}
-				else {
-					$wrongReferral = 1;
-					$data['wrongReferral'] = $wrongReferral;
-				}
-			}
-			else if($library != null)
-			{
-				$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-				$this->get_login_layout_name($library_data);
-				if(count($library_data) > 0)
-				{
-					if($this->Session->read('lId') == '')
-					{
-						$this->Session->write("subdomain",$library);
-						$this->Session->write("lId",$library_data['Library']['id']);
-					}
-				}
-				else
-				{
-					$wrongReferral = 1;
-				}
-			}
-		}
+       
+       
+      //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }  
+
+        $this->Session->write("layout_option", 'login');
+        
+        if($this->Session->read('login_action'))
+        {
+                if($this->action != $this->Session->read('login_action'))
+                {
+                        $this->Session->destroy('referral');
+                        $this->Session->destroy('subdomain');
+                        $this->Session->destroy('login_action');
+                }
+        }
+        if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
+                if(isset($_SERVER['HTTP_REFERER']) && $library == null){
+                        $url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
+                        if(count($url) > 0){
+                                if($this->Session->read('referral') == ''){
+                                        $this->Session->write("referral",$_SERVER['HTTP_REFERER']);
+                                        $this->Session->write("lId",$url[0]['Url']['library_id']);
+                                        $this->Session->write("login_action",'idlogin');
+                                }
+                        }
+                        else {
+                                $wrongReferral = 1;
+                                $data['wrongReferral'] = $wrongReferral;
+                        }	
+                }
+                else if($library != null)
+                {
+                        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+                        $this->get_login_layout_name($library_data);
+                        if(count($library_data) > 0)
+                        {
+                                if($this->Session->read('lId') == '')
+                                {
+                                        $this->Session->write("subdomain",$library);
+                                        $this->Session->write("lId",$library_data['Library']['id']);
+                                }
+                        }
+                        else 
+                        {
+                                $wrongReferral = 1;
+                        }	
+                }
+        }
 		if($this->Session->read('layout_option') == 'login'){
 			$this->layout = 'login';
 		}
@@ -1502,6 +1551,22 @@ Class UsersController extends AppController
    */
 
    function mdlogin($library = null){
+       
+       
+      //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+    if($library){            
+        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        if(count($library_data) > 0)
+        {
+            if($library_data['Library']['library_status'] == 'inactive'){
+                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                exit;                           
+            }
+        }
+    }
+       
+       
+       
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -1688,6 +1753,21 @@ Class UsersController extends AppController
    */
 
    function mndlogin($library = null){
+       
+       
+      //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+    if($library){            
+        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        if(count($library_data) > 0)
+        {
+            if($library_data['Library']['library_status'] == 'inactive'){
+                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                exit;                           
+            }
+        }
+    }  
+       
+       
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -1870,7 +1950,26 @@ Class UsersController extends AppController
    */
 
    function ildlogin($library = null){
-    $this->Session->write("layout_option", 'login');
+    
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+    if($library){            
+        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        if(count($library_data) > 0)
+        {
+            if($library_data['Library']['library_status'] == 'inactive'){
+                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                exit;                           
+            }
+        }
+    }
+       
+       
+       
+       
+       
+       
+       
+       $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -2094,8 +2193,22 @@ Class UsersController extends AppController
     Function Name : inlogin
     Desc : For patron inlogin(Innovative w/o PIN) login method
    */
-
-	function inlogin($library = null){
+   
+  function inlogin($library = null){
+            
+            
+            
+             //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+    if($library){            
+        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        if(count($library_data) > 0)
+        {
+            if($library_data['Library']['library_status'] == 'inactive'){
+                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                exit;                           
+            }
+        }
+    }
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -2308,6 +2421,24 @@ Class UsersController extends AppController
    */
 
    function indlogin($library = null){
+       
+       
+       
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+    if($library){            
+        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        if(count($library_data) > 0)
+        {
+            if($library_data['Library']['library_status'] == 'inactive'){
+                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                exit;                           
+            }
+        }
+    }
+       
+       
+       
+       
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -2516,6 +2647,21 @@ Class UsersController extends AppController
 
 
 	function slogin($library = null){
+            
+            
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }
+    
+    
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -2742,17 +2888,30 @@ Class UsersController extends AppController
 
 
 	function snlogin($library = null){
-    $this->Session->write("layout_option", 'login');
-		if($this->Session->read('login_action'))
-		{
-			if($this->action != $this->Session->read('login_action'))
-			{
-				$this->Session->destroy('referral');
-				$this->Session->destroy('subdomain');
-				$this->Session->destroy('login_action');
-			}
-		}
-		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
+            
+                
+           if($library){            
+                $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+                if(count($library_data) > 0)
+                {
+                    if($library_data['Library']['library_status'] == 'inactive'){
+                        $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                        exit;                           
+                    }
+                }
+           }
+                       
+            $this->Session->write("layout_option", 'login');
+            if($this->Session->read('login_action'))
+            {
+                    if($this->action != $this->Session->read('login_action'))
+                    {
+                            $this->Session->destroy('referral');
+                            $this->Session->destroy('subdomain');
+                            $this->Session->destroy('login_action');
+                    }
+            }
+		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){ 
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));
 				if(count($url) > 0){
@@ -2952,6 +3111,19 @@ Class UsersController extends AppController
 	*/
 
 	function sdlogin($library = null){
+            
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        } 
+            
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -3180,6 +3352,21 @@ Class UsersController extends AppController
 	*/
 
 	function sndlogin($library = null){
+            
+             //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }
+            
+            
+            
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -3521,6 +3708,23 @@ Class UsersController extends AppController
    */
 
    function inhlogin($library = null){
+       
+       
+    //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+    if($library){            
+        $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        if(count($library_data) > 0)
+        {
+            if($library_data['Library']['library_status'] == 'inactive'){
+                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                exit;                           
+            }
+        }
+    }
+       
+       
+       
+       
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -3747,6 +3951,21 @@ Class UsersController extends AppController
    */
 
    function ihdlogin($library = null){
+       
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }
+       
+       
+       
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -3974,6 +4193,19 @@ Class UsersController extends AppController
    */
 
    function inhdlogin($library = null){
+       
+       
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -4184,8 +4416,21 @@ Class UsersController extends AppController
     Function Name : plogin
     Desc : For patron login(Using SOAP web services) login method
    */
-
-	function plogin($library = null){
+   
+    function plogin($library = null){
+            
+            //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }
+        
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -4410,6 +4655,22 @@ Class UsersController extends AppController
     Desc : For patron ilhdlogin(Innovative Var HTTPS with Name) login method
    */
    function ilhdlogin($library = null){
+       
+        //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+        if($library){            
+            $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+            if(count($library_data) > 0)
+            {
+                if($library_data['Library']['library_status'] == 'inactive'){
+                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                    exit;                           
+                }
+            }
+        }
+       
+       
+       
+       
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
@@ -4640,6 +4901,22 @@ Class UsersController extends AppController
    */
 
 	function clogin($library = null){
+            
+            
+            //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+            if($library){            
+                $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+                if(count($library_data) > 0)
+                {
+                    if($library_data['Library']['library_status'] == 'inactive'){
+                        $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/libinactive'); 
+                        exit;                           
+                    }
+                }
+           }
+            
+            
+            
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
