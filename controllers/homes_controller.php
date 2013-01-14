@@ -809,6 +809,7 @@ STR;
 					$genre =  $this->data['Home']['genre_id'];
 
 					$artist = str_replace("^", " ", $artist);
+                                        $artist = str_replace("-", " ", $artist);                                        
           $label = str_replace("^", " ", $label);
 					$composer = str_replace("^", " ", $composer);
 					$song = str_replace("^", " ", $song);
@@ -1057,6 +1058,7 @@ STR;
 					}
 				} else {
 					$searchKey = str_replace("^", " ", $searchKey);
+                                        $searchKey = str_replace("-", " ", $searchKey);
 					$searchKey = str_replace("$", " ", $searchKey);
 					$searchKey = '"'.addslashes($searchKey).'"';
 					$searchParam = "@".$searchtype." ".$searchKey;
