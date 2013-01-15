@@ -1165,9 +1165,17 @@ Class UsersController extends AppController
 					$this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}
+                        
+                        
+                        
+                        
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -1408,7 +1416,7 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 5 && !$this->Session->read("subdomain")){
+			elseif(strlen($card) < $library_data['Library']['minimum_card_length'] && !$this->Session->read("subdomain")){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}			
 			elseif($pin == ''){            
@@ -2054,7 +2062,7 @@ Class UsersController extends AppController
 				   $this->set('name',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
+			elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}			
 			elseif($name == ''){            
@@ -2285,9 +2293,13 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
-			elseif(strlen($card) < 5){
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+			}
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -2515,7 +2527,7 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");
 			}
-			elseif(strlen($card) < 5){
+			elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}			
 			else{				
@@ -2746,9 +2758,14 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+			}
+                        
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -2981,9 +2998,19 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
-			elseif(strlen($card) < 5){
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+			}
+                        
+                        
+                        
+                        
+                        
+                        
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -3118,7 +3145,7 @@ Class UsersController extends AppController
 		Desc : For patron sdlogin(SIP2 Var) login method
 	*/
  
-	function sdlogin($library = null){
+function sdlogin($library = null){
             
         //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
         if($library){            
@@ -3199,7 +3226,7 @@ Class UsersController extends AppController
 			$card = $this->data['User']['card'];
 			$data['card_orig'] = $card;
 			$card = str_replace(" ","",$card);
-		//	$card = strtolower($card);			
+                        //$card = strtolower($card);			
 			$data['card'] = $card;
 			$pin = $this->data['User']['pin'];
 			$data['pin'] = $pin;
@@ -3215,9 +3242,12 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 3){
+//			elseif(strlen($card) < 3){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+			}
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -3240,10 +3270,10 @@ Class UsersController extends AppController
 					$library_cond = $this->Session->read('lId');
 					$data['library_cond'] = $library_cond;
 					$existingLibraries = $this->Library->find('all',array(
-														'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var','id' => $library_cond),
-														'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
-														)
-													 );					
+					'conditions' => array('library_status' => 'active','library_authentication_method' => 'sip2_var','id' => $library_cond),
+					'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_sip_version','Library.library_sip_error','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+                                            )
+					);					
 				} else {
 					$library_cond = '';
 					$data['library_cond'] = $library_cond;
@@ -3448,9 +3478,14 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");            
 			}
-			elseif(strlen($card) < 5){
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+			}
+                        
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -3593,9 +3628,9 @@ Class UsersController extends AppController
 			$this->Library->recursive = -1;
 			$this->Library->Behaviors->attach('Containable');	
 			$existingLibraries = $this->Library->find('all',array(
-												'conditions' => array('library_ezproxy_name' => $libName,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
-												'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','library_ezproxy_logout','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
-												)
+                            'conditions' => array('library_ezproxy_name' => $libName,'library_status' => 'active','library_authentication_method' => 'ezproxy'),
+                            'fields' => array('Library.id','Library.library_territory','Library.library_ezproxy_secret','library_ezproxy_logout','Library.library_ezproxy_referral','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+                            )
 											 );
 			$this->Session->write("ezproxy_logout",$existingLibraries['0']['Library']['library_ezproxy_logout']);
 		} 
@@ -3815,9 +3850,13 @@ Class UsersController extends AppController
                $this->set('pin',"");
             }            
          }
-		 elseif(strlen($card) < 5){
+//		 elseif(strlen($card) < 5){
+//			$this->Session->setFlash("Please provide a correct card number.");			
+//		 }
+                 
+                 elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 			$this->Session->setFlash("Please provide a correct card number.");			
-		 }		 
+		 }
          elseif($pin == ''){            
             $this -> Session -> setFlash("Please provide pin.");            
             if($card != ''){
@@ -4056,9 +4095,15 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+                                $this->Session->setFlash("Please provide a correct card number.");			
+                        }
+                        
+                        
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -4289,9 +4334,13 @@ Class UsersController extends AppController
 			if($card == ''){            
 				$this -> Session -> setFlash("Please provide card number.");          
 			}
-			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+                                $this->Session->setFlash("Please provide a correct card number.");			
+                        }
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -4521,9 +4570,14 @@ Class UsersController extends AppController
 					$this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        
+                    elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+                            $this->Session->setFlash("Please provide a correct card number.");			
+                    }
 			elseif($pin == ''){            
 				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
@@ -4679,7 +4733,7 @@ Class UsersController extends AppController
        
        
        
-    $this->Session->write("layout_option", 'login');
+        $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
 		{
 			if($this->action != $this->Session->read('login_action'))
@@ -4762,9 +4816,16 @@ Class UsersController extends AppController
 				   $this->set('name',"");
 				}            
 			}
-			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");			
-			}			
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+                            $this->Session->setFlash("Please provide a correct card number.");			
+                        }
+                        
+                        
 			elseif($name == ''){            
 				$this -> Session -> setFlash("Please provide patron Last Name.");            
 				if($card != ''){
@@ -4925,16 +4986,17 @@ Class UsersController extends AppController
             
             
             
-    $this->Session->write("layout_option", 'login');
-		if($this->Session->read('login_action'))
-		{
-			if($this->action != $this->Session->read('login_action'))
-			{
-				$this->Session->destroy('referral');
-				$this->Session->destroy('subdomain');
-				$this->Session->destroy('login_action');
-			}
-		}
+           $this->Session->write("layout_option", 'login');
+           
+                if($this->Session->read('login_action'))
+                {
+                        if($this->action != $this->Session->read('login_action'))
+                        {
+                                $this->Session->destroy('referral');
+                                $this->Session->destroy('subdomain');
+                                $this->Session->destroy('login_action');
+                        }
+                }
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
 			if(isset($_SERVER['HTTP_REFERER']) && $library == null){
 				$url = $this->Url->find('all', array('conditions' => array('domain_name' => $_SERVER['HTTP_REFERER'])));

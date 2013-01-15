@@ -35,9 +35,7 @@ Class LibrariesController extends AppController
         }
        
         
-        $librarySelect = $this->Library->find('list', array('fields' => array('id','library_name'))); 
-    
-        
+        $librarySelect = $this->Library->find('list', array('fields' => array('id','library_name')));    
         
         
         $libraryFilter = array();
@@ -47,8 +45,7 @@ Class LibrariesController extends AppController
         }
      
         $libraryFilter = array_unique($libraryFilter);
-        $this->set('libraryFilter',$libraryFilter);
-        
+        $this->set('libraryFilter',$libraryFilter);     
         
         
         $this->Library->recursive = -1;
@@ -163,29 +160,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
-																				'Library.library_space_check',
-																				'Library.library_logout_url',
-																				'Library.library_subdomain',
-																				'Library.library_apikey',
-																				'Library.library_soap_url',
-																				'Library.library_curl_url',
-																				'Library.library_curl_db',
-																				'Library.library_authentication_variable',
-																				'Library.library_authentication_response',
-																				'Library.library_host_name',
-																				'Library.library_port_no',
-																				'Library.library_sip_login',
-																				'Library.library_sip_password',
-																				'Library.library_sip_location',
-																				'Library.library_sip_terminal_password',
-																				'Library.library_sip_version',
-																				'Library.library_sip_error',
-																				'Library.library_sip_institution',
-																				'Library.library_sip_24_check',
-																				'Library.library_sip_64_check_off',
-																				'Library.library_ezproxy_secret',
-																				'Library.library_ezproxy_referral',
-																				'Library.library_ezproxy_name',
+										'Library.library_ezproxy_name',
 																				'Library.library_ezproxy_logout',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
@@ -203,10 +178,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
 																				'Library.library_phone',
-																				'Library.library_address',
-																				'Library.library_address2',
-																				'Library.library_city',
-																				'Library.library_state',
+										'Library.library_state',
 																				'Library.library_zipcode',
 																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
@@ -215,7 +187,8 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_download_limit',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
-																				'Library.show_library_name',
+                                                                                'Library.minimum_card_length',
+                                                                                'Library.show_library_name',
 																				'Library.library_territory',
 																				'Library.library_language',
 																				'Library.facebook_icon',
@@ -238,7 +211,7 @@ Class LibrariesController extends AppController
                                                                                                 )
                                                                             )
                                                                 )));
-				$this -> set( 'getData', $getData );
+		$this -> set( 'getData', $getData );
                 $this->LibraryPurchase->recursive = -1;
                 $allPurchases = $this->LibraryPurchase->find('all', array('conditions' => array('library_id' => $libraryId), 'order' => array('created' => 'asc')));
                 $this->set('allPurchases', $allPurchases);
@@ -246,8 +219,8 @@ Class LibrariesController extends AppController
                 $this->set('allVariables', $allVariables);
                 $allUrls = $this->Url->find('all', array('conditions' => array('library_id' => $libraryId),'order' => array('id')));
                 $this->set('allUrls', $allUrls);
-				$consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
-				$this->set('consortium', $consortium);
+                $consortium = $this->Consortium->find('list', array('fields' => array('consortium_name','consortium_name'), 'order' => 'consortium_name ASC'));
+                $this->set('consortium', $consortium);
 			}
         }
         else
@@ -290,29 +263,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
 																				'Library.library_space_check',
-																				'Library.library_logout_url',
-																				'Library.library_subdomain',
-																				'Library.library_apikey',
-																				'Library.library_soap_url',
-																				'Library.library_curl_url',
-																				'Library.library_curl_db',
-																				'Library.library_authentication_variable',
-																				'Library.library_authentication_response',
-																				'Library.library_host_name',
-																				'Library.library_port_no',
-																				'Library.library_sip_login',
-																				'Library.library_sip_password',
-																				'Library.library_sip_location',
-																				'Library.library_sip_terminal_password',
-																				'Library.library_sip_version',
-																				'Library.library_sip_error',
-																				'Library.library_sip_institution',
-																				'Library.library_sip_24_check',
-																				'Library.library_sip_64_check_off',
-																				'Library.library_ezproxy_secret',
-																				'Library.library_ezproxy_referral',
-																				'Library.library_ezproxy_name',
-																				'Library.library_ezproxy_logout',
+																			'Library.library_ezproxy_logout',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -324,22 +275,16 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_navlinks_color',
                                                                                 'Library.library_navlinks_hover_color',
 																				'Library.library_box_header_color',
-																				'Library.library_box_hover_color',
 																				'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
 																				'Library.library_phone',
-																				'Library.library_address',
-																				'Library.library_address2',
-																				'Library.library_city',
-																				'Library.library_state',
-																				'Library.library_zipcode',
 																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
                                                                                 'Library.library_download_limit',
-																				'Library.library_current_downloads',
+										'Library.minimum_card_length',										'Library.library_current_downloads',
 																				'Library.library_total_downloads',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
@@ -492,27 +437,27 @@ Class LibrariesController extends AppController
                                                 $this->User->id = $getData['Library']['library_admin_id'];
                                             }
                                             $this->data['User']['type_id'] = 4;
-											if(trim($this->data['User']['password']) == ""){
-											// do not update the password
-											$this->data['User']['password'] = $getData['User']['password'];
-											}
+                                            if(trim($this->data['User']['password']) == ""){
+                                                // do not update the password
+                                                $this->data['User']['password'] = $getData['User']['password'];
+                                            }
                                             if($this->User->save($this->data['User'])) {
                                                 if(trim($libraryId) != '' && is_numeric($libraryId)) {
 
-													if($this->data['Library']['library_unlimited'] == 1){
-														$this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
-													} else {
-														$this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
-													}
-													$this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
-													$this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
-                                                }
-                                                else {
-													if($this->data['Library']['library_unlimited'] == 1){
-														$this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
-													} else {
-														$this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
-													}
+                                                                                                if($this->data['Library']['library_unlimited'] == 1){
+                                                                                                        $this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
+                                                                                                } else {
+                                                                                                        $this->data['Library']['library_available_downloads'] = $getData['Library']['library_available_downloads']+$this->data['LibraryPurchase']['purchased_tracks'];
+                                                                                                }
+                                                                                                $this->data['Library']['library_current_downloads'] = $getData['Library']['library_current_downloads'];
+                                                                                                $this->data['Library']['library_total_downloads'] = $getData['Library']['library_total_downloads'];
+                                        }
+                                        else {
+                                                                                                if($this->data['Library']['library_unlimited'] == 1){
+                                                                                                        $this->data['Library']['library_available_downloads'] = Configure::read('unlimited');
+                                                                                                } else {
+                                                                                                        $this->data['Library']['library_available_downloads'] = $this->data['LibraryPurchase']['purchased_tracks'];
+                                                                                                }
                                                 }
                                                 $this->data['Library']['library_admin_id'] = $this->User->id;
                                                 if(strtotime(date('Y-m-d')) < strtotime($this->data['Library']['library_contract_start_date'])) {
@@ -558,37 +503,37 @@ Class LibrariesController extends AppController
 																$this->Url->saveAll($url);
 															}
 														}
-														if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
-														if($this->data['Library']['library_unlimited'] == 1){
-															$this->data['LibraryPurchase']['purchased_tracks'] = Configure::read('unlimited');
-														} else {
-															$this->data['LibraryPurchase']['purchased_tracks'] = $this->data['LibraryPurchase']['purchased_tracks'];
-														}
-														$this->data['LibraryPurchase']['library_id'] = $this->Library->id;
-														$this->data['Library']['id'] = $this->Library->id;
+                                                    if($this->data['LibraryPurchase']['purchased_order_num'] != "" && $this->data['LibraryPurchase']['purchased_amount'] != "") {
+                                                            if($this->data['Library']['library_unlimited'] == 1){
+                                                                    $this->data['LibraryPurchase']['purchased_tracks'] = Configure::read('unlimited');
+                                                            } else {
+                                                                    $this->data['LibraryPurchase']['purchased_tracks'] = $this->data['LibraryPurchase']['purchased_tracks'];
+                                                            }
+                                                            $this->data['LibraryPurchase']['library_id'] = $this->Library->id;
+                                                            $this->data['Library']['id'] = $this->Library->id;
 
-                                                        if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
-															$contract['library_contract_start_date'] = $this->data['Library']['library_contract_start_date'];
-															$contract['library_contract_end_date'] = $this->data['Library']['library_contract_end_date'];
-															$contract['library_unlimited'] = $this->data['Library']['library_unlimited'];
-															$contract['id_library_purchases'] = $this->LibraryPurchase->id;
-															$contract['library_id'] = $this->Library->id;
-															$this->ContractLibraryPurchase->save($contract);
-                              
-                              //
-                              $currentDate = date('Y-m-d');
-                              $sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
-                              $wishlistResult = $this->Wishlist->query($sql);
-                              $count = $wishlistResult[0][0]['count'];		
-                              $sqlUpdateLibrary = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-".$count." Where id=".$libraryId;	
-                              $this->Library->query($sqlUpdateLibrary);
-                              //$sqlWishlistDelete = "Delete from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND library_id=".$libraryId;
-                              //$this->Wishlist->query($sqlWishlistDelete);                              
-                              
-															$message = __('You will be redirected to the next step shortly...', true);
-                                                            $data = $this->data;
-                                                            $this->set('success', compact('message', 'data'));
-                                                        }
+                                                            if($this->LibraryPurchase->save($this->data['LibraryPurchase'])) {
+                                                                    $contract['library_contract_start_date'] = $this->data['Library']['library_contract_start_date'];
+                                                                    $contract['library_contract_end_date'] = $this->data['Library']['library_contract_end_date'];
+                                                                    $contract['library_unlimited'] = $this->data['Library']['library_unlimited'];
+                                                                    $contract['id_library_purchases'] = $this->LibraryPurchase->id;
+                                                                    $contract['library_id'] = $this->Library->id;
+                                                                    $this->ContractLibraryPurchase->save($contract);
+
+                                                                    //
+                                                                    $currentDate = date('Y-m-d');
+                                                                    $sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
+                                                                    $wishlistResult = $this->Wishlist->query($sql);
+                                                                    $count = $wishlistResult[0][0]['count'];		
+                                                                    $sqlUpdateLibrary = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-".$count." Where id=".$libraryId;	
+                                                                    $this->Library->query($sqlUpdateLibrary);
+                                                                    //$sqlWishlistDelete = "Delete from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND library_id=".$libraryId;
+                                                                    //$this->Wishlist->query($sqlWishlistDelete);                              
+
+                                                                                                                                                                $message = __('You will be redirected to the next step shortly...', true);
+                                                                $data = $this->data;
+                                                                $this->set('success', compact('message', 'data'));
+                                                            }
                                                         else {
                                                             $message = __('To proceed further please enter the data correctly.|5', true);
                                                             $LibraryPurchase = $this->LibraryPurchase->invalidFields();
