@@ -41,15 +41,17 @@ class ClearController extends AppController {
   function admin_library($id){
     $this->autoRender = false;
     if(!empty($id)) {
-      $key = 'library' . $id;
-      $check = Cache::delete($key);
-      if($check == true){
-        $this->Session -> setFlash( 'Cache cleared..!!', 'modal', array( 'class' => 'modal success' ) );
-        $this->redirect('/admin/libraries/managelibrary');
-      } else {
-        $this->Session -> setFlash( 'Cache is already cleared..!!', 'modal', array( 'class' => 'modal problem' ) );
-        $this->redirect('/admin/libraries/managelibrary');
-      }
+		$memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		$key = Configure::read('App.memcache_key').'library' . $id;
+		$check = memcache_delete($memcache,$key);
+		if($check == true){
+			$this->Session -> setFlash( 'Cache cleared..!!', 'modal', array( 'class' => 'modal success' ) );
+			$this->redirect('/admin/libraries/managelibrary');
+		} else {
+			$this->Session -> setFlash( 'Cache is already cleared..!!', 'modal', array( 'class' => 'modal problem' ) );
+			$this->redirect('/admin/libraries/managelibrary');
+		}
     }
     else
     {
