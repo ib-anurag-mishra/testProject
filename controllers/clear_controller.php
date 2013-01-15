@@ -43,7 +43,7 @@ class ClearController extends AppController {
     if(!empty($id)) {
 		$memcache = new Memcache;
 		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		$key = Configure::read('App.memcache_key').'library' . $id;
+		$key = Configure::read('App.memcache_key').'_library' . $id;
 		$check = memcache_delete($memcache,$key);
 		if($check == true){
 			$this->Session -> setFlash( 'Cache cleared..!!', 'modal', array( 'class' => 'modal success' ) );
