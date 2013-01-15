@@ -1049,6 +1049,7 @@ STR;
 						} */
 						$value = str_replace("^", " ", $value);
 						$value = str_replace("$", " ", $value);
+                                                $value = str_replace("-", " ", $value);
 						$value = '"'.addslashes($value).'"';
 						if ($searchParam == "") {
 							$searchParam = "@".$searchtype." ".$value;
