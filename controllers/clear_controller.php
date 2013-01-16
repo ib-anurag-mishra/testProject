@@ -7,7 +7,7 @@
 class ClearController extends AppController {
   var $name = 'Clear';
   var $autoLayout = false;
-  var $uses = array('Album','Download','Song','Genre', 'Library','Artist','Country');
+  var $uses = array('Album','Download','Song','Genre', 'Library','Artist','Country', 'LatestDownload');
 
   function cachekey($key){
     if(!empty($key)){
@@ -797,6 +797,105 @@ STR;
     
     
   }  
+  
+  function syncDownloadsWithLatestDownloads(){
+    
+    
+    function gen_uuid() {
+      
+      return sprintf( '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+        // 32 bits for "time_low"
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ),
+
+        // 16 bits for "time_mid"
+        mt_rand( 0, 0xffff ),
+
+        // 16 bits for "time_hi_and_version",
+        // four most significant bits holds version number 4
+        mt_rand( 0, 0x0fff ) | 0x4000,
+
+        // 16 bits, 8 bits for "clk_seq_hi_res",
+        // 8 bits for "clk_seq_low",
+        // two most significant bits holds zero and one for variant DCE1.1
+        mt_rand( 0, 0x3fff ) | 0x8000,
+
+        // 48 bits for "node"
+        mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff ), mt_rand( 0, 0xffff )
+      );
+    }
+    
+
+    $data = $this->LatestDownload->find('all', array(
+      'joins' => array(
+        array(
+          'table' => 'downloads',
+          'type' => 'LEFT',
+          'conditions'=> array(
+            'LatestDownload.library_id = downloads.library_id', 
+            'LatestDownload.patron_id = downloads.patron_id', 
+            'LatestDownload.ProdID = downloads.ProdID', 
+            'LatestDownload.provider_type = downloads.provider_type', 
+            'LatestDownload.created = downloads.created', 
+          )
+        )
+      ),
+      'conditions' => array(
+          'downloads.id IS NULL',
+        ),
+      'recursive' => -1,
+    ));
+    
+    /** Query  **/
+    /**  
+        SELECT LatestDownload.id, LatestDownload.library_id, LatestDownload.patron_id, LatestDownload.ProdID, LatestDownload.pProdID, 
+        LatestDownload.ProductID, LatestDownload.ISRC, LatestDownload.artist, LatestDownload.track_title, LatestDownload.user_login_type, 
+        LatestDownload.email, LatestDownload.user_agent, LatestDownload.ip, LatestDownload.history, LatestDownload.provider_type, 
+        LatestDownload.created FROM latest_downloads AS LatestDownload 
+
+        LEFT JOIN downloads  ON (LatestDownload.library_id = downloads.library_id AND LatestDownload.patron_id = downloads.patron_id 
+        AND LatestDownload.ProdID = downloads.ProdID AND LatestDownload.provider_type = downloads.provider_type AND LatestDownload.created = downloads.created)  
+
+        WHERE downloads.id IS NULL
+    **/
+    
+    $total_records_found = 0; 
+    
+    foreach($data AS $key => $val){
+      
+      $total_records_found++;          
+      
+      $insertArr = Array();
+      $insertArr['id']                    = gen_uuid();
+      $insertArr['library_id']            = $val['LatestDownload']['library_id'];
+      $insertArr['patron_id']             = $val['LatestDownload']['patron_id'];
+      $insertArr['ProdID']                = $val['LatestDownload']['ProdID'];
+      $insertArr['ProductID']             = $val['LatestDownload']['ProductID'];
+      $insertArr['ISRC']                  = $val['LatestDownload']['ISRC'];
+      $insertArr['artist']                = $val['LatestDownload']['artist'];
+      $insertArr['track_title']           = $val['LatestDownload']['track_title'];
+      $insertArr['user_login_type']       = $val['LatestDownload']['user_login_type'];
+      $insertArr['provider_type']         = $val['LatestDownload']['provider_type'];
+      $insertArr['email']                 = $val['LatestDownload']['email'];
+      $insertArr['user_agent']            = $val['LatestDownload']['user_agent'];
+      $insertArr['ip']                    = $val['LatestDownload']['ip'];
+      $insertArr['created']               = $val['LatestDownload']['created'];
+
+      $row_save_status = $this->Download->save($insertArr);
+      
+      echo '<br />';  echo 'Status of Insert: ';  var_dump($row_save_status); echo '<br />';  
+      
+    }    
+    
+    
+    echo '<br /><br />  Total Records : ' . $total_records_found;
+  
+    
+    exit;
+
+    
+    
+    
+  }
 	
     
 }
