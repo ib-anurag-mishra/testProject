@@ -1070,7 +1070,7 @@ Class UsersController extends AppController
 	function ilogin($library = null){
             
             
-             //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
+            //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
             if($library){            
                 $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
                 if(count($library_data) > 0)
@@ -1083,16 +1083,16 @@ Class UsersController extends AppController
             }
             
                         
-            $this->Session->write("layout_option", 'login');
-		if($this->Session->read('login_action'))
-		{
-			if($this->action != $this->Session->read('login_action'))
-			{
-				$this->Session->destroy('referral');
-				$this->Session->destroy('subdomain');
-				$this->Session->destroy('login_action');
-			}
-		}
+                $this->Session->write("layout_option", 'login');
+                if($this->Session->read('login_action'))
+                {
+                        if($this->action != $this->Session->read('login_action'))
+                        {
+                                $this->Session->destroy('referral');
+                                $this->Session->destroy('subdomain');
+                                $this->Session->destroy('login_action');
+                        }
+                }
 		if(!$this->Session->read('referral') && !$this->Session->read("subdomain")){
                     
                     if(isset($_SERVER['HTTP_REFERER']) && $library == null){
@@ -1171,9 +1171,7 @@ Class UsersController extends AppController
                         
                         elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
-			}
-                        
-                        
+			}                        
                         
                         
 			elseif($pin == ''){            
@@ -1416,7 +1414,7 @@ Class UsersController extends AppController
 				   $this->set('pin',"");
 				}            
 			}
-			elseif(strlen($card) < $library_data['Library']['minimum_card_length'] && !$this->Session->read("subdomain")){
+			elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}			
 			elseif($pin == ''){            
@@ -1427,6 +1425,8 @@ Class UsersController extends AppController
 				else{
 				   $this->set('card',"");
 				}            
+			}elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+				$this->Session->setFlash("Please provide a correct card number.");			
 			}
 			else{
 				$cardNo = substr($card,0,5);
@@ -3005,12 +3005,7 @@ Class UsersController extends AppController
                         elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
 				$this->Session->setFlash("Please provide a correct card number.");			
 			}
-                        
-                        
-                        
-                        
-                        
-                        
+                                                                       
 			else{
 				$cardNo = substr($card,0,5);
 				$data['cardNo'] = $cardNo;
@@ -3319,6 +3314,7 @@ function sdlogin($library = null){
 								$this->Currentpatron->save($insertArr);						
 							}
 							$date = time();
+                                                        
 							$values = array(0 => $date, 1 => session_id());			
 							Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 							
