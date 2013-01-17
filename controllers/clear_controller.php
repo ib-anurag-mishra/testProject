@@ -805,7 +805,7 @@ STR;
             'LatestDownload.patron_id = downloads.patron_id', 
             'LatestDownload.ProdID = downloads.ProdID', 
             'LatestDownload.provider_type = downloads.provider_type', 
-            'LatestDownload.created = downloads.created', 
+            'DATE(LatestDownload.created) = DATE(downloads.created)', 
           )
         )
       ),
