@@ -749,7 +749,7 @@ STR;
       
       for($i=0; $i<50; $i++){
         
-        $sql  = "CALL sonyproc_new('187','1000601023756a".$i."', '25891257', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-07-21 00:00:00', '2012-01-13 23:59:59', @ret)";
+        $sql  = "CALL sonyproc_new('187','1000601023756a".$i."', '25891257', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-01-14 00:00:00', '2013-01-20 23:59:59', @ret)";
             
         $this->Library->query($sql);
         $sql = "SELECT @ret";
@@ -817,7 +817,7 @@ STR;
     
     /** Query  **/
     /**  
-        SELECT LatestDownload.id, LatestDownload.library_id, LatestDownload.patron_id, LatestDownload.ProdID, LatestDownload.pProdID, 
+        SELECT LatestDownload.id, LatestDownload.library_id, LatestDownload.patron_id, LatestDownload.ProdID, 
         LatestDownload.ProductID, LatestDownload.ISRC, LatestDownload.artist, LatestDownload.track_title, LatestDownload.user_login_type, 
         LatestDownload.email, LatestDownload.user_agent, LatestDownload.ip, LatestDownload.history, LatestDownload.provider_type, 
         LatestDownload.created FROM latest_downloads AS LatestDownload 
