@@ -747,7 +747,7 @@ STR;
     
       $this->Library->setDataSource('master');
       
-      for($i=0; $i<50; $i++){
+      for($i=0; $i<1000; $i++){
         
         $sql  = "CALL sonyproc_new('187','1000601023756a".$i."', '258912579".rand()."', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-01-14 00:00:00', '2013-01-20 23:59:59', @ret)";
             
