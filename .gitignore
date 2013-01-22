@@ -16,6 +16,7 @@ webroot/img/internet_explorer/*
 webroot/min/tmp/*
 webroot/sony_reports/*
 webroot/cron/config.php
+webroot/cron/config_ioda.php
 config/config.php
 webroot/suggestion_xml/*
 
