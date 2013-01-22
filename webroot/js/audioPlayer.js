@@ -159,7 +159,7 @@ function stopThis(event, objID) {
     document.getElementById("stop_audio"+objID).style.display = "none";
 }
 
-function playSample(obj, objID, playID, webRoot) {
+function playSample(obj, objID, playID, pt, webRoot) {
     $("img[id^='play_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "block";
     });
@@ -174,7 +174,7 @@ function playSample(obj, objID, playID, webRoot) {
        $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
 	$(".upgradeFlash").click().delay(800);
     }
-	var data = "prodId="+playID;
+	var data = "prodId="+playID+"&pt="+pt;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webRoot+"homes/userSample", // URL to request

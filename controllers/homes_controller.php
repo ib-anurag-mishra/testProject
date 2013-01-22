@@ -810,6 +810,7 @@ STR;
 					$genre =  $this->data['Home']['genre_id'];
 
 					$artist = str_replace("^", " ", $artist);
+                                        $artist = str_replace("-", " ", $artist);                                        
           $label = str_replace("^", " ", $label);
 					$composer = str_replace("^", " ", $composer);
 					$song = str_replace("^", " ", $song);
@@ -1049,6 +1050,7 @@ STR;
 						} */
 						$value = str_replace("^", " ", $value);
 						$value = str_replace("$", " ", $value);
+                                                $value = str_replace("-", " ", $value);
 						$value = '"'.addslashes($value).'"';
 						if ($searchParam == "") {
 							$searchParam = "@".$searchtype." ".$value;
@@ -1058,6 +1060,7 @@ STR;
 					}
 				} else {
 					$searchKey = str_replace("^", " ", $searchKey);
+                                        $searchKey = str_replace("-", " ", $searchKey);
 					$searchKey = str_replace("$", " ", $searchKey);
 					$searchKey = '"'.addslashes($searchKey).'"';
 					$searchParam = "@".$searchtype." ".$searchKey;
@@ -2740,8 +2743,9 @@ STR;
 		Configure::write('debug', 0);
 		$this->layout = false;
 		$prodId = $_POST['prodId'];
+		$pt = base64_decode($_POST['pt']);
 		$this->Song->recursive = 2;
-		$data =  $this->Song->find('first',array('conditions' => array('Song.ProdID' =>$prodId),
+		$data =  $this->Song->find('first',array('conditions' => array('Song.ProdID' =>$prodId, 'Song.provider_type' => $pt),
 												'contain' => array(
 													'Sample_Files' => array(
 														'fields' => array(

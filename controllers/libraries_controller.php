@@ -27,16 +27,52 @@ Class LibrariesController extends AppController
      Desc : action for listing all the libraries
     */
     function admin_managelibrary() {
-	if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
-		{
-			$this->redirect(array('controller' => 'users', 'action' => 'login'));
-		}
-        $this->Library->recursive = -1;
-		$this->paginate = array('order' => 'id');
-		$this->paginate = array('cache' => 'no');
-        $this->set('libraries', $this->paginate('Library'));
-    }
+        
 	
+        if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
+        {
+                $this->redirect(array('controller' => 'users', 'action' => 'login'));
+        }
+       
+        
+        $librarySelect = $this->Library->find('list', array('fields' => array('id','library_name')));    
+        
+        
+        $libraryFilter = array();
+        for($i=1; $i<=count($librarySelect); $i++){
+            if(isset($librarySelect[$i][0]))
+                $libraryFilter[] = strtoupper(trim($librarySelect[$i][0]));            
+        }
+     
+        $libraryFilter = array_unique($libraryFilter);
+        $this->set('libraryFilter',$libraryFilter);     
+        
+        
+        $this->Library->recursive = -1;
+	$searchKeyword="";
+        if(isset($this->params['url']['data']['library_name']))
+        {
+            $searchKeyword = $this->params['url']['data']['library_name'];
+            $this->paginate = array('conditions' => array("library_name Like"=>"%".$searchKeyword."%"), 'order' => 'id', 'cache' => 'no');
+        }
+        else if(isset($this->params['named']['alpha']))
+        {
+            $this->paginate = array('conditions' => array("library_name Like"=>$this->params['named']['alpha']."%"), 'order' => 'id', 'cache' => 'no');
+        }
+        else
+        {
+            $this->paginate = array('order' => 'id', 'cache' => 'no');
+        }
+        $this->set('searchKeyword', $searchKeyword);
+        $this->set('libraries', $this->paginate('Library'));
+        
+        
+        
+     
+        
+       
+    }
+
 	    /*
      Function Name : admin_preview
      Desc : action for showing preview of the layout in the admin end
@@ -1326,7 +1362,7 @@ STR;
             $getData = $this->LibrariesTimezone->query($fetchSql);         
         }
         
-         $timezoneResults = $this->Timezone->find('all');
+         $timezoneResults = $this->Timezone->find('all',array('order' => array('zone_name' => 'asc')));
         // print_r($timezoneResults);
          $this->set('timezoneResults',$timezoneResults);         
       
