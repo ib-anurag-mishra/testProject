@@ -1,5 +1,5 @@
 <?php
-        
+
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
@@ -30,6 +30,7 @@ class SoapsController extends AppController {
 
 
   function index(){
+    
     Configure::write('debug',0);
     $this->autoRender = false;
     ini_set("soap.wsdl_cache_enabled", "0");
@@ -1058,11 +1059,7 @@ STR;
     $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libraryId)));
 
     $wishlist = 0;
-    if(!($libraryDetails['Library']['library_download_limit'] > $libraryDetails['Library']['library_current_downloads'])) {
-      $wishlist = 1;
-    }
-
-
+    
     $obj = new UserCurrentDownloadDataType;
     $obj->currentDownloadCount                = (int)$downloadCount;
     $obj->totalDownloadLimit                  = (int)$libraryDetails['Library']['library_user_download_limit'];
@@ -3939,7 +3936,7 @@ STR;
 
     $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-
+    $wishlist = 0;
     return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
 
 
@@ -3981,11 +3978,20 @@ STR;
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);  
         
+    $log_name = 'stored_procedure_app_log_'.date('Y_m_d');
+    $log_id = md5(time());
+    $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
+        
     if($checkValidation){
       
       $validationResult = $this->Downloads->validateDownload($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
       
+      $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider_type."':DownloadComponentParameters-isMobileDownload= 'true':DownloadComponentParameters-Territory= '".$libraryDetails['Library']['library_territory']."':DownloadComponentParameters-PatronID='".$patId."':DownloadComponentParameters-Agent='".$agent."':DownloadComponentParameters-LibID='".$libId."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
+
       if(false === $validationResult[0])  {
+        
+        $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+        $this->log($log_data, $log_name);
         
         if(5 == $validationResult[2]) {
           throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
@@ -4078,9 +4084,11 @@ STR;
 	  $this->Library->setDataSource('master');
     
     if($maintainLatestDownload){
+      $procedure = 'sonyproc_new';
       $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
       
     }else{
+      $procedure = 'sonyproc_ioda';
       $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
     }
     
@@ -4089,6 +4097,12 @@ STR;
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
+    
+    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$TrackData['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$TrackData['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($TrackData['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($TrackData['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$provider_type."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'".PHP_EOL."---------Request (".$log_id.") End----------------";
+    
+    $this->log($log_data, $log_name);
+    
+    
 		$this->Library->setDataSource('default');
     $wishlist = 0;
 		if(is_numeric($return)){
@@ -4111,26 +4125,21 @@ STR;
 
       $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-
-
-      if(!($libraryDetails['Library']['library_download_limit'] > ($libraryDetails['Library']['library_current_downloads']+1))) {
-        $wishlist = 1;
-      }
-
+      
+      $wishlist = 0;
       return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
 
 		}
 		else{
 
       if('incld' == $return) {
+      
+        $wishlist = 0;
         return $this->createSongDownloadSuccessObject('Already downloaded.', '',false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
       } else {
         if('error' == $return) {
 
-          if(!($libraryDetails['Library']['library_download_limit'] > ($libraryDetails['Library']['library_current_downloads']+1))) {
-            $wishlist = 1;
-          }
-
+          $wishlist = 0;
           return $this->createSongDownloadSuccessObject('Library limit exceeded.', '', false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
         }
       }

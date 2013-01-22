@@ -15,6 +15,7 @@ class HomesController extends AppController
      Desc : actions that needed before other functions are getting called
     */
     function beforeFilter() {
+    
 		parent::beforeFilter();
         if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
             $validPatron = $this->ValidatePatron->validatepatron();
@@ -1179,10 +1180,24 @@ STR;
         $prodId = $_POST['ProdID'];
         $provider = $_POST['ProviderType'];
         
+        /**
+          creates log file name
+        */
+        $log_name = 'stored_procedure_web_log_'.date('Y_m_d');
+        $log_id = md5(time());
+        $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
+        
         $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
         if($checkValidation == 1){
             $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+            
+            /**
+              records download component request & response
+            */
+            $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
+                  
+                  
             $checked = "true";
             $validationPassed = $validationResult[0];
             $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');
@@ -1331,12 +1346,15 @@ STR;
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-		if($maintainLatestDownload){    
+		
+    if($maintainLatestDownload){    
       $this->log("sonyproc_new called",'download');
+      $procedure = 'sonyproc_new';
       $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
     }
     else
     {
+      $procedure = 'sonyproc_ioda';
       $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";      
     }
     
@@ -1344,6 +1362,11 @@ STR;
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
+    
+    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$trackDetails['0']['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$trackDetails['0']['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($trackDetails['0']['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($trackDetails['0']['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$insertArr['provider_type']."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'".PHP_EOL."---------Request (".$log_id.") End----------------";
+    
+    $this->log($log_data, $log_name);
+    
 		$this->Library->setDataSource('default');
 		if(is_numeric($return)){
 			header("Location: ".$finalSongUrl);
@@ -1374,6 +1397,14 @@ STR;
             exit;
 		}*/
         } else {
+        
+          /**
+            complete records with validation fail
+          */
+          $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+          $this->log($log_data, $log_name);
+        
+        
             $this->Session->setFlash($validationResult[1]);
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
@@ -2203,11 +2234,53 @@ STR;
       $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
       $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
       $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+      $insertArr['provider_type'] = $provider;
+        
+      /**
+          creates log file name
+        */
+      $log_name = 'stored_procedure_web_wishlist_log_'.date('Y_m_d');
+      $log_id = md5(time());
+      $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;  
         
       $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
       $checkValidation = $Setting['Siteconfig']['svalue'];
       if($checkValidation == 1){
+          
           $validationResult = $this->Downloads->validateDownload($prodId, $provider);
+          
+          /**
+            records download component request & response
+          */
+            $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
+            
+          // patorn downloaded limit validation
+          /* if(!($this->Downloads->checkPatronDownload($patId, $libId))){
+            
+            /**
+              complete records with validation fail
+            */
+            /*$log_data .= ":checkPatronDownload= 'stop'";
+            $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+            $this->log($log_data, $log_name);
+
+          }
+          $log_data .= ":checkPatronDownload= 'allow'"; */ 
+          
+          // already downloaded validation
+         /*  if(!($this->Downloads->checkSongAlreadyDownloaded($prodId, $provider, $libId, $patId))){
+            
+            /**
+              complete records with validation fail
+            */
+            /*$log_data .= ":checkSongAlreadyDownloaded= 'stop'";
+            $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+            $this->log($log_data, $log_name);
+
+            
+          }
+          $log_data .= ":checkSongAlreadyDownloaded= 'allow'"; */            
+            
           $checked = "true";
           $validationPassed = $validationResult[0];
           $validationPassedMessage = (($validationResult[0] == 0)?'false':'true');
@@ -2314,21 +2387,32 @@ STR;
         $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
         $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
+        $downloadStatus = $latestdownloadStatus = 0;          
         //save to downloads table
         if($this->Download->save($insertArr)){
+          $downloadStatus = 1;  
           $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
           $siteConfigData = $this->Album->query($siteConfigSQL);
           $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
           if($maintainLatestDownload){
-            $this->LatestDownload->save($insertArr);
+            if($this->LatestDownload->save($insertArr)){
+              $latestdownloadStatus = 1;
+            }
           }
+                    
           //update library table
           $this->Library->setDataSource('master');
           $sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1 Where id=".$libId;
           $this->Library->query($sql);
           $this->Library->setDataSource('default');
-        }
-
+        }      
+      
+        $log_data .= ":SaveParameters-LibID='".$insertArr['library_id']."':SaveParameters-Patron='".$insertArr['patron_id']."':SaveParameters-ProdID='".$insertArr['ProdID']."':SaveParameters-ProductID='".$insertArr['ProductID']."':SaveParameters-ISRC='".$insertArr['ISRC']."':SaveParameters-Artist='".$insertArr['artist']."':SaveParameters-SongTitle='".$insertArr['track_title']."':SaveParameters-UserLoginType='".$insertArr['user_login_type']."':SaveParameters-ProviderType='".$provider."':SaveParameters-Email='".$insertArr['email']."':SaveParameters-UserAgent='".$insertArr['user_agent']."':SaveParameters-IP='".$insertArr['ip']."':SaveParametersStatus-Download='".$downloadStatus."':SaveParametersStatus-LatestDownload='".$latestdownloadStatus."'".PHP_EOL."---------Request (".$log_id.") End----------------";
+    
+        $this->log($log_data, $log_name);
+        
+        
+        
         //delete from wishlist table
         $deleteSongId = $id;
         $this->Wishlist->delete($deleteSongId);
@@ -2341,6 +2425,12 @@ STR;
       }
       else
       {
+        /**
+          complete records with validation fail
+          */
+          $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+          $this->log($log_data, $log_name);
+          
         echo "invalid|".$validationResult[1];
         exit;
       }
