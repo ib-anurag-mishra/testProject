@@ -26,15 +26,16 @@ $lib_types = array('Unlimited' , 'ALC');
 //$begin = new DateTime( '2011-10-01' );
 //$end = new DateTime( '2012-01-06' );
 
-$begin = new DateTime( '2012-10-01' );
-$end = new DateTime( '2012-12-03' );
+//$begin = new DateTime( '2012-10-01' );
+//$end = new DateTime( '2012-12-03' );
 
-$interval = DateInterval::createFromDateString('1 day');
+/*$interval = DateInterval::createFromDateString('1 day');
 $period = new DatePeriod($begin, $interval, $end);
 foreach ( $period as $dt )
 {
 	echo $currentDate = $dt->format( "Y-m-d" );
-	echo "\n";
+	echo "\n";*/
+	$currentDate = date( "Y-m-d", time() );
 	list($year, $month, $day) = explode('-', $currentDate);
 	$weekFirstDay = date('Y-m-d', strtotime(date('Y' , strtotime($currentDate))."W".date('W' , strtotime($currentDate))."1"));
 	$monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
@@ -376,7 +377,7 @@ else {
 	echo "\nToday is not either the week first day or the month first day so the report didn't get generated.\n";
 }
 
-}
+//}
 
 
 ?>
