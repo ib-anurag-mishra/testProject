@@ -1366,7 +1366,41 @@ STR;
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
     
-    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$trackDetails['0']['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$trackDetails['0']['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($trackDetails['0']['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($trackDetails['0']['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$insertArr['provider_type']."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'".PHP_EOL."---------Request (".$log_id.") End----------------";
+    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$trackDetails['0']['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$trackDetails['0']['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($trackDetails['0']['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($trackDetails['0']['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$insertArr['provider_type']."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
+    
+    if(is_numeric($return)){
+      
+      $data = $this->LatestDownload->find('count', array(
+        'conditions'=> array(
+            "LatestDownload.library_id = '" . $libId . "'", 
+            "LatestDownload.patron_id = '" . $patId . "'", 
+            "LatestDownload.ProdID = '" . $prodId . "'", 
+            "LatestDownload.ProductID = '" . $trackDetails['0']['Song']['ProductID'] . "'", 
+            "LatestDownload.ISRC = '" . $trackDetails['0']['Song']['ISRC'] . "'", 
+            "LatestDownload.artist = '" . addslashes($trackDetails['0']['Song']['Artist']) . "'", 
+            "LatestDownload.track_title = '" . addslashes($trackDetails['0']['Song']['SongTitle']) . "'", 
+            "LatestDownload.user_login_type = '" . $insertArr['user_login_type'] . "'", 
+            "LatestDownload.provider_type = '" . $insertArr['provider_type'] . "'", 
+            "LatestDownload.email = '" . $insertArr['email'] . "'", 
+            "LatestDownload.user_agent = '" . addslashes($insertArr['user_agent']) . "'", 
+            "LatestDownload.ip = '" . $insertArr['ip'] . "'",       
+            "DATE(LatestDownload.created) = '" . date('Y-m-d') . "'", 
+        ),
+        'recursive' => -1,
+      ));
+      
+
+      if(0 === $data){
+        $log_data .= ":NotInLD";
+      }
+      
+      if(false === $data){
+        $log_data .= ":SelectLDFail";
+      }
+    
+    }
+    
+    $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
     
     $this->log($log_data, $log_name);
     
@@ -2410,7 +2444,15 @@ STR;
           $this->Library->setDataSource('default');
         }      
       
-        $log_data .= ":SaveParameters-LibID='".$insertArr['library_id']."':SaveParameters-Patron='".$insertArr['patron_id']."':SaveParameters-ProdID='".$insertArr['ProdID']."':SaveParameters-ProductID='".$insertArr['ProductID']."':SaveParameters-ISRC='".$insertArr['ISRC']."':SaveParameters-Artist='".$insertArr['artist']."':SaveParameters-SongTitle='".$insertArr['track_title']."':SaveParameters-UserLoginType='".$insertArr['user_login_type']."':SaveParameters-ProviderType='".$provider."':SaveParameters-Email='".$insertArr['email']."':SaveParameters-UserAgent='".$insertArr['user_agent']."':SaveParameters-IP='".$insertArr['ip']."':SaveParametersStatus-Download='".$downloadStatus."':SaveParametersStatus-LatestDownload='".$latestdownloadStatus."'".PHP_EOL."---------Request (".$log_id.") End----------------";
+        
+      
+        $log_data .= ":SaveParameters-LibID='".$insertArr['library_id']."':SaveParameters-Patron='".$insertArr['patron_id']."':SaveParameters-ProdID='".$insertArr['ProdID']."':SaveParameters-ProductID='".$insertArr['ProductID']."':SaveParameters-ISRC='".$insertArr['ISRC']."':SaveParameters-Artist='".$insertArr['artist']."':SaveParameters-SongTitle='".$insertArr['track_title']."':SaveParameters-UserLoginType='".$insertArr['user_login_type']."':SaveParameters-ProviderType='".$provider."':SaveParameters-Email='".$insertArr['email']."':SaveParameters-UserAgent='".$insertArr['user_agent']."':SaveParameters-IP='".$insertArr['ip']."':SaveParametersStatus-Download='".$downloadStatus."':SaveParametersStatus-LatestDownload='".$latestdownloadStatus."'";
+    
+        if($downloadStatus != $latestdownloadStatus){
+          $log_data .= ":NotInBothTable";
+        }
+    
+        $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
     
         $this->log($log_data, $log_name);
         
