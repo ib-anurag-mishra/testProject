@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -41,7 +41,7 @@ class SoapsController extends AppController {
 
 
   function wsdl(){
-
+  
     Configure::write('debug',0);
     $this->autoRender = false;
     $siteUrl = Configure::read('App.base_url');
@@ -4092,13 +4092,49 @@ STR;
       $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
     }
     
+    
 
     $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
     
-    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$TrackData['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$TrackData['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($TrackData['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($TrackData['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$provider_type."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'".PHP_EOL."---------Request (".$log_id.") End----------------";
+    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$TrackData['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$TrackData['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($TrackData['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($TrackData['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$provider_type."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
+    
+    if(is_numeric($return)){
+      
+      $data = $this->LatestDownload->find('count', array(
+        'conditions'=> array(
+            "LatestDownload.library_id = '" . $libId . "'", 
+            "LatestDownload.patron_id = '" . $patId . "'", 
+            "LatestDownload.ProdID = '" . $prodId . "'", 
+            "LatestDownload.ProductID = '" . $TrackData['Song']['ProductID'] . "'", 
+            "LatestDownload.ISRC = '" . $TrackData['Song']['ISRC'] . "'", 
+            "LatestDownload.artist = '" . addslashes($TrackData['Song']['Artist']) . "'", 
+            "LatestDownload.track_title = '" . addslashes($TrackData['Song']['SongTitle']) . "'", 
+            "LatestDownload.user_login_type = '" . $insertArr['user_login_type'] . "'", 
+            "LatestDownload.provider_type = '" . $provider_type . "'", 
+            "LatestDownload.email = '" . $insertArr['email'] . "'", 
+            "LatestDownload.user_agent = '" . addslashes($insertArr['user_agent']) . "'", 
+            "LatestDownload.ip = '" . $insertArr['ip'] . "'",       
+            "DATE(LatestDownload.created) = '" . date('Y-m-d') . "'", 
+        ),
+        'recursive' => -1,
+      ));
+      
+
+      if(0 === $data){
+        $log_data .= ":NotInLD";
+      }
+      
+      if(false === $data){
+        $log_data .= ":SelectLDFail";
+      }
+    
+    }
+    
+    $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
+    
     
     $this->log($log_data, $log_name);
     
