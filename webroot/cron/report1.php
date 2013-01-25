@@ -35,7 +35,8 @@ foreach ( $period as $dt )
 {
 	echo $currentDate = $dt->format( "Y-m-d" );
 	echo "\n";*/
-	$currentDate = date( "Y-m-d", time() );
+	$currentDate = '2012-01-21';
+	//$currentDate = date( "Y-m-d", time() );
 	list($year, $month, $day) = explode('-', $currentDate);
 	$weekFirstDay = date('Y-m-d', strtotime(date('Y' , strtotime($currentDate))."W".date('W' , strtotime($currentDate))."1"));
 	$monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
