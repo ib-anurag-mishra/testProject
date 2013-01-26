@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 	echo $currentDate = $dt->format( "Y-m-d" );
 	echo "\n";*/
-	$currentDate = '2013-01-21';
-	//$currentDate = date( "Y-m-d", time() );
+	//$currentDate = '2013-01-21';
+	$currentDate = date( "Y-m-d", time() );
 	list($year, $month, $day) = explode('-', $currentDate);
 	$weekFirstDay = date('Y-m-d', strtotime(date('Y' , strtotime($currentDate))."W".date('W' , strtotime($currentDate))."1"));
 	$monthFirstDate = date('Y-m-d', mktime(0, 0, 0, $month, 1, $year));
@@ -49,8 +49,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 			foreach($countrys as $country => $currency){
 				//$reports_dir = '/var/www/freegal_movies/app/webroot/sony_reports1';
 //        $reports_dir = '/var/www/freegal_movies/app/webroot/sony_reports_12Q1';
-				$reports_dir = '/var/www/freegal_prod/app/webroot/sony_reports_Oct_2012';
-				if(!file_exists($reports_dir)) {
+				//$reports_dir = '/var/www/freegal_prod/app/webroot/sony_reports_Oct_2012';
+                $reports_dir = SONY_REPORTFILES;
+                if(!file_exists($reports_dir)) {
 					mkdir($reports_dir);
 				}
 
@@ -201,15 +202,15 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 							$trailer .= "0";									// Total Quantity Returned
 							fwrite($file, $trailer);
 							fclose($file);
-							//$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
-							//$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
+							$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+							$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 					//		FOR SENDING REPORT TO SONY SERVER USING SFTP
 							if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly")) {
 
 					//		FOR SENDING REPORT TO SONY SERVER USING FTP
 							// if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "weekly")) {
-								//$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
-								//$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
+								$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
+								$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 							// }
 						}
 					}
@@ -359,15 +360,15 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate)) {
 
 							fclose($file);
 
-							//$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
-							//$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
+							$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+							$result6 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 					//		FOR SENDING REPORT TO SONY SERVER USING SFTP
 							if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly")) {
 
 					//		FOR SENDING REPORT TO SONY SERVER USING FTP
 					//		if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
-                //$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
-                //$result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
+                                $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
+                                $result7 = mysql_query($sql) or die('Query failed: ' . mysql_error());
 							}
 						}
 					}
