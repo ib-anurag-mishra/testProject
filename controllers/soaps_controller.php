@@ -4105,19 +4105,11 @@ STR;
       
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
-            "LatestDownload.library_id = '" . $libId . "'", 
-            "LatestDownload.patron_id = '" . $patId . "'", 
-            "LatestDownload.ProdID = '" . $prodId . "'", 
-            "LatestDownload.ProductID = '" . $TrackData['Song']['ProductID'] . "'", 
-            "LatestDownload.ISRC = '" . $TrackData['Song']['ISRC'] . "'", 
-            "LatestDownload.artist = '" . addslashes($TrackData['Song']['Artist']) . "'", 
-            "LatestDownload.track_title = '" . addslashes($TrackData['Song']['SongTitle']) . "'", 
-            "LatestDownload.user_login_type = '" . $insertArr['user_login_type'] . "'", 
-            "LatestDownload.provider_type = '" . $provider_type . "'", 
-            "LatestDownload.email = '" . $insertArr['email'] . "'", 
-            "LatestDownload.user_agent = '" . addslashes($insertArr['user_agent']) . "'", 
-            "LatestDownload.ip = '" . $insertArr['ip'] . "'",       
-            "DATE(LatestDownload.created) = '" . date('Y-m-d') . "'", 
+            "LatestDownload.library_id " => $libId,
+            "LatestDownload.patron_id " => $patId, 
+            "LatestDownload.ProdID " => $prodId,
+            "LatestDownload.provider_type " => $provider_type,     
+            "DATE(LatestDownload.created) " => date('Y-m-d'), 
         ),
         'recursive' => -1,
       ));
