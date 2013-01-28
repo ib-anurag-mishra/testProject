@@ -4103,6 +4103,7 @@ STR;
     
     if(is_numeric($return)){
       
+      $this->LatestDownload->setDataSource('master');
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
             "LatestDownload.library_id " => $libId,
@@ -4122,7 +4123,7 @@ STR;
       if(false === $data){
         $log_data .= ":SelectLDFail";
       }
-    
+      $this->LatestDownload->setDataSource('default');
     }
     
     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
