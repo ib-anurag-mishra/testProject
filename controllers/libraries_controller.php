@@ -941,6 +941,12 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         }
     }
 	function admin_consortium(){
+  
+    // allwoes only admin
+    if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+      $this->redirect(array('controller' => 'users', 'action' => 'login'));
+    }
+  
 		$consortium = $this->Consortium->find('all', array('order' => 'consortium_key ASC'));
 		$this->set('consortium', $consortium);		
 	}

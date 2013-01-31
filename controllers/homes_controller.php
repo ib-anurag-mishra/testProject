@@ -1559,7 +1559,13 @@ STR;
      Function Name : admin_aboutusform
      Desc : actions used for admin about us form
     */
-    function admin_aboutusform() {
+    function admin_aboutusform() { 
+    
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      } 
+    
 	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 	    $language = $this->data['Home']['language'];
 	    $this -> set( 'formAction', 'admin_aboutusform');
@@ -1630,6 +1636,12 @@ STR;
      Desc : actions used for admin terms form
     */
     function admin_termsform() {
+    
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      }
+    
 	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 	    $language = $this->data['Home']['language'];
 	    $this -> set( 'formAction', 'admin_termsform');
@@ -1700,6 +1712,12 @@ STR;
      Desc : actions used for admin login form
     */
     function admin_loginform() {
+    
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      }
+    
 		if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 			$language = $this->data['Home']['language'];
 			$this -> set( 'formAction', 'admin_loginform');
@@ -1770,6 +1788,12 @@ STR;
      Desc : actions used for admin wishlist form
     */
     function admin_wishlistform() {
+    
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      }
+    
 	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 	    $language = $this->data['Home']['language'];
 	    $this -> set( 'formAction', 'admin_wishlistform');
@@ -1841,6 +1865,12 @@ STR;
      Desc : actions used for admin limits form
     */
     function admin_limitsform(){
+    
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      }
+    
 	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 	    $language = $this->data['Home']['language'];
 	    $this -> set( 'formAction', 'admin_limitsform');
@@ -2508,6 +2538,12 @@ STR;
     */
 
     function admin_historyform() {
+    
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      }
+    
 	if(isset($this->data) && ($this->data['Home']['language_change']) == 1){
 	    $language = $this->data['Home']['language'];
 	    $this -> set( 'formAction', 'admin_historyform');
@@ -2661,6 +2697,7 @@ STR;
     Desc : actions that is invoked when a particular language is selected
    */
     function language(){
+    
 		Configure::write('debug', 0);
 		$this->layout = false;
 		$language = $_POST['lang'];
@@ -2680,7 +2717,14 @@ STR;
     Function Name : admin_language
     Desc : Adding languages at admin end
    */
-   function admin_language(){
+    function admin_language(){
+   
+      // allwoes only admin
+      if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+      }
+      
+   
 		if (!empty($this->data)) {
 			$data['Language']['id'] = '';
 			$data['Language']['short_name'] = $this->data['Homes']['short_name'];
