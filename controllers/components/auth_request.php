@@ -37,7 +37,6 @@ Class AuthRequestComponent extends Object
 		// make the connection
 		$result = curl_exec($ch);
 		curl_close($ch);
-        echo $result; die;
    		$result =& new Xml($result);
 		$result = Set::reverse($result);
 		return $result;
