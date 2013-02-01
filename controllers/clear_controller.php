@@ -745,54 +745,24 @@ STR;
 
     function testProcedure(){
     
-    $this->Library->setDataSource('master');
-    
-    $sql  = "CALL sonyproc_new('187','1000601023756a', '25891257', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-07-21 00:00:00', '2012-01-13 23:59:59', @ret)";
+      $this->Library->setDataSource('master');
+      
+      for($i=0; $i<1000; $i++){
         
-    $this->Library->query($sql);
-		$sql = "SELECT @ret";
-		$data = $this->Library->query($sql);
-    
-    var_dump($data);
-    
-    
-    echo '<br />============================<br />';
-    
-    $this->Library->setDataSource('master');
-    
-    $sql  = "CALL sonyproc_new('187','1000601023756b', '25891257', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-07-21 00:00:00', '2012-01-13 23:59:59', @ret)";
+        $sql  = "CALL sonyproc_new('187','1000601023756a".$i."', '258912579".rand()."', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-01-14 00:00:00', '2013-01-20 23:59:59', @ret)";
+            
+        $this->Library->query($sql);
+        $sql = "SELECT @ret";
+        $data = $this->Library->query($sql);
         
-    $this->Library->query($sql);
-		$sql = "SELECT @ret";
-		$data = $this->Library->query($sql);
-    
-    var_dump($data);
-    
-    echo '<br />============================<br />';
-    
-    $this->Library->setDataSource('master');
-    
-    $sql  = "CALL sonyproc_new('187','1000601023756c', '25891257', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-07-21 00:00:00', '2012-01-13 23:59:59', @ret)";
+        var_dump($data);
         
-    $this->Library->query($sql);
-		$sql = "SELECT @ret";
-		$data = $this->Library->query($sql);
-    
-    var_dump($data);
-    
-    echo '<br />============================<br />';
-    
-    $this->Library->setDataSource('master');
-    
-    $sql  = "CALL sonyproc_new('187','1000601023756d', '25891257', 'G010002771204W', 'USSM11106876', 'Train', 'Drive By', 'referral_url', 'sony', '', 'Android_4.2.1_Galaxy Nexus_1.0', '68.169.175.31', '2013-07-21 00:00:00', '2012-01-13 23:59:59', @ret)";
         
-    $this->Library->query($sql);
-		$sql = "SELECT @ret";
-		$data = $this->Library->query($sql);
+        echo '<br />============================<br />';
+        
+      }
     
-    var_dump($data);
-    
-    exit;
+      exit;
     
     
     
@@ -835,7 +805,7 @@ STR;
             'LatestDownload.patron_id = downloads.patron_id', 
             'LatestDownload.ProdID = downloads.ProdID', 
             'LatestDownload.provider_type = downloads.provider_type', 
-            'LatestDownload.created = downloads.created', 
+            'DATE(LatestDownload.created) = DATE(downloads.created)', 
           )
         )
       ),
@@ -847,7 +817,7 @@ STR;
     
     /** Query  **/
     /**  
-        SELECT LatestDownload.id, LatestDownload.library_id, LatestDownload.patron_id, LatestDownload.ProdID, LatestDownload.pProdID, 
+        SELECT LatestDownload.id, LatestDownload.library_id, LatestDownload.patron_id, LatestDownload.ProdID, 
         LatestDownload.ProductID, LatestDownload.ISRC, LatestDownload.artist, LatestDownload.track_title, LatestDownload.user_login_type, 
         LatestDownload.email, LatestDownload.user_agent, LatestDownload.ip, LatestDownload.history, LatestDownload.provider_type, 
         LatestDownload.created FROM latest_downloads AS LatestDownload 
