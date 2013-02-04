@@ -637,7 +637,17 @@ Class UsersController extends AppController
 					$this->Session->destroy();
 					$this->redirect($redirectUrl, null, true);
 				}
-			}		
+			}
+            elseif($this->Session->read('soslogin') && ($this->Session->read('soslogin') != '')){            
+				if($this->Session->read('referral')){
+					$redirectUrl = $this->Session->read('referral');
+					$this->Session->destroy();
+					$this->redirect($redirectUrl, null, true);
+				} else {
+					$this->Session->destroy();
+					$this->redirect(array('controller' => 'users', 'action' => 'soslogin'));				
+				}
+			}
 			else{            
 			$this->Session->destroy();
 			$this->redirect($this->Auth->logout());    
@@ -5446,7 +5456,7 @@ function sdlogin($library = null){
 								$this->Session->write("library", $existingLibraries['0']['Library']['id']);
 								$this->Session->write("patron", $patronId);
 								$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-								$this->Session->write("sip2","sip2");
+								$this->Session->write("soslogin","soslogin");
 								if($existingLibraries['0']['Library']['library_logout_url'] != '' && ($this->Session->read('referral') != '' || $this->Session->read("subdomain") != '')){
 									$this->Session->write("referral",$existingLibraries['0']['Library']['library_logout_url']);
 								}
