@@ -276,5 +276,14 @@ class ResetcacheController extends AppController
 
 	}  
   
+  
+  function printVar($var){
+  
+    echo '<pre>';
+    var_dump( Cache::read($var) );         
+    exit('done');
+  
+  }
+  
 }
 ?>
