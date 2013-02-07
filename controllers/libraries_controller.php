@@ -1002,6 +1002,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
 		set_time_limit(0);
 		ini_set("memory_limit", "1G");
 		ini_set('max_input_time', 1800);
+                set_time_limit("1800");
 		Ignore_User_Abort(True);
     ini_set('auto_detect_line_endings',TRUE);
 		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
