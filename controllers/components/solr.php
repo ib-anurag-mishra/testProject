@@ -31,10 +31,9 @@ class SolrComponent extends Object {
         }
     }
 
-    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $perfect=false){
+    function search($keyword, $type = 'song', $sort="SongTitle", $sortOrder="asc", $page = 1, $limit = 10, $country, $perfect=false){
         $query = '';
         $docs = array();
-        $country = $this->Session->read('territory');
         $cond="";
 
         if($this->Session->read('block') == 'yes') {

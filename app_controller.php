@@ -392,5 +392,54 @@ class AppController extends Controller
 		$this->Acl->deny( $adminType, 'controllers/users/admin_patronform');
 		$this->Acl->deny( $adminType, 'controllers/libraries/libraryform');
 	}
+  
+  
+  /**
+    @ getCurrentCountryTable
+    set tablePrefix attribute in countries model
+   */
+    function getCurrentCountryTable(){
+
+      $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+      $siteConfigData = $this->Album->query($siteConfigSQL);
+
+      $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+      if(0 == $multiple_countries) {
+        $this->Session->write('multiple_countries', '');
+      }
+
+      return $multiple_countries;
+
+    }
+
+  
+  /**
+    @ switchCpuntriesTable
+    set session raviable for table switching
+   */
+  function switchCpuntriesTable() {
+
+    // set session variable multiple_countries
+    $tmp_territory = $this->Session->read('territory');
+    if ( !(empty($tmp_territory) )) {
+
+      $this->Session->write('multiple_countries', strtolower($this->Session->read('territory')).'_' );
+    } else {
+      $this->Session->write('multiple_countries', '');
+    }
+    //$this->Session->write('multiple_countries','nz_' );
+    //var_dump( $this->Session->read('multiple_countries') );
+
+    // call function getCurrentCountrytable from app_controller
+    $multiple_countries = $this->getCurrentCountryTable();
+    //var_dump( $this->Session->read('multiple_countries') );
+
+    // switch to table
+    $this->Country->setTablePrefix($this->Session->read('multiple_countries'));
+    
+  }
+  
+  
+  
 }
 ?>
