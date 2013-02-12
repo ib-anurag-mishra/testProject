@@ -125,6 +125,7 @@ class SearchController extends AppController
         $facetPage = $facetPage;
       }
 
+      $country = $this->Session->read('territory'); 
 			$songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
 			$total = $this->Solr->total;
 			$totalPages = ceil($total/$limit);
