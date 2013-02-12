@@ -44,7 +44,6 @@ class SoapsController extends AppController {
     Configure::write('debug',0);
     $this->autoRender = false;
     $siteUrl = Configure::read('App.base_url');
-    $siteUrl = 'http://fm1production.com/';
     ini_set("soap.wsdl_cache_enabled", "0");
     App::import("Vendor","php2wsdl",array('file' => "php2wsdl".DS."WSDLCreator.php"));
     App::import("Vendor","xmlcreator",array('file' => "php2wsdl".DS."XMLCreator.php"));
