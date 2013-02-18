@@ -95,14 +95,14 @@ Class ArtistsController extends AppController
 			$artistName = '';
 		}
                 
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-		memcache_close($memcache);
+//		$memcache = new Memcache;
+//		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+//		memcache_close($memcache);
 	}
 
 	/*
@@ -953,19 +953,19 @@ Class ArtistsController extends AppController
 	 Desc : For artist view page
 	*/
 	function admin_getArtists(){
-        Configure::write('debug', 0);
+                Configure::write('debug', 0);
 		$this->Song->recursive = 0;
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
-    $this->Song->unbindModel(array('hasOne' => array('Genre')));
-    $this->Song->unbindModel(array('hasOne' => array('Country')));
-    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files')));
-    $this->Song->unbindModel(array('belongsTo' => array('Full_Files')));
-    $artist = $this->Song->find('all',array(
+                $this->Song->unbindModel(array('hasOne' => array('Genre')));
+                $this->Song->unbindModel(array('hasOne' => array('Country')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files')));
+                $this->Song->unbindModel(array('belongsTo' => array('Full_Files')));
+                $artist = $this->Song->find('all',array(
 							'conditions' =>
 								array('and' =>
 									array(
-										array("(find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory) or Song.Territory = '".'"'.$_REQUEST['Territory'].'"'."' )",'Song.provider_type' => 'sony')
-                  )
+										array("(find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory) or  Song.Territory = '".'"'.$_REQUEST['Territory'].'"'."' )",'Song.provider_type' => 'sony')
+                )
 								),
 							'fields' => array(
 									'DISTINCT Song.ArtistText',
@@ -1015,25 +1015,23 @@ Class ArtistsController extends AppController
    
   function admin_getAutoArtist() {
     
-    $artist = $this->Song->find('all',array(
-							'conditions' =>
-								array('and' =>
-									array(
-										array(
+    $artist = $this->Song->find('all',array('conditions' =>
+					array('and' =>
+                                            array(
+						array(
                       "(find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory) or Song.Territory = '".'"'.$_REQUEST['Territory'].'"'."' )",
                       'Song.provider_type' => 'sony',
                       'Song.ArtistText LIKE' => $_REQUEST['Name']."%",
                       'Song.downloadstatus' => '1'
                     )
                   )
-								),
-							'fields' => array(
-									'DISTINCT Song.ArtistText',
+		),
+		'fields' => array( 'DISTINCT Song.ArtistText'
 									),
               'recursive' => -1,
               'limit' => '0,20',
-							'order' => 'Song.ArtistText'
-						));
+              'order' => 'Song.ArtistText'
+	));
     
     
     $html = '<ul style="max-height: 180px; overflow: auto;">';
