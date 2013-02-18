@@ -964,7 +964,7 @@ Class ArtistsController extends AppController
 							'conditions' =>
 								array('and' =>
 									array(
-										array("find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory)",'Song.provider_type' => 'sony')
+										array("(find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory) or Song.Territory = '".'"'.$_REQUEST['Territory'].'"'."' )",'Song.provider_type' => 'sony')
                   )
 								),
 							'fields' => array(
