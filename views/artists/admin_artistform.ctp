@@ -124,7 +124,10 @@
 
     
 	function getAlbum(){		
-		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+$("#ArtistArtistName").val();
+                var artistNameText = escape($("#ArtistArtistName").val());
+		var data = "Territory="+$("#ArtistTerritory").val()+"&artist="+artistNameText;
+               
+               
 		jQuery.ajax({
 			type: "post",  // Request method: post, get
 			url: webroot+"admin/artists/getAlbums", // URL to request

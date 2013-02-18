@@ -953,19 +953,19 @@ Class ArtistsController extends AppController
 	 Desc : For artist view page
 	*/
 	function admin_getArtists(){
-                Configure::write('debug', 0);
+        Configure::write('debug', 0);
 		$this->Song->recursive = 0;
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
-                $this->Song->unbindModel(array('hasOne' => array('Genre')));
-                $this->Song->unbindModel(array('hasOne' => array('Country')));
-                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files')));
-                $this->Song->unbindModel(array('belongsTo' => array('Full_Files')));
-                $artist = $this->Song->find('all',array(
+    $this->Song->unbindModel(array('hasOne' => array('Genre')));
+    $this->Song->unbindModel(array('hasOne' => array('Country')));
+    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files')));
+    $this->Song->unbindModel(array('belongsTo' => array('Full_Files')));
+    $artist = $this->Song->find('all',array(
 							'conditions' =>
 								array('and' =>
 									array(
-										array("(find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory) or  Song.Territory = '".'"'.$_REQUEST['Territory'].'"'."' )",'Song.provider_type' => 'sony')
-                )
+										array("find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory)",'Song.provider_type' => 'sony')
+                  )
 								),
 							'fields' => array(
 									'DISTINCT Song.ArtistText',
@@ -982,9 +982,12 @@ Class ArtistsController extends AppController
 	function admin_getAlbums(){
             
                 Configure::write('debug', 0);
+                
 		$result = array();
-		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText' => $_REQUEST['artist']), 'recursive' => -1));
+		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
 		$val = '';
+             
+               
 		$this->Song->Behaviors->attach('Containable');
 		foreach($allAlbum as $k => $v){
 			$recordCount = $this->Song->find('all', array('fields' => array('DISTINCT Song.ProdID'),'conditions' => array('Song.ReferenceID' => $v['Album']['ProdID'],'Song.DownloadStatus' => 1,'TrackBundleCount' => 0,'Country.Territory' => $_REQUEST['Territory']), 'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0,'limit' => 1));
@@ -1015,23 +1018,26 @@ Class ArtistsController extends AppController
    
   function admin_getAutoArtist() {
     
-    $artist = $this->Song->find('all',array('conditions' =>
-					array('and' =>
-                                            array(
-						array(
+    
+    $artist = $this->Song->find('all',array(
+							'conditions' =>
+								array('and' =>
+									array(
+										array(
                       "(find_in_set('".'"'.$_REQUEST['Territory'].'"'."',Song.Territory) or Song.Territory = '".'"'.$_REQUEST['Territory'].'"'."' )",
                       'Song.provider_type' => 'sony',
                       'Song.ArtistText LIKE' => $_REQUEST['Name']."%",
                       'Song.downloadstatus' => '1'
                     )
                   )
-		),
-		'fields' => array( 'DISTINCT Song.ArtistText'
+								),
+							'fields' => array(
+									'DISTINCT Song.ArtistText',
 									),
               'recursive' => -1,
               'limit' => '0,20',
-              'order' => 'Song.ArtistText'
-	));
+							'order' => 'Song.ArtistText'
+						));
     
     
     $html = '<ul style="max-height: 180px; overflow: auto;">';
@@ -1045,8 +1051,7 @@ Class ArtistsController extends AppController
     }else{
       $html .= '<li>No record found</li>';
     }    
-    $html .= '</ul>';
-    
+    $html .= '</ul>';   
    
     
     print $html; exit;
