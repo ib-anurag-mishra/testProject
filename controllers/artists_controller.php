@@ -979,7 +979,7 @@ Class ArtistsController extends AppController
 	function admin_getAlbums(){
         Configure::write('debug', 0);
 		$result = array();
-		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText' => $_REQUEST['artist']), 'recursive' => -1));
+		$allAlbum = $this->Album->find('all', array('fields' => array('Album.ProdID','Album.AlbumTitle'),'conditions' => array('Album.ArtistText = ' => urldecode($_REQUEST['artist'])), 'recursive' => -1));
 		$val = '';
 		$this->Song->Behaviors->attach('Containable');
 		foreach($allAlbum as $k => $v){
