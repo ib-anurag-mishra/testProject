@@ -118,7 +118,7 @@ class SoapsController extends AppController {
 * SIN( RADIANS(latitude)))) as distance'),
         'joins' => array(	array('table' => 'zipusstates','alias' => 'zipus','type' => 'inner', 'conditions' => array('library_zipcode = zipus.zip'))),
         'conditions' => array(
-            'library_status'=>'active', 'library_zipcode != ""', 'library_authentication_method != "ezproxy"'
+            'library_status'=>'active', 'library_zipcode != ""'
         ),
         'group' => 'id HAVING distance < ' . $this->library_search_radius,
         'order' => array('distance' => 'ASC', 'Library.library_name' => 'ASC'),
@@ -128,7 +128,7 @@ class SoapsController extends AppController {
           $list = array();
           foreach($libraries as $library){
 
-            if( ('referral_url' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
+            if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
 
             } else { 
 
@@ -141,7 +141,7 @@ class SoapsController extends AppController {
               $obj->LibraryAuthenticationMethod = $identifier;
 
               $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-              if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+              if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
                 $obj->LibraryAuthenticationNum = 1;
               } else {
                 $obj->LibraryAuthenticationNum = 0;
@@ -218,7 +218,7 @@ class SoapsController extends AppController {
       $list = array();
       foreach($libraries as $library){
         
-        if( ('referral_url' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
+        if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
 
         } else {
         
@@ -230,7 +230,7 @@ class SoapsController extends AppController {
           $obj->LibraryAuthenticationMethod = $identifier;
 
           $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-          if( ('referral_url' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+          if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
             $obj->LibraryAuthenticationNum = 1;
           } else {
             $obj->LibraryAuthenticationNum = 0;
@@ -3322,8 +3322,8 @@ STR;
 
 
 
-  /**
-   * Authenticates user by referral_url method
+    /**
+   * Authenticates user by referral_url & ezproxy method
    * @param $card
    * @param $pin
    * @param $library_id
@@ -3353,7 +3353,7 @@ STR;
 
 
       $library_data = $this->Library->find('first', array(
-                        'fields' => array('library_authentication_num', 'mobile_auth'),
+                        'fields' => array('library_authentication_num', 'mobile_auth', 'library_authentication_method'),
                         'conditions' => array('id' => $library_id),
                         'recursive' => -1
 
@@ -3371,13 +3371,26 @@ STR;
       $this->Library->recursive = -1;
       $this->Library->Behaviors->attach('Containable');
 
-      $existingLibraries = $this->Library->find('all',array(
+      if( ('referral_url' == trim($library_data['Library']['library_authentication_method'])) ) {
+      
+        $existingLibraries = $this->Library->find('all',array(
                     'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
                                           'library_authentication_method' => 'referral_url'),
                     'fields' => array('Library.id','Library.library_authentication_method','Library.library_territory','Library.library_authentication_url',
                                       'Library.library_logout_url','Library.library_territory','Library.library_user_download_limit',
                                       'Library.library_block_explicit_content','Library.library_language', 'mobile_auth'))
-      );
+        );
+      } else {
+        
+        $existingLibraries = $this->Library->find('all',array(
+                    'conditions' => array('Library.id' => $library_id, 'library_status' => 'active',
+                                          'library_authentication_method' => 'ezproxy'),
+                    'fields' => array('Library.id','Library.library_authentication_method','Library.library_territory','Library.library_authentication_url',
+                                      'Library.library_logout_url','Library.library_territory','Library.library_user_download_limit',
+                                      'Library.library_block_explicit_content','Library.library_language', 'mobile_auth'))
+        );
+          
+      } 
 
 
       $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
@@ -5230,7 +5243,8 @@ STR;
       'referral_url' => '16',
       'innovative_var' => '17',
       'mndlogin_reference' => '18',
-      'mdlogin_reference' => '19'
+      'mdlogin_reference' => '19',
+      'ezproxy' => '16',
 
     );
 
