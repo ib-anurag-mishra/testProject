@@ -95,14 +95,14 @@ Class ArtistsController extends AppController
 			$artistName = '';
 		}
                 
-//		$memcache = new Memcache;
-//		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
-//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
-//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
-//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
-//		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
-//		memcache_close($memcache);
+		$memcache = new Memcache;
+		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_u_s");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_c_a");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_i_t");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_n_z");
+		memcache_delete($memcache, Configure::read('App.memcache_key')."_featured_a_u");
+		memcache_close($memcache);
 	}
 
 	/*
