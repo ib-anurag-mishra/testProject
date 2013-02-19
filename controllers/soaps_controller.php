@@ -3826,8 +3826,6 @@ STR;
 			
         $data['database'] = 'freegal';
         $result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-			
-        echo '<pre>'; print_r($result); exit; 
       
         $resultAnalysis[0] = $result['Posts']['status'];
         $resultAnalysis[1] = $result['Posts']['message'];
