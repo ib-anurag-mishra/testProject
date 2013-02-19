@@ -5389,8 +5389,7 @@ function sdlogin($library = null){
                             $authUrl = Configure::read('App.AuthUrl')."soslogin_validation";
 			}				
 			$data['database'] = 'freegal';
-			$result = $this->AuthRequest->getAuthResponse($data,$authUrl);
-				echo '<pre>'; print_r($result); exit;		
+			$result = $this->AuthRequest->getAuthResponse($data,$authUrl);		
 			$resultAnalysis[0] = $result['Posts']['status'];
 			$resultAnalysis[1] = $result['Posts']['message'];
 			if($resultAnalysis[0] == "fail"){
