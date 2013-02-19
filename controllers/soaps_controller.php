@@ -3756,7 +3756,7 @@ STR;
 	}  
   
   /**
-   * Authenticates user by mdlogin_reference method
+   * Authenticates user by soslogin method
    * @param $card
    * @param $pin
    * @param $library_id
@@ -3837,7 +3837,19 @@ STR;
           $response_msg = $resultAnalysis[1];
           return $this->createsAuthenticationResponseDataObject(false, $response_msg);
         }elseif($resultAnalysis[0] == "success"){
-      
+     
+          $token = md5(time());
+          $insertArr['patron_id'] = $patronId;
+					$insertArr['library_id'] = $library_id;
+					$insertArr['token'] = $token;
+					$insertArr['auth_time'] = time();
+					$insertArr['agent'] = $agent;
+					$insertArr['auth_method'] = 'soslogin';
+					$this->AuthenticationToken->save($insertArr);
+
+          $patron_id = $insertArr['patron_id'];
+          $response_msg = 'Login Successfull';
+          return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
                             
         }					
       }
