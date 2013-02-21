@@ -9,7 +9,7 @@ Class LibrariesController extends AppController
 {
     var $name = 'Libraries';
     var $layout = 'admin';
-    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
+    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session','LibrariesTimezone');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist','LibrariesTimezone','Timezone');
 
@@ -886,6 +886,8 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
 			}
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
+         
+                        
             $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 			$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
 			if($existingLibraries['0']['Library']['library_logout_url'] != ''){

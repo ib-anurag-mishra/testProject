@@ -46,7 +46,11 @@
 			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>&library_box_header_color=<?php echo $libraryInfo['Library']['library_box_header_color'];?>&library_box_hover_color=<?php echo $libraryInfo['Library']['library_box_hover_color'];?>" type="text/css" rel="stylesheet" />
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 			<script type="text/javascript">
-				$(document).ready(function() {
+                             var webroot = '<?php echo $this->webroot; ?>';
+                            $(document).ready(function() {
+                               
+                                    
+                                    
                                      //$.noConflict();
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					jQuery('#autoComplete').keypress(function(event) {
@@ -68,13 +72,75 @@
 					{
 					?>
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+                                                
+                                                
 					<?php }	?>
-				});
-				var languageSet = '<?php echo $setLang; ?>';
-				var webroot = '<?php echo $this->webroot; ?>';	
+                                            
+                                            var languageSet = '<?php echo $setLang; ?>';
+					
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				var attributes = { id: "audioplayer" }; 
 				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+                                      
+                                            
+          <?php
+               if(($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
+           ?>  
+           
+               $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+                                           
+                //close the popup 
+               $("#colorboxCloseBtn").click(function() { 
+                   
+                   var data = {notificationClose: 1};
+                    jQuery.ajax({
+                            type: "post",  // Request method: post, get
+                            url: webroot+"users/saveNotification", // URL to request
+                            data: data,  // post data
+                            success: function(response) {
+                                                $.fn.colorbox.close();                                  
+                            },
+                            error:function (XMLHttpRequest, textStatus, errorThrown) {}
+                    }); 
+                   
+               });
+                
+               //save email notificaion data and close the popup
+               $("#colorboxSubmitBtn").click(function() { 
+
+               if(!$('#userNewsletterEmailField').val()){
+                    alert('Please enter the valid email address.');
+                    return false;
+               }
+                
+               if(!validateEmail($('#userNewsletterEmailField').val())){
+                   alert('Please enter the valid email address.');
+                   return false;
+               }
+                
+               //post the notification information
+              
+               var pid = <?=$this->Session->read('patron')?>;
+               var lid = <?=$this->Session->read('library')?>;
+               var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid,lid:lid};
+               jQuery.ajax({
+                       type: "post",  // Request method: post, get
+                       url: webroot+"users/saveNotification", // URL to request
+                       data: data,  // post data
+                       success: function(response) {
+                                        $.fn.colorbox.close();                                  
+                       },
+                       error:function (XMLHttpRequest, textStatus, errorThrown) {}
+               });  
+                   
+                   
+                  
+               }); 
+                                            
+          <?php } ?>                                  
+                                            
+				});
+				
 			</script>
 			<style>
 				<?php
@@ -85,6 +151,18 @@
 				<?php
 				}
 				?>
+                                                                          
+          <?php
+               if(($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
+           ?>
+					#cboxClose{display:none !important;}
+				<?php
+				}
+				?>
+                                        
+                               
+					
+				
 				#slideshow a { display: none }
 				#slideshow a.first { display: block }
 				#featured_artist a { display: none }
@@ -143,7 +221,17 @@
 					location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
 				<?php } ?>
 			}
+                        
+                        
+                        
+                        
 		});
+                
+                              
+            function validateEmail(email) { 
+                var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }    
 	</script>	
 </head>
 <body>
@@ -208,6 +296,33 @@
 			</div>
 		</div>
 	<?php } ?>
+                                         
+          <?php
+               if(($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
+           ?>
+		<a class='notificationApproval' href="#"></a>
+		<div style="display:none;">
+			<div id="notificationApproval_div">
+				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+				</div>
+				<b>Email Notification</b><br />
+                                <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">Please add your email address here to receive twice-weekly email reminders of your available downloads.<br /><br /><br /><div ><b>*Email :</b>&nbsp;&nbsp;<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'></div></div><br />
+				<input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+			</div>
+		</div>
+	      
+          <?php } ?>  
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 	<div id="border-background" >
 	<div id="container">
 		<?php echo $this->element('header'); ?>

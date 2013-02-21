@@ -115,6 +115,8 @@ class User extends AppModel
     $getAdminData = $this->find('first', array('conditions' => array('User.id' => $id)));
     return $getAdminData;
   }
+  
+  
     
  
   /*
