@@ -40,8 +40,8 @@ class database
   
   public function database()
   {
-    $this->db = new mysqli("192.168.2.178", "infobeans","infobeans", "freegal");
-    //$this->db = new mysqli("10.181.56.177", "freegal_pushd",'7c2<2]xc6uLC', "freegal");
+    //$this->db = new mysqli("192.168.2.178", "infobeans","infobeans", "freegal");
+    $this->db = new mysqli("10.181.56.177", "freegal_pushd",'7c2<2]xc6uLC', "freegal");
     //$this->db = new mysqli("192.168.100.114", "freegal_pushp",'o}aH8862gJ^L', "freegal");
   }
 }
