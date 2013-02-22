@@ -9,7 +9,7 @@ Class LibrariesController extends AppController
 {
     var $name = 'Libraries';
     var $layout = 'admin';
-    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session','LibrariesTimezone');
+    var $helpers = array( 'Html', 'Ajax', 'Javascript', 'Form', 'Session');
     var $components = array( 'Session', 'Auth', 'Acl', 'RequestHandler','ValidatePatron','Downloads','CdnUpload', 'Email');
     var $uses = array( 'Library', 'User', 'LibraryPurchase', 'Download', 'Currentpatron','Variable', 'Url','ContractLibraryPurchase','Consortium','Territory','Card', 'Wishlist','LibrariesTimezone','Timezone');
 
@@ -822,13 +822,15 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
                                                 'conditions' => array('LOWER(library_domain_name) LIKE "%'.$referrerUrl.'%"','library_status' => 'active','library_authentication_method' => 'referral_url')
                                                 )
                                             );
-		/*echo $library1;
-		if($library != null)
-		{
-			$library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
-		}
-		if(count($existingLibraries) == 0)
-		$existingLibraries = $library_data;*/
+        /*echo $library1;
+        if($library != null)
+        {
+                $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
+        }
+        if(count($existingLibraries) == 0)
+        $existingLibraries = $library_data;
+        */
+        
 	if(count($existingLibraries) == 0)
         {
             $this -> Session -> setFlash("You are not authorized to view this location.");
