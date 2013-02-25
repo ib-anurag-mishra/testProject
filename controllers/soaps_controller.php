@@ -1526,6 +1526,16 @@ STR;
  	function loginByWebservice($authtype, $email, $password, $card, $pin, $last_name, $library_id, $agent) {
 
     switch($authtype){
+      case '9':  {
+        if('soslogin' == $this->getAuthMethodFronLibID($library_id)) {
+          $authtype = 20;
+        }
+      }
+      break;
+      default:
+    }
+  
+    switch($authtype){
 
       case '1':  {
         $resp = $this->loginAuthinticate($email, $password, $library_id, $agent);
@@ -5353,7 +5363,7 @@ STR;
       'mndlogin_reference' => '18',
       'mdlogin_reference' => '19',
       'ezproxy' => '16',
-      'soslogin' => '20',
+      'soslogin' => '9',
 
     );
 
@@ -5563,6 +5573,24 @@ STR;
           
   }
   
+  /**
+   * Function Name : getAuthMethodFronLibID
+   * Desc : To return authentication method for given lib ID
+   * @param int libID
+	 * @return string
+   */
+  private function getAuthMethodFronLibID($libID){
+     
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libraryId),
+      'fields' => array('library_authentication_method'),
+      'recursive' => -1
+      )
+    );
+
+    return $libraryDetails['Library']['library_authentication_method'];
+
   
+  }
 
 }
