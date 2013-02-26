@@ -5582,7 +5582,7 @@ STR;
   private function getAuthMethodFronLibID($libID){
      
     $libraryDetails = $this->Library->find('first',array(
-      'conditions' => array('Library.id' => $libraryId),
+      'conditions' => array('Library.id' => $libID),
       'fields' => array('library_authentication_method'),
       'recursive' => -1
       )
