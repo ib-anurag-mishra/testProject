@@ -494,7 +494,11 @@
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
-						</tr>						
+						</tr>	
+                                                <tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index0"></td>                                     
+						</tr>
 						<tr id="msgNo">
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
@@ -557,6 +561,14 @@
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>
+                                                        
+                                                        
+                                                       <tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index<?php echo $k; ?>" value="<?php echo $v['Variable']['authentication_variable_index']; ?>"></td>                                     
+                                                       </tr>
+                                                        
+                                                        
 							<tr id="resArr<?php echo $k; ?>" <?php if($var != 'contains'){ ?> style="display:none"<?php } ?>>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Result Array');?></td>
 								<td align="left" style="padding-left:20px" class="libselect">
