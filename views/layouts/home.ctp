@@ -87,6 +87,16 @@
                if(($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
            ?>  
            
+               function sleep(milliseconds) {
+                    var start = new Date().getTime();
+                    for (var i = 0; i < 1e7; i++) {
+                        if ((new Date().getTime() - start) > milliseconds){
+                        break;
+                        }
+                    }
+               }
+               
+               
                $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                            
                 //close the popup 
@@ -119,16 +129,23 @@
                }
                 
                //post the notification information
+               
+               
+             
+
               
                var pid = <?=$this->Session->read('patron')?>;
                var lid = <?=$this->Session->read('library')?>;
                var data = {notificatinEmail: $("#userNewsletterEmailField").val(), pid: pid,lid:lid};
+               $('#noti_content').html('<span style="padding-top:15px;"><b>Your subscription has been done successfully.</b></span>');
                jQuery.ajax({
                        type: "post",  // Request method: post, get
                        url: webroot+"users/saveNotification", // URL to request
                        data: data,  // post data
+                       async: false,
                        success: function(response) {
-                                        $.fn.colorbox.close();                                  
+                           sleep(1000);                          
+                           $.fn.colorbox.close();                                  
                        },
                        error:function (XMLHttpRequest, textStatus, errorThrown) {}
                });  
@@ -303,13 +320,16 @@
 		<a class='notificationApproval' href="#"></a>
 		<div style="display:none;">
 			<div id="notificationApproval_div">
+                            <span id="noti_content">
 				<div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
 					<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
 				</div>
 				<b>Email Notification</b><br />
                                 <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">Please add your email address here to receive twice-weekly email reminders of your available downloads.<br /><br /><br /><div ><b>*Email :</b>&nbsp;&nbsp;<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'></div></div><br />
 				<input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
-			</div>
+                            </span>
+
+                        </div>
 		</div>
 	      
           <?php } ?>  
