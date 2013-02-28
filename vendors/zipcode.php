@@ -52,7 +52,7 @@ define('_M2KM_FACTOR', 1.609344);
 define('DB_HOST', '192.168.2.178');
 define('DB_USER', 'infobeans');
 define('DB_PASSWORD', 'infobeans');
-define('DB', 'freading_09_may');
+define('DB', 'freegal');
   
 class zipcode_class {
 
@@ -135,6 +135,9 @@ class zipcode_class {
          return false;
       } else {
          $row = mysql_fetch_array($r);
+         
+         if( empty($row) ) return false;  
+         
          mysql_free_result($r);
 		 return $row;       
       }      

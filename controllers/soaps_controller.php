@@ -1,7 +1,7 @@
 <?php
 
 App::import('Model', 'AuthenticationToken');
-App::import('Model', 'Zipusstate');
+
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'NationalTopTen.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'LibraryTopTen.php');
@@ -25,7 +25,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -107,24 +107,24 @@ function getLibrary($data) {
     if(is_numeric($data)){
         
         $zipcode = trim($data);
-        $zipRows = array();
-        $zipRows = $this->Zipusstate->find('first',array('fields'=>'zip','conditions'=>array('zip' => $zipcode)));
-             
-	if(!empty($zipRows)) {
-            
-            if(strlen($data) == 5){
+        $result = null;
+        
+            if(strlen($zipcode) == 5){
                    
                 App::import('vendor', 'zipcode_class', array('file' => 'zipcode.php'));
-                $zipcode = new zipcode_class();    
-                $result = $zipcode->get_zips_in_range($zipRows['Zipusstate']['zip'], $this->library_search_radius, _ZIPS_SORT_BY_DISTANCE_ASC, true);
-                
+                $obj_zipcode = new zipcode_class();  
+                      
+                $result = $obj_zipcode->get_zips_in_range($zipcode, $this->library_search_radius, _ZIPS_SORT_BY_DISTANCE_ASC, true);
+                if( empty($result) ){
+                  throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
+                }
                 $this->Library->recursive = -1 ;
                 $condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
                 $libraries = $this->Library->find('all',array(
-                        'conditions' => array(
-                            'OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)")
-                        )
-                      ));                     
+                  'conditions' => array(
+                    'OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)")
+                  )
+                ));                     
 
                 if(!empty($libraries)){
                     
@@ -171,9 +171,7 @@ function getLibrary($data) {
             } else {
                 throw new SOAPFault('Soap:client', 'Invalid Zip Code. Please provide a valid code.');
             }
-      } else {
-        throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
-      }
+     
     } else {
 
       $data = strtolower(trim($data));
