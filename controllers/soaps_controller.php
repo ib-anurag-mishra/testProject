@@ -3388,15 +3388,55 @@ STR;
       }
       else{
 
-        $ch = curl_init($auth_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        
-        if(0 === stripos($auth_url, 'https')) {
-          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+        if($existingLibraries[0]['Library']['library_territory'] == 'AU'){
+          $methodUrl = Configure::read('App.AuthUrl_AU')."ezproxylogin_validation";
         }
+				else{
+					$methodUrl = Configure::read('App.AuthUrl')."ezproxylogin_validation";
+				}
+          
+        $data['auth_url'] = $auth_url;
+        $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
+        $resp = $resp['Posts']['message'];
+
+      
+        if( 'ezproxy' == $library_authentication_method ){
         
-        $resp = curl_exec ( $ch );
-        curl_close($ch);
+          $checkValidXml = null;
+          $checkValidXml = simplexml_load_string($resp);
+        
+          if($checkValidXml) {
+
+            if( ( isset($checkValidXml->Status) && ('' != $checkValidXml->Status) ) &&  ( isset($checkValidXml->LibraryCard) && ('' != $checkValidXml->LibraryCard) ) ) {
+				
+              if(1 == $checkValidXml->Status) {
+							
+                $response_patron_id = $checkValidXml->LibraryCard;
+				  
+                $token = md5(time());
+                $insertArr['patron_id'] = trim($response_patron_id);
+                $insertArr['library_id'] = $library_id;
+                $insertArr['token'] = $token;
+                $insertArr['auth_time'] = time();
+                $insertArr['agent'] = $agent;
+                $insertArr['auth_method'] = $library_authentication_method;
+                $this->AuthenticationToken->save($insertArr);
+
+                $patron_id = $insertArr['patron_id'];
+                $response_msg = 'Login Successfull';
+                return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+			
+              } else {
+                $response_msg = 'Login Failed';
+                return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+              }			
+			
+            }else{
+              $response_msg = 'Login Failed';
+              return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+            } 	  
+          }  
+        }
 
 
         $resp = trim(strip_tags($resp));
