@@ -111,10 +111,10 @@ $ieVersion =  ieversion();
 				</td>
 				<td width="190" align="center">
 					<?php
-						$productInfo = $song->getDownloadData($downloadResult['Download']['ProdID']);
+						$productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']);
 						$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
-							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+                                                $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+                                                $finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
 					?>
 						<p>
 							<span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
