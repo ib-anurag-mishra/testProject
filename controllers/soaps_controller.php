@@ -3436,6 +3436,46 @@ STR;
         $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
         $resp = $resp['Posts']['message'];
 
+      
+        if( 'ezproxy' == $library_authentication_method ){
+        
+          $checkValidXml = null;
+          $checkValidXml = simplexml_load_string($resp);
+        
+          if($checkValidXml) {
+
+            if( ( isset($checkValidXml->Status) && ('' != $checkValidXml->Status) ) &&  ( isset($checkValidXml->LibraryCard) && ('' != $checkValidXml->LibraryCard) ) ) {
+				
+              if(1 == $checkValidXml->Status) {
+							
+                $response_patron_id = $checkValidXml->LibraryCard;
+				  
+                // executes remaning process
+                $token = md5(time());
+                $insertArr['patron_id'] = trim($response_patron_id);
+                $insertArr['library_id'] = $library_id;
+                $insertArr['token'] = $token;
+                $insertArr['auth_time'] = time();
+                $insertArr['agent'] = $agent;
+                $insertArr['auth_method'] = $library_authentication_method;
+                $this->AuthenticationToken->save($insertArr);
+
+                $patron_id = $insertArr['patron_id'];
+                $response_msg = 'Login Successfull';
+                return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+			
+              } else {
+                $response_msg = 'Login Failed';
+                return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+              }			
+			
+            }else{
+              $response_msg = 'Login Failed';
+              return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+            } 	  
+          }  
+        }
+        
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
         
