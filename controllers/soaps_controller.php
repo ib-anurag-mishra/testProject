@@ -3412,7 +3412,7 @@ STR;
       } 
 
 
-      $library_authentication_method = $existingLibraries[0]['Library']['library_authentication_method'];
+      $mobile_auth = trim($existingLibraries[0]['Library']['mobile_auth']);
       $mobile_auth = trim($existingLibraries[0]['Library']['mobile_auth']);
 
       $auth_url = str_ireplace('=CARDNUMBER', '='.$data['patronId'], $mobile_auth);
@@ -3425,15 +3425,16 @@ STR;
       }
       else{
 
-        $ch = curl_init($auth_url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        
-        if(0 === stripos($auth_url, 'https')) {
-          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+        if($existingLibraries[0]['Library']['library_territory'] == 'AU'){
+          $methodUrl = Configure::read('App.AuthUrl_AU')."ezproxylogin_validation";
         }
-        
-        $resp = curl_exec ( $ch );
-        curl_close($ch);
+				else{
+					$methodUrl = Configure::read('App.AuthUrl')."ezproxylogin_validation";
+				}
+          
+        $data['auth_url'] = $auth_url;
+        $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
+        print_r( $resp ); exit;
 
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
