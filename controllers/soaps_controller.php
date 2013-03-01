@@ -3434,7 +3434,7 @@ STR;
           
         $data['auth_url'] = $auth_url;
         $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
-        $resp = = $resp['Posts']['message'];
+        $resp = $resp['Posts']['message'];
 
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
