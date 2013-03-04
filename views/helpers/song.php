@@ -7,10 +7,10 @@
 class SongHelper extends AppHelper {
     var $uses = array('Song');
     
-    function getDownloadData($id) {
+    function getDownloadData($id, $provider) {
         $songInstance = ClassRegistry::init('Song');
         $details = $songInstance->find('all', array(
-		'conditions'=>array('Song.ProdID' => $id),
+		'conditions'=>array('Song.ProdID' => $id, 'Song.provider_type' => $provider),
 		'fields' => array(
 			'Song.ProdID',
 			'Song.ProductID',
