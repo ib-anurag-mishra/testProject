@@ -46,7 +46,7 @@ class notification extends database
     exit;
 
       // Send email notification.
-      //$response = $this->sendNotification();
+      $response = $this->sendNotification();
     }
     else
     {
@@ -81,9 +81,11 @@ class notification extends database
           $emailContent = str_replace("#downloads#", $remainingDownloads, $this->thursdayEmailContent($language));
         }
         
-        $unsubscribeLink = "http://www.localfm.com/notification/unsubscribe/".base64_encode($subscriberData[$i]['email_id']);
+        $link = "http://www.freegaltest.com/users/unsubscribe/".base64_encode($subscriberData[$i]['email_id']);
         
-        $emailContent .= " <a href='".base64_decode($unsubscribeLink)."'>".$unsubscribeLink."<a>";
+        $unsubscribeLink = " <a href='".$link."'>".$link."</a>";
+
+	$emailContent = str_replace("#link#", $unsubscribeLink, $emailContent);
         
         if($subscriberData[$i]['email_id'] != "")
         {
@@ -112,12 +114,12 @@ class notification extends database
         $body = $emailContent;
         //echo $body = preg_replace('/[\]/','',$body);
 
-        $mail->SetFrom('admin@freegalmusic.com', '');
+        $mail->SetFrom('no-reply@freegalmusic.com', '');
         //$mail->AddReplyTo("admin@freegalmusic.com","");
         $address = $emailId;
         $mail->AddAddress($address, "");
-        $mail->Subject = "FreegalMusic-remaining downloads";
-        $mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
+        $mail->Subject = "Freegal Music downloads expiring this week";
+        //$mail->AltBody = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
         $mail->MsgHTML($body);
 
         if(!$mail->Send()) {
@@ -143,7 +145,15 @@ class notification extends database
       }
       else
       {
-        $message = "You have #downloads# new downloads";
+	$message = "Hello,<br />
+<br />
+        Just a friendly reminder that you have #downloads# Freegal Music downloads remaining between now and Sunday night. Please visit your library website and log on to Freegal Music to retrieve your downloads.<br />
+<br />
+        To unsubscribe, press here<br />
+	#link#<br />
+<br />	
+	Regards<br />
+	Freegalmusic Team";       
       }
       
       return $message;
@@ -153,9 +163,9 @@ class notification extends database
   {
       if($language == 'es')
       {
-        $message = "/n/tSaluton,
-        /n/tNur amika memorigas, ke vi havas #downloads# Freegal Muziko elŝutoj ceteraj inter nun kaj Dimanĉo nokto. Bonvolu viziti vian bibliotekon retejo kaj ensaluti al Freegal Muziko por elsxuti viajn elŝutoj.
-        /n/tPor malaboni, klaku ĉi tie";
+        $message = "Saluton,
+        Nur amika memorigas, ke vi havas #downloads# Freegal Muziko elŝutoj ceteraj inter nun kaj Dimanĉo nokto. Bonvolu viziti vian bibliotekon retejo kaj ensaluti al Freegal Muziko por elsxuti viajn elŝutoj.
+        Por malaboni, klaku ĉi tie";
       }
       else if($language == 'it')
       {
@@ -171,9 +181,15 @@ class notification extends database
       }
       else
       {
-        $message = "/n/tHello,
-        /n/tJust a friendly reminder that you have #downloads# Freegal Music downloads remaining between now and Sunday night. Please visit your library website and log on to Freegal Music to retrieve your downloads.
-        /n/tTo unsubscribe, press here";
+        $message = "Hello,<br />
+<br />
+        Just a friendly reminder that you have #downloads# Freegal Music downloads remaining between now and Sunday night. Please visit your library website and log on to Freegal Music to retrieve your downloads.<br />
+<br />
+        To unsubscribe, press here<br />
+	#link#<br />
+<br />	
+	Regards<br />
+	Freegalmusic Team";
       }
       
       return $message;
@@ -308,7 +324,14 @@ class notification extends database
   // Create log
   function createLog($response, $device_details="")
   {
-    $file = 'log/log.txt';
+    if($device_details['system_type'] == "email")
+    {    
+	$file = 'log/email_log.txt';
+    }
+    else
+    {
+	$file = 'log/log.txt';
+    }
 
     date_default_timezone_set('America/Chicago');
 	
@@ -357,7 +380,7 @@ class notification extends database
       $time = date('h');
       $meridiem = date('a');
       //if($time >= 01 && $time <= 12 && ($meridiem == 'pm' || $meridiem == 'am'))
-      if(($week == 1 || $week == 5))
+      if(($week == 1 || $week == 2 || $week == 5))
       {
         $this->dayOfWeek = $week;
         $this->dayOfWeek = 4;
@@ -390,9 +413,9 @@ class notification extends database
   
   function getsubscribedEmailIds()
   {
-    $this->dayOfWeek = 4;
-    if($this->dayOfWeek == 4)
-    {
+    //$this->dayOfWeek = 4;
+    //if($this->dayOfWeek == 4)
+    //{
 	$sql = "SELECT ns.patron_id, l.id, l.library_name, ns.email_id,
         (select COUNT(d.id) from latest_downloads AS d where ns.patron_id=d.patron_id and ns.library_id=d.library_id AND d.created BETWEEN '2012-02-18 00:00:00' AND '".CURRENT_WEEK_END_DATE."') AS cnt,
         l.library_user_download_limit, l.library_user_download_limit, lt.libraries_timezone 
@@ -402,7 +425,7 @@ class notification extends database
         WHERE lt.libraries_timezone IN ('America/New_York') 
         GROUP BY ns.patron_id";
         $res = $this->db->query($sql);
-    }
+    /*}
     else if($this->dayOfWeek == 1)
     {
         $sql = "SELECT ns.patron_id, ns.email_id, 
@@ -413,10 +436,10 @@ class notification extends database
             LEFT JOIN latest_downloads AS d ON ns.patron_id=d.patron_id and ns.library_id=d.library_id
             LEFT JOIN libraries AS l ON l.id=ns.library_id
             LEFT JOIN libraries_timezone AS lt ON l.id=lt.library_id
-            WHERE lt.libraries_timezone IN ('America/New_York') 
+            WHERE lt.libraries_timezone ".$this->timezoneString." 
             GROUP BY d.patron_id";
         $res = $this->db->query($sql);
-    }    
+    }*/
     
     //echo $sql;
 
@@ -425,8 +448,11 @@ class notification extends database
       $i=0;
       while($row = $res->fetch_assoc())
       {
-        $result[$i] = $row;
-        $i++;
+	if($row['cnt'] > 0)
+	{
+          $result[$i] = $row;
+          $i++;
+	}
       }
     }
     
