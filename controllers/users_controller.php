@@ -1200,11 +1200,12 @@ Class UsersController extends AppController
         /*
         Function Name : unsubscribe
         Desc : For unsubscribe email notification information
-    */
+        */
         function unsubscribe($email){
             
             //if email address exist then remove it from table and redirect user to login page with message
             if(isset($email) && $email!=''){
+                $email = base64_decode($email);
                 $this->NotificationSubscriptions->deleteAll(array('email_id' => $email));
                 $this->Session->setFlash('You have successfully unsubscribed!');
                 $this->redirect($this->webroot.'users/login'); 
