@@ -19,7 +19,7 @@ Class UsersController extends AppController
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','soslogin','manage_notification','saveNotification');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','soslogin','manage_notification','saveNotification','unsubscribe');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -1197,6 +1197,24 @@ Class UsersController extends AppController
 
         }
         
+        /*
+        Function Name : unsubscribe
+        Desc : For unsubscribe email notification information
+    */
+        function unsubscribe($email){
+            
+            //if email address exist then remove it from table and redirect user to login page with message
+            if(isset($email) && $email!=''){
+                $this->NotificationSubscriptions->deleteAll(array('email_id' => $email));
+                $this->Session->setFlash('You have successfully unsubscribed!');
+                $this->redirect($this->webroot.'users/login'); 
+            }else{
+                $this->redirect($this->webroot.'users/login'); 
+            }             
+           
+            exit;
+        }
+        
          /*
         Function Name : saveNotification
         Desc : For saving the notification informaiton using ajax call from the home.ctp popup
@@ -1222,10 +1240,10 @@ Class UsersController extends AppController
                 
                 //check if record is already exist for this patron and library
                   $notificationSubscriptionsData = $this->NotificationSubscriptions->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
-                   if(count($notificationSubscriptionsData) > 0) {
+                  if(count($notificationSubscriptionsData) > 0) {
                        
-                       //update record in to the table                       
-                       $this->NotificationSubscriptions->set(array(
+                        //update record in to the table                       
+                        $this->NotificationSubscriptions->set(array(
                          'id' => $notificationSubscriptionsData['NotificationSubscriptions']['id'],
                          'library_id' => $libaryID,
                         'patron_id' => $patronId,
@@ -1236,8 +1254,9 @@ Class UsersController extends AppController
                         $this->Session->write('showNotificationPopup','yes');
                 
                    }else{
-                       //insert new record in the table
-                       $this->NotificationSubscriptions->set(array(
+                       
+                        //insert new record in the table
+                        $this->NotificationSubscriptions->set(array(
                             'library_id' => $libaryID,
                             'patron_id' => $patronId,
                         'email_id' => $notificatinEmail                       
@@ -1246,6 +1265,7 @@ Class UsersController extends AppController
                         $this->NotificationSubscriptions->setDataSource('master');
                         $this->NotificationSubscriptions->save();
                         $this->Session->write('showNotificationPopup','yes');
+                        
                    }
                       
                 echo 'success';
@@ -5620,6 +5640,8 @@ function sdlogin($library = null){
 		}
             }
 	}
+        
+
 
 	
 }
