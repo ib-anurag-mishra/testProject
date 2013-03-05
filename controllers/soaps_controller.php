@@ -3437,7 +3437,7 @@ STR;
         $resp = $resp['Posts']['message'];
 
       
-        if( 'ezproxy' == $library_authentication_method ){
+     
         
           $checkValidXml = null;
           $checkValidXml = simplexml_load_string($resp);
@@ -3474,7 +3474,7 @@ STR;
               return $this->createsAuthenticationResponseDataObject(false, $response_msg);
             } 	  
           }  
-        }
+
         
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
