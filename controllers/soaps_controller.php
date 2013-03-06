@@ -122,6 +122,7 @@ class SoapsController extends AppController {
                 $condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
                 $libraries = $this->Library->find('all',array(
                   'conditions' => array(
+                    'library_status'=>'active',
                     'OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)")
                   )
                 ));                     
