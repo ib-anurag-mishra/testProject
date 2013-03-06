@@ -106,70 +106,71 @@ class SoapsController extends AppController {
     $list = array();
     $keys = array('LibraryID','LibraryName','LibraryApiKey','LibraryAuthenticationVariable','LibraryAuthenticationMethod','LibraryAuthenticationNum','LibraryAuthenticationUrl','LibraryAuthenticationResponse');
     if(is_numeric($data)){
-      $zipcode = trim($data);
-      $Zipusstate_array = $this->Zipusstate->find('first', array('conditions'=>array('zip = ' . $zipcode)));
-      
-      $Library_latitude = substr($Zipusstate_array['Zipusstate']['latitude'], 0, (strpos($Zipusstate_array['Zipusstate']['latitude'], '.') + 5));
-      $Library_longitude = substr($Zipusstate_array['Zipusstate']['longitude'], 0, (strpos($Zipusstate_array['Zipusstate']['longitude'], '.') + 5));
-      
-      if(strlen($data) == 5){
-        $libraries = $this->Library->find('all',
-        array('fields'=>array('id', 'library_name','library_zipcode', 'library_apikey','library_authentication_variable','library_authentication_method','library_authentication_num','library_authentication_url','mobile_auth','library_authentication_response', '(3959 * ACOS( COS( RADIANS(' . $Library_latitude . ') ) * COS( RADIANS( latitude) )
-* COS( RADIANS(longitude) - RADIANS(' . $Library_longitude . ')) + SIN(RADIANS(' . $Library_latitude . '))
-* SIN( RADIANS(latitude)))) as distance'),
-        'joins' => array(	array('table' => 'zipusstates','alias' => 'zipus','type' => 'inner', 'conditions' => array('library_zipcode = zipus.zip'))),
-        'conditions' => array(
-            'library_status'=>'active', 'library_zipcode != ""'
-        ),
-        'group' => 'id HAVING distance < ' . $this->library_search_radius,
-        'order' => array('distance' => 'ASC', 'Library.library_name' => 'ASC'),
-        ));
+        $zipcode = trim($data);
+        $result = null;
+        
+            if(strlen($zipcode) == 5){
+                   
+                App::import('vendor', 'zipcode_class', array('file' => 'zipcode.php'));
+                $obj_zipcode = new zipcode_class();  
+                      
+                $result = $obj_zipcode->get_zips_in_range($zipcode, $this->library_search_radius, _ZIPS_SORT_BY_DISTANCE_ASC, true);
+                if( empty($result) ){
+                  throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
+                }
+                $this->Library->recursive = -1 ;
+                $condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
+                $libraries = $this->Library->find('all',array(
+                  'conditions' => array(
+                    'OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)")
+                  )
+                ));                     
 
-        if(!empty($libraries)){
-          $list = array();
-          foreach($libraries as $library){
+                if(!empty($libraries)){
+                    
+                    $list = array();
+                    foreach($libraries as $library){
 
-            if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
+                        if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && ('' == trim($library['Library']['mobile_auth'])) ) {
 
-            } else { 
+                        } else { 
 
-              $obj = new FreegalLibraryType;
-              $obj->LibraryId = (int)$library['Library']['id'];
-              $obj->LibraryName = $library['Library']['library_name'];
-              $obj->LibraryApiKey = $library['Library']['library_apikey'];
+                          $obj = new FreegalLibraryType;
+                          $obj->LibraryId = (int)$library['Library']['id'];
+                          $obj->LibraryName = $library['Library']['library_name'];
+                          $obj->LibraryApiKey = $library['Library']['library_apikey'];
 
-              $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
-              $obj->LibraryAuthenticationMethod = $identifier;
+                          $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
+                          $obj->LibraryAuthenticationMethod = $identifier;
 
-              $auth_url = trim(strtolower($library['Library']['mobile_auth']));
-              if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
-                $obj->LibraryAuthenticationNum = 1;
-              } else {
-                $obj->LibraryAuthenticationNum = 0;
-              }
+                          $auth_url = trim(strtolower($library['Library']['mobile_auth']));
+                          if( ('referral_url' == $library['Library']['library_authentication_method'] || 'ezproxy' == $library['Library']['library_authentication_method']) && (false === strpos($auth_url, '=pin')) && ('' != $auth_url) ) {
+                            $obj->LibraryAuthenticationNum = 1;
+                          } else {
+                            $obj->LibraryAuthenticationNum = 0;
+                          }
 
-              $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
+                          $obj->LibraryAuthenticationUrl = $library['Library']['library_authentication_url'];
 
-              $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
-            }                        
-            
-          }
+                          $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'FreegalLibraryType');
+                        }                        
+                   }
 
-          if(!empty($list)){
-            $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalLibraryType');
-            return $data;
-          }
-          else{
-            throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
-          }
+                   if(!empty($list)){
+                      $data = new SoapVar($list,SOAP_ENC_OBJECT,null,null,'ArrayOfFreegalLibraryType');
+                      return $data;
+                   }
+                   else{
+                      throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
+                   }
+                } 
+                else {
+                    throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
+                }
 
-
-        } else {
-          throw new SOAPFault('Soap:client', 'No library available for current location. Please try with other location.');
-        }
-      } else {
-        throw new SOAPFault('Soap:client', 'Invalid Zip Code. Please provide a valid code.');
-      }
+            } else {
+                throw new SOAPFault('Soap:client', 'Invalid Zip Code. Please provide a valid code.');
+            }
     } else {
 
       $data = strtolower(trim($data));
