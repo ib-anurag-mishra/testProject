@@ -171,7 +171,7 @@ class notification extends database
       $time = date('h');
       $meridiem = date('a');
       //if($time >= 01 && $time <= 12 && ($meridiem == 'pm' || $meridiem == 'am'))
-      if(($week == 1 || $week == 2 || $week == 4))
+      if(($week == 1 || $week == 2 || $week == 3 || $week == 4 || $week == 3))
       {        
         $result[$i] = $row;
         $i++;
