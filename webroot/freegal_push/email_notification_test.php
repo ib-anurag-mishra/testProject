@@ -133,7 +133,7 @@ class notification extends database
 	#link#<br />
 <br />	
 	Regards<br />
-	Freegalmusic Team";
+	Freegal Music Team";
       }
       
       return $message;
