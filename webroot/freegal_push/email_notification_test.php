@@ -89,7 +89,7 @@ class notification extends database
         //echo $body = preg_replace('/[\]/','',$body);
 
         $mail->SetFrom('no-reply@freegalmusic.com', '');
-        //$mail->AddReplyTo("admin@freegalmusic.com","");
+        $mail->AddReplyTo("","");
         $address = $emailId;
         $mail->AddAddress($address, "");
         $mail->Subject = "Freegal Music downloads expiring this week";
