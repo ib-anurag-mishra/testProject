@@ -472,7 +472,10 @@
 									<option value="<(Fixed)"><(Fixed)</option>
 									<option value="<>(Fixed)"><>(Fixed)</option>
 									<option value="begins(Fixed)">begins(Fixed)</option>
+                                                                        <option value="notbegins(Fixed)">does not begin with(Fixed)</option>
 									<option value="cmp_pos(Fixed)">cmp_pos(Fixed)</option>
+                                                                        <option value="contains(Fixed)">Contains(Fixed)</option>
+                                                                        <option value="notcontain(Fixed)">does not contain(Fixed)</option>
 								</select>							
 							</td>
 						</tr>
@@ -547,7 +550,10 @@
 										<option <?php if($var == '<(Fixed)'){ ?> selected = "selected" <?php } ?> value="<(Fixed)"> <(Fixed) </option>
 										<option <?php if($var == '<>(Fixed)'){ ?> selected = "selected" <?php } ?> value="<>(Fixed)"> <>(Fixed) </option>
 										<option <?php if($var == 'begins(Fixed)'){ ?> selected = "selected" <?php } ?> value="begins(Fixed)"> begins(Fixed) </option>
+                                                                                <option <?php if($var == 'notbegins(Fixed)'){ ?> selected = "selected" <?php } ?> value="notbegins(Fixed)">does not begin with</option>
 										<option <?php if($var == 'cmp_pos(Fixed)'){ ?> selected = "selected" <?php } ?> value="cmp_pos(Fixed)"> cmp_pos(Fixed) </option>
+                                                                                <option <?php if($var == 'contains(Fixed)'){ ?> selected = "selected" <?php } ?> value="contains(Fixed)"> Contains </option>
+                                                                                <option <?php if($var == 'notcontain(Fixed)'){ ?> selected = "selected" <?php } ?> value="notcontain(Fixed)">does not contain</option>
 									</select>							
 								</td>
 							</tr>
