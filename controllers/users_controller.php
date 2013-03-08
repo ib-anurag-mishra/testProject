@@ -11,15 +11,15 @@ Class UsersController extends AppController
 	var $helpers = array('Html','Ajax','Javascript','Form', 'User', 'Library', 'Page', 'Language');
 	var $layout = 'admin';
 	var $components = array('Session','Auth','Acl','PasswordHelper','Email','sip2','ezproxysso','AuthRequest','Cookie');
-	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium','Card');
-
+	var $uses = array('User','Group', 'Library', 'Currentpatron', 'Download','Variable','Url','Language','Consortium','Card','LibrariesTimezone','NotificationSubscriptions');
+   
    /*
     Function Name : beforeFilter
     Desc : actions that needed before other functions are getting called
    */
 	function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers');
+		$this->Auth->allow('libinactive','logout','ilogin','inlogin','ihdlogin','idlogin','ildlogin','indlogin','inhdlogin','inhlogin','slogin','snlogin','sdlogin','sndlogin','plogin','ilhdlogin','admin_user_deactivate','admin_user_activate','admin_patron_deactivate','admin_patron_activate','sso','admin_data','redirection_manager','method_action_mapper','clogin','mdlogin','mndlogin','admin_addmultipleusers','manage_notification','saveNotification','unsubscribe');
 		$this->Cookie->name = 'baker_id';
 		$this->Cookie->time = 3600; // or '1 hour'
 		$this->Cookie->path = '/';
@@ -395,6 +395,25 @@ Class UsersController extends AppController
 				}*/
 
 				$this->Session->write("library", $libraryId);
+                                
+                                //check this library exist is in the library timezone table
+                                $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
+                                $libPicksRecord = $this->LibrariesTimezone->query($countLibPicksSql);
+                                if(isset($libPicksRecord[0][0]['total']) && ($libPicksRecord[0][0]['total'] > 0 )){
+                                    $this->Session->write("isLibaryExistInTimzone", 1);                               
+                                }else{
+                                    $this->Session->write("isLibaryExistInTimzone", 0);                               
+                                }        
+                                
+                                //check if the notification entry is already there in the notification_subscription table
+                                $notificationSql ='select count(*) as total from notification_subscriptions  where patron_id ="'.$patronId.'" and library_id = "'.$this->Session->read("library").'"';
+                                $emailNotificationRecord = $this->NotificationSubscriptions->query($notificationSql);
+                                if(isset($emailNotificationRecord[0][0]['total']) && ($emailNotificationRecord[0][0]['total'] > 0 )){
+                                    $this->Session->write("showNotificationPopup", 'yes');                               
+                                }else{
+                                    $this->Session->write("showNotificationPopup", 'no');                               
+                                }
+                           
 				$this->Session->write("patron", $patronId);
 				$this->Session->write("patronEmail", $this->Session->read('Auth.User.email'));
 				$this->Session->write("territory", $libraryArr['Library']['library_territory']);
@@ -1038,33 +1057,216 @@ Class UsersController extends AppController
     Function Name : my_account
     Desc : For patron my acount page
    */
-
+   
 	function my_account(){
+            
 		$this->layout = 'home';
 		$patronId = $this->Session->read('patron');
-		$this->set('getData', $this->User->getuserdata($patronId));
-		if(isset($this->data)){
-			$this->data['User']['type_id'] = 5;
-			$getData['User'] = $this->data['User'];
-			$getData['type_id'] = 5;
-			$this->set('getData', $getData);
-			if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){
-				// do not update the password
-				$this->data['User']= $this->User->arrayremovekey($this->data['User'],'password');
-			}
-			$this->User->set($this->data['User']);
-			if($this->User->save()){
-				$this->Session->setFlash('Data has been saved successfully!');
-				$this->redirect($this->webroot.'users/my_account');
-			}
-		}
+               
+                $this->Library->recursive = -1;  
+                
+                //unset($this->data['User']['sendNewsLetterCheck']);
+                
+                //check the library data and library authentication method
+                $library_data = $this->Library->find('first', array('conditions' => array('id' => $this->Session->read('library')),'fields' => array('Library.library_authentication_method')));              
+                if(count($library_data) > 0) {
+                    if($library_data['Library']['library_authentication_method'] == 'user_account'){                     
+                        $this->set('getData', $this->User->getuserdata($patronId));
+                        if(isset($this->data)){
+                            $this->data['User']['type_id'] = 5;
+                            $getData['User'] = $this->data['User'];
+                            $getData['type_id'] = 5;        
+                            $this->set('getData', $getData);        
+                            if(trim($this->data['User']['password']) == "48d63321789626f8844afe7fdd21174eeacb5ee5"){            
+                                // do not update the password
+                                $this->data['User']= $this->User->arrayremovekey($this->data['User'],'password');
+                            }         
+                            $this->User->set($this->data['User']); 
+                            $this->NotificationSubscriptions->setDataSource('master');  
+                            if($this->User->save()){                                
+                                $this->Session->setFlash('Account information has been save successfully!');
+                                $this->redirect($this->webroot.'users/my_account');
+                            }
+                        }                        
+                    }
+                }
+                
+                
+           
+                
+                //display notification form when library exist in to the library timzone table
+                if($this->Session->read('isLibaryExistInTimzone')==1){                    
+                
+                      $this->set('notificationShow', 1); 
+                      $this->set('notificationAlreadySave', 'false');  
+                      $this->set('notificationEmail', '');                      
+                      
+                      
+                      $notidataRecord = $this->NotificationSubscriptions->find('first', array('conditions' => array('patron_id' => $patronId,'library_id' => $this->Session->read('library')),'fields'=>array('email_id')));                          
+                    
+                      
+                      //count($notidataRecord);
+                      if(count($notidataRecord) > 0) {
+                          
+                       
+                        if($notidataRecord['NotificationSubscriptions']['email_id']==''){
+                            //get user email address if email not there
+                            $getUserData = $this->User->find('first', array('conditions' => array('User.id' => $patronId),'fields'=>array('User.email')));
+                            $this->set('notificationEmail', $getUserData['User']['email']);
+                        }else{
+                            $this->set('notificationAlreadySave', 'true');
+                            $this->set('notificationEmail', $notidataRecord['NotificationSubscriptions']['email_id']);
+                        }
+                        
+                      }
+                }
+               
+                   
+		
 	}
+    
+        /*
+        Function Name : manage_notification
+        Desc : For manage email notification information
+    */
+        function manage_notification(){
+            $patronId = $this->Session->read('patron');
+            $libaryID = $this->Session->read('library');
+             if(isset($this->data)){
+               if($this->data['User']['sendNewsLetterCheck'] == 1){
+                   $notificationEmail = $this->data['User']['NewsletterEmail'];                   
+                   
+                   $notificationSubscriptionsData = $this->NotificationSubscriptions->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
+                   if(count($notificationSubscriptionsData) > 0) {
+                       
+                       //update record in to the table
+                       
+                       $this->NotificationSubscriptions->set(array(
+                         'id' => $notificationSubscriptionsData['NotificationSubscriptions']['id'],
+                         'library_id' => $libaryID,
+                        'patron_id' => $patronId,
+                       'email_id' => $notificationEmail                       
+                        ));
+                        $this->NotificationSubscriptions->setDataSource('master');       
 
-   /*
-    Function Name : ilogin
-    Desc : For patron ilogin(Innovative) login method
-   */
 
+                        if($this->NotificationSubscriptions->save()){                                
+                            $this->Session->setFlash('Notification information has been updated successfully!');
+                            $this->redirect($this->webroot.'users/my_account');
+                        }  
+                       
+                       
+                   }else{
+                        //insert in to the table
+                       
+                        $this->NotificationSubscriptions->set(array(
+                            'library_id' => $libaryID,
+                            'patron_id' => $patronId,
+                        'email_id' => $notificationEmail                       
+                        )); 
+
+                        $this->NotificationSubscriptions->setDataSource('master');
+                        
+                        if($this->NotificationSubscriptions->save()){                                
+                            $this->Session->setFlash('Notification information has been saved successfully!');
+                            $this->redirect($this->webroot.'users/my_account');
+                        }                       
+                   }                    
+                    
+               }else{
+                   
+                   $this->NotificationSubscriptions->deleteAll(array('library_id' => $libaryID,'patron_id' => $patronId));
+                   $this->Session->setFlash('Notification information has been removed successfully!');
+                   $this->redirect($this->webroot.'users/my_account'); 
+                   
+               }
+                
+             }
+
+        }
+        
+        /*
+        Function Name : unsubscribe
+        Desc : For unsubscribe email notification information
+        */
+        function unsubscribe($email){
+            
+            //if email address exist then remove it from table and redirect user to login page with message
+            if(isset($email) && $email!=''){
+                $email = base64_decode($email);
+                $this->NotificationSubscriptions->deleteAll(array('email_id' => $email));
+                $this->Session->setFlash('You have successfully unsubscribed!');
+                $this->redirect($this->webroot.'users/login'); 
+            }else{
+                $this->redirect($this->webroot.'users/login'); 
+            }            
+           
+            exit;
+        }
+        
+         /*
+        Function Name : saveNotification
+        Desc : For saving the notification informaiton using ajax call from the home.ctp popup
+    */
+        function saveNotification(){
+            Configure::write('debug', 2);
+           
+            $this->layout = false;
+            
+            if(isset($_REQUEST['notificationClose']) && $_REQUEST['notificationClose']==1){
+                $this->Session->write('showNotificationPopup','yes');
+                exit;
+            }    
+            
+            
+            if(isset($_REQUEST['pid']) && isset($_REQUEST['lid']) && isset($_REQUEST['notificatinEmail']) 
+                    && $_REQUEST['lid']!=''  && $_REQUEST['pid']!='' && $_REQUEST['notificatinEmail']!=''){
+                
+                $patronId = $_REQUEST['pid'];
+                $libaryID = $_REQUEST['lid'];
+                $notificatinEmail = $_REQUEST['notificatinEmail'];
+                $this->NotificationSubscriptions->setDataSource('master');
+                
+                //check if record is already exist for this patron and library
+                  $notificationSubscriptionsData = $this->NotificationSubscriptions->find('first', array('conditions' => array('library_id' => $libaryID,'patron_id' => $patronId)));
+                  if(count($notificationSubscriptionsData) > 0) {
+                       
+                        //update record in to the table                       
+                        $this->NotificationSubscriptions->set(array(
+                         'id' => $notificationSubscriptionsData['NotificationSubscriptions']['id'],
+                         'library_id' => $libaryID,
+                        'patron_id' => $patronId,
+                       'email_id' => $notificatinEmail                       
+                        ));
+                        $this->NotificationSubscriptions->setDataSource('master');
+                        $this->NotificationSubscriptions->save();   
+                        $this->Session->write('showNotificationPopup','yes');
+                
+                   }else{
+                       
+                        //insert new record in the table
+                        $this->NotificationSubscriptions->set(array(
+                            'library_id' => $libaryID,
+                            'patron_id' => $patronId,
+                        'email_id' => $notificatinEmail                       
+                        )); 
+
+                        $this->NotificationSubscriptions->setDataSource('master');
+                        $this->NotificationSubscriptions->save();
+                        $this->Session->write('showNotificationPopup','yes');
+                        
+                   }
+                      
+                echo 'success';
+                exit;           
+            }
+        }
+   
+    /*
+        Function Name : ilogin
+        Desc : For patron ilogin(Innovative) login method
+    */
+   
 	function ilogin($library = null){
             
             
@@ -1162,11 +1364,17 @@ Class UsersController extends AppController
 					$this->set('pin',"");
 				}
 			}
-			elseif(strlen($card) < 5){
-				$this->Session->setFlash("Please provide a correct card number.");
-			}
-			elseif($pin == ''){
-				$this -> Session -> setFlash("Please provide pin.");
+//			elseif(strlen($card) < 5){
+//				$this->Session->setFlash("Please provide a correct card number.");			
+//			}
+                        
+                        elseif(strlen($card) < $library_data['Library']['minimum_card_length']){
+				$this->Session->setFlash("Please provide a correct card number.");			
+			}                        
+                        
+                        
+			elseif($pin == ''){            
+				$this -> Session -> setFlash("Please provide pin.");            
 				if($card != ''){
 					$this->set('card',$card);
 				}

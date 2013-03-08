@@ -11,6 +11,8 @@
 if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+        
+        $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
 		$width = 125;
@@ -247,9 +249,15 @@ form, fieldset {
 		<?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
 		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 'my_wishlist')); ?></li>
 		<?php } ?>
-		<?php if($libraryInfo['Library']['library_authentication_method'] == "user_account"){ ?>
+                
+                
+		<?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || ($isLibaryExistInTimzone ==1)){ ?>
 		<li><?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?></li>
-		<?php } ?>		
+		<?php } ?>
+                
+                
+                
+                
 		<li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array('controller' => 'homes', 'action' => 'my_history')); ?></li>
 		<li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
 		<li><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'));?></li>
