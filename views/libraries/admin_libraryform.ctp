@@ -38,6 +38,7 @@
 		$getData['Library']['library_sip_error'] = "on";
                 $getData['Library']['minimum_card_length'] = 5;
 		$getData['Library']['library_sip_institution'] = "";
+                $getData['Library']['library_sip_command'] = "";
 		$getData['Library']['library_sip_24_check'] = "yes";
 		$getData['Library']['library_sip_64_check_off'] = 0;
 		$getData['Library']['library_ezproxy_secret'] = "";
@@ -66,8 +67,8 @@
 		$getData['Library']['library_country'] = "";
 		$getData['Library']['library_zipcode'] = "";
 		$getData['Library']['library_download_limit'] = "";
-	    $getData['Library']['library_user_download_limit'] = "";
-	    $getData['Library']['library_download_type'] = "daily";
+                $getData['Library']['library_user_download_limit'] = "";
+                $getData['Library']['library_download_type'] = "daily";
 		$getData['Library']['library_territory'] = "";
 		$getData['Library']['library_image_name'] = "";
 		$getData['Library']['library_block_explicit_content'] = 0;
@@ -83,8 +84,7 @@
 		$getData['Library']['library_unlimited'] = 0;
 		$getData['Library']['facebook_icon'] = '';
 		$getData['Library']['twiter_icon'] = '';
-		$getData['Library']['youtube_icon'] = '';
-		
+		$getData['Library']['youtube_icon'] = '';		
 		$getData['Library']['library_language'] = 'en';
 		$getData['Library']['library_exp_date_format'] = '';
 	}
@@ -351,6 +351,22 @@
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 Institution ID');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_sip_institution',array('label' => false, 'value' => $getData['Library']['library_sip_institution'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
 					</tr>
+                                        <tr id="sip_over_ssh" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'SIP2 Over SSH');?></td>
+						<td aligh="left">
+                                                    <?php
+                                                        echo $this->Form->input('is_sip_over_ssh', array('options' => array(
+                                                                '0' => 'No',
+                                                                '1' => 'Yes'
+                                                                ), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $getData['Library']['is_sip_over_ssh'])
+                                                        );
+                                                    ?>
+                                                </td>
+					</tr>
+                                        <tr id="ssh_command" <?php if($getData['Library']['library_authentication_method'] != "sip2_var" && $getData['Library']['library_authentication_method'] != "sip2_var_wo_pin"){?>style="display:none;"<?php } ?>>
+						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library SIP2 SSH Command');?></td>
+						<td aligh="left"><?php echo $this->Form->input('library_sip_command',array('label' => false, 'value' => $getData['Library']['library_sip_command'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
+					</tr>
 					<tr id="curl_url" <?php if($getData['Library']['library_authentication_method'] != "curl_method" && $getData['Library']['library_authentication_method'] != "curl_method"){?>style="display:none;"<?php } ?>>
 						<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Curl URL');?></td>
 						<td aligh="left"><?php echo $this->Form->input('library_curl_url',array('label' => false, 'value' => $getData['Library']['library_curl_url'], 'div' => false, 'class' => 'form_fields', 'size' => 50));?></td>
@@ -373,7 +389,7 @@
 								echo $this->Form->input('library_sip_version', array('options' => array(
 									'2.00' => '2.00',
 									'2.0E' => '2.0E',
-                  '2.0S' => '2.0S'
+                                                                        '2.0S' => '2.0S'
 									), 'label' => false, 'div' => false, 'class' => 'select_fields', 'default' => $version)
 								);
 							?>						
@@ -401,8 +417,8 @@
 									$checked = true;
 								}
 								echo $this->Form->checkbox('library_sip_64_check_off', array('label' => false, 'div' => false, 'class' => 'form_fields', 'checked' => $checked)); 
-              ?>            
-            </td>
+                                                ?>            
+                                                </td>
 						<td aligh="left">
 							<?php echo $this->Form->label('Library Message(64) Check off');?>
 						</td>
@@ -601,7 +617,7 @@
 								<td aligh="left"  class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][error_msg]" class="form_fields" size="50" value="<?php echo $v['Variable']['error_msg']; ?>"><?php if($k==0){ ?><input type="button" value="+" class="form_fields" onClick="addVariable(<?php echo $count; ?>);"><?php }else{ ?><input type="button" value="Remove" class="form_fields" onClick="removeVariable(<?php echo $k; ?>);"><?php } ?></td>
 							</tr>
 							</table>
-					<?php
+                                                        <?php
 							$j++;
 						}
 					}
@@ -723,7 +739,7 @@
 						<td align="right" width="255"><?php echo $this->Form->label(null, 'Expiration Date Format');?></td>
 						<td align="left">
 							<?php
-                $option_array = array(      
+                                            $option_array = array(      
                                             '0' => 'Select a Expiration Date Format',
                                             'MM-DD-YYYY' => 'MM-DD-YYYY',
                                             'DD-MM-YYYY' => 'DD-MM-YYYY',
@@ -1061,6 +1077,8 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();                                                
 						$("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
@@ -1091,7 +1109,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();        
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();        
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1121,7 +1141,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1151,7 +1173,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1182,7 +1206,9 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1213,7 +1239,9 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1244,7 +1272,9 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1274,7 +1304,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1305,7 +1337,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1335,7 +1369,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1365,7 +1401,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1396,7 +1434,9 @@
 						$("#msgNo").show();
 						$("#space").show();
 						$("#24_message").show();
-            $("#64_message").show();
+                                                $("#64_message").show();
+                                                $("#sip_over_ssh").show();
+                                                $("#ssh_command").show();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1427,7 +1467,9 @@
 						$("#msgNo").show();
 						$("#space").show();
 						$("#24_message").show();
-            $("#64_message").show();
+                                                $("#sip_over_ssh").show();
+                                                $("#ssh_command").show();
+                                                $("#64_message").show();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1457,7 +1499,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1488,7 +1532,9 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1519,7 +1565,9 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1550,7 +1598,9 @@
 						$("#msgNo").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}					
@@ -1580,7 +1630,9 @@
 						$("#block_explicit").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
@@ -1610,7 +1662,9 @@
 						$("#block_explicit").hide();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").show();
 						$("#curl_db").show();						
 					}						
@@ -1640,7 +1694,9 @@
 						$("#block_explicit").show();
 						$("#space").hide();
 						$("#24_message").hide();
-            $("#64_message").hide();
+                                                $("#sip_over_ssh").hide();
+                                                $("#ssh_command").hide();
+                                                $("#64_message").hide();
 						$("#curl_url").hide();
 						$("#curl_db").hide();						
 					}
