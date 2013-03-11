@@ -90,7 +90,8 @@ function mailUpdate($response,$date,$query){
   }
 }
 
-$dataDate = date('Y-m-d',(time() - 86400));
+//$dataDate = date('Y-m-d',(time() - 86400));
+$dataDate = date('Y-m-d', strtotime('-1 day', time()));
 echo "==========".$dataDate."============\n";
 updateDownloadPatrons($dataDate);
 updateDownloadGenres($dataDate);
