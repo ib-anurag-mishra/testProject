@@ -160,7 +160,29 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_method',
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
-										'Library.library_ezproxy_name',
+																				'Library.library_space_check',
+																				'Library.library_logout_url',
+																				'Library.library_subdomain',
+																				'Library.library_apikey',
+																				'Library.library_soap_url',
+																				'Library.library_curl_url',
+																				'Library.library_curl_db',
+																				'Library.library_authentication_variable',
+																				'Library.library_authentication_response',
+																				'Library.library_host_name',
+																				'Library.library_port_no',
+																				'Library.library_sip_login',
+																				'Library.library_sip_password',
+																				'Library.library_sip_location',
+																				'Library.library_sip_terminal_password',
+																				'Library.library_sip_version',
+																				'Library.library_sip_error',
+																				'Library.library_sip_institution',
+																				'Library.library_sip_24_check',
+																				'Library.library_sip_64_check_off',
+																				'Library.library_ezproxy_secret',
+																				'Library.library_ezproxy_referral',
+																				'Library.library_ezproxy_name',
 																				'Library.library_ezproxy_logout',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
@@ -178,7 +200,10 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
 																				'Library.library_phone',
-										'Library.library_state',
+																				'Library.library_address',
+																				'Library.library_address2',
+																				'Library.library_city',
+																				'Library.library_state',
 																				'Library.library_zipcode',
 																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
@@ -187,8 +212,7 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_download_limit',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
-                                                                                'Library.minimum_card_length',
-                                                                                'Library.show_library_name',
+																				'Library.show_library_name',
 																				'Library.library_territory',
 																				'Library.library_language',
 																				'Library.facebook_icon',
@@ -263,7 +287,29 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_authentication_num',
                                                                                 'Library.library_authentication_url',
 																				'Library.library_space_check',
-																			'Library.library_ezproxy_logout',
+																				'Library.library_logout_url',
+																				'Library.library_subdomain',
+																				'Library.library_apikey',
+																				'Library.library_soap_url',
+																				'Library.library_curl_url',
+																				'Library.library_curl_db',
+																				'Library.library_authentication_variable',
+																				'Library.library_authentication_response',
+																				'Library.library_host_name',
+																				'Library.library_port_no',
+																				'Library.library_sip_login',
+																				'Library.library_sip_password',
+																				'Library.library_sip_location',
+																				'Library.library_sip_terminal_password',
+																				'Library.library_sip_version',
+																				'Library.library_sip_error',
+																				'Library.library_sip_institution',
+																				'Library.library_sip_24_check',
+																				'Library.library_sip_64_check_off',
+																				'Library.library_ezproxy_secret',
+																				'Library.library_ezproxy_referral',
+																				'Library.library_ezproxy_name',
+																				'Library.library_ezproxy_logout',
                                                                                 'Library.library_bgcolor',
                                                                                 'Library.library_content_bgcolor',
                                                                                 'Library.library_nav_bgcolor',
@@ -275,16 +321,22 @@ Class LibrariesController extends AppController
                                                                                 'Library.library_navlinks_color',
                                                                                 'Library.library_navlinks_hover_color',
 																				'Library.library_box_header_color',
+																				'Library.library_box_hover_color',
 																				'Library.library_contact_fname',
                                                                                 'Library.library_contact_lname',
                                                                                 'Library.library_contact_email',
 																				'Library.library_phone',
+																				'Library.library_address',
+																				'Library.library_address2',
+																				'Library.library_city',
+																				'Library.library_state',
+																				'Library.library_zipcode',
 																				'Library.library_country',
                                                                                 'Library.library_user_download_limit',
                                                                                 'Library.library_admin_id',
                                                                                 'Library.library_download_type',
                                                                                 'Library.library_download_limit',
-										'Library.minimum_card_length',										'Library.library_current_downloads',
+																				'Library.library_current_downloads',
 																				'Library.library_total_downloads',
                                                                                 'Library.library_image_name',
                                                                                 'Library.library_block_explicit_content',
@@ -813,7 +865,10 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         }
 
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
-		if($referrerUrl == ''){
+        if($referrerUrl == 'http://www.ocls.info/freegalmusic-sp.asp'){
+            $this->Session->write('Config.language', 'es');
+        }
+        if($referrerUrl == ''){
             $this -> Session -> setFlash("You are not coming from a correct referral url.");
             $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 		}
@@ -914,6 +969,12 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
         }
     }
 	function admin_consortium(){
+  
+    // allwoes only admin
+    if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {
+      $this->redirect(array('controller' => 'users', 'action' => 'login'));
+    }
+  
 		$consortium = $this->Consortium->find('all', array('order' => 'consortium_key ASC'));
 		$this->set('consortium', $consortium);
 	}
@@ -969,6 +1030,7 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
 		set_time_limit(0);
 		ini_set("memory_limit", "1G");
 		ini_set('max_input_time', 1800);
+                set_time_limit("1800");
 		Ignore_User_Abort(True);
     ini_set('auto_detect_line_endings',TRUE);
 		if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))
