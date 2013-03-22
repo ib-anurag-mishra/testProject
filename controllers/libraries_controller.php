@@ -840,34 +840,6 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             $patronId = $requestUrlArr['2'];          
         }
         
-        if($_SERVER['HTTP_HOST'] == 'bakerfreelibrary.freegalmusic.com'){
-            $totalLength = strlen($patronId);
-            $length = $totalLength - 2;
-            
-            if(strpos($patronId,"@@"))
-            {
-                //$patronId = substr($patronId, 0, $length+1);
-            }
-            else if(strpos($patronId,"@40"))
-            {
-                $patronId = substr($patronId, 0, $length);
-            }
-            else
-            {   
-                if(strpos($patronId,"@"))
-                {        
-                    $patronId = str_replace("@","%",$patronId);
-                }
-                else
-                {
-                    if($length > 12)
-                    {
-                        $patronId = substr($patronId, 0, $length);
-                    }                    
-                }
-            }
-        }
-		
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
         if($referrerUrl == 'http://www.ocls.info/freegalmusic-sp.asp'){
             $this->Session->write('Config.language', 'es');
