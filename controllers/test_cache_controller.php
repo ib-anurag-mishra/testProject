@@ -1,6 +1,6 @@
 <?php
 class CacheController extends AppController {
-    var $name = 'Cache';
+    var $name = 'TestCache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country');
 
