@@ -1,5 +1,5 @@
 <?php
-class CacheController extends AppController {
+class TestCacheController extends AppController {
     var $name = 'TestCache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country');
@@ -28,7 +28,8 @@ class CacheController extends AppController {
     }
 
   //for caching data
-	function cacheGenre(){
+  function cacheGenreTest(){
+ 
     $xml_data = array();    
     set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
@@ -740,7 +741,7 @@ STR;
 	  
     
     echo "============".date("Y-m-d H:i:s")."===============";
-    unlink('../webroot/uploads/allCache.txt');
+    unlink('../webroot/uploads/allCacheTest.txt');
     $handle = fopen('../webroot/uploads/allCacheTest.txt', 'w+');
     fwrite($handle, json_encode($xml_data));
     fclose($handle);
