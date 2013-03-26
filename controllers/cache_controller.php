@@ -30,7 +30,7 @@ class CacheController extends AppController {
   //for caching data
 	function cacheGenre(){
         
-    set_time_limit(0);
+    /*set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
     echo "============".date("Y-m-d H:i:s")."===============";
 
@@ -570,7 +570,7 @@ STR;
 	  //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
 	  
 	  
-    }
+    }*/
     
     //--------------------------------Library Top Ten Start----------------------------------------------------
 	  
@@ -585,6 +585,18 @@ STR;
       
       $libId = $val['Library']['id'];
       $country = $val['Library']['library_territory'];
+      
+      $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
+      $siteConfigData = $this->Album->query($siteConfigSQL);
+      $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+      
+      if(0 == $multiple_countries){
+        $countryPrefix = '';
+        $this->Country->setTablePrefix('');
+      } else {
+        $countryPrefix = strtolower($country)."_";
+        $this->Country->setTablePrefix($countryPrefix);
+      }
       
       $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
       $siteConfigData = $this->Album->query($siteConfigSQL);
@@ -704,9 +716,8 @@ STR;
 			} else {
 				$topDownload = array();
 			}
-
-      //		library top 10 cache set
       
+      //		library top 10 cache set      
       if( (count($topDownload) < 1) || ($topDownload === false) )
       {
         Cache::write("lib".$libId, Cache::read("lib".$libId) );
