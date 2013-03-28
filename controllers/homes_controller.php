@@ -152,7 +152,7 @@ class HomesController extends AppController
                     latest_downloads,
                     Songs AS Song
                         LEFT JOIN
-                    countries AS Country ON Country.ProdID = Song.ProdID
+                    ".$this->Session->read('multiple_countries')."countries AS Country ON Country.ProdID = Song.ProdID
                         LEFT JOIN
                     File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                         LEFT JOIN
@@ -204,7 +204,7 @@ class HomesController extends AppController
                     downloads,
                     Songs AS Song
                         LEFT JOIN
-                    countries AS Country ON Country.ProdID = Song.ProdID
+                    ".$this->Session->read('multiple_countries')."countries AS Country ON Country.ProdID = Song.ProdID
                         LEFT JOIN
                     File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                         LEFT JOIN
@@ -298,7 +298,7 @@ class HomesController extends AppController
               latest_downloads,
               Songs AS Song
                   LEFT JOIN
-              countries AS Country ON Country.ProdID = Song.ProdID
+              ".$this->Session->read('multiple_countries')."countries AS Country ON Country.ProdID = Song.ProdID
                   LEFT JOIN
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
@@ -350,7 +350,7 @@ class HomesController extends AppController
               downloads,
               Songs AS Song
                   LEFT JOIN
-              countries AS Country ON Country.ProdID = Song.ProdID
+              ".$this->Session->read('multiple_countries')."countries AS Country ON Country.ProdID = Song.ProdID
                   LEFT JOIN
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
@@ -465,6 +465,7 @@ class HomesController extends AppController
 				
 				
 				$this->Song->recursive = 2;
+                                $countryPrefix = $this->Session->read('multiple_countries');
 				 $topDownloaded_query =<<<STR
 				SELECT 
 					Song.ProdID,
@@ -497,7 +498,7 @@ class HomesController extends AppController
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-					countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 				WHERE
@@ -573,7 +574,7 @@ STR;
 		  }
 		  $data = array();
 
-
+                  $countryPrefix = $this->Session->read('multiple_countries');
 	 $sql_national_100 =<<<STR
 	SELECT 
 		Song.ProdID,
@@ -606,7 +607,7 @@ STR;
 			LEFT JOIN
 		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 			LEFT JOIN
-		countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+		{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 			LEFT JOIN
 		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
 	WHERE

@@ -8,8 +8,14 @@
 class Country extends AppModel
 {
   var $name = 'Country';
-//  var $useDbConfig = 'freegal';
+
   var $usetable = 'countries';
   
+  var $tablePrefix = '';
+  
+  function setTablePrefix($prefix){  
+
+    $this->tablePrefix = $prefix;
+  }
 }
 ?>

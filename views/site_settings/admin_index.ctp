@@ -57,6 +57,20 @@
                                 </tr>
                     <?php
                             }
+                            if($k == "multiple_countries") {
+                    ?>
+                                <tr><td colspan="2" align="center"><h1>Multiple Countries Table</h1></td></tr>
+                                <tr>
+                                    <td align="right" width="435"><?php echo $this->Form->label('Enable Multiple Countries Table Option'); ?></td>
+                                    <td align="left">
+                                        <?php
+                                            echo $this->Form->checkbox($k,array('label' => false ,'value' => $v, 'checked' => $v, 'div' => false, 'class' => 'form_fields'));
+                                        ?>
+                                    </td>
+                                </tr>
+                                    
+                    <?php
+                            }
                         }
                     ?>
                     <tr>
