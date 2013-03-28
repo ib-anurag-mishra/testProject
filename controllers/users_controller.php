@@ -78,6 +78,10 @@ Class UsersController extends AppController
 						$referral = explode(",",$library_data['Library']['library_domain_name']);
 						$this->redirect($referral[0]);
 					}
+                                        else if($library_data['Library']['library_authentication_method'] == 'ezproxy')
+                                        {
+                                            $this->redirect($library_data['Library']['library_ezproxy_referral']);
+                                        }
 					else
 					{
 						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
