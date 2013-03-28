@@ -30,7 +30,7 @@ class CacheController extends AppController {
   //for caching data
 	function cacheGenre(){
         
-    /*set_time_limit(0);
+    set_time_limit(0);
     $this->log("============".date("Y-m-d H:i:s")."===============",'debug');
     echo "============".date("Y-m-d H:i:s")."===============";
 
@@ -570,7 +570,7 @@ STR;
 	  //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
 	  
 	  
-    }*/
+    }
     
     //--------------------------------Library Top Ten Start----------------------------------------------------
 	  
