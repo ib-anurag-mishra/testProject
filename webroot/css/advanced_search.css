@@ -1,12 +1,14 @@
 body {
-	color: #666666;;
+	color: #000000;
 }
 
 a{
 	text-decoration: none;
 	cursor:pointer;
 }
-
+.breadCrumb {
+    margin: 15px 0 0 15px;
+}
 a:hover{
 	text-decoration: underline;
 }
@@ -23,14 +25,15 @@ a:hover{
 	padding: 15px 0 15px 15px;
 }
 #leftColWrapper H1{
-	margin: 0 0 15px 44px;text-align: center;width: 60%;
+	margin: 0 0 15px 0px;text-align: center;width: 67%;color:#666666;
 }
 #search_query{
-	border: 1px solid #CCCCCC;font-size: 12px;line-height: 1.33333;margin: 0 5px 7px 10%;width: 60%;
+	border: 1px solid #CCCCCC;font-size: 12px;line-height: 1.33333;margin: 0 5px 7px 4%;width: 60%;
 }
 #searchfilter{
-	margin: 0 0 10px 10%; text-align: center;width: 62%;
-	
+	margin: 0 0 10px 26px;
+    text-align: left;
+    width: 55%;	
 }
 #searchfilter li {
 	display: inline;
@@ -38,9 +41,16 @@ a:hover{
 #searchfilter li a{
 	border-right: 1px solid #B7B7B7;font-size: 12px;line-height: 1.18182;padding: 0 0.5em 0 0.2em;	
 }
+#list_last  a{
+	border-right: none !important;
+}
 
 #hide_blocks{
-	width:50px;height:30px;float:right;
+	width:78px;height:30px;float:right;
+}
+#show_blocks{
+	width:78px;height:30px;float:right;
+	display:none;
 }
 
 #leftColblock{
@@ -54,15 +64,21 @@ a:hover{
 }
 
 #albumblock  h2{
-	border-top: medium none;margin-top: -10px;
+	border-top: medium none;margin-top: -10px;color:#666666;
 }
 
 #albumblockR1{
 	margin-top:10px;float:left;
 }
+#albumblockR2{
+   display: block;
+    float: left;
+    width: 646px;
+
+}
 
 .albumblockC1{
-	float:left;width:320px;height:92px;
+	float:left;width:320px;height:86px;
 }
 .albumblockC2{
 	float:left;width:320px;
@@ -93,7 +109,7 @@ a:hover{
 }
 
 #ComposersWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #ComposersWrapper ul{
@@ -119,7 +135,7 @@ a:hover{
 }
 
 #GenreWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #GenreWrapper ul{
@@ -135,7 +151,7 @@ a:hover{
 }
 
 #ArtistWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #ArtistWrapper ul{
@@ -150,7 +166,7 @@ a:hover{
 }
 
 #LabelWrapper h2{
-	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;
+	border-top: medium none;margin-bottom: 5px;margin-top: -8px;font-size: 15px;color:#666666;
 }
 
 #LabelWrapper ul{
@@ -161,14 +177,15 @@ a:hover{
 }
 
 #rightCol{
-	float: right;padding: 15px;width: 300px;margin-top:10px;
+	float: right;padding: 15px;width: 300px;
 }
 
 #resultsSummary{
-margin-left: 15px; padding-top: 0px; position: absolute; width: 998px;
+margin-left: 15px; padding-top: 0px; position: relative; width: 998px;color:#666666;
 }
 .search_result_text{
 	float:left;
+	width: 910px;
 }
 
 #genreArtist{
@@ -187,6 +204,134 @@ margin-left: 15px; padding-top: 0px; position: absolute; width: 998px;
 	width:215px;
 	
 }
+
+#all_block{
+	float: left;
+	margin: 15px;
+	width: 988px;
+	border: 1px solid #DDDDDD;
+	border-radius: 4px 4px 4px 4px;
+	font-size: 11px;padding: 15px;
+	float: left; 
+	width: 958px;
+}
+#all_block h2{
+	border-top: medium none;margin-top: -10px;color:#666666;
+}
+
+#all_block  li{
+	border-bottom: 1px solid #ADADAD;
+    color: #0080FF;
+    font-size: 14px;
+    list-style: none outside none;
+    padding: 3px 0;
+    width: 267px;
+}
+
+#album_all_block{
+	font-size: 11px;margin: 0 0 15px;padding: 15px;
+}
+.albumblockR{
+	border-radius: 4px 4px 4px 4px;font-size: 11px;margin: 0 0 15px;padding: 15px;height: 59px;
+}
+
+.album_all_blockC1{
+	float:left;width:318px;height:92px;
+}
+.album_all_blockC2, .album_all_blockC3{
+	float:left;width:290px;
+}
+.albumblockR    img.art{
+	width: 65px;
+	border:1px solid #A2A2A2;
+	float:left;	
+}
+
+
+.genre_all_block1, .genre_all_block2, .genre_all_block3{
+	float:left;width:318px;
+}
+
+.label_all_block1, .label_all_block2, .label_all_block3{
+	float:left;width:318px;
+}
+
+.artist_all_block1, .artist_all_block2, .artist_all_block3{
+	float:left;width:318px;
+}
+.composer_all_block1, .composer_all_block2, .composer_all_block3{
+	float:left;width:318px;
+}
+
+
+
+
+div.paging_all_block{
+    background: none repeat scroll 0 0 #FFFFFF;
+    clear: both;
+    color: #000000;
+    float: right;
+    font-size: 13px;
+    margin-right: 19px;
+    padding-bottom: 10px;
+}
+
+div.paging_all_block span.disabled {
+    color: #DDDDDD;
+    display: inline;
+}
+div.paging_all_block span.disabled {
+    color: #DDDDDD;
+    display: inline;
+}
+div.paging_all_block span.current {
+    color: #000000;
+}
+div.paging_all_block span a {
+    color: #0080FF;
+    text-decoration: underline;
+}
+
+div.paging {
+    float: right;
+    margin-right: 10px;
+    padding-bottom: 10px;
+    text-align: right;
+	width: 95%;
+}
+
+div.paging{
+    color: #000000;
+}
+
+div.paging span.disabled {
+    color: #DDDDDD;
+}
+div.paging span.disabled {
+    color: #DDDDDD;
+}
+div.paging span.current {
+    color: #000000;
+}
+div.paging span a {
+    color: #0080FF;
+}
+
+div.paging span a, div.paging a {
+    /*color: #0080FF;*/
+    text-decoration: none;
+}
+
+#genreArtist {
+  margin: 10px 0 0 15px;
+}
+
+
+
+
+
+
+
 
 
 
