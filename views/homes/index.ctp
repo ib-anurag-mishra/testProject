@@ -524,15 +524,14 @@ $ieVersion =  ieversion();
 					<legend class="hidden">search</legend>
 					<strong class="logo-freegal">freegal</strong>
 					<div class="row">
-						<form controller="Home" class="search_form" id="HomeSearchForm" method="get" action="/homes/search" accept-charset="utf-8">
-						<span class="field"><input name="search" type="text" size="24" id="autoComplete" value="" /></span>
-						<input type="hidden" name="auto" size="24" id="auto" value="0" />
+						<form controller="Home" class="search_form" id="HomeSearchForm" method="get" action="/search/advanced_search" accept-charset="utf-8">
+						<span class="field"><input name="q" type="text" size="24" id="autoComplete" value="" /></span>
 						<span class="in">in</span>
-						<select title="Artists" id="type111" name="search_type"><option value="artist">Artists</option><option value="song">Song</option><option value="album">Album</option><option value="composer">Composer</option></select>
+						<select title="Artists" id="type111" name="type"><option value="artist">Artists</option><option value="song">Song</option><option value="album">Album</option><option value="genre">Genres</option><option value="composer">Composer</option><option value="label">Label</option></select>
 						<input type="submit" class="submit" value="ok" />
 						</form>
             <span class="artist_browse"><a href="/genres/view">A to Z Artist Browsing</a>&nbsp;&nbsp;&nbsp;</span>
-						<span class="advance_search"><a href="/homes/advance_search">Advanced Search</a>&nbsp;&nbsp;&nbsp;</span>
+						<span class="advance_search"><a href="/search/advanced_search">Advanced Search</a>&nbsp;&nbsp;&nbsp;</span>
 					</div>
 				</fieldset>
 			</span>

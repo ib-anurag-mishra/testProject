@@ -26,7 +26,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
-  var $components = array('Downloads','AuthRequest');
+  var $components = array('Downloads','AuthRequest', 'Solr');
 
 
   function index(){
@@ -4982,62 +4982,54 @@ STR;
 	private function getSearchAllList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
 
-        $matchType = 'All';
-        $artist = $searchText;
-        $composer = '';
-        $song = $searchText;
-        $album = $searchText;
-        $genre = '';
-        $sphinxFinalCondition = '@ArtistText "'.$searchText.'" | @SongTitle "'.$searchText.'" | @Title "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1 ';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
+    $queryVar   = $searchText;
+    $typeVar    = 'all';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
 
-
-        $_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$AllData = $this->paginate('Song');
-
-
+    
     foreach($AllData AS $key => $val){
 
-        $sobj = new SearchDataType;
-        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
-        $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
-        $sobj->ISRC                 = $val['Song']['ISRC'];
-
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        }
-            
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $val->SongTitle;
+      $sobj->Title                = $val->Title;
+      $sobj->SongArtist           = $val->Artist;
+      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration; 
+      $sobj->ISRC                 = $val->ISRC;
+      
+  
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+        
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
+        
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      ); 
 
-        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
+      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
 
@@ -5065,72 +5057,62 @@ STR;
    * @param string $library_terriotry
 	 * @return SearchDataType[]
    */
-	private function getSearchArtistList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
-
-        $matchType = 'All';
-        $artist = $searchText;
-        $composer = '';
-        $song = '';
-        $album = '';
-        $genre = '';
-        $sphinxFinalCondition = '@ArtistText "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
-
-        $_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$ArtistData = $this->paginate('Song');
-
-
-
-    foreach($ArtistData AS $key => $val){
-
-        $sobj = new SearchDataType;
-        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
-        $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
-        $sobj->ISRC                 = $val['Song']['ISRC'];
+  private function getSearchArtistList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
+    
+    $queryVar   = $searchText;
+    $typeVar    = 'artist';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
+      
+    
+    $search_list = array();  
+    foreach($ArtistData AS $key => $val){    
         
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $val->SongTitle;
+      $sobj->Title                = $val->Title;
+      $sobj->SongArtist           = $val->Artist;
+      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration; 
+      $sobj->ISRC                 = $val->ISRC;
+      
+  
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+      
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        }
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      ); 
+
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
+      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
         
-        
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
-
-        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
-
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
 
-
+    
     if(!empty($ArtistData)){
       return $data;
     }
@@ -5152,71 +5134,61 @@ STR;
    * @param string $library_terriotry
 	 * @return SearchDataType[]
    */
-	private function getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
+  private function getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
 
-        $matchType = 'All';
-        $artist = '';
-        $composer = '';
-        $song = '';
-        $album = $searchText;
-        $genre = '';
-        $sphinxFinalCondition = '@Title "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1 ';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
+    $queryVar   = $searchText;
+    $typeVar    = 'album';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
 
-
-        $_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$Albumlist = $this->paginate('Song');
-
+                
     foreach($Albumlist AS $key => $val){
 
-        $sobj = new SearchDataType;
-        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
-        $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
-        $sobj->ISRC                 = $val['Song']['ISRC'];
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $val->SongTitle;
+      $sobj->Title                = $val->Title;
+      $sobj->SongArtist           = $val->Artist;
+      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->ISRC                 = $val->ISRC;
 
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+      
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        }
         
-        
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      );
 
-        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
+      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
-
-
+    
     if(!empty($Albumlist)){
       return $data;
     }
@@ -5239,67 +5211,54 @@ STR;
    */
 	private function getSearchSongList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
-        $matchType = 'All';
-        $artist = '';
-        $composer = '';
-        $song = $searchText;
-        $album = '';
-        $genre = '';
-        $sphinxFinalCondition = '@SongTitle "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
+    $queryVar   = $searchText;
+    $typeVar    = 'song';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
 
 
-				$_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$SongData = $this->paginate('Song');
-
-
-    foreach($SongData AS $key => $val){
-
-        $sobj = new SearchDataType;
-        $sobj->SongProdID             = (int)$this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle              = (string)$val['Song']['SongTitle'];
-        $sobj->SongArtist             = (string)$val['Song']['Artist'];
-        $sobj->Sample_Duration        = (string)$val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration    = (string)$val['Song']['FullLength_Duration'];
-        $sobj->ISRC                   = (string)$val['Song']['ISRC'];
+    foreach($SongData AS $key => $val){        
         
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
-        
-        $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $val->SongTitle;
+      $sobj->Title                = $val->Title;
+      $sobj->SongArtist           = $val->Artist;
+      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->ISRC                 = $val->ISRC;
 
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL        = Configure::read('App.Music_Path').$sampleFileURL;
-        }
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
         
         
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      );
 
-        $sobj->AlbumProdID            = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle             = (string)$albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist            = (string)$albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
+      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+
 
     }
 
