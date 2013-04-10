@@ -36,6 +36,7 @@
 		$getData['Library']['library_sip_terminal_password'] = "";
 		$getData['Library']['library_sip_version'] = "";
 		$getData['Library']['library_sip_error'] = "on";
+                $getData['Library']['minimum_card_length'] = 5;
 		$getData['Library']['library_sip_institution'] = "";
                 $getData['Library']['library_sip_command'] = "";
 		$getData['Library']['library_sip_24_check'] = "yes";
@@ -734,7 +735,21 @@
 								);
 							?>
 						</td>
-					</tr> 					
+					</tr> 
+                                        <tr>
+						<td align="right" width="255"><?php echo $this->Form->label(null, 'Select minimum card length ( If Applicable )');?></td>
+						<td align="left">
+							<?php
+								echo $this->Form->input('minimum_card_length', array('options' => array(
+									'1' => '1',
+                                                                        '2' => '2',
+                                                                        '3' => '3',
+                                                                        '4' => '4',
+                                                                        '5' => '5'),'label' => false, 'div' => false, 'class' => 'select_fields','default' => $getData['Library']['minimum_card_length'])
+								);
+							?>
+						</td>
+					</tr>
 					<tr><td colspan="2">&nbsp;</td></tr>
 					<tr><td colspan="2"><?php echo $this->Form->label('Logo Upload ( Image height should not exceed 60 pixels )');?></td></tr>
 					<tr>
