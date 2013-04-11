@@ -1077,7 +1077,7 @@ STR;
 							$songUrl = shell_exec('perl files/tokengen ' . $sampleFile['CdnPath']."/".$sampleFile['SaveAsName']);
 							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
 							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
-							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$psong->ProdID.', "'.$this->webroot.'");'));
+							echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$psong->ProdID.', "'.base64_encode($psong->provider_type).'", "'.$this->webroot.'");'));
 							echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i));
 							echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");'));
 							?>
