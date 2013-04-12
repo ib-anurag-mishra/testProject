@@ -1066,7 +1066,9 @@ STR;
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->SongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28); ?>
+             <?php  $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle)); ?>
+
+							<span title="<?php echo str_replace('"','',$showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28); ?>
               <?php if ($psong->Advisory == 'T') {
             		echo '<font class="explicit"> (Explicit)</font>';
             	}
