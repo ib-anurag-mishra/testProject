@@ -148,9 +148,6 @@
                        error:function (XMLHttpRequest, textStatus, errorThrown) {}
                });  
                    
-                   
-                  
-               }); 
                                             
           <?php } ?>                                  
                                             
