@@ -204,6 +204,13 @@ function sendReportEmail($typereport){
 	return $success;
 }
 
+function sendalert($message)
+{
+    $subject = "Monthly-Weekly Report failed";
+    $success = mail(REPORT_TO,$subject,$message,REPORT_HEADERS);
+    return $success;
+}
+
 /*
  Function Name : sendFile
  Desc : function used for uploading the file to CDN
