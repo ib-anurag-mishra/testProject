@@ -484,31 +484,31 @@ class SolrComponent extends Object {
         if($type != 'all'){
           switch($type){
             case 'song':
-              $query = '(CSongTitle:('.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.'*)';
+              $query = '(CSongTitle:('.strtolower($searchkeyword).'*) OR SongTitle (:'.$searchkeyword.'*))';
               $field = 'SongTitle';
               break;
             case 'genre':
-              $query = '(CGenre:(*'.strtolower($searchkeyword).'*) OR Genre:*'.$searchkeyword.'*)';
+              $query = '(CGenre:(*'.strtolower($searchkeyword).'*) OR Genre (:*'.$searchkeyword.'*))';
               $field = 'Genre';
               break;
             case 'album':
-              $query = '(CTitle:('.strtolower($searchkeyword).'*) OR Title:'.$searchkeyword.'*)';
+              $query = '(CTitle:('.strtolower($searchkeyword).'*) OR Title (:'.$searchkeyword.'*))';
               $field = 'Title';
               break;
             case 'artist':
-              $query = '(CArtistText:('.strtolower($searchkeyword).'*) OR ArtistText:'.$searchkeyword.'*)';
+              $query = '(CArtistText:('.strtolower($searchkeyword).'*) OR ArtistText (:'.$searchkeyword.'*))';
               $field = 'ArtistText';
               break;
             case 'label':
-              $query = '(CLabel:('.strtolower($searchkeyword).'*) OR Label:'.$searchkeyword.'*)';
+              $query = '(CLabel:('.strtolower($searchkeyword).'*) OR Label: ('.$searchkeyword.'*))';
               $field = 'Label';
               break;
             case 'composer':
-              $query = '(CComposer:('.strtolower($searchkeyword).'*) OR Composer:'.$searchkeyword.'*)';
+              $query = '(CComposer:('.strtolower($searchkeyword).'*) OR Composer: ('.$searchkeyword.'*))';
               $field = 'Composer';
               break;
             default:
-              $query = '(CSongTitle:('.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.'*)';
+              $query = '(CSongTitle:('.strtolower($searchkeyword).'*) OR SongTitle: ('.$searchkeyword.'*))';
               $field = 'SongTitle';
               break;
           }
