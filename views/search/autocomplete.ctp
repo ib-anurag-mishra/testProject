@@ -6,10 +6,12 @@
  */
   if($type != 'all'){
     foreach($records as $record){
+      $record = mb_strtolower($record, 'UTF-8');
       echo "$record|$record\n";
     }
   } else {
     foreach($records as $record){
+      $record = mb_strtolower($record, 'UTF-8');
       echo "$record\n";
     }
   }
