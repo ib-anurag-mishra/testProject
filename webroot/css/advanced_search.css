@@ -326,6 +326,10 @@ div.paging span a, div.paging a {
   margin: 10px 0 0 15px;
 }
 
+.ac_results ul li {
+ text-align: left;
+}
+
 
 
 
