@@ -516,13 +516,11 @@ class SolrComponent extends Object {
           $query = $query.' AND Territory:'.$country.$cond;
 
           $additionalParams = array(
-            'facet' => 'true',
-            'facet.field' => array(
+            'group' => 'true',
+            'fl' => array(
               $field
             ),
-            'facet.query' => $query,
-            'facet.mincount' => 1,
-            'facet.limit' => $limit
+            'group.query' => $query,
           );
 
           $response = self::$solr->search( $query, 0, 0, $additionalParams);
