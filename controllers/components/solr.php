@@ -516,11 +516,13 @@ class SolrComponent extends Object {
           $query = $query.' AND Territory:'.$country.$cond;
 
           $additionalParams = array(
-            'group' => 'true',
-            'fl' => array(
+            'facet' => 'true',
+            'facet.field' => array(
               $field
             ),
-            'group.query' => $query,
+            'facet.query' => $query,
+            'facet.mincount' => 1,
+            'facet.limit' => $limit
           );
 
           $response = self::$solr->search( $query, 0, 0, $additionalParams);
@@ -565,7 +567,7 @@ class SolrComponent extends Object {
 
     function escapeSpace($keyword){
       //$keyword = mb_strtolower($keyword, 'UTF-8');
-      $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array(' ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword);
+      $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword);
       //$keyword = utf8_decode($keyword);
       //$keyword = utf8_decode(str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $keyword));
       return $keyword;
