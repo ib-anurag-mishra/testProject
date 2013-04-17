@@ -87,8 +87,13 @@
 					<?php
 						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
-							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
-							echo '<br />';
+                                                     if(strstr($album['Album']['ArtistURL'], 'http://')){
+                                                         echo $html->link($album['Album']['ArtistURL'], $album['Album']['ArtistURL'], array('target' => 'blank'));
+							 echo '<br />';
+                                                     }else{
+                                                         echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
+							 echo '<br />';  
+                                                     }							
 						}
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<font class="explicit"> (Explicit)</font>';
