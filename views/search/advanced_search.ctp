@@ -565,8 +565,13 @@ STR;
 
 						$artist_name = str_replace('"','',$artist->ArttistText);
 						$artist_name_text = truncate_text($artist_name, 30);
+            
+            $utf8_decode_artist_name = str_replace('"','',truncate_text($artist->ArtistText, 30));
+            $utf8_decode_artist_name = iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
+
+
 						$tilte = urlencode($artist->ArtistText);
-            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+            $link = $html->link($utf8_decode_artist_name, array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 						$count = $artist->numFound;
             $artist_list .=<<<STR
 						<li ><span class="left_text">$link</span><span class="right_text">($count)</span></li>
