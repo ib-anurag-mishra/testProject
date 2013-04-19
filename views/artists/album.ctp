@@ -75,7 +75,10 @@ $explodeUrl = explode("page:", $_SERVER['HTTP_REFERER']);
 $explodeUrl = explode("genres/view/", $explodeUrl[0]);
 $explodeUrl[1] = str_replace("/", "", $explodeUrl[1]);
 
-if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_REFERER'], "page:") == "")
+/*
+ * This part of code is commented to resolve issue: Back button directing patrons to All Music from an artist page going through Genres
+ */
+/*if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_REFERER'], "page:") == "")
 {
     echo $javascript->link('backfix.min.js');
     ?>
@@ -102,7 +105,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
     }
     </script>
 <?php
-}
+}*/
 ?>
 <div style="padding-left:46px;padding-right:40px;" >
 <table  width="100%">
