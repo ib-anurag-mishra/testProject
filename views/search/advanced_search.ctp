@@ -106,7 +106,9 @@ function truncate_text($text, $char_count){
 		$modified_text = $text;
 	}
 
-	return utf8_decode($modified_text);
+	//return utf8_decode($modified_text);
+	$utf8_decode_artist_name = utf8_decode($modified_text);
+	return iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
 }
 
 //Code for check Sales date
@@ -553,6 +555,7 @@ STR;
 					$column = 1;
 					$artist_no = 0;
 					foreach($artists as $artist){
+
 						$column = 1;
 						$artist_no++;
 						if($index == 0){
@@ -566,12 +569,12 @@ STR;
 						$artist_name = str_replace('"','',$artist->ArttistText);
 						$artist_name_text = truncate_text($artist_name, 30);
             
-            $utf8_decode_artist_name = str_replace('"','',truncate_text($artist->ArtistText, 30));
-            $utf8_decode_artist_name = iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
+            //$utf8_decode_artist_name = str_replace('"','',truncate_text($artist->ArtistText, 30));
+            //$utf8_decode_artist_name = iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
 
 
 						$tilte = urlencode($artist->ArtistText);
-            $link = $html->link($utf8_decode_artist_name, array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 						$count = $artist->numFound;
             $artist_list .=<<<STR
 						<li ><span class="left_text">$link</span><span class="right_text">($count)</span></li>
@@ -921,6 +924,7 @@ STR;
 				<ul>
 						<?php foreach($artists as $artist)
 				{
+						
 								$tilte = urlencode($artist->ArtistText);
 								$artist_name_text = truncate_text($artist->ArtistText, 30);
                 $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
@@ -1060,14 +1064,14 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$psong->ArtistText); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
+							<span title="<?php echo str_replace('"','',iconv(mb_detect_encoding(utf8_decode($psong->ArtistText)), "UTF-8//IGNORE", utf8_decode($psong->ArtistText))); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
 						</p>
 					</td>
 					<td width="170" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Composer); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30); ?></span></p>
+						<p><span title="<?php echo str_replace('"','',iconv(mb_detect_encoding(utf8_decode($psong->Composer)), "UTF-8//IGNORE", utf8_decode($psong->Composer))); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30); ?></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$psong->Title); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30)); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',iconv(mb_detect_encoding(utf8_decode($psong->Title)), "UTF-8//IGNORE", utf8_decode($psong->Title))); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30)); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
