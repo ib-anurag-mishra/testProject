@@ -4996,14 +4996,13 @@ STR;
 
     
     foreach($AllData AS $key => $val){
-
         
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $val->SongTitle;
-      $sobj->Title                = $val->Title;
-      $sobj->SongArtist           = $val->Artist;
-      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->SongTitle            = iconv(mb_detect_encoding(utf8_decode($val->SongTitle)), "UTF-8//IGNORE", utf8_decode($val->SongTitle));
+      $sobj->Title                = iconv(mb_detect_encoding(utf8_decode($val->Title)), "UTF-8//IGNORE", utf8_decode($val->Title));
+      $sobj->SongArtist           = iconv(mb_detect_encoding(utf8_decode($val->Artist)), "UTF-8//IGNORE", utf8_decode($val->Artist));
+      $sobj->ArtistText           = iconv(mb_detect_encoding(utf8_decode($val->ArtistText)), "UTF-8//IGNORE", utf8_decode($val->ArtistText));
       $sobj->Sample_Duration      = $val->Sample_Duration;
       $sobj->FullLength_Duration  = $val->FullLength_Duration; 
       $sobj->ISRC                 = $val->ISRC;
@@ -5026,8 +5025,8 @@ STR;
       ); 
 
       $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
@@ -5077,10 +5076,10 @@ STR;
         
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $val->SongTitle;
-      $sobj->Title                = $val->Title;
-      $sobj->SongArtist           = $val->Artist;
-      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->SongTitle            = iconv(mb_detect_encoding(utf8_decode($val->SongTitle)), "UTF-8//IGNORE", utf8_decode($val->SongTitle));
+      $sobj->Title                = iconv(mb_detect_encoding(utf8_decode($val->Title)), "UTF-8//IGNORE", utf8_decode($val->Title));
+      $sobj->SongArtist           = iconv(mb_detect_encoding(utf8_decode($val->Artist)), "UTF-8//IGNORE", utf8_decode($val->Artist));
+      $sobj->ArtistText           = iconv(mb_detect_encoding(utf8_decode($val->ArtistText)), "UTF-8//IGNORE", utf8_decode($val->ArtistText));
       $sobj->Sample_Duration      = $val->Sample_Duration;
       $sobj->FullLength_Duration  = $val->FullLength_Duration; 
       $sobj->ISRC                 = $val->ISRC;
@@ -5103,11 +5102,12 @@ STR;
       ); 
 
       $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-        
+      
+              
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -5154,10 +5154,10 @@ STR;
 
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $val->SongTitle;
-      $sobj->Title                = $val->Title;
-      $sobj->SongArtist           = $val->Artist;
-      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->SongTitle            = iconv(mb_detect_encoding(utf8_decode($val->SongTitle)), "UTF-8//IGNORE", utf8_decode($val->SongTitle));
+      $sobj->Title                = iconv(mb_detect_encoding(utf8_decode($val->Title)), "UTF-8//IGNORE", utf8_decode($val->Title));
+      $sobj->SongArtist           = iconv(mb_detect_encoding(utf8_decode($val->Artist)), "UTF-8//IGNORE", utf8_decode($val->Artist));
+      $sobj->ArtistText           = iconv(mb_detect_encoding(utf8_decode($val->ArtistText)), "UTF-8//IGNORE", utf8_decode($val->ArtistText));
       $sobj->Sample_Duration      = $val->Sample_Duration;
       $sobj->FullLength_Duration  = $val->FullLength_Duration;
       $sobj->ISRC                 = $val->ISRC;
@@ -5180,11 +5180,12 @@ STR;
       );
 
       $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
+      
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
@@ -5228,10 +5229,10 @@ STR;
         
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $val->SongTitle;
-      $sobj->Title                = $val->Title;
-      $sobj->SongArtist           = $val->Artist;
-      $sobj->ArtistText           = $val->ArtistText;
+      $sobj->SongTitle            = iconv(mb_detect_encoding(utf8_decode($val->SongTitle)), "UTF-8//IGNORE", utf8_decode($val->SongTitle));
+      $sobj->Title                = iconv(mb_detect_encoding(utf8_decode($val->Title)), "UTF-8//IGNORE", utf8_decode($val->Title));
+      $sobj->SongArtist           = iconv(mb_detect_encoding(utf8_decode($val->Artist)), "UTF-8//IGNORE", utf8_decode($val->Artist));
+      $sobj->ArtistText           = iconv(mb_detect_encoding(utf8_decode($val->ArtistText)), "UTF-8//IGNORE", utf8_decode($val->ArtistText));
       $sobj->Sample_Duration      = $val->Sample_Duration;
       $sobj->FullLength_Duration  = $val->FullLength_Duration;
       $sobj->ISRC                 = $val->ISRC;
@@ -5254,11 +5255,10 @@ STR;
       );
 
       $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-      $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-      $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
 
     }
 
