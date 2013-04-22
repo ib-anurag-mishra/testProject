@@ -234,7 +234,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market .= "$country #*#10#*#100";
                     fwrite($file, $market . "\n");
 
-                    $sql = 'SELECT COUNT(*) AS Count FROM downloads';
+                    // Change: This Query is no longer is used.
+                    // Date: Apr-22-2013
+                    /*$sql = 'SELECT COUNT(*) AS Count FROM downloads';
                     $result2 = mysql_query($sql);
                     
                     if($result2)
@@ -246,7 +248,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         sendalert("Query failed: ".$sql);
                         die(" Query failed: ". $sql. " Error: " .mysql_error());
                     }
-                    $row = mysql_fetch_array($result2, MYSQL_ASSOC);
+                    $row = mysql_fetch_array($result2, MYSQL_ASSOC);*/
                     $trailer = "Z#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $trailer .= $numberOfSalesRecords . "#*#"; // Number of Standard Sales Records (total number of N records)
                     $trailer .= "1#*#"; // Number of Market Share Records (total number of M records)
@@ -477,7 +479,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market .= " $country #*#11#*#100";
                     fwrite($file, $market . "\n");
 
-                    $sql = 'SELECT COUNT(*) AS Count FROM downloads';
+                    // Change: This Query is no longer is used.
+                    // Date: Apr-22-2013
+                    /*$sql = 'SELECT COUNT(*) AS Count FROM downloads';
                     $result2 = mysql_query($sql);
                     
                     if($result2)
@@ -490,7 +494,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         die("Query failed: ". $sql. " Error: " .mysql_error());
                     }
                         
-                    $row = mysql_fetch_array($result2, MYSQL_ASSOC);
+                    $row = mysql_fetch_array($result2, MYSQL_ASSOC);*/
 
                     $trailer = "Z#*#PM43#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $trailer .= $numberOfSalesRecords . "#*#"; // Number of Standard Sales Records (total number of N records)
