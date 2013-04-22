@@ -9,37 +9,43 @@
 Class AuthRequestComponent extends Object
 {
      function getAuthResponse($data,$authUrl) {
-		App::import(array('Xml'));
-		if(!empty($data))
-		{
-			$str = '<data ';
-			foreach($data as $key=>$value)
-			{
-				$str = $str.$key.'="'.htmlentities($value).'" ';
-			}
-			$str = $str."></data>";
-		}
-		$post_data = array('xml'=>$str);
-		$url = $authUrl;
-		$ch=curl_init();
-		// tell curl target url
-		curl_setopt($ch, CURLOPT_URL, $url);
-		// tell curl we will be sending via POST
-		curl_setopt($ch, CURLOPT_POST, true);
-		// tell it not to validate ssl cert
-		curl_setopt($ch, CURLOPT_SSLVERSION, 3);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		//curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-		//curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt"); 
-		// tell it where to get POST variables from
-		curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
-		// make the connection
-		$result = curl_exec($ch);
-		curl_close($ch);
-   		$result =& new Xml($result);
-		$result = Set::reverse($result);
-		return $result;
+            App::import(array('Xml'));
+            if(!empty($data))
+            {
+                    $str = '<data ';
+                    foreach($data as $key=>$value)
+                    {
+                            $str = $str.$key.'="'.htmlentities($value).'" ';
+                    }
+                    $str = $str."></data>";
+            }
+            $post_data = array('xml'=>$str);
+            $url = $authUrl;
+
+            $ch=curl_init();
+            // tell curl target url
+            curl_setopt($ch, CURLOPT_URL, $url);
+            // tell curl we will be sending via POST
+            curl_setopt($ch, CURLOPT_POST, true);
+            // tell it not to validate ssl cert
+            curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            //curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+            //curl_setopt($ch, CURLOPT_CAINFO, getcwd() . "/CAcerts/BuiltinObjectToken-EquifaxSecureCA.crt"); 
+            // tell it where to get POST variables from
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
+            // make the connection
+                $result = curl_exec($ch);
+
+
+            print_r( $result);
+            die;
+
+            curl_close($ch);
+            $result =& new Xml($result);
+            $result = Set::reverse($result);
+            return $result;
     }
 
 	function getRestResponse($data,$authUrl)

@@ -514,10 +514,18 @@
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
 						</tr>	
-                                                <tr>
+                                                	
+					<tr>
+					<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+					<td  style="font-size:12px;">
+						<input id="varialbe_index_flag00" type="radio" name="data[Variable][0][variable_index]" value="1" class="form_fields"  >&nbsp;Index Value&nbsp;<input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="15" id="authentication_variable_index0">
+						<input id="varialbe_index_flag10" type="radio" name="data[Variable][0][variable_index]" value="2" class="form_fields"  >&nbsp;All Index
+					</td>
+					</tr>
+<!--                                                <tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index0"></td>                                     
-						</tr>
+						</tr>-->
 						<tr id="msgNo">
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
@@ -537,6 +545,7 @@
 					<?php
 					}else{
 						$count = count($allVariables)+1;
+                                                //print_r($allVariables);
 						foreach($allVariables as $k=>$v){
 							$j = $k+1;
 					?>	
@@ -585,11 +594,19 @@
 							</tr>
                                                         
                                                         
-                                                       <tr>
-							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
-							<td aligh="left" class="libalign"><input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index<?php echo $k; ?>" value="<?php echo $v['Variable']['authentication_variable_index']; ?>"></td>                                     
-                                                       </tr>
                                                         
+                                                        
+                                                  
+                                                        <tr>
+					<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+					<td  style="font-size:12px;">
+                                            
+						<input id="varialbe_index_flag0<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="1" class="form_fields"  <?php if($v['Variable']['variable_index'] == 1) { ?> checked="checked" <?php } ?>>&nbsp;Index Value&nbsp;<input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable_index]" value="<?php if($v['Variable']['variable_index'] == 1) { echo $v['Variable']['authentication_variable_index'];} ?>" class="form_fields" size="15" id="authentication_variable_index<?php echo $k; ?>">
+						<input id="varialbe_index_flag1<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="2" class="form_fields"  <?php if($v['Variable']['variable_index'] == 2) { ?> checked="checked" <?php } ?>>&nbsp;All Index
+					</td>
+					</tr>
+                                                        
+                                              
                                                         
 							<tr id="resArr<?php echo $k; ?>" <?php if($var != 'contains'){ ?> style="display:none"<?php } ?>>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Result Array');?></td>
