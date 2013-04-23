@@ -6,12 +6,12 @@
  */
   if($type != 'all'){
     foreach($records as $record){
-      $this->getTextEncode($record);
+      $record = $this->getTextEncode($record);
       echo "$record|$record\n";
     }
   } else {
     foreach($records as $record){
-      $this->getTextEncode($record);
+      $record = $this->getTextEncode($record);
       echo "$record\n";
     }
   }
