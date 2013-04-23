@@ -36,11 +36,11 @@ Class AuthRequestComponent extends Object
             curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
             // make the connection
-                $result = curl_exec($ch);
+            $result = curl_exec($ch);
 
 
-            print_r( $result);
-            die;
+            //print_r( $result);
+            //die;
 
             curl_close($ch);
             $result =& new Xml($result);
