@@ -102,46 +102,53 @@ Description : Function for sending report through SFTP
 
 function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 {
-	if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
-	{
-		echo "Not Able to Establish Connection\n";
-		return false;
-	}
-	else
-	{
-		if(!ssh2_auth_password($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
-		{
-			echo "fail: unable to authenticate\n";
-			return false;
-		}
-		else
-		{
-			$sftp = ssh2_sftp($con);
-			if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH.$typeReport."/"))
-			{
-				ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH.$typeReport."/");
-			}
+    $name = explode("PM43_W_", $src);
+    $reportName = "PM43_W_".$name[1];
+    $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
+    $reportName = explode($showEndDate, $reportName);
+    $reportName = str_replace(".txt","",$reportName[1]);
+    $reportName = ltrim(str_replace("_"," ",$reportName));
 
-			if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH.$typeReport."/".$dst, 0644)){
-				echo "error sending " . $typeRepport . " report to Sony server\n";
-				fwrite($logFileWrite, "error sending " . $typeRepport . " report to Sony server\n");
-				return false;
-			}
-			else
-			{
-				echo ucfirst($typeReport) . " Report Sucessfully sent\n";
-				fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
-				sendReportEmail($typeReport);
-				return true;
-			}
-		}
-	}
+    if(!($con = ssh2_connect(REPORTS_SFTP_HOST,REPORTS_SFTP_PORT)))
+    {
+        echo "Not Able to Establish Connection\n";
+        return false;
+    }
+    else
+    {
+        if(!ssh2_auth_password($con,REPORTS_SFTP_USER,REPORTS_SFTP_PASS))
+        {
+            echo "fail: unable to authenticate\n";
+            return false;
+        }
+        else
+        {
+            $sftp = ssh2_sftp($con);
+            if(!is_dir("ssh2.sftp://$sftp".REPORTS_SFTP_PATH.$typeReport."/"))
+            {
+                ssh2_sftp_mkdir($sftp,REPORTS_SFTP_PATH.$typeReport."/");
+            }
+
+            if(!ssh2_scp_send($con, $src, REPORTS_SFTP_PATH.$typeReport."/".$dst, 0644)){
+                echo "error sending " . $typeRepport . " report to Sony server\n";
+                fwrite($logFileWrite, "error sending " . $typeRepport . " report to Sony server\n");
+                return false;
+            }
+            else
+            {
+                echo ucfirst($typeReport) . " Report Sucessfully sent\n";
+                fwrite($logFileWrite, ucfirst($typeReport) . " Report Sucessfully sent\n");
+                sendReportEmail($typeReport, $reportName);
+                return true;
+            }
+        }
+    }
 }
 
 function resetDownloads()
 {
     date_default_timezone_set("America/New_York");
-	$currentDate = date('Y-m-d');
+    $currentDate = date('Y-m-d');
     $nextDayTS = strtotime($currentDate); 
     $nextDay = date('Y-m-d', strtotime('+1 day', $nextDayTS));    
     $date = date('y-m-d');
@@ -153,43 +160,43 @@ function resetDownloads()
     $results = mysql_query($qry);
     while($resultsArr = mysql_fetch_assoc($results))
     {
-		$downloadType = $resultsArr['library_download_type'];	
-		if($downloadType == "daily")
-		{
-			$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-			mysql_query($sql);            
-		}
-		else if($downloadType == "weekly")
-		{
-			if($currentDate == $weekFirstDay)
-			{
-			$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-			mysql_query($sql);
-			}
-		}
-		else if($downloadType == "monthly")
-		{
-			if($currentDate == $monthFirstDate)
-			{
-			$sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
-			mysql_query($sql);
-			}
-		}
-		
-		$libraryId = $resultsArr['id'];	
-		$sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
-		$result = mysql_query($sql);
-		$row = mysql_fetch_assoc($result);
-		$count = $row['count'];	
-		$sql="UPDATE `libraries` SET library_available_downloads=library_available_downloads+".$count." Where id=".$libraryId;	
-		mysql_query($sql);
-		$qry = "Delete from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND library_id=".$libraryId;
-		mysql_query($qry);
-		
-		if(($resultsArr['library_available_downloads'] > 0) && ($resultsArr['library_download_limit'] > $resultsArr['library_current_downloads'])){		
-			$qry = "UPDATE wishlists SET `delete_on` = '".$nextDay."' WHERE `library_id` = ".$libraryId;		
-			mysql_query($qry);
-		}
+        $downloadType = $resultsArr['library_download_type'];	
+        if($downloadType == "daily")
+        {
+            $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+            mysql_query($sql);            
+        }
+        else if($downloadType == "weekly")
+        {
+            if($currentDate == $weekFirstDay)
+            {
+                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                mysql_query($sql);
+            }
+        }
+        else if($downloadType == "monthly")
+        {
+            if($currentDate == $monthFirstDate)
+            {
+                $sql = "UPDATE `libraries` SET `library_current_downloads` = '0' WHERE `libraries`.`id` =".$resultsArr['id'];
+                mysql_query($sql);
+            }
+        }
+
+        $libraryId = $resultsArr['id'];	
+        $sql = "SELECT count(*) as count from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND `library_id` = ".$libraryId;	
+        $result = mysql_query($sql);
+        $row = mysql_fetch_assoc($result);
+        $count = $row['count'];	
+        $sql="UPDATE `libraries` SET library_available_downloads=library_available_downloads+".$count." Where id=".$libraryId;	
+        mysql_query($sql);
+        $qry = "Delete from wishlists where `delete_on` <= '".$currentDate."' AND `delete_on` != '0000-00-00' AND library_id=".$libraryId;
+        mysql_query($qry);
+
+        if(($resultsArr['library_available_downloads'] > 0) && ($resultsArr['library_download_limit'] > $resultsArr['library_current_downloads'])){		
+            $qry = "UPDATE wishlists SET `delete_on` = '".$nextDay."' WHERE `library_id` = ".$libraryId;		
+            mysql_query($qry);
+        }
     }
 }
 
@@ -198,15 +205,16 @@ Function Name : sendReportEmail
 Description : Function for sending Email for Reports
 */
 
-function sendReportEmail($typereport){
-	$subject = $typereport.REPORT_SUBJECT;
-	$success = mail(REPORT_TO,$subject,REPORT_BODY,REPORT_HEADERS);
-	return $success;
+function sendReportEmail($typereport, $reportName){
+    $subject = $reportName." ".$typereport." ".REPORT_SUBJECT;
+    $body = $reportName." ".$typereport." ".REPORT_BODY;
+    $success = mail(REPORT_TO,$subject,$body,REPORT_HEADERS);
+    return $success;
 }
 
 function sendalert($message)
 {
-    $subject = "Monthly-Weekly Report failed";
+    $subject = "Monthly-Weekly Report failed";    
     $success = mail(REPORT_TO,$subject,$message,REPORT_HEADERS);
     return $success;
 }
