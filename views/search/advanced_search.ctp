@@ -106,8 +106,14 @@ function truncate_text($text, $char_count){
 		$modified_text = $text;
 	}
 
-	$utf8_decode_artist_name = utf8_decode($modified_text);
-	return iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
+  //$utf8_decode_artist_name = utf8_decode($modified_text);
+  //return iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
+  if('' != $obj){
+    return $obj->getTextEncode($modified_text);
+  }else{
+    return $modified_text;
+  }
+
 }
 
 //Code for check Sales date
@@ -573,13 +579,17 @@ STR;
             echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
             $ArtistText = iconv(mb_detect_encoding($ArtistText), "WINDOWS-1252//IGNORE", $ArtistText);
             $ArtistText = iconv(mb_detect_encoding($ArtistText), "UTF-8//IGNORE", $ArtistText);
-            echo 'Result -> '; var_dump($ArtistText); echo '<br />';
+            echo 'Result -> '; var_dump($ArtistText); echo '<br /><br />';
+
+            $ArtistText = $artist->ArtistText;
+            echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
             echo 'Call -> '; var_dump($this->getTextEncode($ArtistText)); echo '<br />';
             echo '<br />=================================<br />';
 
 
+
 						$tilte = urlencode($artist->ArtistText);
-            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 						$count = $artist->numFound;
             $artist_list .=<<<STR
 						<li ><span class="left_text">$link</span><span class="right_text">($count)</span></li>
