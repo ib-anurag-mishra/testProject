@@ -96,7 +96,7 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 	return $pagination_str;
 }
 
-function truncate_text($text, $char_count){
+function truncate_text($text, $char_count, $obj = null){
 	if(strlen($text) > $char_count) {
 		$modified_text = substr($text, 0, $char_count);
 		$modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
