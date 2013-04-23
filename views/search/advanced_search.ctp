@@ -321,14 +321,14 @@ STR;
 
 					}
 
-					$album_title = truncate_text($palbum->Title, 30);
+					$album_title = truncate_text($palbum->Title, 30, $this);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$album_label = $palbum->Label;
 					$tilte = urlencode($palbum->Title);
           $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
           $linkProviderType = base64_encode($palbum->provider_type);
 		  if(!empty($album_label)){
-			$album_label_str = "Label: " . truncate_text($album_label, 32);
+			$album_label_str = "Label: " . truncate_text($album_label, 32, $this);
 		  }
 		  else{
 			$album_label_str = "";
@@ -414,7 +414,7 @@ STR;
 						}
 
 						$genre_name = str_replace('"','',$genre->Genre);
-						$genre_name_text = truncate_text($genre_name, 30);
+						$genre_name_text = truncate_text($genre_name, 30, $this);
 						$tilte = urlencode($genre->Genre);
             $name = $genre->Genre;
             $count = $genre->numFound;
@@ -493,7 +493,7 @@ STR;
 						}
 
 						$label_name = str_replace('"','',$label->Label);
-						$label_name_text = truncate_text($label_name, 30);
+						$label_name_text = truncate_text($label_name, 30, $this);
 						$tilte = urlencode($label->Label);
             $name = $label->Label;
             $count = $label->numFound;
@@ -572,9 +572,9 @@ STR;
 						}
 
 						$artist_name = str_replace('"','',$artist->ArttistText);
-						$artist_name_text = truncate_text($artist_name, 30);
+						$artist_name_text = truncate_text($artist_name, 30, $this);
             
-            echo '<br />=================================<br />';
+            /*echo '<br />=================================<br />';
             $ArtistText = $artist->ArtistText;
             echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
             $ArtistText = iconv(mb_detect_encoding($ArtistText), "WINDOWS-1252//IGNORE", $ArtistText);
@@ -584,7 +584,7 @@ STR;
             $ArtistText = $artist->ArtistText;
             echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
             echo 'Call -> '; var_dump($this->getTextEncode($ArtistText)); echo '<br />';
-            echo '<br />=================================<br />';
+            echo '<br />=================================<br />';*/
 
 
 
@@ -664,7 +664,7 @@ STR;
 						}
 
 						$composer_name = str_replace('"','',$composer->Composer);
-						$composer_name = truncate_text($composer_name, 30);
+						$composer_name = truncate_text($composer_name, 30, $this);
 						$tilte = urlencode($composer->Composer);
             $name = $composer->Composer;
             $count = $composer->numFound;
@@ -779,7 +779,7 @@ STR;
 						}
 					}
 
-					$album_title = truncate_text($palbum->Title, 30);
+					$album_title = truncate_text($palbum->Title, 30, $this);
 					$title = urlencode($palbum->Title);
 					$album_genre = str_replace('"','',$palbum->Genre);
 					$tilte = urlencode($palbum->Title);
@@ -793,7 +793,7 @@ STR;
               $explicit = '';
           }
 		  if(!empty($album_label)){
-			$album_label_str = "Label: " . truncate_text($album_label, 32);
+			$album_label_str = "Label: " . truncate_text($album_label, 32, $this);
 		  }
 		  else{
 			$album_label_str = "";
@@ -858,7 +858,7 @@ STR;
 				<?php foreach($composers as $composer)
 				{
 					$tilte = urlencode($composer->Composer);
-					$composer_name = truncate_text($composer->Composer, 30);
+					$composer_name = truncate_text($composer->Composer, 30, $this);
 				?>
 							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $composer->numFound; ?>)</span></li>
 				<?php
@@ -891,7 +891,7 @@ STR;
 					foreach($genres as $genre){
 						$genre_name = str_replace('"','',$genre->Genre);
 						$tilte = urlencode($genre_name);
-						$genre_name_text = truncate_text($genre_name, 30);
+						$genre_name_text = truncate_text($genre_name, 30, $this);
             $name = $genre->Genre;
             $count = $genre->numFound;
 						$genre_list .=<<<STR
@@ -941,7 +941,7 @@ STR;
 				{
 						
 								$tilte = urlencode($artist->ArtistText);
-								$artist_name_text = truncate_text($artist->ArtistText, 30);
+								$artist_name_text = truncate_text($artist->ArtistText, 30, $this);
                 $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 				?>
 				<li ><span class="left_text"><?php echo $link; ?></span><span class="right_text">(<?php echo $artist->numFound; ?>)</span></li>
@@ -970,7 +970,7 @@ STR;
 						<?php foreach($labels as $label)
 				{
 								$tilte = urlencode($label->Label);
-								$label_name_text = truncate_text($label->Label, 30);
+								$label_name_text = truncate_text($label->Label, 30, $this);
                 $name = $label->Label;
                 $count = $label->numFound;
 				?>
@@ -1079,18 +1079,18 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title="<?php echo str_replace('"','',iconv(mb_detect_encoding(utf8_decode($psong->ArtistText)), "UTF-8//IGNORE", utf8_decode($psong->ArtistText))); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
+							<span title="<?php echo str_replace('"','',$this->getTextEncode($psong->ArtistText)); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
 						</p>
-					</td>
+					</td> 
 					<td width="170" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',iconv(mb_detect_encoding(utf8_decode($psong->Composer)), "UTF-8//IGNORE", utf8_decode($psong->Composer))); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30); ?></span></p>
+						<p><span title="<?php echo str_replace('"','',$this->getTextEncode($psong->Composer)); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30); ?></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',iconv(mb_detect_encoding(utf8_decode($psong->Title)), "UTF-8//IGNORE", utf8_decode($psong->Title))); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30)); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',$this->getTextEncode($psong->Title)); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30)); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
-             <?php  $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle)); ?>
+             <?php  $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
 
 							<span title="<?php echo str_replace('"','',$showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28); ?>
               <?php if ($psong->Advisory == 'T') {
