@@ -589,7 +589,7 @@ STR;
 
 
 						$tilte = urlencode($artist->ArtistText);
-            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this))), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+            $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 						$count = $artist->numFound;
             $artist_list .=<<<STR
 						<li ><span class="left_text">$link</span><span class="right_text">($count)</span></li>
