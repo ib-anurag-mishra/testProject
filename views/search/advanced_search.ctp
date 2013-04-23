@@ -106,7 +106,6 @@ function truncate_text($text, $char_count){
 		$modified_text = $text;
 	}
 
-	//return utf8_decode($modified_text);
 	$utf8_decode_artist_name = utf8_decode($modified_text);
 	return iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
 }
@@ -569,8 +568,14 @@ STR;
 						$artist_name = str_replace('"','',$artist->ArttistText);
 						$artist_name_text = truncate_text($artist_name, 30);
             
-            //$utf8_decode_artist_name = str_replace('"','',truncate_text($artist->ArtistText, 30));
-            //$utf8_decode_artist_name = iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
+            echo '<br />=================================<br />';
+            $ArtistText = $artist->ArtistText;
+            echo 'Artist -> '; var_dump($ArtistText); echo '<br />';
+            $ArtistText = iconv(mb_detect_encoding($ArtistText), "WINDOWS-1252//IGNORE", $ArtistText);
+            $ArtistText = iconv(mb_detect_encoding($ArtistText), "UTF-8//IGNORE", $ArtistText);
+            echo 'Result -> '; var_dump($ArtistText); echo '<br />';
+            echo 'Call -> '; var_dump($this->getTextEncode($ArtistText)); echo '<br />';
+            echo '<br />=================================<br />';
 
 
 						$tilte = urlencode($artist->ArtistText);
