@@ -942,7 +942,7 @@ STR;
 						
 								$tilte = urlencode($artist->ArtistText);
 								$artist_name_text = truncate_text($artist->ArtistText, 30, $this);
-                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
 				?>
 				<li ><span class="left_text"><?php echo $link; ?></span><span class="right_text">(<?php echo $artist->numFound; ?>)</span></li>
 						<?php
@@ -1079,20 +1079,20 @@ STR;
 			<tr <?php echo $class; ?> style="margin-left:0px;">
 					<td width="187" valign="top" style="padding-left: 5px;">
 						<p>
-							<span title="<?php echo str_replace('"','',$this->getTextEncode($psong->ArtistText)); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
+							<span title="<?php echo str_replace('"','',$this->getTextEncode($psong->ArtistText)); ?>"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></span>
 						</p>
 					</td> 
 					<td width="170" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$this->getTextEncode($psong->Composer)); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30); ?></span></p>
+						<p><span title="<?php echo str_replace('"','',$this->getTextEncode($psong->Composer)); ?>"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30, $this); ?></span></p>
 					</td>
 					<td width="182" valign="top" style="padding-left: 10px;">
-						<p><span title="<?php echo str_replace('"','',$this->getTextEncode($psong->Title)); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30)); ?></a></span></p>
+						<p><span title="<?php echo str_replace('"','',$this->getTextEncode($psong->Title)); ?>"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30, $this)); ?></a></span></p>
 					</td>
 					<td valign="top" width="205" style="padding-left: 10px;">
 						<p>
              <?php  $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
 
-							<span title="<?php echo str_replace('"','',$showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28); ?>
+							<span title="<?php echo str_replace('"','',$showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28, $this); ?>
               <?php if ($psong->Advisory == 'T') {
             		echo '<font class="explicit"> (Explicit)</font>';
             	}
