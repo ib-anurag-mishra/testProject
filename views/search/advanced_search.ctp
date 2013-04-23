@@ -574,6 +574,7 @@ STR;
             $ArtistText = iconv(mb_detect_encoding($ArtistText), "WINDOWS-1252//IGNORE", $ArtistText);
             $ArtistText = iconv(mb_detect_encoding($ArtistText), "UTF-8//IGNORE", $ArtistText);
             echo 'Result -> '; var_dump($ArtistText); echo '<br />';
+            echo 'Call -> '; var_dump($this->getTextEncode($ArtistText)); echo '<br />';
             echo '<br />=================================<br />';
 
 
