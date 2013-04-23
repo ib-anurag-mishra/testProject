@@ -97,7 +97,8 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 }
 
 function truncate_text($text, $char_count, $obj = null){
-	if(strlen($text) > $char_count) {
+	
+  if(strlen($text) > $char_count) {
 		$modified_text = substr($text, 0, $char_count);
 		$modified_text = substr($modified_text, 0, strrpos($modified_text, " ", 0));
 		$modified_text = substr($modified_text, 0, $char_count) . "...";
@@ -106,13 +107,7 @@ function truncate_text($text, $char_count, $obj = null){
 		$modified_text = $text;
 	}
 
-  //$utf8_decode_artist_name = utf8_decode($modified_text);
-  //return iconv(mb_detect_encoding($utf8_decode_artist_name), "UTF-8//IGNORE", $utf8_decode_artist_name);
-  if('' != $obj){
-    return $obj->getTextEncode($modified_text);
-  }else{
-    return $modified_text;
-  }
+  return $obj->getTextEncode($modified_text); 
 
 }
 
