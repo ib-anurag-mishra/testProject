@@ -489,7 +489,10 @@
 									<option value="<(Fixed)"><(Fixed)</option>
 									<option value="<>(Fixed)"><>(Fixed)</option>
 									<option value="begins(Fixed)">begins(Fixed)</option>
+                                                                        <option value="notbegins(Fixed)">does not begin with(Fixed)</option>
 									<option value="cmp_pos(Fixed)">cmp_pos(Fixed)</option>
+                                                                        <option value="contains(Fixed)">Contains(Fixed)</option>
+                                                                        <option value="notcontain(Fixed)">does not contain(Fixed)</option>
 								</select>							
 							</td>
 						</tr>
@@ -511,7 +514,19 @@
 						<tr>
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_response]" class="form_fields" size="50" id="responseField0"></td>
-						</tr>						
+						</tr>	
+                                                	
+					<tr>
+					<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+					<td  style="font-size:12px;">
+						<input id="varialbe_index_flag00" type="radio" name="data[Variable][0][variable_index]" value="1" class="form_fields"  >&nbsp;Index Value&nbsp;<input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="15" id="authentication_variable_index0">
+						<input id="varialbe_index_flag10" type="radio" name="data[Variable][0][variable_index]" value="2" class="form_fields"  >&nbsp;All Index
+					</td>
+					</tr>
+<!--                                                <tr>
+							<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+							<td aligh="left" class="libalign"><input type="text" name="data[Variable][0][authentication_variable_index]" class="form_fields" size="50" id="authentication_variable_index0"></td>                                     
+						</tr>-->
 						<tr id="msgNo">
 							<td align="right" width="250"><?php echo $this->Form->label(null, 'Message No');?></td>
 							<td align="left" style="padding-left:20px" class="libselect">
@@ -560,7 +575,10 @@
 										<option <?php if($var == '<(Fixed)'){ ?> selected = "selected" <?php } ?> value="<(Fixed)"> <(Fixed) </option>
 										<option <?php if($var == '<>(Fixed)'){ ?> selected = "selected" <?php } ?> value="<>(Fixed)"> <>(Fixed) </option>
 										<option <?php if($var == 'begins(Fixed)'){ ?> selected = "selected" <?php } ?> value="begins(Fixed)"> begins(Fixed) </option>
+                                                                                <option <?php if($var == 'notbegins(Fixed)'){ ?> selected = "selected" <?php } ?> value="notbegins(Fixed)">does not begin with(Fixed)</option>
 										<option <?php if($var == 'cmp_pos(Fixed)'){ ?> selected = "selected" <?php } ?> value="cmp_pos(Fixed)"> cmp_pos(Fixed) </option>
+                                                                                <option <?php if($var == 'contains(Fixed)'){ ?> selected = "selected" <?php } ?> value="contains(Fixed)"> Contains(Fixed) </option>
+                                                                                <option <?php if($var == 'notcontain(Fixed)'){ ?> selected = "selected" <?php } ?> value="notcontain(Fixed)">does not contain(Fixed)</option>
 									</select>							
 								</td>
 							</tr>
@@ -574,6 +592,22 @@
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Response');?></td>
 								<td aligh="left" class="libalign"><input type="text" id="responseField<?php echo $k; ?>" name="data[Variable][<?php echo $k; ?>][authentication_response]" class="form_fields" size="50" value="<?php echo $v['Variable']['authentication_response']; ?>"></td>
 							</tr>
+                                                        
+                                                        
+                                                        
+                                                        
+                                                  
+                                                        <tr>
+					<td align="right" width="250"><?php echo $this->Form->label(null, 'Library Authentication Variable Index');?></td>
+					<td  style="font-size:12px;">
+                                            
+						<input id="varialbe_index_flag0<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="1" class="form_fields"  <?php if($v['Variable']['variable_index'] == 1) { ?> checked="checked" <?php } ?>>&nbsp;Index Value&nbsp;<input type="text" name="data[Variable][<?php echo $k; ?>][authentication_variable_index]" value="<?php if($v['Variable']['variable_index'] == 1) { echo $v['Variable']['authentication_variable_index'];} ?>" class="form_fields" size="15" id="authentication_variable_index<?php echo $k; ?>">
+						<input id="varialbe_index_flag1<?php echo $k; ?>" type="radio" name="data[Variable][<?php echo $k; ?>][variable_index]" value="2" class="form_fields"  <?php if($v['Variable']['variable_index'] == 2) { ?> checked="checked" <?php } ?>>&nbsp;All Index
+					</td>
+					</tr>
+                                                        
+                                              
+                                                        
 							<tr id="resArr<?php echo $k; ?>" <?php if($var != 'contains'){ ?> style="display:none"<?php } ?>>
 								<td align="right" width="250"><?php echo $this->Form->label(null, 'Result Array');?></td>
 								<td align="left" style="padding-left:20px" class="libselect">
