@@ -5231,7 +5231,7 @@ STR;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
       $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
       $sobj->Title                = $this->getTextUTF($val->Title);
-      $sobj->SongArtist           = $this->getTextUTF(($val->Artist);
+      $sobj->SongArtist           = $this->getTextUTF($val->Artist);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
       $sobj->Sample_Duration      = $val->Sample_Duration;
       $sobj->FullLength_Duration  = $val->FullLength_Duration;
