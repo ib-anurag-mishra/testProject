@@ -1,7 +1,7 @@
 <?php
 
 App::import('Model', 'AuthenticationToken');
-App::import('Model', 'Zipusstate');
+
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'NationalTopTen.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'LibraryTopTen.php');
@@ -25,12 +25,11 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload');
-  var $components = array('Downloads','AuthRequest');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone');
+  var $components = array('Downloads','AuthRequest', 'Solr');
 
 
   function index(){
-    
     Configure::write('debug',0);
     $this->autoRender = false;
     ini_set("soap.wsdl_cache_enabled", "0");
@@ -41,7 +40,7 @@ class SoapsController extends AppController {
 
 
   function wsdl(){
-  
+
     Configure::write('debug',0);
     $this->autoRender = false;
     $siteUrl = Configure::read('App.base_url');
@@ -100,12 +99,13 @@ class SoapsController extends AppController {
    * @param string $data
 	 * @return FreegalLibraryType[]
    */
-	function getLibrary($data) {
+function getLibrary($data) {
 
     $siteUrl = Configure::read('App.base_url');
     $list = array();
     $keys = array('LibraryID','LibraryName','LibraryApiKey','LibraryAuthenticationVariable','LibraryAuthenticationMethod','LibraryAuthenticationNum','LibraryAuthenticationUrl','LibraryAuthenticationResponse');
     if(is_numeric($data)){
+        
         $zipcode = trim($data);
         $result = null;
         
@@ -122,7 +122,6 @@ class SoapsController extends AppController {
                 $condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
                 $libraries = $this->Library->find('all',array(
                   'conditions' => array(
-                    'library_status'=>'active',
                     'OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)")
                   )
                 ));                     
@@ -138,7 +137,7 @@ class SoapsController extends AppController {
 
                           $obj = new FreegalLibraryType;
                           $obj->LibraryId = (int)$library['Library']['id'];
-                          $obj->LibraryName = $library['Library']['library_name'];
+                          $obj->LibraryName = $this->getTextUTF($library['Library']['library_name']);
                           $obj->LibraryApiKey = $library['Library']['library_apikey'];
 
                           $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
@@ -172,6 +171,7 @@ class SoapsController extends AppController {
             } else {
                 throw new SOAPFault('Soap:client', 'Invalid Zip Code. Please provide a valid code.');
             }
+     
     } else {
 
       $data = strtolower(trim($data));
@@ -207,7 +207,8 @@ class SoapsController extends AppController {
                 'Library.library_country LIKE' => '%' . $data . '%'
               ),
             ),
-            'library_status'=>'active'
+            'library_status'=>'active',
+            'library_authentication_method != "ezproxy"'
           ),
           'order' => array('Library.library_name' => 'ASC'),
         )
@@ -226,7 +227,7 @@ class SoapsController extends AppController {
         
           $obj = new FreegalLibraryType;
           $obj->LibraryId = (int)$library['Library']['id'];
-          $obj->LibraryName = $library['Library']['library_name'];
+          $obj->LibraryName = $this->getTextUTF($library['Library']['library_name']);
           $obj->LibraryApiKey = $library['Library']['library_apikey'];
           $identifier = $this->getLibraryIdentefierByLibraryMethod($library['Library']['library_authentication_method']);
           $obj->LibraryAuthenticationMethod = $identifier;
@@ -356,10 +357,10 @@ class SoapsController extends AppController {
         $obj = new AlbumDataByArtistType;
 
         $obj->ProdID         = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
-        $obj->Genre          = $val['Genre']['Genre'];
-        $obj->AlbumTitle     = $val['Album']['AlbumTitle'];
-        $obj->Title          = $val['Album']['Title'];
-        $obj->Label          = $val['Album']['Label'];
+        $obj->Genre          = $this->getTextUTF($val['Genre']['Genre']);
+        $obj->AlbumTitle     = $this->getTextUTF($val['Album']['AlbumTitle']);
+        $obj->Title          = $this->getTextUTF($val['Album']['Title']);
+        $obj->Label          = $this->getTextUTF($val['Album']['Label']);
 
         $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Files']['CdnPath']."/".$val['Files']['SourceURL']);
         $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -426,7 +427,7 @@ class SoapsController extends AppController {
         $obj->ProductId       = '';
         $obj->AlbumTitle      = '';
         $obj->Title           = '';
-        $obj->ArtistText      = $val1['Artist']['artist_name'];
+        $obj->ArtistText      = $this->getTextUTF($val1['Artist']['artist_name']);
         $obj->Artist          = '';
         $obj->ArtistURL       = '';
         $obj->Label           = '';
@@ -519,7 +520,7 @@ class SoapsController extends AppController {
           $obj->ProductId       = '';
           $obj->AlbumTitle      = '';
           $obj->Title           = '';
-          $obj->ArtistText      = $val1['Artist']['artist_name'];
+          $obj->ArtistText      = $this->getTextUTF($val1['Artist']['artist_name']);
           $obj->Artist          = '';
           $obj->ArtistURL       = '';
           $obj->Label           = '';
@@ -591,7 +592,7 @@ class SoapsController extends AppController {
           $obj->ProductId       = '';
           $obj->AlbumTitle      = '';
           $obj->Title           = '';
-          $obj->ArtistText      = $val1['Artist']['artist_name'];
+          $obj->ArtistText      = $this->getTextUTF($val1['Artist']['artist_name']);
           $obj->Artist          = '';
           $obj->ArtistURL       = '';
           $obj->Label           = '';
@@ -653,19 +654,19 @@ class SoapsController extends AppController {
           $obj->ProdId                    = (int) $data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)'';
           $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
-          $obj->Title                     = (string)$data['Song']['Title'];
-          $obj->SongTitle                 = (string)$data['Song']['SongTitle'];
-          $obj->ArtistText                = (string)$data['Song']['ArtistText'];
-          $obj->Artist                    = (string)$data['Song']['Artist'];
+          $obj->Title                     = $this->getTextUTF((string)$data['Song']['Title']);
+          $obj->SongTitle                 = $this->getTextUTF((string)$data['Song']['SongTitle']);
+          $obj->ArtistText                = $this->getTextUTF((string)$data['Song']['ArtistText']);
+          $obj->Artist                    = $this->getTextUTF((string)$data['Song']['Artist']);
           $obj->ISRC                      = (string)'';
           $obj->Composer                  = (string)'';
-          $obj->Genre                     = (string)$data['Genre']['Genre'];
+          $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
           $obj->Territory                 = (string)$data['Country']['Territory'];
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
-          $obj->AlbumTitle = $album['Album']['AlbumTitle'];
+          $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           
@@ -799,19 +800,19 @@ STR;
           $obj->ProdId                    = (int)$data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)$data['Song']['ProductID'];
           $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
-          $obj->Title                     = (string)$data['Song']['Title'];
-          $obj->SongTitle                 = (string)$data['Song']['SongTitle'];
-          $obj->ArtistText                = (string)$data['Song']['ArtistText'];
-          $obj->Artist                    = (string)$data['Song']['Artist'];
+          $obj->Title                     = $this->getTextUTF((string)$data['Song']['Title']);
+          $obj->SongTitle                 = $this->getTextUTF((string)$data['Song']['SongTitle']);
+          $obj->ArtistText                = $this->getTextUTF((string)$data['Song']['ArtistText']);
+          $obj->Artist                    = $this->getTextUTF((string)$data['Song']['Artist']);
           $obj->ISRC                      = (string)$data['Song']['ISRC'];
-          $obj->Composer                  = (string)$data['Song']['Composer'];
-          $obj->Genre                     = (string)$data['Genre']['Genre'];
+          $obj->Composer                  = $this->getTextUTF((string)$data['Song']['Composer']);
+          $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
           $obj->Territory                 = (string)$data['Country']['Territory'];
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
-          $obj->AlbumTitle = $album['Album']['AlbumTitle'];
+          $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
 
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -975,12 +976,12 @@ STR;
       $obj = new AlbumDataType;
       $obj->ProdID                    = (int)$this->getProductAutoID($data['Album']['ProdID'], $data['Album']['provider_type']);
       $obj->ProductID                 = (string)$data['Album']['ProductID'];
-      $obj->AlbumTitle                = (string)$data['Album']['AlbumTitle'];
-      $obj->Title                     = (string)$data['Album']['Title'];
-      $obj->ArtistText                = (string)$data['Album']['ArtistText'];
-      $obj->Artist                    = (string)$data['Album']['Artist'];
+      $obj->AlbumTitle                = $this->getTextUTF((string)$data['Album']['AlbumTitle']);
+      $obj->Title                     = $this->getTextUTF((string)$data['Album']['Title']);
+      $obj->ArtistText                = $this->getTextUTF((string)$data['Album']['ArtistText']);
+      $obj->Artist                    = $this->getTextUTF((string)$data['Album']['Artist']);
       $obj->ArtistURL                 = (string)$data['Album']['ArtistURL'];
-      $obj->Label                     = (string)$data['Album']['Label'];
+      $obj->Label                     = $this->getTextUTF((string)$data['Album']['Label']);
       $obj->Copyright                 = (string)$data['Album']['Copyright'];
       $obj->Advisory                  = (string)$data['Album']['Advisory'];
       $imgData = $this->Files->find('first',array('conditions' => array('FileID' => $data['Album']['FileID'])));
@@ -1000,14 +1001,14 @@ STR;
             $sobj->ProdID                = (int)$this->getProductAutoID($val['ProdID'], $val['provider_type']);
             $sobj->ProductID             = (string)$val['ProductID'];
             $sobj->ReferenceID           = (int)$val['ReferenceID'];
-            $sobj->Title                 = (string)$val['Title'];
-            $sobj->SongTitle             = (string)$val['SongTitle'];
-            $sobj->ArtistText            = (string)$val['ArtistText'];
-            $sobj->Artist                = (string)$val['Artist'];
+            $sobj->Title                 = $this->getTextUTF((string)$val['Title']);
+            $sobj->SongTitle             = $this->getTextUTF((string)$val['SongTitle']);
+            $sobj->ArtistText            = $this->getTextUTF((string)$val['ArtistText']);
+            $sobj->Artist                = $this->getTextUTF((string)$val['Artist']);
             $sobj->Advisory              = (string)$val['Advisory'];
             $sobj->ISRC                  = (string)$val['ISRC'];
-            $sobj->Composer              = (string)$val['Composer'];
-            $sobj->Genre                 = (string)$val['Genre'];
+            $sobj->Composer              = $this->getTextUTF((string)$val['Composer']);
+            $sobj->Genre                 = $this->getTextUTF((string)$val['Genre']);
             $sobj->Territory             = (string)$val['Territory'];
                       
             $sobj->DownloadStatus        = $this->IsDownloadable($val['ProdID'], $library_territory, $val['provider_type']);       
@@ -1071,7 +1072,11 @@ STR;
     $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libraryId)));
 
     $wishlist = 0;
-    
+    if(!($libraryDetails['Library']['library_download_limit'] > $libraryDetails['Library']['library_current_downloads'])) {
+      $wishlist = 1;
+    }
+
+
     $obj = new UserCurrentDownloadDataType;
     $obj->currentDownloadCount                = (int)$downloadCount;
     $obj->totalDownloadLimit                  = (int)$libraryDetails['Library']['library_user_download_limit'];
@@ -1330,9 +1335,9 @@ STR;
       $obj->ProdID                = (int)$this->getProductAutoID($val['Wishlist']['ProdID'], $val['Wishlist']['provider_type']);
       $obj->ProductID             = (string)$val['Wishlist']['ProductID'];
       $obj->ISRC                  = (string)$val['Wishlist']['ISRC'];
-      $obj->artist                = (string)$val['Wishlist']['artist'];
-      $obj->album                 = (string)$val['Wishlist']['album'];
-      $obj->track_title           = (string)$val['Wishlist']['track_title'];
+      $obj->artist                = $this->getTextUTF((string)$val['Wishlist']['artist']);
+      $obj->album                 = $this->getTextUTF((string)$val['Wishlist']['album']);
+      $obj->track_title           = $this->getTextUTF((string)$val['Wishlist']['track_title']);
       $obj->user_agent            = (string)$val['Wishlist']['user_agent'];
       $obj->ip                    = (string)$val['Wishlist']['ip'];
       $obj->created               = (string)$val['Wishlist']['created'];
@@ -1423,7 +1428,6 @@ STR;
     
   }
     
-  
   /**
    * Function Name : updateRegisterDeviceLang
    * Desc : To update language of given device & registration id
@@ -1525,6 +1529,16 @@ STR;
  	function loginByWebservice($authtype, $email, $password, $card, $pin, $last_name, $library_id, $agent) {
 
     switch($authtype){
+      case '9':  {
+        if('soslogin' == $this->getAuthMethodFronLibID($library_id)) {
+          $authtype = 20;
+        }
+      }
+      break;
+      default:
+    }
+  
+    switch($authtype){
 
       case '1':  {
         $resp = $this->loginAuthinticate($email, $password, $library_id, $agent);
@@ -1621,9 +1635,19 @@ STR;
       }
       break;
       
+      case '20':  {
+        $resp = $this->sosloginAuthinticate($card, $pin, $library_id, $agent);
+      }
+      break;
+      
+      
       default:
-    }
-
+    } 
+    
+    
+    $this->log('Method = "'.$authtype.'", Email = "'.$email.'", Password = "'.$password.'", Card = "'.$card.'", Pin = "'.$pin.'", Last_name = "'.$last_name.'", Library_id = "'.$library_id.'", Agent = "'.$agent.'", Response = "'.$resp->enc_value->enc_value->response.'", Response_msg = "'.$resp->enc_value->enc_value->response_msg.'", Authentication_token = "'.$resp->enc_value->enc_value->authentication_token.'", Patron_id = "'.$resp->enc_value->enc_value->patron_id.'"', 'app_auth');
+              
+              
     return $resp;
   }
 
@@ -3413,7 +3437,7 @@ STR;
         $resp = $resp['Posts']['message'];
 
       
-        
+     
         
           $checkValidXml = null;
           $checkValidXml = simplexml_load_string($resp);
@@ -3426,6 +3450,7 @@ STR;
 							
                 $response_patron_id = $checkValidXml->LibraryCard;
 				  
+                // executes remaning process
                 $token = md5(time());
                 $insertArr['patron_id'] = trim($response_patron_id);
                 $insertArr['library_id'] = $library_id;
@@ -3449,9 +3474,8 @@ STR;
               return $this->createsAuthenticationResponseDataObject(false, $response_msg);
             } 	  
           }  
- 
 
-
+        
         $resp = trim(strip_tags($resp));
         $resp = preg_replace("/\s+/", "", $resp);
         
@@ -3786,6 +3810,108 @@ STR;
 	}  
   
   /**
+   * Authenticates user by soslogin method
+   * @param $card
+   * @param $pin
+   * @param $library_id
+   * @param $agent
+   * @return AuthenticationResponseDataType[]
+   */
+  private function sosloginAuthinticate($card, $pin, $library_id, $agent){
+
+    $data['wrongReferral'] = '';
+
+		$card = str_replace(" ","",$card);
+		$card = strtolower($card);			
+		$data['card'] = $card;
+
+		$data['pin'] = $pin;
+		$patronId = $card;    
+		$data['patronId'] = $patronId;
+		
+    $Library = $this->Library->find('first',array(
+      'fields' => array('Library.minimum_card_length', 'Library.library_subdomain'),
+      'conditions' => array('Library.id' => $library_id),
+      'recursive' => -1,
+    ));
+    
+    if($card == ''){            
+      
+      $response_msg = 'Card number not provided';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);           
+		}
+    elseif(strlen($card) < $Library['Library']['minimum_card_length']){
+      	
+      $response_msg = 'Invalid Card number';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);       
+		}
+    elseif($pin == ''){            
+      $response_msg = 'Pin not provided';
+      return $this->createsAuthenticationResponseDataObject(false, $response_msg);            
+		}
+    else{
+      $cardNo = substr($card,0,5);
+      $data['cardNo'] = $cardNo;
+      
+      $this->Library->recursive = -1;
+      $this->Library->Behaviors->attach('Containable');
+      $data['subdomain'] = $Library['Library']['library_subdomain']; 
+      
+      $library_cond = $this->Session->read('lId');
+			$data['library_cond'] = $library_id;
+			$existingLibraries = $this->Library->find('all',array(
+        'conditions' => array('library_status' => 'active','library_authentication_method' => 'soslogin','id' => $library_id),
+        'fields' => array('Library.id','Library.library_territory','Library.library_authentication_url','Library.library_logout_url','Library.library_territory','Library.library_host_name','Library.library_port_no','Library.library_sip_login','Library.library_sip_password','Library.library_sip_location','Library.library_user_download_limit','Library.library_block_explicit_content','Library.library_language')
+			));
+                    
+		
+      if(count($existingLibraries) == 0){
+        $response_msg = 'Invalid credentials provided.';
+        return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+      }        
+		  else{
+                        
+        if($existingLibraries['0']['Library']['library_territory'] == 'AU'){
+          $authUrl = Configure::read('App.AuthUrl_AU')."soslogin_validation";
+        }
+        else{
+          $authUrl = Configure::read('App.AuthUrl')."soslogin_validation";
+        }				
+			
+        $data['database'] = 'freegal';
+        $result = $this->AuthRequest->getAuthResponse($data,$authUrl);
+      
+        $resultAnalysis[0] = $result['Posts']['status'];
+        $resultAnalysis[1] = $result['Posts']['message'];
+			
+        if($resultAnalysis[0] == "fail"){
+      
+          $response_msg = $resultAnalysis[1];
+          return $this->createsAuthenticationResponseDataObject(false, $response_msg);
+        }elseif($resultAnalysis[0] == "success"){
+     
+          $token = md5(time());
+          $insertArr['patron_id'] = $patronId;
+					$insertArr['library_id'] = $library_id;
+					$insertArr['token'] = $token;
+					$insertArr['auth_time'] = time();
+					$insertArr['agent'] = $agent;
+					$insertArr['auth_method'] = 'soslogin';
+					$this->AuthenticationToken->save($insertArr);
+
+          $patron_id = $insertArr['patron_id'];
+          $response_msg = 'Login Successfull';
+          return $this->createsAuthenticationResponseDataObject(true, $response_msg, $token, $patron_id);
+                            
+        }					
+      }
+    }
+    
+    
+  }
+  
+  
+  /**
    * Function Name : updateUserDetails
    * Desc : To update users details
    * @param string $authentication_token
@@ -4001,7 +4127,7 @@ STR;
 
     $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-    $wishlist = 0;
+
     return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
 
 
@@ -4043,20 +4169,11 @@ STR;
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);  
         
-    $log_name = 'stored_procedure_app_log_'.date('Y_m_d');
-    $log_id = md5(time());
-    $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
-        
     if($checkValidation){
       
       $validationResult = $this->Downloads->validateDownload($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
       
-      $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider_type."':DownloadComponentParameters-isMobileDownload= 'true':DownloadComponentParameters-Territory= '".$libraryDetails['Library']['library_territory']."':DownloadComponentParameters-PatronID='".$patId."':DownloadComponentParameters-Agent='".$agent."':DownloadComponentParameters-LibID='".$libId."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
-
       if(false === $validationResult[0])  {
-        
-        $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
-        $this->log($log_data, $log_name);
         
         if(5 == $validationResult[2]) {
           throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
@@ -4149,54 +4266,17 @@ STR;
 	  $this->Library->setDataSource('master');
     
     if($maintainLatestDownload){
-      $procedure = 'sonyproc_new';
       $sql = "CALL sonyproc_new('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
       
     }else{
-      $procedure = 'sonyproc_ioda';
       $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Song']['ProductID']."', '".$TrackData['Song']['ISRC']."', '".addslashes($TrackData['Song']['Artist'])."', '".addslashes($TrackData['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
     }
-    
     
 
     $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
-    
-    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$TrackData['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$TrackData['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($TrackData['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($TrackData['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$provider_type."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
-    
-    if(is_numeric($return)){
-      
-      $this->LatestDownload->setDataSource('master');
-      $data = $this->LatestDownload->find('count', array(
-        'conditions'=> array(
-            "LatestDownload.library_id " => $libId,
-            "LatestDownload.patron_id " => $patId, 
-            "LatestDownload.ProdID " => $prodId,
-            "LatestDownload.provider_type " => $provider_type,     
-            "DATE(LatestDownload.created) " => date('Y-m-d'), 
-        ),
-        'recursive' => -1,
-      ));
-      
-
-      if(0 === $data){
-        $log_data .= ":NotInLD";
-      }
-      
-      if(false === $data){
-        $log_data .= ":SelectLDFail";
-      }
-      $this->LatestDownload->setDataSource('default');
-    }
-    
-    $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
-    
-    
-    $this->log($log_data, $log_name);
-    
-    
 		$this->Library->setDataSource('default');
     $wishlist = 0;
 		if(is_numeric($return)){
@@ -4219,21 +4299,26 @@ STR;
 
       $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
-      
-      $wishlist = 0;
+
+
+      if(!($libraryDetails['Library']['library_download_limit'] > ($libraryDetails['Library']['library_current_downloads']+1))) {
+        $wishlist = 1;
+      }
+
       return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
 
 		}
 		else{
 
       if('incld' == $return) {
-      
-        $wishlist = 0;
         return $this->createSongDownloadSuccessObject('Already downloaded.', '',false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
       } else {
         if('error' == $return) {
 
-          $wishlist = 0;
+          if(!($libraryDetails['Library']['library_download_limit'] > ($libraryDetails['Library']['library_current_downloads']+1))) {
+            $wishlist = 1;
+          }
+
           return $this->createSongDownloadSuccessObject('Library limit exceeded.', '', false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
         }
       }
@@ -4392,7 +4477,7 @@ STR;
     foreach($genreAll AS $key => $val){
 
       $obj = new GenreDataType;
-      $obj->GenreTitle               = (string)$val['Genre']['Genre'];
+      $obj->GenreTitle               = $this->getTextUTF((string)$val['Genre']['Genre']);
 
       $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType');
     }
@@ -4421,7 +4506,7 @@ STR;
     foreach($genres AS $val){
 
       $obj = new GenreDataType;
-      $obj->GenreTitle               = (string)$val;
+      $obj->GenreTitle               = $this->getTextUTF((string)$val);
 
       $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType');
     }
@@ -4467,14 +4552,14 @@ STR;
           $sobj->ProdID                = (int)    $arrTemp[$cnt]['PRODUCT']['pid'];
           $sobj->ProductID             = (string) '';
           $sobj->ReferenceID           = (int)$this->getProductAutoID($arrTemp[$cnt]['Song']['ReferenceID'], $arrTemp[$cnt]['Song']['provider_type']);
-          $sobj->Title                 = (string) $arrTemp[$cnt]['Song']['Title'];
-          $sobj->SongTitle             = (string) $arrTemp[$cnt]['Song']['SongTitle'];
-          $sobj->ArtistText            = (string) $arrTemp[$cnt]['Song']['ArtistText'];
-          $sobj->Artist                = (string) $arrTemp[$cnt]['Song']['Artist'];
+          $sobj->Title                 = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['Title']);
+          $sobj->SongTitle             = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['SongTitle']);
+          $sobj->ArtistText            = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['ArtistText']);
+          $sobj->Artist                = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['Artist']);
           $sobj->Advisory              = (string) $arrTemp[$cnt]['Song']['Advisory'];
           $sobj->ISRC                  = (string) '';
           $sobj->Composer              = (string) '';
-          $sobj->Genre                 = (string) $arrTemp[$cnt]['Genre']['Genre'];
+          $sobj->Genre                 = $this->getTextUTF((string) $arrTemp[$cnt]['Genre']['Genre']);
           $sobj->Territory             = (string) $arrTemp[$cnt]['Country']['Territory'];       
           
           ($arrTemp[$cnt]['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
@@ -4569,7 +4654,7 @@ STR;
             $sobj->ReferenceID           = (int)    '';
             $sobj->Title                 = (string) '';
             $sobj->SongTitle             = (string) '';
-            $sobj->ArtistText            = (string) $arrTemp[$cnt];
+            $sobj->ArtistText            = $this->getTextUTF((string) $arrTemp[$cnt]);
             $sobj->Artist                = (string) '';
             $sobj->Advisory              = (string) '';
             $sobj->ISRC                  = (string) '';
@@ -4633,14 +4718,14 @@ STR;
         $sobj->ProdID                = (int)    $val['PRODUCT']['pid'];
         $sobj->ProductID             = (string) '';
         $sobj->ReferenceID           = (int)    $this->getProductAutoID($val['Song']['ReferenceID'], $val['Song']['provider_type']);
-        $sobj->Title                 = (string) $val['Song']['Title'];
-        $sobj->SongTitle             = (string) $val['Song']['SongTitle'];
-        $sobj->ArtistText            = (string) $val['Song']['ArtistText'];
-        $sobj->Artist                = (string) $val['Song']['Artist'];
+        $sobj->Title                 = $this->getTextUTF((string) $val['Song']['Title']);
+        $sobj->SongTitle             = $this->getTextUTF((string) $val['Song']['SongTitle']);
+        $sobj->ArtistText            = $this->getTextUTF((string) $val['Song']['ArtistText']);
+        $sobj->Artist                = $this->getTextUTF((string) $val['Song']['Artist']);
         $sobj->Advisory              = (string) $val['Song']['Advisory'];
         $sobj->ISRC                  = (string) '';
         $sobj->Composer              = (string) '';
-        $sobj->Genre                 = (string) $val['Genre']['Genre'];
+        $sobj->Genre                 = $this->getTextUTF((string) $val['Genre']['Genre']);
         $sobj->Territory             = (string) $val['Country']['Territory'];
                         
         ($val['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
@@ -4839,10 +4924,10 @@ STR;
 
           $sobj = new SearchDataType;
           $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-          $sobj->SongTitle            = $val['Song']['SongTitle'];
-          $sobj->Title                = $val['Song']['Title'];
-          $sobj->SongArtist           = $val['Song']['Artist'];
-          $sobj->ArtistText           = $val['Song']['ArtistText'];
+          $sobj->SongTitle            = $this->getTextUTF($val['Song']['SongTitle']);
+          $sobj->Title                = $this->getTextUTF($val['Song']['Title']);
+          $sobj->SongArtist           = $this->getTextUTF($val['Song']['Artist']);
+          $sobj->ArtistText           = $this->getTextUTF($val['Song']['ArtistText']);
           $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
           $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
           $sobj->ISRC                 = $val['Song']['ISRC'];
@@ -4865,8 +4950,8 @@ STR;
           );
 
           $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-          $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-          $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+          $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
+          $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
           $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
         }
@@ -4897,62 +4982,53 @@ STR;
 	private function getSearchAllList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
 
-        $matchType = 'All';
-        $artist = $searchText;
-        $composer = '';
-        $song = $searchText;
-        $album = $searchText;
-        $genre = '';
-        $sphinxFinalCondition = '@ArtistText "'.$searchText.'" | @SongTitle "'.$searchText.'" | @Title "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1 ';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
+    $queryVar   = $searchText;
+    $typeVar    = 'all';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $AllData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
 
-
-        $_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$AllData = $this->paginate('Song');
-
-
+    
     foreach($AllData AS $key => $val){
-
-        $sobj = new SearchDataType;
-        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
-        $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
-        $sobj->ISRC                 = $val['Song']['ISRC'];
-
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        }
-            
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle));
+      $sobj->Title                = $this->getTextUTF($val->Title));
+      $sobj->SongArtist           = $this->getTextUTF($val->Artist));
+      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText));
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration; 
+      $sobj->ISRC                 = $val->ISRC;
+      
+  
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+        
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
+        
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      ); 
 
-        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
 
@@ -4980,72 +5056,63 @@ STR;
    * @param string $library_terriotry
 	 * @return SearchDataType[]
    */
-	private function getSearchArtistList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
-
-        $matchType = 'All';
-        $artist = $searchText;
-        $composer = '';
-        $song = '';
-        $album = '';
-        $genre = '';
-        $sphinxFinalCondition = '@ArtistText "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
-
-        $_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$ArtistData = $this->paginate('Song');
-
-
-
-    foreach($ArtistData AS $key => $val){
-
-        $sobj = new SearchDataType;
-        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
-        $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
-        $sobj->ISRC                 = $val['Song']['ISRC'];
+  private function getSearchArtistList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
+    
+    $queryVar   = $searchText;
+    $typeVar    = 'artist';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $ArtistData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
+      
+    
+    $search_list = array();  
+    foreach($ArtistData AS $key => $val){    
         
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle));
+      $sobj->Title                = $this->getTextUTF($val->Title));
+      $sobj->SongArtist           = $this->getTextUTF($val->Artist));
+      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText));
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration; 
+      $sobj->ISRC                 = $val->ISRC;
+      
+  
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+      
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        }
-        
-        
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      ); 
 
-        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
-
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      
+              
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
 
-
+    
     if(!empty($ArtistData)){
       return $data;
     }
@@ -5067,71 +5134,62 @@ STR;
    * @param string $library_terriotry
 	 * @return SearchDataType[]
    */
-	private function getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
+  private function getSearchAlbumList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
 
-        $matchType = 'All';
-        $artist = '';
-        $composer = '';
-        $song = '';
-        $album = $searchText;
-        $genre = '';
-        $sphinxFinalCondition = '@Title "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1 ';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
+    $queryVar   = $searchText;
+    $typeVar    = 'album';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $Albumlist = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
 
-
-        $_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$Albumlist = $this->paginate('Song');
-
+                
     foreach($Albumlist AS $key => $val){
 
-        $sobj = new SearchDataType;
-        $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
-        $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
-        $sobj->ISRC                 = $val['Song']['ISRC'];
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle));
+      $sobj->Title                = $this->getTextUTF($val->Title));
+      $sobj->SongArtist           = $this->getTextUTF($val->Artist));
+      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText));
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->ISRC                 = $val->ISRC;
 
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
+      
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        }
         
-        
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      );
 
-        $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
+      
     }
 
     $data = new SoapVar($search_list,SOAP_ENC_OBJECT,null,null,'ArraySearchDataType');
-
-
+    
     if(!empty($Albumlist)){
       return $data;
     }
@@ -5154,67 +5212,53 @@ STR;
    */
 	private function getSearchSongList($searchText, $startFrom, $recordCount, $searchType, $libraryId, $library_terriotry) {
 
-        $matchType = 'All';
-        $artist = '';
-        $composer = '';
-        $song = $searchText;
-        $album = '';
-        $genre = '';
-        $sphinxFinalCondition = '@SongTitle "'.$searchText.'" & @Territory "'.$library_terriotry.'"  & @DownloadStatus 1';
-        $sphinxSort = '';
-        $sphinxDirection = '';
-        $country = $library_terriotry;
+    $queryVar   = $searchText;
+    $typeVar    = 'song';
+    $sortVar    = 'ArtistText';
+    $sortOrder  = 'asc';
+    $limit      = $recordCount;
+    
+    $page = ceil(($startFrom + $recordCount)/$recordCount); 
+    
+    $SongData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
+    $total = $this->Solr->total;
+    $totalPages = ceil($total/$limit);
 
 
-				$_SESSION['webservice_startFrom'] = $startFrom;
-        $_SESSION['webservice_recordCount'] = $recordCount;
-        $_SESSION['webservice_master'] = 1;
-        $_SESSION['webservice_slave'] = 0;
-
-
-				$this->paginate = array('Song' => array(
-          'sphinx' => 'yes', 'sphinxcheck' => $sphinxFinalCondition, 'sphinxsort' => $sphinxSort, 'sphinxdirection' => $sphinxDirection,
-          'cont' => $country));
-
-				$SongData = $this->paginate('Song');
-
-
-    foreach($SongData AS $key => $val){
-
-        $sobj = new SearchDataType;
-        $sobj->SongProdID             = (int)$this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle              = (string)$val['Song']['SongTitle'];
-        $sobj->SongArtist             = (string)$val['Song']['Artist'];
-        $sobj->Sample_Duration        = (string)$val['Song']['Sample_Duration'];
-        $sobj->FullLength_Duration    = (string)$val['Song']['FullLength_Duration'];
-        $sobj->ISRC                   = (string)$val['Song']['ISRC'];
+    foreach($SongData AS $key => $val){        
         
-        $sobj->DownloadStatus       = $this->IsDownloadable($val['Song']['ProdID'], $library_terriotry, $val['Song']['provider_type']);
-        
-        $sampleFileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Sample_Files']['CdnPath']."/".$val['Sample_Files']['SaveAsName']);
-        
+      $sobj = new SearchDataType;
+      $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
+      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle));
+      $sobj->Title                = $this->getTextUTF($val->Title));
+      $sobj->SongArtist           = $this->getTextUTF(($val->Artist));
+      $sobj->ArtistText           = $this->getTextUTF($val->ArtistText));
+      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->FullLength_Duration  = $val->FullLength_Duration;
+      $sobj->ISRC                 = $val->ISRC;
 
+      $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
         
-        if($sobj->DownloadStatus) {
-          $sobj->fileURL        = 'nostring';
-        }else{
-          $sobj->fileURL        = Configure::read('App.Music_Path').$sampleFileURL;
-        }
+      if($sobj->DownloadStatus) {
+        $sobj->fileURL            = 'nostring';
+      }else{
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
+      }
         
         
-        $albumData = $this->Album->find('first',
-          array(
-            'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-            'conditions' => array('ProdID' => $val['Song']['ReferenceID'], 'provider_type' => $val['Song']['provider_type']),
-            'recursive' => -1,
-          )
-        );
+      $albumData = $this->Album->find('first',
+        array(
+          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
+          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
+          'recursive' => -1,
+        )
+      );
 
-        $sobj->AlbumProdID            = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle             = (string)$albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist            = (string)$albumData['Album']['Artist'];
+      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
+      $sobj->AlbumTitle           = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['AlbumTitle'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['AlbumTitle']));
+      $sobj->AlbumArtist          = iconv(mb_detect_encoding(utf8_decode($albumData['Album']['Artist'])), "UTF-8//IGNORE", utf8_decode($albumData['Album']['Artist']));
 
-        $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
+      $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
     }
 
@@ -5322,6 +5366,7 @@ STR;
       'mndlogin_reference' => '18',
       'mdlogin_reference' => '19',
       'ezproxy' => '16',
+      'soslogin' => '9',
 
     );
 
@@ -5529,6 +5574,36 @@ STR;
     
     return $response_patron_id;
           
+  }
+  
+  /**
+   * Function Name : getAuthMethodFronLibID
+   * Desc : To return authentication method for given lib ID
+   * @param int libID
+	 * @return string
+   */
+  private function getAuthMethodFronLibID($libID){
+     
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libID),
+      'fields' => array('library_authentication_method'),
+      'recursive' => -1
+      )
+    );
+
+    return $libraryDetails['Library']['library_authentication_method'];
+  }
+  
+  /**
+   * Function Name : getTextUTF
+   * Desc : To return UTF8 string
+   * @param string text
+   * @return string
+   */
+   private function getTextUTF($text) {
+
+    $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+    return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
   }
 
 }
