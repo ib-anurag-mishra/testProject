@@ -95,10 +95,10 @@
 
 					<?php
 						if (strlen($wishlistResult['Wishlist']['artist']) >= 19) {
-							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['artist']).'">' .substr($wishlistResult['Wishlist']['artist'], 0, 19) . '...</span>';
+							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['artist'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['artist'], 0, 19)) . '...</span>';
 						} else {
 							$ArtistName = $wishlistResult['Wishlist']['artist'];
-							echo $ArtistName;
+							echo $this->getTextEncode($ArtistName);
 						}
 
 					?>
@@ -107,9 +107,9 @@
 				<td width="200" valign="top">
 					<?php
 						if (strlen($wishlistResult['Wishlist']['album']) >= 24) {
-							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['album']).'">' .substr($wishlistResult['Wishlist']['album'], 0, 24) . '...</span>';
+							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['album'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['album'], 0, 24)) . '...</span>';
 						} else {
-							echo $wishlistResult['Wishlist']['album'];
+							echo $this->getTextEncode($wishlistResult['Wishlist']['album']);
 						}
 
 					?>
@@ -117,9 +117,9 @@
 				<td width="240" valign="top">
 					<?php
 						if (strlen($wishlistResult['Wishlist']['track_title']) >= 48) {
-							echo '<span title="'.htmlentities($wishlistResult['Wishlist']['track_title']).'">' .substr($wishlistResult['Wishlist']['track_title'], 0, 48) . '...</span>';
+							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['track_title'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['track_title'], 0, 48)) . '...</span>';
 						} else {
-							echo $wishlistResult['Wishlist']['track_title'];
+							echo $this->getTextEncode($wishlistResult['Wishlist']['track_title']);
 					 	}
 					?>
 				</td>

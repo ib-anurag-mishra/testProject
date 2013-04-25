@@ -57,13 +57,13 @@ if(count($genres) > 0){
 				if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
 					$ArtistName = substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
 					echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">' . $html->link(
-						$ArtistName,
+						$this->getTextEncode($ArtistName),
 						array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])). '/'. base64_encode($genre))) . '</span>'; ?>
 				<?php
 				} else {
 					$ArtistName = $genres[$counter]['Song']['ArtistText'];
 					echo $html->link(
-						$ArtistName,
+						$this->getTextEncode($ArtistName),
 						array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])).  '/'.base64_encode($genre)));
 				}
 				echo '</p></td>';

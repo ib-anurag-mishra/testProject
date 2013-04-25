@@ -33,7 +33,7 @@
 			$html->addCrumb(__('All Genre', true), '/genres/view/');
                         if($genre_crumb_name != "")
                         {
-                            $html->addCrumb( $genre_crumb_name  , '/genres/view/'.base64_encode($genre_crumb_name));
+                            $html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));
                         }
 		
 			echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
@@ -41,7 +41,7 @@
 			if(strlen($artisttext) >= 30){
 				$artisttext = substr($artisttext, 0, 30). '...';
 			}
-			echo $artisttext;	
+			echo $this->getTextEncode($artisttext);	
 
 		}
 		else{
@@ -52,7 +52,7 @@
 			if(strlen($artisttext) >= 30){
 				$artisttext = substr($artisttext, 0, 30). '...';
 			}
-			echo $artisttext;
+			echo $this->getTextEncode($artisttext);
 		}
 	?>
 	
@@ -149,13 +149,13 @@ $i = 0;
 						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
 					}
 					?>
-					<?php echo $album['Album']['AlbumTitle'];?>		
+					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?>		
 					</b>
 				</div>
 				</a>
 				<div class="album_artistInfo" style="float:left">
 					<?php
-						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
+						echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
                                                     
                                                     if(strstr($album['Album']['ArtistURL'], 'http://')){
@@ -172,11 +172,11 @@ $i = 0;
                             echo '<br />';
                         }
 						if ($album['Album']['Label'] != '') {
-							echo __("Label").': ' . $album['Album']['Label'];
+							echo __("Label").': ' . $this->getTextEncode($album['Album']['Label']);
 							echo '<br />';
 						}
 						if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-							echo $album['Album']['Copyright'];
+							echo $this->getTextEncode($album['Album']['Copyright']);
 						}
 					?>
 				</div>
