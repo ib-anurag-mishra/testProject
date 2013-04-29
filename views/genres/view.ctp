@@ -179,7 +179,7 @@ jQuery(document).ready(function() {
 	$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
 	
 	$html->addCrumb(__('All Genre', true), '/genres/view/');
-	$html->addCrumb( $genre_crumb_name  , '/genres/view/'.base64_encode($genre_crumb_name));
+	$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 	$totalRows = count($genresAll);
 
@@ -292,14 +292,14 @@ jQuery("html").ajaxStop(replaceText);
 					$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
 					if($genre_name == $genre){
 						?>
-						<a class="genre_list_item" style="font-weight:bold;" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($genre_name);  ?>')"><?php echo $genre_name; ?></a>
+						<a class="genre_list_item" style="font-weight:bold;" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a>
 						<?php
 					}
 					else{
 						
 					
 						?>
-						<a class="genre_list_item" id="genre_list_item_<?php echo $genre_count; ?>" style="curser:pointer" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($genre_name);  ?>' )" ><?php echo $genre_name; ?></a>
+						<a class="genre_list_item" id="genre_list_item_<?php echo $genre_count; ?>" style="curser:pointer" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a>
 						<?php
 					}
 				}
@@ -364,13 +364,13 @@ jQuery("html").ajaxStop(replaceText);
 
 					echo "<td width='250'><p>";
 					if (strlen($genres[$counter]['Song']['ArtistText']) >= 30) {
-						$ArtistName = mb_substr($genres[$counter]['Song']['ArtistText'], 0, 30) . '...';
+						$ArtistName = $this->getTextEncode(mb_substr($genres[$counter]['Song']['ArtistText'], 0, 30)) . '...';
 						echo '<span title="'.$genres[$counter]['Song']['ArtistText'].'">';
                                                 echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' >";
                                                 echo $ArtistName;
                                                 echo '</a></span>';
                                         } else {
-                                                $ArtistName = $genres[$counter]['Song']['ArtistText'];
+                                                $ArtistName = $this->getTextEncode($genres[$counter]['Song']['ArtistText']);
 						echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$counter]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' >";
                                                 echo $ArtistName;
                                                 echo '</a></span>';

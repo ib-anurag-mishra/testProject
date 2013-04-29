@@ -101,14 +101,14 @@ jQuery(document).ready(function() {
 					<span class="song">
 						<?php										
 						if (strlen($songs[$i]['Song']['SongTitle']) >= 35 ) {
-							echo '<span title="'.$songs[$i]['Song']['SongTitle'].'">' . substr($songs[$i]['Song']['SongTitle'], 0, 35) . "..." . "</span>";
+							echo '<span title="'.$this->getTextEncode($songs[$i]['Song']['SongTitle']).'">' . $this->getTextEncode(substr($songs[$i]['Song']['SongTitle'], 0, 35)) . "..." . "</span>";
 						} else {
-							echo $songs[$i]['Song']['SongTitle'];
+							echo $this->getTextEncode($songs[$i]['Song']['SongTitle']);
 						}
 						?>				
 						<span class="singer">
 							<?php
-								echo "<a href='/artists/album/".base64_encode($songs[$i]['Song']['ArtistText'])."'>".substr($songs[$i]['Song']['ArtistText'], 0, 35)."</a>";
+								echo "<a href='/artists/album/".base64_encode($songs[$i]['Song']['ArtistText'])."'>".$this->getTextEncode(substr($songs[$i]['Song']['ArtistText'], 0, 35))."</a>";
 							?>
 						</span>										
 					</span>

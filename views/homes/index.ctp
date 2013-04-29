@@ -660,14 +660,14 @@ $ieVersion =  ieversion();
 											<span class="song">
 												<?php
 												if (strlen($genre_pop[$i]['Song']['SongTitle']) >= 22 ) {
-													echo '<span title="'.$genre_pop[$i]['Song']['SongTitle'].'">' . substr($genre_pop[$i]['Song']['SongTitle'], 0, 22) . "..." . "</span>";
+													echo '<span title="'.$this->getTextEncode($genre_pop[$i]['Song']['SongTitle']).'">' . $this->getTextEncode(substr($genre_pop[$i]['Song']['SongTitle'], 0, 22)) . "..." . "</span>";
 												} else {
-													echo $genre_pop[$i]['Song']['SongTitle'];
+													echo $this->getTextEncode($genre_pop[$i]['Song']['SongTitle']);
 												}
 												?>
 												<span class="singer">
 													<?php
-														echo "<a href='/artists/album/".base64_encode($genre_pop[$i]['Song']['ArtistText'])."'>".substr($genre_pop[$i]['Song']['ArtistText'], 0, 22)."</a>";
+														echo "<a href='/artists/album/".base64_encode($genre_pop[$i]['Song']['ArtistText'])."'>".$this->getTextEncode(substr($genre_pop[$i]['Song']['ArtistText'], 0, 22))."</a>";
 													?>
 												</span>
 											</span>
