@@ -3409,19 +3409,11 @@ STR;
 				}
           
         $data['auth_url'] = $auth_url;
-        
-        
-          
-          $ch = curl_init($auth_url);
-          curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-          if(0 === stripos($auth_url, 'https')) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-          }
-          $resp = curl_exec ( $ch );
-          curl_close($ch);
-          
-        
-        
+        $data['database'] = 'freegal';
+
+        $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
+        $resp = $resp['Posts']['message'];
+
 
           $checkValidXml = null;
           $checkValidXml = simplexml_load_string($resp);
