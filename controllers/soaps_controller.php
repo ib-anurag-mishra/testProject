@@ -3410,7 +3410,7 @@ STR;
           
         $data['auth_url'] = $auth_url;
         
-        if('referral_url' == $library_authentication_method) {
+        
           
           $ch = curl_init($auth_url);
           curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -3420,10 +3420,7 @@ STR;
           $resp = curl_exec ( $ch );
           curl_close($ch);
           
-        } else {
-          $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
-          $resp = $resp['Posts']['message'];
-        }
+        
         
 
           $checkValidXml = null;
