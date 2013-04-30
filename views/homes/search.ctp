@@ -68,7 +68,7 @@ if(isset($searchtype)){
 								if (strlen($searchResult['Song']['ArtistText']) >= 60) {
 									$searchResult['Song']['ArtistText'] = substr($searchResult['Song']['ArtistText'], 0, 60) . '...';
 								}
-								echo '<span title="'.htmlentities($searchResult['Song']['ArtistText']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($name)))).'</span>';
+								echo '<span title="'.$this->getTextEncode($searchResult['Song']['ArtistText']).'">'.$html->link($this->getTextEncode($ArtistName), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($name)))).'</span>';
 						?>
 						<?php
 							} else {
