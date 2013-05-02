@@ -112,7 +112,7 @@ function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
         $name = explode("PM43_W_", $src);  
         $reportName = "PM43_W_".$name[1];
     }
-    $reportName = "PM43_W_".$name[1];
+    //$reportName = "PM43_W_".$name[1];
     $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
     $reportName = explode($showEndDate, $reportName);
     $reportName = str_replace(".txt","",$reportName[1]);
