@@ -102,7 +102,16 @@ Description : Function for sending report through SFTP
 
 function sendReportFilesftp($src,$dst,$logFileWrite,$typeReport)
 {
-    $name = explode("PM43_W_", $src);
+    if(strpos($src,"PM43_M_"))
+    {
+        $name = explode("PM43_M_", $src);
+        $reportName = "PM43_M_".$name[1];
+    }
+    else
+    {
+        $name = explode("PM43_W_", $src);  
+        $reportName = "PM43_W_".$name[1];
+    }
     $reportName = "PM43_W_".$name[1];
     $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
     $reportName = explode($showEndDate, $reportName);
