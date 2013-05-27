@@ -16,6 +16,9 @@ class AppController extends Controller
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
 		$this->Auth->authorize = 'actions';
+                
+                echo 'test';
+                
 		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
 		$this->Auth->loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
