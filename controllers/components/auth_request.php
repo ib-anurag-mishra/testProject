@@ -39,8 +39,8 @@ Class AuthRequestComponent extends Object
             $result = curl_exec($ch);
 
 
-            //print_r( $result);
-            //die;
+            print_r( $result);
+            die;
 
             curl_close($ch);
             $result =& new Xml($result);
