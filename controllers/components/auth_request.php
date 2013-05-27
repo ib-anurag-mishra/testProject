@@ -20,7 +20,8 @@ Class AuthRequestComponent extends Object
                     $str = $str."></data>";
             }
             $post_data = array('xml'=>$str);
-            $url = $authUrl;
+            echo $url = $authUrl;
+            die;
 
             $ch=curl_init();
             // tell curl target url
