@@ -27,16 +27,16 @@
 	<?php
 	$language = $language->getLanguage();
 	if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
-		$lang = "English";
+		$lang = $this->getTextEncode("English");
 	}
 	elseif($this->Session->read('Config.language') == 'es'){
-		$lang = "Español";
+		$lang = $this->getTextEncode("Español");
 	}
 	elseif($this->Session->read('Config.language') == 'fr'){
-		$lang = "FranÃ§ais";
+		$lang = $this->getTextEncode("FranÃ§ais");
 	}
 	elseif($this->Session->read('Config.language') == 'it'){
-		$lang = "Italiano";
+		$lang = $this->getTextEncode("Italiano");
 	}
 	foreach($language as $k => $v){
 		?>
