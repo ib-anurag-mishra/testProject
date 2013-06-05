@@ -13,9 +13,10 @@ $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
-$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
-$countrys = array('US' => 'USD');
+//$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
+//$countrys = array('US' => 'USD');
 //$countrys = array('CA' => 'CAD');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD');
 
 $lib_types = array('Unlimited' , 'ALC');
 //$lib_types = array('ALC');
@@ -37,7 +38,7 @@ foreach ( $period as $dt )
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
 //$currentDate = '2013-01-21';
-$currentDate = date( "2012-11-01", time());
+$currentDate = date( "2013-05-01", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -208,10 +209,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             }
                             
                             $sales .= "0#*#"; // Charity Amount
-                            $sales .= "$currency #*#"; // Currency Key
+                            $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            if($country != 'US' && $lib_types == 'Unlimited')
+                            {
+                                $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
+                            else
+                            {
+                                $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
                             $sales .= "05#*#"; // Distribution Type Key
                             $sales .= "20#*#"; // Transaction Type Key
                             $sales .= "10#*#"; // Service Type Key
@@ -453,10 +461,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             }
 
                             $sales .= "0#*#"; // Charity Amount
-                            $sales .= " $currency #*#"; // Currency Key
+                            $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            if($country != 'US' && $lib_types == 'Unlimited')
+                            {
+                                $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
+                            else
+                            {
+                                $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
                             $sales .= "05#*#"; // Distribution Type Key
                             $sales .= "20#*#"; // Transaction Type Key
                             $sales .= "10#*#"; // Service Type Key
