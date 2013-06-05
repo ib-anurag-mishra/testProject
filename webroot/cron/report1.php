@@ -182,7 +182,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         $libSales = 0;
                         foreach($lib as $line)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*# $country #*#SA#*##*##*#";
+                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
@@ -207,10 +207,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             }
                             
                             $sales .= "0#*#"; // Charity Amount
-                            $sales .= "$currency #*#"; // Currency Key
+                            $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            if($country != 'US')
+                            {
+                                $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
+                            else
+                            {
+                                $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
                             $sales .= "05#*#"; // Distribution Type Key
                             $sales .= "20#*#"; // Transaction Type Key
                             $sales .= "10#*#"; // Service Type Key
@@ -231,7 +238,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= "$country #*#10#*#100";
+                    $market .= "$country#*#10#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
@@ -426,7 +433,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         
                         foreach($lib as $line)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*# $country #*#SA#*##*##*#";
+                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
@@ -452,10 +459,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             }
 
                             $sales .= "0#*#"; // Charity Amount
-                            $sales .= " $currency #*#"; // Currency Key
+                            $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            if($country != 'US')
+                            {
+                                $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
+                            else
+                            {
+                                $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                            }
                             $sales .= "05#*#"; // Distribution Type Key
                             $sales .= "20#*#"; // Transaction Type Key
                             $sales .= "10#*#"; // Service Type Key
@@ -476,7 +490,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= " $country #*#11#*#100";
+                    $market .= "$country#*#11#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
