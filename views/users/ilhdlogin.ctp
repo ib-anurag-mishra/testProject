@@ -19,12 +19,12 @@
 	echo '<fieldset>';
 	echo $form->create('User', array( 'action' => 'ilhdlogin', 'id' => 'login', 'class'=>'login-form'));
 		echo '<div class="row">';
-		echo $form->input('card', array('label' => __('Card Number', true),'value' => $card, 'alt'=>__('Card Number', true)));
+		echo $form->input('card', array('label' => $this->getTextEncode( __('Card Number', true)),'value' => $card, 'alt'=> $this->getTextEncode( __('Card Number', true))));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('name', array('label' => 'Last Name','value' => $name, 'type'=>'password', 'alt'=>__('Last Name', true)));
+		echo $form->input('name', array('label' => 'Last Name','value' => $name, 'type'=>'password', 'alt'=> $this->getTextEncode( __('Last Name', true))));
 		echo '</div>';
-	echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button'));
+	echo $form->end(array('label' => $this->getTextEncode( __('Login', true)),'div' => false, 'class' => 'button'));
 	echo '</fieldset>';
 	echo '</div>';
 	echo '</div>';
@@ -54,7 +54,7 @@
 		else {
 			echo 'class = "non-active"';
 		}
-		echo '>'.$v.'</li>';
+		echo '>'.$this->getTextEncode($v).'</li>';
 	}
 	?>
 </ul>

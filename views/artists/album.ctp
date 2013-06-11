@@ -33,7 +33,7 @@
 			$html->addCrumb(__('All Genre', true), '/genres/view/');
                         if($genre_crumb_name != "")
                         {
-                            $html->addCrumb( $genre_crumb_name  , '/genres/view/'.base64_encode($genre_crumb_name));
+                            $html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));
                         }
 		
 			echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
@@ -41,7 +41,7 @@
 			if(strlen($artisttext) >= 30){
 				$artisttext = substr($artisttext, 0, 30). '...';
 			}
-			echo $artisttext;	
+			echo $this->getTextEncode($artisttext);	
 
 		}
 		else{
@@ -52,7 +52,7 @@
 			if(strlen($artisttext) >= 30){
 				$artisttext = substr($artisttext, 0, 30). '...';
 			}
-			echo $artisttext;
+			echo $this->getTextEncode($artisttext);
 		}
 	?>
 	
@@ -75,10 +75,7 @@ $explodeUrl = explode("page:", $_SERVER['HTTP_REFERER']);
 $explodeUrl = explode("genres/view/", $explodeUrl[0]);
 $explodeUrl[1] = str_replace("/", "", $explodeUrl[1]);
 
-/*
- * This part of code is commented to resolve issue: Back button directing patrons to All Music from an artist page going through Genres
- */
-/*if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_REFERER'], "page:") == "")
+if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_REFERER'], "page:") == "")
 {
     echo $javascript->link('backfix.min.js');
     ?>
@@ -105,7 +102,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
     }
     </script>
 <?php
-}*/
+}
 ?>
 <div style="padding-left:46px;padding-right:40px;" >
 <table  width="100%">
@@ -152,22 +149,15 @@ $i = 0;
 						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
 					}
 					?>
-					<?php echo $album['Album']['AlbumTitle'];?>		
+					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?>		
 					</b>
 				</div>
 				</a>
 				<div class="album_artistInfo" style="float:left">
 					<?php
-						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
+						echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
-                                                    
-                                                    if(strstr($album['Album']['ArtistURL'], 'http://')){
-                                                      	echo $html->link($album['Album']['ArtistURL'],$album['Album']['ArtistURL'], array('target' => 'blank'));
-  
-                                                    }else{
-                                                        echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
-
-                                                    }
+							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
 						}
                         if($album['Album']['Advisory'] == 'T'){
@@ -175,11 +165,11 @@ $i = 0;
                             echo '<br />';
                         }
 						if ($album['Album']['Label'] != '') {
-							echo __("Label").': ' . $album['Album']['Label'];
+							echo __("Label").': ' . $this->getTextEncode($album['Album']['Label']);
 							echo '<br />';
 						}
 						if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-							echo $album['Album']['Copyright'];
+							echo $this->getTextEncode($album['Album']['Copyright']);
 						}
 					?>
 				</div>

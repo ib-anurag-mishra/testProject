@@ -68,7 +68,7 @@ if(isset($searchtype)){
 								if (strlen($searchResult['Song']['ArtistText']) >= 60) {
 									$searchResult['Song']['ArtistText'] = substr($searchResult['Song']['ArtistText'], 0, 60) . '...';
 								}
-								echo '<span title="'.htmlentities($searchResult['Song']['ArtistText']).'">'.$html->link($ArtistName, array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($name)))).'</span>';
+								echo '<span title="'.$this->getTextEncode($searchResult['Song']['ArtistText']).'">'.$html->link($this->getTextEncode($ArtistName), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($name)))).'</span>';
 						?>
 						<?php
 							} else {
@@ -84,7 +84,7 @@ if(isset($searchtype)){
 						<?php
 						if (strlen($searchResult['Participant']['Name']) >= 17) {
 							$ArtistName = substr($searchResult['Participant']['Name'], 0, 17) . '...';
-							echo '<span title="'.htmlentities($searchResult['Participant']['Name']).'">'.$ArtistName.'</span>';
+							echo '<span title="'.$this->getTextEncode($searchResult['Participant']['Name']).'">'.$this->getTextEncode($ArtistName).'</span>';
 						?>
 						<?php
 						} else {
@@ -100,9 +100,9 @@ if(isset($searchtype)){
 					<p>
 					<?php
 						if (strlen($searchResult['Song']['Title']) >= 19) {
-							echo '<span title="'.htmlentities($searchResult['Song']['Title'], ENT_QUOTES, "UTF-8").'">' . substr(htmlentities($searchResult['Song']['Title'], ENT_NOQUOTES, "UTF-8"), 0, 19) . '...' . '</span>'; 
+							echo '<span title="'.$this->getTextEncode($searchResult['Song']['Title']).'">' . $this->getTextEncode(substr($searchResult['Song']['Title'], 0, 19)) . '...' . '</span>'; 
 						} else { 
-							echo $searchResult['Song']['Title'];
+							echo $this->getTextEncode($searchResult['Song']['Title']);
 						}
 						
 					?>
@@ -113,9 +113,9 @@ if(isset($searchtype)){
 					<p>
 					<?php 
 						if (strlen($searchResult['Song']['SongTitle']) > 25) {
-							echo '<span title="'.htmlentities($searchResult['Song']['SongTitle'], ENT_QUOTES, "UTF-8").'">' . substr(htmlentities($searchResult['Song']['SongTitle'], ENT_NOQUOTES, "UTF-8"), 0, 25) . '...</span>';
+							echo '<span title="'.$this->getTextEncode($searchResult['Song']['SongTitle']).'">' . $this->getTextEncode(substr($searchResult['Song']['SongTitle'], 0, 25)) . '...</span>';
 						} else {
-							echo $searchResult['Song']['SongTitle']; 
+							echo $this->getTextEncode($searchResult['Song']['SongTitle']); 
 					 	}
 						if ($searchResult['Song']['Advisory'] == 'T') {
 							echo '<font class="explicit"> (Explicit)</font>';

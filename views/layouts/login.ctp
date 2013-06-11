@@ -129,7 +129,7 @@ jQuery(document).ready(function() {
 				<div class="form-area">
 					<!--<h2>Welcome to the Freegal Music log in page.</h2>
 					<p><strong>Freegal Music gives you access to millions of songs from over 10,000 labels including the Sony Music catalog of your country.</strong></p> -->
-					<?php echo utf8_encode($page->getPageContent('login_upper')); ?>
+					<?php echo $this->getTextEncode($page->getPageContent('login_upper')); ?>
 				</div>
 			</div>
 			<img class="decor" src="/img/img01.jpg" width="571" height="544" alt="image description" />
@@ -139,7 +139,7 @@ jQuery(document).ready(function() {
 					<a class="btn-andriod"target="_blank" href="https://play.google.com/store/apps/details?id=com.libraryideas.freegalmusic&feature=nav_result#?t=W251bGwsMSwyLDNd"><img src="/img/btn-andriod.png" width="196" height="394" alt="image description" /></a>
 				</div>
 				<div class="info">
-					<?php echo $page->getPageContent('login_new'); ?>
+					<?php echo $this->getTextEncode($page->getPageContent('login_new')); ?>
 				</div>
 			</div>
 		</div>

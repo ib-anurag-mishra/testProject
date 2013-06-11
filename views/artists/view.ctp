@@ -29,10 +29,10 @@
         $html->addCrumb(__('All Genre', true), '/genres/view/');
         if($genre_crumb_name != "")
         {
-            $html->addCrumb( $genre_crumb_name  , '/genres/view/'.base64_encode($genre_crumb_name));
+            $html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));
         }
-	$html->addCrumb(__($artistName, true), '/artists/album/'.str_replace('/','@',base64_encode($artistName)).'/'.base64_encode($genre));
-	$html->addCrumb( $albumData[0]['Album']['AlbumTitle']  , '/artists/view/'.str_replace('/','@',base64_encode($artistName)).'/'.$album.'/'.base64_encode($albumData[0]['Album']['provider_type']));
+	$html->addCrumb(__($this->getTextEncode($artistName), true), '/artists/album/'.str_replace('/','@',base64_encode($artistName)).'/'.base64_encode($genre));
+	$html->addCrumb( $this->getTextEncode($albumData[0]['Album']['AlbumTitle'])  , '/artists/view/'.str_replace('/','@',base64_encode($artistName)).'/'.$album.'/'.base64_encode($albumData[0]['Album']['provider_type']));
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
@@ -42,7 +42,7 @@
 		$artistName = substr($artistName, 0, 30). '...';
 	}
 	?>
-	<?php echo $artistName; ?>
+	<?php echo $this->getTextEncode($artistName); ?>
 	<?php
 	function ieversion()
 	{
@@ -82,29 +82,24 @@
 						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
 					}
 					?>
-					<?php echo $album['Album']['AlbumTitle'];?>				</div>
+					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?>				</div>
 				<div class="artistInfo">
 					<?php
-						echo __('Genre').": ".$html->link($album['Genre']['Genre'], array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
+						echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
-                                                     if(strstr($album['Album']['ArtistURL'], 'http://')){
-                                                         echo $html->link($album['Album']['ArtistURL'], $album['Album']['ArtistURL'], array('target' => 'blank'));
-							 echo '<br />';
-                                                     }else{
-                                                         echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
-							 echo '<br />';  
-                                                     }							
+							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
+							echo '<br />';
 						}
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<font class="explicit"> (Explicit)</font>';
                             echo '<br />';
                         }
 						if ($album['Album']['Label'] != '') {
-							echo __("Label").': ' . $album['Album']['Label'];
+							echo __("Label").': ' . $this->getTextEncode($album['Album']['Label']);
 							echo '<br />';
 						}
 						if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-							echo $album['Album']['Copyright'];
+							echo $this->getTextEncode($album['Album']['Copyright']);
 						}
 					?>
 				</div>
@@ -139,9 +134,9 @@
 								<td width="340" valign="top" align="left">
 									<?php
 										if (strlen($albumSong['Song']['SongTitle']) >= 40) {
-											echo '<span title="'.$albumSong['Song']['SongTitle'].'">'  . substr($albumSong['Song']['SongTitle'], 0, 45) . '...</span>';
+											echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 45)) . '...</span>';
 										} else {
-											echo '<p>' . $albumSong['Song']['SongTitle'];
+											echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']);
 										}
 										if ($albumSong['Song']['Advisory'] == 'T') {
 											echo '<span class="explicit"> (Explicit)</span>';
@@ -155,9 +150,9 @@
 											if(strlen($albumSong['Song']['Artist']) >= 60){
 												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60). '...';
 											}
-											echo '<span title="'.$albumSong['Song']['Artist'].'">' . substr($albumSong['Song']['Artist'], 0, 13) . '...</span>';
+											echo '<span title="'.$this->getTextEncode($albumSong['Song']['Artist']).'">' . $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 13)) . '...</span>';
 										} else {
-											echo '<p>' . $albumSong['Song']['Artist'] . '</p>';
+											echo '<p>' . $this->getTextEncode($albumSong['Song']['Artist']) . '</p>';
 										}
 									?>
 								<td>

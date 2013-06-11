@@ -356,10 +356,10 @@ class SoapsController extends AppController {
         $obj = new AlbumDataByArtistType;
 
         $obj->ProdID         = $this->getProductAutoID($val['Album']['ProdID'], $val['Album']['provider_type']);
-        $obj->Genre          = $val['Genre']['Genre'];
-        $obj->AlbumTitle     = $val['Album']['AlbumTitle'];
-        $obj->Title          = $val['Album']['Title'];
-        $obj->Label          = $val['Album']['Label'];
+        $obj->Genre          = $this->getTextUTF($val['Genre']['Genre']);
+        $obj->AlbumTitle     = $this->getTextUTF($val['Album']['AlbumTitle']);
+        $obj->Title          = $this->getTextUTF($val['Album']['Title']);
+        $obj->Label          = $this->getTextUTF($val['Album']['Label']);
 
         $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Files']['CdnPath']."/".$val['Files']['SourceURL']);
         $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -426,7 +426,7 @@ class SoapsController extends AppController {
         $obj->ProductId       = '';
         $obj->AlbumTitle      = '';
         $obj->Title           = '';
-        $obj->ArtistText      = $val1['Artist']['artist_name'];
+        $obj->ArtistText      = $this->getTextUTF($val1['Artist']['artist_name']);
         $obj->Artist          = '';
         $obj->ArtistURL       = '';
         $obj->Label           = '';
@@ -519,7 +519,7 @@ class SoapsController extends AppController {
           $obj->ProductId       = '';
           $obj->AlbumTitle      = '';
           $obj->Title           = '';
-          $obj->ArtistText      = $val1['Artist']['artist_name'];
+          $obj->ArtistText      = $this->getTextUTF($val1['Artist']['artist_name']);
           $obj->Artist          = '';
           $obj->ArtistURL       = '';
           $obj->Label           = '';
@@ -591,7 +591,7 @@ class SoapsController extends AppController {
           $obj->ProductId       = '';
           $obj->AlbumTitle      = '';
           $obj->Title           = '';
-          $obj->ArtistText      = $val1['Artist']['artist_name'];
+          $obj->ArtistText      = $this->getTextUTF($val1['Artist']['artist_name']);
           $obj->Artist          = '';
           $obj->ArtistURL       = '';
           $obj->Label           = '';
@@ -653,19 +653,19 @@ class SoapsController extends AppController {
           $obj->ProdId                    = (int) $data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)'';
           $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
-          $obj->Title                     = (string)$data['Song']['Title'];
-          $obj->SongTitle                 = (string)$data['Song']['SongTitle'];
-          $obj->ArtistText                = (string)$data['Song']['ArtistText'];
-          $obj->Artist                    = (string)$data['Song']['Artist'];
+          $obj->Title                     = $this->getTextUTF((string)$data['Song']['Title']);
+          $obj->SongTitle                 = $this->getTextUTF((string)$data['Song']['SongTitle']);
+          $obj->ArtistText                = $this->getTextUTF((string)$data['Song']['ArtistText']);
+          $obj->Artist                    = $this->getTextUTF((string)$data['Song']['Artist']);
           $obj->ISRC                      = (string)'';
           $obj->Composer                  = (string)'';
-          $obj->Genre                     = (string)$data['Genre']['Genre'];
+          $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
           $obj->Territory                 = (string)$data['Country']['Territory'];
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
-          $obj->AlbumTitle = $album['Album']['AlbumTitle'];
+          $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
           
@@ -799,19 +799,19 @@ STR;
           $obj->ProdId                    = (int)$data['PRODUCT']['pid'];
           $obj->ProductId                 = (string)$data['Song']['ProductID'];
           $obj->ReferenceId               = (int)$this->getProductAutoID($data['Song']['ReferenceID'], $data['Song']['provider_type']);
-          $obj->Title                     = (string)$data['Song']['Title'];
-          $obj->SongTitle                 = (string)$data['Song']['SongTitle'];
-          $obj->ArtistText                = (string)$data['Song']['ArtistText'];
-          $obj->Artist                    = (string)$data['Song']['Artist'];
+          $obj->Title                     = $this->getTextUTF((string)$data['Song']['Title']);
+          $obj->SongTitle                 = $this->getTextUTF((string)$data['Song']['SongTitle']);
+          $obj->ArtistText                = $this->getTextUTF((string)$data['Song']['ArtistText']);
+          $obj->Artist                    = $this->getTextUTF((string)$data['Song']['Artist']);
           $obj->ISRC                      = (string)$data['Song']['ISRC'];
-          $obj->Composer                  = (string)$data['Song']['Composer'];
-          $obj->Genre                     = (string)$data['Genre']['Genre'];
+          $obj->Composer                  = $this->getTextUTF((string)$data['Song']['Composer']);
+          $obj->Genre                     = $this->getTextUTF((string)$data['Genre']['Genre']);
           $obj->Territory                 = (string)$data['Country']['Territory'];
           $obj->Sample_Duration           = (string)$data['Song']['Sample_Duration'];
           $obj->FullLength_Duration       = (string)$data['Song']['FullLength_Duration'];
           $this->Album->recursive = -1;
           $album = $this->Album->find('first',array('fields' => array('AlbumTitle'),'conditions' => array("ProdId = ".$data['Song']['ReferenceID'], "provider_type" => $data['Song']['provider_type'])));
-          $obj->AlbumTitle = $album['Album']['AlbumTitle'];
+          $obj->AlbumTitle = $this->getTextUTF($album['Album']['AlbumTitle']);
 
           $fileURL = shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Sample_Files']['CdnPath']."/".$data['Sample_Files']['SaveAsName']);
           $fileURL = Configure::read('App.Music_Path').$fileURL;
@@ -975,12 +975,12 @@ STR;
       $obj = new AlbumDataType;
       $obj->ProdID                    = (int)$this->getProductAutoID($data['Album']['ProdID'], $data['Album']['provider_type']);
       $obj->ProductID                 = (string)$data['Album']['ProductID'];
-      $obj->AlbumTitle                = (string)$data['Album']['AlbumTitle'];
-      $obj->Title                     = (string)$data['Album']['Title'];
-      $obj->ArtistText                = (string)$data['Album']['ArtistText'];
-      $obj->Artist                    = (string)$data['Album']['Artist'];
+      $obj->AlbumTitle                = $this->getTextUTF((string)$data['Album']['AlbumTitle']);
+      $obj->Title                     = $this->getTextUTF((string)$data['Album']['Title']);
+      $obj->ArtistText                = $this->getTextUTF((string)$data['Album']['ArtistText']);
+      $obj->Artist                    = $this->getTextUTF((string)$data['Album']['Artist']);
       $obj->ArtistURL                 = (string)$data['Album']['ArtistURL'];
-      $obj->Label                     = (string)$data['Album']['Label'];
+      $obj->Label                     = $this->getTextUTF((string)$data['Album']['Label']);
       $obj->Copyright                 = (string)$data['Album']['Copyright'];
       $obj->Advisory                  = (string)$data['Album']['Advisory'];
       $imgData = $this->Files->find('first',array('conditions' => array('FileID' => $data['Album']['FileID'])));
@@ -1000,14 +1000,14 @@ STR;
             $sobj->ProdID                = (int)$this->getProductAutoID($val['ProdID'], $val['provider_type']);
             $sobj->ProductID             = (string)$val['ProductID'];
             $sobj->ReferenceID           = (int)$val['ReferenceID'];
-            $sobj->Title                 = (string)$val['Title'];
-            $sobj->SongTitle             = (string)$val['SongTitle'];
-            $sobj->ArtistText            = (string)$val['ArtistText'];
-            $sobj->Artist                = (string)$val['Artist'];
+            $sobj->Title                 = $this->getTextUTF((string)$val['Title']);
+            $sobj->SongTitle             = $this->getTextUTF((string)$val['SongTitle']);
+            $sobj->ArtistText            = $this->getTextUTF((string)$val['ArtistText']);
+            $sobj->Artist                = $this->getTextUTF((string)$val['Artist']);
             $sobj->Advisory              = (string)$val['Advisory'];
             $sobj->ISRC                  = (string)$val['ISRC'];
-            $sobj->Composer              = (string)$val['Composer'];
-            $sobj->Genre                 = (string)$val['Genre'];
+            $sobj->Composer              = $this->getTextUTF((string)$val['Composer']);
+            $sobj->Genre                 = $this->getTextUTF((string)$val['Genre']);
             $sobj->Territory             = (string)$val['Territory'];
                       
             $sobj->DownloadStatus        = $this->IsDownloadable($val['ProdID'], $library_territory, $val['provider_type']);       
@@ -1330,9 +1330,9 @@ STR;
       $obj->ProdID                = (int)$this->getProductAutoID($val['Wishlist']['ProdID'], $val['Wishlist']['provider_type']);
       $obj->ProductID             = (string)$val['Wishlist']['ProductID'];
       $obj->ISRC                  = (string)$val['Wishlist']['ISRC'];
-      $obj->artist                = (string)$val['Wishlist']['artist'];
-      $obj->album                 = (string)$val['Wishlist']['album'];
-      $obj->track_title           = (string)$val['Wishlist']['track_title'];
+      $obj->artist                = $this->getTextUTF((string)$val['Wishlist']['artist']);
+      $obj->album                 = $this->getTextUTF((string)$val['Wishlist']['album']);
+      $obj->track_title           = $this->getTextUTF((string)$val['Wishlist']['track_title']);
       $obj->user_agent            = (string)$val['Wishlist']['user_agent'];
       $obj->ip                    = (string)$val['Wishlist']['ip'];
       $obj->created               = (string)$val['Wishlist']['created'];
@@ -3409,12 +3409,12 @@ STR;
 				}
           
         $data['auth_url'] = $auth_url;
+        $data['database'] = 'freegal';
+
         $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
         $resp = $resp['Posts']['message'];
 
-      
-        
-        
+
           $checkValidXml = null;
           $checkValidXml = simplexml_load_string($resp);
         
@@ -4392,7 +4392,7 @@ STR;
     foreach($genreAll AS $key => $val){
 
       $obj = new GenreDataType;
-      $obj->GenreTitle               = (string)$val['Genre']['Genre'];
+      $obj->GenreTitle               = $this->getTextUTF((string)$val['Genre']['Genre']);
 
       $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType');
     }
@@ -4421,7 +4421,7 @@ STR;
     foreach($genres AS $val){
 
       $obj = new GenreDataType;
-      $obj->GenreTitle               = (string)$val;
+      $obj->GenreTitle               = $this->getTextUTF((string)$val);
 
       $genre_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'GenreDataType');
     }
@@ -4467,14 +4467,14 @@ STR;
           $sobj->ProdID                = (int)    $arrTemp[$cnt]['PRODUCT']['pid'];
           $sobj->ProductID             = (string) '';
           $sobj->ReferenceID           = (int)$this->getProductAutoID($arrTemp[$cnt]['Song']['ReferenceID'], $arrTemp[$cnt]['Song']['provider_type']);
-          $sobj->Title                 = (string) $arrTemp[$cnt]['Song']['Title'];
-          $sobj->SongTitle             = (string) $arrTemp[$cnt]['Song']['SongTitle'];
-          $sobj->ArtistText            = (string) $arrTemp[$cnt]['Song']['ArtistText'];
-          $sobj->Artist                = (string) $arrTemp[$cnt]['Song']['Artist'];
+          $sobj->Title                 = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['Title']);
+          $sobj->SongTitle             = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['SongTitle']);
+          $sobj->ArtistText            = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['ArtistText']);
+          $sobj->Artist                = $this->getTextUTF((string) $arrTemp[$cnt]['Song']['Artist']);
           $sobj->Advisory              = (string) $arrTemp[$cnt]['Song']['Advisory'];
           $sobj->ISRC                  = (string) '';
           $sobj->Composer              = (string) '';
-          $sobj->Genre                 = (string) $arrTemp[$cnt]['Genre']['Genre'];
+          $sobj->Genre                 = $this->getTextUTF((string) $arrTemp[$cnt]['Genre']['Genre']);
           $sobj->Territory             = (string) $arrTemp[$cnt]['Country']['Territory'];       
           
           ($arrTemp[$cnt]['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
@@ -4569,7 +4569,7 @@ STR;
             $sobj->ReferenceID           = (int)    '';
             $sobj->Title                 = (string) '';
             $sobj->SongTitle             = (string) '';
-            $sobj->ArtistText            = (string) $arrTemp[$cnt];
+            $sobj->ArtistText            = $this->getTextUTF((string) $arrTemp[$cnt]);
             $sobj->Artist                = (string) '';
             $sobj->Advisory              = (string) '';
             $sobj->ISRC                  = (string) '';
@@ -4633,14 +4633,14 @@ STR;
         $sobj->ProdID                = (int)    $val['PRODUCT']['pid'];
         $sobj->ProductID             = (string) '';
         $sobj->ReferenceID           = (int)    $this->getProductAutoID($val['Song']['ReferenceID'], $val['Song']['provider_type']);
-        $sobj->Title                 = (string) $val['Song']['Title'];
-        $sobj->SongTitle             = (string) $val['Song']['SongTitle'];
-        $sobj->ArtistText            = (string) $val['Song']['ArtistText'];
-        $sobj->Artist                = (string) $val['Song']['Artist'];
+        $sobj->Title                 = $this->getTextUTF((string) $val['Song']['Title']);
+        $sobj->SongTitle             = $this->getTextUTF((string) $val['Song']['SongTitle']);
+        $sobj->ArtistText            = $this->getTextUTF((string) $val['Song']['ArtistText']);
+        $sobj->Artist                = $this->getTextUTF((string) $val['Song']['Artist']);
         $sobj->Advisory              = (string) $val['Song']['Advisory'];
         $sobj->ISRC                  = (string) '';
         $sobj->Composer              = (string) '';
-        $sobj->Genre                 = (string) $val['Genre']['Genre'];
+        $sobj->Genre                 = $this->getTextUTF((string) $val['Genre']['Genre']);
         $sobj->Territory             = (string) $val['Country']['Territory'];
                         
         ($val['Country']['SalesDate'] <= date('Y-m-d')) ? $sobj->DownloadStatus = 0 : $sobj->DownloadStatus = 1;
@@ -4839,10 +4839,10 @@ STR;
 
           $sobj = new SearchDataType;
           $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-          $sobj->SongTitle            = $val['Song']['SongTitle'];
-          $sobj->Title                = $val['Song']['Title'];
-          $sobj->SongArtist           = $val['Song']['Artist'];
-          $sobj->ArtistText           = $val['Song']['ArtistText'];
+          $sobj->SongTitle            = $this->getTextUTF($val['Song']['SongTitle']);
+          $sobj->Title                = $this->getTextUTF($val['Song']['Title']);
+          $sobj->SongArtist           = $this->getTextUTF($val['Song']['Artist']);
+          $sobj->ArtistText           = $this->getTextUTF($val['Song']['ArtistText']);
           $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
           $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
           $sobj->ISRC                 = $val['Song']['ISRC'];
@@ -4865,8 +4865,8 @@ STR;
           );
 
           $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-          $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-          $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+          $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
+          $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
           $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
         }
@@ -4926,8 +4926,8 @@ STR;
 
         $sobj = new SearchDataType;
         $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
+        $sobj->SongTitle            = $this->getTextUTF($val['Song']['SongTitle']);
+        $sobj->SongArtist           = $this->getTextUTF($val['Song']['Artist']);
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
         $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
         $sobj->ISRC                 = $val['Song']['ISRC'];
@@ -4949,8 +4949,8 @@ STR;
         );
 
         $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+        $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
+        $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
         $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
@@ -5012,8 +5012,8 @@ STR;
 
         $sobj = new SearchDataType;
         $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
+        $sobj->SongTitle            = $this->getTextUTF($val['Song']['SongTitle']);
+        $sobj->SongArtist           = $this->getTextUTF($val['Song']['Artist']);
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
         $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
         $sobj->ISRC                 = $val['Song']['ISRC'];
@@ -5036,8 +5036,8 @@ STR;
         );
 
         $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+        $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
+        $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
         $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
@@ -5098,8 +5098,8 @@ STR;
 
         $sobj = new SearchDataType;
         $sobj->SongProdID           = $this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle            = $val['Song']['SongTitle'];
-        $sobj->SongArtist           = $val['Song']['Artist'];
+        $sobj->SongTitle            = $this->getTextUTF($val['Song']['SongTitle']);
+        $sobj->SongArtist           = $this->getTextUTF($val['Song']['Artist']);
         $sobj->Sample_Duration      = $val['Song']['Sample_Duration'];
         $sobj->FullLength_Duration  = $val['Song']['FullLength_Duration'];
         $sobj->ISRC                 = $val['Song']['ISRC'];
@@ -5122,8 +5122,8 @@ STR;
         );
 
         $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle           = $albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist          = $albumData['Album']['Artist'];
+        $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
+        $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
 
         $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
@@ -5183,8 +5183,8 @@ STR;
 
         $sobj = new SearchDataType;
         $sobj->SongProdID             = (int)$this->getProductAutoID($val['Song']['ProdID'], $val['Song']['provider_type']);
-        $sobj->SongTitle              = (string)$val['Song']['SongTitle'];
-        $sobj->SongArtist             = (string)$val['Song']['Artist'];
+        $sobj->SongTitle              = $this->getTextUTF((string)$val['Song']['SongTitle']);
+        $sobj->SongArtist             = $this->getTextUTF((string)$val['Song']['Artist']);
         $sobj->Sample_Duration        = (string)$val['Song']['Sample_Duration'];
         $sobj->FullLength_Duration    = (string)$val['Song']['FullLength_Duration'];
         $sobj->ISRC                   = (string)$val['Song']['ISRC'];
@@ -5211,8 +5211,8 @@ STR;
         );
 
         $sobj->AlbumProdID            = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-        $sobj->AlbumTitle             = (string)$albumData['Album']['AlbumTitle'];
-        $sobj->AlbumArtist            = (string)$albumData['Album']['Artist'];
+        $sobj->AlbumTitle             = $this->getTextUTF((string)$albumData['Album']['AlbumTitle']);
+        $sobj->AlbumArtist            = $this->getTextUTF((string)$albumData['Album']['Artist']);
 
         $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
@@ -5529,6 +5529,17 @@ STR;
     
     return $response_patron_id;
           
+  }
+  /**
+   * Function Name : getTextUTF
+   * Desc : To return UTF8 string
+   * @param string text
+   * @return string
+   */
+   private function getTextUTF($text) {
+
+    $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
+    return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
   }
 
 }

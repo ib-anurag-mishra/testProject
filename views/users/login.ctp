@@ -14,15 +14,15 @@
 		echo '<fieldset>';
 		echo $form->create('User', array( 'action' => 'login', 'id' => 'login', 'class'=>'login-form'));
 		echo '<div class="row">';
-		echo $form->input('email', array('label' => __('Email', true),'div' => false,'alt' => __('Email', true)));
+		echo $form->input('email', array('label' => $this->getTextEncode( __('Email', true)),'div' => false,'alt' => $this->getTextEncode( __('Email', true))));
 		echo '</div>';
 		echo '<div class="row">';
-		echo $form->input('password', array('label' => __('Password', true),'div' => false, 'alt' => __('Password', true)));
+		echo $form->input('password', array('label' => $this->getTextEncode( __('Password', true)),'div' => false, 'alt' => $this->getTextEncode( __('Password', true))));
 		echo '</div>';
 		echo '<span class="forgot">';
-			echo $html->link(__('Forgot Password?', true), array('controller' => 'homes', 'action' => 'forgot_password'));
+    echo $html->link( $this->getTextEncode( __('Forgot Password?', true)), array('controller' => 'homes', 'action' => 'forgot_password'));
 		echo '</span>';
-		echo $form->end(array('label' => __('Login', true),'div' => false, 'class' => 'button' ));
+		echo $form->end(array('label' => $this->getTextEncode( __('Login', true)),'div' => false, 'class' => 'button' ));
 		echo '</fieldset>';
 		echo '</div>';
 		echo '</div>';
@@ -52,7 +52,7 @@
 		else {
 			echo 'class = "non-active"';
 		}
-		echo '>'.$v.'</li>';
+		echo '>'.$this->getTextEncode($v).'</li>';
 	}
 	?>
 </ul>

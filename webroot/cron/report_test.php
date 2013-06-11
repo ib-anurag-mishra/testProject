@@ -13,8 +13,10 @@ $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
-$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
+//$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
+//$countrys = array('US' => 'USD');
 //$countrys = array('CA' => 'CAD');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD');
 
 $lib_types = array('Unlimited' , 'ALC');
 //$lib_types = array('ALC');
@@ -35,8 +37,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-06-01';
-$currentDate = date( "Y-m-d", time());
+//$currentDate = '2013-01-21';
+$currentDate = date( "2013-05-01", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -80,7 +82,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $showEndDate = date('Ymd', strtotime($currentDate." last sunday") );
                 $condStartDate = date('Y-m-d', strtotime($currentDate . " -$StartOfLastWeek day"))." 00:00:00";
                 $condEndDate = date('Y-m-d', strtotime($currentDate." last sunday"))." 23:59:59";
-                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
+                $report_name = $reports_dir."/PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt";
 
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";
                 $result3 = mysql_query($sql);
@@ -182,7 +184,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         $libSales = 0;
                         foreach($lib as $line)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*# $country #*#SA#*##*##*#";
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
@@ -210,7 +212,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            if($country != 'US')
+                            if($country != 'US' && $lib_types == 'Unlimited')
                             {
                                 $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
                             }
@@ -238,7 +240,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= "$country#*#10#*#100";
+                    $market .= "$country #*#10#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
@@ -267,10 +269,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
-                    $result6 = mysql_query($sql);
+                    //$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    //$result6 = mysql_query($sql);
                     
-                    if($result6)
+                    /*if($result6)
                     {
                         // do nothing
                     }
@@ -278,17 +280,17 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     {
                         sendalert("Query failed: ".$sql);
                         die(" Query failed: ". $sql. " Error: " .mysql_error());
-                    }
+                    }*/
 
                     //  FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))
-                    {
+                    //if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))                    
+                    //{
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "weekly")) {
-                        $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
-                        $result7 = mysql_query($sql);
+                        //$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
+                        //$result7 = mysql_query($sql);
                         
-                        if($result7)
+                        /*if($result7)
                         {
                             // do nothing
                         }
@@ -296,9 +298,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         {
                             sendalert("Query failed: ".$sql);
                             die(" Query failed: ". $sql. " Error: " .mysql_error());
-                        }
+                        }*/
                         // }
-                    }
+                    //}
                 }
             }
 
@@ -312,7 +314,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $condStartDate = date("Y-m-d", strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))." 00:00:00";
                 $condEndDate = date("Y-m-d", strtotime('-1 second',strtotime('+1 month',strtotime('-1 month',strtotime(date('m' , strtotime($currentDate)).'/01/'.date('Y' , strtotime($currentDate)).' 00:00:00')))))." 23:59:59";
 
-                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt";
+                $report_name = $reports_dir."/PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country."_test.txt";
 
                 $sql = "SELECT COUNT(*) as ReportCount, id FROM sony_reports WHERE report_name = 'PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt'";;
                 $result3 = mysql_query($sql);
@@ -433,7 +435,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         
                         foreach($lib as $line)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*# $country #*#SA#*##*##*#";
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
@@ -462,7 +464,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            if($country != 'US')
+                            if($country != 'US' && $lib_types == 'Unlimited')
                             {
                                 $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
                             }
@@ -490,7 +492,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= "$country#*#11#*#100";
+                    $market .= " $country #*#11#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
@@ -521,7 +523,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $trailer);
                     fclose($file);
 
-                    $sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
+                    /*$sql = "INSERT INTO sony_reports(report_name, report_location, created, modified)values('PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt', '".addslashes(SONY_REPORTFILES)."', now(), now())";
                     $result6 = mysql_query($sql);
                     
                     if($result6)
@@ -532,14 +534,14 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     {
                         sendalert("Query failed: ".$sql);
                         die("Query failed: ". $sql. " Error: " .mysql_error());
-                    }
+                    }*/
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
-                    {
+                    //if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
+                    //{
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
-                        $sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
+                        /*$sql = "UPDATE sony_reports SET is_uploaded = 'yes', modified = now() WHERE id = ".mysql_insert_id();
                         $result7 = mysql_query($sql);
                         
                         if($result7)
@@ -550,8 +552,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         {
                             sendalert("Query failed: ".$sql);
                             die("Query failed: ". $sql. " Error: " .mysql_error());
-                        }
-                    }
+                        }*/
+                    //}
                 }   
             }
         }

@@ -96,14 +96,14 @@ jQuery(document).ready(function() {
 				<span class="song">
 					<?php											
 					if (strlen($genre_info[$i]['Song']['SongTitle']) >= 23 ) {
-						echo '<span title="'.$genre_info[$i]['Song']['SongTitle'].'">' . substr($genre_info[$i]['Song']['SongTitle'], 0, 23) . "..." . "</span>";
+						echo '<span title="'.$this->getTextEncode($genre_info[$i]['Song']['SongTitle']).'">' . $this->getTextEncode(substr($genre_info[$i]['Song']['SongTitle'], 0, 23)) . "..." . "</span>";
 					} else {
-						echo $genre_info[$i]['Song']['SongTitle'];
+						echo $this->getTextEncode($genre_info[$i]['Song']['SongTitle']);
 					}
 					?>				
 						<span class="singer">
 							<?php
-								echo "<a href='/artists/album/".base64_encode($genre_info[$i]['Song']['ArtistText'])."'>".substr($genre_info[$i]['Song']['ArtistText'], 0, 23)."</a>";
+								echo "<a href='/artists/album/".base64_encode($genre_info[$i]['Song']['ArtistText'])."'>".$this->getTextEncode(substr($genre_info[$i]['Song']['ArtistText'], 0, 23))."</a>";
 							?>
 						</span>										
 				</span>

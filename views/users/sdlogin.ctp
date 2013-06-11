@@ -54,7 +54,7 @@
 		else {
 			echo 'class = "non-active"';
 		}
-		echo '>'.$v.'</li>';
+		echo '>'.$this->getTextEncode($v).'</li>';
 	}
 	?>
 </ul>
