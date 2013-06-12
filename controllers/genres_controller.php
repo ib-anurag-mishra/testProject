@@ -20,19 +20,19 @@ Class GenresController extends AppController
 		parent::beforeFilter();
 		$this->Auth->allowedActions = array('view','index','ajax_view');
 		$libraryCheckArr = array("view","index");
-		if(in_array($this->action,$libraryCheckArr)) {
-		  $validPatron = $this->ValidatePatron->validatepatron();
-			if($validPatron == '0') {
-				//$this->Session->destroy();
-				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-			}
-			else if($validPatron == '2') {
-				//$this->Session->destroy();
-				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-			}
-		}
+//		if(in_array($this->action,$libraryCheckArr)) {
+//		  $validPatron = $this->ValidatePatron->validatepatron();
+//			if($validPatron == '0') {
+//				//$this->Session->destroy();
+//				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
+//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+//			}
+//			else if($validPatron == '2') {
+//				//$this->Session->destroy();
+//				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
+//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+//			}
+//		}
 	}
 
 	/*

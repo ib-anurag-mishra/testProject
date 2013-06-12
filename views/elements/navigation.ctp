@@ -24,7 +24,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		$width = 166;
 	}
 }
- ?>
+?>
 
 <style>
 body {
@@ -223,43 +223,59 @@ form, fieldset {
 		<?php
 		if(!$libraryInfo['Library']['show_library_name']) {
 		?>
-			<?php
-      if($libraryInfo['Library']['library_home_url'] != "") {
-      ?>
-        <div id="lib_name"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank" style="color:#9A9A9A; text-decoration:none"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
-      <?php
-      }else{
-      ?>
-        <div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
-      <?php
-      }
-      ?>
+		<?php
+                if($libraryInfo['Library']['library_home_url'] != "") {
+                ?>
+                    <div id="lib_name"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank" style="color:#9A9A9A; text-decoration:none"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
+                <?php
+                }else{
+                ?>
+                    <div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
+                <?php
+                }
+                ?>
 		<?php
 		}
-		?>		
-		<p><?php __('Weekly Downloads'); ?>&nbsp;<span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>
-		<?php 
-					echo $html->image("question.png", array("alt" => "Download Limits", "width" => 26, "height" => 18, "id" => 'qtip', "title" => $page->getPageContent('limits'))); ?>
+		?>	
+        
+        
+        <?php if($this->Session->read("patron")){ ?>
+		<p><?php __('Weekly Downloads'); ?>&nbsp;<span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>                    
+         
+                    
+	<?php echo $html->image("question.png", array("alt" => "Download Limits", "width" => 26, "height" => 18, "id" => 'qtip', "title" => $page->getPageContent('limits'))); ?>
 		</p>
+        <?php } ?>
 	</div>
+    
 	<ul id="nav">
 		<li class="first-child" ><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index') , array('class' => 'navigation_item') );?></li>
 		<li><?php echo $html->link(__('Genre', true), array('controller' => 'genres','action'=>'view'));?></li>
 		<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>
-		<?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
+		
+                 <?php if($this->Session->read("patron")){ ?>    
+                    
+                <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
 		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 'my_wishlist')); ?></li>
 		<?php } ?>
                 
                 
 		<?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || ($isLibaryExistInTimzone ==1)){ ?>
 		<li><?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?></li>
-		<?php } ?>
-                
-                
+		<?php } ?> 
                 
                 
 		<li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array('controller' => 'homes', 'action' => 'my_history')); ?></li>
-		<li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
+		
+                <?php  } ?>
+                
+                <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
+                
+                <?php if($this->Session->read("patron")){ ?>  
 		<li><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'));?></li>
+                <?php  }else{ ?>
+                
+                <?php  } ?>
+     
 	</ul>
 </div>

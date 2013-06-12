@@ -8,13 +8,46 @@ class AppController extends Controller
 	
 	function beforeFilter()
 	{
-		ini_set('session.cookie_domain', env('HTTP_BASE')); 
+		
+           
+                ini_set('session.cookie_domain', env('HTTP_BASE')); 
                 Configure::write('Session.checkAgent', false);
                 Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
                 $this->switchCpuntriesTable();
 		if (Configure::read('SiteSettings.site_status') == 'Offline' && $this->here != Configure::read('SiteSettings.site_offline_url')) {
 				$this->redirect(Configure::read('SiteSettings.site_offline_url'));
 		}
+                
+                
+                //changed the code to display all innner page without login
+                $libraryInstance = ClassRegistry::init('Library');
+		$url = $_SERVER['SERVER_NAME'];
+		$host = explode('.', $url);
+		$subdomains = array_slice($host, 0, count($host) - 2 );									
+		$subdomains = $subdomains[0] ;
+		
+                
+                
+		if($subdomains !== '' && $subdomains != 'www' && $subdomains != 'freegalmusic'){	
+                    
+                    $libraryIDArray = $libraryInstance->find("first", array("conditions" => array('library_subdomain' => $subdomains), 'fields' => array('id', 'library_name', 'library_home_url','library_image_name', 'library_country', 'library_territory','library_authentication_method'), 'recursive' => -1));
+
+                    $this->Session->write("subdomain",$subdomains);
+                    $this->Session->write("lId",$libraryIDArray['Library']['id']);                    
+                    $this->Session->write("territory", $libraryIDArray['Library']['library_territory']);  
+                    $this->Session->write("library", $libraryIDArray['Library']['id']);
+                    
+		}else{
+                    
+                    $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory'), 'recursive' => -1));            
+                    $country = $libraryData['Library']['library_territory'];
+                    $this->Session->write("libCountry",$country);	
+                    $this->Session->write("lId",1);  
+                    $this->Session->write("library", 1);
+                }
+                
+                
+                
 		$this->Auth->authorize = 'actions';
 		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
 		$this->Auth->loginRedirect = array( 'controller' => 'users', 'action' => 'index' );

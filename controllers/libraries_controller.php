@@ -927,16 +927,21 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             $this->Session->write("library", $existingLibraries['0']['Library']['id']);
             $this->Session->write("patron", $patronId);
             $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
-			$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
-			if($existingLibraries['0']['Library']['library_logout_url'] != ''){
-				$this->Session->write("referral_url",$existingLibraries['0']['Library']['library_logout_url']);
-			}
-			if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
-				$this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
-			}
+            
+            
+            $this->Session->write("referral_url",$existingLibraries['0']['Library']['library_domain_name']);
+            if($existingLibraries['0']['Library']['library_logout_url'] != ''){
+                    $this->Session->write("referral_url",$existingLibraries['0']['Library']['library_logout_url']);
+            }
+            if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+                    $this->Session->write('Config.language', $existingLibraries['0']['Library']['library_language']);
+            }
+            
             $isApproved = $this->Currentpatron->find('first',array('conditions' => array('libid' => $existingLibraries['0']['Library']['id'],'patronid' => $patronId)));            
             $this->Session->write("approved", $isApproved['Currentpatron']['is_approved']);
             $this->Session->write("downloadsAllotted", $existingLibraries['0']['Library']['library_user_download_limit']);
+            
+            
             $results =  $this->Download->find('count',array('conditions' => array('library_id' => $existingLibraries['0']['Library']['id'],'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
             $this ->Session->write("downloadsUsed", $results);
             if($existingLibraries['0']['Library']['library_block_explicit_content'] == '1')
@@ -949,7 +954,14 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             $this->redirect(array('controller' => 'homes', 'action' => 'index'));
         }
     }
-	function admin_consortium(){
+    
+    
+    
+   
+	
+    
+    
+    function admin_consortium(){
   
     // allwoes only admin
     if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.User.type_id') != 1))  {

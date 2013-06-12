@@ -27,7 +27,8 @@
  * to use (in this case, /app/views/pages/home.ctp)...
  */
  
- $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+        $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+        
 	if($library != 'www' && $library != 'freegalmusic' && $library != '50')
 	{
 		
@@ -48,7 +49,7 @@
 		Router::connect('/users/ihdlogin', array('controller' => 'users', 'action' => 'ihdlogin', $library));
 		Router::connect('/users/ildlogin', array('controller' => 'users', 'action' => 'ildlogin', $library));
                 Router::connect('/users/ilhdlogin', array('controller' => 'users', 'action' => 'ilhdlogin', $library));
-    Router::connect('/users/mdlogin', array('controller' => 'users', 'action' => 'mdlogin', $library));
+                Router::connect('/users/mdlogin', array('controller' => 'users', 'action' => 'mdlogin', $library));
 		Router::connect('/users/mndlogin', array('controller' => 'users', 'action' => 'mndlogin', $library));
 		Router::connect('/libraries/patron/:id',array('controller' => 'libraries', 'action' => 'patron',$library),array('id' => '[0-9]+'));
     
@@ -56,17 +57,18 @@
 	}
 	else
 	{
-		Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
+		
+            Router::connect('/', array('controller' => 'homes', 'action' => 'index'));
 	}
 	Router::connect('/index', array('controller' => 'homes', 'action' => 'index')); 
-/**	
- * ...and connect the rest of 'Pages' controller's urls.
- */
+        /**	
+        * ...and connect the rest of 'Pages' controller's urls.
+        */
 	
 	Router::connect('/pages/*', array('controller' => 'pages', 'action' => 'display'));
   
-  Router::connect('/wsdl', array('controller' => 'soaps', 'action' => 'wsdl'));
-  //Router::connect('/soaps/*', array('controller' => 'soaps', 'action' => 'index'));
+        Router::connect('/wsdl', array('controller' => 'soaps', 'action' => 'wsdl'));
+        //Router::connect('/soaps/*', array('controller' => 'soaps', 'action' => 'index'));
 	
 	Router::connect('/admin', array('controller' => 'users', 'action' => 'index', 'admin' => true));
 	
