@@ -1,0 +1,90 @@
+form {
+	
+	.box-structure;
+	background: #666;
+	width: 100%;
+	
+	@media (min-width:480px) {
+		
+		width: 480px;
+	}
+	
+	
+}
+
+
+
+.rounded-corners (@radius:5px) {
+	
+	-webkit-border-radius: @radius;
+	-moz-border-radius: @radius;
+	-ms-border-radius: @radius;
+	-o-border-radius: @radius;
+}
+
+
+.zero-out-input-elements {
+	border: 0;
+	border-radius: 0;
+	font-size: 16px;
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+	width: 100%;
+	
+}
+
+.zero-out-textarea {
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	margin-bottom: 10px;
+	padding: 0;
+	width: 100%;
+	
+}
+
+.zero-out-submit {
+	-webkit-appearance: none;
+	background: #999;
+	color: #fff;
+	border: 0;
+	border-radius: 0;
+	margin: 0;
+	padding: 0;
+	padding: 5px;
+	
+}
+
+
+.box-shadow (@blur-distance; @shadow-color) {
+	-moz-box-shadow: 0 0 @blur-distance @shadow-color;
+	-webkit-box-shadow: 0 0 @blur-distance @shadow-color;
+	box-shadow: 0 0 @blur-distance @shadow-color;
+	
+}
+
+.inset-box-shadow (@blur-distance; @shadow-color) {
+	-moz-box-shadow: 0 0 @blur-distance @shadow-color;
+	-webkit-box-shadow: 0 0 @blur-distance @shadow-color;
+	box-shadow: 0 0 @blur-distance @shadow-color;
+	
+}
+
+
+.left-inset-box-shadow (@blur-distance; @shadow-color) {
+	box-shadow: inset @blur-distance 0 @blur-distance @blur-distance @shadow-color;
+}
+
+.right-inset-box-shadow (@blur-distance; @shadow-color) {
+	box-shadow: inset -@blur-distance 0 @blur-distance -@blur-distance @shadow-color;
+}
+
+.top-inset-box-shadow (@blur-distance; @shadow-color) {
+	box-shadow: inset 0 @blur-distance @blur-distance -@blur-distance @shadow-color;
+}
+
+.bottom-inset-box-shadow (@blur-distance; @shadow-color) {
+	box-shadow: inset 0 -@blur-distance @blur-distance -@blur-distance @shadow-color;
+}
+
