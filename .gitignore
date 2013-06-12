@@ -26,3 +26,4 @@ webroot/uploads/*.csv
 webroot/uploads/*.txt
 
 
+/nbproject/private/

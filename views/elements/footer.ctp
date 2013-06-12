@@ -1,61 +1,76 @@
-<?php
-/**
- * 
- *
- * @author Rob Richmond
- * @version $Id$
- * @copyright Maycreate Idea Group, 19 February, 2010
- * @package default
- **/
+				</div> <!-- end .content -->
 
-/**
- * Footer file for home page
- **/
+			
+			</div><!-- end .content-wrapper -->
+			<div class="music-player-container clearfix">
 
-if ($this->Session->read('library') && $this->Session->read('library') != '') {
-?>
-<div id="footer">
-	<div id="copyright" style="float:left;">
-		&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;<?php $this->getTextEncode(__('All Rights Reserved')); ?>
-	</div>
-	<div class="footerlinks">
-		<div class="footerLink"><?php echo $html->link( $this->getTextEncode(__('About Freegal Music', true)), array('controller' => 'homes', 'action' => 'aboutus')); ?></div>
-		<div class="navbar">|</div>
-		<div class="footerLink"><?php echo $html->link( $this->getTextEncode(__('Terms & Conditions', true)), array('controller' => 'homes', 'action' => 'terms')); ?></div>
-		<div class="navbar">|</div>
-		<div class="footerLink"><?php echo $html->link( $this->getTextEncode(__('FAQ', true)), array('controller' => 'questions', 'action' => 'index')); ?></div>
-	</div>
-</div>
-	<span id="language">
-		<?php $this->getTextEncode(__('Also available in')); ?>&nbsp;
-		<?php
-		$language = $language->getLanguage();
-		$i =1;
-		foreach($language as $k => $v){
-			echo '<a href="javascript:void(0)" id='.$k.' onClick="changeLang('.$k.');">';?><?php echo $this->getTextEncode($v); ?><?php echo '</a> ';
-			if($i > 0 && $i < count($language)){
-				echo "| ";
-			}
-			$i++;
-		}
-		?>
-	</span>
-<?php
-} 
-else {
-?>
-<div id="footer">
-	<div id="copyright" style="float:left;">
-		&copy; 2011 Library Ideas, LLC&nbsp;&nbsp;<?php __('All Rights Reserved') ?>
-	</div>
-</div>
-<?php } ?>
-<script type="text/javascript">
-var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-</script>
-<script type="text/javascript">
-try {
-var pageTracker = _gat._getTracker("UA-16162084-1");
-pageTracker._trackPageview();
-} catch(err) {}</script>
+					<div class="music-player">
+						<div class="player-mgmt-container">
+							<button class="min-max" type="button"></button>
+							
+							
+						</div>
+						
+						<div class="album-cover-art">
+							<img src="<? echo $this->webroot; ?>app/webroot/img/music_player/album_cover_art.png" alt="album_cover_art" width="69" height="69">
+						</div>
+						<div class="album-title">
+							4 - <span class="artist">Beyonce</span>
+						</div>
+						<audio class="fmp">  
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/PnkFeaturingNateRues_JustGiveMeAReason_G010002829359t_1_4-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/Journey_DontStopBelievin_G0100027183574_1_2-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/SaraBareilles_Brave_G010002970060q_1_1-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/Train_DropsOfJupiter_G010000669385g_1_3-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/WalkOffTheEarth_SomebodyThatIUsedToK_G010002768367n_1_1-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/MumfordSons_TheCave_G0100019146910_1_2-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/DaftPunkFeatPharrell_GetLucky_G0100029758145_1_1-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/JustinTimberlake_Mirrors_G0100029371261_1_1-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/JustinTimberlake_SuitTieFeaturingJayZ_G010002929236q_1_1-256K_44S_2C_cbr1x.mp3" />
+						   <source src="<? echo $this->webroot; ?>app/webroot/media/Adele_Skyfall_G010002882136i_1_1-256K_44S_2C_cbr1x.mp3" />  
+ 
+						</audio>
+						
+						
+					</div>
+
+			</div>
+			
+			
+		</div>			
+			
+			<footer class="site-footer">
+				<div class="footer-content">
+					<div class="legal">
+						&copy; 2013 Library Ideas, LLC  All Rights Reserved
+					</div>
+					<nav class="footer-nav">
+						<ul class="clearfix">
+							<li><a href="#">News</a></li>
+							<li><a href="#">Music Videos</a></li>
+							<li><a href="#">Most Popular</a></li>
+							<li><a href="#">New Releases</a></li>
+							<li><a href="#">Genres</a></li>
+							<li><a href="#">FAQ</a></li>
+						</ul>
+					</nav>
+					<div class="languages">
+						<ul class="clearfix">
+							<li><span>Also available in</span></li>
+							<li><a href="#">English</a></li>
+							<li><a href="#">Espa&ntilde;ol</a></li>
+							<li><a href="#">Fran&ccedil;ais</a></li>
+							<li><a href="#">Italiano</a></li>
+
+						</ul>
+					</div>
+				</div>
+			</footer>
+	</body>
+	
+
+
+	
+	
+	
+</html>

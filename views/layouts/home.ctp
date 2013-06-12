@@ -28,55 +28,77 @@
 		echo $javascript->link('jquery.bgiframe');
 		echo $javascript->link('jquery.autocomplete');*/
 	?>		
-                <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
-	<?php
+                 
+	
+                    
+                    <?php
 		//echo $javascript->link('jquery-1.3.2.min');
 		echo $javascript->link('qtip');
 		echo $javascript->link('qtip_add');
 		echo $scripts_for_layout;
 		if($this->Session->read('Config.language') == 'en'){
 			$setLang = 'en';
+                        
 		}else{
 			$setLang = 'es';
+                       
 		}
 		if($this->Session->read('library') && $this->Session->read('library') != '')
 		{
 			$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	?>
-			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>&library_box_header_color=<?php echo $libraryInfo['Library']['library_box_header_color'];?>&library_box_hover_color=<?php echo $libraryInfo['Library']['library_box_hover_color'];?>" type="text/css" rel="stylesheet" />
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
-			<script type="text/javascript">
+		
+                <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+                <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
+                <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+		<link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+		<link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />	
+		<script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>
+		<script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>
+                
+                
+                <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
+	<script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
+	<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
+
+
+	<link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
+	<link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
+
+       
+                        
+                <script type="text/javascript">
                              var webroot = '<?php echo $this->webroot; ?>';
                             $(document).ready(function() {
                                
                                     
                                     
-                                     //$.noConflict();
-				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-					$('#autoComplete').keypress(function(event) {
-						//auto_check();
-						if (event.which != '13') {
-						 $('#auto').attr('value', 0);
-						}
-					});					
-					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
-					{
-						minChars: 1,
-						cacheLength: 10,
-						autoFill: false
-					}).result(function(e, item) {
-						$('#auto').attr('value', 1);
-					});
-					<?php
-					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
-					{
-					?>
-						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
-                                                
-                                                
-					<?php }	?>
-                                            
-                                            var languageSet = '<?php echo $setLang; ?>';
+                                //$.noConflict();
+                                //checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
+                                $('#autoComplete').keypress(function(event) {
+                                        //auto_check();
+                                        if (event.which != '13') {
+                                            $('#auto').attr('value', 0);
+                                        }
+                                });					
+                                $("#autoComplete").autocomplete("<?php echo $this->webroot; ?>homes/autoComplete",
+                                {
+                                        minChars: 1,
+                                        cacheLength: 10,
+                                        autoFill: false
+                                }).result(function(e, item) {
+                                        $('#auto').attr('value', 1);
+                                });
+                                <?php
+                                if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
+                                {
+                                ?>
+                                        $(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+
+
+                                <?php }	?>
+
+                                    var languageSet = '<?php echo $setLang; ?>';
 					
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				var attributes = { id: "audioplayer" }; 
@@ -187,40 +209,14 @@
 				#newly_added a { display: none }
 				#newly_added a.first { display: block }
 			</style>
+                        
+                        
+	
 	<?php
 		}
-		else {
-	?>
-			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet" />
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
-	<?php
-		}
-	?>
-<!--[if IE 7]>
-	<style>
-		#ticker {
-			line-height: 16px;
-		}
-		ul.marquee {
-			margin-top: -16px;
-		}
-		.genreSeeAll {
-			margin-top: -20px;
-		}
-		#search .submit {
-			padding: 0 0 0 2px;
-			height:22px;
-		}
-	</style>
-<![endif]-->
-<!--[if IE 8]>
-	<style>
-		#search .submit {
-			padding: 0 0 0 2px;
-			height:20px;
-		}
-	</style>
-<![endif]-->
+		
+	?>	
+
 	<noscript>
 		<?php
 			if($this->params['action'] != 'aboutus') {
@@ -298,6 +294,14 @@
 			to upgrade your Flash Player.<br /><br />
 		</div>
 	</div>
+        
+        
+        
+        
+        
+        
+        
+        
 	<?php
 	if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 	{ ?>
@@ -341,7 +345,7 @@
                 
                 
                 
-                
+              
                 
 	<div id="border-background" >
 	<div id="container">
@@ -352,7 +356,13 @@
 			{
 				echo $this->element('navigation');
 			}
-			echo $content_for_layout; ?>
+                        
+                        
+                        
+			//echo $content_for_layout; 
+                        
+                        
+                        ?>
 		</div>
 		<br class="clr">
 	</div>

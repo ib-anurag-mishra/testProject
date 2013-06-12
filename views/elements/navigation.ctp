@@ -25,257 +25,217 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	}
 }
 ?>
+    <div class="wrapper">
+			<!-- site header -->
+			<header class="site-header">
+                            
+                            
+                            
+                            
+				<h1 class="logo"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></h1>
+				
+					<div class="master-music-search-wrapper">
+							
+						
+						<form class="search" name="search" action="" method="post">
+							
+							<input type="text" id="search-text" name="search-text" />
+							
+						</form>
+						<button type="submit"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
+						<a href="#">Browse A-Z</a>
+							
+					</div>
+					<div class="master-music-search-results">
+						<ul>
+							<li>
+								<div class="master-search-results-image">
+									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/adele.jpg" alt="adele">
+								</div>
+								<div class="master-search-results-detail">
+									<p class="song-album-info"><span class="album-title"><a href="#">21</a></span><span class="song-title"><a href="#"></a></span></p>
+									<p class="artist"><a href="#">Adele</a></p>
+								</div>
+							</li>
+							<li>
+								<div class="master-search-results-image">
+									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/pitbull.jpg" alt="pitbull">
+								</div>
+								<div class="master-search-results-detail">
+									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Mr. Worldwide</a></span></p>
+									<p class="artist"><a href="#">Pitbull</a></p>
+								</div>
+							</li>
+							<li>
+								<div class="master-search-results-image">
+									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/carrie-underwood.jpg" alt="carrie-underwood">
+								</div>
+								<div class="master-search-results-detail">
+									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">Before He Cheats</a></span></p>
+									<p class="artist"><a href="#">Carrie Underwood</a></p>
+								</div>
+							</li>
+							<li>
+								<div class="master-search-results-image">
+									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/kelly-clarkson.jpg" alt="kelly-clarkson">
+								</div>
+								<div class="master-search-results-detail">
+									<p class="song-album-info"><span class="album-title"><a href="#"></a></span><span class="song-title"><a href="#">All I Ever Wanted</a></span></p>
+									<p class="artist"><a href="#">Kelly Clarkson</a></p>
+								</div>
+							</li>
+							<li>
+								<div class="master-search-results-image">
+									<img src="<? echo $this->webroot; ?>app/webroot/img/master_music_search_results/michael-jackson.jpg" alt="michael-jackson">
+								</div>
+								<div class="master-search-results-detail">
+									<p class="song-album-info"><span class="album-title"><a href="#">Thriller</a></span><span class="song-title"><a href="#"></a></span></p>
+									<p class="artist"><a href="#">Michael Jackson</a></p>
+								</div>
+							</li>
+						</ul>
+					</div>
+					
+				<?php if($this->Session->read("patron")){ ?>
+				<div class="weekly-downloads-container clearfix">
+					<div class="label">
+						<p>Joe Smith</p>
+					</div>
+					<div class="tooltip">
+						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/tooltip-play-btn.png" alt="tooltip_play_btn" width="17" height="17"></a>
+						
+					</div>
+                                    
+					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
+                                          
+				</div>
 
-<style>
-body {
-	margin:0;
-	color:#000;
-	font:13px Tahoma, Arial, Helvetica, sans-serif;
-	background:#797979;
-	min-width:965px;
-}
-img {border-style:none;}
-a {
-	text-decoration:underline;
-	color:#0080ff;
-}
-a:hover {text-decoration:none;}
-input,
-textarea,
-select {
-	font:12px Arial, Helvetica, sans-serif;
-	vertical-align:middle;
-	color:#000;
-}
-form, fieldset {
-	margin:0;
-	padding:0;
-	border-style:none;
-}
-#wrapper {
-	width:100%;
-	overflow:hidden;
-	position:relative;
-}
-.hidden {
-	position:absolute;
-	left:-9999px;
-	top:auto;
-	width:1px;
-	height:1px;
-	overflow:hidden;
-}
-.skip {
-	position:absolute;
-	left:-10000px;
-	top:auto;
-	width:1px;
-	height:1px;
-	overflow:hidden;
-}
-.skip:focus {
-	position:static;
-	width:auto;
-	height:auto;
-} 
-.btn-support {
-	width:47px;
-	height:132px;
-	overflow:hidden;
-	text-indent:-9999px;
-	background:url(../img/btn-support.png) no-repeat;
-	position:absolute;
-	top:250px;
-	right:0;
-	z-index:100;
-}
-.w1 {
-	width:965px;
-	background:#fff;
-	margin:0 auto;
-	overflow:hidden;
-}
-#header {
-	text-align:right;
-	width:100%;
-	color:#9a9a9a;
-	font-size:13px;
-}
-#header .top-box {
-	overflow:hidden;
-	height:60%;
-	background:#fefefe; 
-	padding:25px 5px 0 25px;
-}
-#header p {margin:0;}
-.logo {
-	margin:-25px 0 0;
-	width:428px;
-	height:100px;
-	overflow:hidden;
-	float:left;
-	cursor:pointer;
-	text-align:left;
-}
-.logo a {
-	height:100%;
-	display:block;
-}
-.social {
-	padding:0;
-	margin:-11px 0 0 22px;
-	list-style:none;
-	float:right;
-	text-align:left;
-}
-.social li {
-	float:left;
-	width:34px;
-	padding:0 13px 0 0;
-}
-.social li a {
-	width:34px;
-	height:34px;
-	overflow:hidden;
-	text-indent:-9999px;
-	display:block;
-}
-#nav {
-	padding:0;
-	margin:0;
-	list-style:none;
-	overflow:hidden;
-	width:100%;
-	font:15px/17px Tahoma, Arial, sans-serif;
-	background:#004080;
-	margin: 5px 0 0;
-}
-#nav li {}
+				<div class="plays-tooltip">
+					<div class="tooltip-content">
+						<p>The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA).</p>
+					</div>
+				</div>
+                                <?php } ?>
+			</header>
+                       
+			<!-- site nav -->
+			<nav class="site-nav">
 
-#nav li.first-child {background:none;}
-
-#nav li a {
-	color:#fff;
-	float:left;
-	text-align:center;
-	text-decoration:none;
-	width:<?php echo $width.'px';?> !important;
-}
-#nav li a:hover {text-decoration:underline;}
-</style>
-
-<div id="header">
-	<div class="top-box">
-		<ul class="social">
-		<?php
-		if($libraryInfo['Library']['twiter_icon'] != "") {
-		?>		
-			<li><a href="<?php echo $libraryInfo['Library']['twiter_icon'];?>" class="twitter"  TARGET="_blank">twitter</a></li>
-		<?php 
-			} else {
-			?>
-				<li>&nbsp;&nbsp;</li>
-			<?php
-			}
-		?>
-		<?php
-		if($libraryInfo['Library']['facebook_icon'] != "") {
-		?>		
-			<li><a href="<?php echo $libraryInfo['Library']['facebook_icon'];?>" class="facebook"  TARGET="_blank">facebook</a></li>
-		<?php 
-			} else {
-			?>
-				<li>&nbsp;&nbsp;</li>
-			<?php
-			}
-		?>
-		<?php
-		if($libraryInfo['Library']['youtube_icon'] != "") {
-		?>		
-			<li><a href="<?php echo $libraryInfo['Library']['youtube_icon'];?>" class="youtube"  TARGET="_blank">youtube</a></li>
-		<?php 
-			} else {
-			?>
-				<li>&nbsp;&nbsp;</li>
-			<?php
-			}
-		?>			
-		</ul>
-		<div id="lib_image">
-		<?php
-		if($libraryInfo['Library']['library_image_name'] != "") {
-		?>
-				<?php
-				if($libraryInfo['Library']['library_home_url'] != "") {
-				?>
-					<a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>"></a>
-				<?php
-				}else{
-				?>
-					<img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
-				<?php
-				}
-				?>
-		<?php
-		}
-		?>		
-		</div>
-		<?php
-		if(!$libraryInfo['Library']['show_library_name']) {
-		?>
-		<?php
-                if($libraryInfo['Library']['library_home_url'] != "") {
-                ?>
-                    <div id="lib_name"><a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank" style="color:#9A9A9A; text-decoration:none"><?php echo $libraryInfo['Library']['library_name']; ?></a></div>
-                <?php
-                }else{
-                ?>
-                    <div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div>
-                <?php
-                }
-                ?>
-		<?php
-		}
-		?>	
-        
-        
-        <?php if($this->Session->read("patron")){ ?>
-		<p><?php __('Weekly Downloads'); ?>&nbsp;<span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?>                    
-         
-                    
-	<?php echo $html->image("question.png", array("alt" => "Download Limits", "width" => 26, "height" => 18, "id" => 'qtip', "title" => $page->getPageContent('limits'))); ?>
-		</p>
-        <?php } ?>
-	</div>
-    
-	<ul id="nav">
-		<li class="first-child" ><?php echo $html->link(__('Home', true), array('controller' => 'homes','action'=>'index') , array('class' => 'navigation_item') );?></li>
-		<li><?php echo $html->link(__('Genre', true), array('controller' => 'genres','action'=>'view'));?></li>
-		<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>
-		
-                 <?php if($this->Session->read("patron")){ ?>    
+					<ul class="clearfix">
+			<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>
+			<li><a href="#music-sub-cat">Music Videos</a></li>
+						<li><a href="http://www.google.com">Most Popular</a></li>
+						<li><a href="#new-releases-sub-cat">New Releases</a></li>
+						<li><a href="#genres-sub-cat">Genres</a></li>
+						
+                                                        <?php if($this->Session->read("patron")){ ?>    
                     
                 <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
-		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 'my_wishlist')); ?></li>
+		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 
+'my_wishlist')); ?></li>
 		<?php } ?>
                 
                 
-		<?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || ($isLibaryExistInTimzone ==1)){ ?>
-		<li><?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?></li>
+		<?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || 
+($isLibaryExistInTimzone ==1)){ ?>
+		<li><?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 
+'my_account')); ?></li>
 		<?php } ?> 
                 
                 
-		<li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array('controller' => 'homes', 'action' => 'my_history')); ?></li>
+		<li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array
+('controller' => 'homes', 'action' => 'my_history')); ?></li>
 		
                 <?php  } ?>
                 
-                <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
+                <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 
+'index')); ?></li>
                 
                 <?php if($this->Session->read("patron")){ ?>  
-		<li><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 'logout'));?></li>
+		<li><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 
+'logout'));?></li>
                 <?php  }else{ ?>
-                
+               <li><?php echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 
+'login'));?></li>
                 <?php  } ?>
-     
-	</ul>
-</div>
+					</ul>
+
+			</nav>
+			<div class="gradient-border"></div>
+			<div class="top-sub-nav">
+				
+			</div>
+			<div class="content-wrapper clearfix">
+				
+					<section class="left-sidebar">
+						
+							
+							<ul class="browse sidebar-nav"><h3>Browse</h3>
+								
+								<li>
+									<a href="#" class="sidebar-anchor">Music Videos</a>
+
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor">Most Popular</a>
+
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor">New Releases</a>
+
+								</li>
+							</ul>
+							<ul class="streaming sidebar-nav"><h3>My Streaming</h3>
+								
+								
+								<li>
+									<a href="#" class="sidebar-anchor">Playlists</a>
+									<ul class="sidebar-sub-nav">
+										<li><a href="#">Now Playing</a></li>
+										<li><a href="#">Top 40</a></li>
+										<li><a href="#">90's</a></li>
+										<li><a href="#">Classic Rock</a></li>
+										<li><a href="#">Heavy Metal</a></li>
+										<li><a href="#">Electronic</a></li>
+										<li><a href="#">Hip Hop</a></li>
+										<li><a href="#">Jazz</a></li>
+										<li><a href="#">Shuffle</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor saved-queue">Queue</a>
+									<ul class="sidebar-sub-nav">
+										<li><a href="#">Saved Queue</a></li>
+									</ul>
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor">History</a>
+
+								</li>
+							</ul>
+							<ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
+								
+								<li>
+									<a href="#" class="sidebar-anchor">Downloads</a>
+									
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor">Recent</a>
+
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor">Wishlist</a>
+									
+								</li>
+								
+							</ul>
+							<div class="announcements">
+								<h4><a href="#">Announcements</a></h4>
+								<div class="poll">
+									
+								</div>
+							</div>
+						
+					</section>
+					
+					<div class="content">
