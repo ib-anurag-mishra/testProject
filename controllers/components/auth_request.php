@@ -20,8 +20,7 @@ Class AuthRequestComponent extends Object
                     $str = $str."></data>";
             }
             $post_data = array('xml'=>$str);
-            echo $url = $authUrl;
-            die;
+            $url = $authUrl;
 
             $ch=curl_init();
             // tell curl target url
@@ -40,8 +39,8 @@ Class AuthRequestComponent extends Object
             $result = curl_exec($ch);
 
 
-            print_r( $result);
-            die;
+            //print_r( $result);
+            //die;
 
             curl_close($ch);
             $result =& new Xml($result);

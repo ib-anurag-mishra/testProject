@@ -641,7 +641,7 @@ Class ArtistsController extends AppController
 
 			$this->Song->Behaviors->attach('Containable');
 			$songs = $this->Song->find('all', array(
-				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
+				'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_typen'),
 				'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'limit' => 1));
 
 			$val = '';
@@ -785,9 +785,9 @@ Class ArtistsController extends AppController
 			}
 		}
 
-		// echo "<pre>";
-		// print_r($albumSongs);
-		// exit;
+		 //echo "<pre>";
+		 //print_r($albumSongs);
+		 //exit;
 
 		$this->Download->recursive = -1;
 		foreach($albumSongs as $k => $albumSong){

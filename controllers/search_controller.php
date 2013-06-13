@@ -35,6 +35,21 @@ class SearchController extends AppController
 
 
   function advanced_search($page=1, $facetPage=1) {
+
+      // reset page parameters when serach keyword changes
+  if( ('' == trim($_GET['q'])) || ('' == trim($_GET['type'])) ) {
+    unset($_SESSION['SearchReq']);
+  }// unset session when no params
+  if( (isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])) ) {
+    unset($_SESSION['SearchReq']);
+    $this->redirect(array('controller' => 'search', 'action' => 'advanced_search?q='.$_GET['q'].'&type='.$_GET['type']));
+  }//reset session & redirect to 1st page
+  if( ('' != trim($_GET['q'])) && ('' != trim($_GET['type'])) ) {
+    $_SESSION['SearchReq']['word'] = $_GET['q'];
+    $_SESSION['SearchReq']['type'] = $_GET['type'];
+  }//sets values in session
+
+
     $this->layout = 'home';
     $queryVar = null;
     $check_all = null;
@@ -286,6 +301,8 @@ class SearchController extends AppController
           $data1 = $this->Solr->getAutoCompleteData($queryVar, 'artist', 10);
           $data2 = $this->Solr->getAutoCompleteData($queryVar, 'album', 10);
           $data3 = $this->Solr->getAutoCompleteData($queryVar, 'song', 10);
+	  $data4 = $this->Solr->getAutoCompleteData($queryVar, 'genre', 10);
+
           //die;
           foreach($data1 as $record=>$count){
             if(preg_match("/^".$queryVar."/i",$record)){
@@ -305,7 +322,16 @@ class SearchController extends AppController
               $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Track</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|3";
             }
           }
-          $records = array_slice($records,0,10);
+          foreach($data4 as $record=>$count){
+            if(preg_match("/^".$queryVar."/i",$record)){
+              //$records[] = $record."|".$record;
+              $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Genre</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|3";
+            }
+          }
+
+	 // echo '<pre>'; print_r($records); die;
+
+          $records = array_slice($records,0,20);
           break;
         case 'artist':
           foreach($data as $record=>$count){

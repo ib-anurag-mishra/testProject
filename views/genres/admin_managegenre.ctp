@@ -25,13 +25,13 @@
                     }
                     if(in_array($allGenre['Genre']['Genre'],$selectedGenres))
                     {
-                        echo $form->checkbox('Genre.['.$allGenre['Genre']['Genre'].']', array('value' => $allGenre['Genre']['Genre'], 'checked' => True)); 
+                        echo $form->checkbox('Genre.['.$this->getTextEncode($allGenre['Genre']['Genre']).']', array('value' => $allGenre['Genre']['Genre'], 'checked' => True)); 
                     }
                     else
                     {
-                        echo $form->checkbox('Genre.['.$allGenre['Genre']['Genre'].']', array('value' => $allGenre['Genre']['Genre'], 'checked' => False)); 
+                        echo $form->checkbox('Genre.['.$this->getTextEncode($allGenre['Genre']['Genre']).']', array('value' => $allGenre['Genre']['Genre'], 'checked' => False)); 
                     }   
-                    echo $this->Form->label($allGenre['Genre']['Genre']);
+                    echo $this->Form->label($this->getTextEncode($allGenre['Genre']['Genre']));
                     if(($i+1)%3 == 0)
                     {            
                         echo "</td></tr>";        

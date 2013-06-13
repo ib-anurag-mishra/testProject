@@ -52,7 +52,7 @@ if(empty($getData))
 					<?php echo $lang['Language']['short_name']; ?></td>
 				</td>
 				<td>
-					<?php echo $lang['Language']['full_name']; ?></td>
+					<?php echo $this->getTextEncode($lang['Language']['full_name']); ?></td>
 				</td>
 				<td>
 				<?php

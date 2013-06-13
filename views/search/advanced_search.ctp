@@ -281,7 +281,7 @@ STR;
 						<span class="h2Wrapper">Albums</span>
 					</h2>
 STR;
-
+//echo '<pre>'; print_r($albumData); echo '</pre>';
 			if(!empty($albumData)){
 				foreach($albumData as $palbum){
 					$albumDetails = $album->getImage($palbum->ReferenceID);
@@ -663,6 +663,7 @@ STR;
 						$tilte = urlencode($composer->Composer);
             $name = $composer->Composer;
             $count = $composer->numFound;
+	    $name = $this->getTextEncode($name);
 						$composer_list .=<<<STR
 						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=composer" title='$name'>$composer_name</a></span><span class="right_text">($count)</span></li>
 STR;

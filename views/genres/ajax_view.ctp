@@ -49,7 +49,7 @@ if(count($genres) > 0){
 			$class = ' class="altrow"';
 		}
 		echo "<tr" . $class . ">";
-		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)));
+		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*(1.5))));
 		foreach ($counters as $counter):
 			if($counter < count($genres)) {
 

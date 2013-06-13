@@ -865,12 +865,6 @@ if((!$this->Session->read('Auth.User.type_id')) && ($this->Session->read('Auth.U
             $requestUrlArr = explode("/", $_REQUEST['url']);
             $patronId = $requestUrlArr['2'];
         }
-        
-        if($patronId == '___BARCODE___')
-        {
-            $this->Session->setFlash("Sorry you have entered an incorrect card number. Please go back to your Library and login back in.");
-            $this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-        }
 
         $referrerUrl = strtolower($_SERVER['HTTP_REFERER']);
         if($referrerUrl == 'http://www.ocls.info/freegalmusic-sp.asp'){

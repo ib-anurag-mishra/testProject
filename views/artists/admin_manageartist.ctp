@@ -109,7 +109,7 @@ function CheckAllChk(theForm,maincheckname)
 			$artistImage = $artist['Artist']['artist_image'];	   
 		?>
 		<tr>
-			<td class="left"><?php echo $artist['Artist']['artist_name'];?></td>
+			<td class="left"><?php echo $this->getTextEncode($artist['Artist']['artist_name']);?></td>
 			<td class="left"><?php echo $artist['Artist']['territory'];?></td>
 			<td><a href="<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>" rel="image" onclick="javascript: show_uploaded_images('<?php echo $cdnPath.'artistimg/'.$artist['Artist']['artist_image'];?>')"><?php echo $artistImage;?></a></td>                
 			<td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'createartist','id'=>$artist['Artist']['id']));?></td>

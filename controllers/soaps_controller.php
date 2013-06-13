@@ -3418,6 +3418,21 @@ STR;
       $auth_url = str_ireplace('=CARDNUMBER', '='.$data['patronId'], $mobile_auth);
       $auth_url = str_ireplace('=PIN', '='.$data['pin'], $auth_url);
 
+
+	/*************************************************/
+	/*$ch = curl_init($auth_url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+        if(0 === stripos($auth_url, 'https')) {
+          curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        }
+
+        $resp = curl_exec ( $ch );
+        curl_close($ch); 
+        var_dump($resp); exit;*/
+	/************************************************/
+
+
       if(count($existingLibraries) == 0){
 
         $response_msg = 'Invalid credentials provided.';
@@ -3431,12 +3446,12 @@ STR;
 				else{
 					$methodUrl = Configure::read('App.AuthUrl')."ezproxylogin_validation";
 				}
-          
-        $data['auth_url'] = $auth_url;
+        //echo $methodUrl; exit;  
+        $data['auth_url'] = $auth_url;  $data['database'] = 'freegal';
         $resp = $this->AuthRequest->getAuthResponse($data, $methodUrl);
         $resp = $resp['Posts']['message'];
 
-      
+        //echo 'Soap -> '; var_dump($resp); exit; 
      
         
           $checkValidXml = null;

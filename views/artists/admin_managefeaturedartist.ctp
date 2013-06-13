@@ -15,9 +15,9 @@
           {   
             ?>
             <tr>
-                <td class="left"><?php echo $artist['Featuredartist']['artist_name'];?></td>
+                <td class="left"><?php echo $this->getTextEncode($artist['Featuredartist']['artist_name']);?></td>
                 <td class="left"><?php echo $artist['Featuredartist']['territory'];?></td>		  
-		<td class="left"><?php $data = $album->getAlbum($artist['Featuredartist']['album']);echo $data[0]['Album']['AlbumTitle'];?></td>
+		<td class="left"><?php $data = $album->getAlbum($this->getTextEncode($artist['Featuredartist']['album']));echo $this->getTextEncode($data[0]['Album']['AlbumTitle']);?></td>
                 <td><?php echo $html->link('Edit', array('controller'=>'artists','action'=>'artistform','id'=>$artist['Featuredartist']['id']));?></td>
                 <td><?php echo $html->link('Delete', array('controller'=>'artists','action'=>'delete','id'=>$artist['Featuredartist']['id']));?></td>
             </tr>
