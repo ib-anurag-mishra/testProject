@@ -54,19 +54,15 @@
 		<link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
 		<link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />	
 		<script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>
-		<script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>
-                
+		<script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>                
                 
                 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
-	<script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
-	<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
+                <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
+                <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
 
-
-	<link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
-	<link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
-
-       
-                        
+                <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
+                <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
+                      
                 <script type="text/javascript">
                              var webroot = '<?php echo $this->webroot; ?>';
                             $(document).ready(function() {
@@ -209,14 +205,9 @@
 				#newly_added a { display: none }
 				#newly_added a.first { display: block }
 			</style>
-                        
-                        
-	
 	<?php
-		}
-		
-	?>	
-
+		}		
+	?>
 	<noscript>
 		<?php
 			if($this->params['action'] != 'aboutus') {
@@ -234,10 +225,6 @@
 					location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
 				<?php } ?>
 			}
-                        
-                        
-                        
-                        
 		});
                 
                               
@@ -294,14 +281,6 @@
 			to upgrade your Flash Player.<br /><br />
 		</div>
 	</div>
-        
-        
-        
-        
-        
-        
-        
-        
 	<?php
 	if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 	{ ?>
@@ -336,16 +315,7 @@
                         </div>
 		</div>
 	      
-          <?php } ?>  
-                
-                
-                
-                
-                
-                
-                
-                
-              
+          <?php } ?>
                 
 	<div id="border-background" >
 	<div id="container">
@@ -356,12 +326,7 @@
 			{
 				echo $this->element('navigation');
 			}
-                        
-                        
-                        
-			//echo $content_for_layout; 
-                        
-                        
+			echo $content_for_layout; 
                         ?>
 		</div>
 		<br class="clr">

@@ -27,24 +27,49 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 ?>
     <div class="wrapper">
 			<!-- site header -->
-			<header class="site-header">
-                            
-                            
-                            
-                            
-				<h1 class="logo"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></h1>
-				
+			<header class="site-header">                            
+				<h1 class="logo">
+                                    <?php
+                                    if($libraryInfo['Library']['library_image_name'] != "") {
+                                    ?>
+                                            <?php
+                                            if($libraryInfo['Library']['library_home_url'] != "") {
+                                            ?>
+                                                    <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>"></a>
+                                            <?php
+                                            }else{
+                                            ?>
+                                                    <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
+                                            <?php
+                                            }
+                                            ?>
+                                    <?php
+                                    }
+                                    ?>	
+                                    <?php
+                                    if(!$libraryInfo['Library']['show_library_name']) {
+                                    ?>
+                                          <?php
+                                          if($libraryInfo['Library']['library_home_url'] != "") {
+                                          ?>
+                                            <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div></a>
+                                          <?php
+                                          }else{
+                                          ?>
+                                            <?php echo $libraryInfo['Library']['library_name']; ?>
+                                          <?php
+                                          }
+                                          ?>
+                                    <?php
+                                    }
+                                    ?>
+                                </h1>				
 					<div class="master-music-search-wrapper">
-							
-						
-						<form class="search" name="search" action="" method="post">
-							
-							<input type="text" id="search-text" name="search-text" />
-							
+						<form class="search" name="search" action="" method="post">							
+							<input type="text" id="search-text" name="search-text" />							
 						</form>
 						<button type="submit"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
-						<a href="#">Browse A-Z</a>
-							
+						<a href="#">Browse A-Z</a>							
 					</div>
 					<div class="master-music-search-results">
 						<ul>
@@ -99,15 +124,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				<?php if($this->Session->read("patron")){ ?>
 				<div class="weekly-downloads-container clearfix">
 					<div class="label">
-						<p>Joe Smith</p>
+						<p> 
+                                                <?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || ($isLibaryExistInTimzone ==1)){ ?>
+                                                    <?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?>
+                                                <?php } ?>    | 
+                                                <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?>
+                                                </p>
 					</div>
 					<div class="tooltip">
-						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/tooltip-play-btn.png" alt="tooltip_play_btn" width="17" height="17"></a>
-						
-					</div>
-                                    
-					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>
-                                          
+						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/tooltip-play-btn.png" alt="tooltip_play_btn" width="17" height="17"></a>						
+					</div>                                    
+					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>                                          
 				</div>
 
 				<div class="plays-tooltip">
@@ -115,49 +142,42 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 						<p>The download usage counter is located in the upper right corner of freegalmusic.com displaying your weekly allotment. For instance, 1/3 means that you have a weekly limit of 3 downloads, and you have used 1 of those downloads. The download counter resets each week at Monday 12:01 AM (Eastern Time, USA).</p>
 					</div>
 				</div>
-                                <?php } ?>
+                                <?php  }else{ ?>
+                               <div class="weekly-downloads-container clearfix">
+                                   <div class="label"><?php echo $html->link(__('Login', true), array('controller' => 'users', 'action' =>'login'));?></div>
+                               </div>
+                                <?php  } ?>
 			</header>
                        
 			<!-- site nav -->
-			<nav class="site-nav">
+		<nav class="site-nav">
 
-					<ul class="clearfix">
-			<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>
-			<li><a href="#music-sub-cat">Music Videos</a></li>
-						<li><a href="http://www.google.com">Most Popular</a></li>
-						<li><a href="#new-releases-sub-cat">New Releases</a></li>
-						<li><a href="#genres-sub-cat">Genres</a></li>
-						
-                                                        <?php if($this->Session->read("patron")){ ?>    
+                    <ul class="clearfix">
+			<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>			
+                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'musicvideos', 'action' => 
+'view')); ?></li></li>
+                        <li><a href="#"></a></li>
+                        <li><?php echo $html->link(__('Most Popular', true), array('controller' => 'mostpopular', 'action' => 
+'view')); ?></li></li>
+                        <li><a href="#"></a></li>
+                        <li><?php echo $html->link(__('New Releases', true), array('controller' => 'newreleases', 'action' => 
+'view')); ?></li></li>
+                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' => 
+'view')); ?></li></li>
+		
+                <?php if($this->Session->read("patron")){ ?>  
                     
                 <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
 		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 
 'my_wishlist')); ?></li>
 		<?php } ?>
-                
-                
-		<?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || 
-($isLibaryExistInTimzone ==1)){ ?>
-		<li><?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 
-'my_account')); ?></li>
-		<?php } ?> 
-                
-                
-		<li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array
-('controller' => 'homes', 'action' => 'my_history')); ?></li>
 		
+                <li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array
+('controller' => 'homes', 'action' => 'my_history')); ?></li>
                 <?php  } ?>
-                
                 <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 
 'index')); ?></li>
                 
-                <?php if($this->Session->read("patron")){ ?>  
-		<li><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' => 
-'logout'));?></li>
-                <?php  }else{ ?>
-               <li><?php echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 
-'login'));?></li>
-                <?php  } ?>
 					</ul>
 
 			</nav>
