@@ -28,7 +28,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
     <div class="wrapper">
 			<!-- site header -->
 			<header class="site-header">                            
-				<h1 class="logo">
+				
+                                    <?php if($this->Session->read("patron")){ ?>
+                                    <h1 class="logo">
                                     <?php
                                     if($libraryInfo['Library']['library_image_name'] != "") {
                                     ?>
@@ -63,7 +65,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <?php
                                     }
                                     ?>
-                                </h1>				
+                                    </h1>
+                                    <?php } else { ?>
+                                    <h1 class="logo"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></h1>                                    
+                                    <?php } ?>
+                                				
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" action="" method="post">							
 							<input type="text" id="search-text" name="search-text" />							
