@@ -297,20 +297,78 @@ class SearchController extends AppController
           $data1 = array();
           $data2 = array();
           $data3 = array();
+	  $arr_data = $arr_records = array();
 
-          $data1 = $this->Solr->getAutoCompleteData($queryVar, 'artist', 10);
-          $data2 = $this->Solr->getAutoCompleteData($queryVar, 'album', 10);
-          $data3 = $this->Solr->getAutoCompleteData($queryVar, 'song', 10);
-	  $data4 = $this->Solr->getAutoCompleteData($queryVar, 'genre', 10);
+	  // each indiviual filter call
+	  $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'album', 18, '1');
+          $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'artist', 18, '1');
+          $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'composer', 18, '1');
+          $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'genre', 18, '1');
+	  $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'label', 18, '1');
+	  $arr_data[]  = $this->Solr->getAutoCompleteData($queryVar, 'song', 18, '1');
+
+	  // formates array
+	  foreach($arr_data as $key1 => $val1){
+	    foreach($val1 as $key2 => $val2){
+		$arr_result[$key2] = $val2;
+	    }
+	  }
+
+	//sort ain decending order of match result count
+	krsort($arr_result);	  
+
+	//get 3 elements of each filter
+	$arr_show = $arr_result; $in_basket = 0;
+	foreach($arr_result AS $key1 => $val1){
+	  foreach($val1 AS $key2 => $val2){
+  
+	    $val2 = array_slice($val2, 0, 3, true); $in_basket = $in_basket + count($val2);
+	    $arr_show[$key1][$key2] = $val2;
+	  }
+	}
+
+	//get to be filled records count
+	$to_be_in_basket = 18 - $in_basket;
+
+	
+	//get remaining elements from most revelant filter
+	if( 0 != $to_be_in_basket ) {
+
+	  foreach($arr_result AS $key1 => $val1){
+	    if( 0 == $to_be_in_basket ) break;
+	    foreach($val1 AS $key2 => $val2){
+        
+	      $val2 = array_slice($val2, 3, $to_be_in_basket, true); 
+	      $to_be_in_basket = $to_be_in_basket - count($val2);
+	      $arr_show[$key1][$key2] = array_merge($arr_show[$key1][$key2], $val2);
+	      break;
+	    }
+	  }
+	}
+
+
+	/*echo '<pre>';
+	print_r($arr_result);
+	var_dump($in_basket);
+	var_dump($to_be_in_basket);
+	print_r($arr_show);
+	exit;*/ 
+
+
+	//$data1 = $this->Solr->getAutoCompleteData($queryVar, 'artist', 10);
+	/*$data2  = $this->Solr->getAutoCompleteData($queryVar, 'album', 10);
+	$data3   = $this->Solr->getAutoCompleteData($queryVar, 'song', 10);
+	$data4   = $this->Solr->getAutoCompleteData($queryVar, 'genre', 10);*/
+
 
           //die;
-          foreach($data1 as $record=>$count){
+          /*foreach($data1 as $record=>$count){
             if(preg_match("/^".$queryVar."/i",$record)){
               //$records[] = $record."|".$record;
               $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Artist</div><div style='float:right;width:300px;text-align:left;'>".$record."</div>|".$record."|1";
             }
-          }
-          foreach($data2 as $record=>$count){
+          }*/
+         /* foreach($data2 as $record=>$count){
             if(preg_match("/^".$queryVar."/i",$record)){
               //$records[] = $record."|".$record;
               $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Album</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|2";
@@ -327,11 +385,25 @@ class SearchController extends AppController
               //$records[] = $record."|".$record;
               $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>Genre</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|3";
             }
-          }
+          }*/
 
-	 // echo '<pre>'; print_r($records); die;
+	 $rank = 1;
+	 foreach($arr_show as $key => $val){
+	   foreach($val as $name => $value){
+	     foreach($value as $record => $count){
+              //if(preg_match("/^".$queryVar."/i",$record)){
+                //$records[] = $record."|".$record;
+                $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>".ucfirst($name)."</div><div style='float:right;width:300px;text-align:left;'> ".$record."</div>|".$record."|".$rank;
+		$rank++;
+              //}
+	     }
+	   }
+         }
 
-          $records = array_slice($records,0,20);
+
+	  //echo '<pre>'; print_r($data1); print_r($records); die;
+
+          //$records = array_slice($records,0,20);
           break;
         case 'artist':
           foreach($data as $record=>$count){
@@ -379,6 +451,7 @@ class SearchController extends AppController
           }
           break;
         case 'genre':
+	  //echo '<pre>'; print_r($data); 
           foreach($data as $record=>$count){
             if(stripos($record,$queryVar) !== false){
               $record = trim($record, '"');
@@ -388,7 +461,7 @@ class SearchController extends AppController
           }
           break;
       }
-      //print_r($records); die;
+      //print_r($typeVar); print_r($records); //die;
       $this->set('type',$typeVar);
       $this->set('records',$records);
     }

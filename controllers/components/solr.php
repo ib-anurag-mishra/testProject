@@ -551,7 +551,7 @@ class SolrComponent extends Object {
       }
     }
 
-    function getAutoCompleteData($keyword, $type, $limit=10){
+    function getAutoCompleteData($keyword, $type, $limit=10, $allmusic=0){
 
       $query = '';
       $country = $this->Session->read('territory');
@@ -602,7 +602,7 @@ class SolrComponent extends Object {
 
           $query = $query.' AND Territory:'.$country.$cond;
 
-	 // echo $query.'<br />'; //die;
+	  //echo $query.'<br />'; //die;
 
           $additionalParams = array(
             'facet' => 'true',
@@ -615,11 +615,17 @@ class SolrComponent extends Object {
           );
 
           $response = self::$solr->search( $query, 0, 0, $additionalParams);
-          //print_r($response->facet_counts->facet_fields->$field);die;
-          if ( $response->getHttpStatus() == 200 ) {
+                
+	 if ( $response->getHttpStatus() == 200 ) {
             if (!empty($response->facet_counts->facet_fields->$field)) {
-              //print_r($response->facet_counts->facet_fields->$field);die;
-              return $response->facet_counts->facet_fields->$field;
+              
+	     	if(1 == $allmusic){
+			$arr_result = array();
+	     		$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field; 
+	     		return $arr_result;
+		}else{
+			return $response->facet_counts->facet_fields->$field;
+		}
             } else {
               return array();
             }

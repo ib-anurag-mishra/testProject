@@ -17,8 +17,6 @@ class AppController extends Controller
 		}
 		$this->Auth->authorize = 'actions';
                 
-                echo 'test';
-                
 		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
 		$this->Auth->loginRedirect = array( 'controller' => 'users', 'action' => 'index' );
 		$this -> set( 'username', $this -> Session -> read( 'Auth.User.username' ) );
