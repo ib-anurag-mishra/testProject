@@ -41,11 +41,12 @@ class AppController extends Controller
                     
                     $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory'), 'recursive' => -1));            
                     $country = $libraryData['Library']['library_territory'];
-                    $this->Session->write("libCountry",$country);	
+                    $this->Session->write("libCountry",$country);
+                    $this->Session->write("territory",$country);
                     $this->Session->write("lId",1);  
                     $this->Session->write("library", 1);
                 }
-                
+               
                 
                 
 		$this->Auth->authorize = 'actions';

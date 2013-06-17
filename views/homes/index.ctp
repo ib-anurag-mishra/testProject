@@ -3420,7 +3420,7 @@
 										<li>
 											<div class="featured-album-detail">
 												<div class="album-cover-container">
-												<?php $html->link($html->image($image,array("height" => "77", "width" => "84")),
+												<?php echo $html->link($html->image($image,array("height" => "77", "width" => "84")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 													<a class="preview" href="#"></a>
@@ -3458,7 +3458,7 @@
 													<a href="#"><?php echo $title; ?></a>
 												</div>
 												<div class="artist-name">
-													<a href="#"><?php echo $v['Featuredartist']['artist_name']; ?></a>
+													<a href="#"><?php echo $v['Album']['ArtistText']; ?></a>
 												</div>
 											</div>
 										</li>

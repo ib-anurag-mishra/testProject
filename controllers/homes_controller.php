@@ -47,6 +47,7 @@ class HomesController extends AppController
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
+
 		$territory = $this->Session->read('territory');
 		$nationalTopDownload = array();
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -118,8 +119,8 @@ class HomesController extends AppController
 			}
 			Cache::write("featured".$territory, $featured);
 		}
-		//$featured = Cache::read("featured".$country);
-      
+		$featured = Cache::read("featured".$country);
+     
 		$this->set('featuredArtists', $featured);
                 //featured artist slide show code end
                 
@@ -127,9 +128,9 @@ class HomesController extends AppController
                 
                 
 
-		//used for gettting top downloads for Pop Genre
-		if (($artists = Cache::read("pop".$country)) === false)
-                    {
+    //used for gettting top downloads for Pop Genre
+    if (($artists = Cache::read("pop".$country)) === false)
+        {
       
           $SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
           if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){ 
