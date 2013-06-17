@@ -118,7 +118,7 @@ class HomesController extends AppController
 			}
 			Cache::write("featured".$territory, $featured);
 		}
-		$featured = Cache::read("featured".$country);
+		//$featured = Cache::read("featured".$country);
       
 		$this->set('featuredArtists', $featured);
                 //featured artist slide show code end
