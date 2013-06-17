@@ -13,10 +13,8 @@ $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
-//$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
-//$countrys = array('US' => 'USD');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
 //$countrys = array('CA' => 'CAD');
-$countrys = array('CA' => 'CAD' , 'US' => 'USD');
 
 $lib_types = array('Unlimited' , 'ALC');
 //$lib_types = array('ALC');
@@ -37,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-01-21';
-$currentDate = date( "2013-05-01", time());
+$currentDate = '2013-01-01';
+//$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -184,7 +182,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         $libSales = 0;
                         foreach($lib as $line)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*# $country #*#SA#*##*##*#";
+                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
@@ -212,7 +210,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            if($country != 'US' && $lib_types == 'Unlimited')
+                            if($country != 'US')
                             {
                                 $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
                             }
@@ -240,7 +238,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= "$country #*#10#*#100";
+                    $market .= "$country#*#10#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
@@ -435,7 +433,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         
                         foreach($lib as $line)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*# $country #*#SA#*##*##*#";
+                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
@@ -464,7 +462,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= "$currency#*#"; // Currency Key
                             $sales .= "0#*#"; // VAT/TAX
                             $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            if($country != 'US' && $lib_types == 'Unlimited')
+                            if($country != 'US')
                             {
                                 $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
                             }
@@ -492,7 +490,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
                     $market .= "#*#"; // Vendor Key was PM43#*#
-                    $market .= " $country #*#11#*#100";
+                    $market .= "$country#*#11#*#100";
                     fwrite($file, $market . "\n");
 
                     // Change: This Query is no longer is used.
