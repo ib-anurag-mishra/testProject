@@ -38,9 +38,11 @@ class HomesController extends AppController
     }
 
 	function index() {
-		  if($_SERVER['SERVER_PORT'] == 443){
+            
+		if($_SERVER['SERVER_PORT'] == 443){
 			$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-		 }
+		}
+            
 		// Local Top Downloads functionality
 		$libId = $this->Session->read('library');
 		$patId = $this->Session->read('patron');
@@ -53,7 +55,7 @@ class HomesController extends AppController
 		$this->set('patronDownload',$patronDownload);
 		$ids = '';
 		$ids_provider_type = '';
-		//featured artist slideshow
+		//featured artist slideshow code start
 		if (($artists = Cache::read("featured".$country)) === false) {
 			$featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
 		//	print "<pre>";print_r($featured);exit;
@@ -68,6 +70,7 @@ class HomesController extends AppController
 					}	
 				}
 			}
+                       
 			if($ids != ''){
 				$this->Album->recursive = 2;
 				$featured =  $this->Album->find('all',array('conditions' =>
@@ -116,7 +119,13 @@ class HomesController extends AppController
 			Cache::write("featured".$territory, $featured);
 		}
 		$featured = Cache::read("featured".$country);
+      
 		$this->set('featuredArtists', $featured);
+                //featured artist slide show code end
+                
+                
+                
+                
 
 		//used for gettting top downloads for Pop Genre
 		if (($artists = Cache::read("pop".$country)) === false)
@@ -245,10 +254,12 @@ class HomesController extends AppController
 			}
 		}*/
 		$this->set('genre_pop', $genre_pop);
-    if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
-      $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
-      Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
-    }
+        if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
+            $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
+            Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
+        }
+    
+    
     $this->set('artists',$ssartists);
     $this->layout = 'home';
     }

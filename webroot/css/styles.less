@@ -125,6 +125,30 @@ table {
 }
 
 
+.horiz-scroll::-webkit-scrollbar {
+-webkit-appearance:none !important;
+width:11px !important;
+.box-shadow(0 0 1px rgb(122, 122, 122));
+height: 10px;
+border:0;
+}
+.horiz-scroll::-webkit-scrollbar {
+border-radius:8px !important;
+//border:2px solid white !important;
+background-color:rgba(204, 204, 204,.25) !important
+}
+.horiz-scroll::-webkit-scrollbar-thumb {
+border-radius:8px !important;
+//border:2px solid white !important;
+background-color:rgba(0,0,0,.25) !important
+}
+
+// If you want it on hover //
+
+.horiz-scroll::-webkit-scrollbar:active,
+.horiz-scroll::-webkit-scrollbar:hover, 
+.horiz-scroll::-webkit-scrollbar:focus{/*border-radius:8px !important;border:2px solid white !important;*/background-color:rgba(204, 204, 204,.25) !important; height: 10px}
+
 /* site structure */
 
 html, body {
@@ -262,7 +286,7 @@ img {
 	background:   #fff;
 	border-right: 1px solid #ddd;
     .box-sizing;
-	padding-top:  100px;
+	padding-top:  69px;
 	position:     relative;
 	
 	
@@ -340,6 +364,7 @@ img {
 				padding-top:     6px;
 				text-decoration: none;
 				.transition('color 500ms, background-color 500ms');
+				font-size: 15px;
 				
 				&.active {
 					background: #d7eff8;
@@ -609,6 +634,7 @@ img {
 	height:     101px;
 	position:   fixed;
 	width:      100%;
+	opacity: .975;
 	
 	.transition(height 500ms);
 	&.minimized {
@@ -718,25 +744,58 @@ img {
 	padding: 10px 0 20px 20px;
 	position: relative;
 	
+	.grids {
+		
+		display: none;
+		
+		&.active {
+			
+			display: block;
+		}
+	}
+	
+	.lists {
+		
+		display: none;
+		
+		&.active {
+			
+			display: block;
+		}
+	}
+	
 	.top-100 {
 	
 		position: relative;
+		margin-top: 15px;
+		
+		&:after {
+			content: "";
+			background: url(../img/news/top-100/top-100-tapered-shadow.png);
+			position: absolute;
+			right: 0;
+			top:66px;
+			width: 11px;
+			height: 336px;
+			
+		}
+		
 		
 		header {
 			
 			position: relative;
 			width: 100%;
 			height: 40px;
-			
+			padding-bottom: 5px;
 			
 			h3 {
 				
 				position: absolute;
-				font-size: 28px;
+				font-size: 26px;
 				color: rgba(0,0,0,1);
 			}
 			
-			.view-toggle {
+			.top-100-view-toggle {
 				
 				position:absolute;
 				right: 0;
@@ -751,15 +810,26 @@ img {
 					height: 26px;
 					text-indent: -9999px;
 					
-					&.grid-view {
-						
-						background: url(../img/news/top-100/grid-view.png);
+					&.grid-view-button {
+					
+						background: url(../img/news/top-100/grid-view-off.png);	
 						margin-right: 4px;
+						
+						&.active {
+						
+							background: url(../img/news/top-100/grid-view-on.png);
+						}
+						
 					}
 					
-					&.list-view {
+					&.list-view-button {
 						
-						background: url(../img/news/top-100/list-view.png);
+						background: url(../img/news/top-100/list-view-off.png);
+						
+						&.active {
+							
+							background: url(../img/news/top-100/list-view-on.png);
+						}
 					}
 				}
 				
@@ -812,7 +882,7 @@ img {
 				background: rgba(255,255,255,1);
 				/* height: 25px; */
 				width: 109px;
-				height: 26px;
+				height: 19px;
 				
 				
 				
@@ -842,90 +912,241 @@ img {
 			}
 		}
 		
-		#top-100-albums-grid {
+		#top-100-albums-grid,#top-100-songs-grid,#top-100-videos-grid {
 			overflow: hidden;
 			width: 850px;
-			height: 386px;
+			height: 330px;
+			display: none;
+			
+			&.active {
+				
+				display: block;
+			}
 			&:hover {
 				
 				overflow-x: auto;
 			}
 			
-			
-			.add-to-playlist-button {
-				background: url(../img/album-grid/add-to-playlist-button.png);
-				display: block;
-				position: absolute;
-				bottom:4px;
-				right: 4px;
-				width: 26px;
-				height: 25px;
-				opacity: .5;
+			.album-cover-container {
 				
-			}
-			
-			.wishlist-popover {
+				position: relative;
 				
-				display: none;
-				position: absolute;
-				right: 4px;
-				top:123px;
-				font-size: 12px;
-				z-index: 100;
-				
-				
-				.box-shadow(0 0 3px rgba(0,0,0,.5));
-				
-				a {
-					background: #fff;
+				img {
 					
-					display: block;
-					color: #000;
-					padding: 5px;
-					line-height: 20px;
-					text-decoration: none;
+					width: 250px;
+					height: 250px;
 				}
 				
-				.share {
+				.top-100-ranking {
 					
-					background: #fff;
-					border-top: 1px solid rgba(0,0,0,.2);
+					position: absolute;
+					left: 5px;
+					top:5px;
+					background: rgba(255,255,255,.8);
+					width: 80px;
+					height: 32px;
+					font-size: 28px;
+					line-height: 32px;
+					.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+					text-align: center;
+					font-style: italic;
+					font-weight: bold;
+					
+				}
+				
+				.top-100-download-now-button {
+					background: rgb(255,255,255);
+					display: block;
+					position: absolute;
+					width: 124px;
+					height: 25px;
+					line-height: 25px;
+					right: 38px;
+					bottom:10px;
+					opacity: 0;
+					text-transform: uppercase;
+					font-size: 12px;
+					text-align: center;
+					
+					color:rgb(0,0,0);
+					text-decoration: none;	
+					font-weight: bold;
 					
 					
+				}
+				
+				.add-to-playlist-button {
+					background: url(../img/album-grid/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:10px;
+					right: 10px;
+					width: 26px;
+					height: 25px;
+					opacity: 0;
 					
-					p {
+					
+				}
+				
+				.preview {
+					
+					display: block;
+					position: absolute;
+					left: 117px;
+					top:111px;
+					width: 23px;
+					height: 23px;
+					background: url(../img/news/top-100/preview-off.png);
+					opacity: 0;
+					
+					
+					&:hover {
 						
-						padding: 5px;
+						background: url(../img/news/top-100/preview-hover.png);
+						opacity: 1;
+					}
+					
+					&.active {
+						
+						background: url(../img/news/top-100/preview-click.png);
+						opacity: 1;
+						width: 21px;
+						height: 21px;
+					
+					}
+					
+					
+				}
+				
+				
+				.wishlist-popover {
+				
+					display: none;
+					position: absolute;
+					right: 10px;
+					top:68px;
+					font-size: 12px;
+					z-index: 100;
+					width: 120px;
+					
+					
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px 5px 5px 10px;
+					
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+						}
 						
 					}
 					
-					.facebook {
-						background: url(../img/album-grid/facebook.png) no-repeat center center;
+					.playlist-options {
+						position: absolute;
+						right: -147px;
+						top:30px;
+						display: none;
+						background: #fff;
+						width: 145px;
+						height: 186px;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
 						
-						display: block;
-						float: left;
-						width: 17px;
-						height: 17px;
-						padding-top: 0;
-						padding-bottom: 10px;
-						margin-left: 16px;
+						overflow-x: hidden;
 						
-						&:hover {
-							background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+						&.active {
 							
+							display: block;
+						}
+						
+						
+						
+						ul {
+							
+							li {
+								
+								float: none;
+								padding: 0;
+								
+								a {
+									
+									padding: 5px 5px 5px 10px;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: none;
+									}
+								}
+							}
+						}
+							
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						padding-bottom: 3px;
+						
+						
+						p {
+							
+							padding: 5px 5px 5px 10px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 17px;
+							height: 17px;
+							padding-top: 0;
+							padding-bottom: 10px;
+							margin-left: 26px;
+							
+							&:hover {
+								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 18px;
+							height: 15px;
+							padding-top: 4px;
+							padding-bottom: 10px;
+							margin-left: 6px;
+							
+							&:hover {
+								
+								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							}
 						}
 					}
 					
-					.twitter {
-						background: url(../img/album-grid/twitter.png) no-repeat center center;
-						
-						display: block;
-						float: left;
-						width: 18px;
-						height: 15px;
-						padding-top: 4px;
-						padding-bottom: 10px;
-						margin-left: 6px;
+					.add-to-playlist {
+							
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
@@ -941,7 +1162,7 @@ img {
 			.album-title {
 				
 				font-weight: bold;
-				font-size: 13px;
+				font-size: 14px;
 				line-height: 15px;
 				padding-top: 8px;
 				padding-bottom: 4px;
@@ -970,7 +1191,7 @@ img {
 				a {
 					
 					text-decoration: none;
-					color: rgba(0,0,0,5);
+					color: rgba(0,0,0,.5);
 					
 					&:hover {
 						
@@ -981,14 +1202,15 @@ img {
 			}
 			
 			ul {
-				width: 4232px;
+				width: 10000px;
 				overflow-x: auto;
+				height: 330px;
 				
 				li {
 				
 					display: block;
 					float: left;
-					padding: 5px;
+					padding:5px 13px 5px 5px;
 					position: relative;
 				
 					a {
@@ -996,245 +1218,1299 @@ img {
 						img {
 					
 					
-							border: 2px solid #fff;
+							border: 1px solid #fff;
 							.box-shadow(0 0 4px rgba(0,0,0,.5));
 							
 						}
 					}
 					
-					.ribbon-wrapper {
-						background: rgb(177,37,37); /* Old browsers */
-						/* IE9 SVG, needs conditional override of 'filter' to 'none' */
-						background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIxNCUiIHN0b3AtY29sb3I9IiNiMTI1MjUiIHN0b3Atb3BhY2l0eT0iMSIvPgogICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjOGUyODI4IiBzdG9wLW9wYWNpdHk9IjEiLz4KICA8L2xpbmVhckdyYWRpZW50PgogIDxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InVybCgjZ3JhZC11Y2dnLWdlbmVyYXRlZCkiIC8+Cjwvc3ZnPg==);
-						background: -moz-linear-gradient(top,  rgba(177,37,37,1) 14%, rgba(142,40,40,1) 100%); /* FF3.6+ */
-						background: -webkit-gradient(linear, left top, left bottom, color-stop(14%,rgba(177,37,37,1)), color-stop(100%,rgba(142,40,40,1))); /* Chrome,Safari4+ */
-						background: -webkit-linear-gradient(top,  rgba(177,37,37,1) 14%,rgba(142,40,40,1) 100%); /* Chrome10+,Safari5.1+ */
-						background: -o-linear-gradient(top,  rgba(177,37,37,1) 14%,rgba(142,40,40,1) 100%); /* Opera 11.10+ */
-						background: -ms-linear-gradient(top,  rgba(177,37,37,1) 14%,rgba(142,40,40,1) 100%); /* IE10+ */
-						background: linear-gradient(to bottom,  rgba(177,37,37,1) 14%,rgba(142,40,40,1) 100%); /* W3C */
-						filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b12525', endColorstr='#8e2828',GradientType=0 ); /* IE6-8 */
-
-						position: absolute;
-						top:13px;
-						
-						width: 68px;
-						height: 30px;
-						border:2px solid #fff;
-						left: -2px;
-						.box-shadow(1px 1px 3px rgba(0,0,0,1));
-						
-						.ribbon-fold {
-							position: absolute;
-							top:32px;
-							left: -2px;
-							width: 0;
-							height: 0;
-							border-left: 5px solid transparent;
-							border-right: 5px solid transparent;
-							border-bottom: 5px solid #701111;
-							.transform(rotate(45deg));
-							
-						}
-						
-						/*
-&:after {
-							
-							content: "";
-							position: absolute;
-							right: -11px;
-							border-left: 15px solid transparent;
-							border-right: 15px solid transparent;
-							border-bottom: 9px solid #fff;
-							.transform(rotate(270deg));
-							top:11px;
-						}
-						
-						&:before {
-							
-							content: "";
-							position: absolute;
-							right: -13px;
-							border-left: 15px solid transparent;
-							border-right: 15px solid transparent;
-							border-bottom: 9px solid black;
-							.transform(rotate(270deg));
-							top:11px;
-							z-index: 100;
-						}
-*/
-						/*
-						.ribbon-content {
-							
-							&:before {
-								
-								position: absolute;
-								content: "";
-								border-left: 15px solid transparent;
-								border-right: 15px solid transparent;
-								border-bottom: 9px solid transparent;
-								.transform(rotate(270deg));
-								right: -11px;
-								top:11px;
-							}
-						}
-						
-						*/
-					}
+					
+					
 				}
 			}
 			
 
 		}
 		
+		
+		
 		#top-100-songs-grid {
-			
-		/*
-	width: 850px;
-			height: 150px;
-			overflow: hidden;
 			display: none;
-*/
+			overflow: hidden;
+			width: 850px;
+			height: 330px;
+			
+			
+			img {
+				
+				width: 250px;
+				height: 248px;
+			}
+			
+			&.active {
+				
+				display: block;
+			}
 			
 			&:hover {
 				
 				overflow-x: auto;
 			}
 			
-			ul {
+			.song-cover-container {
 				
-				overflow-x: auto;
-				width: 1500px;
+				position: relative;
 				
+				.top-100-ranking {
+					
+					position: absolute;
+					left: 5px;
+					top:5px;
+					background: rgba(255,255,255,.8);
+					width: 80px;
+					height: 32px;
+					font-size: 28px;
+					line-height: 32px;
+					.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+					text-align: center;
+					font-style: italic;
+					font-weight: bold;
+					
+				}
 				
-				li {
+				.top-100-download-now-button {
+					background: rgb(255,255,255);
+					display: block;
+					position: absolute;
+					width: 124px;
+					height: 25px;
+					line-height: 25px;
+					right: 38px;
+					bottom:10px;
+					opacity: .5;
+					text-transform: uppercase;
+					font-size: 12px;
+					text-align: center;
+					
+					color:rgb(0,0,0);
+					text-decoration: none;	
+					font-weight: bold;
+					
+				}
+				
+				.add-to-playlist-button {
+					background: url(../img/album-grid/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:10px;
+					right: 10px;
+					width: 26px;
+					height: 25px;
+					opacity: .5;
+					
+				}
+				
+				.preview {
 					
 					display: block;
-					float: left;
+					position: absolute;
+					left: 117px;
+					top:111px;
+					width: 23px;
+					height: 23px;
+					background: url(../img/news/top-100/preview-off.png);
+					opacity: .7;
 					
+					&:hover {
+						
+						background: url(../img/news/top-100/preview-hover.png);
+						opacity: 1;
+					}
+					
+					&.active {
+						
+						background: url(../img/news/top-100/preview-click.png);
+						opacity: 1;
+						width: 29px;
+						height: 29px;
+						
+					}
+					
+					
+				}
+				
+				
+				.wishlist-popover {
+				
+					display: none;
+					position: absolute;
+					right: 10px;
+					top:68px;
+					font-size: 12px;
+					z-index: 100;
+					width: 120px;
+					
+					
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px 5px 5px 10px;
+					
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+							
+						}
+						
+						
+					}
+					
+					.playlist-options {
+						position: absolute;
+						right: -147px;
+						top:30px;
+						display: none;
+						background: #fff;
+						width: 145px;
+						height: 186px;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						
+						overflow-x: hidden;
+						
+						&.active {
+							
+							display: block;
+						}
+						
+						ul {
+							
+							li {
+								
+								float: none;
+								padding: 0;
+								
+								a {
+									
+									padding: 5px 5px 5px 10px;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: none;
+										background: #999;
+									}
+								}
+							}
+						}
+							
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						padding-bottom: 3px;
+						
+						
+						p {
+							
+							padding: 5px 5px 5px 10px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 17px;
+							height: 17px;
+							padding-top: 0;
+							padding-bottom: 10px;
+							margin-left: 26px;
+							
+							&:hover {
+								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 18px;
+							height: 15px;
+							padding-top: 4px;
+							padding-bottom: 10px;
+							margin-left: 6px;
+							
+							&:hover {
+								
+								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+							
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						}
+					}
+				}
+			}
+			
+			.song-title {
+				
+				font-weight: bold;
+				font-size: 14px;
+				line-height: 15px;
+				padding-top: 8px;
+				padding-bottom: 4px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,1);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+				
+	
+			}
+			
+			.artist-name {
+				
+				color: rgba(0,0,0,.5);
+				font-size: 12px;
+				line-height: 15px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,.5);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+			}
+			
+			ul {
+				width: 10000px;
+				overflow-x: auto;
+				height: 330px;
+				
+				li {
+				
+					display: block;
+					float: left;
+					padding:5px 13px 5px 5px;
+					position: relative;
+				
 					a {
 					
 						img {
 					
 					
-							border: 2px solid #fff;
+							border: 1px solid #fff;
 							.box-shadow(0 0 4px rgba(0,0,0,.5));
 							
 						}
 					}
+					
+					
 				}
 			}
-		}
-	}
+			
 
-	
-	#album-grid,#singles-grid {
+		}
 		
+		#top-100-videos-grid {
+			display: none;
+			overflow: hidden;
+			width: 850px;
+			height: 330px;
+			
+			&.active {
+				
+				display: block;
+			}
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			
+			.video-cover-container {
+				
+				position: relative;
+				
+				.top-100-ranking {
+					
+					position: absolute;
+					left: 5px;
+					top:5px;
+					background: rgba(255,255,255,.8);
+					width: 80px;
+					height: 32px;
+					font-size: 28px;
+					line-height: 32px;
+					.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+					text-align: center;
+					font-style: italic;
+					font-weight: bold;
+					
+				}
+				
+				.top-100-download-now-button {
+					background: rgb(255,255,255);
+					display: block;
+					position: absolute;
+					width: 124px;
+					height: 25px;
+					line-height: 25px;
+					right: 38px;
+					bottom:10px;
+					opacity: 0;
+					text-transform: uppercase;
+					font-size: 12px;
+					text-align: center;
+					
+					color:rgb(0,0,0);
+					text-decoration: none;	
+					font-weight: bold;
+					
+				}
+				
+				.add-to-playlist-button {
+					background: url(../img/album-grid/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:10px;
+					right: 10px;
+					width: 26px;
+					height: 25px;
+					opacity: 0;
+					
+				}
+				
+				.preview {
+					
+					display: block;
+					position: absolute;
+					left: 117px;
+					top:111px;
+					width: 23px;
+					height: 23px;
+					background: url(../img/news/top-100/preview-off.png);
+					opacity: 0;
+					
+					&:hover {
+						
+						background: url(../img/news/top-100/preview-hover.png);
+						opacity: 1;
+					}
+					
+					&.active {
+						
+						background: url(../img/news/top-100/preview-click.png);
+						opacity: 1;
+						width: 29px;
+						height: 29px;
+						
+					}
+					
+					
+				}
+				
+				
+				.wishlist-popover {
+				
+					display: none;
+					position: absolute;
+					right: 10px;
+					top:68px;
+					font-size: 12px;
+					z-index: 100;
+					width: 120px;
+					
+					
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px 5px 5px 10px;
+					
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+						}
+						
+						
+					}
+					
+					.playlist-options {
+						position: absolute;
+						right: -147px;
+						top:30px;
+						display: none;
+						background: #fff;
+						width: 145px;
+						height: 186px;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						
+						overflow-x: hidden;
+						
+						&.active {
+							
+							display: block;
+						}
+						
+						ul {
+							
+							li {
+								
+								float: none;
+								padding: 0;
+								a {
+									
+									padding: 5px 5px 5px 10px;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: none;
+									}
+								}
+							}
+						}
+							
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						padding-bottom: 3px;
+						
+						
+						p {
+							
+							padding: 5px 5px 5px 10px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 17px;
+							height: 17px;
+							padding-top: 0;
+							padding-bottom: 10px;
+							margin-left: 26px;
+							
+							&:hover {
+								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 18px;
+							height: 15px;
+							padding-top: 4px;
+							padding-bottom: 10px;
+							margin-left: 6px;
+							
+							&:hover {
+								
+								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+							
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						}
+					}
+				}
+				
+			}
+			
+			.song-title {
+				
+				font-weight: bold;
+				font-size: 14px;
+				line-height: 15px;
+				padding-top: 8px;
+				padding-bottom: 4px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,1);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+				
+	
+			}
+			
+			.artist-name {
+				
+				color: rgba(0,0,0,.5);
+				font-size: 12px;
+				line-height: 15px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,.5);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+			}
+			
+			ul {
+				width: 10000px;
+				overflow-x: auto;
+				height: 330px;
+				
+				li {
+				
+					display: block;
+					float: left;
+					padding:5px 13px 5px 5px;
+					position: relative;
+				
+					a {
+					
+						img {
+					
+					
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+							
+						}
+					}
+					
+					
+				}
+			}
+			
 
-		//margin-top: 20px;
-		//padding-bottom: 50px;
-		
-		//height: 480px;
-		//padding-bottom: 20px;
-		overflow: hidden;
-		position: relative;
-		padding-top: 5px;
-		//margin-right: -20px; /* account for scrollbars */
-		
-		&:hover {
-			
-			//overflow-x: scroll;
 		}
 		
 		
-		
-		
-		
-		
-	}
-	
-	#album-grid {
-		width: 850px;
-		height:432px;
-		overflow-x: hidden;
-		
-		
-		
-		
-		ul {
-			padding-left: 1px;
-			width: 1731px;
-			overflow-x: auto;
-			overflow-y: hidden;
-			white-space: nowrap;
-			li {
+		#top-100-albums-list-view,#top-100-songs-list-view {
+			
+			display: none;
+			overflow: hidden;
+			width: 850px;
+			height: 330px;
+			
+			
+			ul {	
+				width: 5000px;
+				overflow-x: auto;
+			
+				li {
+					
+					display: block;
+					float: left;
+					margin-right: 21px;
+					
+					
+					
+					&.divider {
+						
+						background: url(../img/news/top-100/list/divider.png) center center no-repeat;
+						width: 3px;
+						height: 280px;
+					}
+					
+					.details-container {
+					
+						margin-bottom: 10px;
+					
+						.artwork-container {
+							float: left;
+							width: 66px;
+							height: 66px;
+							position: relative;
+					
+							img {
+								
+								width: 66px;
+								height: 66px;
+								border:1px solid rgba(255,255,255,1);
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								
+							}
+							
+							.preview {
+								display: block;
+								position: absolute;
+								left: 25px;
+								top:25px;
+								background: url(../img/news/top-100/preview-off.png);
+								width: 23px;
+								height: 23px;
+								opacity: .5;
+								&:hover {
+						
+									background: url(../img/news/top-100/preview-hover.png);
+									opacity: 1;
+								}
+								
+								&.active {
+									
+									background: url(../img/news/top-100/preview-click.png);
+									opacity: 1;
+									width: 21px;
+									height: 21px;
+									left: 25px;
+									top: 25px;
+								}
+								
+								
+							}
+						}
+						
+						.right-col {
+							position: relative;
+							float: left;
+							width: 300px;
+							
+							.add-to-playlist-button {
+								background: url(../img/album-grid/add-to-playlist-button.png);
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								display: block;
+								position: absolute;
+								left: 138px;
+								top:42px;
+								right: 10px;
+								width: 26px;
+								height: 25px;
+								opacity: 1;
+								
+							}
+							
+							.top-100-ranking {
+								
+								position: absolute;
+								left: 10px;
+								top:0;
+							
+			
+								background: rgba(255,255,255,.8);
+								width: 80px;
+								height: 32px;
+								font-size: 28px;
+								line-height: 32px;
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								text-align: center;
+								font-style: italic;
+								font-weight: bold;
+								
+							}
+							
+							.media-detail {
+								
+								position: absolute;
+								left: 100px;
+								top:0;
+								
+								
+								.album-song-video-name {
+								
+									font-weight: bold;
+									font-size: 14px;
+									line-height: 22px;
+									
+									a {
+										text-decoration: none;
+										color: #000;
+										
+										&:hover {
+											
+											text-decoration: underline;
+										}
+									}
+								}
+								
+								.artist {
+								
+									color: rgba(0, 0, 0, 0.5);
+									font-size: 12px;
+									line-height: 15px;
+									
+									a {
+										color: #000;
+										text-decoration: none;
+										
+										&:hover {
+											
+											text-decoration: underline;
+										}
+									}
+									
+								}
+							}
+							
+							.wishlist-popover {
 				
-				float: left;
+								display: none;
+								position: absolute;
+								left: 139px;
+								top:42px;
+								font-size: 12px;
+								z-index: 100;
+								width: 120px;
+								
+								
+								
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								a {
+									background: #fff;
+									
+									display: block;
+									color: #000;
+									padding: 5px 5px 5px 10px;
+								
+									line-height: 20px;
+									text-decoration: none;
+									
+									
+								}
+								
+								.playlist-options {
+									position: absolute;
+									right: -147px;
+									top:34px;
+									display: none;
+									background: #fff;
+									width: 145px;
+									height: 186px;
+									.box-shadow(0 0 3px rgba(0,0,0,.5));
+									
+									overflow-x: hidden;
+									
+									&.active {
+							
+										display: block;
+									}
+									
+									ul {
+										
+										li {
+											
+											float: none;
+											
+											a {
+												
+												padding: 0;
+												text-decoration: none;
+												
+												&:hover {
+													
+													text-decoration: underline;
+												}
+											}
+										}
+									}
+										
+								}
+								
+								.share {
+									
+									background: #fff;
+									border-top: 1px solid rgba(0,0,0,.2);
+									padding-bottom: 3px;
+									
+									
+									p {
+										
+										padding: 5px 5px 5px 10px;
+										
+									}
+									
+									.facebook {
+										background: url(../img/album-grid/facebook.png) no-repeat center center;
+										
+										display: block;
+										float: left;
+										width: 17px;
+										height: 17px;
+										padding-top: 0;
+										padding-bottom: 10px;
+										margin-left: 26px;
+										
+										&:hover {
+											background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+											
+										}
+									}
+									
+									.twitter {
+										background: url(../img/album-grid/twitter.png) no-repeat center center;
+										
+										display: block;
+										float: left;
+										width: 18px;
+										height: 15px;
+										padding-top: 4px;
+										padding-bottom: 10px;
+										margin-left: 6px;
+										
+										&:hover {
+											
+											background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+										}
+									}
+								}
+								
+								.add-to-playlist {
+							
+									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+									
+									&:hover {
+										
+										color: rgba(0,0,0,1);
+										background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+									}
+								}
+								
+								
+							}
+							
+							.top-100-download-now {
+								
+								background: rgb(255,255,255);
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								display: block;
+								position: absolute;
+								width: 124px;
+								height: 26px;
+								line-height: 26px;
+								left: 10px;
+								top:42px;
+								opacity: 1;
+								text-transform: uppercase;
+								font-size: 12px;
+								text-align: center;
+								
+								color:rgb(0,0,0);
+								text-decoration: none;	
+								font-weight: bold;
+							}
+						}
+					}
+				}
+			}
+			
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			&.active {
+				
 				display: block;
-				
 			}
 		}
 		
-		&:hover {
+		
+		#top-100-videos-list-view {
 			
-			overflow-x: auto;
-		}
-	}
-	
-	#singles-grid,#videos-grid {
-		
-		display: none;
-	}
-	
-	#singles-grid {
-		
-		height: 480px;
-		width: 850px;
-		overflow-x: hidden;
-		
-		ul {
-			padding-left: 1px;
-			width: 1731px;
-			overflow-x:auto;
-			overflow-y:hidden;
-			white-space: nowrap;
+			display: none;
+			overflow: hidden;
+			width: 850px;
+			height: 330px;
 			
-			li {
+			
+			ul {	
+				width: 5000px;
+				overflow-x: auto;
+			
+				li {
+					
+					display: block;
+					float: left;
+					margin-right: 21px;
+					
+					
+					
+					&.divider {
+						
+						background: url(../img/news/top-100/list/divider.png) center center no-repeat;
+						width: 3px;
+						height: 280px;
+					}
+					
+					.details-container {
+					
+						margin-bottom: 10px;
+					
+						.artwork-container {
+							float: left;
+							width: 112px;
+							height: 66px;
+							position: relative;
+					
+							img {
+								
+								width: 112px;
+								height: 66px;
+								border:1px solid rgba(255,255,255,1);
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								
+							}
+							
+							.preview {
+								display: block;
+								position: absolute;
+								left: 25px;
+								top:25px;
+								background: url(../img/news/top-100/preview-off.png);
+								width: 23px;
+								height: 23px;
+								opacity: .5;
+								&:hover {
+						
+									background: url(../img/news/top-100/preview-hover.png);
+									opacity: 1;
+								}
+								
+								&.active {
+									
+									background: url(../img/news/top-100/preview-click.png);
+									opacity: 1;
+									width: 21px;
+									height: 21px;
+									left: 25px;
+									top: 25px;
+								}
+								
+								
+							}
+						}
+						
+						.right-col {
+							position: relative;
+							float: left;
+							width: 300px;
+							
+							.add-to-playlist-button {
+								background: url(../img/album-grid/add-to-playlist-button.png);
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								display: block;
+								position: absolute;
+								left: 138px;
+								top:42px;
+								right: 10px;
+								width: 26px;
+								height: 25px;
+								opacity: 1;
+								
+							}
+							
+							.top-100-ranking {
+								
+								position: absolute;
+								left: 10px;
+								top:0;
+							
+			
+								background: rgba(255,255,255,.8);
+								width: 80px;
+								height: 32px;
+								font-size: 28px;
+								line-height: 32px;
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								text-align: center;
+								font-style: italic;
+								font-weight: bold;
+								
+							}
+							
+							.media-detail {
+								
+								position: absolute;
+								left: 100px;
+								top:0;
+								
+								
+								.album-song-video-name {
+								
+									font-weight: bold;
+									font-size: 14px;
+									line-height: 22px;
+									
+									a {
+										text-decoration: none;
+										color: #000;
+										
+										&:hover {
+											
+											text-decoration: underline;
+										}
+									}
+								}
+								
+								.artist {
+								
+									color: rgba(0, 0, 0, 0.5);
+									font-size: 12px;
+									line-height: 15px;
+									
+									a {
+										color: #000;
+										text-decoration: none;
+										
+										&:hover {
+											
+											text-decoration: underline;
+										}
+									}
+									
+								}
+							}
+							
+							.wishlist-popover {
+				
+								display: none;
+								position: absolute;
+								left: 139px;
+								top:42px;
+								font-size: 12px;
+								z-index: 100;
+								width: 120px;
+								
+								
+								
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								a {
+									background: #fff;
+									
+									display: block;
+									color: #000;
+									padding: 5px 5px 5px 10px;
+								
+									line-height: 20px;
+									text-decoration: none;
+									
+									
+								}
+								
+								.playlist-options {
+									position: absolute;
+									right: -147px;
+									top:34px;
+									display: none;
+									background: #fff;
+									width: 145px;
+									height: 186px;
+									.box-shadow(0 0 3px rgba(0,0,0,.5));
+									
+									overflow-x: hidden;
+									
+									&.active {
+							
+										display: block;
+									}
+									
+									ul {
+										
+										li {
+											
+											float: none;
+											
+											a {
+												
+												padding: 0;
+												text-decoration: none;
+												
+												&:hover {
+													
+													text-decoration: underline;
+												}
+											}
+										}
+									}
+										
+								}
+								
+								.share {
+									
+									background: #fff;
+									border-top: 1px solid rgba(0,0,0,.2);
+									padding-bottom: 3px;
+									
+									
+									p {
+										
+										padding: 5px 5px 5px 10px;
+										
+									}
+									
+									.facebook {
+										background: url(../img/album-grid/facebook.png) no-repeat center center;
+										
+										display: block;
+										float: left;
+										width: 17px;
+										height: 17px;
+										padding-top: 0;
+										padding-bottom: 10px;
+										margin-left: 26px;
+										
+										&:hover {
+											background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+											
+										}
+									}
+									
+									.twitter {
+										background: url(../img/album-grid/twitter.png) no-repeat center center;
+										
+										display: block;
+										float: left;
+										width: 18px;
+										height: 15px;
+										padding-top: 4px;
+										padding-bottom: 10px;
+										margin-left: 6px;
+										
+										&:hover {
+											
+											background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+										}
+									}
+								}
+								
+								.add-to-playlist {
+							
+									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+									
+									&:hover {
+										
+										color: rgba(0,0,0,1);
+										background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+									}
+								}
+								
+								
+							}
+							
+							.top-100-download-now {
+								
+								background: rgb(255,255,255);
+								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+								display: block;
+								position: absolute;
+								width: 124px;
+								height: 26px;
+								line-height: 26px;
+								left: 10px;
+								top:42px;
+								opacity: 1;
+								text-transform: uppercase;
+								font-size: 12px;
+								text-align: center;
+								
+								color:rgb(0,0,0);
+								text-decoration: none;	
+								font-weight: bold;
+							}
+						}
+					}
+				}
+			}
+			
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			&.active {
 				
 				display: block;
-				float: left;
 			}
 		}
+
 		
-		&:hover {
-			
-			overflow-x: auto;
-		}
-	}
-	
-	#videos-grid {
 		
-		height: 480px;
-		width: 850px;
-		overflow-x: hidden;
-		
-		ul {
-			padding-left: 1px;
-			width: 1731px;
-			overflow-x:auto;
-			overflow-y:hidden;
-			white-space: nowrap;
-			
-			li {
-				
-				display: block;
-				float: left;
-			}
-		}
-		
-		&:hover {
-			
-			overflow-x: auto;
-		}
 	}
 	
 	
@@ -1245,6 +2521,280 @@ img {
 		width: 850px;
 		height: 300px;
 		overflow: hidden;
+		position: relative;
+		margin-top: 15px;
+		
+		header {
+			
+			margin-bottom: 10px;
+			height: 34px;
+			
+			h3 {
+				
+				font-size: 26px;
+				color: rgba(0,0,0,1);
+			}
+		}
+		
+		&:after {
+			
+			content: "";
+			background: url(../img/news/featured/featured-tapered-shadow.png);
+			position: absolute;
+			right: 0;
+			top:25px;
+			width: 11px;
+			height: 228px;
+		}
+		
+		.featured-grid {
+		
+			img {
+				
+				
+				
+				width: 162px;
+				height: 162px;
+			
+			}
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			
+			//overflow-x:auto;
+			
+			
+			.preview {
+					
+				display: block;
+				position: absolute;
+				left: 73px;
+				top:67px;
+				width: 23px;
+				height: 23px;
+				background: url(../img/news/top-100/preview-off.png);
+				opacity: 0;
+				
+				&:hover {
+					
+					background: url(../img/news/top-100/preview-hover.png);
+					opacity: 1;
+				}
+				
+				&.active {
+					
+					background: url(../img/news/top-100/preview-click.png);
+					opacity: 1;
+					width: 21px;
+					height: 21px;
+
+				}
+				
+				
+			}
+			
+			.playlist-options {
+				position: absolute;
+				right: -147px;
+				top:60px;
+				display: none;
+				background: #fff;
+				width: 145px;
+				height: 154px;
+				.box-shadow(0 0 3px rgba(0,0,0,.5));
+				
+				overflow-x: hidden;
+				
+				&.active {
+							
+					display: block;
+				}
+				
+				ul {
+					
+					li {
+						
+						float: none;
+						padding: 0;
+						
+						a {
+							
+							padding: 5px 5px 5px 10px;
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: none;
+							}
+						}
+					}
+				}
+					
+			}
+			
+			
+		}
+		
+		.album-cover-container {
+				
+			position: relative;
+			
+			
+			
+			.top-100-ranking {
+				
+				position: absolute;
+				left: 5px;
+				top:5px;
+				background: rgba(255,255,255,.8);
+				width: 80px;
+				height: 32px;
+				font-size: 28px;
+				line-height: 32px;
+				.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+				text-align: center;
+				font-style: italic;
+				font-weight: bold;
+				
+			}
+			
+			.top-100-download-now-button {
+				background: rgb(255,255,255);
+				display: block;
+				position: absolute;
+				width: 124px;
+				height: 25px;
+				line-height: 25px;
+				right: 38px;
+				bottom:10px;
+				opacity: 0;
+				text-transform: uppercase;
+				font-size: 12px;
+				text-align: center;
+				
+				color:rgb(0,0,0);
+				text-decoration: none;	
+				font-weight: bold;
+				
+			}
+			
+			.add-to-playlist-button {
+				background: url(../img/album-grid/add-to-playlist-button.png);
+				display: block;
+				position: absolute;
+				bottom:10px;
+				right: 10px;
+				width: 26px;
+				height: 25px;
+				opacity: 0;
+				
+			}
+			
+			
+			.wishlist-popover {
+			
+				display: none;
+				position: absolute;
+				right: -84px;
+				top:1px;
+				font-size: 12px;
+				z-index: 100;
+				width: 120px;
+				
+				.box-shadow(0 0 3px rgba(0,0,0,.5));
+				
+				&.active {
+					
+					display: block;
+				}
+				
+				a {
+					background: #fff;
+					
+					display: block;
+					color: #000;
+					padding: 5px 5px 5px 10px;
+					line-height: 20px;
+					text-decoration: none;
+					
+					&:hover {
+						
+						background: #999;
+					}
+				}
+				
+				.share {
+					
+					background: #fff;
+					border-top: 1px solid rgba(0,0,0,.2);
+					position:relative;
+					width: 120px;
+					height: 32px;
+					
+					
+					p {
+						
+						position:absolute;
+						left: 10px;
+						top:10px;
+						
+						
+					}
+					
+					.facebook {
+						background: url(../img/album-grid/facebook.png) no-repeat center center;
+						
+						display: block;
+						
+						width: 17px;
+						height: 17px;
+						position: absolute;
+						left: 62px;
+						top:1px;
+						
+						&:hover {
+							background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+							
+						}
+					}
+					
+					.twitter {
+						background: url(../img/album-grid/twitter.png) no-repeat center center;
+						
+						display: block;
+						position: absolute;
+						width: 18px;
+						height: 15px;
+						left:86px;
+						top:3px;
+						
+						&:hover {
+							
+							background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+						}
+					}
+				}
+				
+				.add-to-playlist {
+							
+					background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+					
+					&:hover {
+						
+						color: rgba(0,0,0,1);
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+					}
+				}
+			}
+			
+		}
+		
+		
+		
+		
+		
 		
 		.album-title {
 				
@@ -1278,7 +2828,7 @@ img {
 			a {
 				
 				text-decoration: none;
-				color: rgba(0,0,0,5);
+				color: rgba(0,0,0,.5);
 				
 				&:hover {
 					
@@ -1288,41 +2838,45 @@ img {
 			}
 		}
 		
-		&:hover {
-			
-			overflow-x: auto;
-		}
 		
-		header {
-			
-			h3 {
-				
-				font-size: 28px;
-				color: rgba(0,0,0,1);
-			}
-		}
+		
+
 		
 		ul {
 			
 			overflow-x: auto;
-			width: 2000px;
+			overflow-y: hidden;
+			width: 2165px;
+			height: 234px;
+			padding-left: 1px;
 			
 			li {
 				
 				display: block;
 				float: left;
-				padding: 5px;
 				
+			
 				a {
 					
 					img {
 						
-						border: 2px solid #fff;
+						border: 1px solid #fff;
 						.box-shadow(0 0 4px rgba(0,0,0,.5));
 					}
 				}
+				
+				.featured-album-detail {
+					
+					margin-top: 10px;
+					margin-right: 17px;
+					width: 162px;
+				}
 			}
 		}
+		
+		
+		
+		
 	}
 
 	
@@ -1340,7 +2894,7 @@ img {
 			background: url(../img/album-grid/right-tapered-shadow.png) transparent;
 			width: 10px;
 			height: 449px;
-			top:77px;
+			top:60px;
 		}
 		
 		
@@ -1352,7 +2906,7 @@ img {
 			h3 {
 				
 				
-				font-size: 28px;
+				font-size: 26px;
 				
 
 			}
@@ -1365,19 +2919,17 @@ img {
 		.coming-soon-filter-container {
 			position: relative;
 			height: 37px;
-			margin-top: 7px;
-			margin-bottom: 14px;
+			margin-top: 3px;
+			margin-bottom: 3px;
 			
 			.category-filter {
 
 				height: 41px;
-				//margin-top:    10px;
+
 				position: absolute;
 				
 				ul {
-					//left: 0;
-					//position: absolute;
-					//top:0;
+
 					
 					
 					li {
@@ -1388,8 +2940,6 @@ img {
 						a {
 							color:           rgba(0, 0, 0, 0.3);
 							font-size: 		 16px;
-							//font-style:      italic;
-							//font-weight:     bold;
 							line-height:     42px;
 							padding-left:    24px;
 							padding-right:   24px;
@@ -1549,184 +3099,719 @@ img {
 			}		
 		}
 		
+		#coming-soon-album-grid,#coming-soon-singles-grid {
 		
-	}
-	
 
 
-		
-		
-		
-		
-	
-	
-	.album-detail {
-		margin-top: 10px;
-		//float: left;
-		margin-right: 18px;
-		//margin-left: 2px;
-		width: 155px;
-		height: 200px;
-		/*
-		&:last-child {
-			
-			margin-right: 0;
-		}
-		*/
-		
-		.album-cover-container {
-			cursor: default;
+			overflow: hidden;
 			position: relative;
+			padding-top: 5px;
+			display: none;
 			
-			width: 153px;
-			border: 1px solid #fff;
-			.box-shadow(0 0 2px rgba(0,0,0,.8));
+			&:hover {
+				
+			
+			}
+			
+			&.active {
+				
+				display: block;
+			}
 			
 			
 			img {
-				display: block;
-				width: 153px;
-				height: 153px;
+				
+				width: 162px;
+				height: 162px;
 			}
 			
-			.add-to-playlist-button {
-				background: url(../img/album-grid/add-to-playlist-button.png);
-				display: block;
-				position: absolute;
-				bottom:4px;
-				right: 4px;
-				width: 26px;
-				height: 25px;
-				opacity: .5;
-				
+			
+			
+		}
+		
+		#coming-soon-album-grid {
+			width: 850px;
+			height:459px;
+			overflow-x: hidden;
+			
+			overflow-y: hidden;
+			
+			
+			ul {
+				padding-left: 1px;
+				width: 1820px;
+				height: 459px;
+				overflow-x: auto;
+				overflow-y: hidden;
+				white-space: nowrap;
+				li {
+					
+					float: left;
+					display: block;
+					
+				}
 			}
 			
-			.wishlist-popover {
+			&:hover {
 				
-				display: none;
-				position: absolute;
-				right: 4px;
-				top:123px;
-				font-size: 12px;
-				z-index: 100;
+				overflow-x: auto;
+			}
+		}
+		
+
+		
+		#coming-soon-singles-grid {
+			
+			height: 459px;
+			width: 850px;
+			overflow-x: hidden;
+			overflow-y: hidden;
+			
+			ul {
+				padding-left: 1px;
+				width: 1820px;
+				height: 459px;
+				overflow-x:auto;
+				overflow-y:hidden;
+				white-space: nowrap;
 				
-				
-				.box-shadow(0 0 3px rgba(0,0,0,.5));
-				
-				a {
-					background: #fff;
+				li {
 					
 					display: block;
-					color: #000;
-					padding: 5px;
-					line-height: 20px;
-					text-decoration: none;
+					float: left;
+				}
+			}
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+		}
+		
+		#coming-soon-videos-grid {
+			display: none;
+			height: 459px;
+			width: 850px;
+			overflow-x: hidden;
+			overflow-y: hidden;
+			padding-top: 5px;
+			img {
+				
+				width: 275px;
+				height: 162px;
+			}
+			
+			ul {
+				padding-left: 1px;
+				width: 1820px;
+				height: 459px;
+				overflow-x:auto;
+				overflow-y:hidden;
+				white-space: nowrap;
+				
+				li {
+					
+					display: block;
+					float: left;
+				}
+			}
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			
+			&.active {
+				
+				display: block;
+			}
+		}
+		
+		.single-detail {
+			margin-top: 10px;
+			margin-right: 17px;
+			width: 162px;
+			height: 200px;
+	
+			
+			.single-cover-container {
+				cursor: default;
+				position: relative;
+				
+				width: 162px;
+				border: 1px solid #fff;
+				.box-shadow(0 0 2px rgba(0,0,0,.8));
+				
+				
+				img {
+					display: block;
+					width: 162px;
+					height: 162px;
 				}
 				
-				.share {
+				.add-to-playlist-button {
+					background: url(../img/album-grid/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:4px;
+					right: 4px;
+					width: 26px;
+					height: 25px;
+					opacity: 0;
 					
-					background: #fff;
-					border-top: 1px solid rgba(0,0,0,.2);
+				}
+				
+				.wishlist-popover {
+					
+					display: none;
+					position: absolute;
+					right: -64px;
+					top:67px;
+					font-size: 12px;
+					z-index: 100;
 					
 					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
 					
-					p {
+					&.active {
 						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
 						padding: 5px;
-						
-					}
-					
-					.facebook {
-						background: url(../img/album-grid/facebook.png) no-repeat center center;
-						
-						display: block;
-						float: left;
-						width: 17px;
-						height: 17px;
-						padding-top: 0;
-						padding-bottom: 10px;
-						margin-left: 16px;
-						
-						&:hover {
-							background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
-							
-						}
-					}
-					
-					.twitter {
-						background: url(../img/album-grid/twitter.png) no-repeat center center;
-						
-						display: block;
-						float: left;
-						width: 18px;
-						height: 15px;
-						padding-top: 4px;
-						padding-bottom: 10px;
-						margin-left: 6px;
+						line-height: 20px;
+						text-decoration: none;
 						
 						&:hover {
 							
-							background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							background: #999;
+						}
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						
+						
+						
+						p {
+							
+							padding: 5px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 17px;
+							height: 17px;
+							padding-top: 0;
+							padding-bottom: 10px;
+							margin-left: 16px;
+							
+							&:hover {
+								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 18px;
+							height: 15px;
+							padding-top: 4px;
+							padding-bottom: 10px;
+							margin-left: 6px;
+							
+							&:hover {
+								
+								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+								
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
 			}
-		}
-		
-		.album-title {
 			
-			font-weight: bold;
-			font-size: 13px;
-			line-height: 15px;
-			padding-top: 8px;
-			padding-bottom: 4px;
-			
-			a {
+			.song-title {
 				
-				text-decoration: none;
-				color: rgba(0,0,0,1);
+				font-weight: bold;
+				font-size: 13px;
+				line-height: 15px;
+				padding-top: 8px;
+				padding-bottom: 4px;
 				
-				&:hover {
+				a {
 					
-					text-decoration: underline;
+					text-decoration: none;
+					color: rgba(0,0,0,1);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
 				}
 				
+	
 			}
 			
-
+			.artist-name {
+				
+				color: rgba(0,0,0,.5);
+				font-size: 12px;
+				line-height: 15px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,.5);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+			}
+			
+			
+			
+			
+			
+			
+			&.last {
+				
+				margin-right: 0;
+			}
+			
+			
 		}
 		
-		.artist-name {
+		
+		
+		
+		
+		
+		
+		
+		.album-detail {
+			margin-top: 10px;
+			margin-right: 17px;
+			width: 162px;
+			height: 200px;
+	
 			
-			color: rgba(0,0,0,.5);
-			font-size: 12px;
-			line-height: 15px;
-			
-			a {
+			.album-cover-container {
+				cursor: default;
+				position: relative;
 				
-				text-decoration: none;
-				color: rgba(0,0,0,5);
+				width: 162px;
+				border: 1px solid #fff;
+				.box-shadow(0 0 2px rgba(0,0,0,.8));
 				
-				&:hover {
-					
-					text-decoration: underline;
+				
+				img {
+					display: block;
+					width: 162px;
+					height: 162px;
 				}
 				
+				.add-to-playlist-button {
+					background: url(../img/album-grid/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:4px;
+					right: 4px;
+					width: 26px;
+					height: 25px;
+					opacity: 0;
+					
+				}
+				
+				.wishlist-popover {
+					
+					display: none;
+					position: absolute;
+					right: -90px;
+					top:76px;
+					font-size: 12px;
+					z-index: 100;
+					width: 120px;
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px 5px 5px 10px;
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+						}
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						
+						
+						
+						p {
+							
+							padding: 5px 5px 5px 10px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 17px;
+							height: 17px;
+							padding-top: 0;
+							padding-bottom: 10px;
+							margin-left: 24px;
+							
+							&:hover {
+								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 18px;
+							height: 15px;
+							padding-top: 4px;
+							padding-bottom: 10px;
+							margin-left: 6px;
+							
+							&:hover {
+								
+								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+								
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						}
+					}
+				}
 			}
-		}
-		
-		
-		
-		
-		
-		
-		&.last {
 			
-			margin-right: 0;
+			.album-title {
+				
+				font-weight: bold;
+				font-size: 13px;
+				line-height: 15px;
+				padding-top: 8px;
+				padding-bottom: 4px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,1);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+				
+	
+			}
+			
+			.artist-name {
+				
+				color: rgba(0,0,0,.5);
+				font-size: 12px;
+				line-height: 15px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,.5);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+			}
+			
+			
+			
+			
+			
+			
+			&.last {
+				
+				margin-right: 0;
+			}
+			
+			
 		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		.video-detail {
+			margin-top: 10px;
+			margin-right: 17px;
+			width: 275px;
+			height: auto;
+	
+			
+			.video-cover-container {
+				cursor: default;
+				position: relative;
+				
+				width: 275px;
+				border: 1px solid #fff;
+				.box-shadow(0 0 2px rgba(0,0,0,.8));
+				
+				
+				img {
+					display: block;
+					width: 417px;
+					height: 248px;
+				}
+				
+				.add-to-playlist-button {
+					background: url(../img/album-grid/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					bottom:4px;
+					right: 4px;
+					width: 26px;
+					height: 25px;
+					opacity: 0;
+					
+				}
+				
+				.wishlist-popover {
+					
+					display: none;
+					position: absolute;
+					right: -64px;
+					top:67px;
+					font-size: 12px;
+					z-index: 100;
+					
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px;
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+						}
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						
+						
+						
+						p {
+							
+							padding: 5px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 17px;
+							height: 17px;
+							padding-top: 0;
+							padding-bottom: 10px;
+							margin-left: 16px;
+							
+							&:hover {
+								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							
+							display: block;
+							float: left;
+							width: 18px;
+							height: 15px;
+							padding-top: 4px;
+							padding-bottom: 10px;
+							margin-left: 6px;
+							
+							&:hover {
+								
+								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+								
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						}
+					}
+				}
+			}
+			
+			.video-title {
+				
+				font-weight: bold;
+				font-size: 13px;
+				line-height: 15px;
+				padding-top: 8px;
+				padding-bottom: 4px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,1);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+				
+	
+			}
+			
+			.artist-name {
+				
+				color: rgba(0,0,0,.5);
+				font-size: 12px;
+				line-height: 15px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,.5);
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+					
+				}
+			}
+			
+			
+			
+			
+			
+			
+			&.last {
+				
+				margin-right: 0;
+			}
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		
 	}
+	
+
+
+		
+		
+		
+		
+	
+	
 	
 	.whats-happening {
 		margin-top: 20px;
@@ -1747,33 +3832,13 @@ img {
 		header {
 		
 			position: relative;
-			height: 46px;
+			height: 34px;
 			
-			.whats-happening-filter-results {
-					
-				display: none;
-				position: absolute;
-				left: 232px;
-				top:38px;
-				background: rgba(255,255,255,1);
-				z-index: 101;
-				width: 469px;
-				font-size: 14px;
-				.box-shadow(0 0 2px rgba(0,0,0,.5));
-				color: rgba(0,0,0,.4);
-				
-				li {
-					
-					.box-sizing;
-					padding: 5px;
-					border-bottom: 1px solid rgba(0,0,0,.2);
-				}
-				
-			}
+			
 			
 			h3 {
 				
-				font-size: 24px;
+				font-size: 26px;
 				letter-spacing: 1px;
 				position: absolute;
 				left: 0;
@@ -1782,35 +3847,7 @@ img {
 			}
 			
 			
-			form {
-				
-				position: absolute;
-				left: 225px;
-				top:0;
-				line-height: 33px;
-				
-				#whats-happening-filter-text {
-					///background: #fff;
-					background: rgb(256,256,256.7);
-					border: 1px solid rgba(0,0,0,.1);
-					//float: left;
-					height: 22px;
-					outline: none;
-					color: #9f9f9f;
-					padding-left: 10px;
-					font-size: 13px;
-					.border-radius(20px);
-					
-					&::-webkit-input-placeholder {
-						
-						font-style: italic;
-					
-						
-						
-					}
-					
-				}
-			}
+			
 		
 		
 
@@ -1840,26 +3877,17 @@ img {
 		
 		#whats-happening-grid {
 			
-			//margin-top: 10px;
-			//padding-top: 5px;
-			width: 850px;
-			//height: 395px;
-			//height: 730px;
-			overflow-x: hidden;
-			/*
-			background: 
-			url(../img/coming-soon/tapered-shadow-down.png) no-repeat center top,
-			url(../img/coming-soon/tapered-shadow-up.png) no-repeat center bottom;
 
-			*/
-			
-			//margin-right:-20px;
+			width: 850px;
+
+			overflow-x: hidden;
+
 			
 			
 			
 			ul {
 				
-				width: 3416px;
+				width: 3516px;
 				overflow-x: auto;
 				//white-space: nowrap;
 				overflow-y: hidden;
@@ -1883,15 +3911,16 @@ img {
 				//float: left;
 				width: 417px;
 				margin-top: 16px;
-				margin-right: 10px;
+				margin-right: 17px;
 				
 				.post-header-image {
 					
 					border: 1px solid #fff;
 					.box-shadow(0 0 4px rgba(0,0,0,.5));
 					margin-bottom: 10px;
+					width: 417px;
 					img {
-						width: 415px;
+						width: 417px;
 						height: auto;
 						
 					}
@@ -1903,6 +3932,17 @@ img {
 					font-size: 13px;
 					line-height: 16px;
 					margin-bottom: 5px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+					}
 					
 				}
 				
@@ -1930,6 +3970,15 @@ img {
 					font-size: 12px;
 					font-weight: bold;
 					margin-bottom: 15px;
+					
+					a {
+						color: #000;
+						text-decoration: none;
+						&:hover {
+							text-decoration: underline;
+							
+						}
+					}
 				}
 				
 				&.left-col {
@@ -2069,22 +4118,31 @@ img {
 	
 	height:     107px;
 	position:   relative;
+	
+	@media screen and (min-width:1025px) {
+		margin: 0 auto;
+		width:  1024px;
+		
+	}
+	
+
 
 
 	h1 {
-	
-		@media screen and (max-width:480px) {
-			margin-left: 20px;	
-			
-		}
-		
-		
+
+		background:  url(../img/logo.png) no-repeat;
 		display:     block;
 		position: absolute;
 		height:      108px;
-		left: -15px;
+		left: 20px;
 		text-indent: -9999px;
 		width:       157px;
+			
+
+		
+		
+		
+
 		
 		
 		
@@ -2099,7 +4157,7 @@ img {
 		background: rgba(255,255,255,1);
 		z-index: 101;
 		width: 420px;
-		height: 90px;
+		height: 340px;
 		font-size: 14px;
 		.box-shadow(0 0 2px rgba(0,0,0,.5));
 		color: rgba(0,0,0,.4);
@@ -2202,7 +4260,7 @@ img {
 		height:      30px;
 		position:    absolute;
 		width:       420px;
-		left: 375px;
+		left: 450px;
 		top: 52px;
 		
 		
@@ -2311,10 +4369,7 @@ img {
 	
 
 	
-	@media screen and (min-width:1024px) {
-		margin: 0 auto;
-		width:  1024px;
-	}
+	
 	
 	
 	
@@ -2375,7 +4430,7 @@ img {
 				color:           @nav-link-color;
 				display:         block;
 				font-size:       12px;
-				line-height:     39px;
+				line-height:     40px;
 				padding-left:    15px;
 				padding-right:   15px;
 				text-decoration: none;
@@ -2452,6 +4507,11 @@ img {
 				
 				.box-shadow(0 0 3px rgba(0,0,0,.5));
 				
+				&.active {
+					
+					display: block;
+				}
+				
 				a {
 					background: #fff;
 					
@@ -2507,6 +4567,17 @@ img {
 							
 							background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
 						}
+					}
+				}
+				
+				.add-to-playlist {
+							
+					background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+					
+					&:hover {
+						
+						color: rgba(0,0,0,1);
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
 					}
 				}
 			}
