@@ -30,7 +30,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<header class="site-header">                            
 				
                                     <?php if($this->Session->read("patron")){ ?>
-                                    <h1 class="logo">
+                                    <h1>
                                     <?php
                                     if($libraryInfo['Library']['library_image_name'] != "") {
                                     ?>
