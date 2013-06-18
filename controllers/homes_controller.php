@@ -125,7 +125,8 @@ class HomesController extends AppController
                 //featured artist slide show code end
                 
                 
-                
+        $this->national_top_download();
+        die;
                 
 
     //used for gettting top downloads for Pop Genre
@@ -536,7 +537,8 @@ STR;
 
 	function national_top_download()
 	{
-		$this -> layout = 'ajax';
+		//$this -> layout = 'ajax';
+            echo 123;
 		$libId = $this->Session->read('library');
 		$territory = $this->Session->read('territory');
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
@@ -636,6 +638,8 @@ STR;
 			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
+                
+                print_r($nationalTopDownload);
 
 		$nationalTopDownload = Cache::read("national".$territory);
 /*		$this->Download->recursive = -1;
