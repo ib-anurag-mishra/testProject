@@ -3457,8 +3457,13 @@
 												<div class="album-title">
 													<a href="artists/view<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= $v['Album']['provider_type']?>"><?php echo $title; ?></a>
 												</div>
+
+
+
+
+
 												<div class="artist-name">
-													<a href="artists/album/<?php echo $v['Album']['ArtistText']; ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
+													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
 												</div>
 											</div>
 										</li>
