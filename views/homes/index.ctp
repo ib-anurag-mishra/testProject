@@ -1,22 +1,3 @@
- <script>
-       function showhide(flag, id)
-       {	   		
-	   
-         if(flag=="short")
-         {
-            document.getElementById("shortNews"+id).style.display="block";
-            document.getElementById("detailsNews"+id).style.display="none";
-         }
-         
-         if(flag=="detail")
-         {
-            document.getElementById("shortNews"+id).style.display="none";
-            document.getElementById("detailsNews"+id).style.display="block";
-         }
-       }
-        </script>
-
-
 <section class="news">
 							<div class="top-100">
 								<header>
