@@ -1,8 +1,12 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 
 // includes service file
 require_once( __dir__.'/Apache/Solr/Service.php' );
+//require_once( __dir__.'/SolrPhpClient/Apache/Solr/Service.php' );
 
 
 // Try to connect to the named server, port, and url
@@ -56,7 +60,7 @@ WHERE ProdID = '".$arr_row['ProdID']."' AND provider_type = '".$arr_row['provide
 //collect Albums table data
 foreach($arr_docs AS $key => $arr_row){
 
-  $obj_resultset = mysql_query("SELECT AlbumTitle, Label, Label as CLabel, Advisory as AAdvisory FROM Albums WHERE ProdID = '".$arr_row['ReferenceID']."' 
+  $obj_resultset = mysql_query("SELECT Label, Label as CLabel, Advisory as AAdvisory FROM Albums WHERE ProdID = '".$arr_row['ReferenceID']."' 
 AND provider_type = '".$arr_row['provider_type']."'");
 
   $arr_tmp = mysql_fetch_assoc( $obj_resultset );
@@ -73,9 +77,9 @@ foreach($arr_docs AS $key => $arr_row){
   $arr_docs[$key] = array_merge($arr_docs[$key], $arr_tmp);
 }
 
-echo '<pre>';
+/*echo '<pre>';
 print_r($arr_docs);
-echo '</pre>';
+echo '</pre>;*/
 
 
 //creates index document
@@ -121,9 +125,10 @@ foreach($documents AS $key => $song) {
     $solr->optimize();
   }
   catch ( Exception $e ) {
-    echo "<br/>";
+    echo "<br/>============================<br />";
     echo $song->ProdID."<br/>";
     echo $e->getMessage();
+    echo "<br/>============================<br />";
   }
 
 

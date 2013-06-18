@@ -239,8 +239,31 @@ class Apache_Solr_Service
 	{
 		//$http_response_header is set by file_get_contents
 		$response = new Apache_Solr_Response($this->curl_file_get_contents($url), $http_response_header);
-    /*print_r($response); die;
-		if ($response->getHttpStatus() != 200)
+
+/*                 echo '<pre>';
+                 echo '<br />=================_sendRawGet===================<br />';
+
+                 echo '<br />=================http_response_header)===================<br />';
+                 var_dump($http_response_header);
+                 echo '<br />=========================================================<br />';
+
+                 echo '<br />=================response===================<br />';
+                 print_r($response);
+                 echo '<br />========================================================<br />';
+
+                 echo '<br />===================================url==================<br />';
+                 print_r($url);
+                 echo '<br />========================================================<br />';
+
+                 echo '<br />=================rawPost================================<br />';
+                 print_r($rawPost);
+                 echo '<br />========================================================<br />';
+
+
+                 echo '<br />================================================<br />'; */
+
+
+		/*if ($response->getHttpStatus() != 200)
 		{
 			throw new Exception('"' . $response->getHttpStatus() . '" Status: ' . $response->getHttpStatusMessage());
 		}*/
@@ -268,12 +291,30 @@ class Apache_Solr_Service
 
 		//$http_response_header is set by file_get_contents
 		//$response = new Apache_Solr_Response($this->curl_file_get_contents($url, false, $this->_postContext), $http_response_header);
-		$response = new Apache_Solr_Response($this->curl_file_get_contents($url, $rawPost), $http_response_header);
+		$response = new Apache_Solr_Response($this->curl_file_get_contents($url, $rawPost));
 
-		/*if ($response->getHttpStatus() != 200)
+	         /*echo '<pre>';
+	         
+		 echo '<br />=========================rawPost========================<br />';
+                 echo $rawPost; 
+	 	 echo '<br />========================================================<br />';
+
+                 echo '<br />=======================response=========================<br />';
+                 print_r($response);
+                 echo '<br />========================================================<br />';
+	
+                 echo '<br />===================================url==================<br />';
+                 print_r($url);
+                 echo '<br />========================================================<br />';
+		 echo '<br />========================================================<br />';*/
+
+		
+      
+
+		if ($response->getHttpStatus() != 200)
 		{
 			throw new Exception('"' . $response->getHttpStatus() . '" Status: ' . $response->getHttpStatusMessage());
-		}*/
+		}
 
 		return $response;
 	}
@@ -513,6 +554,8 @@ class Apache_Solr_Service
 	 */
 	public function add($rawPost)
 	{
+		//echo "<br />===============<br />".$this->_updateUrl."<br />=============<br />";
+		//echo  "<br />======================<br />".$rawPost."<br />===============<br />";  exit;
 		return $this->_sendRawPost($this->_updateUrl, $rawPost);
 	}
 
@@ -536,7 +579,7 @@ class Apache_Solr_Service
 		$rawPost = '<add allowDups="' . $dupValue . '" overwritePending="' . $pendingValue . '" overwriteCommitted="' . $committedValue . '">';
 		$rawPost .= $this->_documentToXmlFragment($document);
 		$rawPost .= '</add>';
-
+			
 		return $this->add($rawPost);
 	}
 
@@ -773,29 +816,19 @@ class Apache_Solr_Service
 
   private function curl_file_get_contents($request, $postData=null)
   {
-    /*$curl_req = curl_init($request);
-    curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, TRUE);
-    curl_setopt($curl_req, CURLOPT_HEADER, FALSE);
-    $contents = curl_exec($curl_req);
-    curl_close($curl_req);
-    return $contents;*/
-
-
-	$curl_req = curl_init($request);
+    $curl_req = curl_init($request);
 	if($postData != null){
 		curl_setopt($curl_req, CURLOPT_POST, TRUE);
 		curl_setopt($curl_req, CURLOPT_POSTFIELDS, $postData);
 		curl_setopt($curl_req, CURLOPT_HEADER, TRUE);
 		curl_setopt($curl_req, CURLOPT_HTTPHEADER, array("Content-Type: text/xml; charset=UTF-8"));
-	} else {
+    } else {
 		curl_setopt($curl_req, CURLOPT_HEADER, FALSE);
 	}
 	curl_setopt($curl_req, CURLOPT_RETURNTRANSFER, TRUE);
-	$contents = curl_exec($curl_req);
-	curl_close($curl_req);
-	return $contents;
-
+    
+    $contents = curl_exec($curl_req);
+    curl_close($curl_req);
+    return $contents;
   }///end of functn curl File get contents
-
-
 }
