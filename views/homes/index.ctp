@@ -3423,7 +3423,7 @@
 												<?php echo $html->link($html->image($image,array("height" => "77", "width" => "84")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
-													<a class="preview" href="#"></a>
+													<a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a>
 													<a class="add-to-playlist-button" href="#"></a>
 													<div class="wishlist-popover">
 														<div class="playlist-options">
@@ -3441,7 +3441,7 @@
 																<li><a href="#">Playlist 10</a></li>
 															</ul>
 														</div>
-														<a class="download-now">Download Now</a>
+														<a class="download-now" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>">Download Now</a>
 														<a class="add-to-queue" href="#">Add To Queue</a>
 														<a class="add-to-playlist" href="#">Add To Playlist</a>
 														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
