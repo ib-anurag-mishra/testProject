@@ -3455,7 +3455,7 @@
 													</div>
 												</div>
 												<div class="album-title">
-													<a href="artists/view<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= $v['Album']['provider_type']?>"><?php echo $title; ?></a>
+													<a href="artists/view<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $title; ?></a>
 												</div>
 
 
