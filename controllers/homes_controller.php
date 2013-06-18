@@ -541,22 +541,18 @@ STR;
             echo 123;
 		$libId = $this->Session->read('library');
 		$territory = $this->Session->read('territory');
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$patId = $this->Session->read('patron');
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('patronDownload',$patronDownload);
+		
 		// National Top Downloads functionality
 		if (($national = Cache::read("national".$territory)) === false)
                     {
-      $country = $territory;
+     echo $country = $territory;
       
       $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
       $siteConfigData = $this->Album->query($siteConfigSQL);
       $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
       
       if($maintainLatestDownload){
-        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+      echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
