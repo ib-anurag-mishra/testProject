@@ -126,7 +126,7 @@ class HomesController extends AppController
                 
                 
         $this->national_top_download();
-        die;
+        
                 
 
     //used for gettting top downloads for Pop Genre
@@ -537,39 +537,39 @@ STR;
 
 	function national_top_download()
 	{
-		//$this -> layout = 'ajax';
-            echo 123;
-		$libId = $this->Session->read('library');
-		$territory = $this->Session->read('territory');
-		
-		// National Top Downloads functionality
-		if (($national = Cache::read("national".$territory)) === false)
-                    {
-     echo $country = $territory;
-      
-      $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-      $siteConfigData = $this->Album->query($siteConfigSQL);
-      $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-      
-      if($maintainLatestDownload){
-      echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `latest_downloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '".$country."' 
-              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-         } else {
-         	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-              FROM `downloads` AS `Download` 
-              LEFT JOIN libraries ON libraries.id=Download.library_id
-              WHERE libraries.library_territory = '".$country."' 
-              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-              GROUP BY Download.ProdID 
-              ORDER BY `countProduct` DESC 
-              LIMIT 110";
-         }
+            //$this -> layout = 'ajax';
+
+            $libId = $this->Session->read('library');
+            $territory = $this->Session->read('territory');
+
+            // National Top Downloads functionality
+            if (($national = Cache::read("national".$territory)) === false) {
+                    
+                    $country = $territory;
+
+                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                    $siteConfigData = $this->Album->query($siteConfigSQL);
+                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+
+                    if($maintainLatestDownload){
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `latest_downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        } else {
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
