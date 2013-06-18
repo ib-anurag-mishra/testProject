@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload');
 
     /*
      Function Name : beforeFilter
@@ -453,47 +453,6 @@ STR;
     
     $this->set('artists',$ssartists);
     $this->layout = 'home';
-	
-	/*
-				Code OF NEWS Section --- START
-		*/
-		
-		if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
-			$this->Session->write('Config.language', 'en');
-		}
-		//$this->layout = 'home';
-		
-		$news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
-		
-//		echo "news_count: ".$news_count;
-		
-		if($news_count != 0){
-			/*$this->paginate = array(   
-				'conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
-				'order' => 'News.created DESC','limit' => '3','cache' => 'yes'
-			);*/
-			//echo "Place".$this->Session->read('territory');
-			//$news_rs = $this->News->find('all', array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%"));
-			$news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")));
-			
-			
-			
-		}
-		else{
-			/*$this->paginate = array(   
-				'conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
-				'order' => 'News.created DESC','limit' => '3','cache' => 'yes'
-			);	*/	
-			
-			$news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%"))));
-		}
-		$this->set('news',$news_rs);
-		
-		/*
-				Code OF NEWS Section --- END
-		*/
-	
-	
     }
 
 	function get_genre_tab_content($tab_no , $genre){
