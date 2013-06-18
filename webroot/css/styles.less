@@ -48,6 +48,7 @@ table {
 }
 
 
+
 .clearfix:after {
 	content: ".";
 	display: block;
@@ -159,7 +160,7 @@ html, body {
 
 body {
 	
-	background:  url(../img/content_bkg.gif) repeat-y;
+	background:  url(../images/content_bkg.gif) repeat-y;
 	color:       @base-font-color;	
 	font-family: @base-font;
 
@@ -176,7 +177,7 @@ body {
 	
 	.box-sizing;
 	float:      right;
-	height:     1000px;
+	height:     auto;
 	width:      85%;
 	
 
@@ -185,7 +186,7 @@ body {
 
 .content-wrapper {
 
-	min-height: 1850px;
+	min-height: auto;
 	
 	
 	@media screen and (min-width:1024px) {
@@ -314,7 +315,7 @@ img {
 		
 		float:  left;
 		width:  15%;
-		height: 1850px;
+		height: 2500px;
 	
 		
 	}
@@ -332,18 +333,18 @@ img {
 		
 		&.browse {
 			
-			background: url(../img/sidebar-music-icon.png) no-repeat;
+			background: url(../images/sidebar-music-icon.png) no-repeat;
 			margin-top: 2px;
 			
 		}
 		
 		&.streaming {
 			
-			background: url(../img/sidebar-streaming-icon.png) no-repeat;
+			background: url(../images/sidebar-streaming-icon.png) no-repeat;
 		}
 		&.my-downloads {
 			
-			background: url(../img/sidebar-my-downloads.png) no-repeat;
+			background: url(../images/sidebar-my-downloads.png) no-repeat;
 		}
 		
 		h3 {
@@ -417,7 +418,7 @@ img {
 		padding-bottom: 20px;
 		
 		h4 {
-			background:   url(../img/sidebar-announcements-icon.png) no-repeat;
+			background:   url(../images/sidebar-announcements-icon.png) no-repeat;
 			line-height:  18px;
 			padding-left: 26px;
 			
@@ -454,174 +455,6 @@ img {
 }
 
 
-.main {
-
-	
-	h3 {
-		
-		font-size:      24px;
-		letter-spacing: 1px;
-		margin-left:    20px;
-		margin-top:     20px;
-	}
-	
-	.wishlist-filter-container {
-	
-		margin-top: 20px;
-	
-		.filter-container {
-			background: #a5dff2;
-			border:     1px solid #ddd;
-			.border-radius(20px);
-			float:      right;
-			height:     26px;
-			position:   relative;
-			width:      210px;
-			
-			#sort-form {
-				left:     15px;
-				position: absolute;
-				top:      3px;
-				
-				#sort {
-					
-					
-					background:         url(../img/filter-arrow.png) no-repeat right center;
-					border:             none;
-					color:              #fff;
-					cursor:             pointer;
-					font-size:          12px;
-					letter-spacing:     1px;
-					//-moz-appearance: 	window;
-					outline: 			none;
-					text-shadow:        0 0 4px #999;
-					-webkit-appearance: none;
-					width:              62px;
-				}
-			}
-			
-			.filter {
-			
-				input {
-					background:      #fff;
-					border:          0;
-					.border-radius(20px);
-					.box-sizing;
-					color:           #aaa;
-					display:         block;
-					font-size:       12px;
-					letter-spacing:  1px;
-					line-height:     26px;
-					height:          26px;
-					padding-left:    17px;
-					position:        absolute;
-					right:           0;
-					text-decoration: none;
-					top:             0;
-					width:           120px;
-					
-					&:focus {
-						
-						outline: 0;
-					}
-				}
-				
-			}
-			
-			.filter-results {
-				
-				background: #fff;
-				border:     1px solid #ddd;
-				display:    none;
-				height:     400px;
-				left:       0;
-				position:   absolute;
-				top:        30px;
-				width:      208px;
-				
-				li {
-					
-					border-bottom: 1px solid #ddd;
-					.box-sizing;
-					cursor: pointer;
-					padding:       5px;
-					
-					&:hover {
-						background: #b1e4f5;
-							
-						
-					}
-					
-					.filter-image-container {
-						border:1px solid #ccc;
-						float: left;
-						
-						img {
-							
-							width: 50px;
-							height: auto;
-						}
-					}
-					
-					.filter-copy-container {
-						float: left;
-						padding-left: 10px;		
-						p {
-							
-							.box-sizing;
-							color:         #999;
-							font-size:     12px;
-							
-							
-							&.result-text {
-			
-								color:          #555;
-								font-size: 		12px;
-								letter-spacing: 1px;
-								padding-bottom: 5px;
-								padding-top:    5px;
-							}
-							
-							&.result-type {
-								color: 			#555;
-								font-size: 		12px;
-								letter-spacing: 1px;
-								padding-bottom: 10px;
-								padding-top:    5px;
-								
-							}
-						}
-					}
-				}
-				
-			}
-			
-		}
-	
-		.wishlist-tooltip {
-			
-	
-			background:         #fff;
-			.box-shadow(2px 2px 3px 0 #bbb);
-			color:              #000000;
-			float:              left;
-			font-size:          12px;
-			height:             26px;
-			line-height:        26px;
-			margin-left:        20px;
-			margin-right:       20px;
-			text-align:         center;
-			vertical-align:     top;
-			width:              162px;
-	
-		}
-		
-		
-	}
-	
-}
-
-
 
 
 
@@ -629,14 +462,14 @@ img {
 
 
 .music-player-container {
-	background: #d4d9df url(../img/music_player/music_player_bkg.png) repeat-x;
+	background: #d4d9df url(../images/music_player/music_player_bkg.png) repeat-x;
 	bottom:     0;
 	height:     101px;
 	position:   fixed;
 	width:      100%;
 	opacity: .975;
-	
 	.transition(height 500ms);
+	
 	&.minimized {
 		
 		height: 22px;
@@ -670,12 +503,10 @@ img {
 			}
 			
 			.min-max {
-				background: url(../img/music_player/minimize.png) no-repeat center center;
+				background: url(../images/music_player/minimize.png) no-repeat center center;
 				
 				width: 20px;
 				height: 20px;
-				//text-indent: -9999px;
-				//margin-top: 13px;
 				cursor: pointer;
 				padding: 0;
 				border: 0;
@@ -686,9 +517,7 @@ img {
 		
 		.album-cover-art {
 			
-			//float:              left;
-			//margin-left:        70px;
-			//margin-top:         15px;
+
 			.box-shadow(0 1px 1px #666);
 			position: absolute;
 			left: 173px;
@@ -701,10 +530,7 @@ img {
 		}
 		
 		.album-title {
-			
-			//float:       left;
-			//margin-left: 40px;
-			//margin-top:  20px;
+
 			position: absolute;
 			left:333px;
 			top:35px;
@@ -715,9 +541,9 @@ img {
 			
 			&.minimized {
 				
-				//left:339px;
+
 				top:6px;
-				//font-size:12px;
+
 			}
 			
 			span {
@@ -771,7 +597,7 @@ img {
 		
 		&:after {
 			content: "";
-			background: url(../img/news/top-100/top-100-tapered-shadow.png);
+			background: url(../images/news/top-100/top-100-tapered-shadow.png);
 			position: absolute;
 			right: 0;
 			top:66px;
@@ -812,23 +638,23 @@ img {
 					
 					&.grid-view-button {
 					
-						background: url(../img/news/top-100/grid-view-off.png);	
+						background: url(../images/news/top-100/grid-view-off.png);	
 						margin-right: 4px;
 						
 						&.active {
 						
-							background: url(../img/news/top-100/grid-view-on.png);
+							background: url(../images/news/top-100/grid-view-on.png);
 						}
 						
 					}
 					
 					&.list-view-button {
 						
-						background: url(../img/news/top-100/list-view-off.png);
+						background: url(../images/news/top-100/list-view-off.png);
 						
 						&.active {
 							
-							background: url(../img/news/top-100/list-view-on.png);
+							background: url(../images/news/top-100/list-view-on.png);
 						}
 					}
 				}
@@ -878,9 +704,7 @@ img {
 				position: absolute;
 				right: 0;
 				border: 1px solid rgba(0, 0, 0, 0.1);
-				/* .border-radius(20px); */
 				background: rgba(255,255,255,1);
-				/* height: 25px; */
 				width: 109px;
 				height: 19px;
 				
@@ -888,22 +712,16 @@ img {
 				
 				select {
 					.box-sizing;
-					/* background: rgb(248,248,248); */
-					/* background: #666; */
-					/* background: url(../img/news/top-100/select-arrow.png) no-repeat right center; */
 					.border-radius(20px);
 					-webkit-appearance: none;
 					padding: 0;
 					border: 0;
 					width: 100px;
-					/* padding-left: 53px; */
 					font-size: 12px;
 					color: rgba(0,0,0,1);
 					outline: 0;
-					//height: 25px;
-					padding-left: 25px;
-				
-					height: 25px;
+					padding-left: 25px;	
+					height: 18px;
 					
 
 					
@@ -976,7 +794,7 @@ img {
 				}
 				
 				.add-to-playlist-button {
-					background: url(../img/album-grid/add-to-playlist-button.png);
+					background: url(../images/album-grid/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					bottom:10px;
@@ -996,19 +814,19 @@ img {
 					top:111px;
 					width: 23px;
 					height: 23px;
-					background: url(../img/news/top-100/preview-off.png);
+					background: url(../images/news/top-100/preview-off.png);
 					opacity: 0;
 					
 					
 					&:hover {
 						
-						background: url(../img/news/top-100/preview-hover.png);
+						background: url(../images/news/top-100/preview-hover.png);
 						opacity: 1;
 					}
 					
 					&.active {
 						
-						background: url(../img/news/top-100/preview-click.png);
+						background: url(../images/news/top-100/preview-click.png);
 						opacity: 1;
 						width: 21px;
 						height: 21px;
@@ -1024,7 +842,7 @@ img {
 					display: none;
 					position: absolute;
 					right: 10px;
-					top:68px;
+					top:89px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
@@ -1101,63 +919,65 @@ img {
 						background: #fff;
 						border-top: 1px solid rgba(0,0,0,.2);
 						padding-bottom: 3px;
-						
+						position: relative;
+						width: 120px;
+						height: 32px;
 						
 						p {
 							
-							padding: 5px 5px 5px 10px;
+							position: absolute;
+							left: 10px;
+							top:10px;
 							
 						}
 						
 						.facebook {
-							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							background: url(../images/album-grid/facebook.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 17px;
-							height: 17px;
-							padding-top: 0;
-							padding-bottom: 10px;
-							margin-left: 26px;
+							
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 62px;
+							top:4px;
 							
 							&:hover {
-								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							background: url(../images/album-grid/twitter.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 18px;
-							height: 15px;
-							padding-top: 4px;
-							padding-bottom: 10px;
-							margin-left: 6px;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							left: 82px;
+							top:4px;
 							
 							&:hover {
 								
-								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+								background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
-							background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							color: rgba(0,0,0,1);
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
+				
 			}
-			
-			
-			
 			
 			.album-title {
 				
@@ -1235,6 +1055,7 @@ img {
 		
 		
 		#top-100-songs-grid {
+			
 			display: none;
 			overflow: hidden;
 			width: 850px;
@@ -1257,9 +1078,45 @@ img {
 				overflow-x: auto;
 			}
 			
+			
+			
+			ul {
+				width: 10000px;
+				overflow-x: auto;
+				height: 330px;
+				
+				li {
+				
+					display: block;
+					float: left;
+					padding:5px 13px 5px 5px;
+					position: relative;
+				
+					a {
+					
+						img {
+					
+					
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+							
+						}
+					}
+					
+					
+				}
+			}
+			
 			.song-cover-container {
 				
 				position: relative;
+				
+				img {
+					
+					width: 250px;
+					height: 250px;
+				}
+				
 				
 				.top-100-ranking {
 					
@@ -1275,6 +1132,10 @@ img {
 					text-align: center;
 					font-style: italic;
 					font-weight: bold;
+					
+					
+					
+				
 					
 				}
 				
@@ -1299,7 +1160,7 @@ img {
 				}
 				
 				.add-to-playlist-button {
-					background: url(../img/album-grid/add-to-playlist-button.png);
+					background: url(../images/album-grid/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					bottom:10px;
@@ -1318,18 +1179,18 @@ img {
 					top:111px;
 					width: 23px;
 					height: 23px;
-					background: url(../img/news/top-100/preview-off.png);
+					background: url(../images/news/top-100/preview-off.png);
 					opacity: .7;
 					
 					&:hover {
 						
-						background: url(../img/news/top-100/preview-hover.png);
+						background: url(../images/news/top-100/preview-hover.png);
 						opacity: 1;
 					}
 					
 					&.active {
 						
-						background: url(../img/news/top-100/preview-click.png);
+						background: url(../images/news/top-100/preview-click.png);
 						opacity: 1;
 						width: 29px;
 						height: 29px;
@@ -1345,7 +1206,7 @@ img {
 					display: none;
 					position: absolute;
 					right: 10px;
-					top:68px;
+					top:87px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
@@ -1419,64 +1280,69 @@ img {
 					}
 					
 					.share {
-						
+						position: absolute;
 						background: #fff;
 						border-top: 1px solid rgba(0,0,0,.2);
 						padding-bottom: 3px;
+						position: relative;
+						width: 120px;
+						height: 32px;
 						
 						
 						p {
 							
-							padding: 5px 5px 5px 10px;
+							position: absolute;
+							left: 10px;
+							top:10px;
 							
 						}
 						
 						.facebook {
-							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							background: url(../images/album-grid/facebook.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 17px;
-							height: 17px;
-							padding-top: 0;
-							padding-bottom: 10px;
-							margin-left: 26px;
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 62px;
+							top:4px;
 							
 							&:hover {
-								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							background: url(../images/album-grid/twitter.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 18px;
-							height: 15px;
-							padding-top: 4px;
-							padding-bottom: 10px;
-							margin-left: 6px;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							left: 81px;
+							top:4px;
 							
 							&:hover {
 								
-								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+								background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
+				
+				
 			}
 			
 			.song-title {
@@ -1521,32 +1387,7 @@ img {
 				}
 			}
 			
-			ul {
-				width: 10000px;
-				overflow-x: auto;
-				height: 330px;
-				
-				li {
-				
-					display: block;
-					float: left;
-					padding:5px 13px 5px 5px;
-					position: relative;
-				
-					a {
-					
-						img {
-					
-					
-							border: 1px solid #fff;
-							.box-shadow(0 0 4px rgba(0,0,0,.5));
-							
-						}
-					}
-					
-					
-				}
-			}
+			
 			
 
 		}
@@ -1609,7 +1450,7 @@ img {
 				}
 				
 				.add-to-playlist-button {
-					background: url(../img/album-grid/add-to-playlist-button.png);
+					background: url(../images/album-grid/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					bottom:10px;
@@ -1628,18 +1469,18 @@ img {
 					top:111px;
 					width: 23px;
 					height: 23px;
-					background: url(../img/news/top-100/preview-off.png);
+					background: url(../images/news/top-100/preview-off.png);
 					opacity: 0;
 					
 					&:hover {
 						
-						background: url(../img/news/top-100/preview-hover.png);
+						background: url(../images/news/top-100/preview-hover.png);
 						opacity: 1;
 					}
 					
 					&.active {
 						
-						background: url(../img/news/top-100/preview-click.png);
+						background: url(../images/news/top-100/preview-click.png);
 						opacity: 1;
 						width: 29px;
 						height: 29px;
@@ -1655,7 +1496,7 @@ img {
 					display: none;
 					position: absolute;
 					right: 10px;
-					top:68px;
+					top:89px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
@@ -1730,57 +1571,61 @@ img {
 						background: #fff;
 						border-top: 1px solid rgba(0,0,0,.2);
 						padding-bottom: 3px;
-						
+						position: relative;
+						width: 120px;
+						height: 32px;
 						
 						p {
 							
-							padding: 5px 5px 5px 10px;
+							position: absolute;
+							left: 10px;
+							top:10px;
 							
 						}
 						
 						.facebook {
-							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							background: url(../images/album-grid/facebook.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 17px;
-							height: 17px;
-							padding-top: 0;
-							padding-bottom: 10px;
-							margin-left: 26px;
+							
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 62px;
+							top:4px;
 							
 							&:hover {
-								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							background: url(../images/album-grid/twitter.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 18px;
-							height: 15px;
-							padding-top: 4px;
-							padding-bottom: 10px;
-							margin-left: 6px;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							position: absolute;
+							left: 81px;
+							top:4px;
 							
 							&:hover {
 								
-								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+								background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
@@ -1882,7 +1727,7 @@ img {
 					
 					&.divider {
 						
-						background: url(../img/news/top-100/list/divider.png) center center no-repeat;
+						background: url(../images/news/top-100/list/divider.png) center center no-repeat;
 						width: 3px;
 						height: 280px;
 					}
@@ -1911,19 +1756,19 @@ img {
 								position: absolute;
 								left: 25px;
 								top:25px;
-								background: url(../img/news/top-100/preview-off.png);
+								background: url(../images/news/top-100/preview-off.png);
 								width: 23px;
 								height: 23px;
 								opacity: .5;
 								&:hover {
 						
-									background: url(../img/news/top-100/preview-hover.png);
+									background: url(../images/news/top-100/preview-hover.png);
 									opacity: 1;
 								}
 								
 								&.active {
 									
-									background: url(../img/news/top-100/preview-click.png);
+									background: url(../images/news/top-100/preview-click.png);
 									opacity: 1;
 									width: 21px;
 									height: 21px;
@@ -1941,7 +1786,7 @@ img {
 							width: 300px;
 							
 							.add-to-playlist-button {
-								background: url(../img/album-grid/add-to-playlist-button.png);
+								background: url(../images/album-grid/add-to-playlist-button.png);
 								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
 								display: block;
 								position: absolute;
@@ -2100,7 +1945,7 @@ img {
 									}
 									
 									.facebook {
-										background: url(../img/album-grid/facebook.png) no-repeat center center;
+										background: url(../images/album-grid/facebook.png) no-repeat center center;
 										
 										display: block;
 										float: left;
@@ -2111,13 +1956,13 @@ img {
 										margin-left: 26px;
 										
 										&:hover {
-											background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+											background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 											
 										}
 									}
 									
 									.twitter {
-										background: url(../img/album-grid/twitter.png) no-repeat center center;
+										background: url(../images/album-grid/twitter.png) no-repeat center center;
 										
 										display: block;
 										float: left;
@@ -2129,19 +1974,19 @@ img {
 										
 										&:hover {
 											
-											background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+											background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 										}
 									}
 								}
 								
 								.add-to-playlist {
 							
-									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+									background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 									
 									&:hover {
 										
 										color: rgba(0,0,0,1);
-										background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+										background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 									}
 								}
 								
@@ -2207,7 +2052,7 @@ img {
 					
 					&.divider {
 						
-						background: url(../img/news/top-100/list/divider.png) center center no-repeat;
+						background: url(../images/news/top-100/list/divider.png) center center no-repeat;
 						width: 3px;
 						height: 280px;
 					}
@@ -2236,19 +2081,19 @@ img {
 								position: absolute;
 								left: 25px;
 								top:25px;
-								background: url(../img/news/top-100/preview-off.png);
+								background: url(../images/news/top-100/preview-off.png);
 								width: 23px;
 								height: 23px;
 								opacity: .5;
 								&:hover {
 						
-									background: url(../img/news/top-100/preview-hover.png);
+									background: url(../images/news/top-100/preview-hover.png);
 									opacity: 1;
 								}
 								
 								&.active {
 									
-									background: url(../img/news/top-100/preview-click.png);
+									background: url(../images/news/top-100/preview-click.png);
 									opacity: 1;
 									width: 21px;
 									height: 21px;
@@ -2266,7 +2111,7 @@ img {
 							width: 300px;
 							
 							.add-to-playlist-button {
-								background: url(../img/album-grid/add-to-playlist-button.png);
+								background: url(../images/album-grid/add-to-playlist-button.png);
 								.box-shadow(1px 1px 3px rgba(0,0,0,.5));
 								display: block;
 								position: absolute;
@@ -2425,7 +2270,7 @@ img {
 									}
 									
 									.facebook {
-										background: url(../img/album-grid/facebook.png) no-repeat center center;
+										background: url(../images/album-grid/facebook.png) no-repeat center center;
 										
 										display: block;
 										float: left;
@@ -2436,13 +2281,13 @@ img {
 										margin-left: 26px;
 										
 										&:hover {
-											background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+											background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 											
 										}
 									}
 									
 									.twitter {
-										background: url(../img/album-grid/twitter.png) no-repeat center center;
+										background: url(../images/album-grid/twitter.png) no-repeat center center;
 										
 										display: block;
 										float: left;
@@ -2454,19 +2299,19 @@ img {
 										
 										&:hover {
 											
-											background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+											background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 										}
 									}
 								}
 								
 								.add-to-playlist {
 							
-									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+									background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 									
 									&:hover {
 										
 										color: rgba(0,0,0,1);
-										background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+										background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 									}
 								}
 								
@@ -2514,6 +2359,11 @@ img {
 	}
 	
 	
+
+	
+	
+	
+	
 	
 	
 	.featured {
@@ -2539,7 +2389,7 @@ img {
 		&:after {
 			
 			content: "";
-			background: url(../img/news/featured/featured-tapered-shadow.png);
+			background: url(../images/news/featured/featured-tapered-shadow.png);
 			position: absolute;
 			right: 0;
 			top:25px;
@@ -2574,18 +2424,18 @@ img {
 				top:67px;
 				width: 23px;
 				height: 23px;
-				background: url(../img/news/top-100/preview-off.png);
+				background: url(../images/news/top-100/preview-off.png);
 				opacity: 0;
 				
 				&:hover {
 					
-					background: url(../img/news/top-100/preview-hover.png);
+					background: url(../images/news/top-100/preview-hover.png);
 					opacity: 1;
 				}
 				
 				&.active {
 					
-					background: url(../img/news/top-100/preview-click.png);
+					background: url(../images/news/top-100/preview-click.png);
 					opacity: 1;
 					width: 21px;
 					height: 21px;
@@ -2681,7 +2531,7 @@ img {
 			}
 			
 			.add-to-playlist-button {
-				background: url(../img/album-grid/add-to-playlist-button.png);
+				background: url(../images/album-grid/add-to-playlist-button.png);
 				display: block;
 				position: absolute;
 				bottom:10px;
@@ -2744,47 +2594,47 @@ img {
 					}
 					
 					.facebook {
-						background: url(../img/album-grid/facebook.png) no-repeat center center;
+						background: url(../images/album-grid/facebook.png) no-repeat center center;
 						
 						display: block;
 						
-						width: 17px;
-						height: 17px;
+						width: 12px;
+						height: 12px;
 						position: absolute;
 						left: 62px;
-						top:1px;
+						top:4px;
 						
 						&:hover {
-							background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+							background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 							
 						}
 					}
 					
 					.twitter {
-						background: url(../img/album-grid/twitter.png) no-repeat center center;
+						background: url(../images/album-grid/twitter.png) no-repeat center center;
 						
 						display: block;
 						position: absolute;
-						width: 18px;
-						height: 15px;
-						left:86px;
-						top:3px;
+						width: 15px;
+						height: 12px;
+						left:80px;
+						top:4px;
 						
 						&:hover {
 							
-							background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+							background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 						}
 					}
 				}
 				
 				.add-to-playlist {
 							
-					background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+					background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 					
 					&:hover {
 						
 						color: rgba(0,0,0,1);
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 					}
 				}
 			}
@@ -2846,7 +2696,7 @@ img {
 			
 			overflow-x: auto;
 			overflow-y: hidden;
-			width: 3965px;
+			width: 2165px;
 			height: 234px;
 			padding-left: 1px;
 			
@@ -2891,7 +2741,7 @@ img {
 			content: "";
 			position: absolute;
 			right: 0;
-			background: url(../img/album-grid/right-tapered-shadow.png) transparent;
+			background: url(../images/album-grid/right-tapered-shadow.png) transparent;
 			width: 10px;
 			height: 449px;
 			top:60px;
@@ -2987,117 +2837,7 @@ img {
 			}
 			
 		}
-		
-		.month-filter {
-			display: none;
-			///width: 490px;
-			height: 24px;
-			margin-top: 10px;
-			position: absolute;
-			right: 0;
-			top:0;
-			overflow: hidden;
-			
-			
-			.fgm_carousel {
-				
-				position: relative;
-				width: 400px;
-				background: #fff;
-				
-				ul {
-					
-								
-					margin:0;
-					padding: 0;
-					position: absolute;
-					left: 10px;
-					top:0;
-					overflow: hidden;
-					height:	24px;
-					width: 1000px;
-					//background: #fff;
-					
-					li {
-					
-						list-style-type: none;
-						display: block;
-						float: left;
-						
-						
-						a {
-							
-							display: block;
-							padding-left: 10px;
-							padding-right: 10px;
 
-							color: rgba(0,0,0,.3);
-							font-size: 14px;
-							line-height: 24px;
-							
-							text-decoration: none;
-							
-							
-							
-
-
-						}
-						
-						&.active a {
-							
-							
-								
-								color: rgba(0,0,0,.9);
-						
-						}
-						
-					}
-					
-				}
-				
-				span {
-					
-					position: absolute;
-					z-index: 100;
-					background: url(../img/news/span_bkg.jpg) repeat;
-					height: 24px;
-					
-					a {
-						
-						text-indent: -9999px;
-						display: block;
-						
-						z-index: 100;
-						
-						
-
-					}
-					
-					&.prev {
-						
-						left: 0;
-						top:0;
-						background: url(../img/news/date-filter-left-arrow.png) no-repeat;
-						width: 8px;
-						height: 24px;
-					}
-					
-					
-					&.next {
-						
-						right: 0;
-						top:0;
-						background: url(../img/news/date-filter-right-arrow.png) no-repeat;
-						width: 8px;
-						height: 24px;
-					}
-					
-
-				}
-				
-
-			}		
-		}
 		
 		#coming-soon-album-grid,#coming-soon-singles-grid {
 		
@@ -3250,7 +2990,7 @@ img {
 				}
 				
 				.add-to-playlist-button {
-					background: url(../img/album-grid/add-to-playlist-button.png);
+					background: url(../images/album-grid/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					bottom:4px;
@@ -3265,8 +3005,8 @@ img {
 					
 					display: none;
 					position: absolute;
-					right: -64px;
-					top:67px;
+					right: -90px;
+					top:90px;
 					font-size: 12px;
 					z-index: 100;
 					
@@ -3283,7 +3023,7 @@ img {
 						
 						display: block;
 						color: #000;
-						padding: 5px;
+						padding: 5px 5px 5px 10px;
 						line-height: 20px;
 						text-decoration: none;
 						
@@ -3297,58 +3037,60 @@ img {
 						
 						background: #fff;
 						border-top: 1px solid rgba(0,0,0,.2);
-						
+						position: relative;
+						width: 120px;
+						height: 37px;
 						
 						
 						p {
 							
-							padding: 5px;
+							position: absolute;
+							left: 10px;
+							top:10px;
 							
 						}
 						
 						.facebook {
-							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							background: url(../images/album-grid/facebook.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 17px;
-							height: 17px;
-							padding-top: 0;
-							padding-bottom: 10px;
-							margin-left: 16px;
+							position: absolute;
+							width: 12px;
+							height: 12px;
+							left: 64px;
+							top:4px;
 							
 							&:hover {
-								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							background: url(../images/album-grid/twitter.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 18px;
-							height: 15px;
-							padding-top: 4px;
-							padding-bottom: 10px;
-							margin-left: 6px;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							left: 85px;
+							top:4px;
 							
 							&:hover {
 								
-								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+								background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 								
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
@@ -3439,7 +3181,7 @@ img {
 				}
 				
 				.add-to-playlist-button {
-					background: url(../img/album-grid/add-to-playlist-button.png);
+					background: url(../images/album-grid/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					bottom:4px;
@@ -3455,7 +3197,7 @@ img {
 					display: none;
 					position: absolute;
 					right: -90px;
-					top:76px;
+					top:95px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
@@ -3486,58 +3228,61 @@ img {
 						
 						background: #fff;
 						border-top: 1px solid rgba(0,0,0,.2);
-						
-						
+						position:relative;
+						width: 120px;
+						height: 32px;
 						
 						p {
 							
-							padding: 5px 5px 5px 10px;
+							
+							position: absolute;
+							left: 10px;
+							top:10px;
 							
 						}
 						
 						.facebook {
-							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							background: url(../images/album-grid/facebook.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 17px;
-							height: 17px;
-							padding-top: 0;
-							padding-bottom: 10px;
-							margin-left: 24px;
+							position: absolute;
+							width: 12px;
+							height: 12px;
+							left: 64px;
+							top:4px;
 							
 							&:hover {
-								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							background: url(../images/album-grid/twitter.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 18px;
-							height: 15px;
-							padding-top: 4px;
-							padding-bottom: 10px;
-							margin-left: 6px;
+							
+							width: 15px;
+							height: 12px;
+							position: absolute;
+							left: 85px;
+							top:4px;
 							
 							&:hover {
 								
-								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+								background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 								
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
@@ -3629,7 +3374,7 @@ img {
 				}
 				
 				.add-to-playlist-button {
-					background: url(../img/album-grid/add-to-playlist-button.png);
+					background: url(../images/album-grid/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					bottom:4px;
@@ -3644,8 +3389,8 @@ img {
 					
 					display: none;
 					position: absolute;
-					right: -64px;
-					top:67px;
+					right: -90px;
+					top:90px;
 					font-size: 12px;
 					z-index: 100;
 					
@@ -3662,7 +3407,7 @@ img {
 						
 						display: block;
 						color: #000;
-						padding: 5px;
+						padding: 5px 5px 5px 10px;
 						line-height: 20px;
 						text-decoration: none;
 						
@@ -3676,58 +3421,62 @@ img {
 						
 						background: #fff;
 						border-top: 1px solid rgba(0,0,0,.2);
-						
+						position: relative;
+						width: 120px;
+						height: 32px;
 						
 						
 						p {
 							
-							padding: 5px;
+							position: absolute;
+							left: 10px;
+							top:10px;
 							
 						}
 						
 						.facebook {
-							background: url(../img/album-grid/facebook.png) no-repeat center center;
+							background: url(../images/album-grid/facebook.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 17px;
-							height: 17px;
-							padding-top: 0;
-							padding-bottom: 10px;
-							margin-left: 16px;
+							
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 64px;
+							top:4px;
 							
 							&:hover {
-								background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
+								background: url(../images/album-grid/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/album-grid/twitter.png) no-repeat center center;
+							background: url(../images/album-grid/twitter.png) no-repeat center center;
 							
 							display: block;
-							float: left;
-							width: 18px;
-							height: 15px;
-							padding-top: 4px;
-							padding-bottom: 10px;
-							margin-left: 6px;
+							
+							width: 15px;
+							height: 12px;
+							position: absolute;
+							left: 85px;
+							top:4px;
 							
 							&:hover {
 								
-								background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
+								background: url(../images/album-grid/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 								
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
@@ -3821,7 +3570,7 @@ img {
 			content: "";
 			position: absolute;
 			right: 0;
-			background: url(../img/whats-happening-tapered-shadow.png) transparent;
+			background: url(../images/whats-happening-tapered-shadow.png) transparent;
 			width: 7px;
 			height: 390px;
 			top:45px;
@@ -3887,7 +3636,7 @@ img {
 			
 			ul {
 				
-				width: 3516px;
+				width: 4400px;
 				overflow-x: auto;
 				//white-space: nowrap;
 				overflow-y: hidden;
@@ -4003,7 +3752,7 @@ img {
 
 
 .site-footer {
-	background: url(../img/footer-bkg.gif) repeat-x;
+	background: url(../images/footer-bkg.gif) repeat-x;
 	bottom:     0;
 	height:     118px;
 	width:      100%;
@@ -4130,7 +3879,7 @@ img {
 
 	h1 {
 
-		background:  url(../img/logo.png) no-repeat;
+		background:  url(../images/logo.png) no-repeat;
 		display:     block;
 		position: absolute;
 		height:      108px;
@@ -4377,7 +4126,7 @@ img {
 
 	
 	
-}
+} /* end .news */
 
 
 
@@ -4462,182 +4211,11 @@ img {
 
 }
 
-.video-detail {
-
-	
-	margin-right: 14px;
-	margin-top: 15px;
-	
-	.video-cover-container {
-			cursor: default;
-			position: relative;
-			
-			width: 272px;
-			border: 1px solid #fff;
-			.box-shadow(0 0 2px rgba(0,0,0,.8));
-			
-			
-			img {
-				display: block;
-				width: 272px;
-				height: 153px;
-			}
-			
-			.add-to-playlist-button {
-				background: url(../img/album-grid/add-to-playlist-button.png);
-				display: block;
-				position: absolute;
-				bottom:4px;
-				right: 4px;
-				width: 26px;
-				height: 25px;
-				opacity: .5;
-				
-			}
-			
-			.wishlist-popover {
-				
-				display: none;
-				position: absolute;
-				right: 4px;
-				top:123px;
-				font-size: 12px;
-				z-index: 100;
-				
-				
-				.box-shadow(0 0 3px rgba(0,0,0,.5));
-				
-				&.active {
-					
-					display: block;
-				}
-				
-				a {
-					background: #fff;
-					
-					display: block;
-					color: #000;
-					padding: 5px;
-					line-height: 20px;
-					text-decoration: none;
-				}
-				
-				.share {
-					
-					background: #fff;
-					border-top: 1px solid rgba(0,0,0,.2);
-					
-					
-					
-					p {
-						
-						padding: 5px;
-						
-					}
-					
-					.facebook {
-						background: url(../img/album-grid/facebook.png) no-repeat center center;
-						
-						display: block;
-						float: left;
-						width: 17px;
-						height: 17px;
-						padding-top: 0;
-						padding-bottom: 10px;
-						margin-left: 16px;
-						
-						&:hover {
-							background: url(../img/album-grid/facebook-hover.png) no-repeat center center;
-							
-						}
-					}
-					
-					.twitter {
-						background: url(../img/album-grid/twitter.png) no-repeat center center;
-						
-						display: block;
-						float: left;
-						width: 18px;
-						height: 15px;
-						padding-top: 4px;
-						padding-bottom: 10px;
-						margin-left: 6px;
-						
-						&:hover {
-							
-							background: url(../img/album-grid/twitter-hover.png) no-repeat center center;
-						}
-					}
-				}
-				
-				.add-to-playlist {
-							
-					background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
-					
-					&:hover {
-						
-						color: rgba(0,0,0,1);
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
-					}
-				}
-			}
-		}
-		
-		.video-title {
-			
-			font-weight: bold;
-			font-size: 13px;
-			line-height: 15px;
-			padding-top: 8px;
-			padding-bottom: 4px;
-			
-			a {
-				
-				text-decoration: none;
-				color: rgba(0,0,0,1);
-				
-				&:hover {
-					
-					text-decoration: underline;
-				}
-				
-			}
-			
-
-		}
-		
-		.artist-name {
-			
-			color: rgba(0,0,0,.5);
-			font-size: 12px;
-			line-height: 15px;
-			
-			a {
-				
-				text-decoration: none;
-				color: rgba(0,0,0,.5);
-				
-				&:hover {
-					
-					text-decoration: underline;
-				}
-				
-			}
-		}
-		
-		
-		
-		
-		&.last {
-			
-			margin-right: 0;
-		}
-}
 
 .wrapper {
 	
 	
-	background: url(../img/content_bkg.gif) repeat;
+	background: url(../images/content_bkg.gif) repeat;
 	
 	
 	@media screen and (min-width:1024px) {
