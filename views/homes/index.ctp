@@ -1,3 +1,22 @@
+ <script>
+       function showhide(flag, id)
+       {	   		
+	   
+         if(flag=="short")
+         {
+            document.getElementById("shortNews"+id).style.display="block";
+            document.getElementById("detailsNews"+id).style.display="none";
+         }
+         
+         if(flag=="detail")
+         {
+            document.getElementById("shortNews"+id).style.display="none";
+            document.getElementById("detailsNews"+id).style.display="block";
+         }
+       }
+        </script>
+
+
 <section class="news">
 							<div class="top-100">
 								<header>
@@ -4804,179 +4823,56 @@
 									<h3>What's Happening</h3>
 									
 									<div class="whats-happening-see-all">
-										<a href="#">View All</a>
+										<!--<a href="#">View All</a>-->
 									</div>
 									
 								</header>
 								
 								
-								
 								<div id="whats-happening-grid" class="horiz-scroll">
 									<ul class="clearfix">
+									<?php $count = 1;
+									foreach($news as $key => $value)
+									{
+										  $newsText = str_replace('<div', '<p', ($value['News']['body']));
+           								  $newsText = str_replace('</div>', '</p>', $newsText);
+									?>
 										<li>
 											<div class="post">
 												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" /></a>
+													<a href="javascript:void(0);"><img src ='<?php echo $cdnPath. 'news_image/' . $value['News']['image_name'];?>' style="width:417px;height:196px;" /></a>
 												</div>
 												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
+													<a href="javascript:void(0);"><?php echo $value['News']['subject'] ?></a>
 												</div>
 												<div class="post-date">
-													US/CA : April 12, 2012
+													<?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
 												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
+												<div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
+													 <?php echo $this->getTextEncode(substr($newsText,0, 325)); ?>		
+													 <div class="more">
+													 <?php  if(strlen($newsText) > strpos($newsText, "</p>")+4)
+													  {
+														?>
+														<a href="javascript:void(0);" onClick="showhide('detail', '<?php echo $value['News']['id']; ?>')")">More ></a>
+														<?php
+													  } ?>		</div>									
 												</div>
 												
-												<div class="more">
-													<a href="#">More ></a>
+												<div id="detailsNews<?php echo $value['News']['id']; ?>" style="display:none" class="post-excerpt">
+												<?php echo $newsText; ?>
+								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a>
 												</div>
+												
 											</div>
 										</li>
-										<li>
-											<div class="post">
-												
-												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/countrygirls417x196.jpg" alt="countrygirls417x196" width="417" height="196" /></a>
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More ></a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="post">
-												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" /></a>
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More ></a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="post">
-												
-												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" /></a>
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More ></a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="post">
-												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" /></a>
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More >
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="post">
-												
-												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" /></a>
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More ></a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="post">
-												<div class="post-header-image">
-													<a href="#"><img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" /></a>
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More ></a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="post">
-												
-												<div class="post-header-image">
-													<img src="img/news/whats-happening/onedirection417x196.jpg" alt="onedirection417x196" width="417" height="196" />
-												</div>
-												<div class="post-title">
-													<a href="#">UP ALL NIGHT: THE LIVE TOUR DVD TO BE RELEASED MAY 29, 2012</a>
-												</div>
-												<div class="post-date">
-													US/CA : April 12, 2012
-												</div>
-												<div class="post-excerpt">
-													One Direction have done it again; their December 3 show at Madison Square Garden sold out in under 10 minutes. With their entire May/June 2012 tour also selling out in minutes, One Direction are giving their fans a chance to see the group live once again in the...
-												</div>
-												
-												<div class="more">
-													<a href="#">More ></a>
-												</div>
-											</div>
-										</li>
+										
+										<?php
+												if($count==10) break;
+												$count++;
+										}
+									?>
+										
 									</ul>
 									
 									
