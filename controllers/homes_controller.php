@@ -55,7 +55,7 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-/*
+
                 // National Top Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
                     
@@ -154,12 +154,12 @@ STR;
 		$nationalTopDownload = Cache::read("national".$territory);
                 
                 
-               // print_r($nationalTopDownload);
+               print_r($nationalTopDownload);
 
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                 
-           */     
+               
                 
                 
                 
