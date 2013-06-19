@@ -122,8 +122,7 @@ class HomesController extends AppController
                             File.CdnPath,
                             File.SourceURL,
                             File.SaveAsName,
-                            Sample_Files.FileID,                           
-                            Full_Files.FileID,
+                            Sample_Files.FileID,
                             PRODUCT.pid
                     FROM
                             Songs AS Song
@@ -157,7 +156,7 @@ STR;
 		$nationalTopDownload = Cache::read("national".$territory);
                 
                 
-               print_r($nationalTopDownload);
+              // print_r($nationalTopDownload);
 
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
