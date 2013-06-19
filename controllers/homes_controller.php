@@ -99,7 +99,7 @@ class HomesController extends AppController
 		  $data = array();
 
                   $countryPrefix = $this->Session->read('multiple_countries');
-                  $sql_national_100 =<<<STR
+                echo  $sql_national_100 =<<<STR
                     SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
