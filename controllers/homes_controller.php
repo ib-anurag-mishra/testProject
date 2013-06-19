@@ -119,6 +119,9 @@ class HomesController extends AppController
                             Sample_Files.SaveAsName,
                             Full_Files.CdnPath,
                             Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
                             Sample_Files.FileID,
                             Full_Files.FileID,
                             PRODUCT.pid
@@ -133,7 +136,7 @@ class HomesController extends AppController
                                     LEFT JOIN
                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
                                     LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) and Song.ReferenceID=Album.ProdID and Album.FileID = File.FileID
                     WHERE
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                     GROUP BY Song.ProdID
@@ -154,7 +157,7 @@ STR;
 		$nationalTopDownload = Cache::read("national".$territory);
                 
                 
-              // print_r($nationalTopDownload);
+               print_r($nationalTopDownload);
 
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
