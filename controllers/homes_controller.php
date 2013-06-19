@@ -99,7 +99,7 @@ class HomesController extends AppController
 		  $data = array();
 
                   $countryPrefix = $this->Session->read('multiple_countries');
-                echo  $sql_national_100 =<<<STR
+                  $sql_national_100 =<<<STR
                     SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
@@ -122,7 +122,7 @@ class HomesController extends AppController
                             File.CdnPath,
                             File.SourceURL,
                             File.SaveAsName,
-                            Sample_Files.FileID,
+                            Sample_Files.FileID,                           
                             Full_Files.FileID,
                             PRODUCT.pid
                     FROM
