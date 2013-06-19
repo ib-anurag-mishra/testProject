@@ -154,7 +154,7 @@ STR;
 		$nationalTopDownload = Cache::read("national".$territory);
                 
                 
-               print_r($nationalTopDownload);
+              // print_r($nationalTopDownload);
 
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
