@@ -37,7 +37,7 @@
 											if($j==5){
 												break;
 											}
-											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['Files']['CdnPath']."/".$nationalTopDownload[$i]['Files']['SourceURL']);
+											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
                                                                                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 										?>
 											<li>
@@ -46,7 +46,7 @@
 														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>" alt="bradpaisley250x250" width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
-												echo $slNo.". ";
+												echo $slNo;
 											?></div>
 														<a href="#" class="preview"></a>
 														<a class="top-100-download-now-button" href="#">Download Now</a>
