@@ -55,7 +55,7 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-
+/*
                 // National Top Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
                     
@@ -155,45 +155,11 @@ STR;
                 
                 
                // print_r($nationalTopDownload);
-                
-/*		$this->Download->recursive = -1;
-		foreach($nationalTopDownload as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$nationalTopDownload[$key]['Song']['status'] = 'avail';
-			} else{
-				$nationalTopDownload[$key]['Song']['status'] = 'not';
-			}
-		}*/
+
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+           */     
                 
                 
                 
@@ -277,22 +243,6 @@ STR;
                 
                 
    
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 
                 

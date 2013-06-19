@@ -117,7 +117,7 @@
 	padding: 0;
 	bottom: 0;
 	left: 0;
-	background: url(<? echo $this->webroot; ?>app/webroot/js/mediaelement/background.png);
+	background: url(background.png);
 	background: rgba(0, 0, 0, 0.7);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.7)), to(rgba(0,0,0,0.7)));
 	background: -webkit-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); 

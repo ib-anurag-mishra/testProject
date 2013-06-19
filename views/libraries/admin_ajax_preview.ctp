@@ -389,7 +389,7 @@ ul.marquee li {
 	float:left;
 	text-align:center;
 	width:144px;
-/*	background:url(../images/tab-gray.png) top left no-repeat;*/
+/*	background:url(../img/tab-gray.png) top left no-repeat;*/
 	text-decoration:none;
 	color:<?php echo $library_navlinks_color; ?>;
 }
@@ -417,7 +417,7 @@ ul.marquee li {
 }
 
 #nav li:hover a, #nav li.hover a, #nav li.active a{ 
-/*	background:url(../images/tab-white.png) top left no-repeat; */
+/*	background:url(../img/tab-white.png) top left no-repeat; */
 	color:<?php echo $library_navlinks_hover_color; ?>;
 	text-decoration: underline;
 }

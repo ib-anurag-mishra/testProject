@@ -25,6 +25,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 	}
 }
 ?>
+
     <div class="wrapper">
 			<!-- site header -->
 			<header class="site-header">                            

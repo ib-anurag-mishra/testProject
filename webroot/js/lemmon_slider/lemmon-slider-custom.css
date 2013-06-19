@@ -50,14 +50,14 @@
 
 .prev-slide {
 	
-	background: url(../../images/news/date-filter-left-arrow.png) no-repeat center center;
+	background: url(../../img/news/date-filter-left-arrow.png) no-repeat center center;
 	float: left;
 	margin-left: 0;
 	padding: 6px 5px 5px 5px;
 }
 
 .next-slide {
-	background: url(../../images/news/date-filter-right-arrow.png) no-repeat center center;
+	background: url(../../img/news/date-filter-right-arrow.png) no-repeat center center;
 
 	float: right;
 	/* margin-right: 14px; */
