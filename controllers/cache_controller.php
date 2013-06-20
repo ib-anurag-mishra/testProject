@@ -134,48 +134,49 @@ class CacheController extends AppController {
       }
 		  $data = array();
 		  
-	 $sql_national_100 =<<<STR
-	SELECT 
-		Song.ProdID,
-		Song.ReferenceID,
-		Song.Title,
-		Song.ArtistText,
-		Song.DownloadStatus,
-		Song.SongTitle,
-		Song.Artist,
-		Song.Advisory,
-		Song.Sample_Duration,
-		Song.FullLength_Duration,
-		Song.provider_type,
-		Genre.Genre,
-		Country.Territory,
-		Country.SalesDate,
-		Sample_Files.CdnPath,
-		Sample_Files.SaveAsName,
-		Full_Files.CdnPath,
-		Full_Files.SaveAsName,
-		Sample_Files.FileID,
-		Full_Files.FileID,
-		PRODUCT.pid
-	FROM
-		Songs AS Song
-			LEFT JOIN
-		File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-			LEFT JOIN
-		File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-			LEFT JOIN
-		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
-			LEFT JOIN
-         {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
-			LEFT JOIN
-		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
-	WHERE
-		( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
-	GROUP BY Song.ProdID
-	ORDER BY FIELD(Song.ProdID,
-			$ids) ASC
-	LIMIT 100 
-	  
+	  $sql_national_100 =<<<STR
+                    SELECT 
+                            Song.ProdID,
+                            Song.ReferenceID,
+                            Song.Title,
+                            Song.ArtistText,
+                            Song.DownloadStatus,
+                            Song.SongTitle,
+                            Song.Artist,
+                            Song.Advisory,
+                            Song.Sample_Duration,
+                            Song.FullLength_Duration,
+                            Song.provider_type,
+                            Genre.Genre,
+                            Country.Territory,
+                            Country.SalesDate,
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            PRODUCT.pid
+                    FROM
+                            Songs AS Song
+                                    LEFT JOIN
+                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                    LEFT JOIN
+                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                    LEFT JOIN
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                    LEFT JOIN
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                    LEFT JOIN
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    WHERE
+                            ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                    GROUP BY Song.ProdID
+                    ORDER BY FIELD(Song.ProdID,$ids) ASC
+                    LIMIT 100 
+   
 STR;
 		$data = $this->Album->query($sql_national_100);
 		$this->log( $sql_national_100, "cachequery");
@@ -200,8 +201,7 @@ STR;
 		}
 		$this->log("cache written for national top ten for $territory",'debug');
 		
-        */
-            
+     
       // Added caching functionality for featured videos
           $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID WHERE `FeaturedVideo`.`territory` = '".$territory."'";
           $featuredVideos = $this->Album->query($featured_videos_sql);
@@ -438,9 +438,7 @@ STR;
         $this->log("cache written for coming soon videos for $territory",'debug');
         // End Caching functionality for coming soon songs
 
-
-/*
-			// Checking for download status
+     	// Checking for download status
 			$featured = array();
 			$ids = '';
             $ids_provider_type = '';
