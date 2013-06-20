@@ -139,14 +139,15 @@ class HomesController extends AppController
                     WHERE
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                     GROUP BY Song.ProdID
-                    ORDER BY FIELD(Song.ProdID,
-                                    $ids) ASC
+                    ORDER BY FIELD(Song.ProdID,$ids) ASC
                     LIMIT 100 
 	  
 STR;
 
 
 			$nationalTopDownload = $this->Album->query($sql_national_100);
+                        
+                        // print_r($nationalTopDownload);
 			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
