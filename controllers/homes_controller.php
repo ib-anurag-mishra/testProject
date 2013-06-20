@@ -454,13 +454,13 @@ STR;
                 //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
                 
                 $territory = $this->Session->read('territory');
-                //if (1)  
+              // if (1)  
                 if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                             //   $countryPrefix = "ca_";
-                               // $territory = "CA";
+                            //    $countryPrefix = "ca_";
+                              //  $territory = "CA";
                 
                 
                 $sql_coming_soon =<<<STR
@@ -907,6 +907,7 @@ STR;
 	  
 STR;
 
+                echo $sql_national_100; die;
 
 			$nationalTopDownload = $this->Album->query($sql_national_100);
 			// Checking for download status
