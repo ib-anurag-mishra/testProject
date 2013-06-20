@@ -188,11 +188,26 @@
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
 										<ul>
+
+                                                                    <?php if(count($nationalTopVideoDownload) > 0){ ?>
+										<?php
+											$j = 0;
+											$k = 2000;
+											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
+	
+											$albumArtwork = shell_exec('perl files/tokengen "' . $nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL'].'"');
+                                                                                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+
+ /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
+										?>
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="#"><img src="img/news/top-100/grid/jlo423x250.jpg" alt="jlo423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
+														<a href="#"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking"><?php
+												$slNo = ($i + 1);
+												echo $slNo;
+											?></div>
 														<a href="#" class="preview"></a>
 														<a class="top-100-download-now-button" href="#">Download Now</a>
 														
@@ -229,6 +244,14 @@
 															
 														</div>
 													</div>
+
+                                                                                                <?php											
+                                                                                                    if (strlen($nationalTopVideoDownload[$i]['Video']['VideoTitle']) >= 35 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                    } else {
+                                                                                                            $songTitle = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['VideoTitle']);
+                                                                                                    }
+                                                                                                ?>
 													<div class="song-title">
 														<a href="#">Planet Pit</a>
 													</div>
@@ -237,237 +260,11 @@
 													</div>
 												</div>
 											</li>
-											<li>
-												<div class="top-100-video-detail">
-													<div class="video-cover-container">
-														<a href="#"><img src="img/news/top-100/grid/ladyinred423x250.jpg" alt="ladyinred423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
-														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
-														<a class="add-to-playlist-button" href="#"></a>
-														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-													</div>
-													<div class="song-title">
-														<a href="#">Planet Pit</a>
-													</div>
-													<div class="artist-name">
-														<a href="#">Pitbull</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="top-100-video-detail">
-													<div class="video-cover-container">
-														<a href="#"><img src="img/news/top-100/grid/gangstasquad423x250.jpg" alt="gangstasquad423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
-														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
-														<a class="add-to-playlist-button" href="#"></a>
-														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-													</div>
-													<div class="song-title">
-														<a href="#">Planet Pit</a>
-													</div>
-													<div class="artist-name">
-														<a href="#">Pitbull</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="top-100-video-detail">
-													<div class="video-cover-container">
-														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/top-100/grid/jlo423x250.jpg" alt="jlo423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
-														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
-														<a class="add-to-playlist-button" href="#"></a>
-														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-													</div>
-													<div class="song-title">
-														<a href="#">Planet Pit</a>
-													</div>
-													<div class="artist-name">
-														<a href="#">Pitbull</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="top-100-video-detail">
-													<div class="video-cover-container">
-														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/top-100/grid/ladyinred423x250.jpg" alt="lady423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
-														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
-														<a class="add-to-playlist-button" href="#"></a>
-														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-													</div>
-													<div class="song-title">
-														<a href="#">Planet Pit</a>
-													</div>
-													<div class="artist-name">
-														<a href="#">Pitbull</a>
-													</div>
-												</div>
-											</li>
-											<li>
-												<div class="top-100-video-detail">
-													<div class="video-cover-container">
-														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/top-100/grid/gangstasquad423x250.jpg" alt="gangstasquad423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
-														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
-														<a class="add-to-playlist-button" href="#"></a>
-														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-													</div>
-													<div class="song-title">
-														<a href="#">Planet Pit</a>
-													</div>
-													<div class="artist-name">
-														<a href="#">Pitbull</a>
-													</div>
-												</div>
-											</li>
-											
+											<?php 
+											$k++;
+											}
+                                                                                    }
+                                                                                     ?>	
 										</ul>
 									</div>
 								</div> <!-- end .grids -->

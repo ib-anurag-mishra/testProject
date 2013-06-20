@@ -55,11 +55,10 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-echo 147;
+
         // National Top Songs Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {
-              
-            echo 147;
+        if (($national = Cache::read("national".$territory)) === false) {              
+       
             $country = $territory;
 
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -67,7 +66,7 @@ echo 147;
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
             if($maintainLatestDownload){
-                  echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `latest_downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -76,7 +75,7 @@ echo 147;
                     ORDER BY `countProduct` DESC 
                     LIMIT 110";
                 } else {
-                    echo $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -163,13 +162,17 @@ STR;
                 
                 //print_r($nationalTopDownload);
                
-        /*        
+               
              
          // National Top Vidoes Downloads functionality code start
-        if (($national = Cache::read("nationalvideos".$territory)) === false) {
+       // if (($national = Cache::read("nationalvideos".$territory)) === false) {
                     
                 $country = $territory;
-                                
+                
+                $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                $siteConfigData = $this->Album->query($siteConfigSQL);
+                $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+                 $maintainLatestVideoDownload = 0;           
                if(!empty($country)){                   
             
                    if($maintainLatestVideoDownload){
@@ -184,7 +187,7 @@ STR;
                     LIMIT 110";
                 } else {
 
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                      $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `vdownloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -207,7 +210,7 @@ STR;
                     }
                 }
 
-                $data = array();
+                $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
                  $sql_national_100_v =<<<STR
                 SELECT 
@@ -228,6 +231,9 @@ STR;
                                 Full_Files.CdnPath,
                                 Full_Files.SaveAsName,
                                 Full_Files.FileID,
+                                Image_Files.FileID,
+                                Image_Files.CdnPath,
+                                Image_Files.SourceURL,
                                 PRODUCT.pid
                 FROM
                                 video AS Video
@@ -238,7 +244,9 @@ STR;
                                                 LEFT JOIN
          {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
                                                 LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) 
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                LEFT JOIN
+                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
                                 ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                 GROUP BY Video.ProdID
@@ -246,23 +254,24 @@ STR;
                 LIMIT 100 
                   
 STR;
-                    $data = $this->Album->query($sql_national_100_v);
+                    $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
                                 
-                   Cache::write("nationalvideos".$country, Cache::read("nationalvideos".$country) );       
+                   Cache::write("nationalvideos".$country, $nationalTopVideoDownload );       
                 
                 
                }
                
-        }
+       // }
         
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);
         //print_r($nationalTopVideoDownload);
-        $this->set('nationalvideos',$nationalTopVideoDownload);
+
+        $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
 		
         // National Top Vidoes Downloads functionality code end     
                 
-       */
+   
                 
                 
                 
