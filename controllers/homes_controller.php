@@ -907,7 +907,7 @@ STR;
 	  
 STR;
 
-                echo $sql_national_100; die;
+                echo $sql_national_100; die; 
 
 			$nationalTopDownload = $this->Album->query($sql_national_100);
 			// Checking for download status
