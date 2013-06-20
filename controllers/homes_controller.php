@@ -66,7 +66,7 @@ class HomesController extends AppController
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
             if($maintainLatestDownload){
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                  echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `latest_downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -75,7 +75,7 @@ class HomesController extends AppController
                     ORDER BY `countProduct` DESC 
                     LIMIT 110";
                 } else {
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                   echo $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -88,6 +88,7 @@ class HomesController extends AppController
 		  $ids = '';
                   $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
+                  print_r($natTopDownloaded);
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
@@ -156,7 +157,7 @@ STR;
              
 
 		$nationalTopDownload = Cache::read("national".$territory);
-                print_r($nationalTopDownload);
+               // print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                 //print_r($nationalTopDownload);
