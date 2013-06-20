@@ -262,7 +262,7 @@
 								<div id="coming-soon-singles-grid" class="horiz-scroll">
 									<ul class="clearfix">
 
-                                                                            <?php 
+                                                                            <?php  
 
                                                                             $total_songs = count($coming_soon_rs);
                                                                             $sr_no = 0;
