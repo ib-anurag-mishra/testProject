@@ -201,8 +201,7 @@ STR;
 		}
 		$this->log("cache written for national top ten for $territory",'debug');
 		
-        */
-            
+     
       // Added caching functionality for featured videos
           $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID WHERE `FeaturedVideo`.`territory` = '".$territory."'";
           $featuredVideos = $this->Album->query($featured_videos_sql);
@@ -439,9 +438,7 @@ STR;
         $this->log("cache written for coming soon videos for $territory",'debug');
         // End Caching functionality for coming soon songs
 
-
-/*
-			// Checking for download status
+     	// Checking for download status
 			$featured = array();
 			$ids = '';
             $ids_provider_type = '';
