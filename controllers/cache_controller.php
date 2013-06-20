@@ -38,6 +38,7 @@ class CacheController extends AppController {
     $territoryNames = array('US','CA','AU','NZ','IT');
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestVideoDownload = false;
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
@@ -198,6 +199,247 @@ STR;
 		  }
 		}
 		$this->log("cache written for national top ten for $territory",'debug');
+		
+        */
+            
+      // Added caching functionality for featured videos
+          $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID WHERE `FeaturedVideo`.`territory` = '".$territory."'";
+          $featuredVideos = $this->Album->query($featured_videos_sql);
+          if(!empty($featuredVideos)){
+              Cache::write("featured_videos".$territory, $featuredVideos);
+          }
+          
+          
+      // End Caching functionality for featured videos
+            
+      // Added caching functionality for national top 10 videos   
+        
+        $country = $territory;
+		
+        if(!empty($country)){
+		  if($maintainLatestVideoDownload){
+
+		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `latest_vdownloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '".$country."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+         } else {
+             
+         	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+              FROM `vdownloads` AS `Download` 
+              LEFT JOIN libraries ON libraries.id=Download.library_id
+              WHERE libraries.library_territory = '".$country."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+              GROUP BY Download.ProdID 
+              ORDER BY `countProduct` DESC 
+              LIMIT 110";
+         }
+         
+      $ids = '';
+      $ids_provider_type = '';
+		  $natTopDownloaded = $this->Album->query($sql);
+          // echo $sql;
+          // print_r($natTopDownloaded); die;
+		  foreach($natTopDownloaded as $natTopSong){
+			if(empty($ids)){
+			  $ids .= $natTopSong['Download']['ProdID'];
+			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			} else {
+			  $ids .= ','.$natTopSong['Download']['ProdID'];
+			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			}
+		  }
+      
+      if( (count($natTopDownloaded) < 1) || ($natTopDownloaded === false) ) 
+      {
+        $this->log( "download data not recevied for ".$territory, "cache");
+        echo "download data not recevied for ".$territory;
+      }
+            
+            
+            $data = array();
+		  
+	 $sql_national_100_v =<<<STR
+	SELECT 
+		Video.ProdID,
+		Video.ReferenceID,
+		Video.Title,
+		Video.ArtistText,
+		Video.DownloadStatus,
+		Video.VideoTitle,
+		Video.Artist,
+		Video.Advisory,
+		Video.Sample_Duration,
+		Video.FullLength_Duration,
+		Video.provider_type,
+		Genre.Genre,
+		Country.Territory,
+		Country.SalesDate,
+		Full_Files.CdnPath,
+		Full_Files.SaveAsName,
+		Full_Files.FileID,
+		PRODUCT.pid
+	FROM
+		video AS Video
+			LEFT JOIN
+		File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+			LEFT JOIN
+		Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+			LEFT JOIN
+         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Video.ProdID) 
+	WHERE
+		( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+	GROUP BY Video.ProdID
+	ORDER BY FIELD(Video.ProdID,
+			$ids) ASC
+	LIMIT 100 
+	  
+STR;
+         // echo $sql_national_100_v; die;
+		$data = $this->Album->query($sql_national_100_v);
+		$this->log( $sql_national_100_v, "cachequery");
+      if($ids_provider_type == "")
+      {
+        $this->log( "ids_provider_type is set blank for ".$territory, "cache");
+        echo "ids_provider_type is set blank for ".$territory;
+      }
+			  
+		  if(!empty($data)){
+      Cache::delete("nationalvideos".$country);
+			Cache::write("nationalvideos".$country, $data);
+      $this->log("cache written for national top ten  videos for $territory", "cache");
+      echo "cache written for national top ten  videos for $territory";
+		  } else {
+      
+      Cache::write("nationalvideos".$country, Cache::read("nationalvideos".$country) ); 
+			echo "Unable to update key";
+      $this->log("Unable to update national 100  videos for ".$territory, "cache");
+      echo "Unable to update national 100 videos for ".$territory;
+		  }
+		}
+		$this->log("cache written for national top ten  videos for $territory",'debug');
+        // End Caching functionality for national top 10 videos
+        
+        
+        // Added caching functionality for coming soon songs
+        $sql_coming_soon_s =<<<STR
+SELECT 
+            Song.ProdID,
+            Song.ReferenceID,
+            Song.Title,
+            Song.ArtistText,
+            Song.DownloadStatus,
+            Song.SongTitle,
+            Song.Artist,
+            Song.Advisory,
+            Song.Sample_Duration,
+            Song.FullLength_Duration,
+            Song.provider_type,
+            Genre.Genre,
+            Country.Territory,
+            Country.SalesDate,
+            Sample_Files.CdnPath,
+            Sample_Files.SaveAsName,
+            Full_Files.CdnPath,
+            Full_Files.SaveAsName,
+            File.CdnPath,
+            File.SourceURL,
+            File.SaveAsName,
+            Sample_Files.FileID,
+            PRODUCT.pid
+    FROM
+            Songs AS Song
+                    LEFT JOIN
+            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                    LEFT JOIN
+            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                    LEFT JOIN
+            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                    LEFT JOIN
+            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                    LEFT JOIN
+            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+    WHERE
+            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+    GROUP BY Song.ProdID
+    ORDER BY Country.SalesDate ASC
+    LIMIT 20            
+STR;
+
+//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
+        // echo $sql_coming_soon_s; die;
+        $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
+
+        if(!empty($coming_soon_rs)){
+          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+        }
+        
+        $this->log("cache written for coming soon for $territory",'debug');
+        // End Caching functionality for coming soon songs
+        
+        
+        // Added caching functionality for coming soon videos
+        $sql_coming_soon_v =<<<STR
+	SELECT 
+		Video.ProdID,
+		Video.ReferenceID,
+		Video.Title,
+		Video.ArtistText,
+		Video.DownloadStatus,
+		Video.VideoTitle,
+		Video.Artist,
+		Video.Advisory,
+		Video.Sample_Duration,
+		Video.FullLength_Duration,
+		Video.provider_type,
+        Genre.Genre,
+		Country.Territory,
+		Country.SalesDate,
+        Sample_Files.CdnPath,
+        Sample_Files.SaveAsName,
+        Full_Files.CdnPath,
+        Full_Files.SaveAsName,
+        Sample_Files.FileID,
+        Full_Files.SourceURL,
+        Full_Files.FileID,
+		PRODUCT.pid
+	FROM
+		video AS Video
+			LEFT JOIN
+        File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+            LEFT JOIN
+        File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+            LEFT JOIN
+        Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+            LEFT JOIN
+		{$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Video.ProdID) 
+	WHERE
+		( (Video.DownloadStatus = '1')  AND  (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+	GROUP BY Video.ProdID
+	ORDER BY Country.SalesDate ASC
+	LIMIT 12	  
+STR;
+//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
+
+        $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
+
+        if(!empty($coming_soon_rv)){
+          Cache::write("coming_soon_videos.".$territory, $coming_soon_rv);
+        }
+        
+        $this->log("cache written for coming soon videos for $territory",'debug');
+        // End Caching functionality for coming soon songs
+
+
+/*
 			// Checking for download status
 			$featured = array();
 			$ids = '';
