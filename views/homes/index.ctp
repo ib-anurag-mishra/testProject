@@ -191,12 +191,62 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="#"><img src="img/news/top-100/grid/calvinharris423x250.jpg" alt="calvinharris423x250" width="423" height="250" /></a>
+														<a href="#"><img src="img/news/top-100/grid/jlo423x250.jpg" alt="jlo423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking">12</div>
+														<a href="#" class="preview"></a>
+														<a class="top-100-download-now-button" href="#">Download Now</a>
+														
+														<a class="add-to-playlist-button" href="#"></a>
+														
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+													</div>
+													<div class="song-title">
+														<a href="#">Planet Pit</a>
+													</div>
+													<div class="artist-name">
+														<a href="#">Pitbull</a>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="top-100-video-detail">
+													<div class="video-cover-container">
+														<a href="#"><img src="img/news/top-100/grid/ladyinred423x250.jpg" alt="ladyinred423x250" width="423" height="250" /></a>
 														<div class="top-100-ranking">12</div>
 														<a href="#" class="preview"></a>
 														<a class="top-100-download-now-button" href="#">Download Now</a>
 														<a class="add-to-playlist-button" href="#"></a>
 														<div class="wishlist-popover">
+															<!--
 															<div class="playlist-options">
 																<ul>
 																	<li><a href="#">Create New Playlist</a></li>
@@ -214,6 +264,191 @@
 															</div>
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+													</div>
+													<div class="song-title">
+														<a href="#">Planet Pit</a>
+													</div>
+													<div class="artist-name">
+														<a href="#">Pitbull</a>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="top-100-video-detail">
+													<div class="video-cover-container">
+														<a href="#"><img src="img/news/top-100/grid/gangstasquad423x250.jpg" alt="gangstasquad423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking">12</div>
+														<a href="#" class="preview"></a>
+														<a class="top-100-download-now-button" href="#">Download Now</a>
+														<a class="add-to-playlist-button" href="#"></a>
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+													</div>
+													<div class="song-title">
+														<a href="#">Planet Pit</a>
+													</div>
+													<div class="artist-name">
+														<a href="#">Pitbull</a>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="top-100-video-detail">
+													<div class="video-cover-container">
+														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/top-100/grid/jlo423x250.jpg" alt="jlo423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking">12</div>
+														<a href="#" class="preview"></a>
+														<a class="top-100-download-now-button" href="#">Download Now</a>
+														<a class="add-to-playlist-button" href="#"></a>
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+													</div>
+													<div class="song-title">
+														<a href="#">Planet Pit</a>
+													</div>
+													<div class="artist-name">
+														<a href="#">Pitbull</a>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="top-100-video-detail">
+													<div class="video-cover-container">
+														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/top-100/grid/ladyinred423x250.jpg" alt="lady423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking">12</div>
+														<a href="#" class="preview"></a>
+														<a class="top-100-download-now-button" href="#">Download Now</a>
+														<a class="add-to-playlist-button" href="#"></a>
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+													</div>
+													<div class="song-title">
+														<a href="#">Planet Pit</a>
+													</div>
+													<div class="artist-name">
+														<a href="#">Pitbull</a>
+													</div>
+												</div>
+											</li>
+											<li>
+												<div class="top-100-video-detail">
+													<div class="video-cover-container">
+														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/top-100/grid/gangstasquad423x250.jpg" alt="gangstasquad423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking">12</div>
+														<a href="#" class="preview"></a>
+														<a class="top-100-download-now-button" href="#">Download Now</a>
+														<a class="add-to-playlist-button" href="#"></a>
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
 															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 															
 															<div class="share clearfix">
@@ -408,7 +643,7 @@
 										<li>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/calvinharris275x162.jpg" alt="calvinharris275x162" width="162" height="162" /></a>
+													<a href="#"><img src="img/news/coming_soon/videos/rockband275x162.jpg" alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>
@@ -431,7 +666,7 @@
 											</div>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/aerosmith275x162.jpg" alt="aerosmith275x162" width="162" height="162" /></a>
+													<a href="#"><img src="img/news/coming_soon/videos/sarabareilles275x162.jpg" alt="sarabareilles275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>
@@ -453,247 +688,10 @@
 												</div>
 											</div>
 										</li>
-										<li>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/pink275x162.jpg" alt="pink275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/pink275x162.jpg" alt="pink275x162"  width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										<li>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles<a href="#">
-												</div>
-											</div>
-										<li>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162"  width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
+										
 									</ul>
 								</div><!-- end videos grid -->
-								
+																
 							</div> <!-- end coming soon -->
 							
 							<div class="whats-happening">

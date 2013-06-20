@@ -5,7 +5,6 @@ $('#top-100-albums-grid .lazy').lazyload({
 });
 
 $('#top-100-songs-grid .lazy').lazyload({
-   
 	
 	effect:'fadeIn',
 	container:$('#top-100-songs-grid'),
@@ -87,6 +86,19 @@ $('#whats-happening-grid .lazy').lazyload({
 	container:$('#whats-happening-grid')
 });
 
+
+$('.more-videos-scrollable .video-thumb-container .lazy').lazyload({
+	effect:'fadeIn',
+	container:$('.more-videos-scrollable')
+	
+});
+
+
+
+
+
+
+
 $(function() {
 
 
@@ -157,6 +169,12 @@ $(function() {
 	var wishlist_popover = $('.wishlist-popover');
 	
 	var library_list_scrollable = $('.library-list-scrollable');
+	
+	var faq_container = $('.faq-container li a');
+	
+	var most_popular_nav = $('.site-nav li:nth-child(3) a');
+	var most_popular_sub_nav = $('.most-popular-sub-nav');
+	var nav_regular = $('.site-nav .regular');
 	
 	
 	
@@ -727,7 +745,33 @@ $(function() {
 
 		$(this).find('.add-to-playlist-button').css({opacity:0});
 		$(this).find('.top-100-download-now-button').css({opacity:0});
+		
 	
+	});
+	
+	$('.hero-image-container').on('mouseenter',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.download-now-button').css({opacity:1});
+		
+	});
+	
+	$('.hero-image-container').on('mouseleave',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.download-now-button').css({opacity:0});
+		
+	});
+	
+	
+	$('.more-videos-scrollable .video-thumb-container').on('mouseenter',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:1});
+		$(this).find('.download-now-button').css({opacity:1});
+		
+	});
+	
+	$('.more-videos-scrollable .video-thumb-container').on('mouseleave',function(){
+		$(this).find('.add-to-playlist-button').css({opacity:0});
+		$(this).find('.download-now-button').css({opacity:0});
+		
 	});
 	
 	
@@ -771,6 +815,7 @@ $(function() {
 	    var container3 = music_search_results;
 	    var container4 = whats_happening_filter_results;
 	    var container5 = playlist_list;
+	    var container6 = most_popular_sub_nav;
 	
 	    if (container.has(e.target).length === 0)
 	    {
@@ -795,6 +840,11 @@ $(function() {
 	    if (container5.has(e.target).length === 0)
 	    {
 	        container5.removeClass('active');
+	    }
+	    
+	    if (container6.has(e.target).length === 0)
+	    {
+	        container6.removeClass('active');
 	    }
 	    
 	    
@@ -824,7 +874,41 @@ $(function() {
     }
     
 
-
+	/* FAQ page */
+	
+	faq_container.on('click',function(e){
+		e.preventDefault();
+		if($(this).siblings('p').hasClass('active')) {
+		
+			$(this).siblings('p').slideUp(500).removeClass('active');
+		} else {
+			
+			$(this).siblings('p').slideDown(500).addClass('active');
+			
+		}
+		
+	});
+	
+	/* for most popular sub nav */
+	most_popular_nav.on('mouseenter',function(e){
+		e.preventDefault();
+		
+		most_popular_sub_nav.addClass('active');
+		
+	});
+	
+	most_popular_sub_nav.on('mouseleave',function(e){
+		
+		most_popular_sub_nav.removeClass('active');
+	});
+	
+	
+	nav_regular.on('mouseenter',function(e){
+		most_popular_sub_nav.removeClass('active');
+	});
+	
+	
+	
 
 	
 	 
