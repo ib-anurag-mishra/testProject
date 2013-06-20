@@ -55,10 +55,11 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-
+echo 147;
         // National Top Songs Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
-                    
+              
+            echo 147;
             $country = $territory;
 
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
