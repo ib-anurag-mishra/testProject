@@ -453,14 +453,14 @@ STR;
                 $territory = $this->Session->read('territory');
                 //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
                 
-                //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
-                if (1)  
+                if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+                //if (1)  
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');
                                 $territory = $this->Session->read('territory');
-                                $countryPrefix = "ca_";
-                                $territory = "CA";
+                             //   $countryPrefix = "ca_";
+                               // $territory = "CA";
                 
                 
                 $sql_coming_soon =<<<STR
