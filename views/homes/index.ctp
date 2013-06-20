@@ -269,7 +269,7 @@
 
                                                                             foreach($coming_soon_rs as $key => $value)
                                                                             {     
-                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['Full_Files']['CdnPath']."/".$value['Full_Files']['SourceURL']);
+                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                                                             $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                                                                             
 
