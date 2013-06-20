@@ -444,6 +444,102 @@ STR;
 		/*
 				Code OF NEWS Section --- END
 		*/
+                
+                
+                 /*
+                 *              Code For Coming Soon --- START
+                 */
+                
+                $territory = $this->Session->read('territory');
+                //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
+                
+                //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+                if (1) 
+                {               
+                                $this->Song->recursive = 2;
+                                $countryPrefix = $this->Session->read('multiple_countries');
+                                $territory = $this->Session->read('territory');
+                                $countryPrefix = "ca_";
+                                $territory = "CA";
+                
+                
+                $sql_coming_soon =<<<STR
+	SELECT 
+		Song.ProdID,
+		Song.ReferenceID,
+		Song.Title,
+		Song.ArtistText,
+		Song.DownloadStatus,
+		Song.SongTitle,
+		Song.Artist,
+		Song.Advisory,
+		Song.Sample_Duration,
+		Song.FullLength_Duration,
+		Song.provider_type,
+		Genre.Genre,
+		Country.Territory,
+		Country.SalesDate,
+		Sample_Files.CdnPath,
+		Sample_Files.SaveAsName,
+		Full_Files.CdnPath,
+		Full_Files.SaveAsName,
+		Sample_Files.FileID,
+                Full_Files.SourceURL,
+		Full_Files.FileID,
+		PRODUCT.pid
+	FROM
+		Songs AS Song
+			LEFT JOIN
+		File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+			LEFT JOIN
+		File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+			LEFT JOIN
+		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+			LEFT JOIN
+		{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+	WHERE
+		( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+	GROUP BY Song.ProdID
+	ORDER BY Country.SalesDate ASC
+	LIMIT 20	  	
+	  
+STR;
+                
+                
+//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
+                
+                      //  echo "SQL: ".$sql_coming_soon; die;
+                
+
+			$coming_soon_rs = $this->Album->query($sql_coming_soon);
+                        
+//                        echo "<pre>";
+//                        print_r($coming_soon_rs);
+//                        die;
+                        
+                        
+                        if(!empty($coming_soon_rs)){
+                          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                        }
+                    
+                }
+                else    //  Show From Cache
+                {                  
+                    
+                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
+                    
+                }
+                
+                $this->set('coming_soon_rs', $coming_soon_rs);
+                
+                /*
+                 *              Code For Coming Soon --- START
+                 */     
+                
+                
+                
     }
 
 	function get_genre_tab_content($tab_no , $genre){
