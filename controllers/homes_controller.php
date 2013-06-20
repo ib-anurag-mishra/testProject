@@ -450,67 +450,69 @@ STR;
                  *              Code For Coming Soon --- START
                  */
                 
-                $territory = $this->Session->read('territory');
+                
                 //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
                 
-                if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+                $territory = $this->Session->read('territory');
                 //if (1)  
+                if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');
-                                $territory = $this->Session->read('territory');
+                                $countryPrefix = $this->Session->read('multiple_countries');                                
                              //   $countryPrefix = "ca_";
                                // $territory = "CA";
                 
                 
                 $sql_coming_soon =<<<STR
 	SELECT 
-		Song.ProdID,
-		Song.ReferenceID,
-		Song.Title,
-		Song.ArtistText,
-		Song.DownloadStatus,
-		Song.SongTitle,
-		Song.Artist,
-		Song.Advisory,
-		Song.Sample_Duration,
-		Song.FullLength_Duration,
-		Song.provider_type,
-		Genre.Genre,
-		Country.Territory,
-		Country.SalesDate,
-		Sample_Files.CdnPath,
-		Sample_Files.SaveAsName,
-		Full_Files.CdnPath,
-		Full_Files.SaveAsName,
-		Sample_Files.FileID,
-                Full_Files.SourceURL,
-		Full_Files.FileID,
-		PRODUCT.pid
-	FROM
-		Songs AS Song
-			LEFT JOIN
-		File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-			LEFT JOIN
-		File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-			LEFT JOIN
-		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
-			LEFT JOIN
-		{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
-			LEFT JOIN
-		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
-	WHERE
-		( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
-	GROUP BY Song.ProdID
-	ORDER BY Country.SalesDate ASC
-	LIMIT 20	  	
+                            Song.ProdID,
+                            Song.ReferenceID,
+                            Song.Title,
+                            Song.ArtistText,
+                            Song.DownloadStatus,
+                            Song.SongTitle,
+                            Song.Artist,
+                            Song.Advisory,
+                            Song.Sample_Duration,
+                            Song.FullLength_Duration,
+                            Song.provider_type,
+                            Genre.Genre,
+                            Country.Territory,
+                            Country.SalesDate,
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            PRODUCT.pid
+                    FROM
+                            Songs AS Song
+                                    LEFT JOIN
+                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                    LEFT JOIN
+                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                    LEFT JOIN
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                    LEFT JOIN
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                                    LEFT JOIN
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    WHERE
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+                    GROUP BY Song.ProdID
+                    ORDER BY Country.SalesDate ASC
+                    LIMIT 20
+	  	
 	  
 STR;
                 
                 
 //AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
                 
-                      //  echo "SQL: ".$sql_coming_soon; die;
+                        //echo "SQL: ".$sql_coming_soon; die;
                 
 
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
