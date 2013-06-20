@@ -160,7 +160,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		<nav class="site-nav">
 
                     <ul class="clearfix">
-			<li><?php echo $html->link(__('News', true), array('controller' => 'news','action'=>'index'));?></li>			
+			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'));?></li>			
                         <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'musicvideos', 'action' => 
 'view')); ?></li></li>
                         <li><a href="#"></a></li>

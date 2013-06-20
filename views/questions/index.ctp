@@ -24,7 +24,7 @@
                                        <h3><?php echo $question['Section']['title']; ?></h3>
                                <?}?>			
                                        <li><a href="#"><?php echo strip_tags($question['Question']['question']); ?></a>
-                                           <p><?php echo strip_tags($question['Question']['answer']); ?></p></li>
+                                           <p><?php echo str_replace(array("<li>","</li>","<ul>","</ul>"), array("<p>","</p>","",""), $question['Question']['answer']); ?></p></li>
                                <?php $Title = $question['Section']['title']; ?>
                         <?php endforeach; ?>
                     </ul>
