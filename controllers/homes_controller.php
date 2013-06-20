@@ -119,8 +119,10 @@ class HomesController extends AppController
                             Sample_Files.SaveAsName,
                             Full_Files.CdnPath,
                             Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
                             Sample_Files.FileID,
-                            Full_Files.FileID,
                             PRODUCT.pid
                     FROM
                             Songs AS Song
@@ -133,18 +135,19 @@ class HomesController extends AppController
                                     LEFT JOIN
                             {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
                                     LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
                             ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                     GROUP BY Song.ProdID
-                    ORDER BY FIELD(Song.ProdID,
-                                    $ids) ASC
+                    ORDER BY FIELD(Song.ProdID,$ids) ASC
                     LIMIT 100 
 	  
 STR;
 
 
 			$nationalTopDownload = $this->Album->query($sql_national_100);
+                        
+                        // print_r($nationalTopDownload);
 			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
@@ -154,46 +157,12 @@ STR;
 		$nationalTopDownload = Cache::read("national".$territory);
                 
                 
-               // print_r($nationalTopDownload);
-                
-/*		$this->Download->recursive = -1;
-		foreach($nationalTopDownload as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$nationalTopDownload[$key]['Song']['status'] = 'avail';
-			} else{
-				$nationalTopDownload[$key]['Song']['status'] = 'not';
-			}
-		}*/
+              // print_r($nationalTopDownload);
+
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
+               
                 
                 
                 
@@ -277,22 +246,6 @@ STR;
                 
                 
    
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
                 
                 
                 
@@ -492,6 +445,104 @@ STR;
 		/*
 				Code OF NEWS Section --- END
 		*/
+                
+                
+                 /*
+                 *              Code For Coming Soon --- START
+                 */
+                
+                
+                //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
+                
+                $territory = $this->Session->read('territory');
+              // if (1)  
+                if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+                {               
+                                $this->Song->recursive = 2;
+                                $countryPrefix = $this->Session->read('multiple_countries');                                
+                            //    $countryPrefix = "ca_";
+                              //  $territory = "CA";
+                
+                
+                $sql_coming_soon =<<<STR
+	SELECT 
+                            Song.ProdID,
+                            Song.ReferenceID,
+                            Song.Title,
+                            Song.ArtistText,
+                            Song.DownloadStatus,
+                            Song.SongTitle,
+                            Song.Artist,
+                            Song.Advisory,
+                            Song.Sample_Duration,
+                            Song.FullLength_Duration,
+                            Song.provider_type,
+                            Genre.Genre,
+                            Country.Territory,
+                            Country.SalesDate,
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            PRODUCT.pid
+                    FROM
+                            Songs AS Song
+                                    LEFT JOIN
+                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                    LEFT JOIN
+                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                    LEFT JOIN
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                    LEFT JOIN
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                                    LEFT JOIN
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    WHERE
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+                    GROUP BY Song.ProdID
+                    ORDER BY Country.SalesDate ASC
+                    LIMIT 20
+	  	
+	  
+STR;
+                
+                
+//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
+                
+                        //echo "SQL: ".$sql_coming_soon; die;
+                
+
+			$coming_soon_rs = $this->Album->query($sql_coming_soon);
+                        
+//                        echo "<pre>";
+//                        print_r($coming_soon_rs);
+//                        die;
+                        
+                        
+                        if(!empty($coming_soon_rs)){
+                          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                        }
+                    
+                }
+                else    //  Show From Cache
+                {                  
+                    
+                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
+                    
+                }
+                
+                $this->set('coming_soon_rs', $coming_soon_rs);
+                
+                /*
+                 *              Code For Coming Soon --- START
+                 */     
+                
+                
+                
     }
 
 	function get_genre_tab_content($tab_no , $genre){
@@ -857,6 +908,7 @@ STR;
 	  
 STR;
 
+                echo $sql_national_100; die;
 
 			$nationalTopDownload = $this->Album->query($sql_national_100);
 			// Checking for download status

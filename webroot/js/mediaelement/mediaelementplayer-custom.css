@@ -171,7 +171,7 @@
 	height: 37px;
 	border: 0;
 	/* background: transparent url(controls.svg) no-repeat; */
-	/* background: url(../../images/music_player/play_btn.png); */
+	/* background: url(../../img/music_player/play_btn.png); */
 	background: none;
 }
 
@@ -261,7 +261,16 @@
 	position: absolute;
 	left: 42px;
 	top: 34px;
+	-webkit-transition: top 500ms;
+	-moz-transition: top 500ms;
+	-ms-transition: top 500ms;
+	transition: top 500ms;
 
+}
+
+.mejs-controls .mejs-button.mejs-pause.minimized {
+	
+	top:4px;
 }
 
 .mejs-controls .mejs-button.mejs-loop-off {
@@ -489,7 +498,7 @@ margin-left: 10px;
 /* Start: Play/pause */
 .mejs-controls .mejs-play button {
 	/* background-position: 0 0; */
-	/* background: url(../../images/music_player/play_btn.png); */
+	/* background: url(../../img/music_player/play_btn.png); */
 }
 .mejs-controls .mejs-pause button {
 	/* background-position: 0 -16px; */

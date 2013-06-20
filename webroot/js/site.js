@@ -1,4 +1,91 @@
+$('#top-100-albums-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('#top-100-albums-grid')
+});
 
+$('#top-100-songs-grid .lazy').lazyload({
+   
+	
+	effect:'fadeIn',
+	container:$('#top-100-songs-grid'),
+	skip_invisible: false
+});
+
+$('#top-100-videos-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('#top-100-videos-grid')
+});
+
+
+$('#featured-video-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container: $('#featured-video-grid')
+});
+
+
+$('.video-top-genres-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('.video-top-genres-grid')
+});
+
+$('.most-downloaded-videos-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('.most-downloaded-videos-grid')
+});
+
+$('.most-viewed-videos-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('.most-viewed-videos-grid')
+});
+
+$('.videos-recommended-for-you-grid .lazy').lazyload({
+	effect:'fadeIn',
+	container:$('.videos-recommended-for-you-grid')
+	
+});
+
+$('#top-100-songs-list-view .lazy').lazyload({
+	effect:'fadeIn',
+	container:$('#top-100-songs-list-view')
+	
+});
+
+$('#top-100-videos-list-view .lazy').lazyload({
+	effect:'fadeIn',
+	container:$('#top-100-videos-list-view')
+	
+});
+
+$('.featured-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('.featured-grid')
+})
+
+
+$('#coming-soon-singles-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('#coming-soon-singles-grid')
+});
+
+$('#coming-soon-videos-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('#coming-soon-videos-grid')
+});
+
+$('#whats-happening-grid .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('#whats-happening-grid')
+});
 
 $(function() {
 
@@ -60,7 +147,7 @@ $(function() {
 	var top_100_songs_list_view = $('#top-100-songs-list-view');
 	var top_100_videos_list_view = $('#top-100-videos-list-view');
 		
-	var category_type = 'albums';
+	var category_type = 'songs';
 	var view_type = 'grid';
 	
 	var artwork_container = $('.artwork-container');
@@ -69,21 +156,19 @@ $(function() {
 	
 	var wishlist_popover = $('.wishlist-popover');
 	
-	
-
-	
-	
-
+	var library_list_scrollable = $('.library-list-scrollable');
 	
 	
 	
 	$('.site-nav li:first-child a').addClass('active');
 	$('.category-filter li:first-child a').addClass('active');
 	$('.top-100-nav li:first-child a').addClass('active');
-	coming_soon_album_grid.addClass('active');
+	//coming_soon_album_grid.addClass('active');
+	coming_soon_singles_grid.addClass('active');
 	
 	
-	top_100_albums_grid.addClass('active');
+	//top_100_albums_grid.addClass('active');
+	top_100_songs_grid.addClass('active');
 	
 	grid_view_button.addClass('active');
 	
@@ -95,6 +180,8 @@ $(function() {
 		music_search_results.show();
 	});
 	
+	
+	/*
 	grid_view_button.on('click',function(e){
 		e.preventDefault();
 		grid_view_button.addClass('active');
@@ -146,6 +233,8 @@ $(function() {
 		
 		
 	});
+	
+	*/
 	
 	top_100_nav.on('click',function(e){
 		e.preventDefault();
@@ -378,34 +467,34 @@ $(function() {
 	
 	playlist_list.on('mouseleave',function(){
 		
-		//playlist_list.removeClass('active');
+		playlist_list.removeClass('active');
 	});
 	
 	add_to_queue.on('mouseenter',function(){
-		/*
+		
 		
 		if(playlist_list.hasClass('active')) {
 			
 			playlist_list.removeClass('active');
 		}
-		*/
+		
 		
 	});
 	
 	add_to_wishlist.on('mouseenter',function(){
 		
-		/*
+		
 		if(playlist_list.hasClass('active')) {
 			
 			playlist_list.removeClass('active');
 		}
-		*/
+		
 		
 	});
 	
 	wishlist_popover.on('mouseleave',function(){
 		
-		//$(this).removeClass('active');
+		$(this).removeClass('active');
 	});
 	
 	
@@ -425,6 +514,27 @@ $(function() {
 
 		
 	});
+	
+
+	
+	library_list_scrollable.bind('mousewheel',function(e){
+	
+	
+		
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+		
+	});
+	
+
+	
+
 	
 	whats_happening_filter_text.on('keyup',function(){
 		whats_happening_filter_results.show();

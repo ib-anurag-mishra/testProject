@@ -46,7 +46,7 @@ Class DownloadsComponent extends Object
     }
     
     function validateDownload($prodId, $providerType, $isMobileDownload = false, $mobileTerritory = null, $patId = null, $agent = null, $library_id = null){
-        
+       
         if(!$isMobileDownload){
           $uid = $this->Session->read('Auth.User.id');
           if(empty($uid)){
@@ -56,6 +56,7 @@ Class DownloadsComponent extends Object
           $ip = $_SERVER['REMOTE_ADDR'];
           $channel = 'Website';
           $libId = $this->Session->read('library');
+        
         } else {
             $uid = $patId;
             $ip = $agent;
@@ -64,8 +65,8 @@ Class DownloadsComponent extends Object
         }
   
          
-            if($this->checkSongExists($prodId, $providerType)){
-                if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
+            if($this->checkSongExists($prodId, $providerType)){                
+                if($this->checkAllowedCountry($prodId, $providerType, $isMobileDownload, $mobileTerritory)){                    
                     if($this->checkLibraryDownload($libId)){
                         //if($this->checkPatronDownload($uid,$libId)){
                             $this->log($channel." : allowed download request for ".$prodId." - ".$providerType." - ".$libId." from User:".$uid." IP:".$ip,'download');
@@ -109,9 +110,9 @@ Class DownloadsComponent extends Object
             $territory = $mobileTerritory;
         }
         $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
-        if(!empty($country['Country'])){
+        if(!empty($country['Country'])){            
             return true;
-        } else {
+        } else {            
             return false;
         }
     }
