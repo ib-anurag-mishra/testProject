@@ -334,10 +334,10 @@
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
-														<a href="artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle;?></a>
+														<a href="artists/view/<?=base64_encode($nationalTopDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
-														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $nationalTopDownload[$i]['Song']['ArtistText']; ?></a>
+														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopDownload[$i]['Video']['ArtistText']; ?></a>
 													</div>
 												</div>
 											</li>
