@@ -8,7 +8,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video');
 
     /*
      Function Name : beforeFilter
@@ -554,10 +554,11 @@ STR;
 		*/
                 
                 
-                 /*
+                /*
                  *              Code For Coming Soon --- START
                  */
                 
+                //  Songs
                 
                 //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
                 
@@ -644,9 +645,92 @@ STR;
                 
                 $this->set('coming_soon_rs', $coming_soon_rs);
                 
+                
+                //  Videos //
+                
+                
+                
+                //if(1)
+                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                {               
+                                $this->Song->recursive = 2;
+                                $countryPrefix = $this->Session->read('multiple_countries');                                
+                              //  $countryPrefix = "us_";
+                               // $territory = "US";
+                
+                
+                $sql_cs_videos =<<<STR
+SELECT 
+Video.ProdID,
+Video.ReferenceID,
+Video.Title,
+Video.ArtistText,
+Video.DownloadStatus,
+Video.VideoTitle,
+Video.Artist,
+Video.Advisory,
+Video.Sample_Duration,
+Video.FullLength_Duration,
+Video.provider_type,
+Genre.Genre,
+Country.Territory,
+Country.SalesDate,
+Full_Files.CdnPath,
+Full_Files.SaveAsName,
+Full_Files.FileID,
+Image_Files.FileID,
+Image_Files.CdnPath,
+Image_Files.SourceURL,
+PRODUCT.pid
+FROM
+video AS Video
+LEFT JOIN
+File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+LEFT JOIN
+Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+LEFT JOIN
+{$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+LEFT JOIN
+PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+LEFT JOIN
+File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+WHERE
+( (Video.DownloadStatus = '1')  AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+GROUP BY Video.ProdID
+ORDER BY Country.SalesDate ASC
+LIMIT 20 
+STR;
+                
+                
+//AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
+                
+                        //echo "SQL: ".$sql_coming_soon; die;
+                
+
+			$coming_soon_videos = $this->Video->query($sql_cs_videos);
+                        
+//                        echo "<pre>";
+//                        print_r($coming_soon_videos);
+//                        die;
+                        
+                        
+                        if(!empty($coming_soon_videos)){
+                          Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
+                        }
+                    
+                }
+                else    //  Show From Cache
+                {                  
+                    
+                    $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
+                    
+                }
+                
+                $this->set('coming_soon_videos', $coming_soon_videos);
+                
                 /*
                  *              Code For Coming Soon --- START
-                 */     
+                 */       
                 
                 
                 

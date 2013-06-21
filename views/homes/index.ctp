@@ -374,9 +374,7 @@
 								
 								<div id="coming-soon-singles-grid" class="horiz-scroll">
 									<ul class="clearfix">
-
                                                                             <?php  
-
                                                                             $total_songs = count($coming_soon_rs);
                                                                             $sr_no = 0;
 
@@ -407,7 +405,7 @@
 													</div>
 												</div>
 												<div class="song-title">
-													<a href="#">
+													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     if(strlen($value['Song']['SongTitle'])>20)
                                                                                                                     echo substr($value['Song']['SongTitle'],0,20)."..."; 
@@ -416,7 +414,7 @@
                                                                                                         </a>
 												</div>
 												<div class="artist-name">
-													<a href="#">                                                                                                        
+													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>20)
                                                                                                                     echo substr($value['Song']['Artist'],0,20)."..."; 
@@ -436,11 +434,18 @@
 									</ul>
 								</div> <!-- end #coming-soon-singles-grid -->
 								<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
-									<ul class="clearfix">
-										<li>
+									<ul class="clearfix">										
+                                                                            <?php                                                                              
+                                                                            $total_videos = count($coming_soon_videos);
+                                                                            $sr_no = 0;
+                                                                            foreach($coming_soon_videos as $key => $value)
+                                                                            {     
+                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;?>
+                                                                            <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/rockband275x162.jpg" alt="rockband275x162" width="275" height="162" /></a>
+													<a href="#"><img src="img/news/coming_soon/videos/rockband275x162.jpg" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>
@@ -455,36 +460,29 @@
 													</div>
 												</div>
 												<div class="video-title">
-													<a href="#">Brave</a>
+													 <a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                                                                            <?php
+                                                                                                                    if(strlen($value['Video']['VideoTitle'])>20)
+                                                                                                                    echo substr($value['Video']['VideoTitle'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['VideoTitle'];
+                                                                                                             ?> </a>
 												</div>
 												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
+													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+                                                                                                         <?php 
+                                                                                                                    if(strlen($value['Video']['Artist'])>20)
+                                                                                                                    echo substr($value['Video']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['Artist'];
+                                                                                                             ?></a>
 												</div>
 											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/sarabareilles275x162.jpg" alt="sarabareilles275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
+											
+										<?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
+
+                                                                                <?php
+                                                                                        $sr_no++;
+                                                                                }
+                                                                                ?>
 										
 									</ul>
 								</div><!-- end videos grid -->
