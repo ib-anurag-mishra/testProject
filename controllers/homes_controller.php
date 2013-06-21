@@ -214,7 +214,7 @@ STR;
 
                 $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                echo  $sql_national_100_v =<<<STR
+                 $sql_national_100_v =<<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
@@ -266,7 +266,7 @@ STR;
        // }
         
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);
-        print_r($nationalTopVideoDownload);
+        //print_r($nationalTopVideoDownload);
 
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
