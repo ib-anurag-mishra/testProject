@@ -264,7 +264,7 @@ STR;
         }
         
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);
-        //print_r($nationalTopVideoDownload);
+        print_r($nationalTopVideoDownload);
 
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
