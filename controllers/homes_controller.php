@@ -174,10 +174,9 @@ STR;
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
                  $maintainLatestVideoDownload = 0;           
                if(!empty($country)){ 
-                   echo 14;
-            
+                              
                    if($maintainLatestVideoDownload){
-                       echo 456;
+                       
 
                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `latest_vdownloads` AS `Download` 
