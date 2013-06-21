@@ -165,7 +165,7 @@ STR;
                
              
          // National Top Vidoes Downloads functionality code start
-        if (($national = Cache::read("nationalvideos".$territory)) === false) {
+        //if (($national = Cache::read("nationalvideos".$territory)) === false) {
                     
                 $country = $territory;
                 
@@ -261,7 +261,7 @@ STR;
                 
                }
                
-        }
+       // }
         
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);
         print_r($nationalTopVideoDownload);
