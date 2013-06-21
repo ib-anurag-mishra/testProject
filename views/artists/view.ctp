@@ -96,7 +96,13 @@
 					?>	
 				
 				<div class="tracklist">
-					<a href="#" class="preview"></a>
+					<span class="preview"><?php
+										if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
+											echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.base64_encode($albumSong["Song"]["provider_type"]).'", "'.$this->webroot.'");'));
+											echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$album_key.$key));
+											echo $html->image('stop.png', array("alt" => "Stop Sample", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$album_key.$key, "onClick" => 'stopThis(this, "'.$album_key.$key.'");'));
+										}
+										?></span>
 					<div class="song"><?php
 										if (strlen($albumSong['Song']['SongTitle']) >= 40) {
 											echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 45)) . '...</span>';
