@@ -556,9 +556,50 @@ STR;
                 
                 
                 /*
+				Code OF NEWS Section --- START
+		*/
+		
+		if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+			$this->Session->write('Config.language', 'en');
+		}
+		//$this->layout = 'home';
+		
+		$news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
+		
+//		echo "news_count: ".$news_count;
+		
+		if($news_count != 0){
+			/*$this->paginate = array(   
+				'conditions' => array('AND' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")),
+				'order' => 'News.created DESC','limit' => '3','cache' => 'yes'
+			);*/
+			//echo "Place".$this->Session->read('territory');
+			//$news_rs = $this->News->find('all', array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%"));
+			$news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")));
+			
+			
+			
+		}
+		else{
+			/*$this->paginate = array(   
+				'conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
+				'order' => 'News.created DESC','limit' => '3','cache' => 'yes'
+			);	*/	
+			
+			$news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%"))));
+		}
+		$this->set('news',$news_rs);
+		
+		/*
+				Code OF NEWS Section --- END
+		*/
+                
+                
+                /*
                  *              Code For Coming Soon --- START
                  */
                 
+                //  Songs
                 
                 //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
                 
@@ -568,7 +609,7 @@ STR;
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                            //    $countryPrefix = "ca_";
+                                //$countryPrefix = "ca_";
                               //  $territory = "CA";
                 
                 
@@ -731,6 +772,8 @@ STR;
                 /*
                  *              Code For Coming Soon --- START
                  */       
+                
+                     
                 
                 
                 

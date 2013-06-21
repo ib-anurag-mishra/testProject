@@ -1,0 +1,468 @@
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
+
+.albums-page {
+	margin-top: 20px;
+	margin-left: 40px;
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		margin-bottom: 18px;
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+		}
+
+
+	}
+	
+	.album-detail-container {
+		
+		
+		
+		
+		
+		.album-detail {
+			float: left;
+			width: 252px;
+			font-size: 12px;
+			line-height: 16px;
+			
+			.album-cover-image {
+				margin-bottom: 20px;
+				
+				img {
+					.box-shadow(0 0 4px rgba(0,0,0,.5));
+					border:1px solid #fff;
+				}
+				
+			}
+			
+			.release-info {
+				
+				font-weight: bold;
+				margin-bottom: 6px;
+			}
+			
+			
+			
+			.album-genre {
+				
+				font-weight: bold;
+				margin-bottom: 	6px;
+				
+				span {
+					font-weight: normal;
+					
+					a {
+						
+						color: #000;
+						
+						text-decoration: none;
+					}
+				}
+			}
+			
+			.album-label {
+				font-weight: bold;
+				margin-bottom: 6px;
+				span {
+					
+					font-weight: normal;
+				}
+			}
+			
+			.more-by {
+				
+				display: block;
+				width: 250px;
+				height: 39px;
+				background: url(../img/genres/more-by-off.jpg);
+				text-decoration: none;
+				color: rgba(0,0,0,.7);
+				.box-shadow(0 0 4px rgba(0,0,0,.5));
+				text-align: center;
+				line-height: 39px;
+				font-size: 14px;
+				margin-bottom: 20px;
+				
+			}
+		}
+		
+		.tracklist-container {
+			
+			float: right;
+			width: 560px;
+			
+			.album-title {
+				
+				font-size: 24px;
+				
+				margin-bottom: 10px;
+				margin-top: 10px;
+				
+				span {
+					
+					font-weight: normal;
+				}
+			}
+			
+			.artist-name {
+				
+				font-size: 16px;
+				color: rgba(0,0,0,.5);
+				margin-bottom: 10px;
+				
+				
+			}
+			
+			
+			.tracklist-header {
+						
+				position: relative;
+				height: 39px;
+				background: url(../img/albums-page/tracklist-header-bkg.jpg) repeat;
+				width: 100%;
+				
+				span {
+					display: block;
+					position: absolute;
+					
+					font-weight: bold;
+					font-size: 12px;
+					line-height: 39px;
+					top:0;
+					
+					&.song {
+						
+						left: 15px;
+						
+					}
+					
+					&.artist {
+						
+						left: 331px;
+						background: url(../img/albums-page/borders.jpg) no-repeat;
+						width: 100px;
+						padding-left: 14px;
+						
+						
+						
+					}
+					
+					&.time {
+						left: 503px;
+						background: url(../img/albums-page/borders.jpg) no-repeat;
+						width: 100px;
+						padding-left: 13px;
+					}
+					
+					
+				}
+		
+			}
+			
+			.tracklist {
+				
+				position: relative;
+				height: 44px;
+				
+				&:nth-child(odd) {
+					
+					background: #f1f1f1;
+				}
+				
+				&:nth-child(even) {
+					
+					background: #e9e9e9;
+				}
+				
+				&:hover {
+					
+					background: #c3e6f1;
+				}
+				
+				&.playing {
+					background: #c3e6f1;
+					
+				}
+				
+				.preview {
+					
+					display: block;
+					position: absolute;
+					left: 13px;
+					top:12px;
+					width: 19px;
+					height: 19px;
+					background: url(../img/albums-page/preview-off.png);
+					opacity: .7;
+					
+					
+					&:hover {
+						
+						background: url(../img/albums-page/preview-hover.png);
+						opacity: 1;
+					}
+					
+					&.active {
+						
+						background: url(../img/albums-page/preview-click.png);
+						opacity: 1;
+						width: 17px;
+						height: 17px;
+					
+					}
+					
+					&.playing {
+						background: url(../img/albums-page/preview-click.png);
+						opacity: 1;
+						width: 17px;
+						height: 17px;
+						
+					}
+				
+				
+				}
+				
+				div {
+					display: block;
+					position: absolute;
+					
+					font-weight: normal;
+					font-size: 12px;
+					line-height: 44px;
+					
+					
+					
+					color: rgba(0,0,0,.7);
+					
+					&.song {
+						
+						left: 53px;
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+						}
+						
+						
+					}
+					
+					&.artist {
+						
+						left: 345px;
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+						}
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+						}
+						
+					}
+					
+					&.time {
+						left: 519px;
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+						}
+						
+					}
+					
+					
+				}
+				
+				.add-to-playlist-button {
+					background: url(../img/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					top:10px;
+					left: 295px;
+					width: 26px;
+					height: 25px;
+					opacity: .6;
+					
+					&:hover {
+						opacity: 1;
+					}
+					
+					
+				}
+				
+				
+				.wishlist-popover {
+				
+					display: none;
+					position: absolute;
+					left: 295px;
+					top:-122px;
+					font-size: 12px;
+					z-index: 100;
+					width: 120px;
+					
+					
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px 5px 5px 10px;
+					
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+						}
+						
+					}
+					
+					.playlist-options {
+						position: absolute;
+						right: -147px;
+						top:30px;
+						display: none;
+						background: #fff;
+						width: 145px;
+						height: 186px;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						
+						overflow-x: hidden;
+						
+						&.active {
+							
+							display: block;
+						}
+						
+						
+						
+						ul {
+							
+							li {
+								
+								float: none;
+								padding: 0;
+								
+								a {
+									
+									padding: 5px 5px 5px 10px;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: none;
+									}
+								}
+							}
+						}
+							
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						padding-bottom: 3px;
+						position: relative;
+						width: 120px;
+						height: 32px;
+						
+						p {
+							
+							position: absolute;
+							left: 10px;
+							top:-5px;
+							
+						}
+						
+						.facebook {
+							background: url(../img/facebook.png) no-repeat center center;
+							
+							display: block;
+							
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 62px;
+							top:4px;
+							
+							&:hover {
+								background: url(../img/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/twitter.png) no-repeat center center;
+							
+							display: block;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							left: 82px;
+							top:4px;
+							
+							&:hover {
+								
+								background: url(../img/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+							
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						}
+					}
+				}
+
+				
+				
+				
+				
+				
+				
+				
+			}
+			
+			
+		}
+		
+		
+		
+	}
+	
+	
+	
+}
