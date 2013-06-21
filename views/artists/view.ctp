@@ -139,8 +139,7 @@
 								<li><a href="#">Playlist 10</a></li>
 							</ul>
 						</div>
-						<a class="add-to-wishlist" href="#">Download Now</a>
-                                                
+						                                                
                                                 
                                                 <?php
                                                                     if($this->Session->read('patron')) {
