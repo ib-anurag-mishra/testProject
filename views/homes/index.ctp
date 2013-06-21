@@ -480,7 +480,7 @@
 										<?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
 
                                                                                 <?php
-                                                                                        $sr_no++;
+                                                                                        $sr_no++; 
                                                                                 }
                                                                                 ?>
 										

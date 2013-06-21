@@ -643,7 +643,7 @@ STR;
                     
                 }
                 
-                $this->set('coming_soon_rs', $coming_soon_rs);
+                $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 
                 //  Videos //
