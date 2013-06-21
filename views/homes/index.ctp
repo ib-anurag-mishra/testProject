@@ -514,7 +514,7 @@
 										
 									</ul>
 								</div> <!-- end #coming-soon-singles-grid -->
-								<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
+									<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
 									<ul class="clearfix">										
                                                                             <?php                                                                              
                                                                             $total_videos = count($coming_soon_videos);
@@ -526,7 +526,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
+													<a href="#"><img src="img/news/coming_soon/videos/rockband275x162.jpg" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>

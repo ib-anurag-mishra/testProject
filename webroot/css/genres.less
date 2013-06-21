@@ -39,7 +39,7 @@
 			
 			float: right;
 			font-size: 12px;
-			margin-top: 19px;
+			margin-top: 10px;
 			
 			a {
 				
@@ -51,11 +51,11 @@
 	
 	.border {
 		
-		background: url(../img/genres/border.png) repeat-y;
-		width: 2px;
-		height: 222px;
+		background: url(/app/webroot/img/genres/border.png) repeat-y;
+		width: 3px;
+		height: 37px;
 		float: left;
-		margin-top: 29px;
+		
 	}
 	
 	.genre-filter-container {
@@ -66,15 +66,16 @@
 		.genre-shadow-container {
 			position: relative;
 			height: 247px;
-			width: 229px;
+			width: 226px;
 			float: left;
+			background: url(/app/webroot/img/genres/genre-filter-header-bkg.jpg) repeat;
 			
 			&:after {
 				content: "";
 				position: absolute;
 				bottom:0;
 				left: 0;
-				background: url(../img/genres/genres-tapered-shadow.png) no-repeat;
+				background: url(/app/webroot/img/genres/genres-tapered-shadow.png) no-repeat;
 				width: 229px;
 				height: 11px;
 				
@@ -82,29 +83,34 @@
 			
 			h3 {
 				font-size: 18px;
-				margin-bottom: 10px;
+				
+				height: 28px;
+				padding-left: 10px;
+				padding-top: 10px;
 			}
 		
 			.genre-list {
 				
 				
 				
-				height: 219px;
+				height: 207px;
 				width: 229px;
 				overflow-y: hidden;
 				
-				
+				background: url(/app/webroot/img/genres/border.png) repeat-y;
 				
 				ul {
 					
 					
 					li {
+					
+						//background: url(/app/webroot/img/genres/border.png) repeat-y right center;
 						&:nth-child(odd) a {
-								background: #e7e7e7;
+								background: #e7e7e7 url(/app/webroot/img/genres/border.png) repeat-y right center;
 							}
 							
 						&:nth-child(even) a {
-								background: #f0f0f0;
+								background: #f0f0f0 url(/app/webroot/img/genres/border.png) repeat-y right center;
 								
 						}
 						
@@ -114,10 +120,10 @@
 							color: #707070;
 							font-size: 12px;
 							text-decoration: none;
-							padding: 2px;
+							padding: 2px 2px 2px 10px;
 							
 							&:hover {
-								background: #c2e5f1;
+								background: #c2e5f1 url(/app/webroot/img/genres/border.png) repeat-y right center;
 								
 							}
 						}
@@ -143,11 +149,14 @@
 			width: 60px;
 			height: 247px;
 			position: relative;
-			
+			background: url(/app/webroot/img/genres/genre-filter-header-bkg.jpg) repeat-x;
 			
 			h3 {
 				font-size: 18px;
-				margin-bottom: 10px;
+				
+				height: 28px;
+				padding-left: 17px;
+				padding-top: 10px;
 			}
 			
 			
@@ -155,7 +164,7 @@
 			.alphabetical-filter {
 				
 				width: 60px;
-				height: 219px;
+				height: 209px;
 				overflow-y: hidden;	
 				text-align: center;
 				
@@ -165,11 +174,11 @@
 					
 					li {
 						&:nth-child(odd) a {
-								background: #e7e7e7;
+								background: #e7e7e7 url(/app/webroot/img/genres/border.png) repeat-y right center;
 							}
 							
 						&:nth-child(even) a {
-								background: #f0f0f0;
+								background: #f0f0f0 url(/app/webroot/img/genres/border.png) repeat-y right center;
 								
 						}
 						
@@ -182,7 +191,7 @@
 							padding: 2px;
 							
 							&:hover {
-								background: #c2e5f1;
+								background: #c2e5f1 url(/app/webroot/img/genres/border.png) repeat-y right center;
 								
 							}
 						}
@@ -209,7 +218,7 @@
 			&:after {
 				
 				content: "";
-				background: url(../img/genres/alphabet-tapered-shadow.png) no-repeat;
+				background: url(/app/webroot/img/genres/alphabet-tapered-shadow.png) no-repeat;
 				width: 60px;
 				height: 11px;
 				position:absolute;
@@ -225,7 +234,7 @@
 			width: 255px;
 			height: 247px;
 			position: relative;
-			background: url(../img/genres/genre-filter-header-bkg.jpg) repeat-x;
+			background: url(/app/webroot/img/genres/genre-filter-header-bkg.jpg) repeat-x;
 			h3 {
 				
 				height: 28px;
@@ -241,24 +250,24 @@
 				height: 11px;
 				left: 0;
 				bottom:0;
-				background: url(../img/genres/artist-tapered-shadow.png) no-repeat;
+				background: url(/app/webroot/img/genres/artist-tapered-shadow.png) no-repeat;
 			}
 			
 			.artist-list {
-				width: 255px;
-				height: 219px;
-				margin-top: 28px;
+				width: 258px;
+				height: 209px;
+			
 				overflow-y: hidden;	
 				
 				ul {
 					
 					li {
 						&:nth-child(odd) a {
-								background: #e7e7e7 url(../img/genres/border.png) repeat-y right center;
+								background: #e7e7e7 url(/app/webroot/img/genres/border.png) repeat-y right center;
 							}
 							
 						&:nth-child(even) a {
-								background: #f0f0f0 url(../img/genres/border.png) repeat-y right center;
+								background: #f0f0f0 url(/app/webroot/img/genres/border.png) repeat-y right center;
 								
 						}
 						
@@ -271,7 +280,7 @@
 							padding: 2px 2px 2px 10px;
 							
 							&:hover {
-								background: #c2e5f1 url(../img/genres/border.png) repeat-y right center;
+								background: #c2e5f1 url(/app/webroot/img/genres/border.png) repeat-y right center;
 								
 							}
 						}
@@ -299,7 +308,7 @@
 			float: left;
 			width: 280px;
 			height: 247px;
-			background: url(../img/genres/genre-filter-header-bkg.jpg) repeat-x;
+			background: url(/app/webroot/img/genres/genre-filter-header-bkg.jpg) repeat-x;
 			
 			&:after {
 				
@@ -309,7 +318,7 @@
 				bottom:0;
 				width: 320px;
 				height: 11px;
-				background: url(../img/genres/album-overview-tapered-shadow.png) no-repeat;
+				background: url(/app/webroot/img/genres/album-overview-tapered-shadow.png) no-repeat;
 			}
 			h3 {
 				font-size: 18px;
@@ -333,7 +342,7 @@
 					height: 100px;
 					overflow-y: hidden;
 					overflow-x: hidden;
-					background: #efefef url(../img/genres/bottom-border.png) center bottom no-repeat;
+					background: #efefef url(/app/webroot/img/genres/bottom-border.png) center bottom no-repeat;
 					
 					
 					.album-image {
@@ -457,7 +466,7 @@
 				display: block;
 				width: 250px;
 				height: 39px;
-				background: url(../img/genres/more-by-off.jpg);
+				background: url(/app/webroot/img/genres/more-by-off.jpg);
 				text-decoration: none;
 				color: rgba(0,0,0,.7);
 				.box-shadow(0 0 4px rgba(0,0,0,.5));
@@ -478,7 +487,7 @@
 						
 				position: relative;
 				height: 39px;
-				background: url(../img/genres/tracklist-header-bkg.jpg) repeat;
+				background: url(/app/webroot/img/genres/tracklist-header-bkg.jpg) repeat;
 				width: 100%;
 				
 				span {
@@ -499,7 +508,7 @@
 					&.artist {
 						
 						left: 331px;
-						background: url(../img/genres/borders.jpg) no-repeat;
+						background: url(/app/webroot/img/genres/borders.jpg) no-repeat;
 						padding-left: 14px;
 						width: 100px;
 						
@@ -507,7 +516,7 @@
 					
 					&.time {
 						left: 503px;
-						background: url(../img/genres/borders.jpg) no-repeat;
+						background: url(/app/webroot/img/genres/borders.jpg) no-repeat;
 						padding-left: 14px;
 						width: 100px;
 						
@@ -546,19 +555,19 @@
 					top:10px;
 					width: 19px;
 					height: 19px;
-					background: url(../img/genres/preview-off.png);
+					background: url(/app/webroot/img/genres/preview-off.png);
 					opacity: .7;
 					
 					
 					&:hover {
 						
-						background: url(../img/genres/preview-hover.png);
+						background: url(/app/webroot/img/genres/preview-hover.png);
 						opacity: 1;
 					}
 					
 					&.active {
 						
-						background: url(../img/genres/preview-click.png);
+						background: url(/app/webroot/img/genres/preview-click.png);
 						opacity: 1;
 						width: 17px;
 						height: 17px;
@@ -566,7 +575,7 @@
 					}
 					
 					&.playing {
-						background: url(../images/genres/preview-click.png);
+						background: url(/app/webroot/img/genres/preview-click.png);
 						opacity: 1;
 						width: 17px;
 						height: 17px;
@@ -634,7 +643,7 @@
 				}
 				
 				.add-to-playlist-button {
-					background: url(../images/add-to-playlist-button.png);
+					background: url(/app/webroot/img/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
 					top:7px;
@@ -746,7 +755,7 @@
 						}
 						
 						.facebook {
-							background: url(../img/facebook.png) no-repeat center center;
+							background: url(/app/webroot/img/facebook.png) no-repeat center center;
 							
 							display: block;
 							
@@ -757,13 +766,13 @@
 							top:4px;
 							
 							&:hover {
-								background: url(../img/facebook-hover.png) no-repeat center center;
+								background: url(/app/webroot/img/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../img/twitter.png) no-repeat center center;
+							background: url(/app/webroot/img/twitter.png) no-repeat center center;
 							
 							display: block;
 							position: absolute;
@@ -774,19 +783,19 @@
 							
 							&:hover {
 								
-								background: url(../img/twitter-hover.png) no-repeat center center;
+								background: url(/app/webroot/img/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 							
-						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(/app/webroot/img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(/app/webroot/img/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
