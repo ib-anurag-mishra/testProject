@@ -395,7 +395,11 @@
 																<li><a href="#">Playlist 10</a></li>
 															</ul>
 														</div>
+                                                                                                    <?php if($this->Session->read('patron')) { ?>
 														<a class="download-now" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>">Download Now</a>
+                                                                                                    <?php }else{ ?>
+                                                                                                    <a class="download-now" href='/users/login'> <?php __("Login");?></a>
+                                                                                                    <?php } ?>
 														<a class="add-to-queue" href="#">Add To Queue</a>
 														<a class="add-to-playlist" href="#">Add To Playlist</a>
 														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
