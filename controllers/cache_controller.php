@@ -2,7 +2,7 @@
 class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Territory');
 
     function cacheLogin() {
 			$libid = $_REQUEST['libid'];
@@ -35,7 +35,12 @@ class CacheController extends AppController {
     echo "============".date("Y-m-d H:i:s")."===============";
 
     
-    $territoryNames = array('US','CA','AU','NZ','IT');
+    //$territoryNames = array('US','CA','AU','NZ','IT');
+    $territories = $this->Territory->find("all");
+    for($mm=0;$mm<count($territories);$mm++)
+    {
+        $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+    }
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);

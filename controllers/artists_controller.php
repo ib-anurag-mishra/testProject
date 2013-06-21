@@ -8,7 +8,7 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download', 'Territory' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language','Album');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
@@ -239,6 +239,12 @@ Class ArtistsController extends AppController
     ini_set('memory_limit','1024M');
 		set_time_limit(0);
 		$errorMsg = '';
+                $territories = $this->Territory->find("all");
+                for($m=0;$m<count($territories);$m++)
+                {
+                    $territoriesArray[$territories[$m]['Territory']['Territory']] = $territories[$m]['Territory']['Territory'];
+                }
+                $this->set("territories", $territoriesArray);
 		if( !empty( $this -> params[ 'named' ][ 'id' ] ) ) { //gets the values from the url in form  of array
 			$artistId = $this -> params[ 'named' ][ 'id' ];
 			if( trim( $artistId ) != '' && is_numeric( $artistId ) ) {
@@ -246,7 +252,7 @@ Class ArtistsController extends AppController
 				$this -> set( 'formHeader', 'Edit Artist' );
 				$getArtistrDataObj = new Artist();
 				$getData = $getArtistrDataObj -> getartistdata( $artistId );
-				$this -> set( 'getData', $getData );
+				$this -> set( 'getData', $getData );                                
 				$condition = 'edit';
 				$artistName = '';
 				if(isset($_REQUEST[ 'artistName' ])){
@@ -369,10 +375,10 @@ Class ArtistsController extends AppController
 				}
 			}
 		}
-		$memcache = new Memcache;
-		$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
-		memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
-		memcache_close($memcache);
+		//$memcache = new Memcache;
+		//$memcache->addServer(Configure::read('App.memcache_ip'), 11211);
+		//memcache_delete($memcache, Configure::read('App.memcache_key')."_artists");
+		//memcache_close($memcache);
 	}
 
 	/*
