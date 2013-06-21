@@ -558,7 +558,6 @@ STR;
                  *              Code For Coming Soon --- START
                  */
                 
-                //  Songs
                 
                 //echo "Cache Value:".Cache::read("coming_soon_songs".$territory);
                 
