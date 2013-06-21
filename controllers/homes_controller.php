@@ -173,9 +173,11 @@ STR;
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
                  $maintainLatestVideoDownload = 0;           
-               if(!empty($country)){                   
+               if(!empty($country)){ 
+                   echo 14;
             
                    if($maintainLatestVideoDownload){
+                       echo 456;
 
                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `latest_vdownloads` AS `Download` 
@@ -212,7 +214,7 @@ STR;
 
                 $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                 $sql_national_100_v =<<<STR
+                echo  $sql_national_100_v =<<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
