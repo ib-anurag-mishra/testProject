@@ -51,7 +51,7 @@
 	
 	.border {
 		
-		background: url(../images/genres/border.png) repeat-y;
+		background: url(../img/genres/border.png) repeat-y;
 		width: 2px;
 		height: 222px;
 		float: left;
@@ -74,7 +74,7 @@
 				position: absolute;
 				bottom:0;
 				left: 0;
-				background: url(../images/genres/genres-tapered-shadow.png) no-repeat;
+				background: url(../img/genres/genres-tapered-shadow.png) no-repeat;
 				width: 229px;
 				height: 11px;
 				
@@ -209,7 +209,7 @@
 			&:after {
 				
 				content: "";
-				background: url(../images/genres/alphabet-tapered-shadow.png) no-repeat;
+				background: url(../img/genres/alphabet-tapered-shadow.png) no-repeat;
 				width: 60px;
 				height: 11px;
 				position:absolute;
@@ -225,6 +225,13 @@
 			width: 255px;
 			height: 247px;
 			position: relative;
+			background: url(../img/genres/genre-filter-header-bkg.jpg) repeat-x;
+			h3 {
+				
+				height: 28px;
+				padding-left: 5px;
+				padding-top: 10px;
+			}
 			
 			&:after {
 				
@@ -234,7 +241,7 @@
 				height: 11px;
 				left: 0;
 				bottom:0;
-				background: url(../images/genres/artist-tapered-shadow.png) no-repeat;
+				background: url(../img/genres/artist-tapered-shadow.png) no-repeat;
 			}
 			
 			.artist-list {
@@ -247,11 +254,11 @@
 					
 					li {
 						&:nth-child(odd) a {
-								background: #e7e7e7;
+								background: #e7e7e7 url(../img/genres/border.png) repeat-y right center;
 							}
 							
 						&:nth-child(even) a {
-								background: #f0f0f0;
+								background: #f0f0f0 url(../img/genres/border.png) repeat-y right center;
 								
 						}
 						
@@ -261,10 +268,10 @@
 							color: #707070;
 							font-size: 12px;
 							text-decoration: none;
-							padding: 2px;
+							padding: 2px 2px 2px 10px;
 							
 							&:hover {
-								background: #c2e5f1;
+								background: #c2e5f1 url(../img/genres/border.png) repeat-y right center;
 								
 							}
 						}
@@ -292,6 +299,7 @@
 			float: left;
 			width: 280px;
 			height: 247px;
+			background: url(../img/genres/genre-filter-header-bkg.jpg) repeat-x;
 			
 			&:after {
 				
@@ -301,11 +309,14 @@
 				bottom:0;
 				width: 320px;
 				height: 11px;
-				background: url(../images/genres/album-overview-tapered-shadow.png) no-repeat;
+				background: url(../img/genres/album-overview-tapered-shadow.png) no-repeat;
 			}
 			h3 {
 				font-size: 18px;
-				margin-bottom: 10px;
+				height: 28px;
+				padding-left: 10px;
+				padding-top: 10px;
+				
 			}
 		
 			.album-list {
@@ -322,8 +333,8 @@
 					height: 100px;
 					overflow-y: hidden;
 					overflow-x: hidden;
-					background: #efefef;
-					border-bottom: 1px solid rgba(0,0,0,.1);
+					background: #efefef url(../img/genres/bottom-border.png) center bottom no-repeat;
+					
 					
 					.album-image {
 						position: absolute;
@@ -340,21 +351,23 @@
 					.album-title {
 						position: absolute;
 						left: 88px;
-						top:16px;
+						top:20px;
 						font-size: 13px;
 						width: 203px;
+						line-height: 16px;
 						
 						a {
 							
 							color: #000;
 							text-decoration: none;
+							font-weight: bold;
 						}
 					}
 					
 					.album-year {
 						position: absolute;
 						left: 87px;
-						top:47px;
+						top:54px;
 						width: 100px;
 						font-size: 13px;
 						
@@ -418,6 +431,13 @@
 				font-weight: bold;
 				margin-bottom: 	10px;
 				
+				a {
+						
+					color: #000;
+					
+					text-decoration: none;
+				}
+				
 				span {
 					font-weight: normal;
 				}
@@ -437,7 +457,7 @@
 				display: block;
 				width: 250px;
 				height: 39px;
-				background: url(../images/genres/more-by-off.jpg);
+				background: url(../img/genres/more-by-off.jpg);
 				text-decoration: none;
 				color: rgba(0,0,0,.7);
 				.box-shadow(0 0 4px rgba(0,0,0,.5));
@@ -457,8 +477,8 @@
 			.tracklist-header {
 						
 				position: relative;
-				height: 47px;
-				background: url(../images/genres/tracklist-header-bkg.jpg) repeat;
+				height: 39px;
+				background: url(../img/genres/tracklist-header-bkg.jpg) repeat;
 				width: 100%;
 				
 				span {
@@ -467,7 +487,7 @@
 					
 					font-weight: bold;
 					font-size: 12px;
-					line-height: 47px;
+					line-height: 39px;
 					top:0;
 					
 					&.song {
@@ -478,12 +498,18 @@
 					
 					&.artist {
 						
-						left: 345px;
+						left: 331px;
+						background: url(../img/genres/borders.jpg) no-repeat;
+						padding-left: 14px;
+						width: 100px;
 						
 					}
 					
 					&.time {
-						left: 519px;
+						left: 503px;
+						background: url(../img/genres/borders.jpg) no-repeat;
+						padding-left: 14px;
+						width: 100px;
 						
 					}
 					
@@ -495,7 +521,7 @@
 			.tracklist {
 				
 				position: relative;
-				height: 44px;
+				height: 39px;
 				
 				&:nth-child(odd) {
 					
@@ -507,31 +533,44 @@
 					background: #e9e9e9;
 				}
 				
+				&.playing {
+					background: #c3e6f1;
+					
+				}
+				
 				.preview {
 					
 					display: block;
 					position: absolute;
 					left: 13px;
 					top:10px;
-					width: 23px;
-					height: 23px;
-					background: url(../images/genres/preview-off.png);
+					width: 19px;
+					height: 19px;
+					background: url(../img/genres/preview-off.png);
 					opacity: .7;
 					
 					
 					&:hover {
 						
-						background: url(../images/genres/preview-hover.png);
+						background: url(../img/genres/preview-hover.png);
 						opacity: 1;
 					}
 					
 					&.active {
 						
+						background: url(../img/genres/preview-click.png);
+						opacity: 1;
+						width: 17px;
+						height: 17px;
+					
+					}
+					
+					&.playing {
 						background: url(../images/genres/preview-click.png);
 						opacity: 1;
-						width: 21px;
-						height: 21px;
-					
+						width: 17px;
+						height: 17px;
+						
 					}
 				
 				
@@ -543,7 +582,7 @@
 					
 					font-weight: normal;
 					font-size: 12px;
-					line-height: 44px;
+					line-height: 39px;
 					
 					
 					
@@ -552,17 +591,42 @@
 					&.song {
 						
 						left: 53px;
+						color:rgba(0,0,0,.7);
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+						}
 						
 					}
 					
 					&.artist {
 						
 						left: 345px;
+						color:rgba(0,0,0,.7);
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+						}
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+						}
 						
 					}
 					
 					&.time {
 						left: 519px;
+						color:rgba(0,0,0,.7);
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+						}
 						
 					}
 					
@@ -573,7 +637,7 @@
 					background: url(../images/add-to-playlist-button.png);
 					display: block;
 					position: absolute;
-					top:10px;
+					top:7px;
 					left: 295px;
 					width: 26px;
 					height: 25px;
@@ -592,7 +656,7 @@
 					display: none;
 					position: absolute;
 					left: 295px;
-					top:-90px;
+					top:-95px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
@@ -682,7 +746,7 @@
 						}
 						
 						.facebook {
-							background: url(../images/facebook.png) no-repeat center center;
+							background: url(../img/facebook.png) no-repeat center center;
 							
 							display: block;
 							
@@ -693,13 +757,13 @@
 							top:4px;
 							
 							&:hover {
-								background: url(../images/facebook-hover.png) no-repeat center center;
+								background: url(../img/facebook-hover.png) no-repeat center center;
 								
 							}
 						}
 						
 						.twitter {
-							background: url(../images/twitter.png) no-repeat center center;
+							background: url(../img/twitter.png) no-repeat center center;
 							
 							display: block;
 							position: absolute;
@@ -710,19 +774,19 @@
 							
 							&:hover {
 								
-								background: url(../images/twitter-hover.png) no-repeat center center;
+								background: url(../img/twitter-hover.png) no-repeat center center;
 							}
 						}
 					}
 					
 					.add-to-playlist {
 							
-						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
 						
 						&:hover {
 							
 							color: rgba(0,0,0,1);
-							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
+							background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
 						}
 					}
 				}
