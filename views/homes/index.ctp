@@ -195,7 +195,7 @@
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
 	
-											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
+											$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
                                                                                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
  /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
