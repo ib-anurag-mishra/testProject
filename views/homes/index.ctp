@@ -121,7 +121,7 @@
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/login'> <?php __("Download Now");?></a>
+     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
 
 
     <?php
