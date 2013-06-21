@@ -161,8 +161,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
                     <ul class="clearfix">
 			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'));?></li>			
-                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'musicvideos', 'action' => 
-'view')); ?></li></li>
+                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 
+'index')); ?></li></li>
                         <li><a href="#"></a></li>
                         <li><?php echo $html->link(__('Most Popular', true), array('controller' => 'mostpopular', 'action' => 
 'view')); ?></li></li>
