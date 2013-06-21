@@ -223,7 +223,7 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
 
                     $nationalTopDownload[$i]['Video']['status'] = 'avail1';
-                    if(isset($nationalTopVideoDownload[$i]['Video']['status']) && ($nationalTopVideoDownload[$i]['Video']['status'] != 'avail') ) {
+                    if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
                             <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
