@@ -229,8 +229,8 @@ Class GenresController extends AppController
 		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
-		//if (($genre = Cache::read("genre".$country)) === false) {
-                if(1)       {
+		if (($genre = Cache::read("genre".$country)) === false) {
+                //if(1)       {
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
 							array('and' =>
@@ -250,9 +250,9 @@ Class GenresController extends AppController
 									),
 						),'group' => 'Genre.Genre'
 					));
-                        echo "<pre>";
-                        print_r($genreAll);
-                        die;
+//                        echo "<pre>";
+//                        print_r($genreAll);
+//                        die;
 			Cache::write("genre".$country, $genreAll);
 		}
 	}
