@@ -72,4 +72,6 @@
 	
 	Router::connect('/admin', array('controller' => 'users', 'action' => 'index', 'admin' => true));
 	
-	Router::connect('/:language/:controller/:action/*', array(), array('language' => '[a-z]{2}'));	
+	Router::connect('/:language/:controller/:action/*', array(), array('language' => '[a-z]{2}'));
+	Router::connect('/homes/chooser', array('controller' => 'homes', 'action' => 'chooser'));
+        
