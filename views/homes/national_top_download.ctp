@@ -23,7 +23,7 @@ jQuery(document).ready(function() {
 							<div id="left-part">
 								<div class="text-box vscrollable" id='tab-2-scroller-div' style="width:100%;left: -8px;">
 									<ul>
-										<?php if(count($nationalTopDownload) > 0){ ?>
+										<?php if(trim($nationalTopDownload) != "" && count($nationalTopDownload) > 0){ ?>
 										<?php
 											$j = 0;
 											$k = 2000;
