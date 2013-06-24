@@ -269,43 +269,47 @@ STR;
                 $data = array();
 
                 $sql_national_100_v = <<<STR
-	SELECT 
-		Video.ProdID,
-		Video.ReferenceID,
-		Video.Title,
-		Video.ArtistText,
-		Video.DownloadStatus,
-		Video.VideoTitle,
-		Video.Artist,
-		Video.Advisory,
-		Video.Sample_Duration,
-		Video.FullLength_Duration,
-		Video.provider_type,
-		Genre.Genre,
-		Country.Territory,
-		Country.SalesDate,
-		Full_Files.CdnPath,
-		Full_Files.SaveAsName,
-		Full_Files.FileID,
-		PRODUCT.pid
-	FROM
-		video AS Video
-			LEFT JOIN
-		File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-			LEFT JOIN
-		Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-			LEFT JOIN
+	                SELECT 
+                                Video.ProdID,
+                                Video.ReferenceID,
+                                Video.Title,
+                                Video.ArtistText,
+                                Video.DownloadStatus,
+                                Video.VideoTitle,
+                                Video.Artist,
+                                Video.Advisory,
+                                Video.Sample_Duration,
+                                Video.FullLength_Duration,
+                                Video.provider_type,
+                                Genre.Genre,
+                                Country.Territory,
+                                Country.SalesDate,
+                                Full_Files.CdnPath,
+                                Full_Files.SaveAsName,
+                                Full_Files.FileID,
+                                Image_Files.FileID,
+                                Image_Files.CdnPath,
+                                Image_Files.SourceURL,
+                                PRODUCT.pid
+                FROM
+                                video AS Video
+                                                LEFT JOIN
+                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                                                LEFT JOIN
+                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                                                LEFT JOIN
          {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
-			LEFT JOIN
-		PRODUCT ON (PRODUCT.ProdID = Video.ProdID) 
-	WHERE
-		( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
-	GROUP BY Video.ProdID
-	ORDER BY FIELD(Video.ProdID,
-			$ids) ASC
-	LIMIT 100 
-	  
+                                                LEFT JOIN
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                LEFT JOIN
+                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                GROUP BY Video.ProdID
+                ORDER BY FIELD(Video.ProdID, $ids) ASC
+                LIMIT 100 
 STR;
+
                 // echo $sql_national_100_v; die;
                 $data = $this->Album->query($sql_national_100_v);
                 $this->log($sql_national_100_v, "cachequery");
