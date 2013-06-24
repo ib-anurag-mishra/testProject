@@ -3368,5 +3368,153 @@ STR;
 		echo $finalSongUrl;
 		exit;
 	}
+        
+        /*
+  * Function Name : chooser
+  * Desc : action for thelibrary login page
+  * 
+  * Function added by Mangesh
+  */
+	function chooser()
+	{
+	    $this->layout = 'home';
+                $territories = $this->Library->find('all',array('fields'=>array('DISTINCT Library.library_territory','Library.library_country') , 'conditions' => array("Library.library_territory <> 'US' AND Library.library_territory <> 'UNITE'")));
+                $territorylist[''] = '';
+		foreach($territories as $territory)
+		{
+			$territorylist["{$territory['Library']['library_territory']}"] = $territory['Library']['library_country'];
+		}
+		$this->set('territorylist',$territorylist);
+               
+                if($this->data)
+		{
+                  
+
+			if(isset($this->data['Library_details1']['zipcode']))
+			{
+                            	$zip = mysql_real_escape_string($this->data['Library_details1']['zipcode']);
+				$city = mysql_real_escape_string($this->data['Library_details1']['city']);
+				$state = mysql_real_escape_string($this->data['Library_details1']['state']);
+				$library_name = mysql_real_escape_string($this->data['Library_details1']['library_name']);
+				$country = mysql_real_escape_string($this->data['Library_details1']['country']);
+				if($zip != '' || $city != '' || $state != '' || $library_name != '' || $country != '')
+				{
+					//Check for Library name should not start with Free, Public or Library
+					$pos1 = stripos('Free Library', $library_name);
+					$pos2 = stripos('Public Library', $library_name);
+					if((is_numeric($pos1)) || (is_numeric($pos2))){
+						$this->Session->setFlash('Please Enter a valid Library name');
+					}
+					else{
+                                            
+
+						//Added code for City
+						$other_condition = '';
+						if(!empty($city)){
+							if($other_condition != ''){
+								$other_condition = ' library_city like "%' . $city . '%"';
+							}
+							else{
+								$other_condition .= ' library_city like "%' . $city . '%"';
+							}
+						}
+						//Added code for state
+						if(!empty($state)){
+							if($other_condition != ''){
+								$other_condition .= ' OR library_state like "%' . $state . '%"';
+							}
+							else{
+								$other_condition .= 'library_state like "%' . $state . '%"';
+							}
+						}
+						//Added code for library name
+						if(!empty($library_name)){
+							if($other_condition != ''){
+								$other_condition .= ' OR library_name like "%' . $library_name . '%"';
+							}
+							else{
+								$other_condition .= 'library_name like "%' . $library_name . '%"';
+							}
+						}
+						if(!empty($country)){
+							if($other_condition != ''){
+								$other_condition .= ' OR library_territory = "' . $country . '"';
+							}
+							else{
+								$other_condition .= 'library_territory = "' . $country . '"';
+							}
+						}
+
+						if($zip == ''){
+							$result = $this->Library->find('all',array('conditions' => array('OR'=>array($other_condition))));
+                                                    
+                                                        
+                                                        if(!empty($result)){
+								$this->set('libraries',$result);
+							}
+							else{
+								$this->set('msg','Sorry, currently there are no libraries in your area that subscribe to 	Freading.');
+							}
+                                                         
+						}
+						else{
+							$zipRows = $this->Zipcode->find('first',array('fields'=>'DISTINCT(ZipCode)','conditions'=>array('ZipCode' => $zip)));
+
+							if(!empty($zipRows))
+							{
+								App::import('vendor', 'zipcode_class', array('file' => 'zipcode.php'));
+								$zipcode = new zipcode_class();
+
+								$result = $zipcode->get_zips_in_range($zipRows['Zipcode']['ZipCode'],60,_ZIPS_SORT_BY_DISTANCE_ASC, true);
+
+								$this->Library->recursive = -1 ;
+								$condition = implode("',library_zipcode) OR find_in_set('",explode(',',$result));
+
+
+
+
+								$result = $this->Library->find('all',array('conditions' => array('OR'=>array("substring(library_zipcode,1,5) in ($result)","find_in_set('".$condition."',library_zipcode)", $other_condition))));
+								if(!empty($result)){
+									$this->set('libraries',$result);
+								}
+								else{
+									$this->set('msg','Sorry, currently there are no libraries in your area that subscribe to 	Freading.');
+								}
+							}
+							else
+							{
+								$this->Session->setFlash('Please Enter a valid zip code');
+							}
+						}
+                                                                                                
+					}
+				}
+				else{
+					$this->Session->setFlash('Please enter either your Library Name, Zip Code, City, State or Country.');
+				}
+			}
+			else if(isset($this->data['Library_details1']['country']))
+			{
+				if($this->data['Library_details1']['country'] != '')
+				{
+					$territory = $this->data['Library_details1']['country'];
+					$this->Library->recursive = -1 ;
+					$result = $this->Library->find('all',array('conditions' => "library_territory = '$territory'"));
+					if(!empty($result))
+					$this->set('libraries',$result);
+					else
+					$this->Session->setFlash('Sorry no libraries found in the country');
+				}
+				else
+				{
+					$this->Session->setFlash('Please select a country');
+				}
+			}
+			else
+			{
+				$this->Session->setFlash('Please enter something valid');
+			}
+		} 
+	}
 }
 ?>

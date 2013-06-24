@@ -121,7 +121,7 @@
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/login'> <?php __("Download Now");?></a>
+     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
 
 
     <?php
@@ -223,7 +223,7 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
 
                     $nationalTopDownload[$i]['Video']['status'] = 'avail1';
-                    if(isset($nationalTopVideoDownload[$i]['Video']['status']) && ($nationalTopVideoDownload[$i]['Video']['status'] != 'avail') ) {
+                    if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
                             <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -280,7 +280,7 @@
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/login'> <?php __("Download Now");?></a>
+     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
 
 
     <?php
@@ -334,10 +334,10 @@
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
-														<a href="#">Planet Pit</a>
+														<a href="artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
-														<a href="#">Pitbull</a>
+														<a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a>
 													</div>
 												</div>
 											</li>
@@ -395,7 +395,11 @@
 																<li><a href="#">Playlist 10</a></li>
 															</ul>
 														</div>
+                                                                                                    <?php if($this->Session->read('patron')) { ?>
 														<a class="download-now" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>">Download Now</a>
+                                                                                                    <?php }else{ ?>
+                                                                                                    <a class="download-now" href='/users/login'> <?php __("Login");?></a>
+                                                                                                    <?php } ?>
 														<a class="add-to-queue" href="#">Add To Queue</a>
 														<a class="add-to-playlist" href="#">Add To Playlist</a>
 														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
