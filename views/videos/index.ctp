@@ -79,37 +79,21 @@
         <div class="video-top-genres-grid horiz-scroll">
 
             <ul class="clearfix">
+<?php if(!empty($topVideoDownloads)){ ?>
+<li>
 <?php
-$featured_video_array = array(
-    'img/videos/top-genres/zztop-163x97.jpg',
-    'img/videos/top-genres/ryanleslie-163x97.jpg',
-    'img/videos/top-genres/pink-163x97.jpg',
-    'img/videos/top-genres/kingsofleon-163x97.jpg',
-    'img/videos/top-genres/girl-163x97.jpg',
-    'img/videos/top-genres/zztop-163x97.jpg',
-    'img/videos/top-genres/ryanleslie-163x97.jpg',
-    'img/videos/top-genres/pink-163x97.jpg',
-    'img/videos/top-genres/kingsofleon-163x97.jpg',
-    'img/videos/top-genres/girl-163x97.jpg',
-    'img/videos/top-genres/zztop-163x97.jpg',
-    'img/videos/top-genres/ryanleslie-163x97.jpg',
-    'img/videos/top-genres/pink-163x97.jpg',
-    'img/videos/top-genres/kingsofleon-163x97.jpg',
-    'img/videos/top-genres/girl-163x97.jpg',
-    'img/videos/top-genres/zztop-163x97.jpg',
-    'img/videos/top-genres/ryanleslie-163x97.jpg',
-    'img/videos/top-genres/pink-163x97.jpg',
-    'img/videos/top-genres/kingsofleon-163x97.jpg',
-    'img/videos/top-genres/girl-163x97.jpg'
-);
-
-for ($c = 0; $c < count($featured_video_array); $c+=2) {
+$i = 0;
+foreach($topVideoDownloads as $topDownload)
+{
+     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
+     // print_r($featureVideo);
+     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
     ?>
 
-                    <li>
+                    
 
                         <div class="video-cover-container">
-                            <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $featured_video_array[$c]; ?>" width="163" height="97" /></a>
+                            <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
@@ -127,37 +111,23 @@ for ($c = 0; $c < count($featured_video_array); $c+=2) {
 
                         </div>
                         <div class="video-title">
-                            <a href="#">Planet Pit</a>
+                            <a href="#"><?php echo $topDownload['Video']['VideoTitle']; ?></a>
                         </div>
                         <div class="video-name">
-                            <a href="#">Pitbull</a>
+                            <a href="#"><?php echo $topDownload['Video']['ArtistText']; ?></a>
                         </div>
-                        <div class="video-cover-container">
-                            <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $featured_video_array[$c + 1]; ?>" width="163" height="97" /></a>
-                            <a class="add-to-playlist-button" href="#"></a>
-                            <div class="wishlist-popover">
-
-                                <a class="download-now" href="#">Download Now</a>
-                                <a class="add-to-wishlist" href="#">Add To Wishlist</a>
-
-                                <div class="share clearfix">
-                                    <p>Share via</p>
-                                    <a class="facebook" href="#"></a>
-                                    <a class="twitter" href="#"></a>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="video-title">
-                            <a href="#">Planet Pit</a>
-                        </div>
-                        <div class="video-name">
-                            <a href="#">Pitbull</a>
-                        </div>
-                    </li>
-
+               <?php 
+                $i++;
+                if(($i % 2) == 0) {
+                  echo "</li><li>";  
+                }
+                ?>
     <?php
-}
+    }
+?>
+                    </li>
+                    <?php
+}   
 ?>
 
 
