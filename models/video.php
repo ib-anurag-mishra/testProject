@@ -5,7 +5,7 @@
  Author : m68interactive
  */
 
-class Videos extends AppModel
+class Video extends AppModel
 {
 	var $name = 'Videos';
 	var $useTable = 'videos';
