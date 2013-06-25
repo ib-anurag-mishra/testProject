@@ -8,7 +8,7 @@
 class LatestVideoDownload extends AppModel
 {
   var $name = 'LatestVideoDownload';
-  var $usetable = 'latest_videodownloads';
+  var $useTable = 'latest_videodownloads';
 
 
 }
