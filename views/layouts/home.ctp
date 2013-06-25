@@ -15,7 +15,7 @@
         <?php
         echo $this->Html->meta('icon');
         //echo $javascript->link('ImageDisableRightClick');
-        /* echo $this->Html->css('freegal_styles');
+        echo $this->Html->css('freegal_styles');
           echo $this->Html->css('jquery.autocomplete');
           echo $html->css('colorbox');
           echo $javascript->link('jquery.min');
@@ -26,7 +26,7 @@
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
           echo $javascript->link('jquery.bgiframe');
-          echo $javascript->link('jquery.autocomplete'); */
+          echo $javascript->link('jquery.autocomplete'); 
         ?>		
 
 
@@ -58,6 +58,7 @@
             <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/faq.less" />
 
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>

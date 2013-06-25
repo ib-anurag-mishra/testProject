@@ -27,9 +27,9 @@
 								<div class="grids">
 									
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
-										<ul>
+										<ul style="width:27000px;">
 
-                                                        <?php if(count($nationalTopDownload) > 0){ ?>
+                                                                                <?php if(count($nationalTopDownload) > 0){ ?>
 										<?php
 											$j = 0;
 											$k = 2000;
@@ -39,6 +39,8 @@
 											}
 											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
                                                                                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+
+ /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
 										?>
 											<li>
 												<div class="top-100-songs-detail">
@@ -49,7 +51,86 @@
 												echo $slNo;
 											?></div>
 														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
+
+
+												
+
+
+<?php
+
+    if($this->Session->read('patron')) {
+        if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
+
+            if($libraryDownload == '1' && $patronDownload == '1') {
+
+                    $nationalTopDownload[$i]['Song']['status'] = 'avail1';
+                    if($nationalTopDownload[$i]['Song']['status'] != 'avail') {
+                            ?>
+        <span class="top-100-download-now-button">
+                            <form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+                            <input type="hidden" name="ProdID" value="<?php echo $nationalTopDownload[$i]["Song"]["ProdID"];?>" />
+                            <input type="hidden" name="ProviderType" value="<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>" />
+                            <span class="beforeClick" id="song_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>">
+                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            </span>
+                            <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                            <span id="download_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                            </form>
+        </span>
+                            <?php	
+                    } else {
+                    ?>
+                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                    <?php
+                    }
+
+            } else {
+
+                if($libraryDownload != '1') {
+                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                        $wishlistCount = $wishlist->getWishlistCount();
+                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
+                        ?> 
+                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <?php
+                        } else {
+                                $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
+                                if($wishlistInfo == 'Added to Wishlist') {
+                                ?> 
+                                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                <?php 
+                                } else { 
+                                ?>
+                                        <span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                        <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+                                <?php	
+                                }
+                        }
+
+                } else { 
+                ?>
+                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                <?php	
+                }												
+            }
+        } else {
+        ?>
+            <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+        <?php
+        }
+}else{
+
+?>
+     <a class="top-100-download-now-button" href='/users/login'> <?php __("Download Now");?></a>
+
+
+    <?php
+    }
+      ?>
+
+
+
+
 														<a class="add-to-playlist-button" href="#"></a>
 														<div class="wishlist-popover">
 															<div class="playlist-options">
@@ -107,15 +188,33 @@
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
 										<ul>
+
+                                                                    <?php if(count($nationalTopVideoDownload) > 0){ ?>
+										<?php
+											$j = 0;
+											$k = 2000;
+											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
+	
+											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
+                                                                                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+
+ /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
+										?>
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="#"><img src="img/news/top-100/grid/calvinharris423x250.jpg" alt="calvinharris423x250" width="423" height="250" /></a>
-														<div class="top-100-ranking">12</div>
+														<a href="#"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
+														<div class="top-100-ranking"><?php
+												$slNo = ($i + 1);
+												echo $slNo;
+											?></div>
 														<a href="#" class="preview"></a>
 														<a class="top-100-download-now-button" href="#">Download Now</a>
+														
 														<a class="add-to-playlist-button" href="#"></a>
+														
 														<div class="wishlist-popover">
+															<!--
 															<div class="playlist-options">
 																<ul>
 																	<li><a href="#">Create New Playlist</a></li>
@@ -131,8 +230,10 @@
 																	<li><a href="#">Playlist 10</a></li>
 																</ul>
 															</div>
+															
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
 															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 															
 															<div class="share clearfix">
@@ -143,6 +244,14 @@
 															
 														</div>
 													</div>
+
+                                                                                                <?php											
+                                                                                                    if (strlen($nationalTopVideoDownload[$i]['Video']['VideoTitle']) >= 35 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                    } else {
+                                                                                                            $songTitle = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['VideoTitle']);
+                                                                                                    }
+                                                                                                ?>
 													<div class="song-title">
 														<a href="#">Planet Pit</a>
 													</div>
@@ -151,7 +260,11 @@
 													</div>
 												</div>
 											</li>
-											
+											<?php 
+											$k++;
+											}
+                                                                                    }
+                                                                                     ?>	
 										</ul>
 									</div>
 								</div> <!-- end .grids -->
@@ -261,9 +374,7 @@
 								
 								<div id="coming-soon-singles-grid" class="horiz-scroll">
 									<ul class="clearfix">
-
                                                                             <?php  
-
                                                                             $total_songs = count($coming_soon_rs);
                                                                             $sr_no = 0;
 
@@ -294,7 +405,7 @@
 													</div>
 												</div>
 												<div class="song-title">
-													<a href="#">
+													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     if(strlen($value['Song']['SongTitle'])>20)
                                                                                                                     echo substr($value['Song']['SongTitle'],0,20)."..."; 
@@ -303,7 +414,7 @@
                                                                                                         </a>
 												</div>
 												<div class="artist-name">
-													<a href="#">                                                                                                        
+													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>20)
                                                                                                                     echo substr($value['Song']['Artist'],0,20)."..."; 
@@ -323,11 +434,18 @@
 									</ul>
 								</div> <!-- end #coming-soon-singles-grid -->
 								<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
-									<ul class="clearfix">
-										<li>
+									<ul class="clearfix">										
+                                                                            <?php                                                                              
+                                                                            $total_videos = count($coming_soon_videos);
+                                                                            $sr_no = 0;
+                                                                            foreach($coming_soon_videos as $key => $value)
+                                                                            {     
+                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;?>
+                                                                            <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/calvinharris275x162.jpg" alt="calvinharris275x162" width="162" height="162" /></a>
+													<a href="#"><img src="img/news/coming_soon/videos/rockband275x162.jpg" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>
@@ -342,277 +460,33 @@
 													</div>
 												</div>
 												<div class="video-title">
-													<a href="#">Brave</a>
+													 <a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                                                                            <?php
+                                                                                                                    if(strlen($value['Video']['VideoTitle'])>20)
+                                                                                                                    echo substr($value['Video']['VideoTitle'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['VideoTitle'];
+                                                                                                             ?> </a>
 												</div>
 												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
+													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+                                                                                                         <?php 
+                                                                                                                    if(strlen($value['Video']['Artist'])>20)
+                                                                                                                    echo substr($value['Video']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['Artist'];
+                                                                                                             ?></a>
 												</div>
 											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/aerosmith275x162.jpg" alt="aerosmith275x162" width="162" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/pink275x162.jpg" alt="pink275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/pink275x162.jpg" alt="pink275x162"  width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										<li>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
-										<li>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles<a href="#">
-												</div>
-											</div>
-										<li>
-											<div class="video-detail">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162"  width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-											<div class="video-detail last">
-												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="img/news/coming_soon/videos/lang275x162.jpg" alt="lang275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
-														
-													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-												</div>
-												<div class="video-title">
-													<a href="#">Brave</a>
-												</div>
-												<div class="artist-name">
-													<a href="#">Sara Bareilles</a>
-												</div>
-											</div>
-										</li>
+											
+										<?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
+
+                                                                                <?php
+                                                                                        $sr_no++; 
+                                                                                }
+                                                                                ?>
+										
 									</ul>
 								</div><!-- end videos grid -->
-								
+																
 							</div> <!-- end coming soon -->
 							
 							<div class="whats-happening">
@@ -681,14 +555,5 @@
 							
 							
 							
-						</section> <!-- end .news -->
-						
-						
-					<script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
-<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
+						</section> <!-- end .news -->	
 
-<script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
-<script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
-
-	
-</html>

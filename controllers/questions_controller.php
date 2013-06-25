@@ -38,6 +38,7 @@ class QuestionsController extends AppController
 	 Desc : actions index for showing faqs at user end
         */
 	function index() {
+           
 		if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
 			$this->Session->write('Config.language', 'en');
 		}
@@ -55,6 +56,7 @@ class QuestionsController extends AppController
 	 Desc : actions index for showing individual faqs at user end
         */
 	function view($id = null) {
+            
 		if (!$id) {
 			$this->Session->setFlash(sprintf(__('Invalid %s', true), 'question'));
 			$this->redirect(array('action' => 'index'));
