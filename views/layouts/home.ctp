@@ -60,12 +60,15 @@
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/faq.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/videos.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
             
             
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
             <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
             
+            
+            <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
                        
 
 

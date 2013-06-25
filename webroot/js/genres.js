@@ -93,7 +93,7 @@ $(document).ready(function(){
 	
 	$('.more-by').on('mousedown',function(e){
 		
-		$(this).css('background','url(images/genres/more-by-click.jpg)')
+		$(this).css('background','url(../img/genres/more-by-click.jpg)')
 	
 	});
 	
