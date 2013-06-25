@@ -17,7 +17,7 @@ class VideosController extends AppController {
         $prefix = strtolower($this->Session->read('territory'));
         
         if($topDownloads = Cache::read("top_download_videos".$this->Session->read('territory')) === false){
-            $topDownloadSQL = "SELECT Vdownloads.ProdID, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Vdownloads.id)) AS COUNT FROM vdownloads as Vdownloads LEFT JOIN video as Video ON (Vdownloads.ProdID = Video.ProdID AND Vdownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN libraries as Library ON Library.id=Vdownloads.library_id WHERE library_id=1 AND Library.library_territory='".$this->Session->read('territory')."' GROUP BY Vdownloads.ProdID ORDER BY COUNT DESC";
+            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='".$this->Session->read('territory')."' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
             $topDownloads = $this->Album->query($topDownloadSQL);
             if(!empty($topDownloads)){
                 Cache::write("top_download_videos".$this->Session->read('territory'), $topDownloads);
