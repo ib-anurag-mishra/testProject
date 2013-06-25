@@ -89,7 +89,7 @@ Class UsersController extends AppController
 						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
 						//$this->redirect(array('controller' => 'users', 'action' => $action));
                                                 $this->Session->write("layout_option", 'login');
-                                                $this->redirect('https://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
+                                                $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
 					}
                                     } else {
                                         $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
