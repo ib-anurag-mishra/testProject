@@ -64,7 +64,7 @@
             if($libraryDownload == '1' && $patronDownload == '1') {
 
                     $nationalTopDownload[$i]['Song']['status'] = 'avail1';
-                    if($nationalTopDownload[$i]['Song']['status'] != 'avail') {
+                    if(isset($nationalTopDownload[$i]['Song']['status']) && ($nationalTopDownload[$i]['Song']['status'] != 'avail')) {
                             ?>
         <span class="top-100-download-now-button">
                             <form method="Post" id="form<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
@@ -121,7 +121,7 @@
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/login'> <?php __("Download Now");?></a>
+     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
 
 
     <?php
@@ -195,7 +195,7 @@
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
 	
-											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
+											$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
                                                                                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
  /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
@@ -209,7 +209,88 @@
 												echo $slNo;
 											?></div>
 														<a href="#" class="preview"></a>
-														<a class="top-100-download-now-button" href="#">Download Now</a>
+
+
+
+														
+
+
+<?php
+
+    if($this->Session->read('patron')) {
+        if($nationalTopVideoDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) { 
+
+            if($libraryDownload == '1' && $patronDownload == '1') {
+
+                    $nationalTopDownload[$i]['Video']['status'] = 'avail1';
+                    if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
+                            ?>
+                            <span class="top-100-download-now-button">
+                            <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+                            <input type="hidden" name="ProdID" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"];?>" />
+                            <input type="hidden" name="ProviderType" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>" />
+                            <span class="beforeClick" id="song_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>">
+                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            </span>
+                            <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                            <span id="download_loader_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                            </form>
+                            </span>
+                            <?php	
+                    } else {
+                    ?>
+                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                    <?php
+                    }
+
+            } else {
+
+                if($libraryDownload != '1') {
+                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                        $wishlistCount = $wishlist->getWishlistCount();
+                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
+                        ?> 
+                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <?php
+                        } else {
+                                $wishlistInfo = $wishlist->getWishlistData($nationalTopVideoDownload[$i]["Video"]["ProdID"]);
+                                if($wishlistInfo == 'Added to Wishlist') {
+                                ?> 
+                                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                <?php 
+                                } else { 
+                                ?>
+                                        <span class="beforeClick" id="wishlist<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                        <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+                                <?php	
+                                }
+                        }
+
+                } else { 
+                ?>
+                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                <?php	
+                }												
+            }
+        } else {
+        ?>
+            <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($nationalTopVideoDownload[$i]['Country']['SalesDate'])){ echo date("F d Y", strtotime($nationalTopVideoDownload[$i]['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+        <?php
+        }
+}else{
+
+?>
+     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
+
+
+    <?php
+    }
+    ?>
+
+
+
+
+
 														
 														<a class="add-to-playlist-button" href="#"></a>
 														
@@ -253,10 +334,10 @@
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
-														<a href="#">Planet Pit</a>
+														<a href="artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
-														<a href="#">Pitbull</a>
+														<a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a>
 													</div>
 												</div>
 											</li>
@@ -314,7 +395,11 @@
 																<li><a href="#">Playlist 10</a></li>
 															</ul>
 														</div>
+                                                                                                    <?php if($this->Session->read('patron')) { ?>
 														<a class="download-now" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>">Download Now</a>
+                                                                                                    <?php }else{ ?>
+                                                                                                    <a class="download-now" href='/users/login'> <?php __("Login");?></a>
+                                                                                                    <?php } ?>
 														<a class="add-to-queue" href="#">Add To Queue</a>
 														<a class="add-to-playlist" href="#">Add To Playlist</a>
 														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
@@ -433,7 +518,7 @@
 										
 									</ul>
 								</div> <!-- end #coming-soon-singles-grid -->
-								<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
+									<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
 									<ul class="clearfix">										
                                                                             <?php                                                                              
                                                                             $total_videos = count($coming_soon_videos);
@@ -445,7 +530,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img src="img/news/coming_soon/videos/rockband275x162.jpg" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
+													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>
