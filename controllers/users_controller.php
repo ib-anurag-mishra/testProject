@@ -71,9 +71,11 @@ Class UsersController extends AppController
                         
 			if(!empty($library_data))
 			{
-				if($this->Session->read('library') == '' && $this->Session->read('patron')== '')
+                            	if($this->Session->read('loginchk') == '' && $this->Session->read('patron')== '')
 				{
-					if($library_data['Library']['library_authentication_method'] == 'referral_url')
+                                    
+                                    if($_SERVER['REQUEST_URI'] == '/users/redirection_manager'){
+                                        if($library_data['Library']['library_authentication_method'] == 'referral_url')
 					{
 						$referral = explode(",",$library_data['Library']['library_domain_name']);
 						$this->redirect($referral[0]);
@@ -86,13 +88,12 @@ Class UsersController extends AppController
 					{
 						$action = $this->method_action_mapper($library_data['Library']['library_authentication_method']);
 						//$this->redirect(array('controller' => 'users', 'action' => $action));
-            if($action != 'login'){
-              $this->Session->write("layout_option", 'login');
-            } else {
-              $this->Session->write("layout_option", 'login');
-            }
-						$this->redirect('https://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
+                                                $this->Session->write("layout_option", 'login');
+                                                $this->redirect('https://'.$_SERVER['HTTP_HOST'].'/users/'.$action);
 					}
+                                    } else {
+                                        $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/index');
+                                    }
 				}
 				else
 				{
@@ -399,6 +400,7 @@ Class UsersController extends AppController
 				}*/
 
 				$this->Session->write("library", $libraryId);
+                                $this->Session->write("loginchk", 'Yes');
                                 
                                 //check this library exist is in the library timezone table
                                 $countLibPicksSql ='select count(*) as total from libraries_timezone  where library_id = "'.$this->Session->read("library").'"';
@@ -1486,6 +1488,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative","innovative");
@@ -1729,6 +1732,7 @@ Class UsersController extends AppController
 							}
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_var","innovative_var");
@@ -1925,6 +1929,7 @@ Class UsersController extends AppController
 						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("mdlogin_reference","mdlogin_reference");
@@ -2121,6 +2126,7 @@ Class UsersController extends AppController
 						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("mndlogin_reference","mndlogin_reference");
@@ -2373,6 +2379,7 @@ Class UsersController extends AppController
 
 					}*/
 					$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                        $this->Session->write("loginchk", 'Yes');
 					$this->Session->write("patron", $patronId);
 					$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 					$this->Session->write("innovative_var_name","innovative_var_name");
@@ -2603,6 +2610,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_wo_pin","innovative_wo_pin");
@@ -2828,6 +2836,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_var_wo_pin","innovative_var_wo_pin");
@@ -3071,6 +3080,7 @@ Class UsersController extends AppController
 
 								}*/
 								$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                                $this->Session->write("loginchk", 'Yes');
 								$this->Session->write("patron", $patronId);
 								$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 								$this->Session->write("sip2","sip2");
@@ -3301,6 +3311,7 @@ Class UsersController extends AppController
 
 								  }*/
 								  $this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                                  $this->Session->write("loginchk", 'Yes');
 								  $this->Session->write("patron", $patronId);
 								  $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 								  $this->Session->write("sip","sip");
@@ -3550,6 +3561,7 @@ Class UsersController extends AppController
 
 							}*/
 							$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                        $this->Session->write("loginchk", 'Yes');
 							$this->Session->write("patron", $patronId);
 							$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 							$this->Session->write("sip2_var","sip2_var");
@@ -3778,6 +3790,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("sip2_var_wo_pin","sip2_var_wo_pin");
@@ -3917,6 +3930,7 @@ Class UsersController extends AppController
 
 			}*/
 			$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                        $this->Session->write("loginchk", 'Yes');
 			$this->Session->write("patron", $user);
 			$this->Session->write("ezproxy","ezproxy");
 			$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
@@ -4158,6 +4172,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_https","innovative_https");
@@ -4406,6 +4421,7 @@ Class UsersController extends AppController
 
 						}*/
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                           $this->Session->write("loginchk", 'Yes');
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 					   $this->Session->write("innovative_var_https","innovative_var_https");
@@ -4634,6 +4650,7 @@ Class UsersController extends AppController
 
 						}*/
 					   $this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                           $this->Session->write("loginchk", 'Yes');
 					   $this->Session->write("patron", $patronId);
 					   $this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 					   $this->Session->write("innovative_var_https_wo_pin","innovative_var_https_wo_pin");
@@ -4878,6 +4895,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("soap","soap");
@@ -5129,6 +5147,7 @@ Class UsersController extends AppController
 
 						}*/
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("innovative_var_https_name","innovative_var_name");
@@ -5334,6 +5353,7 @@ Class UsersController extends AppController
 						$values = array(0 => $date, 1 => session_id());
 						Cache::write("login_".$existingLibraries['0']['Library']['library_territory']."_".$existingLibraries['0']['Library']['id']."_".$patronId, $values);
 						$this->Session->write("library", $existingLibraries['0']['Library']['id']);
+                                                $this->Session->write("loginchk", 'Yes');
 						$this->Session->write("patron", $patronId);
 						$this->Session->write("territory", $existingLibraries['0']['Library']['library_territory']);
 						$this->Session->write("curl_method","curl_method");

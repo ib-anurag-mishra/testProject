@@ -151,7 +151,16 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				</div>
                                 <?php  }else{ ?>
                                <div class="weekly-downloads-container clearfix">
-                                   <div class="label"><?php echo $html->link(__('Login', true), array('controller' => 'users', 'action' =>'login'));?></div>
+                                   <div class="label">
+                                       <?php 
+                                            $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+                                            if($library != 'www' && $library != 'freading' && $library != '50'){
+                                                echo $html->link(__('Log in', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
+                                            } else {
+                                                echo $html->link(__('Log in', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
+                                            }
+                                       ?>
+                                   </div>
                                </div>
                                 <?php  } ?>
 			</header>
