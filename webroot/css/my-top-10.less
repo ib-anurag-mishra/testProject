@@ -1,0 +1,827 @@
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
+
+.my-top-100-page {
+	
+	margin-left: 20px;
+	margin-top: 20px;
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
+
+
+	}
+	
+	header {
+		margin-top: 10px;
+		margin-bottom: 24px;
+		
+		h2 {
+			
+			font-size: 24px;
+			letter-spacing: 1px;
+			
+		}
+		
+		
+	}
+	
+	h3 {
+		
+		font-size: 16px;
+		margin-top: 20px;
+		margin-bottom: 10px;
+		
+	}
+	
+	.album-shadow-container {
+		
+		position: relative;
+		height: 320px;
+		
+		&:after {
+			
+			content: "";
+			position: absolute;
+			right: 0;
+			top:0;
+			background: url(../images/us-top-10/us-top-10-tapered-shadow.png);
+			width: 11px;
+			height: 336px;
+		}
+		
+		.album-scrollable {
+			
+			height: 320px;
+			overflow-x: hidden;
+			overflow-y: hidden;
+			
+			&:hover {
+				
+				overflow-x: scroll;
+			}
+			
+			ul {
+				
+				width: 5000px;
+				
+				li {
+					
+					display: block;
+					float: left;
+					width: 252px;
+					margin-right: 15px;
+					
+					.album-container {
+					
+						position: relative;
+						margin-bottom: 10px;
+						img {
+							
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+							
+						}
+						
+						.top-10-ranking {
+					
+							position: absolute;
+							left: 5px;
+							top:5px;
+							background: rgba(255,255,255,.8);
+							width: 80px;
+							height: 32px;
+							font-size: 28px;
+							line-height: 32px;
+							.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+							text-align: center;
+							font-style: italic;
+							font-weight: bold;
+							
+						}
+
+						
+						
+					}
+					
+					.album-title {
+						font-weight: bold;
+						font-size: 14px;
+						line-height: 15px;
+						margin-bottom: 5px;
+						
+						a {
+							
+							color: #000;
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+					}
+					
+					.artist-name {
+						
+						font-size: 12px;
+						line-height: 15px;
+						color: rgba(0,0,0,.5);
+						
+						a {
+							color: rgba(0,0,0,.5);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+							
+						}
+					}
+					
+				}
+			}
+		}
+	}
+	
+	
+	.songs-shadow-container {
+		position: relative;
+		height: 320px;
+		
+		&:after {
+			
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: url(../images/us-top-10/us-top-10-tapered-shadow.png);
+			width: 11px;
+			height: 320px;
+		}
+	
+		.songs-scrollable {
+			
+			height: 320px;
+			overflow-y: hidden;
+			overflow-x: hidden;
+			
+			&:hover {
+				
+				overflow-x: scroll;
+			}
+			
+			ul {
+				
+				width: 5000px;
+				
+			
+			
+				li {			
+					display: block;
+					float: left;
+					margin-right: 15px;
+				
+					.song-container {
+				
+						position: relative;
+						margin-bottom: 10px;
+						
+						img {
+							
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+							
+						}
+
+							
+						.top-10-ranking {
+					
+							position: absolute;
+							left: 5px;
+							top:5px;
+							background: rgba(255,255,255,.8);
+							width: 80px;
+							height: 32px;
+							font-size: 28px;
+							line-height: 32px;
+							.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+							text-align: center;
+							font-style: italic;
+							font-weight: bold;
+							
+						}
+						
+						.add-to-playlist-button {
+							background: url(../images/add-to-playlist-button.png);
+							display: block;
+							position: absolute;
+							bottom:10px;
+							right:10px;
+							width: 26px;
+							height: 25px;
+							opacity: 0;
+							
+							&:hover {
+								opacity: 1;
+							}
+							
+							
+						}
+						
+						
+						.wishlist-popover {
+						
+							display: none;
+							position: absolute;
+							bottom: 37px;
+							right:10px;
+							font-size: 12px;
+							z-index: 100;
+							width: 120px;
+							
+							
+							
+							.box-shadow(0 0 3px rgba(0,0,0,.5));
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							a {
+								background: #fff;
+								
+								display: block;
+								color: #000;
+								padding: 5px 5px 5px 10px;
+							
+								line-height: 20px;
+								text-decoration: none;
+								
+								&:hover {
+									
+									background: #999;
+								}
+								
+							}
+							
+							.playlist-options {
+								position: absolute;
+								right: -147px;
+								top:0;
+								display: none;
+								background: #fff;
+								width: 145px;
+								height: 156px;
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								
+								overflow-x: hidden;
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 5px 5px 5px 10px;
+											text-decoration: none;
+											
+											&:hover {
+												
+												text-decoration: none;
+											}
+										}
+									}
+								}
+									
+							}
+							
+							.share {
+								
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: relative;
+								width: 120px;
+								height: 32px;
+								
+								p {
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									
+								}
+								
+								.facebook {
+									background: url(../images/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 62px;
+									top:4px;
+									
+									&:hover {
+										background: url(../images/facebook-hover.png) no-repeat center center;
+										
+									}
+								}
+								
+								.twitter {
+									background: url(../images/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									left: 82px;
+									top:4px;
+									
+									&:hover {
+										
+										background: url(../images/twitter-hover.png) no-repeat center center;
+									}
+								}
+							}
+							
+							.add-to-playlist {
+									
+								background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+								
+								&:hover {
+									
+									color: rgba(0,0,0,1);
+									background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
+								}
+							}
+						}
+						
+						.preview {
+					
+							display: block;
+							position: absolute;
+							left: 117px;
+							top:114px;
+							width: 23px;
+							height: 23px;
+							background: url(../images/preview-off.png);
+							opacity: 0;
+							
+							
+							&:hover {
+								
+								background: url(../images/preview-hover.png);
+								opacity: 1;
+							}
+							
+							&.active {
+								
+								background: url(../images/preview-click.png);
+								opacity: 1;
+								width: 21px;
+								height: 21px;
+							
+							}
+							
+							
+						
+						}
+						
+						
+						.top-10-download-now-button {
+							background: rgb(255,255,255);
+							display: block;
+							position: absolute;
+							width: 124px;
+							height: 25px;
+							line-height: 27px;
+							right: 38px;
+							bottom:10px;
+							opacity: 0;
+							text-transform: uppercase;
+							font-size: 12px;
+							text-align: center;
+							
+							color:rgb(0,0,0);
+							text-decoration: none;	
+							font-weight: bold;
+							
+							
+						}
+					}
+					
+					.album-title {
+						font-weight: bold;
+						font-size: 14px;
+						line-height: 15px;
+						margin-bottom: 5px;
+						
+						a {
+							
+							color: #000;
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+					}
+					
+					.artist-name {
+						
+						font-size: 12px;
+						line-height: 15px;
+						color: rgba(0,0,0,.5);
+						
+						a {
+							color: rgba(0,0,0,.5);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+							
+						}
+					}	
+				}	
+			
+			}		
+		}
+						
+	
+	
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	.videos-shadow-container {
+		position: relative;
+		height: 320px;
+		
+		&:after {
+			
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 0;
+			background: url(../images/us-top-10/us-top-10-tapered-shadow.png);
+			width: 11px;
+			height: 320px;
+		}
+	
+		.videos-scrollable {
+			
+			height: 320px;
+			overflow-y: hidden;
+			overflow-x: hidden;
+			
+			&:hover {
+				
+				overflow-x: scroll;
+			}
+			
+			ul {
+				
+				width: 7000px;
+				
+			
+			
+				li {			
+					display: block;
+					float: left;
+					margin-right: 15px;
+				
+					.video-container {
+				
+						position: relative;
+						margin-bottom: 10px;
+						
+						img {
+							
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+							
+						}
+
+							
+						.top-10-ranking {
+					
+							position: absolute;
+							left: 5px;
+							top:5px;
+							background: rgba(255,255,255,.8);
+							width: 80px;
+							height: 32px;
+							font-size: 28px;
+							line-height: 32px;
+							.box-shadow(1px 1px 3px rgba(0,0,0,.5));
+							text-align: center;
+							font-style: italic;
+							font-weight: bold;
+							
+						}
+						
+						.add-to-playlist-button {
+							background: url(../images/add-to-playlist-button.png);
+							display: block;
+							position: absolute;
+							bottom:10px;
+							right:10px;
+							width: 26px;
+							height: 25px;
+							opacity: 0;
+							
+							&:hover {
+								opacity: 1;
+							}
+							
+							
+						}
+						
+						
+						.wishlist-popover {
+						
+							display: none;
+							position: absolute;
+							bottom: 37px;
+							right:10px;
+							font-size: 12px;
+							z-index: 100;
+							width: 120px;
+							
+							
+							
+							.box-shadow(0 0 3px rgba(0,0,0,.5));
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							a {
+								background: #fff;
+								
+								display: block;
+								color: #000;
+								padding: 5px 5px 5px 10px;
+							
+								line-height: 20px;
+								text-decoration: none;
+								
+								&:hover {
+									
+									background: #999;
+								}
+								
+							}
+							
+							.playlist-options {
+								position: absolute;
+								right: -147px;
+								top:0;
+								display: none;
+								background: #fff;
+								width: 145px;
+								height: 156px;
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								
+								overflow-x: hidden;
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 5px 5px 5px 10px;
+											text-decoration: none;
+											
+											&:hover {
+												
+												text-decoration: none;
+											}
+										}
+									}
+								}
+									
+							}
+							
+							.share {
+								
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: relative;
+								width: 120px;
+								height: 32px;
+								
+								p {
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									
+								}
+								
+								.facebook {
+									background: url(../images/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 62px;
+									top:4px;
+									
+									&:hover {
+										background: url(../images/facebook-hover.png) no-repeat center center;
+										
+									}
+								}
+								
+								.twitter {
+									background: url(../images/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									left: 82px;
+									top:4px;
+									
+									&:hover {
+										
+										background: url(../images/twitter-hover.png) no-repeat center center;
+									}
+								}
+							}
+							
+							.add-to-playlist {
+									
+								background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+								
+								&:hover {
+									
+									color: rgba(0,0,0,1);
+									background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
+								}
+							}
+						}
+						
+						.preview {
+					
+							display: block;
+							position: absolute;
+							left: 117px;
+							top:114px;
+							width: 23px;
+							height: 23px;
+							background: url(../images/preview-off.png);
+							opacity: 0;
+							
+							
+							&:hover {
+								
+								background: url(../images/preview-hover.png);
+								opacity: 1;
+							}
+							
+							&.active {
+								
+								background: url(../images/preview-click.png);
+								opacity: 1;
+								width: 21px;
+								height: 21px;
+							
+							}
+							
+							
+						
+						}
+						
+						
+						.top-10-download-now-button {
+							background: rgb(255,255,255);
+							display: block;
+							position: absolute;
+							width: 124px;
+							height: 25px;
+							line-height: 27px;
+							right: 38px;
+							bottom:10px;
+							opacity: 0;
+							text-transform: uppercase;
+							font-size: 12px;
+							text-align: center;
+							
+							color:rgb(0,0,0);
+							text-decoration: none;	
+							font-weight: bold;
+							
+							
+						}
+					}
+					
+					.album-title {
+						font-weight: bold;
+						font-size: 14px;
+						line-height: 15px;
+						margin-bottom: 5px;
+						
+						a {
+							
+							color: #000;
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+					}
+					
+					.artist-name {
+						
+						font-size: 12px;
+						line-height: 15px;
+						color: rgba(0,0,0,.5);
+						
+						a {
+							color: rgba(0,0,0,.5);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+							
+						}
+					}	
+				}	
+			
+			}		
+		}
+						
+	
+	
+		
+		
+	}
+	
+	
+	
+	
+}
