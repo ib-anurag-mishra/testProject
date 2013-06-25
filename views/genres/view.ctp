@@ -6,60 +6,85 @@
  */
 ?>
 
-<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
-                            
+          
+<link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />        
+<script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>
+<style>
 
-            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
-            <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
-            <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />	
-
-
-            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
-            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />            
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/login.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/videos.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/individual-videos.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
-            
-            
-
-            
-            
-
-
-            <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script> 
-<?php
-function ieversion()
-{
-	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
-	  if(!isset($reg[1])) {
-		return -1;
-	  } else {
-		return floatval($reg[1]);
-	  }
+.genre_list_item{
+	cursor: pointer;
+	display:block;
 }
-$ieVersion =  ieversion();
+.genre_list_item_all{
+  cursor: pointer;
+	display:block;
+}
+    
+    
+    
+</style>
+<script language="javascript">
+function load_genres(link , id_serial , genre_name)
+{
+	jQuery("#ajax_genrelist_content").empty().html(jQuery("#ajx_loader").html());
+	jQuery('#ajax_genrelist_content').load(link);
+	jQuery('.genre_list_item_all,.genre_list_item').css('font-weight' , 'normal');
+	jQuery('#genre_list_item_'+id_serial).css('font-weight' , 'bold');
+        
+//	jQuery(".breadCrumb").find("a:eq(3)").html(genre_name);
+//	jQuery(".breadCrumb").find("a:eq(3)").attr('href' , link );
+//	jQuery(".breadCrumb").find("a:eq(3)").attr('href' , jQuery(".breadCrumb").find("a:eq(2)").attr('href').replace('ajax_view' , 'view'));
+//
+//	 jQuery("#genre_artist_search a").each(function () {
+//		jQuery(this).attr('href' , jQuery(this).attr('href').replace('ajax_view' , 'view'));
+//	});
+
+
+	//setInterval('VSA_initScrollbars()' , 500);
+}
+</script>            
+<?php
+
+
+
+$genre_text_conversion = array(
+		"Children's Music" =>  "Children's" ,
+		"Classic"  =>  "Soundtracks",
+		"Comedy/Humor"  =>  "Comedy",
+		"Country/Folk"  =>  "Country",
+		"Dance/House"  =>  "Dance",
+		"Easy Listening Vocal" => "Easy Listening",
+		"Easy Listening Vocals"  =>  "Easy Listening",
+		"Folk/Blues" => "Folk",
+		"Folk/Country" => "Folk",
+		"Folk/Country/Blues" => "Folk",
+		"Hip Hop Rap" => "Hip-Hop Rap",
+		"Rap/Hip-Hop" => "Hip-Hop Rap",
+		"Rap / Hip-Hop" => "Hip-Hop Rap",
+		"Jazz/Blues"  =>  "Jazz",
+		"Kindermusik"  =>  "Children's",
+		"Miscellaneous/Other" => "Miscellaneous",
+		"Other" => "Miscellaneous",
+		"Age/Instumental" => "New Age",
+		"Pop / Rock" =>  "Pop/Rock",
+		"R&B/Soul" => "R&B",
+		"Soundtracks" => "Soundtrack",
+		"Soundtracks/Musicals" => "Soundtrack",
+		"World Music (Other)" => "World Music"
+	);
+	
+	$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+	
+	$html->addCrumb(__('All Genre', true), '/genres/view/');
+	$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));	
+	$totalRows = count($genresAll);
 ?>
 
 	<div height="400px" style="color:blue;">
-    <?php
-	$totalRows = count($genresAll);
-//		$counters = array($i, ($i+($totalRows*1)), ($i+($totalRows*2)), ($i+($totalRows*3)));
-		foreach ($genresAll as $genres):
-				echo $html->link(ucwords($genres['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($genres['Genre']['Genre'])))."</br>";
-		endforeach;
-//	}
-    ?>
+    
 	</div>
         	<section class="genres-page">
-		<div class="breadcrumbs"><span>Home</span> > <span>Genres</span></div>
+		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
 		<header class="clearfix">
 			<h2>Search for your favorite music.</h2>
 			<div class="faq-link">Need help? Visit our <a href="#">FAQ section.</a></div>
@@ -71,135 +96,110 @@ $ieVersion =  ieversion();
 					
 					<ul>
 						
-						<li><a href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>
-						<li><a href="#" data-genre="Acapella">Acapella</a></li>
-						<li><a href="#" data-genre="Acid">Acid</a></li>
-						<li><a href="#" data-genre="Acid Jazz">Acid Jazz</a></li>
-						<li><a href="#" data-genre="Acid Punk">Acid Punk</a></li>
-						<li><a href="#" data-genre="Adult Contemporary">Adult Contemporary</a></li>
-						<li><a href="#" data-genre="African">African</a></li>
-						<li><a href="#" data-genre="Afro Pop">Afro Pop</a></li>
-						<li><a href="#" data-genre="Alt-Country">Alt-Country</a></li>
-						<li><a href="#" data-genre="Alternative">Alternative</a></li>
-						<li><a href="#" data-genre="Alternative Rock">Alternative Rock</a></li>
-						<li><a href="#" data-genre="Alternative/Indie">Alternative/Indie</a></li>
-						<li><a href="#" data-genre="Alternative/Punk">Alternative/Punk</a></li>
-						<li><a href="#" data-genre="Ambient">Ambient</a></li>
-						<li><a href="#" data-genre="Americana">Americana</a></li>
-						<li><a href="#" data-genre="Acid">Acid</a></li>
-						<li><a href="#" data-genre="Acid Jazz">Acid Jazz</a></li>
-						<li><a href="#" data-genre="Acid Punk">Acid Punk</a></li>
-						<li><a href="#" data-genre="Adult Contemporary">Adult Contemporary</a></li>
-						<li><a href="#" data-genre="African">African</a></li>
-						<li><a href="#" data-genre="Afro Pop">Afro Pop</a></li>
-						<li><a href="#" data-genre="Alt-Country">Alt-Country</a></li>
-						<li><a href="#" data-genre="Alternative">Alternative</a></li>
-						<li><a href="#" data-genre="Alternative Rock">Alternative Rock</a></li>
-						<li><a href="#" data-genre="Alternative/Indie">Alternative/Indie</a></li>
-						<li><a href="#" data-genre="Alternative/Punk">Alternative/Punk</a></li>
-						<li><a href="#" data-genre="Ambient">Ambient</a></li>
-						<li><a href="#" data-genre="Americana">Americana</a></li>
-						<li><a href="#" data-genre="Acid">Acid</a></li>
-						<li><a href="#" data-genre="Acid Jazz">Acid Jazz</a></li>
-						<li><a href="#" data-genre="Acid Punk">Acid Punk</a></li>
-						<li><a href="#" data-genre="Adult Contemporary">Adult Contemporary</a></li>
-						<li><a href="#" data-genre="African">African</a></li>
-						<li><a href="#" data-genre="Afro Pop">Afro Pop</a></li>
-						<li><a href="#" data-genre="Alt-Country">Alt-Country</a></li>
-						<li><a href="#" data-genre="Alternative">Alternative</a></li>
-						<li><a href="#" data-genre="Alternative Rock">Alternative Rock</a></li>
-						<li><a href="#" data-genre="Alternative/Indie">Alternative/Indie</a></li>
-						<li><a href="#" data-genre="Alternative/Punk">Alternative/Punk</a></li>
-						<li><a href="#" data-genre="Ambient">Ambient</a></li>
-						<li><a href="#" data-genre="Americana">Americana</a></li>
-						<li><a href="#" data-genre="Z Genre">Z Genre</a></li>
-					</ul>
+						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>
+					  
+                                                
+            <?php
+                $genre_count = 1;
+                foreach ($genresAll as $genre_all):
+                    if($genre_all['Genre']['Genre'] != ''){
+                            $genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
+                            if($genre_name == $genre){
+                                    ?>
+                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                    <?php
+                            }
+                            else{
+                                    ?>
+                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                    <?php
+                            }
+                }
+                $genre_count++;
+                endforeach;
+            ?>            
+                    	</ul>
 				</div>
 			</div>
 			<div class="border"></div>
+                        
+                 <div style="display:none;" id="ajx_loader"><img style="margin-top:200px;margin-left:270px" src="/img/ajax-loader-big.gif" ></div>
+
+                <div id="ajax_genrelist_content">
+                    
 			<div class="alphabetical-shadow-container">
-				<h3>Artist</h3>
+				<h3><?php __('Artist'); ?></h3>
 				<div class="alphabetical-filter">
-					
-					<ul>
-						
-						<li><a href="#" data-letter="All">ALL</a></li>
-						<li><a href="#" data-letter="#">#</a></li>
-						<li><a href="#" data-letter="A">A</a></li>
-						<li><a href="#" data-letter="B">B</a></li>
-						<li><a href="#" data-letter="C">C</a></li>
-						<li><a href="#" data-letter="D">D</a></li>
-						<li><a href="#" data-letter="E">E</a></li>
-						<li><a href="#" data-letter="F">F</a></li>
-						<li><a href="#" data-letter="G">G</a></li>
-						<li><a href="#" data-letter="H">H</a></li>
-						<li><a href="#" data-letter="I">I</a></li>
-						<li><a href="#" data-letter="J">J</a></li>
-						<li><a href="#" data-letter="K">K</a></li>
-						<li><a href="#" data-letter="L">L</a></li>
-						<li><a href="#" data-letter="M">M</a></li>
-						<li><a href="#" data-letter="N">N</a></li>
-						<li><a href="#" data-letter="O">O</a></li>
-						<li><a href="#" data-letter="P">P</a></li>
-						<li><a href="#" data-letter="Q">Q</a></li>
-						<li><a href="#" data-letter="R">R</a></li>
-						<li><a href="#" data-letter="S">S</a></li>
-						<li><a href="#" data-letter="T">T</a></li>
-						<li><a href="#" data-letter="U">U</a></li>
-						<li><a href="#" data-letter="V">V</a></li>
-						<li><a href="#" data-letter="W">W</a></li>
-						<li><a href="#" data-letter="X">X</a></li>
-						<li><a href="#" data-letter="Y">Y</a></li>
-						<li><a href="#" data-letter="Z">Z</a></li>
-					</ul>
+                                    <ul>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>" data-letter="All">ALL</a></li>                                            
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/spl" data-letter="#">#</a></li> 
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/A" data-letter="A">A</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/B" data-letter="B">B</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/C" data-letter="C">C</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/D" data-letter="D">D</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/E" data-letter="E">E</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/F" data-letter="F">F</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/G" data-letter="G">G</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/H" data-letter="H">H</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/I" data-letter="I">I</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/J" data-letter="J">J</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/K" data-letter="K">K</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/L" data-letter="L">L</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/M" data-letter="M">M</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/N" data-letter="N">N</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/O" data-letter="O">O</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/P" data-letter="P">P</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/Q" data-letter="Q">Q</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/R" data-letter="R">R</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/S" data-letter="S">S</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/T" data-letter="T">T</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/U" data-letter="U">U</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/V" data-letter="V">V</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/W" data-letter="W">W</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/X" data-letter="X">X</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/Y" data-letter="Y">Y</a></li>
+                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/Z" data-letter="Z">Z</a></li>
+                                    </ul>
 				</div>
-			</div>
-			
+			</div> 
+                    
+                    
+                    
+                    
+                    
+                    
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
-				<div class="artist-list">
-					
+				<div class="artist-list">					
 					<ul>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li>
-						<li><a href="#" data-artist="Amanda Ford">Amanda Ford</a></li>
-						<li><a href="#" data-artist="Anneliese Rothenberger">Anneliese Rothenberger</a></li>
-						<li><a href="#" data-artist="Adam Cohen">Adam Cohen</a></li>
-						<li><a href="#" data-artist="ZZ Top">ZZ Top</a></li>
+						
+                                            
+                                         <?php
+                                         
+                                         print_r($genres);
+                                            if(count($genres) > 0){                                                    
+                                                    for ($i = 0; $i < count($genres); $i++) {
+                                                            echo " <li>";
+                                                            $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
+                                                            echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' data-artist='".$ArtistName."'>";
+                                                            echo $ArtistName;
+                                                            echo '</a>';
+                                                            echo '</li>';                                                                    
+                                                    }
+                                                }else{
+                                                        echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
+                                                }
+                                         ?> 
+                                            
+                                          <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
+				
 					</ul>
 				</div>
 			</div>
+                   </div>                 
+                        
+                        
+                        
 			<div class="border"></div>
 			<div class="album-list-shadow-container">
 				<h3>Album</h3>
