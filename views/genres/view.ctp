@@ -175,20 +175,19 @@ $genre_text_conversion = array(
 						
                                             
                                          <?php
-                                         
-                                         print_r($genres);
+                                                           
                                             if(count($genres) > 0){                                                    
-                                                    for ($i = 0; $i < count($genres); $i++) {
-                                                            echo " <li>";
-                                                            $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                                            echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' data-artist='".$ArtistName."'>";
-                                                            echo $ArtistName;
-                                                            echo '</a>';
-                                                            echo '</li>';                                                                    
-                                                    }
-                                                }else{
-                                                        echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
+                                                for ($i = 0; $i < count($genres); $i++) {
+                                                        echo " <li>";
+                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
+                                                        echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' data-artist='".$ArtistName."'>";
+                                                        echo $ArtistName;
+                                                        echo '</a>';
+                                                        echo '</li>';                                                                    
                                                 }
+                                            }else{
+                                                    echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
+                                            }
                                          ?> 
                                             
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
