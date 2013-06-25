@@ -8,7 +8,7 @@
 class Video extends AppModel
 {
 	var $name = 'Videos';
-	var $useTable = 'videos';
+	var $useTable = 'video';
 	var $primaryKey = 'ProdID';
 
 	var $actsAs = array('Containable','Sphinx');
