@@ -8,7 +8,7 @@
 
           
 <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />        
-<script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>
+
 <style>
 
 .genre_list_item{
