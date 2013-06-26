@@ -1039,9 +1039,7 @@ Class ArtistsController extends AppController
 
             
             $htmlContain ='';
-            foreach($albumData as $album_key => $album){                
-              
-           
+            foreach($albumData as $album_key => $album){
              
                 //get the album image
                 if(empty($album['Files']['CdnPath'])){
@@ -1076,7 +1074,7 @@ Class ArtistsController extends AppController
                $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
                      
 			  
-               $htmlContain .= '<div class="album-overview-container">
+              echo $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
