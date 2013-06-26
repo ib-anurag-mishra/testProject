@@ -930,7 +930,7 @@ Class ArtistsController extends AppController
         
         function album_ajax($id=null,$album=null,$provider=null)
 	{
-           // Configure::write('debug', 2);	
+            //Configure::write('debug', 2);	
             $this->layout = false;
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
@@ -959,8 +959,7 @@ Class ArtistsController extends AppController
                     'conditions' => array('Song.ArtistText' => base64_decode($id) ,'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''" ,'Country.Territory' => $country, $cond, 'Song.provider_type = Country.provider_type'),'contain' => array('Country' => array('fields' => array('Country.Territory'))), 'recursive' => 0, 'order'=>array('Song.provider_type DESC')));
 
             $val = '';
-            $val_provider_type = '';
-            print_r( $songs);
+            $val_provider_type = '';           
             
             foreach($songs as $k => $v){
                     $val .= $v['Song']['ReferenceID'].",";
@@ -971,14 +970,22 @@ Class ArtistsController extends AppController
             $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
                    
+            $this->layout = 'home';
+            $this->set('artisttext',base64_decode($id));
+            $this->set('genre',base64_decode($album));
+            $patId = $this->Session->read('patron');
             $libId = $this->Session->read('library');
-     
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Album.Advisory' => 'F');
             }
             else{
                     $cond = "";
             }
+            
             $this->paginate =  array('conditions' =>
                                     array('and' =>
                                             array(
@@ -993,7 +1000,7 @@ Class ArtistsController extends AppController
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                    'Album.Advisory',
+                                            'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1036,7 +1043,8 @@ Class ArtistsController extends AppController
             foreach($albumData as $album_key => $album){
                 
                 print_r($album);
-                die;
+                echo 123;
+           
              
                 //get the album image
                 if(empty($album['Files']['CdnPath'])){
