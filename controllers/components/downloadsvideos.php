@@ -108,9 +108,8 @@ Class DownloadsvideosComponent extends Object
         } else {
             $territory = $mobileTerritory;
         }
-        $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
-        $log_name = 'videos_stored_procedure_web_log_' . date('Y_m_d');
-        $this->log(serialize($country),$log_name);
+        $countryInstance->tablePrefix = strtolower($territory)."_";
+        $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory)));
         if(!empty($country['Country'])){
             return true;
         } else {
