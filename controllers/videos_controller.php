@@ -5,9 +5,25 @@ class VideosController extends AppController {
     var $uses = array('Video','Library','Album','LatestVideodownload','Siteconfig');
     var $components = array('Downloadsvideos');
     var $layout = 'home';
-
+    
+    /*
+    Function Name : beforeFilter
+    Desc : actions that needed before other functions are getting called
+   */
+	function beforeFilter(){
+		parent::beforeFilter();
+		$this->Cookie->name = 'baker_id';
+		$this->Cookie->time = 3600; // or '1 hour'
+		$this->Cookie->path = '/';
+		$this->Cookie->domain = 'freegalmusic.com';
+		//$this->Cookie->key = 'qSI232qs*&sXOw!';
+	}
+    
     function index() {
         $prefix = strtolower($this->Session->read('territory'))."_";
+        
+        $featuredVideos = array();
+        $topDownloads = array();
         
         if ($featuredVideos = Cache::read("featured_videos" . $this->Session->read('territory')) === false) {
             $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $this->Session->read('territory') . "' AND `Country`.`SalesDate` <= NOW()";
