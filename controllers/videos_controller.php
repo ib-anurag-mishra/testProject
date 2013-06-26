@@ -2,22 +2,25 @@
 
 class VideosController extends AppController {
 
-    var $uses = array('Album');
+    var $uses = array('Video','Library','Album','LatestVideodownload','Siteconfig');
+    var $components = array('Downloadsvideos');
     var $layout = 'home';
 
     function index() {
+        $prefix = strtolower($this->Session->read('territory'))."_";
+        
         if ($featuredVideos = Cache::read("featured_videos" . $this->Session->read('territory')) === false) {
-            $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID WHERE `FeaturedVideo`.`territory` = '" . $this->Session->read('territory') . "'";
+            $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $this->Session->read('territory') . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featuredVideosSql);
             if (!empty($featuredVideos)) {
                 Cache::write("featured_videos" . $this->Session->read('territory'), $featuredVideos);
             }
         }
 
-        $prefix = strtolower($this->Session->read('territory'));
+        
 
         if ($topDownloads = Cache::read("top_download_videos" . $this->Session->read('territory')) === false) {
-            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $this->Session->read('territory') . "' GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $this->Session->read('territory') . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
             $topDownloads = $this->Album->query($topDownloadSQL);
             if (!empty($topDownloads)) {
                 Cache::write("top_download_videos" . $this->Session->read('territory'), $topDownloads);
@@ -36,7 +39,7 @@ class VideosController extends AppController {
     function download() {
 
         //settings
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
         $this->layout = false;
 
         //set required params
@@ -66,7 +69,7 @@ class VideosController extends AppController {
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
-
+        
         // sets user id
         $user = $this->Session->read('Auth.User.id');
         if (empty($user)) {
@@ -90,7 +93,7 @@ class VideosController extends AppController {
                 $this->redirect(array('controller' => 'homes', 'action' => 'index'));
             }
             //get video data  
-            $trackDetails = $this->Videos->getVideoData($prodId, $provider);
+            $trackDetails = $this->Video->getVideoData($prodId, $provider);
 
             //collects video data  
             $insertArr = Array();
@@ -98,13 +101,13 @@ class VideosController extends AppController {
             $insertArr['patron_id'] = $patId;
             $insertArr['ProdID'] = $prodId;
             $insertArr['artist'] = addslashes($trackDetails['0']['Videos']['Artist']);
-            $insertArr['track_title'] = addslashes($trackDetails['0']['Videos']['SongTitle']);
+            $insertArr['track_title'] = addslashes($trackDetails['0']['Videos']['VideoTitle']);
             $insertArr['provider_type'] = $trackDetails['0']['Videos']['provider_type'];
             $insertArr['ProductID'] = $trackDetails['0']['Videos']['ProductID'];
             $insertArr['ISRC'] = $trackDetails['0']['Videos']['ISRC'];
 
             // creates download url
-            $videoUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
+            $videoUrl = shell_exec('perl files/tokengen ' . "/sony_test/".$trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 
             //collects video data 
