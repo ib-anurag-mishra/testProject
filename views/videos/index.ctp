@@ -105,7 +105,7 @@ foreach($topVideoDownloads as $topDownload)
                             <div class="wishlist-popover">
 
                                 <form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/videos/download">
-                                    <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+                                    <input type="hidden" name="ProdID" value="<?php echo $featureVideo["Video"]["ProdID"];?>" />
 									<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
                                         <span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
                                             <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
