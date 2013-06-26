@@ -1036,14 +1036,12 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //print_r($albumData);
+            print_r($albumData);
 
             
             $htmlContain ='';
-            foreach($albumData as $album_key => $album){
-                
-                print_r($album);
-                echo 123;
+            foreach($albumData as $album_key => $album){                
+              
            
              
                 //get the album image
