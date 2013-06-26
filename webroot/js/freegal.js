@@ -1164,3 +1164,9 @@ function DetectFlashVer(reqMajorVer, reqMinorVer, reqRevision)
 		return false;
 	}
 }
+
+function videoDownloadAll(prodId)
+{
+    $('#form'+prodId).submit();
+    setTimeout("location.reload(true)", 7000);
+} 
