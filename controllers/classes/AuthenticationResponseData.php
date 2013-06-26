@@ -39,6 +39,11 @@ class AuthenticationResponseDataType{
 	 * @var int
 	 */
   public $patron_id;
+  /**
+	 * user_type
+	 * @var int
+	 */
+  public $user_type;
 
   /**
 	 * Constructor
