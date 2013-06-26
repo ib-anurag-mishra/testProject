@@ -197,9 +197,9 @@ $genre_text_conversion = array(
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
-                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
+                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick='showAllAlbumsList('".$url."')' data-artist='".$ArtistName."'>";
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'>";
                                                         echo $ArtistName;
                                                         echo '</a>';
                                                         echo '</li>';                                                                    
