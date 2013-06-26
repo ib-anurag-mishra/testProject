@@ -930,7 +930,7 @@ Class ArtistsController extends AppController
         
         function album_ajax($id=null,$album=null,$provider=null)
 	{
-		
+            Configure::write('debug', 2);	
             $this->layout = false;
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
@@ -960,7 +960,7 @@ Class ArtistsController extends AppController
 
             $val = '';
             $val_provider_type = '';
-
+            print_r( $songs);
             
             foreach($songs as $k => $v){
                     $val .= $v['Song']['ReferenceID'].",";
@@ -970,15 +970,9 @@ Class ArtistsController extends AppController
 
             $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
 
-            $this->layout = 'home';
-            $this->set('artisttext',base64_decode($id));
-            $this->set('genre',base64_decode($album));
-            $patId = $this->Session->read('patron');
+                   
             $libId = $this->Session->read('library');
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-            $this->set('libraryDownload',$libraryDownload);
-            $this->set('patronDownload',$patronDownload);
+     
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Album.Advisory' => 'F');
             }
@@ -1052,9 +1046,9 @@ Class ArtistsController extends AppController
                 //get the album image
                 if(empty($album['Files']['CdnPath'])){
                     if(empty($album['Files']['SourceURL'])){
-                        mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                       // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
                     } else {
-                        mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                       // mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
                     }
                 }
                                 
@@ -1080,8 +1074,7 @@ Class ArtistsController extends AppController
                 
                //created the album url 
                $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
-       
-                
+                     
 			  
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
