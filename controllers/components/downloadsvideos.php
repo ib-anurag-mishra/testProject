@@ -61,7 +61,7 @@ Class DownloadsvideosComponent extends Object
             $libId = $library_id;
         }
   
-        if($uid > 0){ 
+        //if($uid > 0){ 
             if($this->checkSongExistsVideos($prodId, $providerType)){
                 if($this->checkAllowedCountryVideos($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
                     if($this->checkLibraryDownloadVideos($libId)){
@@ -72,28 +72,28 @@ Class DownloadsvideosComponent extends Object
                             //return array(false,'The patron has reached the download limit', 2);
                         //}
                     } else {
-                        $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the library download limit has been reached");
+                        $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the library download limit has been reached");
                         return array(false,'The library has reached the download limit.', 3);
                     }
                 } else {
-                    $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory));
+                    $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory));
                     return array(false,'The song is not available for this Country.', 4);
                 }
             } else {
-                $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table");
+                $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the song requested does not exist in songs table");
                 return array(false,'The song requested for download does not exist', 5);
             }
-        } else {
-            $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from IP:".$ip." as user was not authenticated.");
-            return array(false, 'User is not Authenticated', 6);
-        }
+        //} else {
+            //$this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from IP:".$ip." as user was not authenticated.");
+            //return array(false, 'User is not Authenticated', 6);
+        //}
     }
     
     function checkSongExistsVideos($prodId, $providerType){
-        $songInstance = ClassRegistry::init('Song');
+        $songInstance = ClassRegistry::init('Video');
         $songInstance->recursive = -1;
         $song = $songInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'DownloadStatus'=>'1')));
-        if(!empty($song['Song'])){
+        if(!empty($song['Video'])){
             return true;
         } else {
             return false;
