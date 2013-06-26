@@ -7,7 +7,7 @@
 
 class Video extends AppModel
 {
-	var $name = 'Videos';
+	var $name = 'Video';
 	var $useTable = 'video';
 	var $primaryKey = 'ProdID';
 
