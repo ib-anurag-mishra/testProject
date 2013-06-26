@@ -1050,7 +1050,7 @@ Class ArtistsController extends AppController
                     }
                 }
                                 
-               echo  $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
+                $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
                 
                 
                 //get the album title
@@ -1071,10 +1071,10 @@ Class ArtistsController extends AppController
 				
                 
                //created the album url 
-               $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
+               echo $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
                      
 			  
-              echo $htmlContain .= '<div class="album-overview-container">
+               echo $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
