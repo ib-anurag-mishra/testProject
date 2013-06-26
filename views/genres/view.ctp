@@ -198,7 +198,8 @@ $genre_text_conversion = array(
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                                        echo "<a onclick='showAllAlbumsList('/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . '/' . base64_encode($genre). "')' data-artist='".$ArtistName."'>";
+                                                        $url = "/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                                        echo "<a onclick='showAllAlbumsList('".$url."')' data-artist='".$ArtistName."'>";
                                                         echo $ArtistName;
                                                         echo '</a>';
                                                         echo '</li>';                                                                    
