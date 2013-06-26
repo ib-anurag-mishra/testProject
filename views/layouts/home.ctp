@@ -41,8 +41,8 @@
         } else {
             $setLang = 'es';
         }
-        if ($this->Session->read('library') && $this->Session->read('library') != '') {
-            $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+        if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
+            $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
             ?>
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
@@ -65,14 +65,14 @@
             
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
+            
+            
             <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
-            
-            
             <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
                        
 
 
-            <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
 
                <script type="text/javascript">
