@@ -55,7 +55,7 @@ function showAllAlbumsList(albumListURL){
                 alert(response);
                 $('.album-list').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) {}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
         });    
     
 }
@@ -199,7 +199,7 @@ $genre_text_conversion = array(
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
-                                                        $url = "artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
+                                                        $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                                         echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'>";
                                                         echo $ArtistName;
                                                         echo '</a>';
