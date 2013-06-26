@@ -1035,7 +1035,7 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            print_r($albumData);
+    
 
             
             $htmlContain ='';
@@ -1052,7 +1052,7 @@ Class ArtistsController extends AppController
                     }
                 }
                                 
-                $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
+               echo  $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
                 
                 
                 //get the album title
