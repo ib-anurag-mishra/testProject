@@ -62,7 +62,7 @@
 			<table>
 			<?php foreach($libraries as $library_var) { ?>
                             <tr>
-                                <td><a href="<?php echo 'https://'.$library_var['Library']['library_subdomain'];?>.freegalmusic.com"><?php echo strtoupper($library_var['Library']['library_name']); ?></a></td>
+                                <td><a href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com"><?php echo strtoupper($library_var['Library']['library_name']); ?></a></td>
                             </tr>
 			<?php } ?>
                         </table>

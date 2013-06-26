@@ -32,8 +32,9 @@
 	if($library != 'www' && $library != 'freegalmusic' && $library != '50')
 	{
 		
-		Router::connect('/', array('controller' => 'users', 'action' => 'redirection_manager',$library));
-		Router::connect('/users/login', array('controller' => 'users', 'action' => 'login', $library));
+                Router::connect('/', array('controller' => 'users', 'action' => 'redirection_manager', $library));
+		Router::connect('/users/redirection_manager', array('controller' => 'users', 'action' => 'redirection_manager', $library));
+                Router::connect('/users/login', array('controller' => 'users', 'action' => 'login', $library));
 		Router::connect('/users/plogin', array('controller' => 'users', 'action' => 'plogin', $library));
 		Router::connect('/users/clogin', array('controller' => 'users', 'action' => 'clogin', $library));
 		Router::connect('/users/inhdlogin', array('controller' => 'users', 'action' => 'inhdlogin', $library));

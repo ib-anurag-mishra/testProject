@@ -1,0 +1,1876 @@
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
+
+.border-radius(@radius) {
+	
+	-moz-border-radius:      @radius;
+	-webkit-border-radius:   @radius;
+	border-radius:           @radius;
+	-moz-background-clip:    padding;
+	-webkit-background-clip: padding-box;
+	background-clip:         padding-box;
+}
+
+
+
+.search-page {
+
+	margin-top: 20px;
+	margin-left: 20px;
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
+
+
+	}
+	
+	header {
+		margin-top: 15px;
+		margin-bottom: 10px;
+		
+		.search-results-text {
+		
+			font-size: 24px;
+			
+			
+			letter-spacing: 1px;
+			float: left;
+		}
+		
+		
+		
+	}
+	
+	.advanced-search {
+		margin-bottom: 30px;
+		
+		input[type="search"] {
+			
+			background: #fff;
+			.border-radius(10px);
+			padding-left: 10px;
+			font-size: 12px;
+			line-height: 23px;
+			height: 23px;
+			color: #666;
+			outline: 0;
+			border: 1px solid #ddd;
+			-webkit-appearance: none;
+			margin-bottom: 10px;
+			width: 437px;
+		}
+		
+		input[type="submit"] {
+			
+			-webkit-appearance: none;
+			border: 0;
+			margin: 0;
+			padding: 0;
+			width: 100px;
+			height: 21px;
+			background: url(../images/search-results/advanced-search-btn.jpg);
+			.box-shadow(0 0 3px rgba(0,0,0,.5));
+			margin-left: 10px;
+			
+			&.clicked {
+				
+				background: url(../images/search-results/advanced-search-btn-clicked.jpg);
+			}
+		}
+		
+		ul {
+			
+			li {
+				font-size: 12px;
+				display: block;
+				float: left;
+				color: rgba(0,0,0,.3);
+				padding-right: 10px;
+				
+				a {
+					
+					text-decoration: none;
+					color: rgba(0,0,0,.3);
+					
+					&.active {
+						color: rgba(0,0,0,.7);	
+						
+					}
+				}
+			}
+		}
+		
+		.faq-link {
+			
+			float: right;
+			font-size: 12px;
+			margin-top: 10px;
+			
+			a {
+				
+				text-decoration: none;
+				color: #52c6ec;
+			}
+		}
+	}
+	
+	.advanced-search-results.row-1 {
+	
+		margin-bottom: 20px; 
+		
+		h4 {
+			
+			color: rgba(0,0,0,.7);
+			font-size: 18px;
+		}
+		.advanced-albums {
+			float: left;
+			width: 556px;
+			header {
+				
+				color: rgba(0,0,0,.7);
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 4px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			.advanced-albums-shadow-container {
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				width: 100%;
+				height: 243px;
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					right: 0;
+					top:0;
+					width: 11px;
+					height: 226px;
+					background: url(../images/search-results/advanced-album-tapered-shadow.png);
+				}
+				
+				.advanced-albums-scrollable {
+				
+					overflow-x: hidden;
+					overflow-y: hidden;
+					height: 243px;
+					
+					&:hover {
+						
+						overflow-x: scroll;
+						overflow-y: hidden;
+					}
+			
+					ul {
+						overflow-x: scroll;
+						width: 2700px;
+						height: 243px;
+						
+						li {
+							display: block;
+							float: left;
+							margin-right: 22px;
+							
+							img {
+								
+								border: 1px solid #fff;
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								margin-bottom: 10px;
+							}
+							
+							.album-title {
+								font-size: 12px;
+								font-weight: bold;
+								color: #000;
+								margin-bottom: 6px;
+								
+								a {
+									
+									color: #000;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+							
+							.album-genre {
+								
+								font-size: 12px;
+								color: #666;
+								margin-bottom: 6px;
+								
+								a {
+									
+									color: #666;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+							
+							.album-label {
+								
+								font-size: 12px;
+								color: #666;
+								margin-bottom: 10px;
+								
+								a {
+									
+									color: #666;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		.advanced-artists {
+			float: left;
+			margin-left: 24px;
+			width: 270px;
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				margin-top: 17px;
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+					
+				}
+			}
+			
+			.advanced-artists-shadow-container {
+				
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				height: 226px;
+				width: 270px;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					bottom:0;
+					left: 2px;
+					width: 270px;
+					height: 11px;
+					background: url(../images/search-results/artist-tapered-shadow.png);
+					
+				}
+				
+				.advanced-artists-scrollable {
+					overflow-y: hidden;
+					overflow-x: hidden;
+					height: 226px;
+					
+					&:hover {
+						
+						overflow-y: scroll;
+					}
+					
+					div {
+						
+						font-size: 12px;
+						padding: 10px;
+						
+						&:nth-child(odd) {
+							
+							background: #f1f1f1;
+						}
+						
+						&:nth-child(even) {
+							background: #e9e9e9;
+							
+						}
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+					}
+				
+				}
+			}
+		}
+		
+		
+	}	
+	.advanced-search-results.row-2 {
+	
+		margin-bottom: 45px;	
+		
+		.advanced-composers {
+			float: left;
+			width: 270px;
+			margin-right: 20px;
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				margin-bottom: 10px;
+				
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 2px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+					
+				}
+			}
+			
+			
+			.advanced-composers-shadow-container {
+				
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				height: 226px;
+				width: 270px;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					bottom:0;
+					left: 2px;
+					width: 270px;
+					height: 11px;
+					background: url(../images/search-results/composers-tapered-shadow.png);
+					
+				}
+				
+				.advanced-composers-scrollable {
+					overflow-y: hidden;
+					overflow-x: hidden;
+					height: 226px;
+					
+					&:hover {
+						
+						overflow-y: scroll;
+					}
+					
+					div {
+						
+						font-size: 12px;
+						padding: 10px;
+						
+						&:nth-child(odd) {
+							
+							background: #f1f1f1;
+						}
+						
+						&:nth-child(even) {
+							background: #e9e9e9;
+							
+						}
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+					}
+				
+				}
+			}
+
+			
+			
+			
+		}
+		
+		.advanced-genres {
+			float: left;
+			width: 270px;
+			margin-right: 20px;
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				margin-bottom: 10px;
+				
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 2px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			
+			.advanced-genres-shadow-container {
+				
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				height: 226px;
+				width: 270px;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					bottom:0;
+					left: 2px;
+					width: 270px;
+					height: 11px;
+					background: url(../images/search-results/genres-tapered-shadow.png);
+					
+				}
+				
+				.advanced-genres-scrollable {
+					overflow-y: hidden;
+					overflow-x: hidden;
+					height: 226px;
+					
+					&:hover {
+						
+						overflow-y: scroll;
+					}
+					
+					div {
+						
+						font-size: 12px;
+						padding: 10px;
+						
+						&:nth-child(odd) {
+							
+							background: #f1f1f1;
+						}
+						
+						&:nth-child(even) {
+							background: #e9e9e9;
+							
+						}
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+					}
+				
+				}
+			}
+			
+			
+		}
+		
+		.advanced-labels {
+			float: left;
+			width: 270px;
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				margin-bottom: 10px;
+				
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 2px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			
+			
+			.advanced-labels-shadow-container {
+				
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				height: 226px;
+				width: 270px;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					bottom:0;
+					left: 2px;
+					width: 270px;
+					height: 11px;
+					background: url(../images/search-results/label-tapered-shadow.png);
+					
+				}
+				
+				.advanced-labels-scrollable {
+					overflow-y: hidden;
+					overflow-x: hidden;
+					height: 226px;
+					
+					&:hover {
+						
+						overflow-y: scroll;
+					}
+					
+					div {
+						
+						font-size: 12px;
+						padding: 10px;
+						
+						&:nth-child(odd) {
+							
+							background: #f1f1f1;
+						}
+						
+						&:nth-child(even) {
+							background: #e9e9e9;
+							
+						}
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+					}
+				
+				}
+			}
+			
+			
+			
+		}
+	}
+	
+	
+	
+	
+	.advanced-search-results-albums {
+	
+		margin-bottom: 20px; 
+		
+		h4 {
+			
+			color: rgba(0,0,0,.7);
+			font-size: 18px;
+		}
+		.advanced-albums {
+			
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 4px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			.advanced-albums-shadow-container {
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				width: 100%;
+				height: 485px;
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					right: 0;
+					top:0;
+					width: 11px;
+					height: 506px;
+					background: url(../images/search-results/albums-result-tapered-shadow.png);
+				}
+				
+				.advanced-albums-scrollable {
+				
+					overflow-x: hidden;
+					overflow-y: hidden;
+					height: 485px;
+					
+					&:hover {
+						
+						overflow-x: scroll;
+						overflow-y: hidden;
+					}
+			
+					ul {
+						overflow-x: scroll;
+						width: 2700px;
+						height: 485px;
+						
+						li {
+							display: block;
+							float: left;
+							margin-right: 22px;
+							
+							img {
+								
+								border: 1px solid #fff;
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								margin-bottom: 10px;
+							}
+							
+							.album-title {
+								font-size: 12px;
+								font-weight: bold;
+								color: #000;
+								margin-bottom: 6px;
+								
+								a {
+									
+									color: #000;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+							
+							.album-genre {
+								
+								font-size: 12px;
+								color: #666;
+								margin-bottom: 6px;
+								
+								a {
+									
+									color: #666;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+							
+							.album-label {
+								
+								font-size: 12px;
+								color: #666;
+								margin-bottom: 10px;
+								
+								a {
+									
+									color: #666;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	
+	.advanced-search-results-artists {
+	
+		margin-bottom: 40px; 
+		
+		h4 {
+			
+			color: rgba(0,0,0,.7);
+			font-size: 18px;
+		}
+		.advanced-artists {
+			
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 4px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			.advanced-artists-shadow-container {
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom:0;
+					width: 850px;
+					height: 11px;
+					background: url(../images/search-results/advanced-artist-result-tapered-shadow.png);
+				}
+				
+				.advanced-artists-scrollable {
+				
+					overflow-x: hidden;
+					overflow-y: hidden;
+					height: 216px;
+					
+					&:hover {
+						
+						overflow-x: hidden;
+						overflow-y: scroll;
+					}
+					
+					.row-wrapper {
+					
+						height: 1000px;
+						
+						.rows {
+							padding-left: 10px;
+							
+							&:nth-child(odd) {
+								
+								background: #f1f1f1;
+							}
+							
+							&:nth-child(even) {
+								background: #e9e9e9;
+								
+							}
+							.row {
+								
+								float: left;
+								width: 33.33%;
+								padding-top: 10px;
+								padding-bottom: 10px;
+								
+								a {
+									color: rgba(0,0,0,.7);
+									text-decoration: none;
+									font-size: 12px;
+									
+									&:hover {
+										text-decoration: underline;
+										
+									}
+								}
+							}
+						}
+					}
+			
+					
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	.advanced-search-results-composers {
+	
+		margin-bottom: 40px; 
+		
+		h4 {
+			
+			color: rgba(0,0,0,.7);
+			font-size: 18px;
+		}
+		.advanced-composers {
+			
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 4px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			.advanced-composers-shadow-container {
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom:0;
+					width: 850px;
+					height: 11px;
+					background: url(../images/search-results/advanced-artist-result-tapered-shadow.png);
+				}
+				
+				.advanced-composers-scrollable {
+				
+					overflow-x: hidden;
+					overflow-y: hidden;
+					height: 216px;
+					
+					&:hover {
+						
+						overflow-x: hidden;
+						overflow-y: scroll;
+					}
+					
+					.row-wrapper {
+					
+						height: 1000px;
+						
+						.rows {
+							padding-left: 10px;
+							
+							&:nth-child(odd) {
+								
+								background: #f1f1f1;
+							}
+							
+							&:nth-child(even) {
+								background: #e9e9e9;
+								
+							}
+							.row {
+								
+								float: left;
+								width: 33.33%;
+								padding-top: 10px;
+								padding-bottom: 10px;
+								
+								a {
+									color: rgba(0,0,0,.7);
+									text-decoration: none;
+									font-size: 12px;
+									
+									&:hover {
+										text-decoration: underline;
+										
+									}
+								}
+							}
+						}
+					}
+			
+					
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	.advanced-search-results-genres {
+	
+		margin-bottom: 40px; 
+		
+		h4 {
+			
+			color: rgba(0,0,0,.7);
+			font-size: 18px;
+		}
+		.advanced-genres {
+			
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 4px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			.advanced-genres-shadow-container {
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom:0;
+					width: 850px;
+					height: 11px;
+					background: url(../images/search-results/advanced-artist-result-tapered-shadow.png);
+				}
+				
+				.advanced-genres-scrollable {
+				
+					overflow-x: hidden;
+					overflow-y: hidden;
+					height: 216px;
+					
+					&:hover {
+						
+						overflow-x: hidden;
+						overflow-y: scroll;
+					}
+					
+					.row-wrapper {
+					
+						height: 1000px;
+						
+						.rows {
+							padding-left: 10px;
+							
+							&:nth-child(odd) {
+								
+								background: #f1f1f1;
+							}
+							
+							&:nth-child(even) {
+								background: #e9e9e9;
+								
+							}
+							.row {
+								
+								float: left;
+								width: 33.33%;
+								padding-top: 10px;
+								padding-bottom: 10px;
+								
+								a {
+									color: rgba(0,0,0,.7);
+									text-decoration: none;
+									font-size: 12px;
+									
+									&:hover {
+										text-decoration: underline;
+										
+									}
+								}
+							}
+						}
+					}
+			
+					
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	
+	.advanced-search-results-labels {
+	
+		margin-bottom: 40px; 
+		
+		h4 {
+			
+			color: rgba(0,0,0,.7);
+			font-size: 18px;
+		}
+		.advanced-labels {
+			
+			
+			header {
+				
+				color: rgba(0,0,0,.7);
+				h5 {
+					
+					float: left;
+				}
+				
+				h6 {
+					
+					float: right;
+					font-size: 13px;
+					margin-top: 4px;
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+						
+					}
+				}
+			}
+			
+			.advanced-labels-shadow-container {
+				position: relative;
+				overflow-x: hidden;
+				overflow-y: hidden;
+				
+				
+				&:after {
+					
+					content: "";
+					position: absolute;
+					left: 0;
+					bottom:0;
+					width: 850px;
+					height: 11px;
+					background: url(../images/search-results/advanced-artist-result-tapered-shadow.png);
+				}
+				
+				.advanced-labels-scrollable {
+				
+					overflow-x: hidden;
+					overflow-y: hidden;
+					height: 216px;
+					
+					&:hover {
+						
+						overflow-x: hidden;
+						overflow-y: scroll;
+					}
+					
+					.row-wrapper {
+					
+						height: 1000px;
+						
+						.rows {
+							padding-left: 10px;
+							
+							&:nth-child(odd) {
+								
+								background: #f1f1f1;
+							}
+							
+							&:nth-child(even) {
+								background: #e9e9e9;
+								
+							}
+							.row {
+								
+								float: left;
+								width: 33.33%;
+								padding-top: 10px;
+								padding-bottom: 10px;
+								
+								a {
+									color: rgba(0,0,0,.7);
+									text-decoration: none;
+									font-size: 12px;
+									
+									&:hover {
+										text-decoration: underline;
+										
+									}
+								}
+							}
+						}
+					}
+			
+					
+				}
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	
+	.tracklist-header {
+		
+		position: relative;
+		background: url(../images/search-results/tracklist-header-bkg.jpg);
+		height: 39px;
+		
+		span {
+			
+			display: block;
+			float: left;
+			
+			line-height: 39px;
+			font-weight: bold;
+			font-size: 12px;
+			cursor: pointer;
+			
+			&.artist {
+				
+				
+				
+				width: 190px;
+				height: 39px;
+				background: url(../images/search-results/artist-header-off.jpg);
+				
+				
+				&.active {
+					
+					background: url(../images/search-results/artist-header-up.jpg);
+					
+						
+						
+						&.toggled {
+						
+							background:url(../images/search-results/artist-header-down.jpg);
+							
+						}
+				}
+			}
+			
+			
+			&.composer {
+				
+				
+				
+				width: 191px;
+				height: 39px;
+				background: url(../images/search-results/compose-header-off.jpg);
+				
+				&.active {
+					
+					background: url(../images/search-results/compose-header-up.jpg);
+					
+						
+						
+						&.toggled {
+						
+							background: url(../images/search-results/compose-header-down.jpg)
+							
+						}
+				}
+			}
+			
+			&.album {
+				
+				background: url(../images/search-results/album-header-off.jpg);
+				
+				width: 191px;
+				height: 39px;
+				
+				&.active {
+					
+					background: url(../images/search-results/album-header-up.jpg);
+								
+						&.toggled {
+						
+							background: url(../images/search-results/album-header-down.jpg);
+							
+						}
+				}
+			}
+			
+			&.song {
+				
+				
+				width: 191px;
+				height: 39px;
+				
+				background: url(../images/search-results/song-header-off.jpg);
+				&.active {
+					
+					background: url(../images/search-results/song-header-up.jpg);
+								
+						&.toggled {
+						
+							background: url(../images/search-results/song-header-down.jpg);
+							
+						}
+				}
+			}
+			
+			&.download {
+				
+				background: url(../images/search-results/download-header-off.jpg);
+				width:87px;
+				height: 39px;
+				&.active {
+					
+					background: url(../images/search-results/download-header-off.jpg);
+								
+						&.toggled {
+						
+							background: url(../images/search-results/download-header-off.jpg);
+							
+						}
+				
+				}
+			}
+		}
+	}
+	
+	.tracklist-shadow-container {
+		position: relative;
+		
+		&:after {
+				
+			position: absolute;
+			content: "";
+			bottom:0;
+			left: 0;
+			background: url(../images/search-results/tracklist-tapered-shadow.png) no-repeat;
+			width: 830px;
+			height: 11px;
+		}
+		
+		
+	
+	
+		.tracklist-scrollable {
+		
+			position: relative;
+			overflow-y: hidden;
+			
+			height: 440px;
+			margin-right: -10px;
+			padding-right: 10px;
+			
+			
+			&:hover {
+				
+				overflow-y: scroll;	
+			}
+			
+			
+			
+		
+			.tracklist {
+						
+				position: relative;
+				height: 44px;
+				
+				
+				
+				
+				
+				&:nth-child(odd) {
+					
+					background: #f1f1f1;
+				}
+				
+				&:nth-child(even) {
+					
+					background: #e9e9e9;
+				}
+				
+				&:hover {
+					
+					background: #c3e6f1;
+					
+				}
+				
+				&.playing {
+					background: #c3e6f1;
+					
+				}
+				
+				.preview {
+					
+					display: block;
+					position: absolute;
+					left: 13px;
+					top:12px;
+					width: 19px;
+					height: 19px;
+					background: url(../images/albums-page/preview-off.png);
+					opacity: .7;
+					
+					
+					&:hover {
+						
+						background: url(../images/albums-page/preview-hover.png);
+						opacity: 1;
+					}
+					
+					&.active {
+						
+						background: url(../images/albums-page/preview-click.png);
+						opacity: 1;
+						width: 17px;
+						height: 17px;
+					
+					}
+					
+					&.playing {
+						background: url(../images/albums-page/preview-click.png);
+						opacity: 1;
+						width: 17px;
+						height: 17px;
+						
+					}
+				
+				
+				}
+				
+				div {
+					display: block;
+					position: absolute;
+					
+					font-weight: normal;
+					font-size: 12px;
+					line-height: 44px;
+					
+					
+					
+					color: rgba(0,0,0,.7);
+					
+					
+					
+					&.artist {
+						
+						left: 54px;
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+							
+							a {
+								
+								color: rgba(0,0,0,1);
+							}
+							
+						}
+						
+					}
+					
+					&.composer {
+						
+						left: 207px;
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+							
+							a {
+								
+								color: rgba(0,0,0,1);
+							}
+							
+						}
+						
+					}
+					
+					&.album {
+						
+						left: 439px;
+						
+						a {
+							
+							color: rgba(0,0,0,.7);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+							
+						}
+						
+						&.playing {
+							
+							background: #c3e6f1;
+							font-weight: bold;
+							
+							a {
+								
+								color: rgba(0,0,0,1);
+							}
+							
+							
+						}
+					}
+					
+					&.song {
+						
+						left: 627px;
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+							color: rgba(0,0,0,1);
+							
+						}
+						
+						
+					}
+					
+					&.download {
+						left: 780px;
+						
+						a {
+							
+							text-decoration: none;
+							color: rgba(0,0,0,.7);
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+						&.playing {
+							
+							font-weight: bold;
+							background: #c3e6f1;
+							color: rgba(0,0,0,1); 
+							
+							a {
+								
+								color: rgba(0,0,0,1); 
+							}
+							
+							
+						}
+						
+					}
+					
+					
+					
+					
+					&.cover-art {
+						
+						left: 395px;
+						top:9px;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						border:1px solid #fff;
+						
+						&.playing {
+							
+							background: #c3e6f1;
+							
+						}
+					}
+					
+					
+				}
+				
+				.add-to-playlist-button {
+					background: url(../images/add-to-playlist-button.png);
+					display: block;
+					position: absolute;
+					top:10px;
+					left: 586px;
+					width: 26px;
+					height: 25px;
+					opacity: .6;
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					&:hover {
+						opacity: 1;
+					}
+					
+					
+				}
+				
+				
+				.wishlist-popover {
+				
+					display: none;
+					position: absolute;
+					left: 586px;
+					top:-61px;
+					font-size: 12px;
+					z-index: 100;
+					width: 120px;
+					
+					&.top {
+						
+						left: 586px;
+						top:9px;
+					}
+					
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					a {
+						background: #fff;
+						
+						display: block;
+						color: #000;
+						padding: 5px 5px 5px 10px;
+					
+						line-height: 20px;
+						text-decoration: none;
+						
+						&:hover {
+							
+							background: #999;
+						}
+						
+					}
+					
+					.playlist-options {
+						position: absolute;
+						right: -147px;
+						top:0;
+						display: none;
+						background: #fff;
+						width: 145px;
+						height: 186px;
+						.box-shadow(0 0 3px rgba(0,0,0,.5));
+						
+						overflow-x: hidden;
+						
+						&.active {
+							
+							display: block;
+						}
+						
+						
+						
+						ul {
+							
+							li {
+								
+								float: none;
+								padding: 0;
+								
+								a {
+									
+									padding: 5px 5px 5px 10px;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: none;
+									}
+								}
+							}
+						}
+							
+					}
+					
+					.share {
+						
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						padding-bottom: 3px;
+						position: relative;
+						width: 120px;
+						height: 32px;
+						color: #000;
+						
+						p {
+							
+							position: absolute;
+							left: 10px;
+							top:-5px;
+							
+						}
+						
+						.facebook {
+							background: url(../images/facebook.png) no-repeat center center;
+							
+							display: block;
+							
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 62px;
+							top:4px;
+							
+							&:hover {
+								background: url(../images/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../images/twitter.png) no-repeat center center;
+							
+							display: block;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							left: 82px;
+							top:4px;
+							
+							&:hover {
+								
+								background: url(../images/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+					
+					.add-to-playlist {
+							
+						background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+						
+						&:hover {
+							
+							color: rgba(0,0,0,1);
+							background: url(../images/create-new-playlists-arrow.png) no-repeat 108px center #999;
+						}
+					}
+				}
+		
+				
+				
+				
+				
+				
+				
+			}	
+		}
+	}
+	
+	
+	
+	
+	
+	
+}

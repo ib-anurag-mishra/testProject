@@ -2,6 +2,7 @@
 /* File Name: homes_controller.php
    File Description: Displays the home page for each patron
    Author: Maycreate
+ * Modified: 21-06-2013
 */
 class HomesController extends AppController
 {
@@ -61,6 +62,7 @@ class HomesController extends AppController
        
             $country = $territory;
 
+            //check the config value which show, which table should use
             $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
             $siteConfigData = $this->Album->query($siteConfigSQL);
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
@@ -85,7 +87,9 @@ class HomesController extends AppController
                     LIMIT 110";
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		  $ids = '';
+		  
+                  //make the provide type and prodid array for selecting records
+                  $ids = '';
                   $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   print_r($natTopDownloaded);
@@ -99,7 +103,7 @@ class HomesController extends AppController
 			}
 		  }
 		  $data = array();
-
+                  //fetch the multiple countires prefix
                   $countryPrefix = $this->Session->read('multiple_countries');
                   $sql_national_100 =<<<STR
                     SELECT 
@@ -178,25 +182,25 @@ STR;
                    if($maintainLatestVideoDownload){
                        
 
-                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                    FROM `latest_vdownloads` AS `Download` 
-                    LEFT JOIN libraries ON libraries.id=Download.library_id
-                    WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                    GROUP BY Download.ProdID 
-                    ORDER BY `countProduct` DESC 
-                    LIMIT 110";
-                } else {
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `latest_videodownloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                   } else {
 
-                      $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
-                    FROM `vdownloads` AS `Download` 
-                    LEFT JOIN libraries ON libraries.id=Download.library_id
-                    WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
-                    GROUP BY Download.ProdID 
-                    ORDER BY `countProduct` DESC 
-                    LIMIT 110";
-                }
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `videodownloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                    }
                 
                 $ids = '';
                 $ids_provider_type = '';
