@@ -56,7 +56,7 @@ class Video extends AppModel
 			'Video.ProdID',
 			'Video.ProductID',
 			'Video.Title',
-			'Video.SongTitle',
+			'Video.VideoTitle',
 			'Video.Artist',
 			'Video.ISRC'
 		),
