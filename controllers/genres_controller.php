@@ -331,10 +331,7 @@ Class GenresController extends AppController
                 {
                     $allArtists[$i] = $allArtistsNew[$i];
                 }
-            }
-            //$this->Song->lastQuery();
-            print_r($allArtists);
-            die;
+            }           
             $this->set('genres', $allArtists);
             $this->set('genre',base64_decode($Genre));
 	}
