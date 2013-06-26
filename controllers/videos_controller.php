@@ -123,7 +123,7 @@ class VideosController extends AppController {
             $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
 
             // creates download url
-            $videoUrl = shell_exec('perl files/tokengen ' . "/sony_test/".$trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
+            $videoUrl = shell_exec('perl files/tokengen ' . "sony_test/".$trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 
             //collects video data 
