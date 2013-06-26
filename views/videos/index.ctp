@@ -24,14 +24,20 @@
                 
                 foreach($featuredVideos as $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
-                    // print_r($featureVideo);
+                    // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                 ?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
                                 <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
-
-                                <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a>
+                                <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
+                                    <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
+                                        <span id="song_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>">
+                                            <a class="featured-video-download-now-button" href='#' title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+										</span>
+                                </form>
+                                <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
                                 <a class="add-to-playlist-button" href="#"></a>
                                 <div class="wishlist-popover">
 
@@ -98,8 +104,16 @@ foreach($topVideoDownloads as $topDownload)
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
 
-                                <a class="download-now" href="#">Download Now</a>
-                                <a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                <form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/videos/download">
+                                    <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
+                                        <span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+                                            <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+										</span>
+										<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
+                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+								</form>													
+								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 
                                 <div class="share clearfix">
                                     <p>Share via</p>
