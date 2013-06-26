@@ -12,6 +12,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownlo
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SuccessResponse.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserTypeResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongDownloadSuccess.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalFeaturedAlbum.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SearchData.php');
@@ -62,6 +63,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SuccessResponse.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserTypeResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongDownloadSuccess.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalFeaturedAlbum.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SearchData.php");
@@ -81,6 +83,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
     $test->addURLToClass("SuccessResponse", $siteUrl."soaps/");
+    $test->addURLToClass("UserTypeResponse", $siteUrl."soaps/");
     $test->addURLToClass("SongDownloadSuccess", $siteUrl."soaps/");
     $test->addURLToClass("FreegalFeaturedAlbum", $siteUrl."soaps/");
     $test->addURLToClass("SearchData", $siteUrl."soaps/");
@@ -1638,7 +1641,7 @@ STR;
    * @param int innerCall
    * @param string token
    * @param int libID
-   * @return integer
+   * @return UserTypeResponseType[]
    */
   function getUserType($token, $libID, $innerCall = 0) {
   
@@ -1655,7 +1658,12 @@ STR;
       )
     );
 
-    return $libraryDetails['Library']['library_type'];
+    if(1 != $innerCall){
+      return $this->createsUserTypeResponseObject($libraryDetails['Library']['library_type']);
+    }else{
+      return $libraryDetails['Library']['library_type'];
+    }
+    
 
   }
   
@@ -5306,6 +5314,25 @@ STR;
     return $data;
   }
 
+  /** 
+   * return class(UserTypeResponse) object with response data
+   * @param integer user_type
+   * @return UserTypeResponseType[]
+   */
+
+  private function createsUserTypeResponseObject($user_type){
+
+  
+    $obj = new UserTypeResponseType;
+    $obj->usertype       = $user_type;
+
+    $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'UserTypeResponseType');
+    $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayUserTypeResponseType');
+
+    return $data;
+  }
+  
+  
   /**
    * return int (0,1)
    * @param int $ProdID
