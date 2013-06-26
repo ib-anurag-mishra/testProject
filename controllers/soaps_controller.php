@@ -1624,8 +1624,41 @@ STR;
       default:
     }
 
+    
+    $resp->enc_value->enc_value->user_type = $this->getUserType('', $library_id, 1);
+
+    
     return $resp;
   }
+
+  
+  /**
+   * Function Name : getUserType
+   * Desc : Returns user type i.e. whether it belongs to Freegal4.O or Freegal4.O+  
+   * @param int innerCall
+   * @param string token
+   * @param int libID
+   * @return integer
+   */
+  function getUserType($token, $libID, $innerCall = 0) {
+  
+    if(1 != $innerCall){
+      if(!($this->isValidAuthenticationToken($token))) {
+        throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+      }
+    }
+    
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libID),
+      'fields' => array('library_type'),
+      'recursive' => -1
+      )
+    );
+
+    return $libraryDetails['Library']['library_type'];
+
+  }
+  
 
   /**
   * Authenticates user by login method
@@ -5530,16 +5563,18 @@ STR;
     return $response_patron_id;
           
   }
+  
   /**
    * Function Name : getTextUTF
    * Desc : To return UTF8 string
    * @param string text
    * @return string
    */
-   private function getTextUTF($text) {
+  private function getTextUTF($text) {
 
     $text = iconv(mb_detect_encoding($text), "WINDOWS-1252//IGNORE", $text);
     return iconv(mb_detect_encoding($text), "UTF-8//IGNORE", $text);
   }
+  
 
 }
