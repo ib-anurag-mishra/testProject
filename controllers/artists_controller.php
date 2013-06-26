@@ -1033,7 +1033,7 @@ Class ArtistsController extends AppController
             else{
                     $cond = "";
             }
-            $this->Album->recursive = 2;
+            //$this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
             print_r($albumData);
