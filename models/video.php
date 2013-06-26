@@ -58,7 +58,8 @@ class Video extends AppModel
 			'Video.Title',
 			'Video.VideoTitle',
 			'Video.Artist',
-			'Video.ISRC'
+			'Video.ISRC',
+            'Video.provider_type'
 		),
 		'contain' => array(										
 			'Full_Files' => array(
