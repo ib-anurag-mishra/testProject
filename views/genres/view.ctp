@@ -49,7 +49,7 @@ function showAllAlbumsList(albumListURL){
     var data = "";
     jQuery.ajax({
             type: "post",  // Request method: post, get
-            url: webroot+"admin/artists/getAutoArtist", // URL to request
+            url: webroot+albumListURL, // URL to request
             data: data,  // post data
             success: function(response) {
                 alert(response);

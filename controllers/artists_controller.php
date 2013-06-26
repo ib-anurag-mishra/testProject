@@ -941,7 +941,6 @@ Class ArtistsController extends AppController
                     }
 
             }
-            print_r($_REQUEST);
 
             $country = $this->Session->read('territory');
             if($this->Session->read('block') == 'yes') {
@@ -952,7 +951,7 @@ Class ArtistsController extends AppController
             }
 
 			
-            echo $id = str_replace('@','/',$id);
+            $id = str_replace('@','/',$id);
             $this->Song->Behaviors->attach('Containable');
             $songs = $this->Song->find('all', array(
                     'fields' => array('DISTINCT Song.ReferenceID', 'Song.provider_type'),
@@ -960,7 +959,7 @@ Class ArtistsController extends AppController
 
             $val = '';
             $val_provider_type = '';           
-            print_r($songs);
+            
             foreach($songs as $k => $v){
                     $val .= $v['Song']['ReferenceID'].",";
                     $val_provider_type .= "(" . $v['Song']['ReferenceID'].",'" . $v['Song']['provider_type'] . "')," ;
