@@ -51,14 +51,14 @@ class Video extends AppModel
     $this->recursive = 2;
     $this->Behaviors->attach('Containable');
     $data = $this->find('all', array(
-		'conditions'=>array('Videos.ProdID' => $id , 'Videos.provider_type' => $provider),
+		'conditions'=>array('Video.ProdID' => $id , 'Video.provider_type' => $provider),
 		'fields' => array(
-			'Videos.ProdID',
-			'Videos.ProductID',
-			'Videos.Title',
-			'Videos.SongTitle',
-			'Videos.Artist',
-			'Videos.ISRC'
+			'Video.ProdID',
+			'Video.ProductID',
+			'Video.Title',
+			'Video.SongTitle',
+			'Video.Artist',
+			'Video.ISRC'
 		),
 		'contain' => array(										
 			'Full_Files' => array(
