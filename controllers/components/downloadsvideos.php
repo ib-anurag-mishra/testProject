@@ -108,7 +108,10 @@ Class DownloadsvideosComponent extends Object
         } else {
             $territory = $mobileTerritory;
         }
+        
         $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
+        echo $countryInstance->lastQuery();
+        print_r($country); die;
         if(!empty($country['Country'])){
             return true;
         } else {
