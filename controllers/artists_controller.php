@@ -1030,67 +1030,67 @@ Class ArtistsController extends AppController
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
             //$this->set('count_albums',count($albumData)); 
-            $albumSongs = array();
-            $this->set('albumData', $albumData);
-            if(isset($albumData[0]['Song']['ArtistURL'])) {
-                $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
-            }else {
-                $this->set('artistUrl', "N/A");
-            }
-
-            
-            $htmlContain ='';
-            foreach($albumData as $album_key => $album){
-                
-             
-                //get the album image
-                if(empty($album['Files']['CdnPath'])){
-                    if(empty($album['Files']['SourceURL'])){
-                       // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
-                    } else {
-                       // mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
-                    }
-                }
-                                
-                $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
-                
-                
-                //get the album title
-                if(strlen($album['Album']['AlbumTitle']) >= 50){
-                      $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
-                }
-     
-               
-		$copyrightString='';				
-                if($album['Album']['Advisory'] == 'T'){
-                        $copyrightString .='<font class="explicit"> (Explicit)</font>';                    
-                }
-                
-                
-                if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-                        $copyrightString .= $this->getTextEncode($album['Album']['Copyright']);
-                }
-				
-                
-               //created the album url 
-               $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
-                     
-			  
-               $htmlContain .= '<div class="album-overview-container">
-                                <div class="album-image selected">
-                                        <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
-                                </div>
-                                <div class="album-title">
-                                        <a href="'.$albumURL.'">'.$this->getTextEncode($album['Album']['AlbumTitle']).'</a>
-                                </div>
-                                <div class="album-year">
-                                        <a href="'.$albumURL.'">'.$copyrightString.'</a>
-                                </div>
-                        </div>';   
-                
-             }                                     
-             
-             echo $htmlContain; 
+//            $albumSongs = array();
+//            $this->set('albumData', $albumData);
+//            if(isset($albumData[0]['Song']['ArtistURL'])) {
+//                $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
+//            }else {
+//                $this->set('artistUrl', "N/A");
+//            }
+//
+//            
+//            $htmlContain ='';
+//            foreach($albumData as $album_key => $album){
+//                
+//             
+//                //get the album image
+//                if(empty($album['Files']['CdnPath'])){
+//                    if(empty($album['Files']['SourceURL'])){
+//                       // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+//                    } else {
+//                       // mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+//                    }
+//                }
+//                                
+//                $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
+//                
+//                
+//                //get the album title
+//                if(strlen($album['Album']['AlbumTitle']) >= 50){
+//                      $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
+//                }
+//     
+//               
+//		$copyrightString='';				
+//                if($album['Album']['Advisory'] == 'T'){
+//                        $copyrightString .='<font class="explicit"> (Explicit)</font>';                    
+//                }
+//                
+//                
+//                if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
+//                        $copyrightString .= $this->getTextEncode($album['Album']['Copyright']);
+//                }
+//				
+//                
+//               //created the album url 
+//               $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
+//                     
+//			  
+//               $htmlContain .= '<div class="album-overview-container">
+//                                <div class="album-image selected">
+//                                        <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
+//                                </div>
+//                                <div class="album-title">
+//                                        <a href="'.$albumURL.'">'.$this->getTextEncode($album['Album']['AlbumTitle']).'</a>
+//                                </div>
+//                                <div class="album-year">
+//                                        <a href="'.$albumURL.'">'.$copyrightString.'</a>
+//                                </div>
+//                        </div>';   
+//                
+//             }                                     
+//             
+//             echo $htmlContain; 
 
              exit;
 	}
