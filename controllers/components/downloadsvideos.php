@@ -17,7 +17,7 @@ Class DownloadsvideosComponent extends Object
     function checkLibraryDownloadVideos($libId) {
         $libraryInstance = ClassRegistry::init('Library');
         $libraryInstance->recursive = -1;
-        $results = $libraryInstance->find('count',array('conditions' => array('library_download_limit > library_current_downloads','id' => $libId,'library_available_downloads > 0','library_status'=>'active')));
+        $results = $libraryInstance->find('count',array('conditions' => array('library_download_limit > library_current_downloads','id' => $libId,'library_available_downloads > 1','library_status'=>'active')));
         if($results > 0) {
             return true;
         }
@@ -73,7 +73,7 @@ Class DownloadsvideosComponent extends Object
                         //}
                     } else {
                         $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the library download limit has been reached");
-                        return array(false,'The library has reached the download limit.', 3);
+                        return array(false,'The library has reached the download limit for videos.', 3);
                     }
                 } else {
                     $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the song requested is not available for territory ".((!$isMobileDownload)?$this->Session->read('territory'):$mobileTerritory));
@@ -108,10 +108,7 @@ Class DownloadsvideosComponent extends Object
         } else {
             $territory = $mobileTerritory;
         }
-        
         $country = $countryInstance->find('first', array('conditions' => array('ProdID'=>$prodId, 'provider_type'=>$providerType,'Territory'=>$territory, 'SalesDate <= NOW()')));
-        echo $countryInstance->lastQuery();
-        print_r($country); die;
         if(!empty($country['Country'])){
             return true;
         } else {
