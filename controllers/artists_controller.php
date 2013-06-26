@@ -929,7 +929,7 @@ Class ArtistsController extends AppController
         
         function album_ajax($id=null,$album=null,$provider=null)
 	{
-            //Configure::write('debug', 2);	
+            Configure::write('debug', 2);	
             $this->layout = false;
             if(count($this -> params['pass']) > 1) {
                     $count = count($this -> params['pass']);
@@ -1040,7 +1040,8 @@ Class ArtistsController extends AppController
             $htmlContain ='';
             foreach($albumData as $album_key => $album){
              
-                //get the album image
+                
+            //get the album image
                 if(empty($album['Files']['CdnPath'])){
                     if(empty($album['Files']['SourceURL'])){
                        // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
