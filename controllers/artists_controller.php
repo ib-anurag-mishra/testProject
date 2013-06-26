@@ -1064,7 +1064,9 @@ Class ArtistsController extends AppController
                 
                 
                 if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-                        $copyrightString .= $album['Album']['Copyright'];
+                        
+                    $album['Album']['Copyright'] = substr($album['Album']['Copyright'], 0, 9);                    
+                    $copyrightString .= $album['Album']['Copyright'];
                 }
 				
                 
