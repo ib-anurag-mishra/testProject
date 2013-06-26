@@ -56,7 +56,7 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-
+/*
         // National Top Songs Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {              
        
@@ -281,7 +281,7 @@ STR;
                 
                 
                 
-                
+           */     
                 
                 
                 
@@ -3044,20 +3044,20 @@ STR;
         $this->layout = false;
 
         $id = $_REQUEST['id'];
-		$libId = $_REQUEST['libid'];
-		$patId = $_REQUEST['patronid'];
-		$this->Download->recursive = -1;
+        $libId = $_REQUEST['libid'];
+        $patId = $_REQUEST['patronid'];
+        $this->Download->recursive = -1;
         $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
-		$downloadCount =  $downloadsUsed[0]['Download']['history'];
-		//check for download availability
-		if($downloadCount < 2){
-			$this->Download->setDataSource('master');
-			$sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."' ORDER BY created DESC";
-			$this->Download->query($sql);
-			$this->Download->setDataSource('default');
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
-			$downloadCount =  $downloadsUsed[0]['Download']['history'];
-            echo "suces|".$downloadCount;
+        $downloadCount =  $downloadsUsed[0]['Download']['history'];
+        //check for download availability
+        if($downloadCount < 2){
+                $this->Download->setDataSource('master');
+                $sql = "UPDATE `downloads` SET history=history+1 Where ProdID='".$id."' AND library_id = '".$libId."' AND patron_id = '".$patId."' AND history < 2 AND created BETWEEN '".Configure::read('App.twoWeekStartDate')."' AND '".Configure::read('App.twoWeekEndDate')."' ORDER BY created DESC";
+                $this->Download->query($sql);
+                $this->Download->setDataSource('default');
+                $downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $id,'library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'order'=>'created DESC','limit' => '1'));
+                $downloadCount =  $downloadsUsed[0]['Download']['history'];
+        echo "suces|".$downloadCount;
         } else {
 			echo "error";
 		}
