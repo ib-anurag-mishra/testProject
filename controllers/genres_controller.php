@@ -333,7 +333,8 @@ Class GenresController extends AppController
                 }
             }
             //$this->Song->lastQuery();
-           // print_r($allArtists);
+            print_r($allArtists);
+            die;
             $this->set('genres', $allArtists);
             $this->set('genre',base64_decode($Genre));
 	}
