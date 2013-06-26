@@ -1101,7 +1101,7 @@ Class ArtistsController extends AppController
 								'Files.SourceURL'
 							),
 						)
-					), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'),'cache' => 'yes', 'chk' => 2
+					), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'),'cache' => 'no', 'chk' => 2
 				));
                 
                 
