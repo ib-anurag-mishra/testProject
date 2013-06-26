@@ -35,7 +35,7 @@ class AppController extends Controller
                     $this->Session->write("subdomain",$subdomains);
                     $this->Session->write("lId",$libraryIDArray['Library']['id']);                    
                     $this->Session->write("territory", $libraryIDArray['Library']['library_territory']);  
-                    //$this->Session->write("library", $libraryIDArray['Library']['id']);
+                    $this->Session->write("library", $libraryIDArray['Library']['id']);
                     
 		}else{
                     
@@ -44,7 +44,7 @@ class AppController extends Controller
                     $this->Session->write("libCountry",$country);
                     $this->Session->write("territory",$country);
                     $this->Session->write("lId",1);  
-                    //$this->Session->write("library", 1);
+                    $this->Session->write("library", 1);
                 }
                
                 
