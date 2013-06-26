@@ -1066,7 +1066,7 @@ Class ArtistsController extends AppController
                 
                 
                 if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-                        $copyrightString .= $this->getTextEncode($album['Album']['Copyright']);
+                        $copyrightString .= $album['Album']['Copyright'];
                 }
 				
                 
@@ -1079,7 +1079,7 @@ Class ArtistsController extends AppController
                                         <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
                                 <div class="album-title">
-                                        <a href="'.$albumURL.'">'.$this->getTextEncode($album['Album']['AlbumTitle']).'</a>
+                                        <a href="'.$albumURL.'">'.$album['Album']['AlbumTitle'].'</a>
                                 </div>
                                 <div class="album-year">
                                         <a href="'.$albumURL.'">'.$copyrightString.'</a>
