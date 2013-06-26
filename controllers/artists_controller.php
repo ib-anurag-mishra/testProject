@@ -986,9 +986,7 @@ Class ArtistsController extends AppController
             
            $this->paginate =  array('conditions' =>
                                     array('and' =>
-                                            array(
-                                                //array('Album.ArtistText' => base64_decode($id)),
-                                                    //array('Album.provider_type = Genre.provider_type'),
+                                            array(                                                
                                                     array('Album.provider_type = Country.provider_type'),
                                                 $condition
                                             ), "1 = 1 GROUP BY Album.ProdID, Album.provider_type"
@@ -1041,7 +1039,7 @@ Class ArtistsController extends AppController
             foreach($albumData as $album_key => $album){
              
                 
-            //get the album image
+                //get the album image
                 if(empty($album['Files']['CdnPath'])){
                     if(empty($album['Files']['SourceURL'])){
                        // mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
@@ -1074,7 +1072,7 @@ Class ArtistsController extends AppController
                $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
                      
 			  
-               echo $htmlContain .= '<div class="album-overview-container">
+               $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>

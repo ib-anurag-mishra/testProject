@@ -42,6 +42,24 @@ function load_genres(link , id_serial , genre_name)
 
 	//setInterval('VSA_initScrollbars()' , 500);
 }
+
+
+function showAllAlbumsList(albumListURL){
+    alert(webroot+albumListURL);
+    var data = "";
+    jQuery.ajax({
+            type: "post",  // Request method: post, get
+            url: webroot+"admin/artists/getAutoArtist", // URL to request
+            data: data,  // post data
+            success: function(response) {
+                $('.album-list').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) {}
+        });    
+    
+}
+
+
 </script>            
 <?php
 
@@ -180,7 +198,7 @@ $genre_text_conversion = array(
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);
-                                                        echo "<a href='/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . '/' . base64_encode($genre). "' data-artist='".$ArtistName."'>";
+                                                        echo "<a onclick='showAllAlbumsList('/artists/album/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . '/' . base64_encode($genre). "')' data-artist='".$ArtistName."'>";
                                                         echo $ArtistName;
                                                         echo '</a>';
                                                         echo '</li>';                                                                    

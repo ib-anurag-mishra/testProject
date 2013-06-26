@@ -76,6 +76,7 @@
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
 
                <script type="text/javascript">
+                var webroot = '<?php echo $this->webroot; ?>';
        function showhide(flag, id)
        {	   		
 	   
