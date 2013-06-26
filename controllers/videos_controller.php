@@ -116,11 +116,11 @@ class VideosController extends AppController {
             $insertArr['library_id'] = $libId;
             $insertArr['patron_id'] = $patId;
             $insertArr['ProdID'] = $prodId;
-            $insertArr['artist'] = addslashes($trackDetails['0']['Videos']['Artist']);
-            $insertArr['track_title'] = addslashes($trackDetails['0']['Videos']['VideoTitle']);
-            $insertArr['provider_type'] = $trackDetails['0']['Videos']['provider_type'];
-            $insertArr['ProductID'] = $trackDetails['0']['Videos']['ProductID'];
-            $insertArr['ISRC'] = $trackDetails['0']['Videos']['ISRC'];
+            $insertArr['artist'] = addslashes($trackDetails['0']['Video']['Artist']);
+            $insertArr['track_title'] = addslashes($trackDetails['0']['Video']['VideoTitle']);
+            $insertArr['provider_type'] = $trackDetails['0']['Video']['provider_type'];
+            $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
+            $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
 
             // creates download url
             $videoUrl = shell_exec('perl files/tokengen ' . "/sony_test/".$trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
@@ -221,8 +221,8 @@ class VideosController extends AppController {
             if (is_numeric($return)) {
 
                 //make in LatestDownloadVideo entry
-                $this->LatestDownloadVideo->setDataSource('master');
-                $data = $this->LatestDownloadVideo->find('count', array(
+                $this->LatestVideoDownload->setDataSource('master');
+                $data = $this->LatestVideoDownload->find('count', array(
                     'conditions' => array(
                         "LatestDownloadVideo.library_id " => $libId,
                         "LatestDownloadVideo.patron_id " => $patId,
@@ -241,7 +241,7 @@ class VideosController extends AppController {
                 if (false === $data) {
                     $log_data .= ":SelectLDFail";
                 }
-                $this->LatestDownloadVideo->setDataSource('default');
+                $this->LatestVideoDownload->setDataSource('default');
             }
             // logs data
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
