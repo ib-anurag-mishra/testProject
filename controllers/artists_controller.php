@@ -916,8 +916,7 @@ Class ArtistsController extends AppController
             $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
-            //$this->set('count_albums',count($albumData)); 
-            print_r( $albumData);
+            //$this->set('count_albums',count($albumData));        
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -986,7 +985,7 @@ Class ArtistsController extends AppController
                     $cond = "";
             }
             
-            $this->paginate =  array('conditions' =>
+           $this->paginate =  array('conditions' =>
                                     array('and' =>
                                             array(
                                                 //array('Album.ArtistText' => base64_decode($id)),
@@ -1000,7 +999,7 @@ Class ArtistsController extends AppController
                                             'Album.Title',
                                             'Album.ArtistText',
                                             'Album.AlbumTitle',
-                                            'Album.Advisory',
+                    'Album.Advisory',
                                             'Album.Artist',
                                             'Album.ArtistURL',
                                             'Album.Label',
@@ -1025,7 +1024,7 @@ Class ArtistsController extends AppController
                                                             'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'limit' => '1500','cache' => 'no', 'chk' => 2
+                                    ), 'order' => array('Album.provider_type'=>'desc','Country.SalesDate' => 'desc'), 'limit' => '15','cache' => 'yes', 'chk' => 2
                             );
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
