@@ -221,8 +221,8 @@ class VideosController extends AppController {
             if (is_numeric($return)) {
 
                 //make in LatestDownloadVideo entry
-                $this->LatestVideoDownload->setDataSource('master');
-                $data = $this->LatestVideoDownload->find('count', array(
+                $this->LatestVideodownload->setDataSource('master');
+                $data = $this->LatestVideodownload->find('count', array(
                     'conditions' => array(
                         "LatestDownloadVideo.library_id " => $libId,
                         "LatestDownloadVideo.patron_id " => $patId,
@@ -241,7 +241,7 @@ class VideosController extends AppController {
                 if (false === $data) {
                     $log_data .= ":SelectLDFail";
                 }
-                $this->LatestVideoDownload->setDataSource('default');
+                $this->LatestVideodownload->setDataSource('default');
             }
             // logs data
             $log_data .= PHP_EOL . "---------Request (" . $log_id . ") End----------------";
