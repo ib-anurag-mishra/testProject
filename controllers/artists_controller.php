@@ -967,9 +967,8 @@ Class ArtistsController extends AppController
 
 
             $condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").") AND Album.provider_type = Genre.provider_type");
-
                    
-            $this->layout = 'home';
+          
             $this->set('artisttext',base64_decode($id));
             $this->set('genre',base64_decode($album));
             $patId = $this->Session->read('patron');
@@ -1071,7 +1070,7 @@ Class ArtistsController extends AppController
 				
                 
                //created the album url 
-               echo $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
+               $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
                      
 			  
                echo $htmlContain .= '<div class="album-overview-container">
