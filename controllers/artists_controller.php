@@ -917,7 +917,7 @@ Class ArtistsController extends AppController
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
             //$this->set('count_albums',count($albumData)); 
-
+            print_r( $albumData);
             $albumSongs = array();
             $this->set('albumData', $albumData);
             if(isset($albumData[0]['Song']['ArtistURL'])) {
@@ -1033,7 +1033,7 @@ Class ArtistsController extends AppController
             else{
                     $cond = "";
             }
-            //$this->Album->recursive = 2;
+            $this->Album->recursive = 2;
             $albumData = array();
             $albumData = $this->paginate('Album'); //getting the Albums for the artist
             print_r($albumData);
