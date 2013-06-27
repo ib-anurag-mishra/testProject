@@ -1073,9 +1073,9 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		
-                    if(1)
-                     //if (($libDownload = Cache::read("lib".$libId)) === false)
+		echo "Value:[".Cache::read("lib".$libId)."]";
+                  //  if(1)
+                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1194,7 +1194,7 @@ STR;
 STR;
                                  
 			$topDownload_songs = $this->Song->query($topDownloaded_query_songs);
-                        echo "Songs: ".$topDownloaded_query_songs;
+                        //echo "Songs: ".$topDownloaded_query_songs;
                         
 //                            echo "<pre>";
 //                            print_r($topDownload_songs);
