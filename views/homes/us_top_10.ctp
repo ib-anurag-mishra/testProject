@@ -1,0 +1,200 @@
+
+
+<section class="my-top-100-page">
+		
+		<div class="breadcrumbs"><span>Home</span> > <span>Most Popular</span> > <span>My Top 10</span></div>
+		<header class="clearfix">
+			<h2>My Top 10</h2>
+			
+		</header>
+		<h3>Albums</h3>
+		<div class="album-shadow-container">
+			<div class="album-scrollable horiz-scroll">
+				<ul>
+					<?php
+                                        
+					 $count  =   count($topDownload_albums);           
+					//for($d=1;$d<$count;$d++) {
+                                        foreach($topDownload_albums as $key => $value){
+                                            
+                                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
+					?>					
+					<li>
+						<div class="album-container">
+							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" /></a>
+							<div class="top-10-ranking">1</div>
+							
+						</div>
+						<div class="album-title">
+							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>">
+                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                                                if(strlen($value['Album']['AlbumTitle'])>20)
+                                                                echo substr($value['Album']['AlbumTitle'],0,20)."..."; 
+                                                                else echo $value['Album']['AlbumTitle'];
+                                                         ?>
+                                                    </a>
+						</div>
+						<div class="artist-name">
+							<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Album']['ArtistText'])); ?>/<?=base64_encode($value['Album']['Genre'])?>">
+                                                                                                        <?php 
+                                                                                                                    if(strlen($value['Album']['Artist'])>20)
+                                                                                                                    echo substr($value['Album']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Album']['Artist'];
+                                                                                                             ?>
+                                                       </a>
+						</div>
+					</li>
+					<?php
+					
+					}
+					?>
+				</ul>
+			</div>
+		</div>
+		<h3>Songs</h3>
+		<div class="songs-shadow-container">
+			<div class="songs-scrollable horiz-scroll">
+				<ul>
+					<?php
+                                                
+                                        $count  =   count($top_10_songs);  
+                                                                                
+                                        
+					//for($d=1;$d<$count;$d++) {
+                                        foreach($top_10_songs as $key => $value){
+                                            
+                                             $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                                            
+					?>
+					<li>
+						
+						<div class="song-container">
+							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" /></a>
+							<div class="top-10-ranking">1</div>
+							<a href="#" class="preview"></a>
+							<a class="top-10-download-now-button" href="#">Download Now</a>
+							<a class="add-to-playlist-button" href="#"></a>
+							<div class="wishlist-popover">
+								<div class="playlist-options">
+									<ul>
+										<li><a href="#">Create New Queue</a></li>
+										<li><a href="#">Playlist 1</a></li>
+										<li><a href="#">Playlist 2</a></li>
+										<li><a href="#">Playlist 3</a></li>
+										<li><a href="#">Playlist 4</a></li>
+									</ul>
+								</div>
+								
+								<a class="add-to-playlist" href="#">Add To Queue</a>
+								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+								
+								<div class="share clearfix">
+									<p>Share via</p>
+									<a class="facebook" href="#"></a>
+									<a class="twitter" href="#"></a>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="album-title">
+							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                                                if(strlen($value['Song']['SongTitle'])>20)
+                                                                echo substr($value['Song']['SongTitle'],0,20)."..."; 
+                                                                else echo $value['Song']['SongTitle'];
+                                                         ?>
+                                                    </a>
+						</div>
+						<div class="artist-name">
+							<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+                                                                                                        <?php 
+                                                                                                                    if(strlen($value['Song']['Artist'])>20)
+                                                                                                                    echo substr($value['Song']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Song']['Artist'];
+                                                                                                             ?>
+                                                       </a>
+						</div>
+					</li>
+					
+					<?php
+					
+					}
+					
+					?>
+					
+					
+				</ul>
+			</div>
+		
+		</div>
+		<h3>Videos</h3>
+		<div class="videos-shadow-container">
+			<div class="videos-scrollable horiz-scroll">
+				<ul>
+					<?php
+                                        
+                                        $count  =   count($topDownload_videos_data);  
+                                                                                                                        
+					//for($d=1;$d<$count;$d++) {
+                                        foreach($topDownload_videos_data as $key => $value){
+                                            
+                                             $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             $video_img =  Configure::read('App.Music_Path').$video_img;
+                                            
+					?>
+					<li>
+						
+						<div class="video-container">
+							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>"><img src="img/lazy-placeholder.gif" data-original="<?php echo $video_img; ?>" alt="gangstasquad" width="423" height="250" /></a>                                                  
+							<div class="top-10-ranking">1</div>
+							
+							<a class="top-10-download-now-button" href="#">Download Now</a>
+							<a class="add-to-playlist-button" href="#"></a>
+							<div class="wishlist-popover">
+								
+								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+								
+								<div class="share clearfix">
+									<p>Share via</p>
+									<a class="facebook" href="#"></a>
+									<a class="twitter" href="#"></a>
+								</div>
+								
+							</div>
+							
+						</div>
+						<div class="album-title">
+							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                                                if(strlen($value['Video']['VideoTitle'])>20)
+                                                                echo substr($value['Video']['VideoTitle'],0,20)."..."; 
+                                                                else echo $value['Video']['VideoTitle'];
+                                                         ?>
+                                                    </a>
+						</div>
+						<div class="artist-name">
+							<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+                                                                                                        <?php 
+                                                                                                                    if(strlen($value['Video']['Artist'])>20)
+                                                                                                                    echo substr($value['Video']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['Artist'];
+                                                                                                             ?>
+                                                       </a>
+						</div>
+					</li>
+					
+					<?php
+					
+					}
+					
+					?>
+					
+					
+				</ul>
+			</div>
+		
+		</div>
+	</section>
