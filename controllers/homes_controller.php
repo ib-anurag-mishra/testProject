@@ -1073,8 +1073,8 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
-                print_r($libDownload = Cache::read("lib".$libId));
+		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
+                //print_r($libDownload = Cache::read("lib".$libId));
                   //  if(1)
                      if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
@@ -1209,7 +1209,7 @@ STR;
 		} 
                 else
                {
-                        $topDownload = Cache::read("lib".$libId);
+                        $topDownload_songs = Cache::read("lib".$libId);
                 }
 		
 		$this->set('top_10_songs',$topDownload_songs);
