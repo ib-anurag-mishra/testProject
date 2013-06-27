@@ -1076,7 +1076,7 @@ Class ArtistsController extends AppController
                			  
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
-                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\'$albumURL\')"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
+                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
                                 <div class="album-title">
                                         <a href="javascript:void(0);">'.$album['Album']['AlbumTitle'].'</a>
