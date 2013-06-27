@@ -5,10 +5,10 @@
  Author : m68interactive
 */
 
-class LatestVideoDownload extends AppModel
+class LatestVideodownload extends AppModel
 {
-  var $name = 'LatestVideoDownload';
-  var $useTable = 'latest_videodownloads';
+  var $name = 'LatestVideodownload';
+  var $usetable = 'latest_videodownloads';
 
 
 }

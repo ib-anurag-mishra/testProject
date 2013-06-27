@@ -4,6 +4,8 @@
    Author: Maycreate
  * Modified: 21-06-2013
 */
+
+
 class HomesController extends AppController
 {
     var $name = 'Homes';
@@ -56,7 +58,7 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-
+/*
         // National Top Songs Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {              
        
@@ -277,7 +279,14 @@ STR;
         // National Top Vidoes Downloads functionality code end     
                 
    
-              
+                
+                
+                
+                
+           */     
+                
+                
+                
                 
                 $ids = '';
 		$ids_provider_type = '';
@@ -503,14 +512,14 @@ STR;
 			}
 		}*/
 		$this->set('genre_pop', $genre_pop);
-                if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
-                    $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
-                    Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
-                }
+        if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
+            $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
+            Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
+        }
     
     
-                $this->set('artists',$ssartists);
-                $this->layout = 'home';
+    $this->set('artists',$ssartists);
+    $this->layout = 'home';
 	
 		/*
 				Code OF NEWS Section --- START
@@ -916,6 +925,7 @@ STR;
 		}*/
 		$this->set('genre_info', $genre_info);
 	}
+        
 	function my_lib_top_10()
 	{ 
 		/*$this -> layout = 'ajax';
@@ -1336,7 +1346,7 @@ STR;
                 
                 ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
                 
-                
+               
                 $topDownload_videos_data = $this->requestAction(
                                                     array('controller' => 'videos', 'action' => 'my_lib_top_10_videos'), array(
                                                                                                                                 'data'=>array(
@@ -1348,9 +1358,279 @@ STR;
                                             );
                 
                 
+                
+                
                $this->set('topDownload_videos_data',$topDownload_videos_data);  
                 
 	}
+        
+        function us_top_10()
+        {
+            
+            $this->layout = 'home';  
+
+            $libId = $this->Session->read('library');
+            $territory = $this->Session->read('territory');
+            
+            $libId = 1;
+            $territory = 'us';
+            
+            //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
+            // National Top Downloads functionality
+            //if (($national = Cache::read("national".$territory)) === false) {
+            if (1) {                    
+                    $country = $territory;
+
+                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                    $siteConfigData = $this->Album->query($siteConfigSQL);
+                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+
+                    if($maintainLatestDownload){
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `latest_downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        } else {
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        }
+		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+		  $ids = '';
+		  $natTopDownloaded = $this->Album->query($sql);
+                  
+//                  echo '<pre>';
+//                  echo $sql;
+//                  print_r($natTopDownloaded);
+//                  die;
+                  
+		  foreach($natTopDownloaded as $natTopSong){
+			if(empty($ids)){
+			  $ids .= $natTopSong['Download']['ProdID'];
+			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			} else {
+			  $ids .= ','.$natTopSong['Download']['ProdID'];
+			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			}
+		  }
+		  $data = array();
+                  
+                  
+//                  echo '<pre>';                  
+//                  print_r($natTopDownloaded);
+//                  die;
+                  
+
+                  $countryPrefix = $this->Session->read('multiple_countries');
+	 $sql_national_100 =<<<STR
+	SELECT 
+		Song.ProdID,
+		Song.ReferenceID,
+		Song.Title,
+		Song.ArtistText,
+		Song.DownloadStatus,
+		Song.SongTitle,
+		Song.Artist,
+		Song.Advisory,
+		Song.Sample_Duration,
+		Song.FullLength_Duration,
+		Song.provider_type,
+		Genre.Genre,
+		Country.Territory,
+		Country.SalesDate,
+		Sample_Files.CdnPath,
+		Sample_Files.SaveAsName,
+		Full_Files.CdnPath,
+		Full_Files.SaveAsName,
+		Sample_Files.FileID,
+		Full_Files.FileID,
+		PRODUCT.pid
+	FROM
+		Songs AS Song
+			LEFT JOIN
+		File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+			LEFT JOIN
+		File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+			LEFT JOIN
+		Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+			LEFT JOIN
+		{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+	WHERE
+		( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+	GROUP BY Song.ProdID
+	ORDER BY FIELD(Song.ProdID,
+			$ids) ASC
+	LIMIT 10 
+	  
+STR;
+                        echo $sql_national_100; die;
+
+			$nationalTopDownload = $this->Album->query($sql_national_100);
+			// Checking for download status
+			Cache::write("national".$territory, $nationalTopDownload);
+		}
+                else
+                {
+                    $nationalTopDownload = Cache::read("national".$territory);
+                }
+		
+/*		$this->Download->recursive = -1;
+		foreach($nationalTopDownload as $key => $value){
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+			if(count($downloadsUsed) > 0){
+				$nationalTopDownload[$key]['Song']['status'] = 'avail';
+			} else{
+				$nationalTopDownload[$key]['Song']['status'] = 'not';
+			}
+		}*/
+                
+//                echo "<pre>";
+//                print_r($nationalTopDownload);
+//                die;
+                
+		$this->set('nationalTopDownload',$nationalTopDownload);
+                
+                
+                
+                //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
+                
+                // National Top Downloads functionality
+            //if (($national = Cache::read("national".$territory)) === false) {
+            if (1) {                    
+                    $country = $territory;
+
+                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                    $siteConfigData = $this->Album->query($siteConfigSQL);
+                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+
+                    if($maintainLatestDownload){
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `latest_downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        } else {
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        }
+		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
+		  $ids = '';
+		  $natTopDownloaded = $this->Album->query($sql);
+                  
+//                  echo '<pre>';
+//                  echo $sql;
+//                  print_r($natTopDownloaded);
+//                  die;
+                  
+		  foreach($natTopDownloaded as $natTopSong){
+			if(empty($ids)){
+			  $ids .= $natTopSong['Download']['ProdID'];
+			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			} else {
+			  $ids .= ','.$natTopSong['Download']['ProdID'];
+			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			}
+		  }
+		  $data = array();
+                  
+                  
+//                  echo '<pre>';                  
+//                  print_r($natTopDownloaded);
+//                  die;
+                  
+
+                  $countryPrefix = $this->Session->read('multiple_countries');
+	 $sql_national_100 =<<<STR
+	SELECT 
+		Album.ProdID,
+		Album.ReferenceID,
+		Album.Title,
+		Album.ArtistText,
+		Album.DownloadStatus,
+		Album.AlbumTitle,
+		Album.Artist,
+		Album.Advisory,
+		Album.Sample_Duration,
+		Album.FullLength_Duration,
+		Album.provider_type,
+		Genre.Genre,
+		Country.Territory,
+		Country.SalesDate,
+		Sample_Files.CdnPath,
+		Sample_Files.SaveAsName,
+		Full_Files.CdnPath,
+		Full_Files.SaveAsName,
+		Sample_Files.FileID,
+		Full_Files.FileID,
+		PRODUCT.pid
+	FROM
+		Album AS Albums
+			LEFT JOIN
+		File AS Sample_Files ON (Album.Sample_FileID = Sample_Files.FileID)
+			LEFT JOIN
+		File AS Full_Files ON (Album.FullLength_FileID = Full_Files.FileID)
+			LEFT JOIN
+		Genre AS Genre ON (Genre.ProdID = Album.ProdID)
+			LEFT JOIN
+		{$countryPrefix}countries AS Country ON (Country.ProdID = Album.ProdID) AND (Country.Territory = '$country') AND (Album.provider_type = Country.provider_type)
+			LEFT JOIN
+		PRODUCT ON (PRODUCT.ProdID = Album.ProdID) 
+	WHERE
+		( (Album.DownloadStatus = '1') AND ((Album.ProdID, Album.provider_type) IN ($ids_provider_type)) AND (Album.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Album.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+	GROUP BY Album.ProdID
+	ORDER BY FIELD(Album.ProdID,
+			$ids) ASC
+	LIMIT 10 
+	  
+STR;
+                        echo $sql_national_100; die;
+
+			$nationalTopDownload = $this->Album->query($sql_national_100);
+			// Checking for download status
+			Cache::write("national".$territory, $nationalTopDownload);
+		}
+                else
+                {
+                    $nationalTopDownload = Cache::read("national".$territory);
+                }
+		
+/*		$this->Download->recursive = -1;
+		foreach($nationalTopDownload as $key => $value){
+			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
+			if(count($downloadsUsed) > 0){
+				$nationalTopDownload[$key]['Song']['status'] = 'avail';
+			} else{
+				$nationalTopDownload[$key]['Song']['status'] = 'not';
+			}
+		}*/
+                
+//                echo "<pre>";
+//                print_r($nationalTopDownload);
+//                die;
+                
+		$this->set('nationalTopDownload',$nationalTopDownload);
+                
+        }
 
 
 	function national_top_download()

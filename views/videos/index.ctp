@@ -88,7 +88,7 @@
 <?php if(!empty($topVideoDownloads)){ ?>
 <li>
 <?php
-print_r($topVideoDownloads); die;
+//print_r($topVideoDownloads); die;
 $i = 0;
 foreach($topVideoDownloads as $topDownload)
 {
@@ -105,14 +105,12 @@ foreach($topVideoDownloads as $topDownload)
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
 
-                                <form method="post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/videos/download">
-                                    <input type="hidden" name="ProdID" value="<?php echo $featureVideo["Video"]["ProdID"];?>" />
-									<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
-                                        <span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-                                            <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
+                                    <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
+                                        <span class="beforeClick" id="song_<?php echo $topDownload["Video"]["ProdID"]; ?>">
+                                            <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 										</span>
-										<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
-                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 								</form>													
 								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 
