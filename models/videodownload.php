@@ -5,9 +5,9 @@
  Author : m68interactive
 */
 
-class VideoDownloads extends AppModel
+class Videodownload extends AppModel
 {
-  var $name = 'VideoDownloads';
+  var $name = 'Videodownload';
   var $usetable = 'videodownloads';
 
   
