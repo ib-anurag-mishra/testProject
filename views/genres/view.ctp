@@ -26,15 +26,16 @@
 <script language="javascript">
 function load_artist(link , id_serial , genre_name){
 	
-	jQuery('#ajax_artistlist_content').load(link);
+	//jQuery('#ajax_artistlist_content').load(link);
 
-        var data = "ajax_genre_name="+genre_name;
+       // var data = "ajax_genre_name="+genre_name;
+       var data = "";
         jQuery.ajax({
                 type: "post",  // Request method: post, get
-                url: webroot+albumListURL, // URL to request
+                url: link, // URL to request
                 data: data,  // post data
                 success: function(response) {                
-                    $('.album-list-span').html(response);
+                    $('#ajax_artistlist_content').html(response);
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
             });
