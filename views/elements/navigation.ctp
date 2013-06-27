@@ -209,7 +209,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<ul class="browse sidebar-nav"><h3>Browse</h3>
 								
 								<li>
-									<a href="#" class="sidebar-anchor">Music Videos</a>
+									<?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 
+'index'),array('class'=>'sidebar-anchor')); ?>
 
 								</li>
 								<li>
