@@ -1283,12 +1283,12 @@ STR;
 					$ioda_ids_str = implode(',',$ioda_ids);
 				}
 				if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
-					$top_ten_condition_albums = "((Album.ProdID IN (".$sony_ids_str.") AND Album.provider_type='sony') OR (Album.ProdID IN (".$ioda_ids_str.") AND Album.provider_type='ioda'))";                                       
+					$top_ten_condition_albums = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";                                       
 				} else if(!empty($sony_ids_str)){
-					$top_ten_condition_albums = "(Album.ProdID IN (".$sony_ids_str.") AND Album.provider_type='sony')";                                        
+					$top_ten_condition_albums = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";                                        
                                         
                                 } else if(!empty($ioda_ids_str)){
-					$top_ten_condition_albums = "(Album.ProdID IN (".$ioda_ids_str.") AND Album.provider_type='ioda')";                                        
+					$top_ten_condition_albums = "(Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda')";                                        
 				}
 				
 				
@@ -1336,9 +1336,8 @@ STR;
 					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
 				WHERE
 					((Song.DownloadStatus = '1') AND (($top_ten_condition_songs) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
-				GROUP BY Song.ProdID, Song.ReferenceID
-				ORDER BY FIELD(Song.ProdID,
-						$ids) ASC
+				GROUP BY  Song.ReferenceID
+				ORDER BY count(Song.ProdID) DESC
 				LIMIT 10
 STR;
                                
