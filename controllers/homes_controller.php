@@ -1359,8 +1359,8 @@ STR;
                 }
 		$this->set('topDownload_albums',$topDownload_albums); 
                 
-                echo "<pre>";
-                print_r($topDownload_albums);
+//                echo "<pre>";
+//                print_r($topDownload_albums);
                 
                 ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
                 
