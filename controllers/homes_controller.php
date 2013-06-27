@@ -1646,16 +1646,15 @@ STR;
 		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
-                echo "<pre>";
-                print_r($ustop10Albums);
-                die;
-//                
+//                echo "<pre>";
+//                print_r($ustop10Albums);
+//                die;
+////                
                 
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
                 
                
-                $country = $this->Session->read('territory');
-                //$country = 'us';
+               $country = "US"; 
                 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
