@@ -1074,6 +1074,7 @@ STR;
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
+                print_r($libDownload = Cache::read("lib".$libId));
                   //  if(1)
                      if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
