@@ -146,11 +146,7 @@ $genre_text_conversion = array(
                         
                         
 			<div class="border"></div>
-			<div class="album-list-shadow-container">
-				<h3>Album</h3>
-				<div class="album-list">
-				
-				</div>
+			<div class="album-list-shadow-container">				
 			</div>
 		</section>
                 
