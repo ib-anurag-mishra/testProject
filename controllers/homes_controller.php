@@ -1390,13 +1390,13 @@ STR;
             $libId = $this->Session->read('library');
             $territory = $this->Session->read('territory');
             
-            $libId = 1;
-            $territory = 'us';
+//            $libId = 1;
+//            $territory = 'us';
             
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
-            //if (($national = Cache::read("national".$territory)) === false) {
-            if (1) {                    
+            if (($national = Cache::read("national".$territory)) === false) {
+            //if (1) {                    
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1524,6 +1524,126 @@ STR;
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                 
+                //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
+                
+               
+                
+            
+            if(!empty($country)){                     
+                    $country = $territory;
+
+                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+                    $siteConfigData = $this->Album->query($siteConfigSQL);
+                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+
+                    if($maintainLatestDownload){
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `latest_downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        } else {
+                                $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                            FROM `downloads` AS `Download` 
+                            LEFT JOIN libraries ON libraries.id=Download.library_id
+                            WHERE libraries.library_territory = '".$country."' 
+                            AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                            GROUP BY Download.ProdID 
+                            ORDER BY `countProduct` DESC 
+                            LIMIT 110";
+                        }
+		  
+		  $ids = '';
+		  $natTopDownloaded = $this->Album->query($sql);
+                  
+//                  echo '<pre>';
+//                  echo $sql;
+//                  print_r($natTopDownloaded);
+//                  die;
+                  
+		  foreach($natTopDownloaded as $natTopSong){
+			if(empty($ids)){
+			  $ids .= $natTopSong['Download']['ProdID'];
+			  $ids_provider_type .= ','."(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			} else {
+			  $ids .= ','.$natTopSong['Download']['ProdID'];
+			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+			}
+		  }
+		  $data = array();
+                  
+                  
+//                  echo '<pre>';                  
+//                  print_r($natTopDownloaded);
+//                  die;
+                  
+
+                 $countryPrefix = $this->Session->read('multiple_countries');
+                  // $countryPrefix = 'us_';
+	 
+                  $sql_us_albums =<<<STR
+                               SELECT 
+                                       Song.ProdID,
+                                       Song.ReferenceID,
+                                       Song.Title,
+                                       Song.ArtistText,
+                                       Song.DownloadStatus,
+                                       Song.SongTitle,
+                                       Song.Artist,
+                                       Song.Advisory,
+                                       Song.Sample_Duration,
+                                       Song.FullLength_Duration,
+                                       Song.provider_type,
+                                       Genre.Genre,
+                                       Country.Territory,
+                                       Country.SalesDate,
+                                       Sample_Files.CdnPath,
+                                       Sample_Files.SaveAsName,
+                                       Full_Files.CdnPath,
+                                       Full_Files.SaveAsName,
+                                       File.CdnPath,
+                                       File.SourceURL,
+                                       File.SaveAsName,
+                                       Sample_Files.FileID,
+                                       PRODUCT.pid
+                               FROM
+                                       Songs AS Song
+                                               LEFT JOIN
+                                       File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                               LEFT JOIN
+                                       File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                               LEFT JOIN
+                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                               LEFT JOIN
+                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                               LEFT JOIN
+                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                               WHERE
+                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                               GROUP BY  Song.ReferenceID
+                               ORDER BY count(Song.ProdID) DESC
+                               LIMIT 10 
+
+STR;
+                       
+
+                        //echo $sql_us_albums; die;
+
+			$ustop10Albums = $this->Album->query($sql_us_albums);
+			// Checking for download status
+			
+		}
+                
+		$this->set('ustop10Albums',$ustop10Albums);
+                
+                
+//                echo "<pre>";
+//                print_r($ustop10Albums);
+//                die;
+//                
                 
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
                 
@@ -1534,7 +1654,7 @@ STR;
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-                 $maintainLatestVideoDownload = 0;           
+                $maintainLatestVideoDownload = 0;           
                if(!empty($country)){ 
                               
                    if($maintainLatestVideoDownload){
@@ -1560,7 +1680,7 @@ STR;
                         LIMIT 110";
                     }
                     
-                    echo $sql; die;
+                   // echo $sql; die;
                     
                 
                 $ids = '';

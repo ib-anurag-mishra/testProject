@@ -13,9 +13,9 @@
 				<ul>
 					<?php
                                         
-					 $count  =   count($topDownload_albums);           
+					// $count  =   count($topDownload_albums);           
 					//for($d=1;$d<$count;$d++) {
-                                        foreach($topDownload_albums as $key => $value){
+                                        foreach($ustop10Albums as $key => $value){
                                             
                                              $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
