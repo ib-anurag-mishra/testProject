@@ -1058,13 +1058,13 @@ STR;
 		$patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
                 
-                echo "<br>Lib ID:".$libId;
-                echo "<br>Pat ID:".$patId;
-                echo "<br>Country:".$country;
+//                echo "<br>Lib ID:".$libId;
+//                echo "<br>Pat ID:".$patId;
+//                echo "<br>Country:".$country;
                 
-                $libId  =1;
-                $patId= 8389;
-                $country=   'us';
+//                $libId  =1;
+//                $patId= 8389;
+//                $country=   'us';
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
@@ -1074,8 +1074,8 @@ STR;
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		
-                    if(1)
-                   //  if (($libDownload = Cache::read("lib".$libId)) === false)
+                  //  if(1)
+                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1194,7 +1194,7 @@ STR;
 STR;
                                  
 			$topDownload_songs = $this->Song->query($topDownloaded_query_songs);
-                        echo "Songs: ".$topDownloaded_query_songs;
+                        //echo "Songs: ".$topDownloaded_query_songs;
                         
 //                            echo "<pre>";
 //                            print_r($topDownload_songs);
@@ -1219,8 +1219,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                    if(1)
-                    // if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                   // if(1)
+                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1335,7 +1335,7 @@ STR;
 STR;
                                
                                  
-                                echo "Query: ".$topDownloaded_query_albums;
+                               // echo "Query: ".$topDownloaded_query_albums;
                                  
                             $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
                             
