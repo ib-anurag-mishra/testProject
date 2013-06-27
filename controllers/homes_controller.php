@@ -1058,9 +1058,9 @@ STR;
 		$patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
                 
-                $libId  =1;
-                $patId= 8389;
-                $country=   'us';
+//                $libId  =1;
+//                $patId= 8389;
+//                $country=   'us';
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
@@ -1069,9 +1069,10 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		//if (($libDownload = Cache::read("lib".$libId)) === false)
-                    if(1)
-                    {
+		
+                   // if(1)
+                     if (($libDownload = Cache::read("lib".$libId)) === false)
+                    {   echo "11111";
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -1196,11 +1197,13 @@ STR;
 			} else { 
 				$topDownload_songs = array();                               
 			}
+                        
+                        echo "<br>Songs: ".$topDownloaded_query_songs;
 
 			Cache::write("lib".$libId, $topDownload_songs);
 		} 
                 else
-               {
+               {    echo 2222222;
                         $topDownload = Cache::read("lib".$libId);
                 }
 		
@@ -1211,9 +1214,10 @@ STR;
                                 
                 
                 $ids_provider_type_album = '';
-		//if (($libDownload = Cache::read("lib_album".$libId)) === false)
-                    if(1)
-                    {
+		
+                    //if(1)
+                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    { echo 33333333333;
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -1337,9 +1341,10 @@ STR;
 			}
 
 			Cache::write("lib_album".$libId, $topDownload_albums);
+                        echo "<br>Albums: ".$topDownloaded_query_albums;
 		}
                 else
-                { 
+                { echo 444444444444;
                     $topDownload_albums = Cache::read("lib_album".$libId);
                 }
 		$this->set('topDownload_albums',$topDownload_albums);    

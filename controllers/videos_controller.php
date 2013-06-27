@@ -283,14 +283,20 @@ class VideosController extends AppController {
      function my_lib_top_10_videos()
     {        
         
-                $libId  =1;
-                $patId= 8389;
-                $country=   'us';
+//                $libId  =1;
+//                $patId= 8389;
+//                $country=   'us';
+                $libId = $this->Session->read('library');
+		$patId = $this->Session->read('patron');
+		$country = $this->Session->read('territory');
+         
+         
         
                     $ids_provider_type_video = '';
-                    //if (($libDownload = Cache::read("lib_videos".$libId)) === false)
-                    if(1)
-                    {
+                    
+                    //if(1) 
+                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)
+                    { echo 5555555555;
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -414,7 +420,7 @@ class VideosController extends AppController {
 STR;
                                
                                  
-                                // echo "Query: ".$topDownloaded_query_videos;
+                                echo "<br>Video: ".$topDownloaded_query_videos;
                                  
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
 //                            echo "<pre>";
@@ -429,7 +435,7 @@ STR;
 			Cache::write("lib_video".$libId, $topDownload_video);
 		}
                 else
-                { 
+                { echo 6666666666666;
                     $topDownload_video = Cache::read("lib_video".$libId);
                 }
 		
