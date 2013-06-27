@@ -58,7 +58,7 @@ function showAllAlbumsList(albumListURL){
 }
 
 function showAlbumDetails(albumDetailURL){
-    alert(webroot+albumDetailURL);
+   // alert(webroot+albumDetailURL);
   
         var data = "";
         jQuery.ajax({

@@ -40,13 +40,8 @@
 
 
 
-		<section class="tracklist-container">			
-			<div class="artist-name"><?php
-	if(strlen($artistName) >= 30){
-		$artistName = substr($artistName, 0, 30). '...';
-	}
-	?>
-	<?php echo $this->getTextEncode($artistName); ?></div>
+		<section class="tracklist-container">		
+			
 			<div class="tracklist-header"><span class="song">Song</span><span class="artist">Artist</span><span class="time">Time</span></div>
 			
                             <?php
