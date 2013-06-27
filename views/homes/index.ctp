@@ -536,7 +536,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoAlbumImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
+													<a href="#"><img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>
