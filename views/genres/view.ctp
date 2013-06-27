@@ -36,7 +36,7 @@ function load_genres(link , id_serial , genre_name)
 
 function showAllAlbumsList(albumListURL){
     //alert(webroot+albumListURL);
-    jQuery(".album-list").empty().html(jQuery("#loadingmessage").html());
+    jQuery(".album-list-shadow-container").empty().html(jQuery("#loadingmessage").html());
     $('#loadingmessage').show();
     var data = "";
     jQuery.ajax({
@@ -44,8 +44,8 @@ function showAllAlbumsList(albumListURL){
             url: webroot+albumListURL, // URL to request
             data: data,  // post data
             success: function(response) {
-                jQuery(".album-list").empty();
-                $('.album-list').html(response);
+                jQuery(".album-list-shadow-container").empty();
+                $('.album-list-shadow-container').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
         });

@@ -1035,7 +1035,8 @@ Class ArtistsController extends AppController
     
 
             
-            $htmlContain ='';
+            $htmlContain ='<h3>Album</h3>
+				<div class="album-list">';
             foreach($albumData as $album_key => $album){             
                 
                 //get the album image
@@ -1083,8 +1084,9 @@ Class ArtistsController extends AppController
                         </div>';   
                 
              }                                     
+              $htmlContain .= '</div>';
              
-             echo $htmlContain; 
+              echo $htmlContain; 
 
              exit;
 	}
