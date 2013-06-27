@@ -1633,10 +1633,10 @@ STR;
 STR;
                        
 
-                        echo $sql_us_albums; 
-                        echo "<pre>";
-                        print_r($sql_us_albums);
-                        die;
+//                        echo $sql_us_albums; 
+//                        echo "<pre>";
+//                        print_r($sql_us_albums);
+//                        die;
 
 			$ustop10Albums = $this->Album->query($sql_us_albums);
 			// Checking for download status
@@ -1646,9 +1646,9 @@ STR;
 		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
-//                echo "<pre>";
-//                print_r($ustop10Albums);
-//                die;
+                echo "<pre>";
+                print_r($ustop10Albums);
+                die;
 //                
                 
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
