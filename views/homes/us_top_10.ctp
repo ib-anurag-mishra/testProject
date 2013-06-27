@@ -22,7 +22,9 @@
 					?>					
 					<li>
 						<div class="album-container">
-							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" /></a>
+							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>">                                                        
+                                                        <img src="<?php echo $album_img; ?>" alt="daftpunk" width="250" height="250" />
+                                                        </a>
 							<div class="top-10-ranking">1</div>
 							
 						</div>
@@ -57,12 +59,9 @@
 			<div class="songs-scrollable horiz-scroll">
 				<ul>
 					<?php
-                                                
-                                        $count  =   count($top_10_songs);  
-                                                                                
                                         
 					//for($d=1;$d<$count;$d++) {
-                                        foreach($top_10_songs as $key => $value){
+                                        foreach($nationalTopDownload as $key => $value){
                                             
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img;
@@ -71,12 +70,14 @@
 					<li>
 						
 						<div class="song-container">
-							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" /></a>
+							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
+                                                        <img src="<?php echo $songs_img; ?>" alt="daftpunk" width="250" height="250" />
+                                                        </a>
 							<div class="top-10-ranking">1</div>
 							<a href="#" class="preview"></a>
 							<a class="top-10-download-now-button" href="#">Download Now</a>
 							<a class="add-to-playlist-button" href="#"></a>
-							<div class="wishlist-popover">
+							<div class="wishlist-popover" >
 								<div class="playlist-options">
 									<ul>
 										<li><a href="#">Create New Queue</a></li>
@@ -135,20 +136,21 @@
 			<div class="videos-scrollable horiz-scroll">
 				<ul>
 					<?php
-                                        
-                                        $count  =   count($topDownload_videos_data);  
-                                                                                                                        
-					//for($d=1;$d<$count;$d++) {
-                                        foreach($topDownload_videos_data as $key => $value){
+                                                                                
                                             
-                                             $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+					//for($d=1;$d<$count;$d++) {
+                                        foreach($usTop10VideoDownload as $key => $value){
+                                            
+                                             $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                              $video_img =  Configure::read('App.Music_Path').$video_img;
                                             
 					?>
 					<li>
 						
 						<div class="video-container">
-							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>"><img src="img/lazy-placeholder.gif" data-original="<?php echo $video_img; ?>" alt="gangstasquad" width="423" height="250" /></a>                                                  
+							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                        <img src="img/lazy-placeholder.gif" data-original="<?php echo $video_img; ?>" alt="gangstasquad" width="423" height="250" />
+                                                        </a>                                                  
 							<div class="top-10-ranking">1</div>
 							
 							<a class="top-10-download-now-button" href="#">Download Now</a>
