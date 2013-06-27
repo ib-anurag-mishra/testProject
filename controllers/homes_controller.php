@@ -180,6 +180,7 @@ STR;
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
                  $maintainLatestVideoDownload = 0;           
                if(!empty($country)){ 
+                   echo 147;
                               
                    if($maintainLatestVideoDownload){
                        
@@ -216,10 +217,11 @@ STR;
                         $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
                     }
                 }
+                print_r($ids_provider_type);
 
                 $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                 $sql_national_100_v =<<<STR
+                 echo $sql_national_100_v =<<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
@@ -262,10 +264,12 @@ STR;
                   
 STR;
                     $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
+                    
+                    print_r($nationalTopVideoDownload);
                                 
                    Cache::write("nationalvideos".$country, $nationalTopVideoDownload );       
                 
-                
+                die;
                }
                
        // }
