@@ -1411,7 +1411,7 @@ STR;
                             AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                             GROUP BY Download.ProdID 
                             ORDER BY `countProduct` DESC 
-                            LIMIT 110";
+                            LIMIT 10";
                         } else {
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                             FROM `downloads` AS `Download` 
@@ -1420,7 +1420,7 @@ STR;
                             AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                             GROUP BY Download.ProdID 
                             ORDER BY `countProduct` DESC 
-                            LIMIT 110";
+                            LIMIT 10";
                         }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
@@ -1544,7 +1544,7 @@ STR;
                             AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                             GROUP BY Download.ProdID 
                             ORDER BY `countProduct` DESC 
-                            LIMIT 110";
+                            LIMIT 10";
                         } else {
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                             FROM `downloads` AS `Download` 
@@ -1553,7 +1553,7 @@ STR;
                             AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                             GROUP BY Download.ProdID 
                             ORDER BY `countProduct` DESC 
-                            LIMIT 110";
+                            LIMIT 10";
                         }
 		  
 		  $ids = '';
@@ -1667,7 +1667,7 @@ STR;
                         AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
-                        LIMIT 110";
+                        LIMIT 10";
                    } else {
 
                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -1677,7 +1677,7 @@ STR;
                         AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
-                        LIMIT 110";
+                        LIMIT 10";
                     }
                     
                    // echo $sql; die;
