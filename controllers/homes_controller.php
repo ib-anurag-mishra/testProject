@@ -185,7 +185,7 @@ STR;
                    if($maintainLatestVideoDownload){
                        
 
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                      echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -195,7 +195,7 @@ STR;
                         LIMIT 110";
                    } else {
 
-                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -204,6 +204,7 @@ STR;
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
                     }
+                    echo '<br><br><br><br>';
                 
                 $ids = '';
                 $ids_provider_type = '';
