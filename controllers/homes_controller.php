@@ -180,12 +180,11 @@ STR;
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
                  $maintainLatestVideoDownload = 0;           
                if(!empty($country)){ 
-                   echo 147;
-                              
+                                                 
                    if($maintainLatestVideoDownload){
                        
 
-                      echo   $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -195,7 +194,7 @@ STR;
                         LIMIT 110";
                    } else {
 
-                        echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
@@ -222,7 +221,7 @@ STR;
 
                 $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                 echo $sql_national_100_v =<<<STR
+                  $sql_national_100_v =<<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
@@ -270,7 +269,7 @@ STR;
                                 
                    Cache::write("nationalvideos".$country, $nationalTopVideoDownload );       
                 
-                die;
+               
                }
                
        // }
