@@ -66,6 +66,9 @@
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
             
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/us-top-10.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-top-10.less" />
+            
             
             <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
             <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
