@@ -1581,7 +1581,7 @@ STR;
                   
                   echo '<pre>';                  
                   print_r($natTopDownloaded);
-                  die;
+                  die; 
                   
 
                  $countryPrefix = $this->Session->read('multiple_countries');
