@@ -66,9 +66,7 @@ if(count($genres) == 0)
                                             }else{
                                                     echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
                                             }
-                                         ?>                                            
-                                          <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
-				
+                                         ?>
 					</ul>
 				</div>
 			</div>

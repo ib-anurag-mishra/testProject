@@ -26,7 +26,7 @@
 <script language="javascript">
 function load_genres(link , id_serial , genre_name)
 {
-	
+	alert(link);
 	jQuery('#ajax_genrelist_content').load(link);
 	
         
@@ -149,53 +149,21 @@ $genre_text_conversion = array(
 			<div class="album-list-shadow-container">
 				<h3>Album</h3>
 				<div class="album-list">
-					<div class="album-overview-container">
-						<div class="album-image selected">
-							<a href="#"><img src="/app/webroot/img/genres/album-cover-small.jpg" alt="album-cover-small" width="59" height="59"  /></a>
-						</div>
-						<div class="album-title">
-							<a href="#">13 Shades Of Blue, Best Of Mapleshade Vol. 2</a>
-						</div>
-						<div class="album-year">
-							<a href="#">(2013)</a>
-						</div>
-					</div>
-					<div class="album-overview-container">
-						<div class="album-image">
-							<a href="#"><img src="/app/webroot/img/genres/album-cover-small.jpg" alt="album-cover-small" width="59" height="59" /></a>
-						</div>
-						<div class="album-title">
-							<a href="#">13 Shades Of Blue, Best Of Mapleshade Vol. 2</a>
-						</div>
-						<div class="album-year">
-							<a href="#">(2013)</a>
-						</div>
-					</div>
-					<div class="album-overview-container">
-						<div class="album-image">
-							<a href="#"><img src="/app/webroot/img/genres/album-cover-small.jpg" alt="album-cover-small" width="59" height="59" /></a>
-						</div>
-						<div class="album-title">
-							<a href="#">13 Shades Of Blue, Best Of Mapleshade Vol. 2</a>
-						</div>
-						<div class="album-year">
-							<a href="#">(2013)</a>
-						</div>
-					</div>
-					<div class="album-overview-container">
-						<div class="album-image">
-							<a href="#"><img src="/app/webroot/img/genres/album-cover-small.jpg" alt="album-cover-small" width="59" height="59" /></a>
-						</div>
-						<div class="album-title">
-							<a href="#">13 Shades Of Blue, Best Of Mapleshade Vol. 2</a>
-						</div>
-						<div class="album-year">
-							<a href="#">(2013)</a>
-						</div>
-					</div>
+				
 				</div>
 			</div>
 		</section>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
 		<section class="album-detail-container clearfix">
 			<section class="album-detail">
 				<div class="album-cover-image">
