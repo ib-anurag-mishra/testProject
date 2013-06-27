@@ -1559,10 +1559,10 @@ STR;
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
-                  echo '<pre>';
-                  echo $sql;
-                  print_r($natTopDownloaded);
-                  die;
+//                  echo '<pre>';
+//                  echo $sql;
+//                  print_r($natTopDownloaded);
+//                  die;
                   
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
