@@ -1035,7 +1035,7 @@ Class ArtistsController extends AppController
     
 
             
-            $htmlContain ='<h3>Album</h3>
+            $htmlContain ='<div class="album-list-shadow-container"><h3>Album</h3>
 				<div class="album-list">';
             foreach($albumData as $album_key => $album){             
                 
@@ -1084,7 +1084,7 @@ Class ArtistsController extends AppController
                         </div>';   
                 
              }                                     
-              $htmlContain .= '</div>';
+              $htmlContain .= '</div></div>';
              
               echo $htmlContain; 
 

@@ -26,17 +26,14 @@
 <script language="javascript">
 function load_genres(link , id_serial , genre_name)
 {
-	alert(link);
-	jQuery('#ajax_genrelist_content').load(link);
-	
-        
-
+	jQuery("#ajax_artistlist_content").empty().html(jQuery("#loadingmessage").html());
+	jQuery('#ajax_artistlist_content').load(link);
 }
 
 
 function showAllAlbumsList(albumListURL){
     //alert(webroot+albumListURL);
-    jQuery(".album-list-shadow-container").empty().html(jQuery("#loadingmessage").html());
+    jQuery(".album-list-span").empty().html(jQuery("#loadingmessage").html());
     $('#loadingmessage').show();
     var data = "";
     jQuery.ajax({
@@ -44,8 +41,8 @@ function showAllAlbumsList(albumListURL){
             url: webroot+albumListURL, // URL to request
             data: data,  // post data
             success: function(response) {
-                jQuery(".album-list-shadow-container").empty();
-                $('.album-list-shadow-container').html(response);
+                jQuery(".album-list-span").empty();
+                $('.album-list-span').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
         });
@@ -94,7 +91,7 @@ $genre_text_conversion = array(
     
 	</div>
 <div id='loadingmessage' style='display:none' >
-  <img src='<? echo $this->webroot; ?>app/webroot/ajax-load.gif'/>
+<img src='<? echo $this->webroot; ?>app/webroot/img/ajax-load.gif'/>
 </div>
         	<section class="genres-page">
 		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
@@ -138,7 +135,7 @@ $genre_text_conversion = array(
                         
                  
 
-                <div id="ajax_genrelist_content">
+                <div id="ajax_artistlist_content">
                     
 	
                    </div>                 
@@ -146,8 +143,8 @@ $genre_text_conversion = array(
                         
                         
 			<div class="border"></div>
-			<div class="album-list-shadow-container">				
-			</div>
+			<span class="album-list-span">				
+			</span>
 		</section>
                 
                 
