@@ -175,6 +175,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>"regular")); ?></li></li>   
                         <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>"regular")); ?></li>
                     </ul>
+                    <?php if($this->Session->read("patron")){ ?>
                     <div class="most-popular-sub-nav">
                             <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
                             <div><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
@@ -184,6 +185,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                             <div><a href="#">Top Genres</a></div>
 -->
                     </div>
+                    <?php } ?>
 
 			</nav>
 			<div class="gradient-border"></div>
@@ -199,6 +201,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>'sidebar-anchor')); ?>
                                                     </li>
+                                                    <?php if($this->Session->read("patron")){ ?>
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Most Popular</a>
                                                             <ul class="sidebar-sub-nav">
@@ -206,6 +209,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
                                                             </ul>
                                                     </li>
+                                                    <?php } ?>
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">New Releases</a>
                                                     </li>
@@ -234,27 +238,20 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">History</a>
-
                                                     </li>
                                             </ul>
+                                            <?php if($this->Session->read("patron")){ ?>
                                             <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
-
-                                                <?php if($this->Session->read("patron")){ ?>  
-
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
-
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
-
                                                     <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
                                                     <li><?php echo $html->link(__('Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
-                                                    <?php } ?>                                                                
-                                                <?php } ?>
-
+                                                    <?php } ?>     
                                             </ul>
+                                            <?php } ?>
                                             <div class="announcements">
                                                     <h4><a href="#">Announcements</a></h4>
                                                     <div class="poll">
-
                                                     </div>
                                             </div>						
 					</section>					
