@@ -1560,7 +1560,7 @@ STR;
                         LIMIT 110";
                     }
                     
-                    //echo $sql; die;
+                    echo $sql; die;
                     
                 
                 $ids = '';
