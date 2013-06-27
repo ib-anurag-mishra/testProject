@@ -24,28 +24,36 @@
     
 </style>
 <script language="javascript">
-function load_genres(link , id_serial , genre_name){
+function load_artist(link , id_serial , genre_name){
 	
 	jQuery('#ajax_artistlist_content').load(link);
+
+        var data = "ajax_genre_name="+genre_name;
+        jQuery.ajax({
+                type: "post",  // Request method: post, get
+                url: webroot+albumListURL, // URL to request
+                data: data,  // post data
+                success: function(response) {                
+                    $('.album-list-span').html(response);
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
+            });
 }
 
 
 function showAllAlbumsList(albumListURL){
     //alert(webroot+albumListURL);
-    jQuery(".album-list-span").empty().html(jQuery("#loadingmessage").html());
-    $('#loadingmessage').show();
-    var data = "";
-    jQuery.ajax({
-            type: "post",  // Request method: post, get
-            url: webroot+albumListURL, // URL to request
-            data: data,  // post data
-            success: function(response) {
-                jQuery(".album-list-span").empty();
-                jQuery("#loadingmessage").hide()
-                $('.album-list-span').html(response);
-            },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
-        });
+  
+        var data = "";
+        jQuery.ajax({
+                type: "post",  // Request method: post, get
+                url: webroot+albumListURL, // URL to request
+                data: data,  // post data
+                success: function(response) {              
+                    $('.album-list-span').html(response);
+                },
+                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
+            });
 }
 
 
@@ -106,7 +114,7 @@ $genre_text_conversion = array(
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>
+						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>
 					  
                                                 
             <?php
@@ -116,12 +124,12 @@ $genre_text_conversion = array(
                             $genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
                             if($genre_name == $genre){
                                     ?>
-                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                             else{
                                     ?>
-                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                 }
@@ -136,44 +144,36 @@ $genre_text_conversion = array(
                     	<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); ?></h3>
 				<div class="alphabetical-filter">
-                                    
-                                    
-                                    
                                    
-                                    
-                                    
-                                    
-                                    
-                                    
                                     <ul>
-                                    <li><a href="javascript:void(0);" data-letter="All" onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'' , '')">ALL</a></li>                                            
-                                    <li><a href="javascript:void(0);" data-letter="#"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/spl' ,'' , '')" >#</a></li> 
-                                    <li><a href="javascript:void(0);" data-letter="A"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/A' ,'' , '')">A</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="B"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/B' ,'' , '')">B</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="C"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/C' ,'' , '')">C</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="D"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/D' ,'' , '')">D</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="E"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/E' ,'' , '')">E</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="F"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/F' ,'' , '')">F</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="G"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/G' ,'' , '')">G</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="H"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/H' ,'' , '')">H</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="I"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/I' ,'' , '')">I</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="J"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/J' ,'' , '')">J</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="K"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/K' ,'' , '')">K</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="L"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/L' ,'' , '')">L</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="M"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/M' ,'' , '')">M</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="N"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/N' ,'' , '')">N</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="O"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/O' ,'' , '')">O</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="P"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/P' ,'' , '')">P</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="Q"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/Q' ,'' , '')">Q</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="R"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/R' ,'' , '')">R</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="S"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/S' ,'' , '')">S</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="T"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/T' ,'' , '')">T</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="U"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/U' ,'' , '')">U</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="V"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/V' ,'' , '')">V</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="W"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/W' ,'' , '')">W</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="X"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/X' ,'' , '')">X</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="Y"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/Y' ,'' , '')">Y</a></li>
-                                    <li><a href="javascript:void(0);" data-letter="Z"   onclick="load_genres('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/Z' ,'' , '')">Z</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="All" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
+                                    <li><a href="javascript:void(0);" data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')">#</a></li> 
+                                    <li><a href="javascript:void(0);" data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A' ,'' , '')">A</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B' ,'' , '')">B</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="C"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/C' ,'' , '')">C</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="D"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/D' ,'' , '')">D</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="E"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/E' ,'' , '')">E</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="F"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/F' ,'' , '')">F</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="G"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/G' ,'' , '')">G</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="H"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/H' ,'' , '')">H</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="I"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/I' ,'' , '')">I</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="J"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/J' ,'' , '')">J</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="K"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/K' ,'' , '')">K</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="L"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/L' ,'' , '')">L</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="M"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/M' ,'' , '')">M</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="N"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/N' ,'' , '')">N</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="O"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/O' ,'' , '')">O</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="P"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/P' ,'' , '')">P</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="Q"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Q' ,'' , '')">Q</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="R"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/R' ,'' , '')">R</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="S"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/S' ,'' , '')">S</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="T"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/T' ,'' , '')">T</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="U"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/U' ,'' , '')">U</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="V"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/V' ,'' , '')">V</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="W"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/W' ,'' , '')">W</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="X"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/X' ,'' , '')">X</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="Y"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Y' ,'' , '')">Y</a></li>
+                                    <li><a href="javascript:void(0);" data-letter="Z"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/Z' ,'' , '')">Z</a></li>
                                     </ul>
 				</div>
 			</div> 
