@@ -29,27 +29,27 @@ class VideosController extends AppController {
         $featuredVideos = array();
         $topDownloads = array();
         
-        if ($featuredVideos = Cache::read("featured_videos" . $this->Session->read('territory')) === false) {
-            $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $this->Session->read('territory') . "' AND `Country`.`SalesDate` <= NOW()";
+        if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
+            $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featuredVideosSql);
             if (!empty($featuredVideos)) {
-                Cache::write("featured_videos" . $this->Session->read('territory'), $featuredVideos);
+                Cache::write("featured_videos" . $territory, $featuredVideos);
             }
         }
 
         
 
-        if ($topDownloads = Cache::read("top_download_videos" . $this->Session->read('territory')) === false) {
-            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $this->Session->read('territory') . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+        if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {
+            $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
             $topDownloads = $this->Album->query($topDownloadSQL);
             if (!empty($topDownloads)) {
-                Cache::write("top_download_videos" . $this->Session->read('territory'), $topDownloads);
+                Cache::write("top_download_videos" . $territory, $topDownloads);
             }
         }
 
-        $featuredVideos = Cache::read("featured_videos" . $this->Session->read('territory'));
+        $featuredVideos = Cache::read("featured_videos" . $territory);
 
-        $topDownloads = Cache::read("top_download_videos" . $this->Session->read('territory'));
+        $topDownloads = Cache::read("top_download_videos" . $territory);
 
         $this->set('featuredVideos', $featuredVideos);
 
