@@ -22,7 +22,7 @@
 					?>					
 					<li>
 						<div class="album-container">
-							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $album_img; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" /></a>
 							<div class="top-10-ranking">1</div>
 							
 						</div>
@@ -71,7 +71,7 @@
 					<li>
 						
 						<div class="song-container">
-							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songs_img; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" /></a>
 							<div class="top-10-ranking">1</div>
 							<a href="#" class="preview"></a>
 							<a class="top-10-download-now-button" href="#">Download Now</a>
