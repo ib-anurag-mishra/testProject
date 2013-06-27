@@ -1073,7 +1073,7 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		echo "Value:[".Cache::read("lib".$libId)."]";
+		echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
                   //  if(1)
                      if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
