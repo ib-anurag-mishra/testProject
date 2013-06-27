@@ -217,7 +217,7 @@ STR;
                         $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
                     }
                 }
-                print_r($ids_provider_type);
+                //print_r($ids_provider_type);
 
                 $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
@@ -265,8 +265,7 @@ STR;
 STR;
                     $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
                     
-                    print_r($nationalTopVideoDownload);
-                                
+                                                   
                    Cache::write("nationalvideos".$country, $nationalTopVideoDownload );       
                 
                
