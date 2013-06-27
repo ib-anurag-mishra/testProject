@@ -88,6 +88,7 @@
 <?php if(!empty($topVideoDownloads)){ ?>
 <li>
 <?php
+print_r($topVideoDownloads); die;
 $i = 0;
 foreach($topVideoDownloads as $topDownload)
 {
@@ -104,7 +105,7 @@ foreach($topVideoDownloads as $topDownload)
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
 
-                                <form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/videos/download">
+                                <form method="post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["Video"]["ProdID"];?>" />
 									<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
                                         <span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
