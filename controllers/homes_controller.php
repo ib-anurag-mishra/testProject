@@ -1579,9 +1579,9 @@ STR;
 		  $data = array();
                   
                   
-                  echo '<pre>';                  
-                  print_r($natTopDownloaded);
-                  die; 
+//                  echo '<pre>';                  
+//                  print_r($natTopDownloaded);
+//                  die; 
                   
 
                  $countryPrefix = $this->Session->read('multiple_countries');
@@ -1633,7 +1633,10 @@ STR;
 STR;
                        
 
-                        //echo $sql_us_albums; die;
+                        echo $sql_us_albums; 
+                        echo "<pre>";
+                        print_r($sql_us_albums);
+                        die;
 
 			$ustop10Albums = $this->Album->query($sql_us_albums);
 			// Checking for download status
