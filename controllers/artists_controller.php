@@ -1066,10 +1066,13 @@ Class ArtistsController extends AppController
                         
                     $album['Album']['Copyright'] = '( '.substr($album['Album']['Copyright'], 0, 5).' )';                    
                     $copyrightString .= $album['Album']['Copyright'];
-                }				
+                }
+                
+   
+                
                 
                //created the album url 
-               $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
+               $albumURL = "/artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
                			  
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
@@ -1084,9 +1087,9 @@ Class ArtistsController extends AppController
                         </div>';   
                 
              }                                     
-              $htmlContain .= '</div></div>';
+             $htmlContain .= '</div></div>';
              
-              echo $htmlContain; 
+             echo $htmlContain; 
 
              exit;
 	}

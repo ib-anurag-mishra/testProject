@@ -56,7 +56,7 @@ class HomesController extends AppController
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
 
-/*
+
         // National Top Songs Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {              
        
@@ -277,14 +277,7 @@ STR;
         // National Top Vidoes Downloads functionality code end     
                 
    
-                
-                
-                
-                
-           */     
-                
-                
-                
+              
                 
                 $ids = '';
 		$ids_provider_type = '';
@@ -510,14 +503,14 @@ STR;
 			}
 		}*/
 		$this->set('genre_pop', $genre_pop);
-        if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
-            $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
-            Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
-        }
+                if(($ssartists = Cache::read('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'))) === false){
+                    $ssartists = $this->Artist->find('all',array('conditions'=>array('Artist.territory' => $this->Session->read('territory'), 'Artist.language'=> Configure::read('App.LANGUAGE')),'fields'=>array('Artist.artist_name','Artist.artist_image','Artist.territory','Artist.language'),'limit'=>6));
+                    Cache::write('ssartists_'.$this->Session->read('territory').'_'.Configure::read('App.LANGUAGE'),$ssartists);
+                }
     
     
-    $this->set('artists',$ssartists);
-    $this->layout = 'home';
+                $this->set('artists',$ssartists);
+                $this->layout = 'home';
 	
 		/*
 				Code OF NEWS Section --- START
