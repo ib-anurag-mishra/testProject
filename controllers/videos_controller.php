@@ -296,7 +296,7 @@ class VideosController extends AppController {
                     
                     //if(1) 
                     if (($libDownload = Cache::read("lib_videos".$libId)) === false)
-                    {
+                    { echo 5555555555;
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -435,7 +435,7 @@ STR;
 			Cache::write("lib_video".$libId, $topDownload_video);
 		}
                 else
-                { 
+                { echo 6666666666666;
                     $topDownload_video = Cache::read("lib_video".$libId);
                 }
 		

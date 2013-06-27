@@ -1072,7 +1072,7 @@ STR;
 		
                    // if(1)
                      if (($libDownload = Cache::read("lib".$libId)) === false)
-                    {
+                    {   echo "11111";
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -1203,7 +1203,7 @@ STR;
 			Cache::write("lib".$libId, $topDownload_songs);
 		} 
                 else
-               {
+               {    echo 2222222;
                         $topDownload = Cache::read("lib".$libId);
                 }
 		
@@ -1217,7 +1217,7 @@ STR;
 		
                     //if(1)
                      if (($libDownload = Cache::read("lib_album".$libId)) === false)
-                    {
+                    { echo 33333333333;
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -1344,7 +1344,7 @@ STR;
                         echo "<br>Albums: ".$topDownloaded_query_albums;
 		}
                 else
-                { 
+                { echo 444444444444;
                     $topDownload_albums = Cache::read("lib_album".$libId);
                 }
 		$this->set('topDownload_albums',$topDownload_albums);    
