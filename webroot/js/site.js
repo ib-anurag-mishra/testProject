@@ -316,7 +316,7 @@ $(function() {
 	});
 		
 	sidebar_a.on('click',function(e){
-		e.preventDefault();
+		//e.preventDefault();
 		$(sidebar_a).removeClass('active');
 		$(this).addClass('active');
 		
@@ -332,7 +332,7 @@ $(function() {
 	});
 	
 	sidebar_anchor.on('click',function(e){
-		e.preventDefault();
+		//e.preventDefault();
 		if($(this).next('ul').hasClass('active')) {
 			$(this).next('ul').removeClass('active');
 		} else {
