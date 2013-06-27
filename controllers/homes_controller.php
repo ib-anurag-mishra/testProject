@@ -1563,10 +1563,10 @@ STR;
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
-//                  echo '<pre>';
-//                  echo $sql;
-//                  print_r($natTopDownloaded);
-//                  die;
+                  echo '<pre>';
+                  echo $sql;
+                  print_r($natTopDownloaded);
+                  die;
                   
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
@@ -1634,7 +1634,7 @@ STR;
 STR;
                        
 
-                        echo $sql_us_albums; die;
+                        //echo $sql_us_albums; die;
 
 			$ustop10Albums = $this->Album->query($sql_us_albums);
 			// Checking for download status
