@@ -16,8 +16,12 @@
 				?>
 				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" alt="album-detail-cover" width="250" height="250" />
 			</div>
-			<div class="release-info">Release Information</div>
-                        
+			<div class="album-title"><?php
+					if(strlen($album['Album']['AlbumTitle']) >= 50){
+						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
+					}
+					?>
+					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?></div>                      
                         
                         
                         
@@ -29,18 +33,14 @@
                         }?></span></div>
 			<div class="album-label"><?php echo __('Label').": ";?><span><?php if ($album['Album']['Label'] != '') {
 							echo $this->getTextEncode($album['Album']['Label']);}?></span></div>
-			<div class="release-detail"><?php if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-							echo $this->getTextEncode($album['Album']['Copyright']);
-						}?></div>
+			
 			
 		</section>
-		<section class="tracklist-container">
-			<div class="album-title"><?php
-					if(strlen($album['Album']['AlbumTitle']) >= 50){
-						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
-					}
-					?>
-					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?></div>
+
+
+
+
+		<section class="tracklist-container">			
 			<div class="artist-name"><?php
 	if(strlen($artistName) >= 30){
 		$artistName = substr($artistName, 0, 30). '...';
