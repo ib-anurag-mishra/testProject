@@ -1075,8 +1075,8 @@ STR;
 		$this->set('patronDownload',$patronDownload);
 		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
                 //print_r($libDownload = Cache::read("lib".$libId));
-                    if(1)
-                    // if (($libDownload = Cache::read("lib".$libId)) === false)
+                   // if(1)
+                    if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1220,8 +1220,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                    if(1)
-                   //  if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                   // if(1)
+                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
