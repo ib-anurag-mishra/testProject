@@ -76,7 +76,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 							<input type="text" id="search-text" name="search-text" />							
 						</form>
 						<button type="submit"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
-						<a href="#">Browse A-Z</a>							
+                                                <?php echo $html->link(__('Browse A-Z', true), array('controller' => 'genres', 'action' =>'view')); ?>
 					</div>
 					<div class="master-music-search-results">
 						<ul>
@@ -133,8 +133,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="label">
 						<p> 
                                                 <?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || ($isLibaryExistInTimzone ==1)){ ?>
-                                                    <?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?>
-                                                <?php } ?>    | 
+                                                    <?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?>    | 
+                                                <?php } ?>
                                                 <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?>
                                                 </p>
 					</div>
@@ -167,43 +167,23 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                        
 			<!-- site nav -->
 		<nav class="site-nav">
-
                     <ul class="clearfix">
-			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'));?></li>			
-                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 
-'index')); ?></li></li>
-                        <li><a href="#"></a></li>
-                        <li><?php echo $html->link(__('Most Popular', true), array('controller' => 'mostpopular', 'action' => 
-'view')); ?></li></li>
-                        <li><a href="#"></a></li>
-                        <li><?php echo $html->link(__('New Releases', true), array('controller' => 'newreleases', 'action' => 
-'view')); ?></li></li>
-                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' => 
-'view')); ?></li></li>
-		
-                <?php if($this->Session->read("patron")){ ?>  
-                    
-                <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
-		<li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' => 
-'my_wishlist')); ?></li>
-		<?php } ?>
-		
-                <li style="padding-left:6px;"><?php echo $html->link(__('Recent Downloads', true), array
-('controller' => 'homes', 'action' => 'my_history')); ?></li>
-                <?php  } ?>
-                <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 
-'index')); ?></li>
-                
-					</ul>
-					<div class="most-popular-sub-nav">
-						<div><a href="#">My Library Top 10</a></div>
-						<div><a href="#">US Top 10</a></div>
-						<!--
+			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>"regular"));?></li>			
+                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>"regular")); ?></li></li>
+                        <li><a href="#">Most Popular</a></li>
+                        <li><a href="New Releases">Most Popular</a></li>
+                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>"regular")); ?></li></li>   
+                        <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>"regular")); ?></li>
+                    </ul>
+                    <div class="most-popular-sub-nav">
+                            <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
+                            <div><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
+                            <!--
 <div><a href="#">Top Artists</a></div>
-						<div><a href="#">Top Albums</a></div>
-						<div><a href="#">Top Genres</a></div>
+                            <div><a href="#">Top Albums</a></div>
+                            <div><a href="#">Top Genres</a></div>
 -->
-					</div>
+                    </div>
 
 			</nav>
 			<div class="gradient-border"></div>
@@ -212,81 +192,70 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			</div>
 			<div class="content-wrapper clearfix">
 				
-					<section class="left-sidebar">
-						
+					<section class="left-sidebar">					
 							
-							<ul class="browse sidebar-nav"><h3>Browse</h3>
-								
-								<li>
-									<?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 
-'index'),array('class'=>'sidebar-anchor')); ?>
+                                            <ul class="browse sidebar-nav"><h3>Browse</h3>
 
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor">Most Popular</a>
+                                                    <li>
+                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>'sidebar-anchor')); ?>
+                                                    </li>
+                                                    <li>
+                                                            <a href="#" class="sidebar-anchor">Most Popular</a>
+                                                            <ul class="sidebar-sub-nav">
+                                                                    <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></li>
+                                                                    <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
+                                                            </ul>
+                                                    </li>
+                                                    <li>
+                                                            <a href="#" class="sidebar-anchor">New Releases</a>
+                                                    </li>
+                                            </ul>
+                                            <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
+                                                    <li>
+                                                            <a href="#" class="sidebar-anchor">Freegal Playlists</a>
+                                                            <ul class="sidebar-sub-nav">
 
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor">New Releases</a>
+                                                                    <li><a href="#">Top 40</a></li>
+                                                                    <li><a href="#">90's</a></li>
+                                                                    <li><a href="#">Classic Rock</a></li>
+                                                                    <li><a href="#">Heavy Metal</a></li>
+                                                                    <li><a href="#">Electronic</a></li>
+                                                                    <li><a href="#">Hip Hop</a></li>
+                                                                    <li><a href="#">Jazz</a></li>
+                                                                    <li><a href="#">Shuffle</a></li>
+                                                            </ul>
+                                                    </li>
+                                                    <li>
+                                                            <a href="#" class="sidebar-anchor saved-queue">My Queues</a>
+                                                            <ul class="sidebar-sub-nav">
+                                                                    <li><a href="now-streaming.php">Now Streaming</a></li>
+                                                                    <li><a href="#">Saved Queues</a></li>
+                                                            </ul>
+                                                    </li>
+                                                    <li>
+                                                            <a href="#" class="sidebar-anchor">History</a>
 
-								</li>
-							</ul>
-							<ul class="streaming sidebar-nav"><h3>Streaming</h3>
-								
-								
-								<li>
-									<a href="#" class="sidebar-anchor">Freegal Playlists</a>
-									<ul class="sidebar-sub-nav">
-										
-										<li><a href="#">Top 40</a></li>
-										<li><a href="#">90's</a></li>
-										<li><a href="#">Classic Rock</a></li>
-										<li><a href="#">Heavy Metal</a></li>
-										<li><a href="#">Electronic</a></li>
-										<li><a href="#">Hip Hop</a></li>
-										<li><a href="#">Jazz</a></li>
-										<li><a href="#">Shuffle</a></li>
-									</ul>
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor saved-queue">My Queues</a>
-									<ul class="sidebar-sub-nav">
-										<li><a href="now-streaming.php">Now Streaming</a></li>
-										<li><a href="#">Saved Queues</a></li>
-									</ul>
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor">History</a>
+                                                    </li>
+                                            </ul>
+                                            <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
 
-								</li>
-							</ul>
-							<ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
-								
-								<li>
-									<a href="#" class="sidebar-anchor">Downloads</a>
-									
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor">My Playlists</a>
-									
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor">Recent</a>
+                                                <?php if($this->Session->read("patron")){ ?>  
 
-								</li>
-								<li>
-									<a href="#" class="sidebar-anchor">Wishlist</a>
-									
-								</li>
-								
-							</ul>
-							<div class="announcements">
-								<h4><a href="#">Announcements</a></h4>
-								<div class="poll">
-									
-								</div>
-							</div>
-						
-					</section>
-					
+                                                    <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
+
+                                                    <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
+
+                                                    <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
+                                                    <li><?php echo $html->link(__('Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
+                                                    <?php } ?>                                                                
+                                                <?php } ?>
+
+                                            </ul>
+                                            <div class="announcements">
+                                                    <h4><a href="#">Announcements</a></h4>
+                                                    <div class="poll">
+
+                                                    </div>
+                                            </div>						
+					</section>					
 					<div class="content">
