@@ -1579,9 +1579,9 @@ STR;
 		  $data = array();
                   
                   
-//                  echo '<pre>';                  
-//                  print_r($natTopDownloaded);
-//                  die;
+                  echo '<pre>';                  
+                  print_r($natTopDownloaded);
+                  die;
                   
 
                  $countryPrefix = $this->Session->read('multiple_countries');
