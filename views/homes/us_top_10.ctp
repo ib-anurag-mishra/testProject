@@ -61,7 +61,11 @@
 					<?php
                                         
 					//for($d=1;$d<$count;$d++) {
+
+                                          $count =1;
                                         foreach($nationalTopDownload as $key => $value){
+                                            
+                                            if($count>10) break;
                                             
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img;
@@ -121,7 +125,7 @@
 					</li>
 					
 					<?php
-					
+                                                $count++;
 					}
 					
 					?>

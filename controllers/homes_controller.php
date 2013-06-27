@@ -1563,10 +1563,10 @@ STR;
 		  $ids = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
-                  echo '<pre>';
-                  echo $sql;
-                  print_r($natTopDownloaded);
-                  die;
+//                  echo '<pre>';
+//                  echo $sql;
+//                  print_r($natTopDownloaded);
+//                  die;
                   
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
@@ -1641,7 +1641,7 @@ STR;
 			
 		}
                 
-		$this->set('ustop10Albums',$ustop10Albums);
+		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
 //                echo "<pre>";

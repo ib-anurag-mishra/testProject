@@ -60,11 +60,13 @@
 				<ul>
 					<?php
                                                 
-                                        $count  =   count($top_10_songs);  
+                                        $count  =   1;  
                                                                                 
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($top_10_songs as $key => $value){
+
+                                            if($count>10) break;
                                             
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img;
@@ -124,7 +126,7 @@
 					</li>
 					
 					<?php
-					
+                                                $count++;
 					}
 					
 					?>
