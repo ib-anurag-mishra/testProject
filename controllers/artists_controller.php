@@ -597,11 +597,7 @@ Class ArtistsController extends AppController
 	function view($id=null,$album=null, $provider=null)
 	{
 		
-            if(isset($_POST['check_ajax']) && $_POST['check_ajax']){ 
-                echo 147;
-                die;
-                $this->render('album_ajax_view');             
-            }
+            
             
             if(count($this -> params['pass']) > 1) {
 			$count = count($this -> params['pass']);
@@ -827,7 +823,7 @@ Class ArtistsController extends AppController
 	function album_ajax_view($id=null,$album=null, $provider=null)
 	{
 		
-            
+            $this -> layout = 'ajax';
             
             if(count($this -> params['pass']) > 1) {
 			$count = count($this -> params['pass']);
