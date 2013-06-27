@@ -1084,16 +1084,13 @@ STR;
                             $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
                         } else {
                             $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
-                        }
-                        
-                        print_r($topDownloaded);
-                        
+                        }          
                         
 			$ids = '';
 			$ioda_ids = array();
 			$sony_ids = array();
 			$sony_ids_str = '';
-			$ioda_ids_str = ''; 
+			$ioda_ids_str = '';  
                         
                         
 //			$topDownloaded = Cache::read("lib".$libId); 
