@@ -31,9 +31,9 @@
 						<div class="album-title">
 							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Song']['AlbumTitle'])>20)
-                                                                echo substr($value['Song']['AlbumTitle'],0,20)."..."; 
-                                                                else echo $value['Song']['AlbumTitle'];
+                                                                if(strlen($value['Song']['SongTitle'])>20)
+                                                                echo substr($value['Song']['SongTitle'],0,20)."..."; 
+                                                                else echo $value['Song']['SongTitle'];
                                                          ?>
                                                     </a>
 						</div>
