@@ -420,7 +420,7 @@ class VideosController extends AppController {
 STR;
                                
                                  
-                                // echo "Query: ".$topDownloaded_query_videos;
+                                echo "<br>Video: ".$topDownloaded_query_videos;
                                  
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
 //                            echo "<pre>";

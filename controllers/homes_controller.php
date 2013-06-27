@@ -1197,6 +1197,8 @@ STR;
 			} else { 
 				$topDownload_songs = array();                               
 			}
+                        
+                        echo "<br>Songs: ".$topDownloaded_query_songs;
 
 			Cache::write("lib".$libId, $topDownload_songs);
 		} 
@@ -1339,6 +1341,7 @@ STR;
 			}
 
 			Cache::write("lib_album".$libId, $topDownload_albums);
+                        echo "<br>Albums: ".$topDownloaded_query_albums;
 		}
                 else
                 { 
