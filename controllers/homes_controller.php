@@ -1058,9 +1058,9 @@ STR;
 		$patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
                 
-                $libId  =1;
-                $patId= 8389;
-                $country=   'us';
+//                $libId  =1;
+//                $patId= 8389;
+//                $country=   'us';
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
@@ -1069,8 +1069,9 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		//if (($libDownload = Cache::read("lib".$libId)) === false)
-                    if(1)
+		
+                   // if(1)
+                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1211,8 +1212,9 @@ STR;
                                 
                 
                 $ids_provider_type_album = '';
-		//if (($libDownload = Cache::read("lib_album".$libId)) === false)
-                    if(1)
+		
+                    //if(1)
+                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
