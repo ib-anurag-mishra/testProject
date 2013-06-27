@@ -283,19 +283,19 @@ class VideosController extends AppController {
      function my_lib_top_10_videos()
     {        
         
-//                $libId  =1;
-//                $patId= 8389;
-//                $country=   'us';
-                $libId = $this->Session->read('library');
-		$patId = $this->Session->read('patron');
-		$country = $this->Session->read('territory');
+                $libId  =1;
+                $patId= 8389;
+                $country=   'us';
+//                $libId = $this->Session->read('library');
+//		$patId = $this->Session->read('patron');
+//		$country = $this->Session->read('territory');
          
          
         
                     $ids_provider_type_video = '';
                     
-                    //if(1) 
-                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)
+                    if(1) 
+                   // if (($libDownload = Cache::read("lib_videos".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -305,9 +305,9 @@ class VideosController extends AppController {
                             $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         }
                         
-                        echo "<pre>11";
-                        print_r($topDownloaded_videos);
-                        die;
+//                        echo "<pre>11";
+//                        print_r($topDownloaded_videos);
+//                        die;
                                                
 			$ids = '';
 			$ioda_ids = array();
@@ -348,9 +348,9 @@ class VideosController extends AppController {
 			  }				
 			}
 
-                        echo "<pre>22";
-                        print_r($topDownloaded_videos);
-                        die;                    
+//                        echo "<pre>22";
+//                        print_r($topDownloaded_videos);
+//                        die;                    
                         
 			if($ids != ''){ 
 				if(!empty($sony_ids)){
@@ -420,7 +420,7 @@ class VideosController extends AppController {
 STR;
                                
                                  
-                                // echo "Query: ".$topDownloaded_query_videos;
+                                 echo "Video: ".$topDownloaded_query_videos;
                                  
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
 //                            echo "<pre>";
