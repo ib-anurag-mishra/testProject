@@ -1642,7 +1642,7 @@ STR;
 			
 		}
                 
-		$this->set('ustop10Albums',$ustop10Albums);
+		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
 //                echo "<pre>";
