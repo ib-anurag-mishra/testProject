@@ -1036,8 +1036,7 @@ Class ArtistsController extends AppController
 
             
             $htmlContain ='';
-            foreach($albumData as $album_key => $album){
-             
+            foreach($albumData as $album_key => $album){             
                 
                 //get the album image
                 if(empty($album['Files']['CdnPath'])){
@@ -1049,8 +1048,7 @@ Class ArtistsController extends AppController
                 }
                                 
                 $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']);   
-                
-                
+                                
                 //get the album title
                 if(strlen($album['Album']['AlbumTitle']) >= 50){
                       $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
@@ -1065,15 +1063,13 @@ Class ArtistsController extends AppController
                 
                 if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
                         
-                    $album['Album']['Copyright'] = substr($album['Album']['Copyright'], 0, 5);                    
+                    $album['Album']['Copyright'] = '( '.substr($album['Album']['Copyright'], 0, 5).' )';                    
                     $copyrightString .= $album['Album']['Copyright'];
-                }
-				
+                }				
                 
                //created the album url 
                $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
-                     
-			  
+               			  
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="'.$albumURL.'"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
@@ -1099,14 +1095,14 @@ Class ArtistsController extends AppController
 	 Desc : For artist view page
 	*/
 	function admin_getArtists(){
-        Configure::write('debug', 0);
+                Configure::write('debug', 0);
 		$this->Song->recursive = 0;
 		$this->Song->unbindModel(array('hasOne' => array('Participant')));
-    $this->Song->unbindModel(array('hasOne' => array('Genre')));
-    $this->Song->unbindModel(array('hasOne' => array('Country')));
-    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files')));
-    $this->Song->unbindModel(array('belongsTo' => array('Full_Files')));
-    $artist = $this->Song->find('all',array(
+                $this->Song->unbindModel(array('hasOne' => array('Genre')));
+                $this->Song->unbindModel(array('hasOne' => array('Country')));
+                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files')));
+                $this->Song->unbindModel(array('belongsTo' => array('Full_Files')));
+                $artist = $this->Song->find('all',array(
 							'conditions' =>
 								array('and' =>
 									array(

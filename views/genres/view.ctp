@@ -26,38 +26,29 @@
 <script language="javascript">
 function load_genres(link , id_serial , genre_name)
 {
-	jQuery("#ajax_genrelist_content").empty().html(jQuery("#ajx_loader").html());
+	
 	jQuery('#ajax_genrelist_content').load(link);
-	jQuery('.genre_list_item_all,.genre_list_item').css('font-weight' , 'normal');
-	jQuery('#genre_list_item_'+id_serial).css('font-weight' , 'bold');
+	
         
-//	jQuery(".breadCrumb").find("a:eq(3)").html(genre_name);
-//	jQuery(".breadCrumb").find("a:eq(3)").attr('href' , link );
-//	jQuery(".breadCrumb").find("a:eq(3)").attr('href' , jQuery(".breadCrumb").find("a:eq(2)").attr('href').replace('ajax_view' , 'view'));
-//
-//	 jQuery("#genre_artist_search a").each(function () {
-//		jQuery(this).attr('href' , jQuery(this).attr('href').replace('ajax_view' , 'view'));
-//	});
 
-
-	//setInterval('VSA_initScrollbars()' , 500);
 }
 
 
 function showAllAlbumsList(albumListURL){
     //alert(webroot+albumListURL);
+    jQuery(".album-list").empty().html(jQuery("#loadingmessage").html());
+    $('#loadingmessage').show();
     var data = "";
     jQuery.ajax({
             type: "post",  // Request method: post, get
             url: webroot+albumListURL, // URL to request
             data: data,  // post data
             success: function(response) {
-                alert(response);
+                jQuery(".album-list").empty();
                 $('.album-list').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
-        });    
-    
+        });
 }
 
 
@@ -102,6 +93,9 @@ $genre_text_conversion = array(
 	<div height="400px" style="color:blue;">
     
 	</div>
+<div id='loadingmessage' style='display:none' >
+  <img src='<? echo $this->webroot; ?>app/webroot/ajax-load.gif'/>
+</div>
         	<section class="genres-page">
 		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
 		<header class="clearfix">
@@ -142,79 +136,11 @@ $genre_text_conversion = array(
 			</div>
 			<div class="border"></div>
                         
-                 <div style="display:none;" id="ajx_loader"><img style="margin-top:200px;margin-left:270px" src="/img/ajax-loader-big.gif" ></div>
+                 
 
                 <div id="ajax_genrelist_content">
                     
-			<div class="alphabetical-shadow-container">
-				<h3><?php __('Artist'); ?></h3>
-				<div class="alphabetical-filter">
-                                    <ul>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>" data-letter="All">ALL</a></li>                                            
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/spl" data-letter="#">#</a></li> 
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/A" data-letter="A">A</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/B" data-letter="B">B</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/C" data-letter="C">C</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/D" data-letter="D">D</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/E" data-letter="E">E</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/F" data-letter="F">F</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/G" data-letter="G">G</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/H" data-letter="H">H</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/I" data-letter="I">I</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/J" data-letter="J">J</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/K" data-letter="K">K</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/L" data-letter="L">L</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/M" data-letter="M">M</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/N" data-letter="N">N</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/O" data-letter="O">O</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/P" data-letter="P">P</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/Q" data-letter="Q">Q</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/R" data-letter="R">R</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/S" data-letter="S">S</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/T" data-letter="T">T</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/U" data-letter="U">U</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/V" data-letter="V">V</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/W" data-letter="W">W</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/X" data-letter="X">X</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/Y" data-letter="Y">Y</a></li>
-                                    <li><a href="/genres/view/<?=base64_encode($genre)?>/Z" data-letter="Z">Z</a></li>
-                                    </ul>
-				</div>
-			</div> 
-                    
-                    
-                    
-                    
-                    
-                    
-			<div class="artist-list-shadow-container">
-				<h3>&nbsp;</h3>
-				<div class="artist-list">					
-					<ul>
-						
-                                            
-                                         <?php
-                                                           
-                                            if(count($genres) > 0){                                                    
-                                                for ($i = 0; $i < count($genres); $i++) {
-                                                        echo " <li>";
-                                                        $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
-                                                        $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'>";
-                                                        echo $ArtistName;
-                                                        echo '</a>';
-                                                        echo '</li>';                                                                    
-                                                }
-                                            }else{
-                                                    echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
-                                            }
-                                         ?> 
-                                            
-                                          <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
-				
-					</ul>
-				</div>
-			</div>
+	
                    </div>                 
                         
                         
@@ -225,7 +151,7 @@ $genre_text_conversion = array(
 				<div class="album-list">
 					<div class="album-overview-container">
 						<div class="album-image selected">
-							<a href="#"><img src="/app/webroot/img/genres/album-cover-small.jpg" alt="album-cover-small" width="59" height="59" /></a>
+							<a href="#"><img src="/app/webroot/img/genres/album-cover-small.jpg" alt="album-cover-small" width="59" height="59"  /></a>
 						</div>
 						<div class="album-title">
 							<a href="#">13 Shades Of Blue, Best Of Mapleshade Vol. 2</a>
