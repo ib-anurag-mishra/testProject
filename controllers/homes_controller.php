@@ -1368,7 +1368,7 @@ STR;
                 
                 
                 
-               $this->set('topDownload_videos_data',$topDownload_videos_data);  
+               $this->set('topDownload_videos_data',$topDownload_videos_data);   
                 
 	}
         
