@@ -22,9 +22,9 @@ class VideosController extends AppController {
     
     function index() {
         $territory = $this->Session->read('territory');
-        if(empty($territory)){
+        /*if(empty($territory)){
             $territory = 'US';
-        }
+        }*/
         $prefix = strtolower($territory)."_";
         $featuredVideos = array();
         $topDownloads = array();
