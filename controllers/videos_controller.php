@@ -59,7 +59,7 @@ class VideosController extends AppController {
     function download() {
 
         //settings
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $this->layout = false;
 
         //set required params
@@ -255,6 +255,8 @@ class VideosController extends AppController {
 
             $this->Library->setDataSource('default');
             if (is_numeric($return)) {
+                header("Content-Type: " . $contenttype);
+                header("Content-Disposition: attachment; filename=\"" . basename($trackDetails['0']['Full_Files']['SaveAsName']) . "\";");
                 header("Location: " . $finalVideoUrl);
                 exit;
             }//succcess
