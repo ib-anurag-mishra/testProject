@@ -29,7 +29,8 @@
 									<div id="top-100-songs-grid" class="top-100-grids horiz-scroll">
 										<ul style="width:27000px;">
 
-                                                                                <?php if(count($nationalTopDownload) > 0){ ?>
+                                                                               <?php if(is_array($nationalTopDownload) && count($nationalTopDownload) > 0){ ?>
+
 										<?php
 											$j = 0;
 											$k = 2000;
@@ -189,7 +190,8 @@
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
 										<ul>
 
-                                                                    <?php if(count($nationalTopVideoDownload) > 0){ ?>
+                                                    <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){ ?>
+
 										<?php
 											$j = 0;
 											$k = 2000;
