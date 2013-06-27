@@ -880,8 +880,7 @@ Class ArtistsController extends AppController
 			}
 			$condition = array("(Album.ProdID, Album.provider_type) IN (".rtrim($val_provider_type,",").")");
 		}
-                $id = str_replace('@','/',$id);
-		$this->layout = 'home';
+                $id = str_replace('@','/',$id);		
 		$this->set('artistName',base64_decode($id));
 		$this->set('album',$album);
 		$patId = $this->Session->read('patron');
