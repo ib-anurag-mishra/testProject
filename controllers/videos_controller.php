@@ -296,7 +296,7 @@ class VideosController extends AppController {
                     
                     //if(1) 
                     if (($libDownload = Cache::read("lib_videos".$libId)) === false)
-                    { echo 5555555555;
+                    {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -348,9 +348,9 @@ class VideosController extends AppController {
 			  }				
 			}
 
-//                        echo "<pre>22";
-//                        print_r($topDownloaded_videos);
-//                        die;                    
+                        echo "<pre>22";
+                        print_r($topDownloaded_videos);
+                        die;                    
                         
 			if($ids != ''){ 
 				if(!empty($sony_ids)){
@@ -420,7 +420,7 @@ class VideosController extends AppController {
 STR;
                                
                                  
-                                echo "<br>Video: ".$topDownloaded_query_videos;
+                                // echo "Query: ".$topDownloaded_query_videos;
                                  
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
 //                            echo "<pre>";
@@ -435,7 +435,7 @@ STR;
 			Cache::write("lib_video".$libId, $topDownload_video);
 		}
                 else
-                { echo 6666666666666;
+                { 
                     $topDownload_video = Cache::read("lib_video".$libId);
                 }
 		
