@@ -22,27 +22,27 @@
 					?>					
 					<li>
 						<div class="album-container">
-							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>">
+							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
                                                         </a>
 							<div class="top-10-ranking">1</div>
 							
 						</div>
 						<div class="album-title">
-							<a href="artists/view/<?=base64_encode($value['Album']['ArtistText']);?>/<?= $value['Album']['ProdID']; ?>/<?= base64_encode($value['Album']['provider_type']);?>">
+							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Album']['AlbumTitle'])>20)
-                                                                echo substr($value['Album']['AlbumTitle'],0,20)."..."; 
-                                                                else echo $value['Album']['AlbumTitle'];
+                                                                if(strlen($value['Song']['SongTitle'])>20)
+                                                                echo substr($value['Song']['SongTitle'],0,20)."..."; 
+                                                                else echo $value['Song']['SongTitle'];
                                                          ?>
                                                     </a>
 						</div>
 						<div class="artist-name">
-							<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Album']['ArtistText'])); ?>/<?=base64_encode($value['Album']['Genre'])?>">
+							<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Album']['Artist'])>20)
-                                                                                                                    echo substr($value['Album']['Artist'],0,20)."..."; 
-                                                                                                                    else echo $value['Album']['Artist'];
+                                                                                                                    if(strlen($value['Song']['Artist'])>20)
+                                                                                                                    echo substr($value['Song']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Song']['Artist'];
                                                                                                              ?>
                                                        </a>
 						</div>

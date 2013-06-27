@@ -68,7 +68,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     ?>
                                   
                                     <?php } else { ?>
-                                    <h1 class="logo"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></h1>                                    
+                                    <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>                                    
                                     <?php } ?>
                                 				
 					<div class="master-music-search-wrapper">
@@ -195,6 +195,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 'index')); ?></li>
                 
 					</ul>
+					<div class="most-popular-sub-nav">
+						<div><a href="#">My Library Top 10</a></div>
+						<div><a href="#">US Top 10</a></div>
+						<!--
+<div><a href="#">Top Artists</a></div>
+						<div><a href="#">Top Albums</a></div>
+						<div><a href="#">Top Genres</a></div>
+-->
+					</div>
 
 			</nav>
 			<div class="gradient-border"></div>
@@ -222,13 +231,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 								</li>
 							</ul>
-							<ul class="streaming sidebar-nav"><h3>My Streaming</h3>
+							<ul class="streaming sidebar-nav"><h3>Streaming</h3>
 								
 								
 								<li>
-									<a href="#" class="sidebar-anchor">Playlists</a>
+									<a href="#" class="sidebar-anchor">Freegal Playlists</a>
 									<ul class="sidebar-sub-nav">
-										<li><a href="#">Now Playing</a></li>
+										
 										<li><a href="#">Top 40</a></li>
 										<li><a href="#">90's</a></li>
 										<li><a href="#">Classic Rock</a></li>
@@ -240,9 +249,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 									</ul>
 								</li>
 								<li>
-									<a href="#" class="sidebar-anchor saved-queue">Queue</a>
+									<a href="#" class="sidebar-anchor saved-queue">My Queues</a>
 									<ul class="sidebar-sub-nav">
-										<li><a href="#">Saved Queue</a></li>
+										<li><a href="now-streaming.php">Now Streaming</a></li>
+										<li><a href="#">Saved Queues</a></li>
 									</ul>
 								</li>
 								<li>
@@ -254,6 +264,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 								
 								<li>
 									<a href="#" class="sidebar-anchor">Downloads</a>
+									
+								</li>
+								<li>
+									<a href="#" class="sidebar-anchor">My Playlists</a>
 									
 								</li>
 								<li>
