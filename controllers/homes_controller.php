@@ -265,8 +265,7 @@ STR;
 STR;
                     $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
                     
-                    print_r($nationalTopVideoDownload);
-                                
+                                                   
                    Cache::write("nationalvideos".$country, $nationalTopVideoDownload );       
                 
                
