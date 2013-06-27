@@ -22,6 +22,7 @@ class VideosController extends AppController {
     
     function index() {
         $territory = $this->Session->read('territory');
+        echo $territory; die;
         /*if(empty($territory)){
             $territory = 'US';
         }*/
