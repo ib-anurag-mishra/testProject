@@ -1,11 +1,4 @@
-<?php
-if(count($genres) == 0)
-{
-	echo "<li><a href='javascript:void(0)' data-artist='No Results Found'>No Results Found</a></li>";
-	exit;
-}
 
-?>
 		<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); ?></h3>
 				<div class="alphabetical-filter">
