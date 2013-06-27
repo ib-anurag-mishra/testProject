@@ -41,6 +41,7 @@ function showAllAlbumsList(albumListURL){
             data: data,  // post data
             success: function(response) {
                 jQuery(".album-list-span").empty();
+                jQuery("#loadingmessage").hide()
                 $('.album-list-span').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('error')}
