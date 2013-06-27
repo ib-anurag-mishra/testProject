@@ -203,7 +203,7 @@ STR;
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
                     }
-                    echo '<br><br><br><br>';
+                    
                 
                 $ids = '';
                 $ids_provider_type = '';
