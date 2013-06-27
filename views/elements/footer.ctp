@@ -45,14 +45,14 @@
 						&copy; 2013 Library Ideas, LLC  All Rights Reserved
 					</div>
 					<nav class="footer-nav">
-						<ul class="clearfix">
-							<li><a href="#">News</a></li>
-							<li><a href="#">Music Videos</a></li>
-							<li><a href="#">Most Popular</a></li>
-							<li><a href="#">New Releases</a></li>
-							<li><a href="#">Genres</a></li>
-							<li><a href="#">FAQ</a></li>
-						</ul>
+					<ul class="clearfix">
+		<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'));?></li>
+		<li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index')); ?></li>
+		<li><?php echo $html->link(__('Most Popular', true), array('controller' => 'mostpopular', 'action' => 'view')); ?></li>
+		<li><?php echo $html->link(__('New Releases', true), array('controller' => 'newreleases', 'action' => 'view')); ?></li>
+		<li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' => 'view')); ?></li>
+		<li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
+					</ul>
 					</nav>
 					<div class="languages">
 						<ul class="clearfix">

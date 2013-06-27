@@ -68,7 +68,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     ?>
                                   
                                     <?php } else { ?>
-                                    <h1 class="logo"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></h1>                                    
+                                    <h1 class="logo"><a href="/home/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>                                    
                                     <?php } ?>
                                 				
 					<div class="master-music-search-wrapper">
