@@ -527,12 +527,16 @@
                                                                             $sr_no = 0;
                                                                             foreach($coming_soon_videos as $key => $value)
                                                                             {     
-                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;?>
+                                                                            //$cs_img_url = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                                           // $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+
+                                                                           $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                                           $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+?>
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
+													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoAlbumImage; ?>" alt="rockband275x162" width="275" height="162" /></a>
 													<a class="add-to-playlist-button" href="#">
 														
 													</a>

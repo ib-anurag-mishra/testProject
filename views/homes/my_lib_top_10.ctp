@@ -147,15 +147,19 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($topDownload_videos_data as $key => $value){
                                             
-                                             $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $video_img =  Configure::read('App.Music_Path').$video_img;
+                                            // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             //$video_img =  Configure::read('App.Music_Path').$video_img;
+                                             
+                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                              $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+
                                             
 					?>
 					<li>
 						
 						<div class="video-container">
 							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
-                                                        <img src="<?php echo $video_img; ?>" alt="gangstasquad" width="423" height="250" />
+                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking">1</div>
 							
