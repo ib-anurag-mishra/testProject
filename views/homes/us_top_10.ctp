@@ -157,8 +157,8 @@
 					<li>
 						
 						<div class="video-container">
-							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
-                                                        <img src="img/lazy-placeholder.gif" data-original="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
+							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">                                                        
+                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking">1</div>
 							
