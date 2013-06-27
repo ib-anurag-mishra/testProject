@@ -4,7 +4,7 @@
 		
 		<div class="breadcrumbs"><span>Home</span> > <span>Most Popular</span> > <span>My Top 10</span></div>
 		<header class="clearfix">
-			<h2>My Top 10</h2>
+			<h2>My Library Top 10</h2>
 			
 		</header>
 		<h3>Albums</h3>
