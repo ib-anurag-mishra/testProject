@@ -1072,17 +1072,17 @@ Class ArtistsController extends AppController
                 
                 
                //created the album url 
-               $albumURL = "/artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
+               $albumURL = "artists/view/".base64_encode($album['Album']['ArtistText'])."/".$album['Album']['ProdID']."/".base64_encode($album['Album']['provider_type']);
                			  
                $htmlContain .= '<div class="album-overview-container">
                                 <div class="album-image selected">
                                         <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')"><img src="'. Configure::read('App.Music_Path').$albumArtwork.'" alt="album-cover-small" width="59" height="59" /></a>
                                 </div>
                                 <div class="album-title">
-                                        <a href="javascript:void(0);">'.$album['Album']['AlbumTitle'].'</a>
+                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$album['Album']['AlbumTitle'].'</a>
                                 </div>
                                 <div class="album-year">
-                                        <a href="javascript:void(0);">'.$copyrightString.'</a>
+                                        <a href="javascript:void(0);" onclick="showAlbumDetails(\''.$albumURL.'\')">'.$copyrightString.'</a>
                                 </div>
                         </div>';   
                 

@@ -66,7 +66,7 @@ function showAlbumDetails(albumDetailURL){
                 url: webroot+albumDetailURL, // URL to request
                 data: data,  // post data
                 success: function(response) {              
-                    $('#albumDetailURL').html(response);
+                    $('#album_details_container').html(response);
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
             });
@@ -237,7 +237,7 @@ $genre_text_conversion = array(
                 
                 
                 
-		<section class="album-detail-container clearfix" id='album_details'>
+		<section class="album-detail-container clearfix" id='album_details_container'>
 			<section class="album-detail">
 				<div class="album-cover-image">
 					<img src="/app/webroot/img/genres/album-detail-cover.jpg" alt="album-detail-cover" width="250" height="250" />
