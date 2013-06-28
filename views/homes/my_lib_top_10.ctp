@@ -83,8 +83,12 @@
                                                         <img class="lazy"  src="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" />                                                        
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-							<?php if($this->Session->read("patron")){ ?> <a href="#" class="preview"></a> <?php } ?>
-							<!--<a class="top-10-download-now-button" href="#">Download Now</a> -->
+
+<?php if($this->Session->read("patron")){ ?> <a href="#" class="preview"></a> <?php } ?>
+
+
+												
+
 
 <?php
 
@@ -101,7 +105,7 @@
                             <input type="hidden" name="ProdID" value="<?php echo $value["Song"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Song"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Song"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $value["Song"]["ProdID"]; ?>");'><label class="top-10-download-now-button" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
                             </span>
                             <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                             <span id="download_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -159,32 +163,52 @@
       ?>
 
 
+                                                                                    <?php if($this->Session->read("patron")){ ?> 
+														<a class="add-to-playlist-button" href="#"></a>
+                                                                                               
+														<div class="wishlist-popover">
+                                                                                                         <?php if( $this->Session->read('library_type') == 2 ){ ?> 
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+                                                                                               
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+                                                                                                        <?php } ?>
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+                                                                                                    <?php } ?>
 
 
 
 
-							<a class="add-to-playlist-button" href="#"></a>
-							<div class="wishlist-popover">
-								<div class="playlist-options">
-									<ul>
-										<li><a href="#">Create New Queue</a></li>
-										<li><a href="#">Playlist 1</a></li>
-										<li><a href="#">Playlist 2</a></li>
-										<li><a href="#">Playlist 3</a></li>
-										<li><a href="#">Playlist 4</a></li>
-									</ul>
-								</div>
-								
-								<a class="add-to-playlist" href="#">Add To Queue</a>
-								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-								
-								<div class="share clearfix">
-									<p>Share via</p>
-									<a class="facebook" href="#"></a>
-									<a class="twitter" href="#"></a>
-								</div>
-								
-							</div>
+
+
+
+
+
+
+
+
 							
 						</div>
 						<div class="album-title">
@@ -227,7 +251,7 @@
                                         $count  =   1;  
                                                                                                                         
 					//for($d=1;$d<$count;$d++) {
-print_r($topDownload_videos_data); die;
+// print_r($topDownload_videos_data); die;
                                         foreach($topDownload_videos_data as $key => $value){
                                             
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -248,11 +272,11 @@ print_r($topDownload_videos_data); die;
 							 <?php
                                 if($this->Session->read('patron')) {
                                 ?>
-<form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
-                                    <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
-									<input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
-                                        <span class="beforeClick" id="song_<?php echo $topDownload["Video"]["ProdID"]; ?>">
-                                            <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+<form method="post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download">
+                                    <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
+                                        <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
+                                            <a href='#' class="top-10-download-now-button" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $value["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 										</span>
 								</form>	
 <?php } else{ ?>

@@ -46,6 +46,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
                 $this->Auth->allow('display','aboutus', 'index'); 
           }
                
@@ -96,24 +97,25 @@ class HomesController extends AppController
                     AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
-                    LIMIT 110";
+                    LIMIT 1110";
                 } else {
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
                     AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
-                    LIMIT 110";
+                    LIMIT 1110";
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		  
+		 
+               
+                
                   //make the provide type and prodid array for selecting records
                   $ids = '';
                   $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);
-                  print_r($natTopDownloaded);
+		  $natTopDownloaded = $this->Album->query($sql);               
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
@@ -182,10 +184,10 @@ STR;
              
 
 		$nationalTopDownload = Cache::read("national".$territory);
-               // print_r($nationalTopDownload);
+              
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
-                //print_r($nationalTopDownload);
+               
                
                
              
@@ -207,7 +209,7 @@ STR;
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
-                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
@@ -217,7 +219,7 @@ STR;
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
                         WHERE libraries.library_territory = '".$country."' 
-                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
@@ -680,7 +682,7 @@ STR;
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
-                    GROUP BY Song.ReferenceID
+                    GROUP BY Song.ProdID
                     ORDER BY Country.SalesDate ASC
                     LIMIT 20
 	  	
