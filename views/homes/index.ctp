@@ -123,7 +123,7 @@
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
+     <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php
@@ -230,11 +230,11 @@
                     if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
-                            <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+                            <form method="Post" id="form<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
                             <input type="hidden" name="ProdID" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
                             </span>
                             <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
                             <span id="download_loader_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
@@ -284,7 +284,7 @@
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
+     <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php
