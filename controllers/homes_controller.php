@@ -11,7 +11,7 @@ class HomesController extends AppController
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video', 'Videodownload');
 
     /*
      Function Name : beforeFilter
@@ -3500,6 +3500,8 @@ STR;
         $downloadResults = Array();
         $downloadResults =  $this->Download->find('all',array('group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
 		$this->set('downloadResults',$downloadResults);
+        $videoDownloadResults =  $this->Videodownload->find('all',array('group' => 'Videodownload.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
+		$this->set('videoDownloadResults',$videoDownloadResults);
     }
 
     /*
