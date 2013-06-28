@@ -46,6 +46,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
                 $this->Auth->allow('display','aboutus', 'index'); 
           }
                
@@ -96,19 +97,21 @@ class HomesController extends AppController
                     AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
-                    LIMIT 110";
+                    LIMIT 1110";
                 } else {
-                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
                     AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
-                    LIMIT 110";
+                    LIMIT 1110";
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
-		  
+		 
+               
+                
                   //make the provide type and prodid array for selecting records
                   $ids = '';
                   $ids_provider_type = '';
