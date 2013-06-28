@@ -77,6 +77,9 @@
 						<a class="remove-song" href="#">Remove Song</a>
 						<a class="make-cover-art" href="#">Make Cover Art</a>
 						-->
+                        <?php
+                        if($this->Session->read('library_type') == '2'){
+                        ?>
 						<a class="add-to-playlist" href="#">Add To Queue</a>
 						<div class="share clearfix">
 							<p>Share via</p>
@@ -96,7 +99,16 @@
 								
 							</ul>
 						</div>
-						
+                        <?php } else {
+                           ?>
+                        <div class="share clearfix">
+							<p>Share via</p>
+							<a class="facebook" href="#"></a>
+							<a class="twitter" href="#"></a>
+						</div>
+                        <?php
+                        }
+						?>
 					</div>
 					<div class="download">
                     <a href="#">
