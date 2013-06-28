@@ -168,13 +168,13 @@
                                                                                                     <?php } ?>
 													</div>
 
-                                                                                                    <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 35 ) {
-                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 35)) . "..";
-                                                                                                    } else {
-                                                                                                            $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
-                                                                                                    }
-                                                                                                    ?>
+                                                                                                        <?php											
+                                                                                                        if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 35 ) {
+                                                                                                                $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 35)) . "..";
+                                                                                                        } else {
+                                                                                                                $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
+                                                                                                        }
+                                                                                                        ?>
 
 
 													<div class="song-title">
