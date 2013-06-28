@@ -47,6 +47,7 @@ class HomesController extends AppController
           else                                          //  Before Login
           {
                 $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
+                $this->Auth->allow('display','aboutus', 'index'); 
           }
                
                 
@@ -93,7 +94,7 @@ class HomesController extends AppController
                     FROM `latest_downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
@@ -102,7 +103,7 @@ class HomesController extends AppController
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
@@ -114,7 +115,8 @@ class HomesController extends AppController
                   //make the provide type and prodid array for selecting records
                   $ids = '';
                   $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);                 
+		  $natTopDownloaded = $this->Album->query($sql);
+                  print_r($natTopDownloaded);
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
@@ -681,7 +683,7 @@ STR;
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
-                    GROUP BY Song.ReferenceID
+                    GROUP BY Song.ProdID
                     ORDER BY Country.SalesDate ASC
                     LIMIT 20
 	  	
