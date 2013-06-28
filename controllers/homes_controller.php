@@ -35,16 +35,19 @@ class HomesController extends AppController
 //        }
         
                 
-           echo "patron: ".$this->Session->read('patron');   die;      
+           //echo "patron: ".$this->Session->read('patron');   die;     
                 
-//          if(!empty($this->Session->read('patron')))    //  After Login
-//          {
-//                $this->Auth->allow('*'); 
-//          }
-//          else                                          //  Before Login
-//          {
-//                $this->Auth->allow('display','aboutus', 'index', 'my_lib_top_10'); 
-//          }
+             $pat_id    =   $this->Session->read('patron');   
+                
+                
+          if(!empty($pat_id))    //  After Login
+          {
+                $this->Auth->allow('*'); 
+          }
+          else                                          //  Before Login
+          {
+                $this->Auth->allow('display','aboutus', 'index', 'my_lib_top_10'); 
+          }
                
                 
             
