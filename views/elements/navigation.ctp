@@ -97,19 +97,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="tooltip">
 						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
 					</div>
-                                        <div class="account-options-menu">
-                                            <div>
-                                                <?php 
-                                                    if($libraryInfo['Library']['library_authentication_method'] == "user_account")
-                                                    {  
-                                                        echo $html->link(__('Change Password', true), array('controller' => 'users', 'action' => 'my_account'));                                                
-                                                    } 
-                                                    if($isLibaryExistInTimzone ==1)
-                                                    { 
-                                                        echo $html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'my_account'));
-                                                    }
-                                                ?>
-                                            </div>
+                                        <div class="account-options-menu">                                            
+                                            <?php 
+                                                if($libraryInfo['Library']['library_authentication_method'] == "user_account")
+                                                {  
+                                                    echo "<div>".$html->link(__('Change Password', true), array('controller' => 'users', 'action' => 'my_account'))."</div>";                                                
+                                                } 
+                                                if($isLibaryExistInTimzone ==1)
+                                                { 
+                                                    echo "<div>".$html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'my_account'))."</div>";
+                                                }
+                                            ?>
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
                                         </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>                                          
