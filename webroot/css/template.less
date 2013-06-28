@@ -247,11 +247,40 @@ img {
 		font-size:      14px;
 		height:         26px;
 		line-height:    26px;
-		margin-right:   20px;
+		margin-right:   10px;
+		margin-top: 1px;
 		text-align:     center;
 		vertical-align: top;
 			
 
+	}
+	
+	.select-arrow {
+		
+		float: left;
+		display: block;
+		width: 17px;
+		height: 17px;
+		margin-right: 6px;
+		margin-top: 7px;
+		background: url(../img/drop-down-arrow.png) no-repeat;
+		
+		&:hover {
+			background: url(../img/drop-down-arrow-hover.png) no-repeat;
+			width: 17px;
+			height: 17px;
+		}
+	}
+	
+	.small-divider {
+		
+		float: left;
+		display: block;
+		background: url(../img/small-divider-header.png);
+		width: 3px;
+		height: 22px;
+		margin-right: 10px;
+		margin-top: 4px;
 	}
 	
 	.tooltip {
@@ -833,7 +862,7 @@ img {
 		height:      30px;
 		position:    absolute;
 		width:       420px;
-		left: 450px;
+		left: 388px;
 		top: 52px;
 		
 		
@@ -941,7 +970,49 @@ img {
 
 	
 
-	
+	.account-options-menu {
+		display: none;
+		position: absolute;
+		.border-radius(10px);
+		/*
+width: 134px;
+		height: 85px;
+*/
+		background: #fff;
+		.box-shadow(0 0 4px rgba(0,0,0,.2));
+		left: 0px;
+		top:40px;
+		z-index: 100;
+		color: rgba(0,0,0,.5);
+		font-size: 14px;
+		
+		&.active {
+			
+			display: block;
+		}
+		
+		div {
+		
+			padding-bottom: 10px;
+			
+			&:first-child {
+				
+				padding-top: 10px;
+			}
+			a {
+				
+				color: rgba(0,0,0,.5);
+				text-decoration: none;
+				padding-left: 20px;
+				padding-right: 20px;
+				
+				&:hover {
+					
+					text-decoration: underline;
+				}
+			}
+		}
+	}
 	
 	
 	
