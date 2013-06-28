@@ -1092,7 +1092,8 @@ STR;
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
-		$ids_provider_type = '';
+		$ids = '';
+                $ids_provider_type = '';
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);                
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
@@ -1257,6 +1258,7 @@ STR;
                         
                                                
 			$ids = '';
+                        $ids_provider_type = '';
 			$ioda_ids = array();
 			$sony_ids = array();
 			$sony_ids_str = '';
@@ -1459,6 +1461,7 @@ STR;
                         }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
+                  $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
 //                  echo '<pre>';
@@ -1592,6 +1595,7 @@ STR;
                         }
 		  
 		  $ids = '';
+                  $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
 //                  echo '<pre>';
@@ -1600,14 +1604,17 @@ STR;
 //                  die;
                   
 		  foreach($natTopDownloaded as $natTopSong){
-			if(empty($ids)){
-			  $ids .= $natTopSong['Download']['ProdID'];
-			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			} else {
-			  $ids .= ','.$natTopSong['Download']['ProdID'];
-			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			}
-		  }
+                    if(empty($ids)){
+                        $ids .= $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+                    }
+                    
+                    
+                    
+                }
 		  $data = array();
                   
                   
@@ -1619,7 +1626,7 @@ STR;
                  $countryPrefix = $this->Session->read('multiple_countries');
                   // $countryPrefix = 'us_';
 	 
-                  $sql_us_albums =<<<STR
+                   $sql_us_albums =<<<STR
                                SELECT 
                                        Song.ProdID,
                                        Song.ReferenceID,
@@ -1678,9 +1685,9 @@ STR;
 		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
-                echo "<pre>";
-                print_r($ustop10Albums);
-                die;
+//                echo "<pre>";
+//                print_r($ustop10Albums);
+//                die;
 ////                
                 
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
