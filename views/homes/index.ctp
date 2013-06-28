@@ -134,7 +134,9 @@
 
                                                                                                     <?php if($this->Session->read("patron")){ ?> 
 														<a class="add-to-playlist-button" href="#"></a>
+                                                                                               
 														<div class="wishlist-popover">
+                                                                                                         <?php if( $this->Session->read('library_type') == 2 ){ ?> 
 															<div class="playlist-options">
 																<ul>
 																	<li><a href="#">Create New Playlist</a></li>
@@ -150,10 +152,10 @@
 																	<li><a href="#">Playlist 10</a></li>
 																</ul>
 															</div>
-                                                                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
+                                                                                               
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
-                                                                                                <?php } ?>
+                                                                                                        <?php } ?>
 															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 															
 															<div class="share clearfix">
@@ -294,9 +296,6 @@
     }
     ?>
 
-
-
-
                                                                                                 <?php if($this->Session->read("patron")){ ?> 
 														
 														<a class="add-to-playlist-button" href="#"></a>
@@ -394,6 +393,8 @@
 													
                                                                                                         <a class="add-to-playlist-button" href="#"></a>
 													<div class="wishlist-popover">
+                                                                                                    <?php if($this->Session->read('patron')) { ?>
+                                                                                                        <?php if( $this->Session->read('library_type') == 2 ){ ?> 
 														<div class="playlist-options">
 															<ul>
 																<li><a href="#">Create New Playlist</a></li>
@@ -409,13 +410,13 @@
 																<li><a href="#">Playlist 10</a></li>
 															</ul>
 														</div>
-                                                                                                    <?php if($this->Session->read('patron')) { ?>
+                                                                                                    <?php } ?>
 														<a class="download-now" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>">Download Now</a>
                                                                                                     <?php }else{ ?>
                                                                                                     <a class="download-now" href='/users/login'> <?php __("Login");?></a>
                                                                                                     <?php } ?>
 														
-                                                                                                    <?php if( $this->Session->read('library_type') == 2 ){ ?> 
+                                                                                                    <?php if( $this->Session->read('library_type') == 2 ){ ?>
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                     <?php } ?>

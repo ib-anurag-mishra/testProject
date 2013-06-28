@@ -149,6 +149,7 @@
                                         $count  =   1;  
                                                                                                                         
 					//for($d=1;$d<$count;$d++) {
+print_r($topDownload_videos_data); die;
                                         foreach($topDownload_videos_data as $key => $value){
                                             
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
@@ -166,8 +167,20 @@
                                                         <img src="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-							
-							<a class="top-10-download-now-button" href="#">Download Now</a>
+							 <?php
+                                if($this->Session->read('patron')) {
+                                ?>
+<form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
+                                    <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
+                                        <span class="beforeClick" id="song_<?php echo $topDownload["Video"]["ProdID"]; ?>">
+                                            <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+										</span>
+								</form>	
+<?php } else{ ?>
+<a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+<?php } ?>
+							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
 							<a class="add-to-playlist-button" href="#"></a>
 							<div class="wishlist-popover">
 								
