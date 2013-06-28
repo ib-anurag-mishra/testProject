@@ -136,50 +136,69 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                        
 			<!-- site nav -->
 		<nav class="site-nav">
+                    <?php
+                    $newsCss = "regular";
+                    $videoCss = "regular";
+                    $mostPopularCss = "regular";
+                    $genreCss = "regular";
+                    $faqCss = "regular";
+
+                    if($_SERVER['REQUEST_URI'] == '/homes/index' || $_SERVER['REQUEST_URI'] == '/index')
+                    {
+                        $newsCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == '/videos')
+                    {
+                        $videoCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10' || $_SERVER['REQUEST_URI'] == '/homes/us_top_10')
+                    {
+                        $mostPopularCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == 'genres/view')
+                    {
+                        $genreCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == '/questions')
+                    {
+                        $faqCss = "regular active";
+                    }
+                    ?>
                     <ul class="clearfix">
-			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>"regular"));?></li>			
-                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>"regular")); ?></li></li>
-                        <?php if($this->Session->read("patron")){ ?>
-                        <li><a href="#">Most Popular</a></li>
-                        <?php } ?>
-                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>"regular")); ?></li></li>   
-                        <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>"regular")); ?></li>
+			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
+                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
+                        <li><a href="#" class="<?php echo $mostPopularCss; ?>">Most Popular</a></li>
+                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
+                        <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
                     </ul>
-                    <?php if($this->Session->read("patron")){ ?>
+                    
                     <div class="most-popular-sub-nav">
+                            <?php if($this->Session->read("patron")){ ?>
                             <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
+                            <?php } ?>
                             <div><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
-                            <!--
-<div><a href="#">Top Artists</a></div>
-                            <div><a href="#">Top Albums</a></div>
-                            <div><a href="#">Top Genres</a></div>
--->
-                    </div>
-                    <?php } ?>
+                    </div>                   
 
 			</nav>
 			<div class="gradient-border"></div>
 			<div class="top-sub-nav">
 				
 			</div>
-			<div class="content-wrapper clearfix">
-				
-					<section class="left-sidebar">					
-							
+			<div class="content-wrapper clearfix">				
+					<section class="left-sidebar">
                                             <ul class="browse sidebar-nav"><h3>Browse</h3>
-
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>'sidebar-anchor')); ?>
-                                                    </li>
-                                                    <?php if($this->Session->read("patron")){ ?>
+                                                    </li>                                                    
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Most Popular</a>
                                                             <ul class="sidebar-sub-nav">
+                                                                    <?php if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></li>
+                                                                    <?php } ?>
                                                                     <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
                                                             </ul>
-                                                    </li>
-                                                    <?php } ?>
+                                                    </li>                                                    
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								

@@ -178,9 +178,9 @@ $(function() {
 	
 	
 	
-	$('.site-nav li:first-child a').addClass('active');
-	$('.category-filter li:first-child a').addClass('active');
-	$('.top-100-nav li:first-child a').addClass('active');
+	//$('.site-nav li:first-child a').addClass('active');
+	//$('.category-filter li:first-child a').addClass('active');
+	//$('.top-100-nav li:first-child a').addClass('active');
 	//coming_soon_album_grid.addClass('active');
 	coming_soon_singles_grid.addClass('active');
 	
