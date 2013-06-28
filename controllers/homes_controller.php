@@ -1678,9 +1678,9 @@ STR;
 		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
-//                echo "<pre>";
-//                print_r($ustop10Albums);
-//                die;
+                echo "<pre>";
+                print_r($ustop10Albums);
+                die;
 ////                
                 
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
