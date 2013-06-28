@@ -115,8 +115,7 @@ class HomesController extends AppController
                   //make the provide type and prodid array for selecting records
                   $ids = '';
                   $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);
-                  print_r($natTopDownloaded);
+		  $natTopDownloaded = $this->Album->query($sql);               
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
@@ -185,10 +184,10 @@ STR;
              
 
 		$nationalTopDownload = Cache::read("national".$territory);
-               // print_r($nationalTopDownload);
+              
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
-                //print_r($nationalTopDownload);
+               
                
                
              
@@ -213,7 +212,7 @@ STR;
                         AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
-                        LIMIT 110";
+                        LIMIT 1110";
                    } else {
 
                           $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -223,7 +222,7 @@ STR;
                         AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
-                        LIMIT 110";
+                        LIMIT 1110";
                     }
                     
                 
