@@ -13,6 +13,10 @@
 				<ul>
 					<?php
                                         
+
+                                         echo "<pre>";
+                                        print_r($ustop10Albums);
+
 					 $count  =   1;           
 					//for($d=1;$d<$count;$d++) {
                                         foreach($ustop10Albums as $key => $value){
