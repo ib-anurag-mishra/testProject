@@ -33,8 +33,9 @@ class HomesController extends AppController
 //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 //			}
 //        }
-                
-        $this->Auth->allow('display','aboutus', 'index');
+        
+          
+        $this->Auth->allow('display','aboutus', 'index', 'my_lib_top_10');
                 
         $this->Cookie->name = 'baker_id';
         $this->Cookie->time = 3600; // or '1 hour'
