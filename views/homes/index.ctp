@@ -46,7 +46,7 @@
 											<li>
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
-														<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>" alt="bradpaisley250x250" width="250" height="250" /></a>
+														<a href="artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>" alt="bradpaisley250x250" width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -150,8 +150,10 @@
 																	<li><a href="#">Playlist 10</a></li>
 																</ul>
 															</div>
+                                                                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
+                                                                                                <?php } ?>
 															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 															
 															<div class="share clearfix">
@@ -207,13 +209,14 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="#"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
+														<a href="javascript:void(0);"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
 											?></div>
-														<a href="#" class="preview"></a>
-
+<?php if($this->Session->read("patron")){ ?> 														
+<a href="#" class="preview"></a>
+<?php } ?>
 
 
 														
@@ -339,10 +342,12 @@
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
-														<a href="artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a>
+													<!--	<a href="artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
+                                                                                                        <a href="javascript:void(0);"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
-														<a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a>
+														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
+                                                                                                                <a href="javascript:void(0);"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a>
 													</div>
 												</div>
 											</li>
@@ -409,8 +414,12 @@
                                                                                                     <?php }else{ ?>
                                                                                                     <a class="download-now" href='/users/login'> <?php __("Login");?></a>
                                                                                                     <?php } ?>
-														<a class="add-to-queue" href="#">Add To Queue</a>
-														<a class="add-to-playlist" href="#">Add To Playlist</a>
+														
+                                                                                                    <?php if( $this->Session->read('library_type') == 2 ){ ?> 
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+                                                                                                    <?php } ?>
+                                                                                                                
 														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 														
 														<div class="share clearfix">
@@ -486,8 +495,9 @@
 											<div class="single-detail">
 												<div class="single-cover-container">
 													
-													<a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
+													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+                                                                                                <?php if($this->Session->read("patron")){ ?> 													
+                                                                                                <a class="add-to-playlist-button" href="#">
 														
 													</a>
 													<div class="wishlist-popover">
@@ -499,9 +509,11 @@
 														</div>
 														
 													</div>
+
+                                                                                                <?php } ?>
 												</div>
 												<div class="song-title">
-													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+													<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     if(strlen($value['Song']['SongTitle'])>20)
                                                                                                                     echo substr($value['Song']['SongTitle'],0,20)."..."; 
@@ -510,7 +522,7 @@
                                                                                                         </a>
 												</div>
 												<div class="artist-name">
-													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>20)
                                                                                                                     echo substr($value['Song']['Artist'],0,20)."..."; 
@@ -545,8 +557,9 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="#"><img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" /></a>
-													<a class="add-to-playlist-button" href="#">
+													<a href="javascript:void(0);"><img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" /></a>
+												<?php if($this->Session->read("patron")){ ?> 
+                                                                                                        <a class="add-to-playlist-button" href="#">
 														
 													</a>
 													<div class="wishlist-popover">
@@ -558,22 +571,40 @@
 														</div>
 														
 													</div>
+                                                                                                <?php } ?>
 												</div>
 												<div class="video-title">
-													 <a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+
+                                                                                                        <a href="javascript:void(0);">
                                                                                                             <?php
                                                                                                                     if(strlen($value['Video']['VideoTitle'])>20)
                                                                                                                     echo substr($value['Video']['VideoTitle'],0,20)."..."; 
                                                                                                                     else echo $value['Video']['VideoTitle'];
-                                                                                                             ?> </a>
+                                                                                                         ?> </a>
+
+												<!--	 <a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                                                                            <?php
+                                                                                                                    if(strlen($value['Video']['VideoTitle'])>20)
+                                                                                                                    echo substr($value['Video']['VideoTitle'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['VideoTitle'];
+                                                                                                             ?> </a> -->
 												</div>
 												<div class="artist-name">
-													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+
+
+                                                                                                            <a href="javascript:void(0)">
                                                                                                          <?php 
                                                                                                                     if(strlen($value['Video']['Artist'])>20)
                                                                                                                     echo substr($value['Video']['Artist'],0,20)."..."; 
                                                                                                                     else echo $value['Video']['Artist'];
                                                                                                              ?></a>
+
+												<!--	<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
+                                                                                                         <?php 
+                                                                                                                    if(strlen($value['Video']['Artist'])>20)
+                                                                                                                    echo substr($value['Video']['Artist'],0,20)."..."; 
+                                                                                                                    else echo $value['Video']['Artist'];
+                                                                                                             ?></a>  -->
 												</div>
 											</div>
 											
