@@ -1,5 +1,7 @@
 <?php
 
+echo '<br />Start : '.date('Y-m-d h:i:s').'<br />'; 
+
 error_reporting(E_ALL);
 ini_set('display_errors', '1');
 
@@ -35,7 +37,7 @@ ISRC, ReferenceID, ArtistText, ArtistText as TArtistText, ArtistText as CArtistT
 DownloadStatus, TrackBundleCount, SongTitle, SongTitle as TSongTitle, SongTitle as CSongTitle, Advisory, Genre, 
 Genre as TGenre, Genre as CGenre, Composer, Composer as TComposer, Composer as CComposer, provider_type, 
 CAST(CONCAT(ProdID,'-',provider_type) AS CHAR(50)) as ppjoin, CAST(CONCAT(ReferenceID,'-',provider_type) 
-AS CHAR(50)) as rpjoin FROM Songs WHERE Sample_FileID IS NOT NULL AND DownloadStatus = '1' LIMIT 2");
+AS CHAR(50)) as rpjoin FROM Songs WHERE Sample_FileID IS NOT NULL AND DownloadStatus = '1' LIMIT 100");
 
 
 $docs = array(); $cnt = 1;
@@ -104,25 +106,21 @@ foreach ( $arr_docs as $item => $fields ) {
 }
 
 
-echo '<pre>';
+/*echo '<pre>';
 print_r($documents);
-echo '</pre>';
+echo '</pre>';*/
 
 
 //oad the documents into the index
 foreach($documents AS $key => $song) {
 
-  /*print_r($song); 
-  print_r($song->ProdID);
-  exit;*/
-
   try {
     $solr->delete('<delete><query>ProdID:'.$song->ProdID.' AND provider_type:sony</query></delete>');
     $solr->commit();
-    $solr->optimize();
+//    $solr->optimize();
     $solr->addDocument($song);
     $solr->commit();
-    $solr->optimize();
+//    $solr->optimize();
   }
   catch ( Exception $e ) {
     echo "<br/>============================<br />";
@@ -134,6 +132,8 @@ foreach($documents AS $key => $song) {
 
 }
 
+
+echo '<br />End : '.date('Y-m-d h:i:s').'<br />';
 
 
 mysql_close($link);
