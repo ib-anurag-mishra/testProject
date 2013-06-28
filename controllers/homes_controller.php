@@ -46,8 +46,8 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
-                $this->Auth->allow('display','aboutus', 'index'); 
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10'); 
+                
           }
                
                 
