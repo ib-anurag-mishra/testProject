@@ -121,7 +121,7 @@ $genre_text_conversion = array(
 		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
 		<header class="clearfix">
 			<h2>Search for your favorite music.</h2>
-			<div class="faq-link">Need help? Visit our <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?><</div>
+			<div class="faq-link">Need help? Visit our <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>
 		</header>
 		<section class="genre-filter-container clearfix">
 			<div class="genre-shadow-container">
@@ -130,8 +130,7 @@ $genre_text_conversion = array(
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>
-					  
+						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
                                                 
             <?php
                 $genre_count = 1;
