@@ -51,7 +51,8 @@
 												$slNo = ($i + 1);
 												echo $slNo;
 											?></div>
-														<a href="#" class="preview"></a>
+														
+<?php if($this->Session->read("patron")){ ?> <a href="#" class="preview"></a> <?php } ?>
 
 
 												
@@ -131,7 +132,7 @@
 
 
 
-
+                                                                                                    <?php if($this->Session->read("patron")){ ?> 
 														<a class="add-to-playlist-button" href="#"></a>
 														<div class="wishlist-popover">
 															<div class="playlist-options">
@@ -160,6 +161,7 @@
 															</div>
 															
 														</div>
+                                                                                                    <?php } ?>
 													</div>
 
                                                                                                     <?php											
@@ -292,7 +294,7 @@
 
 
 
-
+                                                                                                <?php if($this->Session->read("patron")){ ?> 
 														
 														<a class="add-to-playlist-button" href="#"></a>
 														
@@ -326,6 +328,7 @@
 															</div>
 															
 														</div>
+                                                                                                  <?php } ?>
 													</div>
 
                                                                                                 <?php											
@@ -379,8 +382,12 @@
 												<?php echo $html->link($html->image($image,array("height" => "77", "width" => "84")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
-													<a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a>
-													<a class="add-to-playlist-button" href="#"></a>
+													
+                                                                                                        <?php if($this->Session->read("patron")){ ?> 
+
+                                                                                                                <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a>
+													
+                                                                                                        <a class="add-to-playlist-button" href="#"></a>
 													<div class="wishlist-popover">
 														<div class="playlist-options">
 															<ul>
@@ -413,6 +420,8 @@
 														</div>
 														
 													</div>
+                                                                                                <?php } ?>
+
 												</div>
 												<div class="album-title">
 													<a href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $title; ?></a>

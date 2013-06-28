@@ -2,6 +2,8 @@
 
 			
 			</div><!-- end .content-wrapper -->
+
+<?php if($this->Session->read("patron")){ ?> 
 			<div class="music-player-container clearfix">
 
 					<div class="music-player">
@@ -36,6 +38,7 @@
 
 			</div>
 			
+<?php } ?>
 			
 		</div>			
 			
