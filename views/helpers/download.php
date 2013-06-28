@@ -11,6 +11,11 @@ class DownloadHelper extends AppHelper {
         $downloadInstance = ClassRegistry::init('Download');
         $downloadInstance->recursive = -1;
         $downloadCount = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $videoDownloadInstance = ClassRegistry::init('Videodownload');
+        $videoDownloadInstance->recursive = -1;
+        $videoDownloadCount = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $videoDownloadCount = $videoDownloadCount *2;
+        $downloadCount = $downloadCount + $videoDownloadCount;
         return $downloadCount;
     }
     function getDownloadData($libId,$startDate,$endDate) {
