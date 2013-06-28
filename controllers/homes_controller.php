@@ -10,7 +10,7 @@ class HomesController extends AppController
 {
     var $name = 'Homes';
     var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
-    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session');
+    var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video');
 
     /*
@@ -33,6 +33,9 @@ class HomesController extends AppController
 //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
 //			}
 //        }
+                
+        $this->Auth->allow('display','aboutus', 'index');
+                
         $this->Cookie->name = 'baker_id';
         $this->Cookie->time = 3600; // or '1 hour'
         $this->Cookie->path = '/';
@@ -1530,7 +1533,7 @@ STR;
                 //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
                 
                
-             $country = "US"; 
+            $country = $this->Session->read('territory');
             
             if(!empty($country)){                     
                     $country = $territory;
@@ -1654,7 +1657,7 @@ STR;
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
                 
                
-               $country = "US"; 
+               $country = $this->Session->read('territory');
                 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
