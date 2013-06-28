@@ -13,7 +13,7 @@
 				<ul>
 					<?php
                                         
-					 $count  =   count($topDownload_albums);           
+					 $count  =   1;           
 					//for($d=1;$d<$count;$d++) {
                                         foreach($topDownload_albums as $key => $value){
                                             
@@ -25,7 +25,7 @@
 							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
                                                         </a>
-							<div class="top-10-ranking">1</div>
+							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
 						</div>
 						<div class="album-title">
@@ -48,7 +48,7 @@
 						</div>
 					</li>
 					<?php
-					
+                                                $count++;
 					}
 					?>
 				</ul>
@@ -78,7 +78,7 @@
 							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <img class="lazy"  src="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" />                                                        
                                                         </a>
-							<div class="top-10-ranking">1</div>
+							<div class="top-10-ranking"><?php echo $count; ?></div>
 							<a href="#" class="preview"></a>
 							<a class="top-10-download-now-button" href="#">Download Now</a>
 							<a class="add-to-playlist-button" href="#"></a>
@@ -142,7 +142,7 @@
 				<ul>
 					<?php
                                         
-                                        $count  =   count($topDownload_videos_data);  
+                                        $count  =   1;  
                                                                                                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($topDownload_videos_data as $key => $value){
@@ -161,7 +161,7 @@
 							<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
                                                         <img src="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
                                                         </a>                                                  
-							<div class="top-10-ranking">1</div>
+							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
 							<a class="top-10-download-now-button" href="#">Download Now</a>
 							<a class="add-to-playlist-button" href="#"></a>
@@ -199,7 +199,7 @@
 					</li>
 					
 					<?php
-					
+                                                 $count++;
 					}
 					
 					?>
