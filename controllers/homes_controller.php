@@ -34,8 +34,14 @@ class HomesController extends AppController
 //			}
 //        }
         
-          
-        $this->Auth->allow('display','aboutus', 'index', 'my_lib_top_10');
+          if(issset($this->Session->read('patron')))    // After Login
+          {
+                $this->Auth->allow('my_lib_top_10', 'us_top_10');
+          }
+          else
+          {
+                $this->Auth->allow('display','aboutus', 'index');
+          }
                 
         $this->Cookie->name = 'baker_id';
         $this->Cookie->time = 3600; // or '1 hour'
