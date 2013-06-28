@@ -162,7 +162,7 @@ class AppModel extends Model {
                           $group = "yes";
                           //$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                           //$paginationcount = count($paginationcount);
-                          //$group = "yes";
+                          //$group = "yesno";
                         }
                         else{
                           $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
