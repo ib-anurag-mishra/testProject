@@ -34,7 +34,7 @@ class HomesController extends AppController
 //			}
 //        }
         
-          if(issset($this->Session->read('patron')))    //  After Login
+          if(isset($this->Session->read('patron')))    //  After Login
           {
                 $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
           }
