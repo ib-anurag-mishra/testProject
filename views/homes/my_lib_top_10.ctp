@@ -32,8 +32,8 @@
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
 						</div>
-						<div class="album-title">
-							<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+						<div class="album-title">							
+                                                        <a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>20)
                                                                 echo substr($value['Song']['SongTitle'],0,20)."..."; 
@@ -41,8 +41,8 @@
                                                          ?>
                                                     </a>
 						</div>
-						<div class="artist-name">
-							<a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+						<div class="artist-name">							
+                                                        <a href="artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>20)
                                                                                                                     echo substr($value['Song']['Artist'],0,20)."..."; 
