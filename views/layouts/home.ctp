@@ -26,7 +26,8 @@
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
           echo $javascript->link('jquery.bgiframe');
-          echo $javascript->link('jquery.autocomplete'); 
+          echo $javascript->link('jquery.autocomplete');
+          echo $javascript->link('recent-downloads');
         ?>		
 
 
@@ -68,7 +69,7 @@
             
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/us-top-10.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-top-10.less" />
-            
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/recent-downloads.less" />
             
             <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
             <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
