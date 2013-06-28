@@ -11,7 +11,7 @@
 if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                
+            
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
@@ -143,7 +143,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     $genreCss = "regular";
                     $faqCss = "regular";
 
-                    if($_SERVER['REQUEST_URI'] == '/homes/index' || $_SERVER['REQUEST_URI'] == '/index')
+                    if($_SERVER['REQUEST_URI'] == '/homes/index' || $_SERVER['REQUEST_URI'] == '/index'  || $_SERVER['REQUEST_URI'] == '/')
                     {
                         $newsCss = "regular active";
                     }
@@ -201,6 +201,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>                                                    
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
+                                            <?php if($libraryInfo['Library']['library_type'] == '2') {?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Freegal Playlists</a>
@@ -226,7 +227,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">History</a>
                                                     </li>
-                                            </ul>                                           
+                                            </ul>
+                                            <?php } ?>
                                             <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
