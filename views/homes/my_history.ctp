@@ -136,7 +136,7 @@
 				</div>
 			</div>
 		</div>
-		(this is the html for the videos)
+		<!-- (this is the html for the videos) -->
 		<div class="recent-video-downloads-shadow-container">
 			<div class="recent-video-downloads-scrollable">
 				<div class="row-container">
