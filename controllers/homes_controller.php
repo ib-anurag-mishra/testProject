@@ -1412,10 +1412,21 @@ STR;
             $this->layout = 'home';  
 
             $libId = $this->Session->read('library');
+            $patId = $this->Session->read('patron');
             $territory = $this->Session->read('territory');
             
 //            $libId = 1;
 //            $territory = 'us';
+            
+            
+                
+               
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
+            
+            
             
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
