@@ -272,3 +272,8 @@ padding-bottom:5px;
     margin-top: 23px;
 }
 
+.forgot > a {
+    color: #52C6EC;
+    font-size: 14px;
+}
+
