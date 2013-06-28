@@ -323,7 +323,9 @@
     }
     ?>
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
-							<?php if($this->Session->read("patron")){ ?> 
+							
+								
+								<?php if($this->Session->read("patron")){ ?> 
 														
 														<a class="add-to-playlist-button" href="#"></a>
 														
@@ -359,7 +361,7 @@
 														</div>
                                                                                                   <?php } ?>
 								
-							</div>
+							
 							
 						</div>
 						<div class="album-title">
