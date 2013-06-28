@@ -2,7 +2,7 @@
 class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Territory');
 
     function cacheLogin() {
 			$libid = $_REQUEST['libid'];
@@ -35,7 +35,12 @@ class CacheController extends AppController {
     echo "============".date("Y-m-d H:i:s")."===============";
 
     
-    $territoryNames = array('US','CA','AU','NZ','IT');
+    //$territoryNames = array('US','CA','AU','NZ','IT');
+    $territories = $this->Territory->find("all");
+    for($mm=0;$mm<count($territories);$mm++)
+    {
+        $territoryNames[$mm] = $territories[$mm]['Territory']['Territory'];
+    }
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
@@ -74,16 +79,18 @@ class CacheController extends AppController {
 						),'group' => 'Genre.Genre'
 					));
             
-      $this->log("cache written for genre for $territory",'debug');
+      $this->log("cache written for genre for $territory",'debug');      
       
       if( (count($genreAll) > 0) && ($genreAll !== false) )
       {
+        Cache::delete("genre".$territory);
         Cache::write("genre".$territory, $genreAll);
         $this->log( "cache written for genre for $territory", "cache");
         echo "cache written for genre for $territory";
       }
       else
-      {
+      {                                  
+        
         Cache::write("genre".$territory, Cache::read("genre".$territory) );
         $this->log( "no data available for genre".$territory, "cache");
         echo "no data available for genre".$territory;
@@ -97,16 +104,16 @@ class CacheController extends AppController {
               FROM `latest_downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
-              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
               LIMIT 110";
          } else {
-		  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+         	$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
               FROM `downloads` AS `Download` 
               LEFT JOIN libraries ON libraries.id=Download.library_id
               WHERE libraries.library_territory = '".$country."' 
-              AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."' 
+              AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
               GROUP BY Download.ProdID 
               ORDER BY `countProduct` DESC 
               LIMIT 110";
@@ -183,10 +190,12 @@ STR;
       }
 			  
 		  if(!empty($data)){
+      Cache::delete("national".$country);
 			Cache::write("national".$country, $data);
       $this->log("cache written for national top ten for $territory", "cache");
       echo "cache written for national top ten for $territory";
 		  } else {
+      
       Cache::write("national".$country, Cache::read("national".$country) ); 
 			echo "Unable to update key";
       $this->log("Unable to update national 100 for ".$territory, "cache");
@@ -263,8 +272,10 @@ STR;
 			}
       
       if(empty($featured)) {
+        
         Cache::write("featured".$territory, Cache::read("featured".$territory) );
       }else{
+        Cache::delete("featured".$territory);
         Cache::write("featured".$territory, $featured);
       }
 			
@@ -384,12 +395,14 @@ STR;
         $data =   $this->Album->query($restoregenre_query);
 		$this->log( $restoregenre_query, "cachequery");	
         if(!empty($data)){
+            Cache::delete($genre.$territory);
           	Cache::write($genre.$territory, $data);
             $this->log("cache written for: $genre $territory", "cache");
             echo "cache written for: $genre $territory";
         } else {
+            
             Cache::write($genre.$territory, Cache::read($genre.$territory) );
-          echo "Unable to update key";
+            echo "Unable to update key";
             $this->log("Unable to update key for: $genre $territory", "cache");
             echo "Unable to update key for: $genre $territory";
         }       
@@ -399,9 +412,9 @@ STR;
 
     //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
     try {
-
+     
       $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
-
+      
       $country = $territory;
       $condition = "";
       $this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -474,7 +487,7 @@ STR;
           )
         )
       );
-
+      
       foreach($genreAll as $genreRow){
         $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
         $condition = "";
@@ -559,7 +572,7 @@ STR;
           )
         )
       );
-	  
+      
     } catch(Exception $e) {
 
       $this->log("Artist Pagenation Mesg : ".$e->getMessage(), "cache");
@@ -573,7 +586,7 @@ STR;
     }
     
     //--------------------------------Library Top Ten Start----------------------------------------------------
-	  
+    
     $libraryDetails = $this->Library->find('all',array(
       'fields' => array('id', 'library_territory'),
       'conditions' => array('library_status' => 'active'),
@@ -607,9 +620,9 @@ STR;
         $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
       } else {
         $download_src = 'Download';
-			$topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+        $topDownloaded = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
       }
-      
+
       $this->log("$download_src - $libId - $country", "cache");
       
 			$ids = '';
@@ -633,13 +646,13 @@ STR;
 						$ioda_ids[] = $v['LatestDownload']['ProdID'];
 					}
 				} else {
-				if(empty($ids)){
-				  $ids .= $v['Download']['ProdID'];
-				  $ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				} else {
-				  $ids .= ','.$v['Download']['ProdID'];
-				  $ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
-				}
+					if(empty($ids)){
+						$ids .= $v['Download']['ProdID'];
+						$ids_provider_type .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+					} else {
+						$ids .= ','.$v['Download']['ProdID'];
+						$ids_provider_type .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+					}
 					if($v['Download']['provider_type'] == 'sony'){
 						$sony_ids[] = $v['Download']['ProdID'];
 					} else {
@@ -715,26 +728,29 @@ STR;
 
 			} else {
 				$topDownload = array();
-			}
+			}     
+			
+      //		library top 10 cache set
       
-      //		library top 10 cache set      
       if( (count($topDownload) < 1) || ($topDownload === false) )
       {
+        
         Cache::write("lib".$libId, Cache::read("lib".$libId) );
         $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
         echo "<br /> library top 10 returns null for lib: $libId $country <br />";
       }
       else
       {        
+        Cache::delete("lib".$libId);
         Cache::write("lib".$libId, $topDownload);
         //library top 10 cache set
         $this->log("library top 10 cache set for lib: $libId $country", "cache");
         echo "<br />library top 10 cache set for lib: $libId $country <br />";
       }
-      }
-	  
+	  }
+    
     //--------------------------------------Library Top Ten End----------------------------------------------
-	  
+    
     
     echo "============".date("Y-m-d H:i:s")."===============";
     $this->requestAction('/Resetcache/genrateXML');
