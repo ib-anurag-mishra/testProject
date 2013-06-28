@@ -323,16 +323,41 @@
     }
     ?>
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
-							<a class="add-to-playlist-button" href="#"></a>
-							<div class="wishlist-popover">
-								
-								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-								
-								<div class="share clearfix">
-									<p>Share via</p>
-									<a class="facebook" href="#"></a>
-									<a class="twitter" href="#"></a>
-								</div>
+							<?php if($this->Session->read("patron")){ ?> 
+														
+														<a class="add-to-playlist-button" href="#"></a>
+														
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+                                                                                                  <?php } ?>
 								
 							</div>
 							
