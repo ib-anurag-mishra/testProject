@@ -164,7 +164,7 @@
 	height: 37px;
 	border: 0;
 	/* background: transparent url(controls.svg) no-repeat; */
-	/* background: url(../../images/music_player/play_btn.png); */
+	/* background: url(../../img/music_player/play_btn.png); */
 	background: none;
 }
 
@@ -175,7 +175,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-prev-button {
-	background: url(../../images/music_player/prev_btn.png);
+	background: url(../../img/music_player/prev_btn.png);
 	height: 33px;
 	width: 33px;
 }
@@ -194,28 +194,28 @@
 
 
 .mejs-controls .mejs-button.mejs-next-button {
-	background: url(../../images/music_player/next_btn.png);
+	background: url(../../img/music_player/next_btn.png);
 	height: 33px;
 	width: 33px;
 	margin-left: 5px;
 }
 
 .mejs-controls .mejs-button.mejs-pause-button {
-	background: url(../../images/music_player/pause_btn.png);
+	background: url(../../img/music_player/pause_btn.png);
 	height: 27px;
 	width: 27px;
 	margin-left: 5px;
 }
 
 .mejs-controls .mejs-button.mejs-loop-button {
-	background: url(../../images/music_player/loop_btn.png);
+	background: url(../../img/music_player/loop_btn.png);
 	height: 15px;
 	width: 15px;
 	margin-left: 5px;	
 }
 
 .mejs-controls .mejs-button.mejs-shuffle-button {
-	background: url(../../images/music_player/shuffle_btn.png);
+	background: url(../../img/music_player/shuffle_btn.png);
 	height: 15px;
 	width: 17px;
 	margin-left: 5px;	
@@ -223,14 +223,14 @@
 
 .mejs-controls .mejs-button.mejs-volume-button {
 	
-	background: url(../../images/music_player/volume_btn.png);
+	background: url(../../img/music_player/volume_btn.png);
 	height: 33px;
 	width: 33px;
 	margin-left: 5px;
 }
 
 .mejs-controls .mejs-button.mejs-playlist-button {
-	background: url(../../images/music_player/playlist_btn.png);
+	background: url(../../img/music_player/playlist_btn.png);
 	height: 28px;
 	width: 39px;
 	margin-left: 5px;	
@@ -278,7 +278,7 @@
 /* Start: Play/pause */
 .mejs-controls .mejs-play button {
 	/* background-position: 0 0; */
-	background: url(../../images/music_player/play_btn.png);
+	background: url(../../img/music_player/play_btn.png);
 }
 .mejs-controls .mejs-pause button {
 	/* background-position: 0 -16px; */

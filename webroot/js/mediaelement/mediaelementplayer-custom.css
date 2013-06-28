@@ -171,7 +171,7 @@
 	height: 37px;
 	border: 0;
 	/* background: transparent url(controls.svg) no-repeat; */
-	/* background: url(../../images/music_player/play_btn.png); */
+	/* background: url(../../img/music_player/play_btn.png); */
 	background: none;
 }
 
@@ -183,7 +183,7 @@
 
 .mejs-controls .mejs-button.mejs-prevtrack {
 	position: absolute;
-	background: url(../../images/music_player/prev_btn.png);
+	background: url(../../img/music_player/prev_btn.png);
 	height: 10px;
 	width: 15px;
 	
@@ -218,7 +218,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-play {
-	background: url(../../images/music_player/play.png);
+	background: url(../../img/music_player/play.png);
 	height: 16px;
 	width: 10px;
 	position: absolute;
@@ -237,7 +237,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-nexttrack {
-	background: url(../../images/music_player/next_btn.png);
+	background: url(../../img/music_player/next_btn.png);
 	height: 10px;
 	width: 15px;
 	position: absolute;
@@ -255,7 +255,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-pause {
-	background: url(../../images/music_player/pause.png);
+	background: url(../../img/music_player/pause.png);
 	height: 16px;
 	width: 10px;
 	position: absolute;
@@ -274,7 +274,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-loop-off {
-	background: url(../../images/music_player/loop_btn_off.png);
+	background: url(../../img/music_player/loop_btn_off.png);
 	height: 15px;
 	width: 15px;
 	position: absolute;
@@ -292,7 +292,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-loop-on {
-	background: url(../../images/music_player/loop_btn_on.png);
+	background: url(../../img/music_player/loop_btn_on.png);
 	height: 15px;
 	width: 15px;
 	position: absolute;
@@ -310,7 +310,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-shuffle-off {
-	background: url(../../images/music_player/shuffle_btn_off.png);
+	background: url(../../img/music_player/shuffle_btn_off.png);
 	height: 16px;
 	width: 18px;
 	position: absolute;
@@ -323,7 +323,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-shuffle-on {
-	background: url(../../images/music_player/shuffle_btn_on.png);
+	background: url(../../img/music_player/shuffle_btn_on.png);
 	height: 16px;
 	width: 18px;
 	position: absolute;
@@ -347,7 +347,7 @@
 
 .mejs-controls .mejs-button.mejs-volume-button {
 	
-	background: url(../../images/music_player/volume_btn.png);
+	background: url(../../img/music_player/volume_btn.png);
 	height: 14px;
 	width: 14px;
 	position: absolute;
@@ -366,7 +366,7 @@
 }
 
 .mejs-controls .mejs-button.mejs-playlist-button {
-	background: url(../../images/music_player/playlist_btn.png);
+	background: url(../../img/music_player/playlist_btn.png);
 	height: 11px;
 	width: 15px;
 /*
@@ -498,7 +498,7 @@ margin-left: 10px;
 /* Start: Play/pause */
 .mejs-controls .mejs-play button {
 	/* background-position: 0 0; */
-	/* background: url(../../images/music_player/play_btn.png); */
+	/* background: url(../../img/music_player/play_btn.png); */
 }
 .mejs-controls .mejs-pause button {
 	/* background-position: 0 -16px; */

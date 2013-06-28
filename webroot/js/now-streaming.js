@@ -59,12 +59,12 @@ $(document).ready(function(){
 	
 	$('.now-streaming-page .song-detail .controls .next').on('mousedown',function(e){
 	
-		$(this).css('background','images/now-streaming/next-pressed.png');
+		$(this).css('background','img/now-streaming/next-pressed.png');
 	});
 	
 	$('.now-streaming-page .song-detail .controls .next').on('mouseup',function(e){
 	
-		$(this).css('background','images/now-streaming/next-btn.png');
+		$(this).css('background','img/now-streaming/next-btn.png');
 	});
 	
 	
