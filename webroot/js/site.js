@@ -199,6 +199,25 @@ $(function() {
 	});
 	
 	
+	$('.select-arrow').on('click',function(e){
+		if($('.account-options-menu').hasClass('active')) {
+			
+			$('.account-options-menu').removeClass('active');
+		} else {
+			$('.account-options-menu').addClass('active');
+			
+		}
+
+	
+	});
+	
+	$('.account-options-menu').on('mouseleave',function(e){
+	
+		$('.account-options-menu').removeClass('active');
+	});
+	
+	
+	
 	/*
 	grid_view_button.on('click',function(e){
 		e.preventDefault();
@@ -480,6 +499,8 @@ $(function() {
 	});
 	
 	
+	
+	
 
 	
 	
@@ -497,6 +518,7 @@ $(function() {
 		}
 		
 		
+		
 	});
 	
 	add_to_wishlist.on('mouseenter',function(){
@@ -506,6 +528,7 @@ $(function() {
 			
 			playlist_list.removeClass('active');
 		}
+		
 		
 		
 	});
@@ -736,7 +759,6 @@ $(function() {
 		$(this).find('.add-to-playlist-button').css({opacity:1});
 		$(this).find('.top-100-download-now-button').css({opacity:1});
 		
-	
 	});
 	
 	$('.video-cover-container').on('mouseleave',function(){

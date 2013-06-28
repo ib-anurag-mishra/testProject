@@ -11,7 +11,7 @@
 if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-        
+                
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
@@ -28,49 +28,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
     <div class="wrapper">
 			<!-- site header -->
-			<header class="site-header">                            
-				
-                                    <?php if($this->Session->read("patron")){ ?>
-                                   
-                                    <?php
-                                    if($libraryInfo['Library']['library_image_name'] != "") {
-                                    ?>
-                                            <?php
-                                            if($libraryInfo['Library']['library_home_url'] != "") {
-                                            ?>
-                                                    <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>"></a>
-                                            <?php
-                                            }else{
-                                            ?>
-                                                    <img height="60px" src="<?php echo str_replace("test","prod",$cdnPath); ?>libraryimg/<?php echo $libraryInfo['Library']['library_image_name']; ?>" alt="<?php echo $libraryInfo['Library']['library_name']; ?>" title="<?php echo $libraryInfo['Library']['library_name']; ?>">
-                                            <?php
-                                            }
-                                            ?>
-                                    <?php
-                                    }
-                                    ?>	
-                                    <?php
-                                    if(!$libraryInfo['Library']['show_library_name']) {
-                                    ?>
-                                          <?php
-                                          if($libraryInfo['Library']['library_home_url'] != "") {
-                                          ?>
-                                            <a href="<?php echo $libraryInfo['Library']['library_home_url']; ?>" target="_blank"><div id="lib_name"><?php echo $libraryInfo['Library']['library_name']; ?></div></a>
-                                          <?php
-                                          }else{
-                                          ?>
-                                            <?php echo $libraryInfo['Library']['library_name']; ?>
-                                          <?php
-                                          }
-                                          ?>
-                                    <?php
-                                    }
-                                    ?>
-                                  
-                                    <?php } else { ?>
-                                    <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>                                    
-                                    <?php } ?>
-                                				
+			<header class="site-header">                                    
+                                    <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" action="" method="post">							
 							<input type="text" id="search-text" name="search-text" />							
@@ -131,16 +90,28 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 				<?php if($this->Session->read("patron")){ ?>
 				<div class="weekly-downloads-container clearfix">
 					<div class="label">
-						<p> 
-                                                <?php if(($libraryInfo['Library']['library_authentication_method'] == "user_account") || ($isLibaryExistInTimzone ==1)){ ?>
-                                                    <?php echo $html->link(__('My Account', true), array('controller' => 'users', 'action' => 'my_account')); ?>    | 
-                                                <?php } ?>
-                                                <?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?>
-                                                </p>
+						<p>My Account</p>
 					</div>
+                                        <a class="select-arrow" href="#"></a>
+					<div class="small-divider"></div>
 					<div class="tooltip">
-						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/tooltip-play-btn.png" alt="tooltip_play_btn" width="17" height="17"></a>						
-					</div>                                    
+						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
+					</div>
+                                        <div class="account-options-menu">
+                                            <div>
+                                                <?php 
+                                                    if($libraryInfo['Library']['library_authentication_method'] == "user_account")
+                                                    {  
+                                                        echo $html->link(__('Change Password', true), array('controller' => 'users', 'action' => 'my_account'));                                                
+                                                    } 
+                                                    if($isLibaryExistInTimzone ==1)
+                                                    { 
+                                                        echo $html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'my_account'));
+                                                    }
+                                                ?>
+                                            </div>
+                                            <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
+                                        </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>                                          
 				</div>
 
@@ -170,8 +141,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>"regular"));?></li>			
                         <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>"regular")); ?></li></li>
+                        <?php if($this->Session->read("patron")){ ?>
                         <li><a href="#">Most Popular</a></li>
-                        <li><a href="New Releases">Most Popular</a></li>
+                        <?php } ?>
                         <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>"regular")); ?></li></li>   
                         <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>"regular")); ?></li>
                     </ul>
@@ -210,10 +182,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             </ul>
                                                     </li>
                                                     <?php } ?>
-                                                    <li>
-                                                            <a href="#" class="sidebar-anchor">New Releases</a>
-                                                    </li>
                                             </ul>
+                                            <?php if($this->Session->read("patron")){ ?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Freegal Playlists</a>
@@ -239,20 +209,19 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">History</a>
                                                     </li>
-                                            </ul>
-                                            <?php if($this->Session->read("patron")){ ?>
+                                            </ul>                                           
                                             <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
                                                     <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
                                                     <li><?php echo $html->link(__('Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <?php } ?>     
-                                            </ul>
-                                            <?php } ?>
+                                            </ul>                                            
                                             <div class="announcements">
                                                     <h4><a href="#">Announcements</a></h4>
                                                     <div class="poll">
                                                     </div>
-                                            </div>						
+                                            </div>
+                                            <?php } ?>
 					</section>					
 					<div class="content">
