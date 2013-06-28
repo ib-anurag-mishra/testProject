@@ -44,7 +44,7 @@ class HomesController extends AppController
           }
                
                 
-       //  echo "patron: ".$this->Session->read('patron');   die;    
+         echo "patron: ".$this->Session->read('patron');   die;    
                 
         $this->Cookie->name = 'baker_id';
         $this->Cookie->time = 3600; // or '1 hour'
