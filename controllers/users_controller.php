@@ -105,7 +105,9 @@ Class UsersController extends AppController
 				$this->Session->write('lib_status', 'invalid');
 				$this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/aboutus');
 			}
-		}
+		} else {
+            $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/homes/chooser');
+        }
 	}
         
      /*
