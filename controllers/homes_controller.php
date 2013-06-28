@@ -89,7 +89,7 @@ class HomesController extends AppController
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
             if($maintainLatestDownload){
-                  echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `latest_downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -98,7 +98,7 @@ class HomesController extends AppController
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
                 } else {
-               echo      $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
@@ -109,7 +109,7 @@ class HomesController extends AppController
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		 
-                echo '<br><br>';
+               
                 
                   //make the provide type and prodid array for selecting records
                   $ids = '';
@@ -127,7 +127,7 @@ class HomesController extends AppController
 		  $data = array();
                   //fetch the multiple countires prefix
                   $countryPrefix = $this->Session->read('multiple_countries');
-                 echo $sql_national_100 =<<<STR
+                  $sql_national_100 =<<<STR
                     SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
