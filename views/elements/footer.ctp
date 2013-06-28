@@ -76,6 +76,7 @@
 <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
 <script src="<? echo $this->webroot; ?>app/webroot/js/us-top-10.js"></script>
 <script src="<? echo $this->webroot; ?>app/webroot/js/my-top-10.js"></script>
+<script src="<? echo $this->webroot; ?>app/webroot/js/site-login.js"></script>
 
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>

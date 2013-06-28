@@ -1,160 +1,262 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-	<?php echo $this->Html->charset(); ?>
-	<title>
-		<?php __('Freegal Music : The New Music Library :'); ?>
-		<?php echo $title_for_layout;;?>
-	</title>
-	<?php echo $this->Html->meta('icon'); ?>
-	<?php echo $this->Html->css('all_new'); ?>
-	<?php echo $scripts_for_layout; ?>
-<script type="text/javascript" src="<?php echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=jquery.min.js,jquery.tools.min.js,inputs.js"></script>
-<style>
-#lbOverlay {
-    background-color: #000000;
-    color: #FFFFFF;
-    cursor: pointer;
-    font-size: 15px;
-    font-weight: bold;
-    height: 100%;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 9999;
-	display:none;
-}
-</style>
-<script type="text/javascript">
-	var webroot = '<?php echo $this->webroot; ?>';
-	function changeLang(type,page){
-		$("#loadingDiv").show();
-		var language = type;
-		var data = "lang="+language;
-		$.ajax({
-			type: "post",  // Request method: post, get
-			url: webroot+"users/"+page, // URL to request
-			data: data,  // post data
-			success: function(response) {
-				var msg = response.substring(0,5);
-				if(msg == 'error')
-				{
-					alert("There was an error while saving your request.");
-					location.reload();
-					return false;
-				}
-				else
-				{
-					if(navigator.appName == 'Microsoft Internet Explorer'){
-						location.reload();
-					}else{
-						$('body').html('');
-						$('#footer').html('');
-						$('body').html(response);
-            initInputs();
-					}
-				}
-			},
-			error:function (XMLHttpRequest, textStatus, errorThrown) {}
-		});
-	}
-	function changeLang_password(type,page){
-		$("#loadingDiv").show();
-		var language = type;
-		var data = "lang="+language;
-		$.ajax({
-			type: "post",  // Request method: post, get
-			url: webroot+"homes/"+page, // URL to request
-			data: data,  // post data
-			success: function(response) {
-				var msg = response.substring(0,5);
-				if(msg == 'error')
-				{
-					alert("There was an error while saving your request.");
-					location.reload();
-					return false;
-				}
-				else
-				{
-					if(navigator.appName == 'Microsoft Internet Explorer'){
-						location.reload();
-					}else{
-						$('body').html('');
-						$('#footer').html('');
-						$('body').html(response);
-            initInputs();
-					}
-				}
-			},
-			error:function (XMLHttpRequest, textStatus, errorThrown) {}
-		});
-	}
-
-
-jQuery(document).ready(function() {
-	jQuery('form').submit(function() {
-		jQuery('#lbOverlay').show();
-	});
-	jQuery("#loadingDiv").hide();
-});
-
-
-
-
-</script>
-</head>
-<body>
-	<div id="wrapper">
-		<div id="header">
-			<h1 class="logo"><a href="#">freegal music</a></h1>
-		</div>
-		<?php
-			echo $session->flash();
-			echo $session->flash('auth');
-                        if(isset($show_inactivelib) &&  $show_inactivelib == 1){
-		?>
-        </div>
-            
+    <head>
+        <?php echo $this->Html->charset(); ?>
+        <title>
+            <?php __('Freegal Music : Your New Music Library :'); ?>
             <?php
-                        }else{
+            if ($title_for_layout == "Homes") {
+                echo substr($title_for_layout, 0, -1);
+            } else {
+                echo $title_for_layout;
+            }
             ?>
+        </title>
+        <?php
+        echo $this->Html->meta('icon');
+        //echo $javascript->link('ImageDisableRightClick');
+        echo $this->Html->css('freegal_styles');
+          echo $this->Html->css('jquery.autocomplete');
+          echo $html->css('colorbox');
+          echo $javascript->link('jquery.min');
+          echo $javascript->link('jquery.colorbox');
+          echo $javascript->link('jquery.cycle.all');
+          echo $javascript->link('curvycorners');
+          echo $javascript->link('swfobject');
+          echo $javascript->link('audioPlayer');
+          echo $javascript->link('freegal');
+          echo $javascript->link('jquery.bgiframe');
+          echo $javascript->link('jquery.autocomplete'); 
+        ?>		
+
+
+
+        <?php
+        echo $javascript->link('jquery-1.3.2.min');
+//		echo $javascript->link('qtip');
+//		echo $javascript->link('qtip_add');
+//		echo $scripts_for_layout;
+        if ($this->Session->read('Config.language') == 'en') {
+            $setLang = 'en';
+        } else {
+            $setLang = 'es';
+        }
+        if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
+            $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
+            ?>
+
+            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+                            
+
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
+            <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+            <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/login.less" />
+
+            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
+            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/faq.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/videos.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
             
-	<div id="main">
-			<div id="loadingDiv" style="display:none;z-index: 100;position:absolute;left:40%; right:40%;top:45%;text-align:center;">
-				<?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
-			</div>
-			<div style="width:321px;height:529px">
-				<?php echo $content_for_layout; ?>
-				<div class="form-area">
-					<!--<h2>Welcome to the Freegal Music log in page.</h2>
-					<p><strong>Freegal Music gives you access to millions of songs from over 10,000 labels including the Sony Music catalog of your country.</strong></p> -->
-					<?php echo $this->getTextEncode($page->getPageContent('login_upper')); ?>
-				</div>
-			</div>
-			<img class="decor" src="/img/img01.jpg" width="571" height="544" alt="image description" />
-			<div class="article">
-				<div class="images">
-					<a class="btn-iphone" target="_blank" href="http://itunes.apple.com/us/app/freegal-music/id508036345?ls=1&mt=8"><img src="/img/btn-iphone.png" width="195" height="387" alt="image description" /></a>
-					<a class="btn-andriod"target="_blank" href="https://play.google.com/store/apps/details?id=com.libraryideas.freegalmusic&feature=nav_result#?t=W251bGwsMSwyLDNd"><img src="/img/btn-andriod.png" width="196" height="394" alt="image description" /></a>
-				</div>
-				<div class="info">
-					<?php echo $this->getTextEncode($page->getPageContent('login_new')); ?>
-				</div>
-			</div>
-		</div>
-	<div id="lbOverlay" style="opacity: 0.8;filter: alpha(opacity = 80); zoom:1;"><div style="text-align:center;margin-top: 253px;"><?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?><br/><br/>Please wait. Login in progress...</div></div>
-		<div id="footer">
-			<ul class="ad">
-				<li><a target="_blank" href="http://www.iodalliance.com/"><img src="/img/ad01.gif" width="62" height="48" alt="image description" /></a></li>
-				<li><a target="_blank" href="http://www.sonymusic.com/"><img src="/img/ad02.gif" width="44" height="48" alt="image description" /></a></li>
-				<li><a target="_blank" href="http://www.libraryideas.com/"><img src="/img/ad03.gif" width="89" height="48" alt="image description" /></a></li>
-			</ul>
-			<p>&copy; 2012 Library Ideas, LLC  All Rights Reserved</p>
-		</div>
-	</div>
-             <?php
-                        }
-            ?>
-</body>
-</html>
+            
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
+            
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/us-top-10.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-top-10.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/site-login.less" />
+            
+            
+            <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
+                       
+
+
+            <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
+
+               <script type="text/javascript">
+                var webroot = '<?php echo $this->webroot; ?>';
+       function showhide(flag, id)
+       {	   		
+	   
+         if(flag=="short")
+         {
+            document.getElementById("shortNews"+id).style.display="block";
+            document.getElementById("detailsNews"+id).style.display="none";
+         }
+         
+         if(flag=="detail")
+         {
+            document.getElementById("shortNews"+id).style.display="none";
+            document.getElementById("detailsNews"+id).style.display="block";
+         }
+       }
+        </script>     
+            
+
+                    
+                    <style>
+    <?php
+    if ($this->Session->read('approved') && $this->Session->read('approved') == 'no') {
+        ?>
+                            #cboxClose{display:none !important;}
+        <?php
+    }
+    ?>
+                                                                                  
+    <?php
+    if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)) {
+        ?>
+                            #cboxClose{display:none !important;}
+        <?php
+    }
+    ?>
+                                                
+                                       
+        					
+        				
+                        #slideshow a { display: none }
+                        #slideshow a.first { display: block }
+                        #featured_artist a { display: none }
+                        #featured_artist a.first { display: block }
+                        #newly_added a { display: none }
+                        #newly_added a.first { display: block }
+                    </style>
+                    <?php
+                }
+                ?>
+                <noscript>
+                    <?php
+                    if ($this->params['action'] != 'aboutus') {
+                        echo $html->meta(null, null, array('http-equiv' => 'refresh', 'content' => "0.1;url=" . $this->webroot . "homes/aboutus/js_err"), false);
+                    }
+                    ?>
+                </noscript>
+                <script type="text/javascript">
+                    $().ready(function() {
+                        var tmpcookie = new Date();
+                        chkcookie = (tmpcookie.getTime() + '');
+                        document.cookie = "chkcookie=" + chkcookie;
+                        if (document.cookie.indexOf(chkcookie,0) < 0) {
+<?php if (!isset($this->params['pass']['0'])) { ?>				
+                location.href = "<?php echo $this->webroot; ?>homes/aboutus/cookie_err";
+<?php } ?>
+        }
+    });
+                
+                              
+    function validateEmail(email) { 
+        var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+    }    
+                </script>	
+                </head>
+                <body>
+                    <!--[if lt IE 7]>
+                    <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
+                    <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>
+                                    <a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'>
+                                            <img src='http://www.ie6nomore.com/files/theme/ie6nomore-cornerx.jpg' style='border: none;' alt='Close this notice'/>
+                                    </a>
+                            </div>
+                    <div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+                            <div style='width: 75px; float: left;'><img src='http://www.ie6nomore.com/files/theme/ie6nomore-warning.jpg' alt='Warning!'/></div>
+                            <div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+                                    <div style='font-size: 14px; font-weight: bold; margin-top: 12px;'>You are using an outdated browser</div>
+                                    <div style='font-size: 12px; margin-top: 6px; line-height: 12px;'>For a better experience using this site, please upgrade to a modern web browser.</div>
+                            </div>
+                            <div style='width: 75px; float: left;'>
+                                            <a href='http://www.firefox.com' target='_blank'>
+                                                    <img src='http://www.ie6nomore.com/files/theme/ie6nomore-firefox.jpg' style='border: none;' alt='Get Firefox 3.5'/>
+                                            </a>
+                                    </div>
+                            <div style='width: 75px; float: left;'>
+                                            <a href='http://www.browserforthebetter.com/download.html' target='_blank'>
+                                                    <img src='http://www.ie6nomore.com/files/theme/ie6nomore-ie8.jpg' style='border: none;' alt='Get Internet Explorer 8'/>
+                                            </a>
+                                    </div>
+                            <div style='width: 73px; float: left;'>
+                                            <a href='http://www.apple.com/safari/download/' target='_blank'>
+                                                    <img src='http://www.ie6nomore.com/files/theme/ie6nomore-safari.jpg' style='border: none;' alt='Get Safari 4'/>
+                                            </a>
+                                    </div>
+                            <div style='float: left;'>
+                                            <a href='http://www.google.com/chrome' target='_blank'>
+                                                    <img src='http://www.ie6nomore.com/files/theme/ie6nomore-chrome.jpg' style='border: none;' alt='Get Google Chrome'/>
+                                            </a>
+                                    </div>
+                    </div>
+                    </div>
+                    <![endif]-->
+                    <div id="audioPixel"><div id="audioflash"></div></div>
+                    <?php $session->flash(); ?>
+                    <a class='upgradeFlash' href="#"></a>
+                    <div style="display:none;">
+                        <div id="upgradeFlash_div">   
+                            This site requires Flash player version 9 or more to play the sample audio files.
+                            Please <a class="orange_link"  href="http://www.adobe.com/support/flashplayer/downloads.html" target="_blank">click here</a> 
+                            to upgrade your Flash Player.<br /><br />
+                        </div>
+                    </div>
+                    <?php
+                    if ($this->Session->read('approved') && $this->Session->read('approved') == 'no') {
+                        ?>
+                        <a class='termsApproval' href="#"></a>
+                        <div style="display:none;">
+                            <div id="termsApproval_div">
+                                <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                    <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                                </div>
+                                <b>You need to accept the terms and conditions to browse the site.</b><br />
+                                <div style="overflow:auto;height:200px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;"><?php echo $page->getPageContent('terms'); ?></div><br />
+                                <input type="button" value="Accept" onclick="Javascript: approvePatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');"> <input type="button" value="Deny" onclick="Javascript: history.back();">
+                                        </div>
+                                        </div>
+                                    <?php } ?>
+
+                                    <?php
+                                    if (($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)) {
+                                        ?>
+                                        <a class='notificationApproval' href="#"></a>
+                                        <div style="display:none;">
+                                            <div id="notificationApproval_div">
+                                                <span id="noti_content">
+                                                    <div id="loaderDiv" style="display:none;position:absolute;width:100%;text-align:center;top:0;bottom:0;left:0;right:0;z-index:10000;">
+                                                        <?php echo $html->image('ajax-loader-big.gif', array('alt' => 'Loading...')); ?>
+                                                    </div>
+                                                    <b>Email Notification</b><br />
+                                                    <div style="height:100px;border: 1px solid #ccc; margin: 10px; padding: 5px; text-align: justify;">Please add your email address here to receive twice-weekly email reminders of your available downloads.<br /><br /><br /><div ><b>*Email :</b>&nbsp;&nbsp;<input type='text' style="width:210px;" name='emailNotification' id='userNewsletterEmailField'></div></div><br />
+                                                    <input type="button" value="Submit" id="colorboxSubmitBtn"> <input type="button" value="Cancel" id="colorboxCloseBtn" >
+                                                            </span>
+
+                                                            </div>
+                                                            </div>
+
+                                                        <?php } ?>
+
+                                                        <div id="border-background" >
+                                                            <div id="container">
+                                                                <?php echo $this->element('header'); ?>
+                                                                <div id="content">
+                                                                    <?php
+                                                                    if ($this->Session->read('library') && $this->Session->read('library') != '') {
+                                                                        echo $this->element('navigation');
+                                                                    }?>
+                                                                    <section class="site-login">
+																	<?php echo $this->getTextEncode($page->getPageContent('login')); ?>
+                                                                    <?php echo $content_for_layout; ?>
+                                                                    </section>
+                                                                </div>
+                                                                <br class="clr">
+                                                            </div>
+                                                            <?php echo $this->element('footer'); ?>
+                                                            
+                                                        </div>
+                                        
+                                                        </body>
+                                                        </html>
