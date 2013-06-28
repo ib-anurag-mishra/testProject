@@ -47,6 +47,7 @@ class HomesController extends AppController
           else                                          //  Before Login
           {
                 $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
+                $this->Auth->allow('display','aboutus', 'index'); 
           }
                
                 
@@ -79,7 +80,7 @@ class HomesController extends AppController
 
 
         // National Top Songs Downloads functionality
-       // if (($national = Cache::read("national".$territory)) === false) {              
+        if (($national = Cache::read("national".$territory)) === false) {              
        
             $country = $territory;
 
@@ -89,32 +90,32 @@ class HomesController extends AppController
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
             if($maintainLatestDownload){
-                  echo  $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `latest_downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
-                    LIMIT 110";
+                    LIMIT 1110";
                 } else {
-               echo      $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                     $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
-                    LIMIT 110";
+                    LIMIT 1110";
                 }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		 
-                echo '<br><br>';
+               
                 
                   //make the provide type and prodid array for selecting records
                   $ids = '';
                   $ids_provider_type = '';
-		  $natTopDownloaded = $this->Album->query($sql);                 
+		  $natTopDownloaded = $this->Album->query($sql);               
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
@@ -127,7 +128,7 @@ class HomesController extends AppController
 		  $data = array();
                   //fetch the multiple countires prefix
                   $countryPrefix = $this->Session->read('multiple_countries');
-                 echo $sql_national_100 =<<<STR
+                  $sql_national_100 =<<<STR
                     SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
@@ -178,15 +179,15 @@ STR;
                         // print_r($nationalTopDownload);
 			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
-		//}
+		}
                 
              
 
 		$nationalTopDownload = Cache::read("national".$territory);
-               // print_r($nationalTopDownload);
+              
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
-                //print_r($nationalTopDownload);
+               
                
                
              
@@ -211,7 +212,7 @@ STR;
                         AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
-                        LIMIT 110";
+                        LIMIT 1110";
                    } else {
 
                           $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -221,7 +222,7 @@ STR;
                         AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
                         GROUP BY Download.ProdID 
                         ORDER BY `countProduct` DESC 
-                        LIMIT 110";
+                        LIMIT 1110";
                     }
                     
                 
@@ -681,7 +682,7 @@ STR;
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
-                    GROUP BY Song.ReferenceID
+                    GROUP BY Song.ProdID
                     ORDER BY Country.SalesDate ASC
                     LIMIT 20
 	  	

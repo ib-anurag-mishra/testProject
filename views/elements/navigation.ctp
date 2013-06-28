@@ -141,17 +141,23 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>"regular"));?></li>			
                         <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>"regular")); ?></li></li>
+                        <?php if($this->Session->read("patron")){ ?>
                         <li><a href="#">Most Popular</a></li>
+                        <?php } ?>
                         <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>"regular")); ?></li></li>   
                         <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>"regular")); ?></li>
                     </ul>
-                    
+                    <?php if($this->Session->read("patron")){ ?>
                     <div class="most-popular-sub-nav">
-                        <?php if($this->Session->read("patron")){ ?>
                             <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
-                        <?php } ?>
-                        <div><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
+                            <div><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
+                            <!--
+<div><a href="#">Top Artists</a></div>
+                            <div><a href="#">Top Albums</a></div>
+                            <div><a href="#">Top Genres</a></div>
+-->
                     </div>
+                    <?php } ?>
 
 			</nav>
 			<div class="gradient-border"></div>
@@ -166,16 +172,16 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>'sidebar-anchor')); ?>
-                                                    </li>                                                    
+                                                    </li>
+                                                    <?php if($this->Session->read("patron")){ ?>
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Most Popular</a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <?php if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></li>
-                                                                    <?php } ?>
                                                                     <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
                                                             </ul>
-                                                    </li>                                                    
+                                                    </li>
+                                                    <?php } ?>
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
