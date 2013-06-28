@@ -201,7 +201,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>                                                    
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
-                                            <?php if($libraryInfo['Library']['library_type'] == '2') {?>
+                                            <?php if($this->Session->read('library_type') == '2') {?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Freegal Playlists</a>
