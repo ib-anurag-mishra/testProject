@@ -46,8 +46,8 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10', 'my_lib_top_10'); 
-                $this->Auth->allow('display','aboutus', 'index'); 
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10'); 
+                
           }
                
                 
@@ -80,7 +80,7 @@ class HomesController extends AppController
 
 
         // National Top Songs Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {              
+       // if (($national = Cache::read("national".$territory)) === false) {              
        
             $country = $territory;
 
@@ -94,7 +94,7 @@ class HomesController extends AppController
                     FROM `latest_downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
@@ -103,7 +103,7 @@ class HomesController extends AppController
                     FROM `downloads` AS `Download` 
                     LEFT JOIN libraries ON libraries.id=Download.library_id
                     WHERE libraries.library_territory = '".$country."' 
-                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.tenWeekEndDate')."' 
                     GROUP BY Download.ProdID 
                     ORDER BY `countProduct` DESC 
                     LIMIT 1110";
@@ -179,7 +179,7 @@ STR;
                         // print_r($nationalTopDownload);
 			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
-		}
+		//}
                 
              
 
@@ -1092,15 +1092,16 @@ STR;
                 
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
-		$ids_provider_type = '';
+		$ids = '';
+                $ids_provider_type = '';
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);                
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
 		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
                 //print_r($libDownload = Cache::read("lib".$libId));
-                   // if(1)
-                    if (($libDownload = Cache::read("lib".$libId)) === false)
+                    if(1)
+                    //if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1244,8 +1245,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                   // if(1)
-                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    if(1)
+                    // if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1257,6 +1258,7 @@ STR;
                         
                                                
 			$ids = '';
+                        $ids_provider_type = '';
 			$ioda_ids = array();
 			$sony_ids = array();
 			$sony_ids_str = '';
@@ -1412,15 +1414,26 @@ STR;
             $this->layout = 'home';  
 
             $libId = $this->Session->read('library');
+            $patId = $this->Session->read('patron');
             $territory = $this->Session->read('territory');
             
 //            $libId = 1;
 //            $territory = 'us';
             
+            
+                
+               
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
+            
+            
+            
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
-            if (($national = Cache::read("national".$territory)) === false) {
-            //if (1) {                    
+           // if (($national = Cache::read("national".$territory)) === false) {
+            if (1) {                    
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1448,6 +1461,7 @@ STR;
                         }
 		  //$sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type FROM `downloads` AS `Download` WHERE library_id IN (SELECT id FROM libraries WHERE library_territory = '".$country."') AND `Download`.`created` BETWEEN '".Configure::read('App.tenWeekStartDate')."' AND '".Configure::read('App.curWeekEndDate')."'  GROUP BY Download.ProdID  ORDER BY `countProduct` DESC  LIMIT 110";
 		  $ids = '';
+                  $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
 //                  echo '<pre>';
@@ -1581,6 +1595,7 @@ STR;
                         }
 		  
 		  $ids = '';
+                  $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
 //                  echo '<pre>';
@@ -1589,14 +1604,17 @@ STR;
 //                  die;
                   
 		  foreach($natTopDownloaded as $natTopSong){
-			if(empty($ids)){
-			  $ids .= $natTopSong['Download']['ProdID'];
-			  $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			} else {
-			  $ids .= ','.$natTopSong['Download']['ProdID'];
-			   $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
-			}
-		  }
+                    if(empty($ids)){
+                        $ids .= $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
+                    }
+                    
+                    
+                    
+                }
 		  $data = array();
                   
                   
@@ -1608,7 +1626,7 @@ STR;
                  $countryPrefix = $this->Session->read('multiple_countries');
                   // $countryPrefix = 'us_';
 	 
-                  $sql_us_albums =<<<STR
+                   $sql_us_albums =<<<STR
                                SELECT 
                                        Song.ProdID,
                                        Song.ReferenceID,

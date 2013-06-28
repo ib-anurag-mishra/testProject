@@ -178,9 +178,9 @@ $(function() {
 	
 	
 	
-	$('.site-nav li:first-child a').addClass('active');
-	$('.category-filter li:first-child a').addClass('active');
-	$('.top-100-nav li:first-child a').addClass('active');
+	//$('.site-nav li:first-child a').addClass('active');
+	//$('.category-filter li:first-child a').addClass('active');
+	//$('.top-100-nav li:first-child a').addClass('active');
 	//coming_soon_album_grid.addClass('active');
 	coming_soon_singles_grid.addClass('active');
 	
@@ -447,7 +447,7 @@ $(function() {
 			$('.mejs-controls .mejs-button.mejs-shuffle-off').removeClass('minimized');
 			$('.mejs-controls .mejs-button.mejs-loop-off').removeClass('minimized');
 			$('.mejs-controls .mejs-button.mejs-loop-on').removeClass('minimized');
-			min_max.css({backgroundImage:'url(images/music_player/minimize.png)'});
+			min_max.css({backgroundImage:'url(img/music_player/minimize.png)'});
 			
 		} else {
 			
@@ -484,7 +484,7 @@ $(function() {
 			$('.mejs-controls .mejs-button.mejs-loop-off').addClass('minimized');
 			$('.mejs-controls .mejs-button.mejs-loop-on').addClass('minimized');
 						
-			min_max.css({backgroundImage:'url(images/music_player/maximize.png)'});
+			min_max.css({backgroundImage:'url(img/music_player/maximize.png)'});
 		}
 
 		
@@ -585,51 +585,51 @@ $(function() {
 
 	$('.mejs-controls .mejs-button.mejs-prevtrack > button').on('mousedown',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-prevtrack').css({background:'url(images/music_player/prev_btn_down.png)'});
+		$('.mejs-controls .mejs-button.mejs-prevtrack').css({background:'url(img/music_player/prev_btn_down.png)'});
 		
 	});
 	
 	$('.mejs-controls .mejs-button.mejs-prevtrack > button').on('mouseup',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-prevtrack').css({background:'url(images/music_player/prev_btn.png)'});
+		$('.mejs-controls .mejs-button.mejs-prevtrack').css({background:'url(img/music_player/prev_btn.png)'});
 		
 	});
 	
 	$('.mejs-controls .mejs-button.mejs-nexttrack > button').on('mousedown',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-nexttrack').css({background:'url(images/music_player/next_btn_down.png)'});
+		$('.mejs-controls .mejs-button.mejs-nexttrack').css({background:'url(img/music_player/next_btn_down.png)'});
 		
 	});
 	
 	$('.mejs-controls .mejs-button.mejs-nexttrack > button').on('mouseup',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-nexttrack').css({background:'url(images/music_player/next_btn.png)'});
+		$('.mejs-controls .mejs-button.mejs-nexttrack').css({background:'url(img/music_player/next_btn.png)'});
 		
 	});
 	
 	
 	$('.mejs-controls .mejs-button.mejs-volume-button > button').on('mousedown',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-volume-button').css({background:'url(images/music_player/volume_btn_down.png)'});
+		$('.mejs-controls .mejs-button.mejs-volume-button').css({background:'url(img/music_player/volume_btn_down.png)'});
 		
 	});
 	
 	$('.mejs-controls .mejs-button.mejs-volume-button > button').on('mouseup',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-volume-button').css({background:'url(images/music_player/volume_btn.png)'});
+		$('.mejs-controls .mejs-button.mejs-volume-button').css({background:'url(img/music_player/volume_btn.png)'});
 		
 	});
 	
 	
 	$('.mejs-controls .mejs-button.mejs-playlist-button > button').on('mousedown',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-playlist-button').css({background:'url(images/music_player/playlist_btn_down.png)'});
+		$('.mejs-controls .mejs-button.mejs-playlist-button').css({background:'url(img/music_player/playlist_btn_down.png)'});
 		
 	});
 	
 	$('.mejs-controls .mejs-button.mejs-playlist-button > button').on('mouseup',function(){
 		
-		$('.mejs-controls .mejs-button.mejs-playlist-button').css({background:'url(images/music_player/playlist_btn.png)'});
+		$('.mejs-controls .mejs-button.mejs-playlist-button').css({background:'url(img/music_player/playlist_btn.png)'});
 		
 	});
 	

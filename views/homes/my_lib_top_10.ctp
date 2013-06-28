@@ -75,8 +75,7 @@
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
 
-echo "<pre>";
-print_r($value);
+
                                             
 					?>
 					<li>
@@ -158,7 +157,7 @@ print_r($value);
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+     <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php
@@ -344,7 +343,7 @@ print_r($value);
 }else{
 
 ?>
-     <a class="top-100-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+     <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
     <?php

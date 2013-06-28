@@ -256,7 +256,7 @@ form#login{
 }
 
 form#login .row{
-  background: url("../images/bg-form-text.png") no-repeat scroll 0 0 transparent;
+  background: url("../img/bg-form-text.png") no-repeat scroll 0 0 transparent;
   float: left;
   height: 34px;
   margin: 0 0 10px;

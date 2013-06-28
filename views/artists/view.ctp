@@ -124,6 +124,8 @@
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
 					<a class="add-to-playlist-button" href="#"></a>
 					<div class="wishlist-popover">
+                                             <?php
+                                                                    if($this->Session->read('patron')) { ?>
 						<div class="playlist-options">
 							<ul>
 								<li><a href="#">Create New Playlist</a></li>
@@ -139,10 +141,8 @@
 								<li><a href="#">Playlist 10</a></li>
 							</ul>
 						</div>
-						                                                
-                                                
-                                                <?php
-                                                                    if($this->Session->read('patron')) {
+						                           <?php                     
+                                        
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
@@ -217,13 +217,16 @@
                                                 
                                                 
                                                 
+                                            <?php   if($this->Session->read('patron')) { ?> 
                                                 
-                                                
-                                                
+                                               <?php if( $this->Session->read('library_type') == 2 ){ ?>   
                                                 
 						<a class="add-to-playlist" href="#">Add To Queue</a>
 						<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 						
+                                               <?php } ?>
+                                                
+                                           <?php } ?>      
 						<div class="share clearfix">
 							<p>Share via</p>
 							<a class="facebook" href="#"></a>

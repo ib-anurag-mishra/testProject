@@ -11,7 +11,7 @@
 if($this->Session->read('library') && $this->Session->read('library') != '')
 {
 	$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                
+            
         $isLibaryExistInTimzone =  $this->Session->read('isLibaryExistInTimzone');
 	$downloadCount = $download->getDownloadDetails($this->Session->read('library'),$this->Session->read('patron'));
 	if($libraryInfo['Library']['library_unlimited'] != "1" && $libraryInfo['Library']['library_authentication_method'] == "user_account"){
@@ -97,19 +97,17 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="tooltip">
 						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
 					</div>
-                                        <div class="account-options-menu">
-                                            <div>
-                                                <?php 
-                                                    if($libraryInfo['Library']['library_authentication_method'] == "user_account")
-                                                    {  
-                                                        echo $html->link(__('Change Password', true), array('controller' => 'users', 'action' => 'my_account'));                                                
-                                                    } 
-                                                    if($isLibaryExistInTimzone ==1)
-                                                    { 
-                                                        echo $html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'my_account'));
-                                                    }
-                                                ?>
-                                            </div>
+                                        <div class="account-options-menu">                                            
+                                            <?php 
+                                                if($libraryInfo['Library']['library_authentication_method'] == "user_account")
+                                                {  
+                                                    echo "<div>".$html->link(__('Change Password', true), array('controller' => 'users', 'action' => 'my_account'))."</div>";                                                
+                                                } 
+                                                if($isLibaryExistInTimzone ==1)
+                                                { 
+                                                    echo "<div>".$html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'my_account'))."</div>";
+                                                }
+                                            ?>
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
                                         </div>
 					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>                                          
@@ -138,52 +136,72 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                        
 			<!-- site nav -->
 		<nav class="site-nav">
+                    <?php
+                    $newsCss = "regular";
+                    $videoCss = "regular";
+                    $mostPopularCss = "regular";
+                    $genreCss = "regular";
+                    $faqCss = "regular";
+
+                    if($_SERVER['REQUEST_URI'] == '/homes/index' || $_SERVER['REQUEST_URI'] == '/index'  || $_SERVER['REQUEST_URI'] == '/')
+                    {
+                        $newsCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == '/videos')
+                    {
+                        $videoCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10' || $_SERVER['REQUEST_URI'] == '/homes/us_top_10')
+                    {
+                        $mostPopularCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == 'genres/view')
+                    {
+                        $genreCss = "regular active";
+                    }
+                    else if($_SERVER['REQUEST_URI'] == '/questions')
+                    {
+                        $faqCss = "regular active";
+                    }
+                    ?>
                     <ul class="clearfix">
-			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>"regular"));?></li>			
-                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>"regular")); ?></li></li>
-                        <?php if($this->Session->read("patron")){ ?>
-                        <li><a href="#">Most Popular</a></li>
-                        <?php } ?>
-                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>"regular")); ?></li></li>   
-                        <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>"regular")); ?></li>
+			<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
+                        <li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
+                        <li><a href="#" class="<?php echo $mostPopularCss; ?>">Most Popular</a></li>
+                        <li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
+                        <li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
                     </ul>
-                    <?php if($this->Session->read("patron")){ ?>
+                    
                     <div class="most-popular-sub-nav">
+                            <?php if($this->Session->read("patron")){ ?>
                             <div><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></div>
+                            <?php } ?>
                             <div><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></div>
-                            <!--
-<div><a href="#">Top Artists</a></div>
-                            <div><a href="#">Top Albums</a></div>
-                            <div><a href="#">Top Genres</a></div>
--->
-                    </div>
-                    <?php } ?>
+                    </div>                   
 
 			</nav>
 			<div class="gradient-border"></div>
 			<div class="top-sub-nav">
 				
 			</div>
-			<div class="content-wrapper clearfix">
-				
-					<section class="left-sidebar">					
-							
+			<div class="content-wrapper clearfix">				
+					<section class="left-sidebar">
                                             <ul class="browse sidebar-nav"><h3>Browse</h3>
-
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>'sidebar-anchor')); ?>
-                                                    </li>
-                                                    <?php if($this->Session->read("patron")){ ?>
+                                                    </li>                                                    
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Most Popular</a>
                                                             <ul class="sidebar-sub-nav">
+                                                                    <?php if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></li>
+                                                                    <?php } ?>
                                                                     <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
                                                             </ul>
-                                                    </li>
-                                                    <?php } ?>
+                                                    </li>                                                    
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
+                                            <?php if($this->Session->read('library_type') == '2') {?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Freegal Playlists</a>
@@ -209,7 +227,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">History</a>
                                                     </li>
-                                            </ul>                                           
+                                            </ul>
+                                            <?php } ?>
                                             <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
