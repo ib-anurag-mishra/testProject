@@ -80,7 +80,7 @@ class HomesController extends AppController
 
 
         // National Top Songs Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {              
+       // if (($national = Cache::read("national".$territory)) === false) {              
        
             $country = $territory;
 
@@ -179,7 +179,7 @@ STR;
                         // print_r($nationalTopDownload);
 			// Checking for download status
 			Cache::write("national".$territory, $nationalTopDownload);
-		}
+		//}
                 
              
 
