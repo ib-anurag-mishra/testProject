@@ -81,25 +81,22 @@
 
                <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
-                function showhide(flag, id)
-                {	   		
-
-                  if(flag=="short")
-                  {
-                     document.getElementById("shortNews"+id).style.display="block";
-                     document.getElementById("detailsNews"+id).style.display="none";
-                  }
-
-                  if(flag=="detail")
-                  {
-                     document.getElementById("shortNews"+id).style.display="none";
-                     document.getElementById("detailsNews"+id).style.display="block";
-                  }
-                }
+       function showhide(flag, id)
+       {	   		
+	   
+         if(flag=="short")
+         {
+            document.getElementById("shortNews"+id).style.display="block";
+            document.getElementById("detailsNews"+id).style.display="none";
+         }
+         
+         if(flag=="detail")
+         {
+            document.getElementById("shortNews"+id).style.display="none";
+            document.getElementById("detailsNews"+id).style.display="block";
+         }
+       }
         </script>     
-            
-            
-            
             
 
                     
