@@ -45,7 +45,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser');
           }
                 
         $this->Cookie->name = 'baker_id';
