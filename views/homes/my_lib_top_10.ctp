@@ -27,13 +27,13 @@
                                                         </a> -->
 
                                                         <?php echo $html->link($html->image($album_img,array("height" => "250", "width" => "250")),
-										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ProdID'] , base64_encode($value['Song']['provider_type'])),
+										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
 						</div>
 						<div class="album-title">							
-                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>35)
                                                                 echo substr($value['Song']['SongTitle'],0,35)."..."; 
@@ -81,7 +81,7 @@
 					<li>
 						
 						<div class="song-container">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <img class="lazy"  src="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" />                                                        
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
@@ -214,7 +214,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>35)
                                                                 echo substr($value['Song']['SongTitle'],0,35)."..."; 
@@ -267,7 +267,7 @@
 					<li>
 						
 						<div class="video-container">
-							<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+							<a href="javascript:void(0);">
                                                         <img src="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
@@ -369,7 +369,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+							<a href="javascript:void(0);">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>35)
                                                                 echo substr($value['Video']['VideoTitle'],0,35)."..."; 
