@@ -3412,8 +3412,10 @@ STR;
 		//print_r($downloadResults);
         //echo $this->Download->lastQuery(); die;
         $this->set('downloadResults',$downloadResults);
-        $videoDownloadResults =  $this->Videodownload->find('all',array('group' => 'Videodownload.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-		$this->set('videoDownloadResults',$videoDownloadResults);
+        $videoDownloadResults =  $this->Videodownload->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('Videodownload.ProdID = Video.ProdID','Videodownload.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'Videodownload.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Videodownload.ProdID','Videodownload.provider_type','Videodownload.track_title','Videodownload.created','Videodownload.patron_id','Videodownload.library_id','Videodownload.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL')));
+		//print_r($videoDownloadResults);
+        //echo $this->Videodownload->lastQuery(); die;
+        $this->set('videoDownloadResults',$videoDownloadResults);
     }
 
     /*
