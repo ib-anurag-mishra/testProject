@@ -168,13 +168,14 @@ function playSample(obj, objID, playID, pt, webRoot) {
 //    alert("webRoot:"+webRoot);
 
 
-    $("img[id^='play_audio']").each(function() { alert("1");
+    $("img[id^='play_audio']").each(function() { 
         document.getElementById($(this).attr("id")).style.display = "block";
+        alert(document.getElementById($(this).attr("id")).style.display);
     });
-    $("img[id^='load_audio']").each(function() {    alert("2");
+    $("img[id^='load_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
-    $("img[id^='stop_audio']").each(function() { alert("3");
+    $("img[id^='stop_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
