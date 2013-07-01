@@ -559,7 +559,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+													<a href="javascript:void(0);">
                                                                                                         <img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
@@ -579,7 +579,7 @@
 												</div>
 												<div class="video-title">
 
-                                                                                                        <a href="artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                                                                        <a href="javascript:void(0);">
                                                                                                             <?php
                                                                                                                     if(strlen($value['Video']['VideoTitle'])>20)
                                                                                                                     echo substr($value['Video']['VideoTitle'],0,20)."..."; 
