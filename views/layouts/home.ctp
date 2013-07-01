@@ -30,6 +30,75 @@
           echo $javascript->link('recent-downloads');
         ?>		
 
+        
+
+        <?php
+        echo $javascript->link('jquery-1.3.2.min');
+//		echo $javascript->link('qtip');
+//		echo $javascript->link('qtip_add');
+//		echo $scripts_for_layout;
+        if ($this->Session->read('Config.language') == 'en') {
+            $setLang = 'en';
+        } else {
+            $setLang = 'es';
+        }
+        if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
+            $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
+            ?>
+
+            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+                            
+
+            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
+            <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+            <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/login.less" />
+
+            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
+            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/faq.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/videos.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
+            
+            
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
+            
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/us-top-10.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-top-10.less" />
+            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/recent-downloads.less" />
+            
+            <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
+            <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
+                       
+
+
+            <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
+
+               <script type="text/javascript">
+                var webroot = '<?php echo $this->webroot; ?>';
+       function showhide(flag, id)
+       {	   		
+	   
+         if(flag=="short")
+         {
+            document.getElementById("shortNews"+id).style.display="block";
+            document.getElementById("detailsNews"+id).style.display="none";
+         }
+         
+         if(flag=="detail")
+         {
+            document.getElementById("shortNews"+id).style.display="none";
+            document.getElementById("detailsNews"+id).style.display="block";
+         }
+       }
+        </script>     
+            
+            
          <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
 	<?php
 		//echo $javascript->link('jquery-1.3.2.min');
@@ -155,73 +224,7 @@
                                             
 				});
 				
-			</script>
-
-        <?php
-        echo $javascript->link('jquery-1.3.2.min');
-//		echo $javascript->link('qtip');
-//		echo $javascript->link('qtip_add');
-//		echo $scripts_for_layout;
-        if ($this->Session->read('Config.language') == 'en') {
-            $setLang = 'en';
-        } else {
-            $setLang = 'es';
-        }
-        if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
-            $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
-            ?>
-
-            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
-                            
-
-            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
-            <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
-            <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/login.less" />
-
-            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
-            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/faq.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/videos.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
-            
-            
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
-            
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/us-top-10.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-top-10.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/recent-downloads.less" />
-            
-            <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
-            <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
-                       
-
-
-            <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
-
-               <script type="text/javascript">
-                var webroot = '<?php echo $this->webroot; ?>';
-       function showhide(flag, id)
-       {	   		
-	   
-         if(flag=="short")
-         {
-            document.getElementById("shortNews"+id).style.display="block";
-            document.getElementById("detailsNews"+id).style.display="none";
-         }
-         
-         if(flag=="detail")
-         {
-            document.getElementById("shortNews"+id).style.display="none";
-            document.getElementById("detailsNews"+id).style.display="block";
-         }
-       }
-        </script>     
+			</script>    
             
 
                     
