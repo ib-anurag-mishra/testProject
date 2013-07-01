@@ -41,7 +41,7 @@
             $setLang = 'en';
         } else {
             $setLang = 'es';
-        }
+        }       
         if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
             ?>

@@ -67,7 +67,7 @@ class HomesController extends AppController
         if($_SERVER['SERVER_PORT'] == 443){
                 $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
         }
-
+        $this->layout = 'home';
         // Local Top Downloads functionality
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
