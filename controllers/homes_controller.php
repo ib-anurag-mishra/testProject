@@ -83,7 +83,7 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) { 
+        //if (($national = Cache::read("national".$territory)) === false) { 
           
        
             $country = $territory;
@@ -182,7 +182,7 @@ STR;
                        // print_r($nationalTopDownload);
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
-		}
+		//}
                 
                 
 
@@ -1324,8 +1324,8 @@ STR;
             
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
-           // if (($national = Cache::read("national".$territory)) === false) {
-            if (1) {                    
+           if (($national = Cache::read("national_us_top10".$territory)) === false) {
+                               
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1428,14 +1428,14 @@ STR;
 
                         //echo $sql_national_100; die;
 
-			$nationalTopDownload = $this->Album->query($sql_national_100);
+			$national_us_top10 = $this->Album->query($sql_national_100);
 			// Checking for download status
-			Cache::write("national".$territory, $nationalTopDownload);
+			Cache::write("national_us_top10".$territory, $national_us_top10);
 		}
-                else
-                {
-                    $nationalTopDownload = Cache::read("national".$territory);
-                }
+               
+              
+                    $national_us_top10_record = Cache::read("national_us_top10".$territory);
+               
 		
 /*		$this->Download->recursive = -1;
 		foreach($nationalTopDownload as $key => $value){
@@ -1451,7 +1451,7 @@ STR;
 //                print_r($nationalTopDownload);
 //                die;
                 
-		$this->set('nationalTopDownload',$nationalTopDownload);
+		$this->set('nationalTopDownload',$national_us_top10_record);
                 
                 
                 //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
