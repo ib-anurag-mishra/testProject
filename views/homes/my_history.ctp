@@ -179,7 +179,7 @@ $ieVersion =  ieversion();
                         $videoImage = shell_exec('perl files/tokengen ' . 'sony_test/'.$videoDownloadResult['File']['CdnPath']."/".$videoDownloadResult['File']['SourceURL']);
                         $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
                         ?>
-                        <img src="/img/my-wishlist/video-cover.jpg" alt="video-cover" width="67" height="40" />
+                        <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
 						<!-- <a class="preview" href="#"></a> -->
 					</div>
 					<div class="song-title">
