@@ -249,3 +249,35 @@ div.message {
 .popup .row_f {
 padding-bottom:5px;
 }
+
+#authMessage, #flashMessage{
+    
+    background: blue !important;
+}
+
+.forgot {
+    left: 251px;
+    position: relative;
+}
+
+#pass {
+    margin-left: -39px;
+}
+
+#last_name{
+    margin-left: -44px;
+}
+
+#ind_field{
+    margin-top: 23px;
+}
+
+.forgot > a {
+    color: #52C6EC;
+    font-size: 14px;
+}
+
+#card_number {
+    margin-left: 57px;
+}    
+

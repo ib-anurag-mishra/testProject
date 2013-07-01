@@ -176,7 +176,7 @@
 
 
 													<div class="song-title">
-														<a href="artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle; ?></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle; ?></a>
 													</div>
 													<div class="artist-name">
 														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $nationalTopDownload[$i]['Song']['ArtistText']; ?></a>
@@ -342,7 +342,7 @@
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
-													<!--	<a href="artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
+													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
                                                                                                         <a href="javascript:void(0);"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
@@ -433,7 +433,7 @@
 
 												</div>
 												<div class="album-title">
-													<a href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $title; ?></a>
+													<a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $title; ?></a>
 												</div>
 
 
@@ -441,7 +441,7 @@
 
 
 												<div class="artist-name">
-													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
+													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
 												</div>
 											</div>
 										</li>

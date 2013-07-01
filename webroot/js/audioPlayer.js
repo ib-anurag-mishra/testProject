@@ -136,7 +136,7 @@ function getVolume(event) {
 function handleResponse(value) {
 }
 
-function load(event, url, playID) {
+function load(event, url, playID) { 
     document.getElementById('audioplayer').loadAudio(unescape(url), true, playID);
 }
 
@@ -160,8 +160,17 @@ function stopThis(event, objID) {
 }
 
 function playSample(obj, objID, playID, pt, webRoot) {
-    $("img[id^='play_audio']").each(function() {
+    
+//    alert("obj:"+obj);
+//    alert("objID:"+objID);
+//    alert("playID:"+playID);
+//    alert("pt:"+pt);
+//    alert("webRoot:"+webRoot);
+
+
+    $("img[id^='play_audio']").each(function() { 
         document.getElementById($(this).attr("id")).style.display = "block";
+      //  alert(document.getElementById($(this).attr("id")).style.display);
     });
     $("img[id^='load_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
