@@ -45,7 +45,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -83,7 +83,7 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-       // if (($national = Cache::read("national".$territory)) === false) { 
+        if (($national = Cache::read("national".$territory)) === false) { 
           
        
             $country = $territory;
@@ -179,10 +179,10 @@ class HomesController extends AppController
 STR;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);                        
-                        print_r($nationalTopDownload);
+                       // print_r($nationalTopDownload);
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
-		//}
+		}
                 
                 
 
