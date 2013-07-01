@@ -213,7 +213,29 @@ $ieVersion =  ieversion();
 						</div>
 						
 					</div>
-					<div class="download"><a href="#">Download</a></div>
+					<div class="download">
+                        <a href="#">
+                            
+                        <p>
+                        <?php
+                            $productInfo = $mvideo->getDownloadData($videoDownloadResult['Videodownload']['ProdID'],$videoDownloadResult['Videodownload']['provider_type']);
+                            $videoUrl = shell_exec('perl files/tokengen ' . 'sony_test/' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+							$finalVideoUrl = Configure::read('App.Music_Path').$songUrl;
+							$finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
+                            ?>
+                            <span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
+								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
+									<a href='#' onclick='return historyDownloadOthers("<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+								<?php } else {?>
+								<!--[if IE]>
+									<a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $videoDownloadResult['Videodownload']['library_id']; ?>","<?php echo $videoDownloadResult['Videodownload']['patron_id']; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download');?></a> 										
+								<![endif]-->
+								<?php } ?>
+							</span>
+							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
+							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                        Download</p></a>
+                    </div>
 				</div>
 				<?php
                     endforeach;
