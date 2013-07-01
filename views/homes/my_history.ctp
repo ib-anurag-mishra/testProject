@@ -175,7 +175,11 @@ $ieVersion =  ieversion();
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($videoDownloadResult['Videodownload']['created'])); ?></div>
 					<div class="small-album-container">
-						<img src="/img/my-wishlist/video-cover.jpg" alt="video-cover" width="67" height="40" />
+						<?php
+                        $videoImage = shell_exec('perl files/tokengen ' . 'sony_test/'.$videoDownloadResult['File']['CdnPath']."/".$videoDownloadResult['File']['SourceURL']);
+                        $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
+                        ?>
+                        <img src="/img/my-wishlist/video-cover.jpg" alt="video-cover" width="67" height="40" />
 						<!-- <a class="preview" href="#"></a> -->
 					</div>
 					<div class="song-title">
@@ -188,7 +192,7 @@ $ieVersion =  ieversion();
 					?>
                     </div>
 					<a class="add-to-wishlist-button" href="#"></a>
-					<div class="album-title"><a href="#"></a></div>
+					<div class="album-title"><a href="#"><?php echo $videoDownloadResult['Video']['Title'];  ?></a></div>
 					<div class="artist-name"><a href="#">
                     <?php
 						if (strlen($videoDownloadResult['Videodownload']['artist']) >= 19) {
