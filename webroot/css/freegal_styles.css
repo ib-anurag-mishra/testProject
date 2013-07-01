@@ -261,7 +261,7 @@ padding-bottom:5px;
 }
 
 #pass {
-    margin-left: -96px;
+    margin-left: -39px;
 }
 
 #last_name{
@@ -276,4 +276,8 @@ padding-bottom:5px;
     color: #52C6EC;
     font-size: 14px;
 }
+
+#card_number {
+    margin-left: 57px;
+}    
 
