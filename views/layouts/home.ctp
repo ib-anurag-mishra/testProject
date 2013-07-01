@@ -83,20 +83,20 @@
                $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                            
                 //close the popup 
-               $("#colorboxCloseBtn").click(function() { 
-                   
-                   var data = {notificationClose: 1};
-                    jQuery.ajax({
-                            type: "post",  // Request method: post, get
-                            url: webroot+"users/saveNotification", // URL to request
-                            data: data,  // post data
-                            success: function(response) {
-                                                $.fn.colorbox.close();                                  
-                            },
-                            error:function (XMLHttpRequest, textStatus, errorThrown) {}
-                    }); 
-                   
-               });
+//               $("#colorboxCloseBtn").click(function() { 
+//                   
+//                   var data = {notificationClose: 1};
+//                    jQuery.ajax({
+//                            type: "post",  // Request method: post, get
+//                            url: webroot+"users/saveNotification", // URL to request
+//                            data: data,  // post data
+//                            success: function(response) {
+//                                                $.fn.colorbox.close();                                  
+//                            },
+//                            error:function (XMLHttpRequest, textStatus, errorThrown) {}
+//                    }); 
+//                   
+//               });
                 
                //save email notificaion data and close the popup
                $("#colorboxSubmitBtn").click(function() { 
