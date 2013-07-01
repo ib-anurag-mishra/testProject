@@ -81,42 +81,25 @@
 
                <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
-       function showhide(flag, id)
-       {	   		
-	   
-         if(flag=="short")
-         {
-            document.getElementById("shortNews"+id).style.display="block";
-            document.getElementById("detailsNews"+id).style.display="none";
-         }
-         
-         if(flag=="detail")
-         {
-            document.getElementById("shortNews"+id).style.display="none";
-            document.getElementById("detailsNews"+id).style.display="block";
-         }
-       }
+                function showhide(flag, id)
+                {	   		
+
+                  if(flag=="short")
+                  {
+                     document.getElementById("shortNews"+id).style.display="block";
+                     document.getElementById("detailsNews"+id).style.display="none";
+                  }
+
+                  if(flag=="detail")
+                  {
+                     document.getElementById("shortNews"+id).style.display="none";
+                     document.getElementById("detailsNews"+id).style.display="block";
+                  }
+                }
         </script>     
             
             
-         <script type="text/javascript" src="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/js&amp;f=swfobject.js,jquery.min.js,audioPlayer.js,freegal.js,jquery.colorbox.js,jquery.cycle.all.js,curvycorners.js,jquery.bgiframe.js,jquery.autocomplete.js"></script>
-	<?php
-		//echo $javascript->link('jquery-1.3.2.min');
-		echo $javascript->link('qtip');
-		echo $javascript->link('qtip_add');
-		echo $scripts_for_layout;
-		if($this->Session->read('Config.language') == 'en'){
-			$setLang = 'en';
-		}else{
-			$setLang = 'es';
-		}
-		if($this->Session->read('library') && $this->Session->read('library') != '')
-		{
-			$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-	?>
-			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>&library_box_header_color=<?php echo $libraryInfo['Library']['library_box_header_color'];?>&library_box_hover_color=<?php echo $libraryInfo['Library']['library_box_hover_color'];?>" type="text/css" rel="stylesheet" />
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
-			<script type="text/javascript">
+            <script type="text/javascript">
 				$(document).ready(function() {
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 					$('#autoComplete').keypress(function(event) {
@@ -224,7 +207,7 @@
                                             
 				});
 				
-			</script>    
+			</script>
             
 
                     
