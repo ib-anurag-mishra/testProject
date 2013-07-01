@@ -16,7 +16,7 @@
 		echo '</div>';
                 echo '<div class="divider"></div>';
 		echo '<div class="pin-number-container" id ="pass">';
-		echo $form->input('pin-number', array('label' => $this->getTextEncode( __('Password', true)),'div' => false, 'alt' => $this->getTextEncode( __('Password', true))));
+		echo $form->input('password', array('label' => $this->getTextEncode( __('Password', true)),'div' => false,'type'=>'password', 'alt' => $this->getTextEncode( __('Password', true))));
 		echo '</div>';
 		echo $form->end(array('label' => $this->getTextEncode( __('Login', true)),'div' => false, 'class' => 'button' ));
 		echo '</div>';
