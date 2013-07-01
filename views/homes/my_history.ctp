@@ -220,7 +220,7 @@ $ieVersion =  ieversion();
                         <?php
                             $productInfo = $mvideo->getDownloadData($videoDownloadResult['Videodownload']['ProdID'],$videoDownloadResult['Videodownload']['provider_type']);
                             $videoUrl = shell_exec('perl files/tokengen ' . 'sony_test/' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
-							$finalVideoUrl = Configure::read('App.Music_Path').$songUrl;
+							$finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
 							$finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
                             <span class="beforeClick" id="download_song_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>">
@@ -234,7 +234,7 @@ $ieVersion =  ieversion();
 							</span>
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-                        Download</p></a>
+                       </p></a>
                     </div>
 				</div>
 				<?php
