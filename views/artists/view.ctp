@@ -133,6 +133,8 @@
 					<div class="wishlist-popover">
                                              <?php
                                                                     if($this->Session->read('patron')) { ?>
+                                            
+                                               <?php if( $this->Session->read('library_type') == 2 ){ ?> 
 						<div class="playlist-options">
 							<ul>
 								<li><a href="#">Create New Playlist</a></li>
@@ -148,7 +150,7 @@
 								<li><a href="#">Playlist 10</a></li>
 							</ul>
 						</div>
-						                           <?php                     
+						                           <?php  }                   
                                         
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{

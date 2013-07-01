@@ -179,15 +179,15 @@ class HomesController extends AppController
 STR;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);                        
-                        
+                        print_r($nationalTopDownload);
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
                 
-            
+                
 
 		$nationalTopDownload = Cache::read("national".$territory);
-              
+                print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                
