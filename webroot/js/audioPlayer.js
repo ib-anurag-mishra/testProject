@@ -161,20 +161,20 @@ function stopThis(event, objID) {
 
 function playSample(obj, objID, playID, pt, webRoot) {
     
-    alert("obj:"+obj);
-    alert("objID:"+objID);
-    alert("playID:"+playID);
-    alert("pt:"+pt);
-    alert("webRoot:"+webRoot);
+//    alert("obj:"+obj);
+//    alert("objID:"+objID);
+//    alert("playID:"+playID);
+//    alert("pt:"+pt);
+//    alert("webRoot:"+webRoot);
 
 
-    $("img[id^='play_audio']").each(function() {
+    $("img[id^='play_audio']").each(function() { alert("1");
         document.getElementById($(this).attr("id")).style.display = "block";
     });
-    $("img[id^='load_audio']").each(function() {
+    $("img[id^='load_audio']").each(function() {    alert("2");
         document.getElementById($(this).attr("id")).style.display = "none";
     });
-    $("img[id^='stop_audio']").each(function() {
+    $("img[id^='stop_audio']").each(function() { alert("3");
         document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
