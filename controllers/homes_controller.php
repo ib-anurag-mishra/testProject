@@ -83,7 +83,8 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {              
+        if (($national = Cache::read("national".$territory)) === false) { 
+            echo 147;
        
             $country = $territory;
             
@@ -183,7 +184,7 @@ STR;
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
                 
-             
+             echo 148;
 
 		$nationalTopDownload = Cache::read("national".$territory);
               
@@ -195,6 +196,7 @@ STR;
              
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
+            echo 157;
                     
                 $country = $territory;
                 
@@ -292,7 +294,7 @@ STR;
                
                }               
        }
-        
+       echo 158; 
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
 
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
@@ -304,6 +306,7 @@ STR;
         $ids_provider_type = '';
         //featured artist slideshow code start
         if (($artists = Cache::read("featured".$country)) === false) {
+            echo 167;
             
             //get all featured artist and make array
             $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
@@ -370,7 +373,7 @@ STR;
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
         }
-        
+         echo 168;
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
         $this->set('featuredArtists', $featured);
