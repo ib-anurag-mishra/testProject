@@ -83,7 +83,7 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) { 
+      //  if (($national = Cache::read("national".$territory)) === false) { 
           
        
             $country = $territory;
@@ -182,7 +182,7 @@ STR;
                         
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
-		}
+		//}
                 
             
 
@@ -203,11 +203,10 @@ STR;
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-                 $maintainLatestVideoDownload = 0;           
+                $maintainLatestVideoDownload = 0;           
                if(!empty($country)){ 
                                                  
-                   if($maintainLatestVideoDownload){
-                       
+                   if($maintainLatestVideoDownload){                       
 
                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
