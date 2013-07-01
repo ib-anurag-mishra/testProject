@@ -136,7 +136,7 @@ function getVolume(event) {
 function handleResponse(value) {
 }
 
-function load(event, url, playID) {
+function load(event, url, playID) { alert("in Load");
     document.getElementById('audioplayer').loadAudio(unescape(url), true, playID);
 }
 
@@ -170,7 +170,7 @@ function playSample(obj, objID, playID, pt, webRoot) {
 
     $("img[id^='play_audio']").each(function() { 
         document.getElementById($(this).attr("id")).style.display = "block";
-        alert(document.getElementById($(this).attr("id")).style.display);
+      //  alert(document.getElementById($(this).attr("id")).style.display);
     });
     $("img[id^='load_audio']").each(function() {
         document.getElementById($(this).attr("id")).style.display = "none";
@@ -179,11 +179,12 @@ function playSample(obj, objID, playID, pt, webRoot) {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
-    if (!hasRequiredVersion) {
+    alert("hasRequiredVersion: "+hasRequiredVersion);
+    if (!hasRequiredVersion) {   alert("in has required");
        $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
 	$(".upgradeFlash").click().delay(800);
     }
-	var data = "prodId="+playID+"&pt="+pt;
+	var data = "prodId="+playID+"&pt="+pt; alert("Data: "+ data);
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webRoot+"homes/userSample", // URL to request
