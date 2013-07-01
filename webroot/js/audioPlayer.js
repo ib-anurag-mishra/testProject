@@ -136,7 +136,7 @@ function getVolume(event) {
 function handleResponse(value) {
 }
 
-function load(event, url, playID) { alert("in Load");
+function load(event, url, playID) { alert(url);
     document.getElementById('audioplayer').loadAudio(unescape(url), true, playID);
 }
 
@@ -179,12 +179,11 @@ function playSample(obj, objID, playID, pt, webRoot) {
         document.getElementById($(this).attr("id")).style.display = "none";
     });
     var hasRequiredVersion = DetectFlashVer(9, 0, 0);
-    alert("hasRequiredVersion: "+hasRequiredVersion);
-    if (!hasRequiredVersion) {   alert("in has required");
+    if (!hasRequiredVersion) {
        $(".upgradeFlash").colorbox({width:"50%", inline:true, href:"#upgradeFlash_div"});
 	$(".upgradeFlash").click().delay(800);
     }
-	var data = "prodId="+playID+"&pt="+pt; alert("Data: "+ data);
+	var data = "prodId="+playID+"&pt="+pt;
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
 		url: webRoot+"homes/userSample", // URL to request
