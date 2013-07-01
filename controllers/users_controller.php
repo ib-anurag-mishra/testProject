@@ -74,7 +74,7 @@ Class UsersController extends AppController
                             	if($this->Session->read('loginchk') == '' && $this->Session->read('patron')== '')
 				{
                                     
-                                    if($_SERVER['REQUEST_URI'] == '/users/redirection_manager'){
+                                    if($_SERVER['REQUEST_URI'] == '/users/redirection_manager' || $_SERVER['REQUEST_URI'] == '/homes/chooser'){
                                         if($library_data['Library']['library_authentication_method'] == 'referral_url')
 					{
 						$referral = explode(",",$library_data['Library']['library_domain_name']);
