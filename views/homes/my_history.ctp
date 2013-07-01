@@ -4,6 +4,17 @@
 	 File Description : View page for download history page
 	 Author : m68interactive
  */
+
+function ieversion()
+{
+	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+	  if(!isset($reg[1])) {
+		return -1;
+	  } else {
+		return floatval($reg[1]);
+	  }
+}
+$ieVersion =  ieversion();
 ?>
 
 <!-- new HTML -->
@@ -48,7 +59,11 @@
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($downloadResult['Download']['created'])); ?></div>
 					<div class="small-album-container">
-						<img src="/img/playlist/small-album-cover.jpg" alt="small-album-cover" width="40" height="40" />
+						<?php
+                        $albumImage = shell_exec('perl files/tokengen ' . $downloadResult['File']['CdnPath']."/".$downloadResult['File']['SourceURL']);
+                        $albumImageUrl = Configure::read('App.Music_Path').$albumImage;
+                        ?>
+                        <img src="<?php echo $albumImageUrl; ?>" alt="small-album-cover" width="40" height="40" />
 						<a class="preview" href="#"></a>
 					</div>
 					<div class="song-title">
@@ -61,7 +76,7 @@
 					?>
                     </div>
 					<a class="add-to-wishlist-button" href="#"></a>
-					<div class="album-title"><a href="#">Sticks and Stones</a></div>
+					<div class="album-title"><a href="#"><?php echo $downloadResult['Song']['Title'];  ?></a></div>
 					<div class="artist-name"><a href="#"><?php
 						if (strlen($downloadResult['Download']['artist']) >= 19) {
 							echo '<span title="'.htmlentities($downloadResult['Download']['artist']).'">' .substr($downloadResult['Download']['artist'], 0, 19) . '...</span>';							
@@ -113,6 +128,12 @@
 					<div class="download">
                     <a href="#">
                         <p>
+                            <?php
+                            $productInfo = $song->getDownloadData($downloadResult['Download']['ProdID'],$downloadResult['Download']['provider_type']);
+                            $songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
+							$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+							$finalSongUrlArr = str_split($finalSongUrl, ceil(strlen($finalSongUrl)/3));
+                            ?>
 							<span class="beforeClick" id="download_song_<?php echo $downloadResult['Download']['ProdID']; ?>">
 								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
 									<a href='#' onclick='return historyDownloadOthers("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $downloadResult['Download']['library_id']; ?>","<?php echo $downloadResult['Download']['patron_id']; ?>", "<?php echo urlencode($finalSongUrlArr[0]);?>", "<?php echo urlencode($finalSongUrlArr[1]);?>", "<?php echo urlencode($finalSongUrlArr[2]);?>");'><?php __('Download');?></a>
