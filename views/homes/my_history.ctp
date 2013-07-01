@@ -234,7 +234,7 @@ $ieVersion =  ieversion();
 							</span>
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $videoDownloadResult['Videodownload']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-                        Download</p></a>
+                       </p></a>
                     </div>
 				</div>
 				<?php
