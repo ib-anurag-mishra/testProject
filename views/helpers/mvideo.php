@@ -8,7 +8,7 @@ class MvideoHelper extends AppHelper {
     var $uses = array('Song');
     
     function getDownloadData($id, $provider) {
-        $songInstance = ClassRegistry::init('Video');
+        $videoInstance = ClassRegistry::init('Video');
         $details = $videoInstance->find('all', array(
 		'conditions'=>array('Video.ProdID' => $id, 'Video.provider_type' => $provider),
 		'fields' => array(
