@@ -494,8 +494,10 @@
 										<?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="single-detail">
 												<div class="single-cover-container">
-													
-													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+																										
+                                                                                                        <a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                                                                        <img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+                                                                                                         
                                                                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                                                                 <a class="add-to-playlist-button" href="#">
 														
