@@ -11,7 +11,7 @@
 	echo $session->flash('auth');
 		echo '<div class="login-form-wrapper clearfix">';
 		echo $form->create('User', array( 'action' => 'login', 'id' => 'login-form'));
-		echo '<div class="card-number-container">';
+		echo '<div class="card-number-container" id = "card_number">';
 		echo $form->input('email', array('label' => $this->getTextEncode( __('Email', true)),'div' => false,'alt' => $this->getTextEncode( __('Email', true))));
 		echo '</div>';
                 echo '<div class="divider"></div>';
