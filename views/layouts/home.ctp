@@ -30,7 +30,7 @@
           echo $javascript->link('recent-downloads');
         ?>		
 
-
+        
 
         <?php
         echo $javascript->link('jquery-1.3.2.min');
