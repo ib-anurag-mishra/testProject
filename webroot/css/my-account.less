@@ -1,0 +1,198 @@
+.border-radius(@radius) {
+	
+	-moz-border-radius:      @radius;
+	-webkit-border-radius:   @radius;
+	border-radius:           @radius;
+	-moz-background-clip:    padding;
+	-webkit-background-clip: padding-box;
+	background-clip:         padding-box;
+}
+
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
+
+.my-account-page {
+	
+	margin-left: 20px;
+	margin-top: 20px;
+	
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
+
+
+	}
+	
+	header {
+		margin-top: 10px;
+		margin-bottom: 24px;
+		
+		h2 {
+			
+			font-size: 24px;
+			letter-spacing: 1px;
+			
+			
+		}
+		
+		
+		
+		
+	}
+	
+	.forms-wrapper {
+		
+		padding-left: 222px;
+		
+		
+		.account-info-wrapper {
+			width: 430px;
+			background: url(/img/my-account/divider.png) no-repeat right bottom;
+			height: 210px;
+			
+			h3 {
+				
+				font-size: 18px;
+				margin-bottom: 10px;
+				margin-left: 128px;
+				color: rgba(0,0,0,.9);
+			}
+			
+			div {
+			
+				text-align: right;
+				margin-bottom: 10px;
+			
+				label {
+					
+					font-size: 14px;
+					margin-right: 5px;
+					color: rgba(0,0,0,.9);
+				}
+				
+				input[type="text"] {
+					
+					outline: 0;
+					width: 300px;
+					margin: 0;
+					padding: 0;
+					border: 1px solid rgba(0,0,0,.2);
+					height: 20px;
+					padding-left: 5px;
+				}
+				
+				input[type="password"] {
+					
+					outline: 0;
+					
+					margin: 0;
+					padding: 0;
+					border: 1px solid rgba(0,0,0,.2);
+					height: 20px;
+					width: 300px;
+					padding-left: 5px;
+				}
+				
+				input[type="submit"] {
+					-webkit-appearance: none;
+					border: 0;
+					margin: 0;
+					padding: 0;
+					text-indent: -9999px;
+					background:url(/img/my-account/save-off.jpg);
+					width: 100px;
+					height: 21px;
+					.box-shadow(0 0 2px rgba(0,0,0,.5));
+					cursor: pointer;
+					margin-right: 1px;
+					
+					
+					&.clicked {
+						
+						background:url(/img/my-account/save-clicked.jpg);
+					}
+				}
+			}
+			
+		}
+		
+		.email-notification-wrapper {
+			width: 430px;
+			margin-top: 40px;
+			
+			h3 {
+				
+				font-size: 18px;
+				margin-bottom: 10px;
+				margin-left: 128px;
+				color: rgba(0,0,0,.9);
+			}
+			
+			div {
+			
+				text-align: right;
+				margin-bottom: 10px;
+				
+				label {
+					
+					font-size: 14px;
+					margin-right: 5px;
+					color: rgba(0,0,0,.9);
+				}
+				
+				input[type="text"] {
+					
+					outline: 0;
+					width: 300px;
+					margin: 0;
+					padding: 0;
+					border: 1px solid rgba(0,0,0,.2);
+					height: 20px;
+					padding-left: 5px;
+					
+				}
+				
+				
+				
+				input[type="submit"] {
+					
+					-webkit-appearance: none;
+					border: 0;
+					margin: 0;
+					padding: 0;
+					text-indent: -9999px;
+					background:url(/img/my-account/save-off.jpg);
+					width: 100px;
+					height: 21px;
+					.box-shadow(0 0 2px rgba(0,0,0,.5));
+					cursor: pointer;
+					margin-right: 1px;
+					
+					&.clicked {
+						
+						background:url(/img/my-account/save-clicked.jpg);
+					}
+				}
+			}
+			
+		}
+	}
+	
+}
