@@ -1306,9 +1306,9 @@ STR;
 
                         //echo $sql_national_100; die;
 
-			$national_us_top10 = $this->Album->query($sql_national_100);
+			$national_us_top10_record = $this->Album->query($sql_national_100);
 			// Checking for download status
-			Cache::write("national_us_top10".$territory, $national_us_top10);
+			Cache::write("national_us_top10".$territory, $national_us_top10_record);
 		}
                 else
                 {
