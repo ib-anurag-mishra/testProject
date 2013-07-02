@@ -56,6 +56,13 @@ class VideosController extends AppController {
         $this->set('topVideoDownloads', $topDownloads);
     }
 
+    /**
+     * @function download
+     * this action handles request for music videos downloads
+     * @param nil
+     **/ 
+    
+    
     function download() {
 
         //settings
