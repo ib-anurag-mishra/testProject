@@ -86,10 +86,7 @@
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
-<?php if($this->Session->read("patron")){ ?> 
-<!-- <a href="#" class="preview"></a>  -->
-
- ?>
+<?php if($this->Session->read("patron")){ ?> <a href="#" class="preview"></a> <?php } ?>
 
 
 												
