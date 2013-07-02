@@ -5,96 +5,64 @@
 	 Author : m68interactive
  */
 ?>
-<style>
-.txt-my-wishlist {
-	height: 60px;
-    left: 39px;
-    overflow: hidden;
-    position: relative;
-    text-indent: -9999px;
-    width: 228px;
-	background:url(../img/<?php echo $this->Session->read('Config.language'); ?>/my_wishlist.png) no-repeat;
-}
-
-#wishlist-table{
-  margin-left: 35px;
-}
-
-#wishlist-table th{
-  background-color: #3d3d3d;
-  color: #fff;
-  height: 20px;
-  text-align: center;
-  /*border-left: 1px solid #fff;
-  border-right: 1px solid #fff;*/
-}
-#wishlist-table td{
-  /*border-left: 1px solid #fff;
-  border-right: 1px solid #fff;*/
-  padding: 0 5px;
-}
-</style>
-
-<div class="breadCrumb">
-<?php
+<section class="my-wishlist-page">
+		
+		<div class="breadcrumbs"><?php
 	$html->addCrumb('My Wishlist', '/homes/my_wishlist');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
-?>
-</div>
-<br class="clr">
-<?php echo $session->flash();?>
-<div class="txt-my-wishlist">
-	<?php __("Wishlist");?>
-</div>
-
-<div id="wishlistText"><?php echo $page->getPageContent('wishlist'); ?></div>
-<!--<div id="genreArtist">
-	<P><?php __("Artist");?></p>
-</div>
-<div id="genreAlbum">
-	<P><?php __("Album");?></p>
-</div>
-<div id="genreTrack" style="width:250px;">
-	<P><?php __("Track");?></p>
-</div>
-<div id="genreDownload">
-	<?php __("Download");?>
-</div>
-<br class="clr">-->
-<div id="genreResults">
-	<table cellspacing="2" cellpadding="0" id="wishlist-table">
-	<tr>
-    <th width="180">
-      <p><?php __("Artist");?></p>
-    </th>
-    <th width="200">
-      <p><?php __("Album");?></p>
-    </th "150px">
-    <th width="240">
-      <p><?php __("Track");?></p>
-    </th>
-    <th width="150">
-      <p><?php __("Download");?></p>
-    </th>
-    <th width="150">
-      <p><?php __("Remove");?></p>
-    </th>
-  </tr>
-	<?php
+?></div>
+		<header class="clearfix">
+			<h2>My Wishlist</h2>
+			<div class="faq-link">Need help? Visit our <a href="#">FAQ section.</a></div>
+		</header>
+		<div class="instructions">
+			<p>
+				In the event that your library exceeds its download budget for the week, you will see "add to wishlist" in place of the "download now" command. Adding your music to the wishlist will place you in a "first come, first serve" line to get more music when it becomes available, which is at midnight Sunday Eastern Time (U.S.). At that point your music is on hold for you for 24 hours (so no need to set your alarm clock) for you to proactively download. You should visit the Wishlist area on the top part of the home page to see the music that you requested, and if it is available.
+			</p>
+			<p>
+				If you do not see the "download now" command in the Wish List area, it means so many people were waiting in line that you need to check back on a subsequent Monday.
+			</p>
+		</div>
+		<nav class="my-wishlist-filter-container clearfix">
+			<div class="date-filter-button filter"></div>
+			<div class="song-filter-button filter"></div>
+			<div class="music-filter-button tab"></div>
+			<div class="video-filter-button tab"></div>
+			<div class="artist-filter-button filter"></div>
+			<div class="album-filter-button filter"></div>
+			<div class="download-button filter"></div>
+			
+		</nav>
+		<div class="my-wishlist-shadow-container">
+			<div class="my-wishlist-scrollable">
+				<div class="row-container">
+				<?php
 	if(count($wishlistResults) != 0)
 	{
-		$i = 1;
+		
 		foreach($wishlistResults as $key => $wishlistResult):
-			$class = null;
-			if ($i++ % 2 == 0) {
-				$class = ' class="altrow"';
-			}
+			
 	?>
-			<!-- <tr onmouseover="this.className = ' hlt';" onmouseout="this.className = '';" <?php // echo $class; ?>> -->
-			<tr <?php echo $class; ?>>
-				<td width="170" valign="top">
-
-					<?php
+				<div class="row clearfix">
+					<div class="date">2013-06-13</div>
+					<div class="small-album-container">
+						<img src="../img/playlist/small-album-cover.jpg" alt="small-album-cover" width="40" height="40" />
+						<a class="preview" href="#"></a>
+					</div>
+					<div class="song-title">Grow Up</div>
+					<a class="add-to-wishlist-button" href="#"></a>
+					<div class="album-title"><a href="#">
+                                         <?php
+						if (strlen($wishlistResult['Wishlist']['album']) >= 24) {
+							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['album'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['album'], 0, 24)) . '...</span>';
+						} else {
+							echo $this->getTextEncode($wishlistResult['Wishlist']['album']);
+						}
+						
+                                          ?>
+                                            </a></div>
+					<div class="artist-name"><a href="#">
+                                            <?php
 						if (strlen($wishlistResult['Wishlist']['artist']) >= 19) {
 							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['artist'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['artist'], 0, 19)) . '...</span>';
 						} else {
@@ -102,30 +70,40 @@
 							echo $this->getTextEncode($ArtistName);
 						}
 						
-					?>
-
-				</td>
-				<td width="190" valign="top">
-					<?php
-						if (strlen($wishlistResult['Wishlist']['album']) >= 24) {
-							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['album'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['album'], 0, 24)) . '...</span>';
-						} else {
-							echo $this->getTextEncode($wishlistResult['Wishlist']['album']);
-						}
-						
-					?>
-				</td>
-				<td width="230" valign="top">
-					<?php 
-						if (strlen($wishlistResult['Wishlist']['track_title']) >= 48) {
-							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResult['Wishlist']['track_title'])).'">' .$this->getTextEncode(substr($wishlistResult['Wishlist']['track_title'], 0, 48)) . '...</span>';
-						} else {
-							echo $this->getTextEncode($wishlistResult['Wishlist']['track_title']);
-					 	}
-					?>
-				</td>
-				<td width="140" align="center">
-					<?php										
+                                            ?>
+                                            </a></div>
+					
+					<div class="wishlist-popover">
+						<!--	
+						<a class="remove-song" href="#">Remove Song</a>
+						<a class="make-cover-art" href="#">Make Cover Art</a>
+						-->
+                                            <?php if( $this->Session->read('library_type') == 2 ){ ?>
+                                                <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <?php } ?>
+						<div class="share clearfix">
+							<p>Share via</p>
+							<a class="facebook" href="#"></a>
+							<a class="twitter" href="#"></a>
+						</div>
+						<?php if( $this->Session->read('library_type') == 2 ){ ?>
+						<div class="playlist-options">
+							<ul>
+								<li><a href="#">Create New Queue</a></li>
+								<li><a href="#">Playlist 1</a></li>
+								<li><a href="#">Playlist 2</a></li>
+								<li><a href="#">Playlist 3</a></li>
+								<li><a href="#">Playlist 4</a></li>
+								<li><a href="#">Playlist 5</a></li>
+								
+								
+							</ul>
+						</div>
+						<?php } ?>
+					</div>
+					<div class="download">
+                                            
+                                        <?php										
 						$productInfo = $song->getDownloadData($wishlistResult['Wishlist']['ProdID'],$wishlistResult['Wishlist']['provider_type']);
 						if($libraryDownload == '1' && $patronDownload == '1'){
 							$songUrl = shell_exec('perl files/tokengen ' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
@@ -150,17 +128,60 @@
 						<?php
 						}
 					?>
-				</td>
-				<td width="140" align="center">
-					<?php echo $html->link('Remove', array('controller' => 'homes', 'action' => 'removeWishlistSong', 'id'=>$wishlistResult['Wishlist']['id'])); ?>
-				</td>	
-			</tr>
-	<?php
-		endforeach;
-	}else{
-		echo 	'<tr><td width="280" valign="top"><p><?php __("You have no songs in your wishlist.");?></p></td></tr>';
-	}
-	
-	?>
-</table>
-</div>
+                                            
+                                        </div>
+				</div>
+        <?php 
+
+        endforeach;
+
+        }else{
+            
+            echo 	'<tr><td width="280" valign="top"><p><?php __("You have no songs in your wishlist.");?></p></td></tr>';
+            
+        }
+
+
+        ?>
+				</div>
+			</div>
+		</div>
+<!--		(this is the html for the videos)
+		<div class="my-video-wishlist-shadow-container">
+			<div class="my-video-wishlist-scrollable">
+				<div class="row-container">
+				<?php
+				for($b=0;$b<28;$b++) {
+				?>
+				
+				<div class="row clearfix">
+					<div class="date">2013-06-13</div>
+					<div class="small-album-container">
+						<img src="../img/my-wishlist/video-cover.jpg" alt="video-cover" width="67" height="40" />
+						 <a class="preview" href="#"></a> 
+					</div>
+					<div class="song-title">Grow Up</div>
+					<a class="add-to-wishlist-button" href="#"></a>
+					<div class="album-title"><a href="#">Sticks and Stones</a></div>
+					<div class="artist-name"><a href="#">Cher Lloyd</a></div>
+					
+					<div class="wishlist-popover">
+						
+						<div class="share clearfix">
+							<p>Share via</p>
+							<a class="facebook" href="#"></a>
+							<a class="twitter" href="#"></a>
+						</div>
+						
+					</div>
+					<div class="download"><a href="#">Download</a></div>
+				</div>
+				<?php 
+				}
+				?>
+				</div>
+			</div>
+		</div>-->
+
+
+	</section>

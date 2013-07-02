@@ -3,7 +3,7 @@
 	File Name : navigation.php
 	File Description : View page for navigation file for front-end site
 	Author : m68interactive
- **/
+**/
 
 /**
  * Navigation file for front-end site

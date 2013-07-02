@@ -81,6 +81,9 @@
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
 
+
+<script src="<? echo $this->webroot; ?>app/webroot/js/my-wishlist.js"></script>
+
 	
 	
 </html>
