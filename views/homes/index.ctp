@@ -51,12 +51,14 @@
 												$slNo = ($i + 1);
 												echo $slNo;
 											?></div>
-														
+<?php
+         echo "<br>album_key: ".$album_key;
+         echo "<br>key: ".$key;
+?>														
 <?php if($this->Session->read("patron")){ ?> 
 <!-- <a href="#" class="preview"></a>  -->
 <?php
-            echo "<br>album_key: ".$album_key;
-            echo "<br>key: ".$key;
+           
 
                                             if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {
                                                     echo $html->image('play.png', array("alt" => "Play Sample", "title" => "Play Sample", "class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio".$album_key.$key, "onClick" => 'playSample(this, "'.$album_key.$key.'", '.$albumSong["Song"]["ProdID"].', "'.base64_encode($albumSong["Song"]["provider_type"]).'", "'.$this->webroot.'");'));
