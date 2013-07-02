@@ -1340,7 +1340,8 @@ STR;
                
             $country = $this->Session->read('territory');
             
-            if(!empty($country)){                     
+            if(!empty($country)){  
+              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1454,7 +1455,11 @@ STR;
 			// Checking for download status
 			
 		}
-                
+                 else
+                {
+                   $ustop10Albums = Cache::read("national_us_top10_albums".$territory); 
+                }
+            } 
 		$this->set('ustop10Albums',$ustop10Albums); 
                 
                 
@@ -1471,8 +1476,11 @@ STR;
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-                $maintainLatestVideoDownload = 0;           
+                $maintainLatestVideoDownload = 0; 
+                
                if(!empty($country)){ 
+               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
+               
                               
                    if($maintainLatestVideoDownload){
                        
@@ -1566,6 +1574,12 @@ STR;
 //                    die; 
                 
                }
+                else
+                {
+                   $usTop10VideoDownload = Cache::read("national_us_top10_videos".$territory); 
+                }
+               }
+                
 
                 $this->set('usTop10VideoDownload',$usTop10VideoDownload);
                 
