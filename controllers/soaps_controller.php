@@ -4773,10 +4773,10 @@ STR;
         }
           
           
-        Full_Files
+        
 
         $sobj->FullLength_FIleID     = (int)    '';
-        $sobj->FullLength_FIleURL    =  Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Full_Files']['CdnPath']."/".$val['Full_Files']['SaveAsName']);
+        $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $val['Full_Files']['CdnPath']."/".$val['Full_Files']['SaveAsName']);
         $sobj->CreatedOn             = (string) '';
         $sobj->UpdateOn              = (string) '';
 
