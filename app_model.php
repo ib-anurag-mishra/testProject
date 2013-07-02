@@ -157,17 +157,20 @@ class AppModel extends Model {
                     if($v === "1 = 1 GROUP BY Song.ArtistText"){
                         if(isset($extra['all_query']) && $extra['all_query'] == true){
                           $fields = array('count'=>'count(DISTINCT ArtistText)');
-                          $paginationrow = $this->query("SELECT COUNT(Distinct ArtistText) FROM Songs AS Song INNER JOIN ".$extra['all_country']." AS `Country` ON (`Country`.`ProdID` = `Song`.`ProdID` AND `Country`.`provider_type` = `Song`.`provider_type`) WHERE Song.DownloadStatus = '1' AND Song.Sample_FileID != '' AND Song.FullLength_FIleID != '' ".((!empty($extra['all_condition']))?" AND ".$extra['all_condition']:""));
+                          $paginationrow = $this->query("SELECT COUNT(Distinct ArtistText) FROM Songs AS Song WHERE Song.DownloadStatus = '1' AND Song.Sample_FileID != '' AND Song.FullLength_FIleID != '' AND ".$extra['all_country'].((!empty($extra['all_condition']))?" AND ".$extra['all_condition']:""));
                           $paginationcount = $paginationrow[0][0]['COUNT(Distinct ArtistText)'];
                           $group = "yes";
+                          //$paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
+                          //$paginationcount = count($paginationcount);
+                          //$group = "yes";
                         }
                         else{
                           $paginationcount = $this->find('all',compact('conditions', 'contain', 'recursive', 'fields'));
                           $paginationcount = count($paginationcount);
                           $group = "yes";
                         }
-                        
-                        
+
+
                     }
                 }
 				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
