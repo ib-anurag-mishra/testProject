@@ -96,7 +96,10 @@
 					?>	
 				
 				<div class="tracklist">
-                                    
+                                    <?php
+         echo "<br>album_key:--> ".$album_key;
+         echo "<br>key:--> ".$key;
+?>
                                    <!-- <a href="#" class="preview"></a> -->
                                    <?php
                                             if($albumSong['Country']['SalesDate'] <= date('Y-m-d')) {

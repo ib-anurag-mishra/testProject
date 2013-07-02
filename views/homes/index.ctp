@@ -51,10 +51,7 @@
 												$slNo = ($i + 1);
 												echo $slNo;
 											?></div>
-<?php
-         echo "<br>album_key:--> ".$album_key;
-         echo "<br>key:--> ".$key;
-?>														
+														
 <?php if($this->Session->read("patron")){ ?> 
 <!-- <a href="#" class="preview"></a>  -->
 <?php
