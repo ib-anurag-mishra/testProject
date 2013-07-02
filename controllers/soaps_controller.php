@@ -4564,7 +4564,7 @@ STR;
    * @param string $authenticationToken
    * @param int $startFrom
    * @param int $recordCount
-	 * @return VideoSongData[]
+	 * @return VideoSongDataType[]
    */
   function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) {
     
@@ -4588,7 +4588,7 @@ STR;
 
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
         if(!(empty($arrTemp[$cnt]))) {
-          $sobj = new VideoSongData;
+          $sobj = new VideoSongDataType;
           $sobj->VideoProdID           = $arrTemp[$cnt]['prd']['pid'];
           $sobj->ReferenceID           = $arrTemp[$cnt]['v']['ReferenceID'];
           $sobj->VideoTitle            = $this->getTextUTF($arrTemp[$cnt]['v']['Title']);
@@ -4605,7 +4605,7 @@ STR;
           $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
           $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['imgf']['ImgCdnPath'] . "/" . $arrTemp[$cnt]['imgf']['ImgSourceURL']);
       
-          $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongData');
+          $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
         }
       }
 
