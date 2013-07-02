@@ -46,7 +46,7 @@
 											<li>
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
-														<a href="artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>" alt="bradpaisley250x250" width="250" height="250" /></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>" alt="bradpaisley250x250" width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -383,12 +383,18 @@
 										
 										<li>
 											<div class="featured-album-detail">
-												<div class="album-cover-container">
-												<?php echo $html->link($html->image($image,array("height" => "77", "width" => "84")),
-										array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
-										array('class'=>'first','escape'=>false))?>
+												<div class="album-cover-container">												
+
+<a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84"));?></a>
+
+
+
+<?php /* echo $html->link($html->image($image,array("height" => "77", "width" => "84")),
+array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
+array('class'=>'first','escape'=>false)) */ ?>
 													
-                                                                                                        <?php if($this->Session->read("patron")){ ?> 
+                                                                                                       
+                                                                                                     <?php if($this->Session->read("patron")){ ?> 
 
                                                                                                                 <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a>
 													
