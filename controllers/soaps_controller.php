@@ -4590,7 +4590,7 @@ STR;
         if(!(empty($arrTemp[$cnt]))) {
           $sobj = new VideoSongDataType;
           $sobj->VideoProdID           = $arrTemp[$cnt]['prd']['pid'];
-          $sobj->ReferenceID           = $arrTemp[$cnt]['v']['ReferenceID'];
+          $sobj->VideoReferenceID      = $arrTemp[$cnt]['v']['ReferenceID'];
           $sobj->VideoTitle            = $this->getTextUTF($arrTemp[$cnt]['v']['Title']);
           $sobj->VideoSongTitle        = $this->getTextUTF($arrTemp[$cnt]['v']['VideoTitle']);
           $sobj->VideoArtistText       = $this->getTextUTF($arrTemp[$cnt]['v']['ArtistText']);

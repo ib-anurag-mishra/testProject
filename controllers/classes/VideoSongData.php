@@ -27,7 +27,7 @@ class VideoSongDataType{
   public $VideoProdID;
   
   /**
-	 * VideoProductID
+	 * VideoReferenceID
 	 * @var string
 	 */
   public $VideoReferenceID;
