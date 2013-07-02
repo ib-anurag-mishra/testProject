@@ -89,7 +89,7 @@
 <?php if($this->Session->read("patron")){ ?> 
 <!-- <a href="#" class="preview"></a>  -->
 <?php                                  if($value['Country']['SalesDate'] <= date('Y-m-d')) {
-                                        echo $html->image('/news/top-100/preview-off.png', array( "class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Song']['ProdID'].', "'.base64_encode($value['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                        echo $html->image('/img/news/top-100/preview-off.png', array( "class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Song']['ProdID'].', "'.base64_encode($value['Song']['provider_type']).'", "'.$this->webroot.'");')); 
                                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); 
                                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
                                   }
