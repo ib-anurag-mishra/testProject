@@ -111,6 +111,12 @@ class NationalTopTenType{
   public $FullLength_FIleID;
 
   /**
+	 * FullLength_FIleURL
+	 * @var string
+	 */
+  public $FullLength_FIleURL;
+  
+  /**
 	 * Constructor
 	 */
   public function __construct(){

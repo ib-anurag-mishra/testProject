@@ -109,7 +109,13 @@ class LibraryTopTenType{
 	 * @var int
 	 */
   public $FullLength_FIleID;
-
+  
+  /**
+	 * FullLength_FIleURL
+	 * @var string
+	 */
+  public $FullLength_FIleURL;
+  
   /**
 	 * Constructor
 	 */

@@ -140,7 +140,12 @@ class SongDataType{
 	 */
   public $UpdateOn;
 
-
+  /**
+	 * FullLength_FIleURL
+	 * @var string
+	 */
+  public $FullLength_FIleURL;
+  
   /**
 	 * Constructor
 	 */
