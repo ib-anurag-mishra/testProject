@@ -399,7 +399,17 @@
 													
                                                                                                         <?php if($this->Session->read("patron")){ ?> 
 
-                                                                                                                <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a>
+                                                                                                               <!-- <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a> -->
+
+
+<?php           
+                                            if($v['Country']['SalesDate'] <= date('Y-m-d')) {
+                                                  echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$k, "onClick" => 'playSample(this, "'.$k.'", '.$v['Song']['ProdID'].', "'.base64_encode($v['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                                  echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$k)); 
+                                                  echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$k, "onClick" => 'stopThis(this, "'.$k.'");')); 
+                                            }
+ ?>
+
 													
                                                                                                         <a class="add-to-playlist-button" href="#"></a>
 													<div class="wishlist-popover">
