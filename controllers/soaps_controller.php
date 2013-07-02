@@ -4559,14 +4559,14 @@ STR;
   }
   
   /**
-   * Function Name : getTopSongs
+   * Function Name : getMyMusicVideos
    * Desc : To get My Music Videos list
    * @param string $authenticationToken
    * @param int $startFrom
    * @param int $recordCount
 	 * @return VideoSongData[]
    */
-  function getTopSongs($authenticationToken, $startFrom, $recordCount) {
+  function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) {
     
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
