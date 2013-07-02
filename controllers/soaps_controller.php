@@ -7,6 +7,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'NationalTopTen.ph
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'LibraryTopTen.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoSongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'WishlistData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownloadData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
@@ -58,6 +59,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AlbumDataByArtist.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."GenreData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongData.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoSongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."WishlistData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserCurrentDownloadData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
@@ -78,6 +80,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("AlbumDataByArtist", $siteUrl."soaps/");
     $test->addURLToClass("GenreData", $siteUrl."soaps/");
     $test->addURLToClass("SongData", $siteUrl."soaps/");
+    $test->addURLToClass("VideoSongData", $siteUrl."soaps/");
     $test->addURLToClass("WishlistData", $siteUrl."soaps/");
     $test->addURLToClass("UserCurrentDownloadData", $siteUrl."soaps/");
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
@@ -4554,6 +4557,71 @@ STR;
     }
 
   }
+  
+  /**
+   * Function Name : getMyMusicVideos
+   * Desc : To get My Music Videos list
+   * @param string $authenticationToken
+   * @param int $startFrom
+   * @param int $recordCount
+	 * @return VideoSongDataType[]
+   */
+  function getMyMusicVideos($authenticationToken, $startFrom, $recordCount) {
+    
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $libraryId = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    $libraryDetails = $this->Library->find('first',array(
+      'conditions' => array('Library.id' => $libraryId),
+      'fields' => array('library_territory'),
+      'recursive' => -1
+      )
+    );
+    $library_territory = $libraryDetails['Library']['library_territory'];
+    
+    if ( (( Cache::read("AppMyMusicVideosList_".$library_territory)) !== false) && (Cache::read("AppMyMusicVideosList_".$library_territory) !== null) ) {
+
+      $arrTemp = Cache::read("AppMyMusicVideosList_".$library_territory);
+
+      for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+        if(!(empty($arrTemp[$cnt]))) {
+          $sobj = new VideoSongDataType;
+          $sobj->VideoProdID           = $arrTemp[$cnt]['prd']['pid'];
+          $sobj->VideoReferenceID      = $arrTemp[$cnt]['v']['ReferenceID'];
+          $sobj->VideoTitle            = $this->getTextUTF($arrTemp[$cnt]['v']['Title']);
+          $sobj->VideoSongTitle        = $this->getTextUTF($arrTemp[$cnt]['v']['VideoTitle']);
+          $sobj->VideoArtistText       = $this->getTextUTF($arrTemp[$cnt]['v']['ArtistText']);
+          $sobj->VideoArtist           = $this->getTextUTF($arrTemp[$cnt]['v']['Artist']);
+          $sobj->VideoAdvisory         = $arrTemp[$cnt]['v']['Advisory'];
+          $sobj->VideoISRC             = $arrTemp[$cnt]['v']['ISRC'];
+          $sobj->VideoComposer         = $this->getTextUTF($arrTemp[$cnt]['v']['Composer']);
+          $sobj->VideoGenre            = $this->getTextUTF($arrTemp[$cnt]['gr']['Genre']);
+          $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
+          ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 1 : $sobj->VideoSalesStatus = 0;
+          $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
+          $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
+          $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['imgf']['ImgCdnPath'] . "/" . $arrTemp[$cnt]['imgf']['ImgSourceURL']);
+      
+          $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
+        }
+      }
+
+      $data = new SoapVar($video_list,SOAP_ENC_OBJECT,null,null,'ArrayVideoSongData');
+
+      return $data;
+
+
+    } else {
+
+      throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
+    }
+    
+  
+  }
+   
 
   /**
    * Function Name : getTopArtist

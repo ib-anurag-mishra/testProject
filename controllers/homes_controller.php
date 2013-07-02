@@ -9,7 +9,7 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session','Mvideo');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
     var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video', 'Videodownload');
 
@@ -45,7 +45,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -83,7 +83,8 @@ class HomesController extends AppController
 
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) {              
+        if (($national = Cache::read("national".$territory)) === false) { 
+          
        
             $country = $territory;
             
@@ -178,15 +179,15 @@ class HomesController extends AppController
 STR;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);                        
-                        
+                       // print_r($nationalTopDownload);
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
 		}
                 
-             
+                
 
 		$nationalTopDownload = Cache::read("national".$territory);
-              
+                //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                
@@ -195,17 +196,17 @@ STR;
              
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
+            
                     
                 $country = $territory;
                 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
                 $siteConfigData = $this->Album->query($siteConfigSQL);
                 $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-                 $maintainLatestVideoDownload = 0;           
+                $maintainLatestVideoDownload = 0;           
                if(!empty($country)){ 
                                                  
-                   if($maintainLatestVideoDownload){
-                       
+                   if($maintainLatestVideoDownload){                       
 
                          $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
@@ -292,7 +293,7 @@ STR;
                
                }               
        }
-        
+     
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
 
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
@@ -304,6 +305,7 @@ STR;
         $ids_provider_type = '';
         //featured artist slideshow code start
         if (($artists = Cache::read("featured".$country)) === false) {
+           
             
             //get all featured artist and make array
             $featured = $this->Featuredartist->find('all', array('conditions' => array('Featuredartist.territory' => $this->Session->read('territory'),'Featuredartist.language' => Configure::read('App.LANGUAGE')), 'recursive' => -1));
@@ -1322,8 +1324,8 @@ STR;
             
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
-           // if (($national = Cache::read("national".$territory)) === false) {
-            if (1) {                    
+           if (($national = Cache::read("national_us_top10".$territory)) === false) {
+                               
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1426,14 +1428,14 @@ STR;
 
                         //echo $sql_national_100; die;
 
-			$nationalTopDownload = $this->Album->query($sql_national_100);
+			$national_us_top10 = $this->Album->query($sql_national_100);
 			// Checking for download status
-			Cache::write("national".$territory, $nationalTopDownload);
+			Cache::write("national_us_top10".$territory, $national_us_top10);
 		}
-                else
-                {
-                    $nationalTopDownload = Cache::read("national".$territory);
-                }
+               
+              
+                    $national_us_top10_record = Cache::read("national_us_top10".$territory);
+               
 		
 /*		$this->Download->recursive = -1;
 		foreach($nationalTopDownload as $key => $value){
@@ -1449,7 +1451,7 @@ STR;
 //                print_r($nationalTopDownload);
 //                die;
                 
-		$this->set('nationalTopDownload',$nationalTopDownload);
+		$this->set('nationalTopDownload',$national_us_top10_record);
                 
                 
                 //////////////////////////////////////////////Albums//////////////////////////////////////////////////////////////////////////
@@ -3406,10 +3408,14 @@ STR;
         $libraryId = $this->Session->read('library');
         $patronId = $this->Session->read('patron');
         $downloadResults = Array();
-        $downloadResults =  $this->Download->find('all',array('group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-		$this->set('downloadResults',$downloadResults);
-        $videoDownloadResults =  $this->Videodownload->find('all',array('group' => 'Videodownload.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate')))));
-		$this->set('videoDownloadResults',$videoDownloadResults);
+        $downloadResults =  $this->Download->find('all',array('joins'=>array(array('table' => 'Songs','alias' => 'Song','type' => 'LEFT','conditions' => array('Download.ProdID = Song.ProdID','Download.provider_type = Song.provider_type')),array('table' => 'Albums','alias' => 'Album','type' => 'LEFT','conditions' => array('Song.ReferenceID = Album.ProdID','Song.provider_type = Album.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Album.FileID = File.FileID'))),'group' => 'Download.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Download.ProdID','Download.provider_type','Download.track_title','Download.created','Download.patron_id','Download.library_id','Download.artist, Song.Title, File.CdnPath, File.SourceURL')));
+		//print_r($downloadResults);
+        //echo $this->Download->lastQuery(); die;
+        $this->set('downloadResults',$downloadResults);
+        $videoDownloadResults =  $this->Videodownload->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('Videodownload.ProdID = Video.ProdID','Videodownload.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'Videodownload.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'fields'=>array('Videodownload.ProdID','Videodownload.provider_type','Videodownload.track_title','Videodownload.created','Videodownload.patron_id','Videodownload.library_id','Videodownload.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL')));
+		//print_r($videoDownloadResults);
+        //echo $this->Videodownload->lastQuery(); die;
+        $this->set('videoDownloadResults',$videoDownloadResults);
     }
 
     /*

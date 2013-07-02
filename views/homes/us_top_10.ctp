@@ -25,14 +25,14 @@
 					?>					
 					<li>
 						<div class="album-container">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
                                                         <img src="<?php echo $album_img; ?>" alt="daftpunk" width="250" height="250" />
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
 						</div>
 						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>35)
                                                                 echo substr($value['Song']['SongTitle'],0,35)."..."; 
@@ -77,11 +77,21 @@
 					<li>
 						
 						<div class="song-container">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
                                                         <img src="<?php echo $songs_img; ?>" alt="daftpunk" width="250" height="250" />
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-							<?php if($this->Session->read("patron")){ ?> <a href="#" class="preview"></a> <?php } ?>
+							
+
+<?php if($this->Session->read("patron")){ ?> 
+<!-- <a href="#" class="preview"></a>  -->
+<?php                                  if($value['Country']['SalesDate'] <= date('Y-m-d')) {
+                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Song']['ProdID'].', "'.base64_encode($value['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "load_audio".$key)); 
+                                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
+                                  }
+ }
+  ?>
 							<?php
 
     if($this->Session->read('patron')) {
@@ -191,7 +201,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>35)
                                                                 echo substr($value['Song']['SongTitle'],0,35)."..."; 
@@ -241,7 +251,7 @@
 					<li>
 						
 						<div class="video-container">
-							<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">                                                        
+							<a href="javascript:void(0);">                                                        
                                                         <img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
@@ -365,7 +375,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ProdID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+							<a href="javascript:void(0);">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>35)
                                                                 echo substr($value['Video']['VideoTitle'],0,35)."..."; 

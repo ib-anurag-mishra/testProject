@@ -52,7 +52,16 @@
 												echo $slNo;
 											?></div>
 														
-<?php if($this->Session->read("patron")){ ?> <a href="#" class="preview"></a> <?php } ?>
+<?php if($this->Session->read("patron")){ ?> 
+<!-- <a href="#" class="preview"></a>  -->
+<?php           
+                                            if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
+                                                  echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                                  echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
+                                                  echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                                            }
+				?>
+<?php } ?>
 
 
 												
@@ -176,7 +185,7 @@
 
 
 													<div class="song-title">
-														<a href="artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle; ?></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle; ?></a>
 													</div>
 													<div class="artist-name">
 														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $nationalTopDownload[$i]['Song']['ArtistText']; ?></a>
@@ -342,7 +351,7 @@
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
-													<!--	<a href="artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
+													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
                                                                                                         <a href="javascript:void(0);"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
@@ -433,7 +442,7 @@
 
 												</div>
 												<div class="album-title">
-													<a href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $title; ?></a>
+													<a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $title; ?></a>
 												</div>
 
 
@@ -441,7 +450,7 @@
 
 
 												<div class="artist-name">
-													<a href="artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
+													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
 												</div>
 											</div>
 										</li>
@@ -494,8 +503,10 @@
 										<?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="single-detail">
 												<div class="single-cover-container">
-													
-													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+																										
+                                                                                                        <a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                                                                        <img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+                                                                                                         
                                                                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                                                                 <a class="add-to-playlist-button" href="#">
 														
@@ -513,7 +524,7 @@
                                                                                                 <?php } ?>
 												</div>
 												<div class="song-title">
-													<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+													<a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                                                                             <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                                                                     if(strlen($value['Song']['SongTitle'])>20)
                                                                                                                     echo substr($value['Song']['SongTitle'],0,20)."..."; 
@@ -557,7 +568,9 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="javascript:void(0);"><img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" /></a>
+													<a href="javascript:void(0);">
+                                                                                                        <img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" />
+                                                                                                        </a>
 												<?php if($this->Session->read("patron")){ ?> 
                                                                                                         <a class="add-to-playlist-button" href="#">
 														

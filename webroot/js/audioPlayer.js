@@ -136,7 +136,7 @@ function getVolume(event) {
 function handleResponse(value) {
 }
 
-function load(event, url, playID) { alert("event: "+event); alert("URL: "+url); alert("playID: "+playID); 
+function load(event, url, playID) { 
     document.getElementById('audioplayer').loadAudio(unescape(url), true, playID);
 }
 
