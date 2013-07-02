@@ -1201,7 +1201,8 @@ STR;
             
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
-           if (($national = Cache::read("national_us_top10".$territory)) === false) {
+            if(!empty($country)){  
+            if (($national = Cache::read("national_us_top10".$territory)) === false) {
                                
                     $country = $territory;
 
@@ -1313,7 +1314,7 @@ STR;
                 {
                    $national_us_top10_record = Cache::read("national_us_top10".$territory); 
                 }
-               
+            }
               
                     
                
