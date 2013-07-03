@@ -33,7 +33,6 @@ jQuery(document).ready(function() {
 				?>
 				<span class="download">
 				<?php
-                print_r($songs);
 						if($songs[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
 							if($libraryDownload == '1' && $patronDownload == '1') {	
 							$songs[$i]['Song']['status'] = 'avail1';
