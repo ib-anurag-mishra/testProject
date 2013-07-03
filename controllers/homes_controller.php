@@ -4103,12 +4103,12 @@ STR;
              
                
              
-             //if(1)
-             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+             if(1)
+             //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                               // $countryPrefix = "us_";
+                                $countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
@@ -4150,9 +4150,9 @@ STR;
                                     LEFT JOIN
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
                     GROUP BY Song.ProdID
-                    ORDER BY Country.SalesDate ASC
+                    ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
 	  
@@ -4181,12 +4181,12 @@ STR;
                 //////////////////////////////////Videos/////////////////////////////////////////////////////////
              
                 
-                //if(1)
-                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                if(1)
+                //if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                //$countryPrefix = "us_";
+                                $countryPrefix = "us_";
                                // $territory = "US";
                 
                 
@@ -4226,9 +4226,9 @@ PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
 LEFT JOIN
 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
 WHERE
-( (Video.DownloadStatus = '1')  AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+( (Video.DownloadStatus = '1')  AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
 GROUP BY Video.ProdID
-ORDER BY Country.SalesDate ASC
+ORDER BY Country.SalesDate DESC
 LIMIT 100 
 STR;
                 
@@ -4257,12 +4257,12 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
              
                 
-             //if(1)
-             if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
+             if(1)
+             //if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                //$countryPrefix = "us_";
+                                $countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
@@ -4304,9 +4304,9 @@ STR;
                                     LEFT JOIN
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
                     GROUP BY  Song.ReferenceID
-                    ORDER BY Country.SalesDate ASC
+                    ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
 	  
