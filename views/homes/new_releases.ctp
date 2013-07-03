@@ -2,15 +2,15 @@
 
 <section class="my-top-100-page">
 		
-		<div class="breadcrumbs">
+		<div class="breadcrumbs">              
                     <?php
                             
-                            $html->addCrumb('US Top 10', '/homes/us_top_10');
+                            $html->addCrumb('New Releases', '/homes/new_releases');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header class="clearfix">
-			<h2>US Top 10</h2>
+			<h2>New Releases</h2>
 			
 		</header>
 		<h3>Albums</h3>
@@ -19,26 +19,27 @@
 				<ul>
 					<?php
                                         
-
-                                            
-
 					 $count  =   1;           
 					//for($d=1;$d<$count;$d++) {
-                                        foreach($ustop10Albums as $key => $value){
+                                        foreach($new_releases_albums as $key => $value){
                                             
                                              $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
 					<li>
 						<div class="album-container">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
-                                                        <img src="<?php echo $album_img; ?>" alt="daftpunk" width="250" height="250" />
-                                                        </a>
+							<!-- <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['ProdID']);?>">
+                                                        <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
+                                                        </a> -->
+
+                                                        <?php echo $html->link($html->image($album_img,array("height" => "250", "width" => "250")),
+										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
+										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
 						</div>
-						<div class="album-title">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+						<div class="album-title">							
+                                                        <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Song']['SongTitle'])>35)
                                                                 echo substr($value['Song']['SongTitle'],0,35)."..."; 
@@ -46,8 +47,8 @@
                                                          ?>
                                                     </a>
 						</div>
-						<div class="artist-name">
-							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
+						<div class="artist-name">							
+                                                        <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
                                                                                                                     if(strlen($value['Song']['Artist'])>35)
                                                                                                                     echo substr($value['Song']['Artist'],0,35)."..."; 
@@ -68,37 +69,44 @@
 			<div class="songs-scrollable horiz-scroll">
 				<ul>
 					<?php
+                                                
+                                        $count  =   1;  
+                                                                                
                                         
 					//for($d=1;$d<$count;$d++) {
+                                        foreach($new_releases_songs as $key => $value){
 
-                                          $count =1;
-                                        foreach($nationalTopDownload as $key => $value){
-                                            
                                             if($count>10) break;
                                             
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                                             $songs_img =  Configure::read('App.Music_Path').$songs_img; 
+
+
                                             
 					?>
 					<li>
 						
 						<div class="song-container">
-							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
-                                                        <img src="<?php echo $songs_img; ?>" alt="daftpunk" width="250" height="250" />
+							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
+                                                        <img class="lazy"  src="<?php echo $songs_img; ?>" alt="pitbull162x162" width="250" height="250" />                                                        
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-							
 
 <?php if($this->Session->read("patron")){ ?> 
 <!-- <a href="#" class="preview"></a>  -->
 <?php                                  if($value['Country']['SalesDate'] <= date('Y-m-d')) {
-                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Song']['ProdID'].', "'.base64_encode($value['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                        echo $html->image('/img/news/top-100/preview-off.png', array( "class" => "preview",  "style" => "cursor:pointer;display:block;border: 0px solid;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Song']['ProdID'].', "'.base64_encode($value['Song']['provider_type']).'", "'.$this->webroot.'");')); 
                                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "load_audio".$key)); 
                                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;border: 0px solid;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
                                   }
  }
-  ?>
-							<?php
+ ?>
+
+
+												
+
+
+<?php
 
     if($this->Session->read('patron')) {
         if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
@@ -122,7 +130,7 @@
                             <?php	
                     } else {
                     ?>
-                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="top-100-download-now-button" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
                     <?php
                     }
 
@@ -161,6 +169,7 @@
         <?php
         }
 }else{
+
 ?>
      <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
 
@@ -204,6 +213,18 @@
 															
 														</div>
                                                                                                     <?php } ?>
+
+
+
+
+
+
+
+
+
+
+
+
 							
 						</div>
 						<div class="album-title">
@@ -242,26 +263,30 @@
 			<div class="videos-scrollable horiz-scroll">
 				<ul>
 					<?php
-                                                                                
-                                            $count = 1;
+                                        
+                                        $count  =   1;  
+                                                                                                                        
 					//for($d=1;$d<$count;$d++) {
-                                        foreach($usTop10VideoDownload as $key => $value){
+// print_r($topDownload_videos_data); die;
+                                        foreach($new_releases_videos as $key => $value){
                                             
-                                            // $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                            // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
+                                             
+                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                              $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
-                                                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
+                                            
 					?>
 					<li>
 						
 						<div class="video-container">
-							<a href="javascript:void(0);">                                                        
-                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" />
+							<a href="javascript:void(0);">
+                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
-							<?php if($this->Session->read("patron")){ ?> 														
+
+                                                        <?php if($this->Session->read("patron")){ ?> 														
                                                             <a href="#" class="preview"></a>
                                                             <?php } ?>
 
@@ -338,46 +363,23 @@
     <?php
     }
     ?>
-							<!-- <a class="top-100-download-now-button" href="#">Download Now</a> -->
-							
+
+
+
+
+							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
+							<a class="add-to-playlist-button" href="#"></a>
+							<div class="wishlist-popover">
 								
-								<?php if($this->Session->read("patron")){ ?> 
-														
-														<a class="add-to-playlist-button" href="#"></a>
-														
-														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-															
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-                                                                                                  <?php } ?>
+								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
 								
-							
+								<div class="share clearfix">
+									<p>Share via</p>
+									<a class="facebook" href="#"></a>
+									<a class="twitter" href="#"></a>
+								</div>
+								
+							</div>
 							
 						</div>
 						<div class="album-title">
@@ -401,7 +403,7 @@
 					</li>
 					
 					<?php
-                                                $count++; 
+                                                 $count++;
 					}
 					
 					?>

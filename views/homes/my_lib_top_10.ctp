@@ -2,7 +2,13 @@
 
 <section class="my-top-100-page">
 		
-		<div class="breadcrumbs"><span>Home</span> > <span>Most Popular</span> > <span>My Top 10</span></div>
+		<div class="breadcrumbs">
+                    <?php
+                            
+                            $html->addCrumb('My Library Top 10', '/homes/my_lib_top_10');
+                            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+                    ?>
+                </div>
 		<header class="clearfix">
 			<h2>My Library Top 10</h2>
 			

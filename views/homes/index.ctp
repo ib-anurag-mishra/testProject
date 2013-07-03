@@ -503,7 +503,7 @@ array('class'=>'first','escape'=>false)) */ ?>
                                                                             $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                                                             $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                                                                             
-
+                                                                              if($sr_no>=20) break;
                                                                           
                                                                               ?>
 										<?php if($sr_no%2==0) {?><li> <?php }?>
@@ -570,6 +570,8 @@ array('class'=>'first','escape'=>false)) */ ?>
 
                                                                            $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                                                            $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+
+                                                                            if($sr_no>=20) break;
 ?>
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
