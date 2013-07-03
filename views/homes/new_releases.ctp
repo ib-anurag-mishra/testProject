@@ -16,7 +16,7 @@
 		<h3>Albums</h3>
 		<div class="album-shadow-container">
 			<div class="album-scrollable horiz-scroll">
-				<ul style="width:2500px;">
+				<ul style="width:25000px;">
 					<?php
                                         
 					 $count  =   1;           
@@ -67,7 +67,7 @@
 		<h3>Songs</h3>
 		<div class="songs-shadow-container">
 			<div class="songs-scrollable horiz-scroll">
-				<ul style="width:2500px;">
+				<ul style="width:25000px;">
 					<?php
                                                 
                                         $count  =   1;  
@@ -261,7 +261,7 @@
 		<h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
-				<ul style="width:2500px;">
+				<ul style="width:25000px;">
 					<?php
                                         
                                         $count  =   1;  
