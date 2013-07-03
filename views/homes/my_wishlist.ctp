@@ -25,7 +25,7 @@ if ($this->Session->read('Config.language') == 'en') {
 ?></div>
 		<header class="clearfix">
 			<h2>My Wishlist</h2>
-			<div class="faq-link">Need help? Visit our <a href="#">FAQ section.</a></div>
+			<div class="faq-link">Need help? Visit our <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>
 		</header>
 		<div class="instructions">
 			<p>
