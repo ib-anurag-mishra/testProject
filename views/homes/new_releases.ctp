@@ -76,7 +76,7 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_songs as $key => $value){
 
-                                            if($count>10) break;
+                                            //if($count>10) break;
                                             
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
