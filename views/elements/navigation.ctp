@@ -233,7 +233,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
-                                                    <li><?php echo $html->link(__('Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
+                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>                                            
                                             <div class="announcements">
