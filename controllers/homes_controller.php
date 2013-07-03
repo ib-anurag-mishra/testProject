@@ -45,7 +45,7 @@ class HomesController extends AppController
           }
           else                                          //  Before Login
           {
-                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password');
+                $this->Auth->allow('display','aboutus', 'index', 'us_top_10','chooser','forgot_password', 'new_releases');
           }
                 
         $this->Cookie->name = 'baker_id';
@@ -4064,5 +4064,10 @@ STR;
 			}
 		} 
 	}
+        
+        function new_releases() 
+        {
+           $this->layout = 'home';  
+        }
 }
 ?>
