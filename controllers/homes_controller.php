@@ -4103,12 +4103,12 @@ STR;
              
                
              
-             //if(1)
-             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+             if(1)
+            // if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                               // $countryPrefix = "us_";
+                                $countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
@@ -4181,12 +4181,12 @@ STR;
                 //////////////////////////////////Videos/////////////////////////////////////////////////////////
              
                 
-                //if(1)
-                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                if(1)
+               // if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                //$countryPrefix = "us_";
+                                $countryPrefix = "us_";
                                // $territory = "US";
                 
                 
@@ -4257,12 +4257,12 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
              
                 
-             //if(1)
-             if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
+             if(1)
+             //if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                //$countryPrefix = "us_";
+                                $countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
