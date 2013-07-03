@@ -66,7 +66,7 @@
 					<?php }	?>
 				});
 				var languageSet = '<?php echo $setLang; ?>';
-				var webroot = '<?php echo $this->webroot; ?>';
+                               	var webroot = '<?php echo $this->webroot; ?>';
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				var attributes = { id: "audioplayer" }; 
 				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);

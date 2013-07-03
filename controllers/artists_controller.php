@@ -669,7 +669,8 @@ Class ArtistsController extends AppController
 			$cond = array('Album.Advisory' => 'F');
 		}
 		else{
-			$cond = "";
+                    
+                    $cond = "";
 		}
 		$this->paginate =  array('conditions' =>
 					array('and' =>
