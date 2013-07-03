@@ -4157,7 +4157,7 @@ STR;
 	  	
 	  
 STR;
-                        //echo $sql_coming_soon; die;
+                        echo "<br>".$sql_coming_soon; 
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);
@@ -4233,7 +4233,7 @@ LIMIT 100
 STR;
                 
 
-               // echo $sql_cs_videos; die;
+                echo "<br>".$sql_cs_videos; 
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);                        
 
@@ -4311,7 +4311,7 @@ STR;
 	  	
 	  
 STR;
-                        //echo $sql_coming_soon; die;
+                        echo "<br>".$sql_coming_soon_albums; 
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);
