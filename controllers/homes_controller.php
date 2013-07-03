@@ -4103,12 +4103,12 @@ STR;
              
                
              
-             if(1)
-            // if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+             //if(1)
+             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                $countryPrefix = "us_";
+                               // $countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
@@ -4157,7 +4157,7 @@ STR;
 	  	
 	  
 STR;
-                        echo "<br>".$sql_coming_soon; 
+                        //echo $sql_coming_soon; die;
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);
@@ -4181,12 +4181,12 @@ STR;
                 //////////////////////////////////Videos/////////////////////////////////////////////////////////
              
                 
-                if(1)
-               // if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                //if(1)
+                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                $countryPrefix = "us_";
+                                //$countryPrefix = "us_";
                                // $territory = "US";
                 
                 
@@ -4233,7 +4233,7 @@ LIMIT 100
 STR;
                 
 
-                echo "<br>".$sql_cs_videos; 
+               // echo $sql_cs_videos; die;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);                        
 
@@ -4257,12 +4257,12 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
              
                 
-             if(1)
-             //if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
+             //if(1)
+             if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                $countryPrefix = "us_";
+                                //$countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
@@ -4311,7 +4311,7 @@ STR;
 	  	
 	  
 STR;
-                        echo "<br>".$sql_coming_soon_albums; 
+                        //echo $sql_coming_soon; die;
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);

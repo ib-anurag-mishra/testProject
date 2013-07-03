@@ -18,7 +18,9 @@
 			<div class="album-scrollable horiz-scroll">
 				<ul>
 					<?php
-                                        
+                                        echo "<pre>";
+print_r($new_releases_albums);
+
 					 $count  =   1;           
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_albums as $key => $value){
@@ -72,6 +74,8 @@
                                                 
                                         $count  =   1;  
                                                                                 
+echo "<pre>";
+print_r($new_releases_songs);
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_songs as $key => $value){
@@ -263,7 +267,8 @@
 			<div class="videos-scrollable horiz-scroll">
 				<ul>
 					<?php
-                                        
+ echo "<pre>";
+print_r($new_releases_videos);                                       
                                         $count  =   1;  
                                                                                                                         
 					//for($d=1;$d<$count;$d++) {
