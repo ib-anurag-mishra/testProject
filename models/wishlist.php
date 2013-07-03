@@ -8,7 +8,8 @@
 class Wishlist extends AppModel
 {
   var $name = 'Wishlist';
-  var $usetable = 'wishlists';
+  var $usetable = 'wishlists'; 
+  
   
   /*
    Function Name : getWishListInformation

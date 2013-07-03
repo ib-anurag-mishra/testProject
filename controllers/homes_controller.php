@@ -3284,15 +3284,43 @@ STR;
     */
     function my_wishlist() {
         $this->layout = 'home';
-        $libraryId = $this->Session->read('library');
-        $patronId = $this->Session->read('patron');
+        echo $libraryId = $this->Session->read('library');
+        echo '<br>';
+        echo $patronId = $this->Session->read('patron');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
         $wishlistResults = Array();
-        $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+        // $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+                
+        $wishlistQuery =<<<STR
+                    SELECT 
+                            wishlists.*,
+                            Song.ReferenceID,
+                            Song.ProdID,                            
+                            Song.provider_type,
+                            Song.ArtistText,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName                          
+                            
+                    FROM
+                            Songs AS Song
+                                    LEFT JOIN
+                            wishlists AS wishlists ON (wishlists.ProdID = Song.ProdID)
+                                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    WHERE
+                            library_id='$libraryId' and patron_id='$patronId'                               
+
+      
+	  
+STR;
+                    //execute the query
+                    $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+                
         $this->set('wishlistResults',$wishlistResults);
+        
     }
 
     /*
@@ -3603,9 +3631,9 @@ STR;
                 $downloadCount =  $downloadsUsed[0]['Download']['history'];
         echo "suces|".$downloadCount;
         } else {
-			echo "error";
-		}
-		exit;
+               echo "error";
+	}
+	exit;
     }
 	/*
      Function Name : admin_historyform
