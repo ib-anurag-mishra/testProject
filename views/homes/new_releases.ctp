@@ -273,10 +273,9 @@
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
                                              
-                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                               $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-echo '<pre>';
-                                            print_r($new_releases_videos); 
+
 					?>
 					<li>
 						
