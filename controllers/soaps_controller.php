@@ -27,7 +27,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video');
   var $components = array('Downloads','AuthRequest');
 
 
@@ -4587,44 +4587,65 @@ STR;
     );
     $library_territory = $libraryDetails['Library']['library_territory'];
     
-    if ( (( Cache::read("AppMyMusicVideosList_".$library_territory)) !== false) && (Cache::read("AppMyMusicVideosList_".$library_territory) !== null) ) {
-
-      $arrTemp = Cache::read("AppMyMusicVideosList_".$library_territory);
-
-      for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-        if(!(empty($arrTemp[$cnt]))) {
-          $sobj = new VideoSongDataType;
-          $sobj->VideoProdID           = $arrTemp[$cnt]['prd']['pid'];
-          $sobj->VideoReferenceID      = $arrTemp[$cnt]['v']['ReferenceID'];
-          $sobj->VideoTitle            = $this->getTextUTF($arrTemp[$cnt]['v']['Title']);
-          $sobj->VideoSongTitle        = $this->getTextUTF($arrTemp[$cnt]['v']['VideoTitle']);
-          $sobj->VideoArtistText       = $this->getTextUTF($arrTemp[$cnt]['v']['ArtistText']);
-          $sobj->VideoArtist           = $this->getTextUTF($arrTemp[$cnt]['v']['Artist']);
-          $sobj->VideoAdvisory         = $arrTemp[$cnt]['v']['Advisory'];
-          $sobj->VideoISRC             = $arrTemp[$cnt]['v']['ISRC'];
-          $sobj->VideoComposer         = $this->getTextUTF($arrTemp[$cnt]['v']['Composer']);
-          $sobj->VideoGenre            = $this->getTextUTF($arrTemp[$cnt]['gr']['Genre']);
-          $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
-          ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 1 : $sobj->VideoSalesStatus = 0;
-          $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
-          $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
-          $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['imgf']['ImgCdnPath'] . "/" . $arrTemp[$cnt]['imgf']['ImgSourceURL']);
+    if ( ((Cache::read("AppMyMusicVideosList_".$library_territory)) === false) || (Cache::read("AppMyMusicVideosList_".$library_territory) === null) ) {
       
-          $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
-        }
+      $this->Session->write('territory', $library_territory); 
+      $this->switchCpuntriesTable();
+      $breakdown_table = $this->Session->read('multiple_countries').'countries';
+      
+      $str_query = 'SELECT v.ProdID, v.ReferenceID, v.Title, v.VideoTitle, v.ArtistText, v.Artist, v.Advisory, v.ISRC, v.Composer,
+        v.FullLength_Duration, v.DownloadStatus, c.SalesDate, gr.Genre, ff.CdnPath AS VideoCdnPath, ff.SaveAsName AS VideoSaveAsName,
+        imgf.CdnPath AS ImgCdnPath, imgf.SourceURL AS ImgSourceURL, prd.pid, COUNT(vd.id) AS cnt
+        FROM video AS v
+        INNER JOIN '.$breakdown_table.' AS c ON v.ProdID = c.ProdID AND v.provider_type = c.provider_type
+        INNER JOIN Genre AS gr ON gr.ProdID = v.ProdID AND gr.provider_type = v.provider_type
+        INNER JOIN File AS ff ON v.FullLength_FileID = ff.FileID
+        INNER JOIN File AS imgf ON v.Image_FileID = imgf.FileID
+        INNER JOIN PRODUCT AS prd ON prd.ProdID = v.ProdID AND prd.provider_type = v.provider_type
+        LEFT JOIN videodownloads AS vd ON vd.ProdID = v.ProdID AND vd.provider_type = v.provider_type
+        WHERE c.Territory = "'.$library_territory.'" AND v.DownloadStatus = "1" GROUP BY v.ProdID
+        ORDER BY cnt DESC';
+        
+      $arr_video = array();  
+      $arr_video = $this->Video->query($str_query);
+      
+      if(!(empty($arr_video))){
+        Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+      }else{
+        throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
       }
-
-      $data = new SoapVar($video_list,SOAP_ENC_OBJECT,null,null,'ArrayVideoSongData');
-
-      return $data;
-
-
-    } else {
-
-      throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
+   
     }
     
-  
+    $arrTemp = Cache::read("AppMyMusicVideosList_".$library_territory);
+
+    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+      if(!(empty($arrTemp[$cnt]))) {
+        $sobj = new VideoSongDataType;
+        $sobj->VideoProdID           = $arrTemp[$cnt]['prd']['pid'];
+        $sobj->VideoReferenceID      = $arrTemp[$cnt]['v']['ReferenceID'];
+        $sobj->VideoTitle            = $this->getTextUTF($arrTemp[$cnt]['v']['Title']);
+        $sobj->VideoSongTitle        = $this->getTextUTF($arrTemp[$cnt]['v']['VideoTitle']);
+        $sobj->VideoArtistText       = $this->getTextUTF($arrTemp[$cnt]['v']['ArtistText']);
+        $sobj->VideoArtist           = $this->getTextUTF($arrTemp[$cnt]['v']['Artist']);
+        $sobj->VideoAdvisory         = $arrTemp[$cnt]['v']['Advisory'];
+        $sobj->VideoISRC             = $arrTemp[$cnt]['v']['ISRC'];
+        $sobj->VideoComposer         = $this->getTextUTF($arrTemp[$cnt]['v']['Composer']);
+        $sobj->VideoGenre            = $this->getTextUTF($arrTemp[$cnt]['gr']['Genre']);
+        $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
+        ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 1 : $sobj->VideoSalesStatus = 0;
+        $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
+        $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
+        $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['imgf']['ImgCdnPath'] . "/" . $arrTemp[$cnt]['imgf']['ImgSourceURL']);
+      
+        $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
+      }
+    }
+
+    $data = new SoapVar($video_list,SOAP_ENC_OBJECT,null,null,'ArrayVideoSongData');
+
+    return $data;
+
   }
    
 
