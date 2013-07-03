@@ -4610,7 +4610,7 @@ STR;
       $arr_video = $this->Video->query($str_query);
       
       if(!(empty($arr_video))){
-        Cache::write("AppMyMusicVideosList_".$territory, $arr_video);
+        Cache::write("AppMyMusicVideosList_".$library_territory, $arr_video);
       }else{
         throw new SOAPFault('Soap:client', 'Freegal is unable to update the information. Please try again later.');
       }
