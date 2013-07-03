@@ -4633,7 +4633,7 @@ STR;
         $sobj->VideoComposer         = $this->getTextUTF($arrTemp[$cnt]['v']['Composer']);
         $sobj->VideoGenre            = $this->getTextUTF($arrTemp[$cnt]['gr']['Genre']);
         $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
-        ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 1 : $sobj->VideoSalesStatus = 0;
+        ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
         $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
         $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
         $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['imgf']['ImgCdnPath'] . "/" . $arrTemp[$cnt]['imgf']['ImgSourceURL']);
