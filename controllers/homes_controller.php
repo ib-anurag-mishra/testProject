@@ -3284,9 +3284,8 @@ STR;
     */
     function my_wishlist() {
         $this->layout = 'home';
-        echo $libraryId = $this->Session->read('library');
-        echo '<br>';
-        echo $patronId = $this->Session->read('patron');
+        $libraryId = $this->Session->read('library');       
+        $patronId = $this->Session->read('patron');
         $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
 	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
