@@ -275,8 +275,8 @@
                                              
                                               $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                               $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-
-                                            
+echo '<pre>';
+                                            print_r($new_releases_videos); 
 					?>
 					<li>
 						
