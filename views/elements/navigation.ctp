@@ -232,9 +232,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
-                                                    <?php if($libraryInfo['Library']['library_unlimited'] != "1"){ ?>
-                                                    <li><?php echo $html->link(__('Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
-                                                    <?php } ?>     
+                                                    <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
+                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
+                                                    <?php /* } */ ?>     
                                             </ul>                                            
                                             <div class="announcements">
                                                     <h4><a href="#">Announcements</a></h4>
