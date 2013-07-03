@@ -87,7 +87,7 @@ if ($this->Session->read('Config.language') == 'en') {
 						
                                           ?>
                                             </a></div>
-					<div class="artist-name"><a href="/artists/album/<?php base64_encode($wishlistResults[$i]['Song']['ArtistText']); ?>">
+					<div class="artist-name"><a href="/artists/album/<?= base64_encode($wishlistResults[$i]['Song']['ArtistText']); ?>">
                                          <?php
 						if (strlen($wishlistResults[$i]['wishlists']['artist']) >= 19) {
 							echo '<span title="'.$this->getTextEncode(htmlentities($wishlistResults[$i]['wishlists']['artist'])).'">' .$this->getTextEncode(substr($wishlistResults[$i]['wishlists']['artist'], 0, 19)) . '...</span>';
