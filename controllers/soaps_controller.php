@@ -15,6 +15,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SuccessResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserTypeResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongDownloadSuccess.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoDownloadSuccess.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalFeaturedAlbum.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SearchData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'PageContent.php');
@@ -27,8 +28,8 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video');
-  var $components = array('Downloads','AuthRequest');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload');
+  var $components = array('Downloads','AuthRequest', 'Downloadsvideos');
 
 
   function index(){
@@ -67,6 +68,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SuccessResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserTypeResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongDownloadSuccess.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoDownloadSuccess.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."FreegalFeaturedAlbum.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SearchData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."PageContent.php");
@@ -88,6 +90,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("SuccessResponse", $siteUrl."soaps/");
     $test->addURLToClass("UserTypeResponse", $siteUrl."soaps/");
     $test->addURLToClass("SongDownloadSuccess", $siteUrl."soaps/");
+    $test->addURLToClass("VideoDownloadSuccess", $siteUrl."soaps/");
     $test->addURLToClass("FreegalFeaturedAlbum", $siteUrl."soaps/");
     $test->addURLToClass("SearchData", $siteUrl."soaps/");
     $test->addURLToClass("PageContent", $siteUrl."soaps/");
@@ -1065,18 +1068,15 @@ STR;
 	 * @return UserCurrentDownloadDataType[]
    */
 	function getUserCurrentDownload($libraryId, $authenticationToken) {
-
-
+  
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
 
     $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
-
-    $this->Download->recursive = -1;
-    $downloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-
-
+    
+    $downloadCount = $this->getTotalDownloadCound($libraryId, $patronId);
+    
     $this->Library->recursive = -1;
     $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libraryId)));
 
@@ -4058,7 +4058,7 @@ STR;
 
   /**
    * Function Name : songDownloadRequest
-   * Desc : Actions that is used for updating user download
+   * Desc : Actions that is used for updating user download request for audio
    * @param string $authentication_token
    * @param string $prodId
    * @param string $agent
@@ -4124,9 +4124,13 @@ STR;
         throw new SOAPFault('Soap:client', 'Requested song is not allowed to download.');
       }
       
-      if('inactive' == $libraryDetails['Library']['library_status']) {
+     if( 
+          ('inactive' == $libraryDetails['Library']['library_status']) || 
+          ($libraryDetails['Library']['library_download_limit'] <= $libraryDetails['Library']['library_current_downloads']) || 
+          ($libraryDetails['Library']['library_available_downloads'] > 1) 
+        ) {
         throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
-      }   
+      }    
 
       if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
         throw new SOAPFault('Soap:client', 'Song does not belong to current library territory.');
@@ -4172,10 +4176,7 @@ STR;
     $insertArr['ProductID'] = $TrackData['Song']['ProductID'];
     $insertArr['ISRC'] = $TrackData['Song']['ISRC'];
 
-
-    $lib_data = $this->Library->getlibrarydata($libId);
-    $library_authentication_method = $lib_data['Library']['library_authentication_method'];
-
+    $library_authentication_method = $libraryDetails['Library']['library_authentication_method'];
 
     if('user_account' == $library_authentication_method) {
 
@@ -4283,6 +4284,239 @@ STR;
 
           $wishlist = 0;
           return $this->createSongDownloadSuccessObject('Library limit exceeded.', '', false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
+        }
+      }
+
+    }
+
+  }
+  
+  /**
+   * Function Name : videoDownloadRequest
+   * Desc : Actions that is used for updating user download request for video
+   * @param string $authentication_token
+   * @param string $prodId
+   * @param string $agent
+	 * @return VideoDownloadSuccess[]
+   */
+
+  function videoDownloadRequest($authentication_token, $prodId, $agent) {
+    
+    
+    if(!($this->isValidAuthenticationToken($authentication_token))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+
+    $patId = $this->getPatronIdFromAuthenticationToken($authentication_token);
+    $libId = $this->getLibraryIdFromAuthenticationToken($authentication_token);
+    
+    $this->Library->recursive = -1;
+    $libraryDetails = $this->Library->find('first', array('conditions' => array('id' => $libId)));
+    
+    
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
+		 
+    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'single_channel'";
+    $siteConfigData = $this->Album->query($siteConfigSQL);
+    $checkValidation = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);  
+        
+    $log_name = 'video_stored_procedure_app_log_'.date('Y_m_d');
+    $log_id = md5(time());
+    $log_data = PHP_EOL."----------Request (".$log_id.") Start----------------".PHP_EOL;
+        
+    if($checkValidation){
+      
+      $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider_type, true, $libraryDetails['Library']['library_territory'], $patId, $agent, $libId);
+      
+      $log_data .=  "DownloadComponentParameters-ProdId= '".$prodId."':DownloadComponentParameters-Provider_type= '".$provider_type."':DownloadComponentParameters-isMobileDownload= 'true':DownloadComponentParameters-Territory= '".$libraryDetails['Library']['library_territory']."':DownloadComponentParameters-PatronID='".$patId."':DownloadComponentParameters-Agent='".$agent."':DownloadComponentParameters-LibID='".$libId."':DownloadComponentResponse-Status='".$validationResult[0]."':DownloadComponentResponse-Msg='".$validationResult[1]."':DownloadComponentResponse-ErrorTYpe='".$validationResult[2]."'"; 
+
+      if(false === $validationResult[0])  {
+        
+        $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------".PHP_EOL;
+        $this->log($log_data, $log_name);
+        
+        if(5 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }
+            
+        if(4 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }
+        
+        if(3 == $validationResult[2]) {
+          throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+        }        
+      }
+    } else {
+      
+      if(0 == $this->getDownloadStatusOfSong($prodId, $provider_type)) {
+        throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+      }
+           
+      if( 
+          ('inactive' == $libraryDetails['Library']['library_status']) || 
+          ($libraryDetails['Library']['library_download_limit'] <= $libraryDetails['Library']['library_current_downloads']) || 
+          ($libraryDetails['Library']['library_available_downloads'] > 1) 
+        ) {
+        throw new SOAPFault('Soap:client', 'Requested library is Inactive.');
+      }   
+
+      if(!($this->IsTerrotiry($prodId, $provider_type, $libId))) {
+        throw new SOAPFault('Soap:client', 'Video does not belong to current library territory.');
+      }
+      
+      if($this->IsDownloadable($prodId, $libraryDetails['Library']['library_territory'], $provider_type)) {
+        throw new SOAPFault('Soap:client', 'Requested video is not allowed to download.');
+      }
+      
+    }
+
+    $currentDownloadCount =  $this->getTotalDownloadCound($libId, $patId);
+
+    $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
+
+    $TrackData = $this->Video->find('first',
+        array(
+          'fields' => array(
+            'Video.ProdID',
+            'Video.ProductID',
+            'Video.Title',
+            'Video.VideoTitle',
+            'Video.Artist',
+            'Video.ISRC',
+            'Video.FullLength_FIleID'
+          ),
+          'conditions' => array(
+            'Video.ProdID' => $prodId,
+            'Video.provider_type' => $provider_type,
+          ),
+          'recursive' => -1,
+        )
+    );
+    
+    $insertArr = Array();
+    $insertArr['library_id'] = $libId;
+    $insertArr['patron_id'] = $patId;
+    $insertArr['ProdID'] = $prodId;
+    $insertArr['artist'] = addslashes($TrackData['Video']['Artist']);
+    $insertArr['track_title'] = addslashes($TrackData['Video']['VideoTitle']);
+    $insertArr['ProductID'] = $TrackData['Video']['ProductID'];
+    $insertArr['ISRC'] = $TrackData['Video']['ISRC'];
+
+    $library_authentication_method = $libraryDetails['Library']['library_authentication_method'];
+
+    if('user_account' == $library_authentication_method) {
+
+      $user = $this->User->find('first',array(
+          'fields' => array('email'),
+          'conditions' => array('User.id' => $patId),
+        )
+      );
+
+      $insertArr['email'] = $user['User']['email'];
+    } else {
+      $insertArr['email'] = '';
+    }
+
+    $insertArr['user_login_type'] = $library_authentication_method;
+    $insertArr['user_agent'] = mysql_real_escape_string($agent);
+    $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+
+	  $this->Library->setDataSource('master');
+    
+    if($maintainLatestDownload){
+      $procedure = 'videos_proc_d_ld';
+      $sql = "CALL videos_proc_d_ld('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Video']['ProductID']."', '".$TrackData['Video']['ISRC']."', '".addslashes($TrackData['Video']['Artist'])."', '".addslashes($TrackData['Video']['VideoTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+      
+    }else{
+      $procedure = 'videos_proc_d';
+      $sql = "CALL videos_proc_d('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Video']['ProductID']."', '".$TrackData['Video']['ISRC']."', '".addslashes($TrackData['Video']['Artist'])."', '".addslashes($TrackData['Video']['VideoTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
+    }
+    
+    
+
+    $this->Library->query($sql);
+		$sql = "SELECT @ret";
+		$data = $this->Library->query($sql);
+		$return = $data[0][0]['@ret'];
+    
+    $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$TrackData['Video']['ProductID']."':StoredProcedureParameters-ISRC='".$TrackData['Video']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($TrackData['Video']['Artist'])."':StoredProcedureParameters-VideoTitle='".addslashes($TrackData['Video']['VideoTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$provider_type."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
+    
+    if(is_numeric($return)){
+      
+      $this->LatestVideodownload->setDataSource('master');
+      $data = $this->LatestVideodownload->find('count', array(
+        'conditions'=> array(
+            "LatestDownloadVideo.library_id " => $libId,
+            "LatestDownloadVideo.patron_id " => $patId, 
+            "LatestDownloadVideo.ProdID " => $prodId,
+            "LatestDownloadVideo.provider_type " => $provider_type,     
+            "DATE(LatestDownloadVideo.created) " => date('Y-m-d'), 
+        ),
+        'recursive' => -1,
+      ));
+      
+
+      if(0 === $data){
+        $log_data .= ":NotInLD";
+      }
+      
+      if(false === $data){
+        $log_data .= ":SelectLDFail";
+      }
+      $this->LatestVideodownload->setDataSource('default');
+    }
+    
+    $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
+    
+    
+    $this->log($log_data, $log_name);
+    
+    
+		$this->Library->setDataSource('default');
+    $wishlist = 0;
+		if(is_numeric($return)){
+      
+      $data = $this->Files->find('first',
+        array(
+          'fields' => array(
+            'CdnPath',
+            'SaveAsName'
+          ),
+          'conditions' => array(
+            'FileID' => $TrackData['Video']['FullLength_FIleID']
+          ),
+          'recursive' => -1
+        )
+      );
+
+      $CdnPath = $data['Files']['CdnPath'];
+      $SaveAsName = $data['Files']['SaveAsName'];
+
+      $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+      $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+      
+      $wishlist = 0;
+      return $this->createVideoDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+2, $totalDownloadLimit, $wishlist);
+
+		}
+		else{
+
+      if('incld' == $return) {
+      
+        $wishlist = 0;
+        return $this->createVideoDownloadSuccessObject('Already downloaded.', '',false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
+      } else {
+        if('error' == $return) {
+
+          $wishlist = 0;
+          return $this->createVideoDownloadSuccessObject('Library limit exceeded.', '', false, $currentDownloadCount, $totalDownloadLimit, $wishlist);
         }
       }
 
@@ -4635,9 +4869,15 @@ STR;
         $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
         ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
         $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
-        $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
-        $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['imgf']['ImgCdnPath'] . "/" . $arrTemp[$cnt]['imgf']['ImgSourceURL']);
-      
+        
+        
+        $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . "sony_test/".$arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
+        
+
+
+        
+        $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);        
+            
         $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
       }
     }
@@ -5511,6 +5751,28 @@ STR;
   }
 
   /**
+   * return VideoDownloadSuccessType object
+   * @param string $method
+   * @return VideoDownloadSuccessType[]
+   */
+  private function createVideoDownloadSuccessObject($message, $video_url, $success, $currentDownloadCount, $totalDownloadLimit, $showWishlist){
+
+    $obj = new VideoDownloadSuccessType;
+
+    $obj->message                   = $message;
+    $obj->video_url                 = $video_url;
+    $obj->success                   = $success;
+    $obj->currentDownloadCount      = $currentDownloadCount;
+    $obj->totalDownloadLimit        = $totalDownloadLimit;
+    $obj->showWishlist              = $showWishlist;
+
+
+    $download_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'VideoDownloadSuccessType');
+    return new SoapVar($download_list,SOAP_ENC_OBJECT,null,null,'ArrayVideoDownloadSuccessType');
+
+  }
+  
+  /**
    * return int (0,1)
    * @param int $songProdID
    * @param string $provider_type
@@ -5742,6 +6004,28 @@ STR;
     return Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);   
     
   }
+  
+  
+  /**
+   * Function Name : getTotalDownloadCound
+   * Desc : returns total download count for login patron
+   * @param int libraryId
+   * @param string patronId
+   * @return int
+   */
+  private function getTotalDownloadCound($libraryId, $patronId) {
+  
+    $this->Download->recursive = -1;
+    $downloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+
+
+    $videoDownloadCount = $this->Videodownload->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+    $videoDownloadCount = $videoDownloadCount *2;
+    return $downloadCount + $videoDownloadCount;
+    
+  }
+ 
+
   
   
 }
