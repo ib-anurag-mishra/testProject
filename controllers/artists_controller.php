@@ -8,7 +8,7 @@
 Class ArtistsController extends AppController
 {
 	var $name = 'Artists';
-	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download' );
+	var $uses = array( 'Featuredartist', 'Artist', 'Newartist','Files','Album','Song','Download','Video' );
 	var $layout = 'admin';
 	var $helpers = array('Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Page', 'Wishlist', 'Language','Album');
 	var $components = array('Session', 'Auth', 'Acl','RequestHandler','Downloads','ValidatePatron','CdnUpload');
@@ -1148,12 +1148,67 @@ Class ArtistsController extends AppController
             //$this->set('count_albums',count($albumData));        
             $albumSongs = array();
             $this->set('albumData', $albumData);
+            if(isset($albumData[0]['Album']['Artist'])) {
+                $this->set('artisttitle',$albumData[0]['Album']['Artist']);
+            }            
             if(isset($albumData[0]['Song']['ArtistURL'])) {
                 $this->set('artistUrl',$albumData[0]['Song']['ArtistURL']);
             }else {
                 $this->set('artistUrl', "N/A");
             }
-
+            $decodedId = trim(base64_decode($id));
+                 $country = $this->Session->read('territory');
+                 if(!empty($country)){
+                 $countryPrefix = $this->Session->read('multiple_countries');                 
+                 $sql_us_10_v =<<<STR
+                SELECT 
+                                Video.ProdID,
+                                Video.ReferenceID,
+                                Video.Title,
+                                Video.ArtistText,
+                                Video.DownloadStatus,
+                                Video.VideoTitle,
+                                Video.Artist,
+                                Video.Advisory,
+                                Video.Sample_Duration,
+                                Video.FullLength_Duration,
+                                Video.provider_type,
+                                Genre.Genre,
+                                Country.Territory,
+                                Country.SalesDate,
+                                Full_Files.CdnPath,
+                                Full_Files.SaveAsName,
+                                Full_Files.FileID,
+                                Image_Files.FileID,
+                                Image_Files.CdnPath,
+                                Image_Files.SourceURL,
+                                PRODUCT.pid
+                FROM
+                                video AS Video
+                                                LEFT JOIN
+                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                                                LEFT JOIN
+                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                                                LEFT JOIN
+         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                                                LEFT JOIN
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                LEFT JOIN
+                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE
+                                ( (Video.DownloadStatus = '1') AND ((Video.ArtistText) IN ('$decodedId')) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                GROUP BY Video.ProdID
+                ORDER BY FIELD(Video.ProdID, '$decodedId') ASC
+                LIMIT 10 
+                  
+STR;
+         
+                    //echo $sql_national_100_v; die;
+                    $artistVideoList = $this->Video->query($sql_us_10_v);
+                    $this->set('artistVideoList',$artistVideoList);
+                    
+                    
+                 }
 	}
         
         function album_ajax($id=null,$album=null,$provider=null)

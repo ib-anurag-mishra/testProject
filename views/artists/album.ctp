@@ -1,6 +1,9 @@
+<section class="artist-page">
 <div class="breadCrumb">
 	<?php
-		$reffer_url = $_SERVER['HTTP_REFERER'];
+		if(!empty($_SERVER['HTTP_REFERER'])){
+                    $reffer_url = $_SERVER['HTTP_REFERER'];
+                }
 		if(isset($genre)){
 			$genre_text_conversion = array(
 				"Children's Music" =>  "Children's" ,
@@ -70,11 +73,17 @@
 	?>	
 </div>
 <br class="clr">
+<header class="clearfix">
+        <?php if(isset($artisttitle)){ ?>
+            <h2><?php echo $artisttitle; ?></h2>
+        <?php } ?>
+        <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
+</header>
 <?php
-$explodeUrl = explode("page:", $_SERVER['HTTP_REFERER']);
-$explodeUrl = explode("genres/view/", $explodeUrl[0]);
-$explodeUrl[1] = str_replace("/", "", $explodeUrl[1]);
-
+if(!empty($_SERVER['HTTP_REFERER'])){
+    $explodeUrl = explode("page:", $_SERVER['HTTP_REFERER']);
+    $explodeUrl = explode("genres/view/", $explodeUrl[0]);
+    $explodeUrl[1] = str_replace("/", "", $explodeUrl[1]);
 if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && strpos($_SERVER['HTTP_REFERER'], "page:") == "")
 {
     echo $javascript->link('backfix.min.js');
@@ -103,59 +112,57 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
     </script>
 <?php
 }
+}
 ?>
-<div style="padding-left:46px;padding-right:40px;" >
-<table  width="100%">
+<h3>Albums</h3>
+<div class="album-shadow-container">
+        <div class="album-scrollable horiz-scroll">
+            <?php if(!empty($albumData)){ ?>
+                <ul>
 <?php
-$i = 0;
 	foreach($albumData as $album_key => $album):
-	if($i == 0){
-		echo "<tr>";
-	}
-	$i++;
 ?>
-		<td valign="top" >
-		<div id="album_list_page" style="float:left">
-			<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
-			<div class="album_lgAlbumArtwork" style="float:left">
-                                <?php
-                                    if(empty($album['Files']['CdnPath'])){
-                                        if(empty($album['Files']['SourceURL'])){
-                                            mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
-                                        } else {
-                                            mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
-                                        }
+            <li>
+                    <div class="album-container">
+                        <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($artisttext)); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
+                            <?php
+                                if(empty($album['Files']['CdnPath'])){
+                                    if(empty($album['Files']['SourceURL'])){
+                                        mail(Configure::read('TO'),"Album Artwork","CdnPath and SourceURL missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
+                                    } else {
+                                        mail(Configure::read('TO'),"Album Artwork","CdnPath missing for Album ".$album['Album']['AlbumTitle']." ProdID ".$album['Album']['ProdID']." Provider Type : ".$album['Album']['provider_type']." ProdID ".$album['Album']['provider_type']." is missing",Configure::read('HEADERS'));
                                     }
+                                }
+                            ?>
+                            <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                            <?php
+                                    $image = Configure::read('App.Music_Path').$albumArtwork;
+                                    if($page->isImage($image)) {
+                                            // Image is a correct one
+                                    }
+                                    else {
+                                            //mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                    }
+                            ?>
+                            <img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="162" height="162">
+                        </a>   
+                    </div>
+                    <div class="album-title">
+                        <a href="/artists/view/<?php echo str_replace('/','@',base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
+
+                                <b>
+                                <?php
+                                if(strlen($album['Album']['AlbumTitle']) >= 50){
+                                        $album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
+                                }
                                 ?>
-				<?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
-				<?php
-					$image = Configure::read('App.Music_Path').$albumArtwork;
-					if($page->isImage($image)) {
-						// Image is a correct one
-					}
-					else {
-						//mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
-					}
-				?>
-				<img src="<?php echo Configure::read('App.Music_Path').$albumArtwork; ?>" width="100" height="100" border="0">
-			</div>
-			</a>			
-			<div class="albumData" style="float:left">
-				<a href="/artists/view/<?php echo str_replace('/','@',base64_encode($album['Album']['ArtistText'])); ?>/<?php echo $album['Album']['ProdID'];  ?>/<?php echo base64_encode($album['Album']['provider_type']);  ?>" >
-				<div class="albumlistBox">
-					<b>
-					<?php
-					if(strlen($album['Album']['AlbumTitle']) >= 50){
-						$album['Album']['AlbumTitle'] = substr($album['Album']['AlbumTitle'], 0, 50). '...';
-					}
-					?>
-					<?php echo $this->getTextEncode($album['Album']['AlbumTitle']);?>		
-					</b>
-				</div>
-				</a>
-				<div class="album_artistInfo" style="float:left">
-					<?php
-						echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
+                                <?php 
+                                echo $this->getTextEncode($album['Album']['AlbumTitle']);?>		
+                                </b>
+                        </a>
+                    </div>
+                    <div class="genre">
+                        <?php echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
 							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							echo '<br />';
@@ -163,31 +170,186 @@ $i = 0;
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<font class="explicit"> (Explicit)</font>';
                             echo '<br />';
+                        } ?>
+                    </div>
+                    <div class="label">
+                        <?php 
+                        if ($album['Album']['Label'] != '') {
+                                echo __("Label").': ' . $this->getTextEncode($album['Album']['Label']);
+                                echo '<br />';
                         }
-						if ($album['Album']['Label'] != '') {
-							echo __("Label").': ' . $this->getTextEncode($album['Album']['Label']);
-							echo '<br />';
-						}
-						if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
-							echo $this->getTextEncode($album['Album']['Copyright']);
-						}
-					?>
-				</div>
-			</div>			
-		</div>
-		</td>
+                        if ($album['Album']['Copyright'] != '' && $album['Album']['Copyright'] != 'Unknown') {
+                                echo $this->getTextEncode($album['Album']['Copyright']);
+                        } ?>
+                    </div>
+            </li>		
 <?php
-if($i == 3){
-	echo "</tr>";
-	$i = 0;
-}
 	endforeach;
 ?>
-</table>
-</div>
+    </ul>
+    <?php }else{ ?>
+            <h2> There are no Albums associated with this Artist <h2>
+    <?php } ?>                        
+  </div>
+</div>    
+
+<h3>Videos</h3>
+		<div class="videos-shadow-container">
+			<div class="videos-scrollable horiz-scroll">
+                            <?php if(!empty($artistVideoList)){ ?>
+                            <ul>
+                                <?php 
+                                foreach($artistVideoList as $key => $value){
+                                            
+                                            // $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                             //$video_img =  Configure::read('App.Music_Path').$video_img;
+
+                                                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+
+					?>  
+					<li>
+						
+						<div class="video-container">
+							<a href="javascript:void(0);">                                                        
+                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="jlo" width="272" height="162" />
+                                                        </a>                                                  
+<?php
+
+    if($this->Session->read('patron')) {
+        if($value['Country']['SalesDate'] <= date('Y-m-d')) { 
+
+            if($libraryDownload == '1' && $patronDownload == '1') {
+
+                    $value['Video']['status'] = 'avail1';
+                    if($value['Video']['status'] != 'avail' ) {
+                            ?>
+                            <span class="top-100-download-now-button">
+                            <form method="Post" id="form<?php echo $value["Video"]["ProdID"]; ?>" action="/videos/download" class="suggest_text1">
+                            <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
+                            <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
+                            <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
+                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="top-10-download-now-button" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            </span>
+                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                            <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                            </form>
+                            </span>
+                            <?php	
+                    } else {
+                    ?>
+                            <a class="top-100-download-now-button" href='/homes/my_history'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __('Downloaded'); ?></label></a>
+                    <?php
+                    }
+
+            } else {
+
+                if($libraryDownload != '1') {
+                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                        $wishlistCount = $wishlist->getWishlistCount();
+                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
+                        ?> 
+                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <?php
+                        } else {
+                                $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
+                                if($wishlistInfo == 'Added to Wishlist') {
+                                ?> 
+                                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                <?php 
+                                } else { 
+                                ?>
+                                        <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>","<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                        <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+                                <?php	
+                                }
+                        }
+
+                } else { 
+                ?>
+                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                <?php	
+                }												
+            }
+        } else {
+        ?>
+            <a class="top-100-download-now-button" href="javascript:void(0);"><span title='<?php __("Coming Soon");?> ( <?php if(isset($value['Country']['SalesDate'])){ echo date("F d Y", strtotime($value['Country']['SalesDate']));} ?> )'><?php __("Coming Soon");?></span></a>
+        <?php
+        }
+}else{
+
+?>
+     <a class="top-10-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
 
 
-<?php  $pages = $this->Paginator->counter(array('format' => '%pages%')); 
+    <?php
+    }
+    ?>
+							<!-- <a class="top-100-download-now-button" href="#">Download Now</a> -->
+							
+								
+								<?php if($this->Session->read("patron")){ ?> 
+														
+														<a class="add-to-playlist-button" href="#"></a>
+														
+														<div class="wishlist-popover">
+															<!--
+															<div class="playlist-options">
+																<ul>
+																	<li><a href="#">Create New Playlist</a></li>
+																	<li><a href="#">Playlist 1</a></li>
+																	<li><a href="#">Playlist 2</a></li>
+																	<li><a href="#">Playlist 3</a></li>
+																	<li><a href="#">Playlist 4</a></li>
+																	<li><a href="#">Playlist 5</a></li>
+																	<li><a href="#">Playlist 6</a></li>
+																	<li><a href="#">Playlist 7</a></li>
+																	<li><a href="#">Playlist 8</a></li>
+																	<li><a href="#">Playlist 9</a></li>
+																	<li><a href="#">Playlist 10</a></li>
+																</ul>
+															</div>
+															
+															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															-->
+															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+															<div class="share clearfix">
+																<p>Share via</p>
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
+															</div>
+															
+														</div>
+                                                                                                  <?php } ?>
+								
+							
+							
+						</div>
+						<div class="song-title">
+							<a href="javascript:void(0);">
+                                                        <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
+                                                                if(strlen($value['Video']['VideoTitle'])>35)
+                                                                echo substr($value['Video']['VideoTitle'],0,35)."..."; 
+                                                                else echo $value['Video']['VideoTitle'];
+                                                         ?>
+                                                         </a>						
+                                                </div>
+						<div class="genre">
+							<?php echo __('Genre').": ".$html->link($this->getTextEncode($value['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($value['Genre']['Genre']))) . '<br />'; ?>
+						</div>
+						<div class="label">
+							Label: Sony Music
+						</div>                                            
+					</li>
+                                  <?php } ?>      
+                            </ul>
+                            <?php }else{ ?>
+                            
+                            <h2> There are no videos associated with this Artist </h2>
+                            <?php } ?>
+<?php  /*$pages = $this->Paginator->counter(array('format' => '%pages%')); 
 if($pages > 1) {
 ?>
 
@@ -197,5 +359,7 @@ if($pages > 1) {
 	<?php echo $paginator->next(__('next', true).' >>', array(), null, array('class'=>'disabled'));?>
 </div>
     
- <?php } ?>
+ <?php } */?>
+ 
 <br class="clr">
+</section>
