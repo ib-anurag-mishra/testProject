@@ -4297,7 +4297,7 @@ STR;
    * @param string $authentication_token
    * @param string $prodId
    * @param string $agent
-	 * @return VideoDownloadSuccess[]
+	 * @return VideoDownloadSuccessType[]
    */
 
   function videoDownloadRequest($authentication_token, $prodId, $agent) {
