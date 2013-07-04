@@ -3364,7 +3364,8 @@ STR;
                 $sortType = $sortOrder;
                 break;
             case 'album':  
-                $songSortBy = 'created';
+                $songSortBy = 'Song.Title';
+                $videoSortBy = 'Video.Title';
                 $sortType = $sortOrder;
                 break;
         }
