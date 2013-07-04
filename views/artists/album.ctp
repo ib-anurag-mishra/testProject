@@ -114,10 +114,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 }
 }
 ?>
-<h3>Albums</h3>
-<div class="album-shadow-container">
-        <div class="album-scrollable horiz-scroll">
             <?php if(!empty($albumData)){ ?>
+            <h3>Albums</h3>
+            <div class="album-shadow-container">
+            <div class="album-scrollable horiz-scroll">
                 <ul>
 <?php
 	foreach($albumData as $album_key => $album):
@@ -187,16 +187,14 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 	endforeach;
 ?>
     </ul>
-    <?php }else{ ?>
-            <h2> There are no Albums associated with this Artist <h2>
-    <?php } ?>                        
   </div>
-</div>    
+</div>                  
+    <?php } ?>                        
 
-<h3>Videos</h3>
+                            <?php if(!empty($artistVideoList)){ ?>
+            <h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
-                            <?php if(!empty($artistVideoList)){ ?>
                             <ul>
                                 <?php 
                                 foreach($artistVideoList as $key => $value){
@@ -345,9 +343,8 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 					</li>
                                   <?php } ?>      
                             </ul>
-                            <?php }else{ ?>
-                            
-                            <h2> There are no videos associated with this Artist </h2>
+                         </div>
+                    </div>
                             <?php } ?>
 <?php  /*$pages = $this->Paginator->counter(array('format' => '%pages%')); 
 if($pages > 1) {
