@@ -124,12 +124,23 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                        <?php 
                                             $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
                                             if($library != 'www' && $library != 'freading' && $library != '50'){
-                                                echo $html->link(__('Log in', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
+                                                echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
                                             } else {
-                                                echo $html->link(__('Log in', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
+                                                echo $html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
                                             }
                                        ?>
+                                       
                                    </div>
+                                    
+					<div class="small-divider"></div>
+					<div class="tooltip">
+						<a href="#"><img src="<? echo $this->webroot; ?>app/webroot/img/note-icon.png" alt="tooltip_play_btn" width="17" height="17"></a>						
+					</div>
+                                        <div class="account-options-menu">                                            
+                                            
+                                            <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
+                                        </div>
+					<div class="play-count"><span id='downloads_used'>0</div>     
                                </div>
                                 <?php  } ?>
 			</header>
@@ -159,6 +170,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     {
                         $genreCss = "regular active";
                     }
+                     else if($_SERVER['REQUEST_URI'] == 'homes/new_releases')
+                    {
+                        $newReleaseCss = "regular active";
+                    }
                     else if($_SERVER['REQUEST_URI'] == '/questions')
                     {
                         $faqCss = "regular active";
@@ -168,6 +183,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<li class="regular"><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
                         <li class="most-popular"><a href="#">Most Popular</a></li>
+                        <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
                         <li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
                     </ul>
@@ -198,7 +214,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                                     <?php } ?>
                                                                     <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
                                                             </ul>
-                                                    </li>                                                    
+                                                    </li>  
+                                                    <li>
+                                                            <?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases'),array('class'=>'sidebar-anchor')); ?>
+                                                    </li> 
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
                                             <?php if($this->Session->read('library_type') == '2') {?>
