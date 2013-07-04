@@ -4499,7 +4499,8 @@ STR;
       $CdnPath = $data['Files']['CdnPath'];
       $SaveAsName = $data['Files']['SaveAsName'];
 
-      $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
+      $songUrl = shell_exec('perl files/tokengen ' . "sony_test/".$CdnPath . "/" . $SaveAsName);
+      
       $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
       
       $wishlist = 0;
@@ -4869,14 +4870,8 @@ STR;
         $sobj->VideoDownloadStatus   = $arrTemp[$cnt]['v']['DownloadStatus'];                     
         ($arrTemp[$cnt]['c']['SalesDate'] <= date('Y-m-d')) ? $sobj->VideoSalesStatus = 0 : $sobj->VideoSalesStatus = 1;
         $sobj->VideoFullLength_Duration   = $arrTemp[$cnt]['v']['FullLength_Duration'];          
-        
-        
-        $sobj->VideoFullLength_FileURL = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . "sony_test/".$arrTemp[$cnt]['ff']['VideoCdnPath'] . "/" . $arrTemp[$cnt]['ff']['VideoSaveAsName']);
-        
-
-
-        
-        $sobj->VideoImage_FileURL = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);        
+        $sobj->VideoFullLength_FileURL = '';
+        $sobj->VideoImage_FileURL      = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$arrTemp[$cnt]['imgf']['ImgCdnPath']."/".$arrTemp[$cnt]['imgf']['ImgSourceURL']);       
             
         $video_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'VideoSongDataType');
       }
