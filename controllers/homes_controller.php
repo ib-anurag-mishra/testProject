@@ -3174,11 +3174,13 @@ STR;
      Desc : To send mail to patrons with new password
     */
     function forgot_password() {
+        
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-        $this->layout = 'login';
+        //$this->layout = 'login';
+           $this->layout = 'home';
 		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){
@@ -3189,8 +3191,13 @@ STR;
 		else{
 			$this->Session->write('Config.language', 'en');
 		}
-        if($this->data){
-            $email = $this->data['Home']['email'];
+        if($_POST['hid_action']==1){
+            
+//            echo '<pre>';
+//            print_r($_POST);
+//            die;
+            
+            $email = $_POST['email'];
             if($email == ''){
                 $errorMsg = "Please provide your email address.";
             }
@@ -3202,10 +3209,10 @@ STR;
                 if(count($email_exists) == 0){
                     $errorMsg = "This is not a valid patron email.";
                 }
-            }
-            if($errorMsg != ''){
+            } //echo $errorMsg; die;
+            if($errorMsg != ''){ 
                 $this->Session->setFlash($errorMsg);
-                $this->redirect($this->webroot.'homes/forgot_password');
+               // $this->redirect($this->webroot.'homes/forgot_password');
             }
             else{
                 $temp_password = $this->PasswordHelper->generatePassword(8);
