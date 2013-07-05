@@ -105,7 +105,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 } 
                                                 if($isLibaryExistInTimzone ==1)
                                                 { 
-                                                    echo "<div>".$html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'my_account'))."</div>";
+                                                    echo "<div>".$html->link(__('Notifications', true), array('controller' => 'users', 'action' => 'manage_notification'))."</div>";
                                                 }
                                             ?>
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>

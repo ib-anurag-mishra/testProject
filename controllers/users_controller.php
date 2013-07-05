@@ -1098,39 +1098,6 @@ Class UsersController extends AppController
                         }                        
                     }
                 }
-                
-                
-           
-                
-                //display notification form when library exist in to the library timzone table
-                if($this->Session->read('isLibaryExistInTimzone')==1){                    
-                
-                      $this->set('notificationShow', 1); 
-                      $this->set('notificationAlreadySave', 'false');  
-                      $this->set('notificationEmail', '');                      
-                      
-                      
-                      $notidataRecord = $this->NotificationSubscriptions->find('first', array('conditions' => array('patron_id' => $patronId,'library_id' => $this->Session->read('library')),'fields'=>array('email_id')));                          
-                    
-                      
-                      //count($notidataRecord);
-                      if(count($notidataRecord) > 0) {
-                          
-                       
-                        if($notidataRecord['NotificationSubscriptions']['email_id']==''){
-                            //get user email address if email not there
-                            $getUserData = $this->User->find('first', array('conditions' => array('User.id' => $patronId),'fields'=>array('User.email')));
-                            $this->set('notificationEmail', $getUserData['User']['email']);
-                        }else{
-                            $this->set('notificationAlreadySave', 'true');
-                            $this->set('notificationEmail', $notidataRecord['NotificationSubscriptions']['email_id']);
-                        }
-                        
-                      }
-                }
-               
-                   
-		
 	}
     
         /*
@@ -1138,6 +1105,35 @@ Class UsersController extends AppController
         Desc : For manage email notification information
     */
         function manage_notification(){
+            
+            $this->layout = 'home';
+            $patronId = $this->Session->read('patron');                
+            //display notification form when library exist in to the library timzone table
+            if($this->Session->read('isLibaryExistInTimzone')==1){                    
+
+                  $this->set('notificationShow', 1); 
+                  $this->set('notificationAlreadySave', 'false');  
+                  $this->set('notificationEmail', '');                      
+
+
+                  $notidataRecord = $this->NotificationSubscriptions->find('first', array('conditions' => array('patron_id' => $patronId,'library_id' => $this->Session->read('library')),'fields'=>array('email_id')));                          
+
+
+                  //count($notidataRecord);
+                  if(count($notidataRecord) > 0) {
+
+
+                    if($notidataRecord['NotificationSubscriptions']['email_id']==''){
+                        //get user email address if email not there
+                        $getUserData = $this->User->find('first', array('conditions' => array('User.id' => $patronId),'fields'=>array('User.email')));
+                        $this->set('notificationEmail', $getUserData['User']['email']);
+                    }else{
+                        $this->set('notificationAlreadySave', 'true');
+                        $this->set('notificationEmail', $notidataRecord['NotificationSubscriptions']['email_id']);
+                    }
+
+                  }
+            }            
             $patronId = $this->Session->read('patron');
             $libaryID = $this->Session->read('library');
              if(isset($this->data)){
@@ -1160,7 +1156,7 @@ Class UsersController extends AppController
 
                         if($this->NotificationSubscriptions->save()){                                
                             $this->Session->setFlash('Notification information has been updated successfully!');
-                            $this->redirect($this->webroot.'users/my_account');
+                            $this->redirect($this->webroot.'users/manage_notification');
                         }  
                        
                        
@@ -1177,7 +1173,7 @@ Class UsersController extends AppController
                         
                         if($this->NotificationSubscriptions->save()){                                
                             $this->Session->setFlash('Notification information has been saved successfully!');
-                            $this->redirect($this->webroot.'users/my_account');
+                            $this->redirect($this->webroot.'users/manage_notification');
                         }                       
                    }                    
                     
@@ -1185,7 +1181,7 @@ Class UsersController extends AppController
                    
                    $this->NotificationSubscriptions->deleteAll(array('library_id' => $libaryID,'patron_id' => $patronId));
                    $this->Session->setFlash('Notification information has been removed successfully!');
-                   $this->redirect($this->webroot.'users/my_account'); 
+                   $this->redirect($this->webroot.'users/manage_notification'); 
                    
                }
                 
