@@ -1455,6 +1455,8 @@ STR;
 			$ustop10Albums = $this->Album->query($sql_us_albums);
 			// Checking for download status
 			
+                        Cache::write("national_us_top10_albums".$territory, $ustop10Albums);
+                        
 		}
                  else
                 {
@@ -1568,7 +1570,7 @@ STR;
 STR;
                     //echo $sql_national_100_v; die;
                     $usTop10VideoDownload = $this->Video->query($sql_us_10_v);
-                    
+                    Cache::write("national_us_top10_videos".$territory, $usTop10VideoDownload);
                     
 //                    echo "<pre>";
 //                    print_r($usTop10VideoDownload);
