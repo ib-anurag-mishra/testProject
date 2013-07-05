@@ -36,7 +36,7 @@
 //		echo $form->input('email', array('label' => __('Email', true),'div' => false, 'alt'=>__('Email', true)));
 //		echo '</div>';
 	//echo $form->end(array('label' => __('Submit', true),'div' => false, 'class' => 'submit'));
-        echo $this->Html->div('loginbtn', $form->end('submit'));
+        echo $this->Html->div('loginbtn', $form->end('Submit'));
 //	echo '</fieldset>';
 //	echo '</div>';
 //	echo '</div>';
@@ -47,31 +47,31 @@
     
 <ul class="lang">
 	<?php
-	$language = $language->getLanguage();
-	if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
-		$lang = "English";
-	}
-	elseif($this->Session->read('Config.language') == 'es'){
-		$lang = "Espa�ol";
-	}
-	elseif($this->Session->read('Config.language') == 'fr'){
-		$lang = "Français";
-	}
-	elseif($this->Session->read('Config.language') == 'it'){
-		$lang = "Italiano";
-	}
-	foreach($language as $k => $v){
-		?>
-		<li id="<?php echo $k; ?>" onClick="changeLang_password(<?php echo $k;?>,'forgot_password')"
+//	$language = $language->getLanguage();
+//	if($this->Session->read('Config.language') == 'en' || $this->Session->read('Config.language') == ''){
+//		$lang = "English";
+//	}
+//	elseif($this->Session->read('Config.language') == 'es'){
+//		$lang = "Espa�ol";
+//	}
+//	elseif($this->Session->read('Config.language') == 'fr'){
+//		$lang = "Français";
+//	}
+//	elseif($this->Session->read('Config.language') == 'it'){
+//		$lang = "Italiano";
+//	}
+//	foreach($language as $k => $v){
+//		?>
+		<li id="<?php //echo $k; ?>" onClick="changeLang_password(<?php echo $k;?>,'forgot_password')"
 		<?php
-		if($v == $lang){
-			echo 'class = "active"';
-		}
-		else {
-			echo 'class = "non-active"';
-		}
-		echo '>'.$v.'</li>';
-	}
+//		if($v == $lang){
+//			echo 'class = "active"';
+//		}
+//		else {
+//			echo 'class = "non-active"';
+//		}
+//		echo '>'.$v.'</li>';
+//	}
 	?>
 </ul>
 <div class="clr"></div>
