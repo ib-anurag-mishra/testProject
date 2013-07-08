@@ -4141,10 +4141,8 @@ STR;
       }
       
     }
-
-
-    $this->Download->recursive = -1;
-    $currentDownloadCount =  $this->Download->find('count',array('conditions' => array('library_id' => $libId, 'patron_id' => $patId, 'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+    
+    $currentDownloadCount = $this->getTotalDownloadCound($libId, $patId);
 
     $totalDownloadLimit  =  $libraryDetails['Library']['library_user_download_limit'];
 
@@ -4453,11 +4451,11 @@ STR;
       $this->LatestVideodownload->setDataSource('master');
       $data = $this->LatestVideodownload->find('count', array(
         'conditions'=> array(
-            "LatestDownloadVideo.library_id " => $libId,
-            "LatestDownloadVideo.patron_id " => $patId, 
-            "LatestDownloadVideo.ProdID " => $prodId,
-            "LatestDownloadVideo.provider_type " => $provider_type,     
-            "DATE(LatestDownloadVideo.created) " => date('Y-m-d'), 
+            "LatestVideodownload.library_id " => $libId,
+            "LatestVideodownload.patron_id " => $patId, 
+            "LatestVideodownload.ProdID " => $prodId,
+            "LatestVideodownload.provider_type " => $provider_type,     
+            "DATE(LatestVideodownload.created) " => date('Y-m-d'),
         ),
         'recursive' => -1,
       ));
