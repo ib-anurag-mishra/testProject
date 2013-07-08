@@ -4213,7 +4213,7 @@ STR;
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);
 //                        die;
-                      
+                     // GROUP BY Song.ProdID,
                         if(!empty($coming_soon_rs)){
                           Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
                         }
@@ -4366,7 +4366,7 @@ STR;
 	  
 STR;
                         //echo $sql_coming_soon_albums; die;
-                       
+                       //GROUP BY  Song.ReferenceID
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
 //                        echo "<pre>";
 //                        print_r($coming_soon_albums_rs);
