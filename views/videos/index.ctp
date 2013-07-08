@@ -56,7 +56,8 @@
                                 <?php
                                 } else {
                                 ?>
-                                <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                <!-- <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>-->
+                                <a class="add-to-playlist-button" href="/users/redirection_manager"></a>
                                 <?php
                                 }
                                 ?>
