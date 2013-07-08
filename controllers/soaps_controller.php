@@ -4049,13 +4049,60 @@ STR;
 
     $songUrl = shell_exec('perl ' .ROOT . DS . APP_DIR . DS . WEBROOT_DIR . DS . 'files' . DS . 'tokengen ' . $CdnPath . "/" . $SaveAsName);
     $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+    
     $wishlist = 0;
-    return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, $currentDownloadCount+1, $totalDownloadLimit, $wishlist);
+    return $this->createSongDownloadSuccessObject('Download permitted.', $finalSongUrl, true, 0, 0, 0);
 
 
   }
 
+  /**
+   * Function Name : regenerateVideoDownloadRequest
+   * Desc : Actions that is used for regenerating download URL for video
+   * @param string $authentication_token
+   * @param string $prodId
+   * @param string $agent
+	 * @return VideoDownloadSuccessType[]
+   */
 
+  function regenerateVideoDownloadRequest($authentication_token, $prodId, $agent) {
+
+    if(!($this->isValidAuthenticationToken($authentication_token))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+
+    $product_detail = $this->getProductDetail($prodId);
+    $prodId = $product_detail['Product']['ProdID'];
+    $provider_type = $product_detail['Product']['provider_type'];
+    
+    
+    $data = $this->Video->find('first',
+      array('joins' =>
+        array(
+          array(
+            'table' => 'File',
+            'alias' => 'f',
+            'type' => 'inner',
+            'foreignKey' => false,
+
+            'conditions'=> array('f.FileID = Video.FullLength_FIleID', 'Video.ProdID = ' . $prodId, 'Video.provider_type' => $provider_type)
+          )
+        )
+      )
+    );
+
+    $CdnPath = $data['Full_Files']['CdnPath'];
+    $SaveAsName = $data['Full_Files']['SaveAsName'];
+
+    $songUrl = shell_exec('perl files/tokengen ' . "sony_test/".$CdnPath . "/" . $SaveAsName);
+    $finalSongUrl = Configure::read('App.Music_Path') . $songUrl;
+
+    return $this->createVideoDownloadSuccessObject('Download permitted.', $finalSongUrl, true, 0, 0, 0);
+    
+
+  }
+  
+  
   /**
    * Function Name : songDownloadRequest
    * Desc : Actions that is used for updating user download request for audio
