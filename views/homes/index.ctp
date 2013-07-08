@@ -14,7 +14,7 @@
 										</li>
 										-->
 										<li>
-											<a href="#top-100-songs" data-category-type="songs">Songs</a>
+											<a href="#top-100-songs" class="active" data-category-type="songs">Songs</a>
 										</li>
 										<li>
 											<a href="#top-100-videos" data-category-type="videos">Videos</a>
@@ -479,7 +479,7 @@ array('class'=>'first','escape'=>false)) */ ?>
 									<nav class="category-filter">
 										<ul class="clearfix">
 											<!-- <li><a href="#coming-soon-album-grid">Albums</a></li> -->
-											<li><a href="#coming-soon-singles-grid">Singles</a></li>
+											<li><a href="#coming-soon-singles-grid" class="active" >Singles</a></li>
 											<li><a href="#coming-soon-videos-grid">Videos</a></li>
 										</ul>
 										
