@@ -4359,19 +4359,18 @@ STR;
                                     LEFT JOIN
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
-                    GROUP BY  Song.ReferenceID
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
 	  
 STR;
-                        echo $sql_coming_soon_albums; die;
+                        //echo $sql_coming_soon_albums; die;
                        
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
-                        echo "<pre>";
-                        print_r($coming_soon_albums_rs);
-                        die;
+//                        echo "<pre>";
+//                        print_r($coming_soon_albums_rs);
+//                        die;
                         
                       
                         if(!empty($coming_soon_albums_rs)){
