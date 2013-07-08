@@ -686,8 +686,6 @@ class SoapsController extends AppController {
           
           $obj->FullLength_FIleID         = (int)$data['Full_Files']['FileID'];
           $obj->FullLength_FIleURL        = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data['Full_Files']['CdnPath']."/".$data['Full_Files']['SaveAsName']);
-          
-
           $list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'NationalTopTenType');
 
       }
