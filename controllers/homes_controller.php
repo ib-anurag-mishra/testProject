@@ -4156,7 +4156,7 @@ STR;
                
              
              if(1)
-             //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+             //if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4215,14 +4215,14 @@ STR;
 //                        die;
                      // GROUP BY Song.ProdID,
                         if(!empty($coming_soon_rs)){
-                          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                          Cache::write("new_releases_songs".$territory, $coming_soon_rs);
                         }
                     
                 }
                 else    //  Show From Cache
                 {                  
                     
-                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
+                    $coming_soon_rs = Cache::read("new_releases_songs".$territory);
                     
                 }
                 
