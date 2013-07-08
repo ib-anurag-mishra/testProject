@@ -405,7 +405,7 @@ array('class'=>'first','escape'=>false)) */ ?>
                                                                                                        
                                                                                                      <?php if($this->Session->read("patron")){ ?> 
 
-                                                                                                                <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a>
+                                                                                                               <!-- <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a> -->
 													
                                                                                                         <a class="add-to-playlist-button" href="#"></a>
 													<div class="wishlist-popover">
