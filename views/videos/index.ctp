@@ -55,10 +55,10 @@
                                 </div>
                                 <?php
                                 } else {
-                                        
-                                ?>                                
-                                <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                ?>
+                                <!-- <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>-->
                                 <a class="add-to-playlist-button" href="#"></a>
+                                <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a>
                                 <?php
                                 }
                                 ?>
