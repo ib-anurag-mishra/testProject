@@ -4366,7 +4366,7 @@ STR;
 	  	
 	  
 STR;
-                        echo $sql_coming_soon; die;
+                        echo $sql_coming_soon_albums; die;
                        
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
                         echo "<pre>";
