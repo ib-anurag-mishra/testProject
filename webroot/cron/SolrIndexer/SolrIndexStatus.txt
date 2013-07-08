@@ -1,0 +1,86 @@
+
+----------Request (1371731672) Start----------------
+2013-06-20 07:34:32 > Start Time: 2013-06-20 07:34:32
+2013-06-20 07:34:32 > Indexing Started ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Total Requests made to DataSource">9800992</str><str name="Total Rows Fetched">23119459</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-19 09:28:18</str><str name="">Indexing completed. Added/Updated: 3266997 documents. Deleted 0 documents.</str><str name="Committed">2013-06-19 12:34:17</str><str name="error">Could not write property file. Delta imports will not work. Make sure your conf directory is writable</str><str name="Total Documents Processed">3266997</str><str name="Time taken">3:5:59.207</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 07:36:32 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">1</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:2:0.23</str><str name="Total Requests made to DataSource">119122</str><str name="Total Rows Fetched">241293</str><str name="Total Documents Processed">39706</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 07:34:32</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 07:38:32 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:4:0.27</str><str name="Total Requests made to DataSource">175874</str><str name="Total Rows Fetched">349151</str><str name="Total Documents Processed">58624</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 07:34:32</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 07:40:32 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:6:0.31</str><str name="Total Requests made to DataSource">199451</str><str name="Total Rows Fetched">393365</str><str name="Total Documents Processed">66483</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 07:34:32</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 07:42:32 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">1</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:8:0.36</str><str name="Total Requests made to DataSource">280951</str><str name="Total Rows Fetched">554361</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 07:34:32</str><str name="">Indexing completed. Added/Updated: 93650 documents. Deleted 0 documents.</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 07:44:32 > Indexing completed ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">280951</str><str name="Total Rows Fetched">554361</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 07:34:32</str><str name="">Indexing completed. Added/Updated: 93650 documents. Deleted 0 documents.</str><str name="Committed">2013-06-20 07:42:34</str><str name="error">Could not write property file. Delta imports will not work. Make sure your conf directory is writable</str><str name="Total Documents Processed">93650</str><str name="Time taken">0:8:2.103</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 07:44:32 > End Time: 2013-06-20 07:44:32
+
+---------Request (1371731672) End----------------
+----------Request (1371733208) Start----------------
+2013-06-20 08:00:08 > Start Time: 2013-06-20 08:00:08
+2013-06-20 08:00:08 > Indexing Started ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">6</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:0:0.29</str><str name="Total Requests made to DataSource">1</str><str name="Total Rows Fetched">0</str><str name="Total Documents Processed">0</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:00:08</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 08:02:08 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:2:0.136</str><str name="Total Requests made to DataSource">118582</str><str name="Total Rows Fetched">240295</str><str name="Total Documents Processed">39526</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:00:08</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 08:04:08 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:4:0.140</str><str name="Total Requests made to DataSource">233828</str><str name="Total Rows Fetched">454201</str><str name="Total Documents Processed">77942</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:00:08</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 08:06:08 > Indexing completed ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">280951</str><str name="Total Rows Fetched">554361</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:00:08</str><str name="">Indexing completed. Added/Updated: 93650 documents. Deleted 0 documents.</str><str name="Committed">2013-06-20 08:04:59</str><str name="error">Could not write property file. Delta imports will not work. Make sure your conf directory is writable</str><str name="Total Documents Processed">93650</str><str name="Time taken">0:4:50.819</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 08:06:08 > End Time: 2013-06-20 08:06:08
+
+---------Request (1371733208) End----------------
+----------Request (1371736661) Start----------------
+2013-06-20 08:57:41 > Start Time: 2013-06-20 08:57:41
+2013-06-20 08:57:41 > Indexing Started ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">5</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:0:0.8</str><str name="Total Requests made to DataSource">1</str><str name="Total Rows Fetched">0</str><str name="Total Documents Processed">0</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:57:41</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 08:59:41 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:2:0.35</str><str name="Total Requests made to DataSource">115856</str><str name="Total Rows Fetched">234765</str><str name="Total Documents Processed">38618</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:57:41</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 09:01:41 > Indexing in progress ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">busy</str><str name="importResponse">A command is still running...</str><lst name="statusMessages"><str name="Time Elapsed">0:4:0.40</str><str name="Total Requests made to DataSource">229609</str><str name="Total Rows Fetched">446707</str><str name="Total Documents Processed">76535</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:57:41</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 09:03:41 > Indexing completed ( Response: <?xml version="1.0" encoding="UTF-8"?>
+<response>
+<lst name="responseHeader"><int name="status">0</int><int name="QTime">0</int></lst><lst name="initArgs"><lst name="defaults"><str name="config">data-config.xml</str></lst></lst><str name="command">status</str><str name="status">idle</str><str name="importResponse"/><lst name="statusMessages"><str name="Total Requests made to DataSource">280951</str><str name="Total Rows Fetched">554361</str><str name="Total Documents Skipped">0</str><str name="Full Dump Started">2013-06-20 08:57:41</str><str name="">Indexing completed. Added/Updated: 93650 documents. Deleted 0 documents.</str><str name="Committed">2013-06-20 09:02:36</str><str name="error">Could not write property file. Delta imports will not work. Make sure your conf directory is writable</str><str name="Total Documents Processed">93650</str><str name="Time taken">0:4:54.433</str></lst><str name="WARNING">This response format is experimental.  It is likely to change in the future.</str>
+</response>
+ )
+2013-06-20 09:03:41 > End Time: 2013-06-20 09:03:41
+
+---------Request (1371736661) End----------------
