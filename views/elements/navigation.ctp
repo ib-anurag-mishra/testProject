@@ -200,23 +200,67 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<div class="top-sub-nav">
 				
 			</div>
+                        
+                        <?php
+                        
+                                 $music_videos_css = "sidebar-anchor";
+                                 $my_lib_css = "sidebar-anchor";
+                                 $us_top_css= "sidebar-anchor";
+                                 $download_css = "sidebar-anchor";
+                                 $wishlist_css = "sidebar-anchor";
+                                 $new_releases_css = "sidebar-anchor";
+                                 $ul_class = "sidebar-sub-nav";
+                                 
+                                 //echo $_SERVER['REQUEST_URI'];
+
+                                if($_SERVER['REQUEST_URI'] == '/videos')
+                                {
+                                    $music_videos_css = "sidebar-anchor active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10')
+                                {
+                                    $my_lib_css = "sidebar-anchor active";
+                                    $ul_class = "sidebar-sub-nav active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/us_top_10')
+                                {
+                                    $us_top_css = "sidebar-anchor active";
+                                    $ul_class = "sidebar-sub-nav active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/my_history')
+                                {
+                                    $download_css ="sidebar-anchor active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/my_wishlist')
+                                {
+                                    $wishlist_css = "sidebar-anchor active";
+                                }
+                                else if($_SERVER['REQUEST_URI'] == '/homes/new_releases')
+                                {
+                                    $new_releases_css = "sidebar-anchor active";
+                                }
+                                
+                        
+                        
+                        ?>
+                        
 			<div class="content-wrapper clearfix">				
 					<section class="left-sidebar">
                                             <ul class="browse sidebar-nav"><h3>Browse</h3>
                                                     <li>
-                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>'sidebar-anchor')); ?>
+                                                            <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Most Popular</a>
-                                                            <ul class="sidebar-sub-nav">
+                                                            <ul class="<?php echo $ul_class; ?>">
                                                                     <?php if($this->Session->read("patron")){ ?>
-                                                                    <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10')); ?></li>
+                                                                    <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
                                                                     <?php } ?>
-                                                                    <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10')); ?></li>
+                                                                    <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css)); ?></li>
                                                             </ul>
                                                     </li>  
                                                     <li>
-                                                            <?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases'),array('class'=>'sidebar-anchor')); ?>
+                                                            <?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases'),array('class'=>$new_releases_css)); ?>
                                                     </li> 
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
@@ -249,10 +293,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>
                                             <?php } ?>
                                             <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
-                                                    <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => 'sidebar-anchor')); ?></li>
+                                                    <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
                                                     <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
-                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => 'sidebar-anchor')); ?></li>
+                                                    <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>                                            
                                             <div class="announcements">
