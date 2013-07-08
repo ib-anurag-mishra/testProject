@@ -4156,7 +4156,7 @@ STR;
                
              
              if(1)
-             //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+             //if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4213,16 +4213,16 @@ STR;
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);
 //                        die;
-                      
+                     // GROUP BY Song.ProdID,
                         if(!empty($coming_soon_rs)){
-                          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                          Cache::write("new_releases_songs".$territory, $coming_soon_rs);
                         }
                     
                 }
                 else    //  Show From Cache
                 {                  
                     
-                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
+                    $coming_soon_rs = Cache::read("new_releases_songs".$territory);
                     
                 }
                 
@@ -4359,19 +4359,18 @@ STR;
                                     LEFT JOIN
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
-                    GROUP BY  Song.ReferenceID
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
 	  
 STR;
-                        //echo $sql_coming_soon; die;
-                       
+                        //echo $sql_coming_soon_albums; die;
+                       //GROUP BY  Song.ReferenceID
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
-                        echo "<pre>";
-                        print_r($coming_soon_albums_rs);
-                        die;
+//                        echo "<pre>";
+//                        print_r($coming_soon_albums_rs);
+//                        die;
                         
                       
                         if(!empty($coming_soon_albums_rs)){

@@ -926,7 +926,7 @@ $(function() {
 	
 	
 	nav_regular.on('mouseenter',function(e){
-		most_popular_sub_nav.removeClass('active');
+		//most_popular_sub_nav.removeClass('active');
 	});
 	
 	
