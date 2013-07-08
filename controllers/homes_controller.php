@@ -4210,9 +4210,9 @@ STR;
 STR;
                        // echo $sql_coming_soon; die;
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
-                        echo "<pre>";
-                        print_r($coming_soon_rs);
-                        die;
+//                        echo "<pre>";
+//                        print_r($coming_soon_rs);
+//                        die;
                       
                         if(!empty($coming_soon_rs)){
                           Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
@@ -4286,7 +4286,11 @@ STR;
 
                // echo $sql_cs_videos; die;
 
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);                        
+            $coming_soon_videos = $this->Video->query($sql_cs_videos);    
+            
+            echo "<pre>";
+            print_r($coming_soon_videos);
+            die;
 
             if(!empty($coming_soon_videos)){
                 Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
