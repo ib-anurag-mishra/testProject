@@ -4210,9 +4210,9 @@ STR;
 STR;
                        // echo $sql_coming_soon; die;
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
-//                        echo "<pre>";
-//                        print_r($coming_soon_rs);
-                        
+                        echo "<pre>";
+                        print_r($coming_soon_rs);
+                        die;
                       
                         if(!empty($coming_soon_rs)){
                           Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
