@@ -100,12 +100,8 @@ $ieVersion =  ieversion();
 				<?php
                 if(count($downloadResults) != 0)
                 {
-                    //$i = 1;
+                    $i = 1;
                     foreach($downloadResults as $key => $downloadResult):
-                    /*$class = null;
-                    if ($i++ % 2 == 0) {
-                        $class = ' class="altrow"';
-                    }*/
                 ?>
 				
 				<div class="row clearfix">
@@ -116,7 +112,12 @@ $ieVersion =  ieversion();
                         $albumImageUrl = Configure::read('App.Music_Path').$albumImage;
                         ?>
                         <img src="<?php echo $albumImageUrl; ?>" alt="small-album-cover" width="40" height="40" />
-						<a class="preview" href="#"></a>
+						<!-- <a class="preview" href="#"></a> -->
+                        <?php
+                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$downloadResult['Download']['ProdID'].', "'.base64_encode($downloadResult['Download']['provider_type']).'", "'.$this->webroot.'");')); 
+                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
+                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                        ?>
 					</div>
 					<div class="song-title">
                     <?php 
@@ -201,6 +202,7 @@ $ieVersion =  ieversion();
                     </a></div>
 				</div>
 				<?php
+                    $i++;
                     endforeach;
                     }else{
                 echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
