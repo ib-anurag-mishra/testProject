@@ -234,7 +234,7 @@ div.message {
 	font-weight: bold;
 	margin: 0 0 1em 0;
 	text-align: center;
-	background: #c73e14;
+	background: none repeat scroll 0 0 #52C6EC;
 	padding: 5px;
 	width: 100%;
 }
@@ -252,7 +252,7 @@ padding-bottom:5px;
 
 #authMessage, #flashMessage{
     
-    background: blue !important;
+    background: none repeat scroll 0 0 #52C6EC;
 }
 
 .forgot {

@@ -1455,6 +1455,8 @@ STR;
 			$ustop10Albums = $this->Album->query($sql_us_albums);
 			// Checking for download status
 			
+                        Cache::write("national_us_top10_albums".$territory, $ustop10Albums);
+                        
 		}
                  else
                 {
@@ -1568,7 +1570,7 @@ STR;
 STR;
                     //echo $sql_national_100_v; die;
                     $usTop10VideoDownload = $this->Video->query($sql_us_10_v);
-                    
+                    Cache::write("national_us_top10_videos".$territory, $usTop10VideoDownload);
                     
 //                    echo "<pre>";
 //                    print_r($usTop10VideoDownload);
@@ -3172,11 +3174,13 @@ STR;
      Desc : To send mail to patrons with new password
     */
     function forgot_password() {
+        
 		if($this->Session->read('layout_option') == 'login_new'){
 			$this->layout = 'login_new';
 		}
 		else{
-        $this->layout = 'login';
+        //$this->layout = 'login';
+           $this->layout = 'home';
 		}
         $errorMsg ='';
 		if(isset($_POST['lang'])){
@@ -3187,8 +3191,13 @@ STR;
 		else{
 			$this->Session->write('Config.language', 'en');
 		}
-        if($this->data){
-            $email = $this->data['Home']['email'];
+        if($_POST['hid_action']==1){
+            
+//            echo '<pre>';
+//            print_r($_POST);
+//            die;
+            
+            $email = $_POST['email'];
             if($email == ''){
                 $errorMsg = "Please provide your email address.";
             }
@@ -3200,10 +3209,10 @@ STR;
                 if(count($email_exists) == 0){
                     $errorMsg = "This is not a valid patron email.";
                 }
-            }
-            if($errorMsg != ''){
+            } //echo $errorMsg; die;
+            if($errorMsg != ''){ 
                 $this->Session->setFlash($errorMsg);
-                $this->redirect($this->webroot.'homes/forgot_password');
+               // $this->redirect($this->webroot.'homes/forgot_password');
             }
             else{
                 $temp_password = $this->PasswordHelper->generatePassword(8);
@@ -4193,18 +4202,17 @@ STR;
                                     LEFT JOIN
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
-                    GROUP BY Song.ProdID
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
 	  
 STR;
-                        //echo $sql_coming_soon; die;
+                       // echo $sql_coming_soon; die;
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
 //                        echo "<pre>";
 //                        print_r($coming_soon_rs);
-                        
+//                        die;
                       
                         if(!empty($coming_soon_rs)){
                           Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
@@ -4278,7 +4286,11 @@ STR;
 
                // echo $sql_cs_videos; die;
 
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);                        
+            $coming_soon_videos = $this->Video->query($sql_cs_videos);    
+            
+//            echo "<pre>";
+//            print_r($coming_soon_videos);
+//            die;
 
             if(!empty($coming_soon_videos)){
                 Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
@@ -4355,9 +4367,11 @@ STR;
 	  
 STR;
                         //echo $sql_coming_soon; die;
+                       
 			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
-//                        echo "<pre>";
-//                        print_r($coming_soon_rs);
+                        echo "<pre>";
+                        print_r($coming_soon_albums_rs);
+                        die;
                         
                       
                         if(!empty($coming_soon_albums_rs)){

@@ -56,6 +56,12 @@ class VideosController extends AppController {
         $this->set('topVideoDownloads', $topDownloads);
     }
 
+  /**
+   * Function Name : download
+   * Desc : Actions that is used for user download request for video
+   * @param nil
+   */  
+   
     function download() {
 
         //settings
@@ -75,6 +81,8 @@ class VideosController extends AppController {
         $Setting = $this->Siteconfig->find('first', array('conditions' => array('soption' => 'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
         if ($checkValidation == 1) {
+            
+            // calls Downloadsvideos component for validation
             $validationResult = $this->Downloadsvideos->validateDownloadVideos($prodId, $provider);
             /** records download component request & response */
             $log_data .= "DownloadComponentParameters-ProdId= '" . $prodId . "':DownloadComponentParameters-Provider_type= '" . $provider . "':DownloadComponentResponse-Status='" . $validationResult[0] . "':DownloadComponentResponse-Msg='" . $validationResult[1] . "':DownloadComponentResponse-ErrorTYpe='" . $validationResult[2] . "'";
@@ -205,11 +213,22 @@ class VideosController extends AppController {
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
 
             if ($maintainLatestDownload) {
-                //logs in downloadvideos.log
-                $this->log("videos_sony_proc called", 'downloadvideos');
-                $procedure = 'videos_sony_proc';
-                //calls procedure
-                $sql = "CALL videos_sony_proc('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Video']['ProductID'] . "', '" . $trackDetails['0']['Video']['ISRC'] . "', '" . addslashes($trackDetails['0']['Video']['Artist']) . "', '" . addslashes($trackDetails['0']['Video']['VideoTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            
+              //logs in downloadvideos.log
+              $this->log("videos_proc_d_ld called", 'downloadvideos');
+              
+              $procedure = 'videos_proc_d_ld';
+              
+              //calls procedure
+              $sql = "CALL videos_proc_d_ld('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Video']['ProductID'] . "', '" . $trackDetails['0']['Video']['ISRC'] . "', '" . addslashes($trackDetails['0']['Video']['Artist']) . "', '" . addslashes($trackDetails['0']['Video']['VideoTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            
+            }else{
+            
+              $procedure = 'videos_proc_d';
+              
+              //calls procedure
+              $sql = "CALL videos_proc_d('" . $libId . "','" . $patId . "', '" . $prodId . "', '" . $trackDetails['0']['Video']['ProductID'] . "', '" . $trackDetails['0']['Video']['ISRC'] . "', '" . addslashes($trackDetails['0']['Video']['Artist']) . "', '" . addslashes($trackDetails['0']['Video']['VideoTitle']) . "', '" . $insertArr['user_login_type'] . "', '" . $insertArr['provider_type'] . "', '" . $insertArr['email'] . "', '" . addslashes($insertArr['user_agent']) . "', '" . $insertArr['ip'] . "', '" . Configure::read('App.curWeekStartDate') . "', '" . Configure::read('App.curWeekEndDate') . "',@ret)";
+            
             }
 
             //get procedure response
