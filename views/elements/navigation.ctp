@@ -316,5 +316,5 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php } ?>
 					</section>					
 					<div class="content">
-                                            <div class="ajaxmessage44" id="ajaxflashMessage44"></div>
+                                            <span class="ajaxmessage44" id="ajaxflashMessage44"></span>
  
