@@ -666,8 +666,8 @@ function addToWishlist(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
-return ;	
+	//document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	
 	var data = "prodId="+prodId+"&provider="+providerType;	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get
@@ -689,11 +689,11 @@ return ;
 					$('.beforeClick').show();
 					$('.afterClick').hide();
 					if(languageSet == 'en'){
-						document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
+						document.getElementById('wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
 					}else{
-						document.getElementById('wishlist'+prodId).innerHTML = 'Añadido a su Lista Deseos';
+						document.getElementById('wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
 					}
-					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+					//document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}
 				else
 				{

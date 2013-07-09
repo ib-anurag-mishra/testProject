@@ -166,8 +166,8 @@
                                                                                                                     <?php 
                                                                                                                     } else { 
                                                                                                                     ?>
-                                                                                                                            <span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-                                                                                                                            <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+                                                                                                                            <span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                                                                                            <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
                                                                                                                     <?php	
                                                                                                                     }
 
@@ -218,7 +218,7 @@
 										</ul>
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-										<ul>
+										<ul style="width:47000px;">
 
                                                     <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){ ?>
 
@@ -392,7 +392,7 @@
 									<h3>Featured</h3>
 								</header>
 								<div class="featured-grid horiz-scroll">
-									<ul style="width:3865px;">
+									<ul style="width:3615px;">
 										<?php
 								foreach($featuredArtists as $k => $v){
 								
@@ -576,7 +576,7 @@ array('class'=>'first','escape'=>false)) */ ?>
 									</ul>
 								</div> <!-- end #coming-soon-singles-grid -->
 									<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
-									<ul class="clearfix">										
+									<ul class="clearfix" style="width:3333px;">										
                                                                             <?php                                                                              
                                                                             $total_videos = count($coming_soon_videos);
                                                                             $sr_no = 0;
