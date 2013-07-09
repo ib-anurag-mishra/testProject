@@ -136,8 +136,8 @@ function Get_Sales_date($sales_date_array, $country){
 <script src="/js/advanced_search.js"></script>
 <div class="breadCrumb">
 <?php
-	$html->addCrumb(__('Search Results', true), '/search/index');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+	/*$html->addCrumb(__('Search Results', true), '/search/index');
+	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');*/
 ?>
 </div>
 
