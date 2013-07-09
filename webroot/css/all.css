@@ -335,6 +335,18 @@ div.message {
     text-align: center;
     width: 100%;
 }
+
+div.ajaxmessage44 {
+    background: none repeat scroll 0 0 #C73E14;
+    clear: both;
+    color: red;
+    font-size: 100%;
+    font-weight: bold;
+    margin: 0 0 1em;
+    padding: 5px;
+    text-align: center;
+    width: 100%;
+}
 .input-placeholder-text{
 	top:17px;
 	left:78px;
