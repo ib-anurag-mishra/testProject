@@ -310,11 +310,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <div class="announcements">
                                                     <h4><a href="#">Announcements</a></h4>
                                                     <div class="poll">
-                                                        <ul>
-                                                            <li>
-                                                        <?php echo $announcment_value; ?>
-                                                            </li>
-                                                        </ul>
+                                                        <?php echo strip_tags($announcment_value); ?>
                                                     </div>
                                             </div>
                                             <?php } ?>
