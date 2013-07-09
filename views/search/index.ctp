@@ -1181,12 +1181,12 @@ STR;
 	<div class="paging">
 		<?php
 			if(isset($type)){
-				$keyword = "?q=".$keyword."&type=".$type;
+				$pagerkeyword = "?q=".$keyword."&type=".$type;
 			}
 		?>
 	<?php
-		$keyword = $keyword."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
-		echo createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$keyword);
+		$pagerkeyword = $keyword."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+		echo createPagination($html, $currentPage,$facetPage,'listing',$totalPages,7,$pagerkeyword);
 	?>
 </div>
 <?php
