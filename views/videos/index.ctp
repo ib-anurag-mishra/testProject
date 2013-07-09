@@ -108,14 +108,14 @@ foreach($topVideoDownloads as $topDownload)
 
                     
 
-                        <div class="featured-video-detail">
+                        <div class="video-cover-container">
                             <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
-                            <!-- <a class="add-to-playlist-button" href="#"></a>-->
-                            
+                            <a class="add-to-playlist-button" href="#"></a>
+                            <div class="wishlist-popover">
                                 <?php
                                 if($this->Session->read('patron')) {
-                                ?><div class="wishlist-popover">
+                                ?>
                                 <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
 									<input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
@@ -130,15 +130,14 @@ foreach($topVideoDownloads as $topDownload)
                                     <a class="facebook" href="#"></a>
                                     <a class="twitter" href="#"></a>
                                 </div>
-                                </div>
                                 <?php
                                 } else {
                                 ?>
-                                <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a>
                                 <?php
                                 }
                                 ?>
-                            
+                            </div>
 
                         </div>
                         <div class="video-title">
