@@ -112,6 +112,12 @@ foreach($topVideoDownloads as $topDownload)
                             <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <a class="add-to-playlist-button" href="#"></a>
+                            <?php
+                                    if(empty($this->Session->read('patron')))
+                                     { ?>
+                                         <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                     <?php }
+                            ?>
                             <div class="wishlist-popover">
                                 <?php
                                 if($this->Session->read('patron')) {
@@ -133,7 +139,7 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 } else {
                                 ?>
-                                <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a>
+                               
                                 <?php
                                 }
                                 ?>
