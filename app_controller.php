@@ -59,6 +59,15 @@ class AppController extends Controller
 		header('Cache-Control: post-check=0, pre-check=0', false);
 		header('Pragma: no-cache');
 	//	$this->checkOnlinePatron();
+                
+                
+                $announcment_query = "SELECT * from pages WHERE announcement = '1' and language='en' ORDER BY modified DESC LIMIT 1";
+                $announcment_rs = $this->Album->query($announcment_query);
+//                echo "<pre>";
+//                print_r($announcment_rs);
+                $this -> set ( 'announcment_value' ,  $announcment_rs[0]['pages']['page_content']);
+                echo $announcment_rs[0]['pages']['page_content'];
+                
 	}
 	
 	function checkOnlinePatron()

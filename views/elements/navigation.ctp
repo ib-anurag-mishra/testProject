@@ -24,6 +24,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		$width = 166;
 	}
 }
+
+
+
 ?>
 
     <div class="wrapper">
@@ -302,8 +305,10 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <div class="announcements">
                                                     <h4><a href="#">Announcements</a></h4>
                                                     <div class="poll">
+                                                        <?php echo $announcment_value; ?>
                                                     </div>
                                             </div>
                                             <?php } ?>
 					</section>					
 					<div class="content">
+ 
