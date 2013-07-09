@@ -16,7 +16,7 @@
 		<h3>Albums</h3>
 		<div class="album-shadow-container">
 			<div class="album-scrollable horiz-scroll">
-				<ul>
+				<ul style="width:2800px;">
 					<?php
                                         
 
@@ -66,7 +66,7 @@
 		<h3>Songs</h3>
 		<div class="songs-shadow-container">
 			<div class="songs-scrollable horiz-scroll">
-				<ul>
+				<ul style="width:2800px;">
 					<?php
                                         
 					//for($d=1;$d<$count;$d++) {
@@ -240,7 +240,7 @@
 		<h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
-				<ul>
+				<ul style="width:4666px;">
 					<?php
                                                                                 
                                             $count = 1;

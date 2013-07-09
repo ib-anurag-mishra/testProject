@@ -1476,7 +1476,8 @@ if(!empty($type) && $type == 'all'){
 				$i=1;
 				$country = $this->Session->read('territory');
                 foreach($songs as $psong) {
-                ?>	
+                ?>
+                    <div class="tracklist">
 						<a href="#" class="preview"></a>
 						<div class="artist"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></div>
 						<a class="add-to-playlist-button" href="#"></a>
