@@ -1524,6 +1524,7 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				<?php		
 					}
+                }
 				?>
 				</div>
 			</div>
