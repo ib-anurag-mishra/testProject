@@ -1515,8 +1515,16 @@ if(!empty($type) && $type == 'all'){
 						<div class="cover-art">
 							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
 						</div>
-						<div class="album"><a href="#">Blown Away</a></div>
-						<div class="song">Blown Away</div>
+						<div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/','@',base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID;	?>/<?php echo base64_encode($psong->provider_type);	?>"><?php echo str_replace('"','',truncate_text($psong->Title,30, $this)); ?></a></a></div>
+						<div class="song">
+                             <?php  $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
+                             <span title="<?php echo str_replace('"','',$showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle,28, $this); ?>
+                             <?php if ($psong->Advisory == 'T') {
+                                    echo '<font class="explicit"> (Explicit)</font>';
+                                }
+                                ?>
+                            </span>
+                        </div>
 						<div class="download"><a href="#">Download</a></div>
 						
 						
