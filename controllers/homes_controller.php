@@ -3347,7 +3347,7 @@ STR;
                             'File.SaveAsName'),
             'joins' => array(array('table' => 'Songs', 'type' => 'LEFT', 'alias' => 'Song', 'conditions' => array('wishlists.ProdID = Song.ProdID')),
                 array('table' => 'Albums', 'type' => 'INNER', 'alias' => 'Albums', 'conditions' => array('Song.ReferenceID=Albums.ProdID')),
-                array('table' => 'File', 'type' => 'INNER', 'alias' => 'File', 'conditions' => array('Albums.FileID = File.FileID')))
+                array('table' => 'File', 'type' => 'INNER', 'alias' => 'File', 'conditions' => array('Albums.FileID1 = File.FileID')))
             );
         $wishlistResults = $this->paginate('Wishlist');
                     print_r(  $wishlistResults);
