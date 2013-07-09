@@ -53,6 +53,7 @@ class HomesController extends AppController
         $this->Cookie->path = '/';
         $this->Cookie->domain = 'freegalmusic.com';
         //$this->Cookie->key = 'qSI232qs*&sXOw!';
+        
     }
     
     
@@ -74,14 +75,14 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
-        
+      
         $nationalTopDownload = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
         
-       /*        
+              
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) { 
@@ -299,7 +300,7 @@ STR;
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
 		
-         */               
+                      
                 
         $ids = '';
         $ids_provider_type = '';
