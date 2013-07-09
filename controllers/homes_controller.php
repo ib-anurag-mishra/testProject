@@ -3239,47 +3239,49 @@ STR;
     function addToWishlist(){
        
         
-        if( !$this->Session->read('library') && !$this->Session->read('patron') 
-                && !isset($_REQUEST['prodId']) && !isset($_REQUEST['provider']) ){
+        if( $this->Session->read('library') && $this->Session->read('patron') 
+                && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']) ){
             
             
-            echo $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'ProdID' => $_REQUEST['prodId'])));
-            
-            
-            die;
-            $libraryId = $this->Session->read('library');
-            $patronId = $this->Session->read('patron');      
-             
-             
-             
-            $prodId = $_REQUEST['prodId'];
-            $downloadsDetail = array();
-            //get song details
-	    $provider = $_REQUEST['provider'];
+            $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'ProdID' => $_REQUEST['prodId'])));
+            if(!$wishlistCount){
+                $libraryId = $this->Session->read('library');
+                $patronId = $this->Session->read('patron');
 
-            $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
-            $insertArr = Array();
-            $insertArr['library_id'] = $libraryId;
-            $insertArr['patron_id'] = $patronId;
-            $insertArr['ProdID'] = $prodId;
-            $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
-            $insertArr['album'] = $trackDetails['0']['Song']['Title'];
-            $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
-            $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
+                $prodId = $_REQUEST['prodId'];
+                $downloadsDetail = array();
+                //get song details
+                $provider = $_REQUEST['provider'];
 
-            if($provider != 'sony'){
-                    $provider = 'ioda';
-            }
-            $insertArr['provider_type'] = $provider;
+                $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
+                $insertArr = Array();
+                $insertArr['library_id'] = $libraryId;
+                $insertArr['patron_id'] = $patronId;
+                $insertArr['ProdID'] = $prodId;
+                $insertArr['artist'] = $trackDetails['0']['Song']['Artist'];
+                $insertArr['album'] = $trackDetails['0']['Song']['Title'];
+                $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
+                $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
 
-            $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
-			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
-			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
-            //insert into wishlist table
-            $this->Wishlist->save($insertArr);           
-			
-            echo "Success";
-            exit;
+                if($provider != 'sony'){
+                        $provider = 'ioda';
+                }
+                $insertArr['provider_type'] = $provider;
+
+                $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
+                $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                //insert into wishlist table
+                $this->Wishlist->save($insertArr);           
+
+                echo "Success";
+                exit;
+
+                }else{
+                    echo 'error1';
+                    exit; 
+
+                }
             
         }else{
             echo 'error';

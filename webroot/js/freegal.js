@@ -674,19 +674,20 @@ function addToWishlist(prodId , providerType)
 		url: webroot+"homes/addToWishlist", // URL to request
 		data: data,  // post data
 		success: function(response) {	
-                    alert(response);
+                    //alert(response);
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
-				
-                                                              
-                                
-                                document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
-                                
-                                //alert("You can not add more songs to your wishlist.");
-				//location.reload();
-				return false;
-			}
+                                                           
+                            document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
+
+                            //alert("You can not add more songs to your wishlist.");
+                            //location.reload();
+                            return false;
+			}else if(msg == 'error1'){                    
+                            
+                            document.getElementById('wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Already Added</a>';
+                        }
 			else
 			{	
 				var msg = response.substring(0,7);
