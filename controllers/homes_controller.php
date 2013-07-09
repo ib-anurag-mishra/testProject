@@ -363,7 +363,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'desc')
+                                    ), 'order' => array('Country.SalesDate' => 'desc','limit'=>20)
                             )
                     );
             } else {
