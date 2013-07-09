@@ -108,7 +108,7 @@ foreach($topVideoDownloads as $topDownload)
 
                     
 
-                        <div class="video-cover-container">
+                        <div class="featured-video-detail">
                             <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <!-- <a class="add-to-playlist-button" href="#"></a>-->
