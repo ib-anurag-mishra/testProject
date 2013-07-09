@@ -3331,6 +3331,7 @@ STR;
 STR;
                     //execute the query
                     $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+                    print_r(  $wishlistResults);
                 
         $this->set('wishlistResults',$wishlistResults);
         
