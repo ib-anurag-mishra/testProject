@@ -53,6 +53,7 @@ class HomesController extends AppController
         $this->Cookie->path = '/';
         $this->Cookie->domain = 'freegalmusic.com';
         //$this->Cookie->key = 'qSI232qs*&sXOw!';
+        
     }
     
     
@@ -74,13 +75,14 @@ class HomesController extends AppController
         $country = $this->Session->read('territory');
         $territory = $this->Session->read('territory');
        
-        
+      
         $nationalTopDownload = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
-
+        
+              
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) { 
@@ -191,8 +193,7 @@ STR;
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
                
-               
-               
+          
              
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
@@ -299,7 +300,7 @@ STR;
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
 		
-                        
+                      
                 
         $ids = '';
         $ids_provider_type = '';
@@ -377,7 +378,7 @@ STR;
         $featured = Cache::read("featured".$country);
         $this->set('featuredArtists', $featured);
         
-     
+      
         
     /*    
     //used for gettting top downloads for Pop Genre
@@ -555,7 +556,7 @@ STR;
             /*
                             Code OF NEWS Section --- END
             */
-                
+          
                 
             /*
             *  Code For Coming Soon --- START
@@ -3235,27 +3236,20 @@ STR;
      Desc : To let the patron add songs to wishlist
     */
     function addToWishlist(){
-        $libraryId = $this->Session->read('library');
-        $patronId = $this->Session->read('patron');
-		//check library download
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
-		//check patron download
-		$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
-        $this->Library->recursive = -1;
-        $libraryDetails = $this->Library->find('all',array('conditions' => array('Library.id' => $libraryId),'fields' => 'library_user_download_limit'));
-        //get patron limit per week
-        $patronLimit = $libraryDetails[0]['Library']['library_user_download_limit'];
-        //get no of downloads for this week
-        $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
-        if($wishlistCount >= $patronLimit && $libraryDownload != '1' && $patronDownload != '0') {
-            echo "error";
-            exit;
-        }
-        else {
+       
+        
+        if( $this->Session->read('library') && $this->Session->read('patron') 
+                && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']) ){
+            
+            $libraryId = $this->Session->read('library');
+            $patronId = $this->Session->read('patron');      
+             
+             
+             
             $prodId = $_REQUEST['prodId'];
-			$downloadsDetail = array();
+            $downloadsDetail = array();
             //get song details
-			$provider = $_REQUEST['provider'];
+	    $provider = $_REQUEST['provider'];
 
             $trackDetails = $this->Song->getdownloaddata($prodId , $provider);
             $insertArr = Array();
@@ -3267,24 +3261,27 @@ STR;
             $insertArr['track_title'] = $trackDetails['0']['Song']['SongTitle'];
             $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
 
-			if($provider != 'sony'){
-				$provider = 'ioda';
-			}
-			$insertArr['provider_type'] = $provider;
+            if($provider != 'sony'){
+                    $provider = 'ioda';
+            }
+            $insertArr['provider_type'] = $provider;
 
             $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 			$insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
 			$insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
             //insert into wishlist table
-            $this->Wishlist->save($insertArr);
-            //update the libraries table
-			$this->Library->setDataSource('master');
-            $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-1 Where id=".$libraryId;
-            $this->Library->query($sql);
-			$this->Library->setDataSource('default');
+            $this->Wishlist->save($insertArr);           
+			
             echo "Success";
             exit;
+            
+        }else{
+            echo 'error';
+            exit;
         }
+
+      
+        
     }
 
     /*
