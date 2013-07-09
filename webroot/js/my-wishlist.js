@@ -5,26 +5,39 @@ $(document).ready(function(){
 	
 	
 	$('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click',function(e){
+            
+            	if($(this).hasClass('date-filter-button')){
+            $('#sortForm #sort').val('date');
+        } else if($(this).hasClass('song-filter-button')){
+            $('#sortForm #sort').val('song');
+        } else if($(this).hasClass('artist-filter-button')){
+            $('#sortForm #sort').val('artist');
+        } else if($(this).hasClass('album-filter-button')){
+            $('#sortForm #sort').val('album');
+        }
 		if($(this).hasClass('active')) {
 			
 			if($(this).hasClass('toggled')) {
 				
 				$(this).removeClass('toggled');
+                                $('#sortForm #sortOrder').val('asc');
 				
 			} else {
 				
 				$(this).addClass('toggled');
+                                $('#sortForm #sortOrder').val('desc');
 			}
 			
 			
 		} else {
 			$('.my-wishlist-page .my-wishlist-filter-container div.filter').removeClass('active');
 			$(this).addClass('active');
+                        $('#sortForm #sortOrder').val('asc');
 			
 			
 		}
 		
-		
+		$('#sortForm').submit();
 	});
 	
 	
