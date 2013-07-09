@@ -3239,9 +3239,14 @@ STR;
     function addToWishlist(){
        
         
-        if( $this->Session->read('library') && $this->Session->read('patron') 
-                && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']) ){
+        if( !$this->Session->read('library') && !$this->Session->read('patron') 
+                && !isset($_REQUEST['prodId']) && !isset($_REQUEST['provider']) ){
             
+            
+            echo $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'ProdID' => $_REQUEST['prodId'])));
+            
+            
+            die;
             $libraryId = $this->Session->read('library');
             $patronId = $this->Session->read('patron');      
              

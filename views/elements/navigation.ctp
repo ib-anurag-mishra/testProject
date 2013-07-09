@@ -203,7 +203,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 			</nav>
 			<div class="gradient-border"></div>
-                        <div class="message" id="flashMessage">Please provide a correct card number.</div>
+                        
 			<div class="top-sub-nav">
 				
 			</div>
@@ -251,7 +251,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                         
                         ?>
                         
-			<div class="content-wrapper clearfix">				
+			<div class="content-wrapper clearfix">	
+                            
 					<section class="left-sidebar">
                                             <ul class="browse sidebar-nav"><h3>Browse</h3>
                                                     <li>
@@ -315,4 +316,5 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php } ?>
 					</section>					
 					<div class="content">
+                                            <span class="ajaxmessage44" id="ajaxflashMessage44"></span>
  
