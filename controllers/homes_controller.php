@@ -3239,8 +3239,8 @@ STR;
     function addToWishlist(){
        
         
-        if( $this->Session->read('library') && $this->Session->read('patron') 
-                && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']) ){
+        if( !$this->Session->read('library') && !$this->Session->read('patron') 
+                && !isset($_REQUEST['prodId']) && !isset($_REQUEST['provider']) ){
             
             $libraryId = $this->Session->read('library');
             $patronId = $this->Session->read('patron');      
