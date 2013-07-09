@@ -3306,7 +3306,7 @@ STR;
         $this->set('patronDownload',$patronDownload);
         $wishlistResults = Array();
         // $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
-                
+        
         $wishlistQuery =<<<STR
                     SELECT 
                             wishlists.*,
@@ -3331,6 +3331,8 @@ STR;
 STR;
                     //execute the query
                     $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+          
+              
                 
         $this->set('wishlistResults',$wishlistResults);
         
