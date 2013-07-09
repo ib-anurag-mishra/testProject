@@ -164,6 +164,24 @@
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                 <?php } ?>
 															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+
+
+                                                                                                                        <?php
+                                                                                                                                
+                                                                                                                            $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
+                                                                                                                            if($wishlistInfo == 'Added to Wishlist') {
+                                                                                                                            ?> 
+                                                                                                                                    <a class="add-to-wishlist" href="/homes/my_wishlist"><?php __("Added to Wishlist");?></a>
+                                                                                                                            <?php 
+                                                                                                                            } else { 
+                                                                                                                            ?>
+                                                                                                                            <a class="add-to-wishlist" >          <span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                                                                                                                                    <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span></a>
+                                                                                                                            <?php	
+                                                                                                                            }
+
+                                                                                                                        ?>
+
 															
 															<div class="share clearfix">
 																<p>Share via</p>
@@ -262,31 +280,21 @@
             } else {
 
                 if($libraryDownload != '1') {
-                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                        $wishlistCount = $wishlist->getWishlistCount();
-                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
-                        ?> 
-                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
-                        <?php
-                        } else {
-                                $wishlistInfo = $wishlist->getWishlistData($nationalTopVideoDownload[$i]["Video"]["ProdID"]);
-                                if($wishlistInfo == 'Added to Wishlist') {
-                                ?> 
-                                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                <?php 
-                                } else { 
-                                ?>
-                                        <span class="beforeClick" id="wishlist<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-                                        <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-                                <?php	
-                                }
-                        }
-
-                } else { 
+                        
+                    $wishlistInfo = $wishlist->getWishlistData($nationalTopVideoDownload[$i]["Video"]["ProdID"]);
+                    if($wishlistInfo == 'Added to Wishlist') {
+                    ?> 
+                            <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                    <?php 
+                    } else { 
+                    ?>
+                            <span class="beforeClick" id="wishlist<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><a class="top-100-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
+                            <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
+                    <?php	
+                    }
+                } 
                 ?>
-                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
-                <?php	
-                }												
+                        											
             }
         } else {
         ?>
