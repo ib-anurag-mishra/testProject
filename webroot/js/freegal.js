@@ -677,8 +677,13 @@ function addToWishlist(prodId , providerType)
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
-				alert("You can not add more songs to your wishlist.");
-				location.reload();
+				
+                                                              
+                                
+                                document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
+                                
+                                //alert("You can not add more songs to your wishlist.");
+				//location.reload();
 				return false;
 			}
 			else
@@ -697,8 +702,9 @@ function addToWishlist(prodId , providerType)
 				}
 				else
 				{
-					alert("You have been logged out from the system. Please login again.");
-					location.reload();
+					 document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
+                                        //alert("You have been logged out from the system. Please login again.");
+					//location.reload();
 					return false;				
 				}
 			}			
