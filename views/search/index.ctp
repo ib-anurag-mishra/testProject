@@ -1209,7 +1209,7 @@ STR;
 		</header>
 		<section class="advanced-search">
             <form method="get" id="searchQueryForm">
-			<input type="search" name="q" id="query" />
+			<input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" name="submit" id="submit" value="Search" />
             </form>
@@ -1315,12 +1315,18 @@ STR;
 			</ul>
 			
 		</section>
-        <section class="advanced-search-results row-1 clearfix">
-			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
-			<section class="advanced-albums">
+        
+			
+<?php
+if(!empty($type) && $type == 'all'){			
+?>      
+       <section class="advanced-search-results row-1 clearfix">
+           <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
+           
+           <section class="advanced-albums">
 				<header class="clearfix">
 					<h5>Album</h5>
-                <h6><a href="#">See more albums</a></h6>
+                <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
 				</header>
 				<div class="advanced-albums-shadow-container">
 					<div class="advanced-albums-scrollable horiz-scroll">
@@ -1345,7 +1351,7 @@ STR;
 			<section class="advanced-artists">
 				<header class="clearfix">
 					<h5>Artists</h5>
-					<h6><a href="#">See more artists</a></h6>
+					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=artist">See more artists</a></h6>
 				</header>
 				<div class="advanced-artists-shadow-container">
 					<div class="advanced-artists-scrollable">
@@ -1376,7 +1382,7 @@ STR;
 			<section class="advanced-composers">
 				<header class="clearfix">
 					<h5>Composers</h5>
-					<h6><a href="#">See more composers</a></h6>
+					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=composer">See more composers</a></h6>
 				</header>
 				<div class="advanced-composers-shadow-container">
 					<div class="advanced-composers-scrollable">
@@ -1404,7 +1410,7 @@ STR;
 			<section class="advanced-genres">
 				<header class="clearfix">
 					<h5>Genres</h5>
-					<h6><a href="#">See more genres</a></h6>
+					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=genre">See more genres</a></h6>
 				</header>
 				<div class="advanced-genres-shadow-container">
 					<div class="advanced-genres-scrollable">
@@ -1432,7 +1438,7 @@ STR;
 			<section class="advanced-labels">
 				<header class="clearfix">
 					<h5>Labels</h5>
-					<h6><a href="#">See more labels</a></h6>
+					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
 				</header>
 				<div class="advanced-labels-shadow-container">
 					<div class="advanced-labels-scrollable">
@@ -1458,6 +1464,7 @@ STR;
 				</div>
 			</section>
 		</section>
+<?php } ?>
 		<section class="tracklist-container">
 			<section class="tracklist-header clearfix">
 				<span class="artist"></span><span class="composer"></span><span class="album"></span><span class="song"></span><span class="download"></span>
@@ -1465,30 +1472,15 @@ STR;
 			<div class="tracklist-shadow-container">
 				<div class="tracklist-scrollable">
 				<?php
-				
-				$b=1;
-				for($a=0;$a<100;$a++) {
-				?>	
-					<?php
-					
-					if($a%10 == 0 ) {
-						
-					?>
-						<div class="tracklist" <?php echo 'id=page-'.$b; ?>>
-					<?php
-						$b++;
-					} else {
-					?>	
-						<div class="tracklist">
-					
-					<?php
-					}
-					?>
-					
+				if(!empty($songs)){
+				$i=1;
+				$country = $this->Session->read('territory');
+                foreach($songs as $psong) {
+                ?>	
 						<a href="#" class="preview"></a>
-						<div class="artist"><a href="#">Carrie Underwood</a></div>
+						<div class="artist"><?php echo $html->link(str_replace('"','',truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($psong->ArtistText)))); ?></div>
 						<a class="add-to-playlist-button" href="#"></a>
-						<div class="composer"><a href="#">Carrie Underwood</a></div>
+						<div class="composer"><?php echo truncate_text(str_replace('"','',$psong->Composer), 30, $this); ?></div>
 							
 						
 						<div class="wishlist-popover">	
