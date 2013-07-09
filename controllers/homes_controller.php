@@ -3306,7 +3306,7 @@ STR;
         $this->set('patronDownload',$patronDownload);
         $wishlistResults = Array();
         // $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
-                
+          /*      
         $wishlistQuery =<<<STR
                     SELECT 
                             wishlists.*,
@@ -3331,6 +3331,25 @@ STR;
 STR;
                     //execute the query
                     $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+           * /
+           */
+                $this->paginate =   array(
+            'limit' => 15, 
+            'contain' => '', 
+            'conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),
+            'fields' => array('wishlists.*',
+                            'Song.ReferenceID',
+                            'Song.ProdID',                            
+                            'Song.provider_type',
+                            'Song.ArtistText',
+                            'File.CdnPath',
+                            'File.SourceURL',
+                            'File.SaveAsName'),
+            'joins' => array(array('table' => 'Songs', 'type' => 'LEFT', 'alias' => 'Song', 'conditions' => array('wishlists.ProdID = Song.ProdID')),
+                array('table' => 'Albums', 'type' => 'INNER', 'alias' => 'Albums', 'conditions' => array('Song.ReferenceID=Albums.ProdID')),
+                array('table' => 'File', 'type' => 'INNER', 'alias' => 'File', 'conditions' => array('Albums.FileID = File.FileID')))
+            );
+        $wishlistResults = $this->paginate('Wishlist');
                     print_r(  $wishlistResults);
                 
         $this->set('wishlistResults',$wishlistResults);
