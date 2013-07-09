@@ -146,6 +146,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 					<div class="play-count"><span id='downloads_used'>0</div>     
                                </div>
                                 <?php  } ?>
+                                    
+                                    <div class="message" id="flashMessage">Please provide a correct card number.</div>
 			</header>
                        
 			<!-- site nav -->

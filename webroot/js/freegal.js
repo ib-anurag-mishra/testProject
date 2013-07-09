@@ -689,9 +689,9 @@ function addToWishlist(prodId , providerType)
 					$('.beforeClick').show();
 					$('.afterClick').hide();
 					if(languageSet == 'en'){
-						document.getElementById('wishlist'+prodId).innerHTML = 'Added to Wishlist';
+						document.getElementById('wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
 					}else{
-						document.getElementById('wishlist'+prodId).innerHTML = 'Añadido a su Lista Deseos';
+						document.getElementById('wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
 					}
 					//document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}
