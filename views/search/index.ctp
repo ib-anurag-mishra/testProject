@@ -1229,22 +1229,94 @@ STR;
                     ?>
                 </li>
 				<li>|</li>
-				<li><a href="#">Albums</a></li>
+				<li>
+                    <?php
+                        if($type != 'album'){
+                    ?>
+                        <a href="/search/index?q=<?php echo $keyword; ?>&type=album">Albums</a>
+                    <?php
+                        } else {
+                    ?>
+                        <a href="#">Albums</a>
+                    <?php
+                    }
+                    ?>
+                </li>
 				<li>|</li>
-				<li><a href="#">Artists</a></li>
+				<li>
+                    <?php
+                        if($type != 'artist'){
+                    ?>
+                        <a href="/search/index?q=<?php echo $keyword; ?>&type=artist">Artists</a>
+                    <?php
+                        } else {
+                    ?>
+                        <a href="#">Artists</a>
+                    <?php
+                        }
+                    ?>
+                </li>
+            	<li>|</li>
+				<li>
+                    <?php
+                        if($type != 'composer'){
+                    ?>
+                        <a href="/search/index?q=<?php echo $keyword; ?>&type=composer">Composers</a>
+                    <?php
+                        } else {
+                    ?>
+                        <a href="#">Composers</a>
+                    <?php
+                        }
+                    ?>
+                </li>
 				<li>|</li>
-				<li><a href="#">Composers</a></li>
+				<li> 
+                    <?php
+                        if($type != 'genre'){
+                    ?>
+                        <a href="/search/index?q=<?php echo $keyword; ?>&type=genre">Genres</a>
+                    <?php
+                        } else {
+                    ?>
+                        <a href="#">Genres</a>
+                    <?php
+                        }
+                    ?>
+                </li>
 				<li>|</li>
-				<li><a href="#">Genres</a></li>
+				<li>
+                    <?php
+                        if($type != 'label'){
+                    ?>
+                        <a href="/search/index?q=<?php echo $keyword; ?>&type=label">Label</a>
+                    <?php
+                        } else {
+                    ?>
+                        <a href="#" style="color:#000">Label</a>
+                    <?php
+                        }
+                    ?>
+                </li>
 				<li>|</li>
-				<li><a href="#">Labels</a></li>
-				<li>|</li>
-				<li><a href="#">Songs</a></li>
+				<li>
+                    <?php
+                        if($type != 'song'){
+                    ?>
+                        <a href="/search/index?q=<?php echo $keyword; ?>&type=song">Songs</a>
+                    <?php
+                        } else {
+                    ?>
+                        <a href="#" style="color:#000">Songs</a>
+                    <?php
+                    }
+                    ?>
+                </li>
 			</ul>
 			
 		</section>
         <section class="advanced-search-results row-1 clearfix">
-			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 			<section class="advanced-albums">
 				<header class="clearfix">
 					<h5>Album</h5>
