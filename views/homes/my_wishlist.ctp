@@ -17,6 +17,10 @@ if ($this->Session->read('Config.language') == 'en') {
 <script lenguage="javascript">
    var languageSet = '<?php echo $setLang; ?>';  
 </script>
+<form id="sortForm" name="sortForm" method='post'>
+    <input id='sort' type='hidden' name="sort" value="<?php echo $sort; ?>" />
+    <input id='sortOrder' type='hidden' name="sortOrder" value="<?php echo $sortOrder; ?>" />
+</form>
 <section class="my-wishlist-page">
 		
 		<div class="breadcrumbs"><?php
@@ -36,12 +40,60 @@ if ($this->Session->read('Config.language') == 'en') {
 			</p>
 		</div>
 		<nav class="my-wishlist-filter-container clearfix">
-			<div class="date-filter-button filter"></div>
+					<?php 
+            if($sort == 'date'){
+                if($sortOrder == 'asc'){
+                ?>    
+                    <div class="date-filter-button filter active"></div>
+                <?php } else { ?>
+                    <div class="date-filter-button filter active toggled"></div>
+                <?php } 
+            } else {
+                ?>
+                <div class="date-filter-button filter "></div>
+            <?php
+            }
+            if($sort == 'song'){
+                if($sortOrder == 'asc'){
+                ?>    
+                    <div class="song-filter-button filter active"></div>
+                <?php } else { ?>
+                    <div class="song-filter-button filter active toggled"></div>
+                <?php } 
+            } else {
+                ?>
 			<div class="song-filter-button filter"></div>
+            <?php
+            }
+            ?>
 			<div class="music-filter-button tab"></div>
 			<div class="video-filter-button tab"></div>
+		<?php
+            if($sort == 'artist'){
+                if($sortOrder == 'asc'){
+                ?>    
+                    <div class="artist-filter-button filter active"></div>
+                <?php } else { ?>
+                    <div class="artist-filter-button filter active toggled"></div>
+                <?php } 
+            } else {
+                ?>
 			<div class="artist-filter-button filter"></div>
+            <?php
+            }
+            if($sort == 'album'){
+                if($sortOrder == 'asc'){
+                ?>    
+                    <div class="album-filter-button filter active"></div>
+                <?php } else { ?>
+                    <div class="album-filter-button filter active toggled"></div>
+                <?php } 
+            } else {
+                ?>
 			<div class="album-filter-button filter"></div>
+            <?php
+            }
+            ?>  
 			<div class="download-button filter"></div>
 			
 		</nav>

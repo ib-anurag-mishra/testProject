@@ -3300,6 +3300,53 @@ STR;
         $this->layout = 'home';
         $libraryId = $this->Session->read('library');       
         $patronId = $this->Session->read('patron');
+        
+        
+        
+         $sortArray = array('date', 'song', 'artist', 'album');
+        $sortOrderArray = array('asc','desc');
+        
+        if(isset($_POST)){
+            $sort = $_POST['sort'];
+            $sortOrder = $_POST['sortOrder'];
+        }
+        
+        if(!in_array($sort, $sortArray)){
+            $sort = 'date';
+        }
+        
+        if(!in_array($sortOrder, $sortOrderArray)){
+            $sortOrder = 'asc';
+        }
+        
+        switch($sort){
+            case 'date':
+                $songSortBy = 'wishlists.created';
+                $videoSortBy = 'Videodownload.created';
+                $sortType = $sortOrder;
+                break;
+            case 'song':
+                $songSortBy = 'wishlists.track_title';
+                $videoSortBy = 'Videodownload.track_title';
+                $sortType = $sortOrder;
+                break;
+            case 'artist':
+                $songSortBy = 'wishlists.artist';
+                $videoSortBy = 'Videodownload.artist';
+                $sortType = $sortOrder;
+                break;
+            case 'album':  
+                $songSortBy = 'wishlists.album';
+                $videoSortBy = 'Video.Title';
+                $sortType = $sortOrder;
+                break;
+        }
+        
+        
+        
+        
+        
+        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
 	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
@@ -3324,7 +3371,7 @@ STR;
                             wishlists AS wishlists ON (wishlists.ProdID = Song.ProdID)
                                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            library_id='$libraryId' and patron_id='$patronId'                               
+                            library_id='$libraryId' and patron_id='$patronId' order by $songSortBy $sortType                               
 
       
 	  
@@ -3335,7 +3382,8 @@ STR;
               
                 
         $this->set('wishlistResults',$wishlistResults);
-        
+        $this->set('sort',$sort);
+        $this->set('sortOrder',$sortOrder);
     }
 
     /*
