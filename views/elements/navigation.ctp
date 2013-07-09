@@ -147,8 +147,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                </div>
                                 <?php  } ?>
                                     
-                                    <div class="message" id="flashMessage">Please provide a correct card number.</div>
+                                    
 			</header>
+                        
                        
 			<!-- site nav -->
 		<nav class="site-nav">
@@ -202,6 +203,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 			</nav>
 			<div class="gradient-border"></div>
+                        <div class="message" id="flashMessage">Please provide a correct card number.</div>
 			<div class="top-sub-nav">
 				
 			</div>
