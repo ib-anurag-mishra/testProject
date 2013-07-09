@@ -666,7 +666,7 @@ function addToWishlist(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	//document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
 return ;	
 	var data = "prodId="+prodId+"&provider="+providerType;	
 	jQuery.ajax({
@@ -693,7 +693,7 @@ return ;
 					}else{
 						document.getElementById('wishlist'+prodId).innerHTML = 'Añadido a su Lista Deseos';
 					}
-					document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+					//document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
 				}
 				else
 				{
