@@ -1209,7 +1209,7 @@ STR;
 		</header>
 		<section class="advanced-search">
             <form method="get" id="searchQueryForm">
-			<input type="search" name="query" id="query" />
+			<input type="search" name="q" id="query" />
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" name="submit" id="submit" value="Search" />
             </form>
@@ -1242,6 +1242,227 @@ STR;
 				<li><a href="#">Songs</a></li>
 			</ul>
 			
+		</section>
+        <section class="advanced-search-results row-1 clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-albums">
+				<header class="clearfix">
+					<h5>Album</h5>
+                <h6><a href="#">See more albums</a></h6>
+				</header>
+				<div class="advanced-albums-shadow-container">
+					<div class="advanced-albums-scrollable horiz-scroll">
+						<ul>
+							<?php
+							for($i=0;$i<12;$i++) {
+							?>
+							<li>
+								<a href="#"><img src="images/search-results/carrieunderwood162x162.jpg" alt="carrieunderwood162x162" width="162" height="162" /></a>
+								<div class="album-title"><a href="#">Some Hearts</a></div>
+								<div class="album-genre">Genre: <span><a href="#">Country</a></span></div>
+								<div class="album-label">Label: <span><a href="#">Sony Music</a></span></div>
+							</li>
+							
+							<?php
+							}
+							?>
+						</ul>
+					</div>
+				</div>
+			</section>
+			<section class="advanced-artists">
+				<header class="clearfix">
+					<h5>Artists</h5>
+					<h6><a href="#">See more artists</a></h6>
+				</header>
+				<div class="advanced-artists-shadow-container">
+					<div class="advanced-artists-scrollable">
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+					</div>
+				</div>
+			
+			</section>
+		</section>
+		<section class="advanced-search-results row-2 clearfix">
+			<section class="advanced-composers">
+				<header class="clearfix">
+					<h5>Composers</h5>
+					<h6><a href="#">See more composers</a></h6>
+				</header>
+				<div class="advanced-composers-shadow-container">
+					<div class="advanced-composers-scrollable">
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+					</div>
+				</div>
+			</section>
+			<section class="advanced-genres">
+				<header class="clearfix">
+					<h5>Genres</h5>
+					<h6><a href="#">See more genres</a></h6>
+				</header>
+				<div class="advanced-genres-shadow-container">
+					<div class="advanced-genres-scrollable">
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+					</div>
+				</div>
+			</section>
+			<section class="advanced-labels">
+				<header class="clearfix">
+					<h5>Labels</h5>
+					<h6><a href="#">See more labels</a></h6>
+				</header>
+				<div class="advanced-labels-shadow-container">
+					<div class="advanced-labels-scrollable">
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
+						<div><a href="#">Carrie <span>(1)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
+						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
+						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+					</div>
+				</div>
+			</section>
+		</section>
+		<section class="tracklist-container">
+			<section class="tracklist-header clearfix">
+				<span class="artist"></span><span class="composer"></span><span class="album"></span><span class="song"></span><span class="download"></span>
+			</section>
+			<div class="tracklist-shadow-container">
+				<div class="tracklist-scrollable">
+				<?php
+				
+				$b=1;
+				for($a=0;$a<100;$a++) {
+				?>	
+					<?php
+					
+					if($a%10 == 0 ) {
+						
+					?>
+						<div class="tracklist" <?php echo 'id=page-'.$b; ?>>
+					<?php
+						$b++;
+					} else {
+					?>	
+						<div class="tracklist">
+					
+					<?php
+					}
+					?>
+					
+						<a href="#" class="preview"></a>
+						<div class="artist"><a href="#">Carrie Underwood</a></div>
+						<a class="add-to-playlist-button" href="#"></a>
+						<div class="composer"><a href="#">Carrie Underwood</a></div>
+							
+						
+						<div class="wishlist-popover">	
+						
+						
+							<div class="playlist-options">
+								<ul>
+									<li><a href="#">Create New Queue</a></li>
+									<li><a href="#">Playlist 1</a></li>
+									<li><a href="#">Playlist 2</a></li>
+									<li><a href="#">Playlist 3</a></li>
+									<li><a href="#">Playlist 4</a></li>
+									<li><a href="#">Playlist 5</a></li>
+									<li><a href="#">Playlist 6</a></li>
+									<li><a href="#">Playlist 7</a></li>
+									<li><a href="#">Playlist 8</a></li>
+									<li><a href="#">Playlist 9</a></li>
+									<li><a href="#">Playlist 10</a></li>
+								</ul>
+							</div>
+							
+							<a class="add-to-playlist" href="#">Add To Queue</a>
+							<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+							
+							<div class="share clearfix">
+								<p>Share via</p>
+								<a class="facebook" href="#"></a>
+								<a class="twitter" href="#"></a>
+							</div>
+						</div>
+						<div class="cover-art">
+							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
+						</div>
+						<div class="album"><a href="#">Blown Away</a></div>
+						<div class="song">Blown Away</div>
+						<div class="download"><a href="#">Download</a></div>
+						
+						
+						
+				
+					</div>
+				<?php		
+					}
+				?>
+				</div>
+			</div>
 		</section>
     </section>
 	</div>
