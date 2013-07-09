@@ -218,7 +218,7 @@
 										</ul>
 									</div>
 									<div id="top-100-videos-grid" class="top-100-grids horiz-scroll">
-										<ul>
+										<ul style="width:47000px;">
 
                                                     <?php if(is_array($nationalTopVideoDownload) && count($nationalTopVideoDownload) > 0){ ?>
 
@@ -392,7 +392,7 @@
 									<h3>Featured</h3>
 								</header>
 								<div class="featured-grid horiz-scroll">
-									<ul style="width:3865px;">
+									<ul style="width:3615px;">
 										<?php
 								foreach($featuredArtists as $k => $v){
 								
@@ -576,7 +576,7 @@ array('class'=>'first','escape'=>false)) */ ?>
 									</ul>
 								</div> <!-- end #coming-soon-singles-grid -->
 									<div id="coming-soon-videos-grid" class="clearfix horiz-scroll">
-									<ul class="clearfix">										
+									<ul class="clearfix" style="width:3333px;">										
                                                                             <?php                                                                              
                                                                             $total_videos = count($coming_soon_videos);
                                                                             $sr_no = 0;
