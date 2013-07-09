@@ -11,14 +11,14 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 		$part = floor($pageLimitToShow/2);
 		if($type == 'listing'){
 			if(1 != $currentPage){
-				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/advanced_search/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
+				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/index/".($currentPage-1).'/'.$facetPage.'/'.$queryString);
 			}
 			else{
 				$pagination_str .=	"&lt&ltprevious";
 			}
 		} else if($type == 'block'){
 			if(1 != $facetPage){
-				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/advanced_search/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
+				$pagination_str .=	$html->link('<<'.__('previous', true), "/search/index/".$currentPage.'/'.($facetPage-1).'/'.$queryString);
 			}
 			else{
 				$pagination_str .=	"&lt&ltprevious";
@@ -59,13 +59,13 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 				if($currentPage == $pageCount){
 					$pagination_str .= $pageCount;
 				} else {
-					$pagination_str .= $html->link($pageCount, '/search/advanced_search/'.($pageCount).'/'.$facetPage.'/'.$queryString);
+					$pagination_str .= $html->link($pageCount, '/search/index/'.($pageCount).'/'.$facetPage.'/'.$queryString);
 				}
 			} else if($type == 'block'){
 				if($facetPage == $pageCount){
 					$pagination_str .= $pageCount;
 				} else {
-					$pagination_str .= $html->link($pageCount, '/search/advanced_search/'.$currentPage.'/'.$pageCount.'/'.$queryString);
+					$pagination_str .= $html->link($pageCount, '/search/index/'.$currentPage.'/'.$pageCount.'/'.$queryString);
 				}
 			}
 			$pagination_str .= "&nbsp;";
@@ -74,14 +74,14 @@ function createPagination($html, $currentPage, $facetPage, $type='listing', $tot
 
 		if($type == 'listing'){
 			if($currentPage != $totalPages ){
-				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
+				$pagination_str .=	$html->link(__('next', true).'>>', '/search/index/'.($currentPage+1).'/'.$facetPage.'/'.$queryString);
 			}
 			else{
 				$pagination_str .=	"next&gt&gt";
 			}
 		} else if($type == 'block'){
 			if($facetPage != $totalPages ){
-				$pagination_str .=	$html->link(__('next', true).'>>', '/search/advanced_search/'.$currentPage.'/'.($facetPage+1).'/'.$queryString);
+				$pagination_str .=	$html->link(__('next', true).'>>', '/search/index/'.$currentPage.'/'.($facetPage+1).'/'.$queryString);
 			}
 			else{
 				$pagination_str .=	"next&gt&gt";
@@ -136,7 +136,7 @@ function Get_Sales_date($sales_date_array, $country){
 <script src="/js/advanced_search.js"></script>
 <div class="breadCrumb">
 <?php
-	$html->addCrumb(__('Advance Search', true), '/search/advanced_search');
+	$html->addCrumb(__('Search Results', true), '/search/index');
 	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
 ?>
 </div>
@@ -153,7 +153,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'all'){
             ?>
-          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=all">All Music</a>
+          <a	href="/search/index?q=<?php echo $keyword; ?>&type=all">All Music</a>
           <?php
           } else {
             ?>
@@ -166,7 +166,7 @@ function Get_Sales_date($sales_date_array, $country){
         <?php
           if($type != 'album'){
             ?>
-          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=album">Albums</a>
+          <a	href="/search/index?q=<?php echo $keyword; ?>&type=album">Albums</a>
           <?php
           } else {
             ?>
@@ -179,7 +179,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'artist'){
           ?>
-          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
+          <a	href="/search/index?q=<?php echo $keyword; ?>&type=artist">Artists</a></li>
           <?php
           } else {
             ?>
@@ -191,7 +191,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'composer'){
           ?>
-          <a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
+          <a	href="/search/index?q=<?php echo $keyword; ?>&type=composer">Composers</a></li>
           <?php
           } else {
             ?>
@@ -203,7 +203,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'genre'){
           ?>
-          <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=genre">Genres</a>
+          <a href="/search/index?q=<?php echo $keyword; ?>&type=genre">Genres</a>
           <?php
           } else {
             ?>
@@ -216,7 +216,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'label'){
           ?>
-          <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">Label</a>
+          <a href="/search/index?q=<?php echo $keyword; ?>&type=label">Label</a>
           <?php
           } else {
             ?>
@@ -229,7 +229,7 @@ function Get_Sales_date($sales_date_array, $country){
           <?php
           if($type != 'song'){
           ?>
-            <a href="/search/advanced_search?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
+            <a href="/search/index?q=<?php echo $keyword; ?>&type=song">Songs</a></li>
             <?php
           } else {
             ?>
@@ -414,7 +414,7 @@ STR;
             $name = $genre->Genre;
             $count = $genre->numFound;
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/index?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -493,7 +493,7 @@ STR;
             $name = $label->Label;
             $count = $label->numFound;
 						$label_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=label" title="$name">$label_name_text</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/index?q=$tilte&type=label" title="$name">$label_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -665,7 +665,7 @@ STR;
             $count = $composer->numFound;
 	    $name = $this->getTextEncode($name);
 						$composer_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=composer" title='$name'>$composer_name</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/index?q=$tilte&type=composer" title='$name'>$composer_name</a></span><span class="right_text">($count)</span></li>
 STR;
 
 						$index++;
@@ -819,7 +819,7 @@ STR;
 					if($counter%4==0 || $counter == count($albumData)){
 						$album_outer_div .=<<<STR
 						<div><span class="more_link">
-						<a	href="/search/advanced_search?q=$keyword&type=album">See more albums</a>
+						<a	href="/search/index?q=$keyword&type=album">See more albums</a>
 						</span></div>
 STR;
 					}
@@ -856,12 +856,12 @@ STR;
 					$tilte = urlencode($composer->Composer);
 					$composer_name = truncate_text($composer->Composer, 30, $this);
 				?>
-							<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $composer->numFound; ?>)</span></li>
+							<li ><span class="left_text"><a href="/search/index?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $composer->numFound; ?>)</span></li>
 				<?php
 				}
 				?>
 				</ul>
-				<span class="more_link"><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
+				<span class="more_link"><a	href="/search/index?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
 				<?php
 				} else {
 				?>
@@ -891,14 +891,14 @@ STR;
             $name = $genre->Genre;
             $count = $genre->numFound;
 						$genre_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/advanced_search?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
+						<li ><span class="left_text"><a href="/search/index?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
 STR;
 					}
 
 					$genre_str .=<<<STR
 						$genre_list
 						</ul>
-						<span class="more_link"><a	href="/search/advanced_search?q=$keyword&type=genre">See more Genre</a></span>
+						<span class="more_link"><a	href="/search/index?q=$keyword&type=genre">See more Genre</a></span>
 STR;
 				}
 				else {
@@ -945,7 +945,7 @@ STR;
 				}
 				?>
 				</ul>
-					<span class="more_link"><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
+					<span class="more_link"><a	href="/search/index?q=<?php echo $keyword; ?>&type=artist">See more Artists</a></span>
 			<?php
 				} else {
 				?>
@@ -970,12 +970,12 @@ STR;
                 $name = $label->Label;
                 $count = $label->numFound;
 				?>
-				<li ><span class="left_text"><a href="/search/advanced_search?q=<?php echo $tilte;?>&type=label" '<?php echo $name; ?>'><?php echo (($name!="false")?$label_name_text:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
+				<li ><span class="left_text"><a href="/search/index?q=<?php echo $tilte;?>&type=label" '<?php echo $name; ?>'><?php echo (($name!="false")?$label_name_text:""); ?></a></span><span class="right_text">(<?php echo $count; ?>)</span></li>
 						<?php
 				}
 				?>
 				</ul>
-				<span class="more_link"><a	href="/search/advanced_search?q=<?php echo $keyword; ?>&type=label">See more Labels</a></span>
+				<span class="more_link"><a	href="/search/index?q=<?php echo $keyword; ?>&type=label">See more Labels</a></span>
 			<?php
 				} else {
 				?>
@@ -996,7 +996,7 @@ STR;
   ?>
 	<div >
 		<div	class="links" id="genreArtist" style="width:192px;">
-        <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>">Artist
+        <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>">Artist
         <?php
           if($sort=='artist'){
             if($sortOrder=='asc'){
@@ -1011,7 +1011,7 @@ STR;
 		</a>
     </div>
 		<div	class="links" id="genreComposer" style="width:180px;">
-      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>">Composer
+      <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>">Composer
       <?php
         if($sort=='composer'){
           if($sortOrder=='asc'){
@@ -1026,7 +1026,7 @@ STR;
 	  </a>
     </div>
 		<div	class="links" id="genreAlbum" style="width:192px;">
-      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>">Album
+      <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>">Album
       <?php
         if($sort=='album'){
           if($sortOrder=='asc'){
@@ -1041,7 +1041,7 @@ STR;
 	  </a>
     </div>
 		<div	class="links"	id="genreTrack" style="width:215px;">
-      <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>">Track
+      <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>">Track
       <?php
         if($sort=='song'){
           if($sortOrder=='asc'){
@@ -1195,3 +1195,52 @@ STR;
 
 ?>
 	</div>
+
+    <section class="search-page">
+		<div class="breadcrumbs">
+            <?php
+            $html->addCrumb(__('Search Results', true), '/search/index');
+            echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
+            ?>
+        </div>
+		<header class="clearfix">
+			
+			
+		</header>
+		<section class="advanced-search">
+            <form method="get" id="searchQueryForm">
+			<input type="search" name="query" id="query" />
+            <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
+			<input type="submit" name="submit" id="submit" value="Search" />
+            </form>
+            <div class="faq-link">Need help? Visit our <a href="#">FAQ section</a>.</div>
+			<ul class="clearfix">
+				<li>
+                    <?php
+                        if($type != 'all'){
+                    ?>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=all">All Music</a>
+                    <?php
+                        } else {
+                    ?>
+                    <a	href="#">All Music</a>
+                    <?php
+                    }
+                    ?>
+                </li>
+				<li>|</li>
+				<li><a href="#">Albums</a></li>
+				<li>|</li>
+				<li><a href="#">Artists</a></li>
+				<li>|</li>
+				<li><a href="#">Composers</a></li>
+				<li>|</li>
+				<li><a href="#">Genres</a></li>
+				<li>|</li>
+				<li><a href="#">Labels</a></li>
+				<li>|</li>
+				<li><a href="#">Songs</a></li>
+			</ul>
+			
+		</section>
+    </section>
