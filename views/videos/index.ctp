@@ -113,10 +113,11 @@ foreach($topVideoDownloads as $topDownload)
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <a class="add-to-playlist-button" href="#"></a>
                             <?php
-                                    if(empty($this->Session->read('patron')))
+                                    if(!($this->Session->read('patron')))
                                      { ?>
                                          <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a>
-                                     <?php }
+                                      <?php 
+                                    }
                             ?>
                             <div class="wishlist-popover">
                                 <?php
@@ -138,9 +139,7 @@ foreach($topVideoDownloads as $topDownload)
                                 </div>
                                 <?php
                                 } else {
-                                ?>
                                
-                                <?php
                                 }
                                 ?>
                             </div>
