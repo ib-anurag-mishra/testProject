@@ -154,7 +154,7 @@
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                 <?php } ?>
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+														
 
                                                                                                                     <?php
                                                                                                                     

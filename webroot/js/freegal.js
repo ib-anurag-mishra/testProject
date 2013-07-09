@@ -666,7 +666,8 @@ function addToWishlist(prodId , providerType)
 {
 	$('.beforeClick').hide();
 	$('.afterClick').show();
-	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';	
+	document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+return ;	
 	var data = "prodId="+prodId+"&provider="+providerType;	
 	jQuery.ajax({
 		type: "post",  // Request method: post, get

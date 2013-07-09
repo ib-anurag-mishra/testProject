@@ -363,7 +363,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'desc')
+                                    ), 'order' => array('Country.SalesDate' => 'desc','limit'=>20)
                             )
                     );
             } else {
@@ -565,10 +565,11 @@ STR;
                
              if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
-                                $this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');                                
-                                //$countryPrefix = "ca_";
-                              //  $territory = "CA";
+                
+                 $this->Song->recursive = 2;
+                $countryPrefix = $this->Session->read('multiple_countries');                                
+                //$countryPrefix = "ca_";
+                //  $territory = "CA";
                 
                 
                $sql_coming_soon =<<<STR
