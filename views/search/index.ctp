@@ -1194,7 +1194,7 @@ STR;
 	}
 
 ?>
-	</div>
+
 
     <section class="search-page">
 		<div class="breadcrumbs">
@@ -1244,3 +1244,4 @@ STR;
 			
 		</section>
     </section>
+	</div>
