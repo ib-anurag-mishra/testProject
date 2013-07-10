@@ -232,7 +232,8 @@ Class GenresController extends AppController
 		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
-		if (($genre = Cache::read("genre".$country)) === false) {
+		//if (($genre = Cache::read("genre".$country)) === false) {
+                if(1){
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
 							array('and' =>
