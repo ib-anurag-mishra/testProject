@@ -48,7 +48,7 @@
 
                                 <?php
 
-                                $wishlistInfo = $wishlist->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
+                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
 
                                 if($wishlistInfo == 'Added to Wishlist') {
                                 ?> 

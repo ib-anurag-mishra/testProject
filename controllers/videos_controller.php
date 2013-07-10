@@ -2,23 +2,25 @@
 
 class VideosController extends AppController {
 
-     var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library');
-    var $components = array('Downloadsvideos', 'Session');
-    var $layout = 'home';
+     var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library','WishlistVideo');
+     var $helpers = array( 'WishlistVideo');
+     var $components = array('Downloadsvideos', 'Session');
+     var $layout = 'home';
+   
    
     
     /*
     Function Name : beforeFilter
     Desc : actions that needed before other functions are getting called
    */
-	function beforeFilter(){
-		parent::beforeFilter();
-		$this->Cookie->name = 'baker_id';
-		$this->Cookie->time = 3600; // or '1 hour'
-		$this->Cookie->path = '/';
-		$this->Cookie->domain = 'freegalmusic.com';
-		//$this->Cookie->key = 'qSI232qs*&sXOw!';
-	}
+    function beforeFilter(){
+            parent::beforeFilter();
+            $this->Cookie->name = 'baker_id';
+            $this->Cookie->time = 3600; // or '1 hour'
+            $this->Cookie->path = '/';
+            $this->Cookie->domain = 'freegalmusic.com';
+            //$this->Cookie->key = 'qSI232qs*&sXOw!';
+    }
     
     function index() {
         $territory = $this->Session->read('territory');
