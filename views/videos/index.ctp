@@ -44,7 +44,29 @@
                                 <a class="add-to-playlist-button" href="#"></a>
                                 <div class="wishlist-popover">
 
+
+
                                     <a class="add-to-wishlist" href="#"><?php echo __('Add To Wishlist'); ?></a>
+
+                                <?php
+
+                                $wishlistInfo = $wishlist->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
+
+                                if($wishlistInfo == 'Added to Wishlist') {
+                                ?> 
+                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                <?php 
+                                } else { 
+                                ?>
+                                        <span class="beforeClick" id="video_wishlist<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>","<?php echo $featureVideo["FeaturedVideo"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                        <span class="afterClick" id="downloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                <?php	
+                                }
+
+                                ?>
+
+
+
 
                                     <div class="share clearfix">
                                         <p><?php echo __('Share via'); ?></p>
