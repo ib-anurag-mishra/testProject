@@ -14,9 +14,11 @@ class WishlistVideoHelper extends AppHelper {
         $patronId = $this->Session->read('patron');  
         $wishlistDetails = $wishlistInstance->find('all', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId, 'ProdID' => $id)));
         if(count($wishlistDetails) != 0) {
+            echo 147;
             return "Added to Wishlist";
         }
         else {
+            echo 478;
             return "Add to wishlist";
         }
     }

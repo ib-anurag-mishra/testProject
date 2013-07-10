@@ -56,7 +56,7 @@
                                 <?php 
                                 } else { 
                                 ?>
-                                        <span class="beforeClick" id="video_wishlist<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>","<?php echo $featureVideo["FeaturedVideo"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                        <span class="beforeClick" id="video_wishlist<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>","<?php echo $featureVideo["FeaturedVideo"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
                                         <span class="afterClick" id="downloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
                                 <?php	
                                 }
