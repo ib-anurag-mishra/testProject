@@ -295,7 +295,7 @@
                                 <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
-                                $wishlistInfo = $wishlist->getWishlistData($nationalTopVideoDownload[$i]["Video"]["ProdID"]);
+                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($nationalTopVideoDownload[$i]["Video"]["ProdID"]);
                                 if($wishlistInfo == 'Added to Wishlist') {
                                 ?> 
                                         <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
