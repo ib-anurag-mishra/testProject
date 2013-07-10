@@ -193,7 +193,7 @@ STR;
           
              
         // National Top Videos list and Downloads functionality code 
-        //if (($national = Cache::read("nationalvideos".$territory)) === false) {
+        if (($national = Cache::read("nationalvideos".$territory)) === false) {
             
                     
                 $country = $territory;
@@ -241,7 +241,7 @@ STR;
 
                 $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
-                 echo $sql_national_100_v =<<<STR
+                  $sql_national_100_v =<<<STR
                 SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
@@ -290,7 +290,7 @@ STR;
                 Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
                
                }               
-     //  }
+       }
      
         $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
 
