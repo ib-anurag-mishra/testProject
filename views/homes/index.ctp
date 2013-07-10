@@ -331,8 +331,6 @@
     ?>
 
 
-
-
                                                                                                 <?php if($this->Session->read("patron")){ ?> 
 														
 														<a class="add-to-playlist-button" href="#"></a>
