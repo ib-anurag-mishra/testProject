@@ -12,8 +12,19 @@ if ($this->Session->read('Config.language') == 'en') {
 } else {
     $setLang = 'es';
 }
+function ieversion()
+{
+	  ereg('MSIE ([0-9]\.[0-9])',$_SERVER['HTTP_USER_AGENT'],$reg);
+	  if(!isset($reg[1])) {
+		return -1;
+	  } else {
+		return floatval($reg[1]);
+	  }
+}
+$ieVersion =  ieversion();
 
 ?>
+
 <script lenguage="javascript">
    var languageSet = '<?php echo $setLang; ?>';  
 </script>
