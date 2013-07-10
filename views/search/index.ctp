@@ -1469,24 +1469,20 @@ if(!empty($type) && $type == 'all'){
 				</header>
 				<div class="advanced-labels-shadow-container">
 					<div class="advanced-labels-scrollable">
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+                            <?php
+                            if(!empty($labels)){
+                                foreach($labels as $label)
+                                {
+                                    $tilte = urlencode($label->Label);
+                                    $label_name_text = truncate_text($label->Label, 30, $this);
+                                    $name = $label->Label;
+                                    $count = $label->numFound;
+                            ?>
+                        <div><a href="/search/index?q=<?php echo $tilte;?>&type=label" title="<?php echo $name; ?>"><?php echo (($name!="false")?$label_name_text:""); ?> <span>(<?php echo $count; ?>)</span></a></div>
+						<?php }
+                            } else { ?>
+                             <div style='color:red'><?php __("No Labels Found"); ?></div>     
+                        <?php  } ?>
 					</div>
 				</div>
 			</section>
