@@ -4202,12 +4202,14 @@ STR;
         
         function new_releases() 
         {
-           $this->layout = 'home'; 
-            
-           
-            //////////////////////////////////Songs/////////////////////////////////////////////////////////
-           
-             $territory = $this->Session->read('territory');
+            $this->layout = 'home';             
+            //fetch the session variables
+            $libraryId = $this->Session->read('library');       
+            $patronId = $this->Session->read('patron');
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+            //////////////////////////////////Songs/////////////////////////////////////////////////////////           
+            $territory = $this->Session->read('territory');
              
                
              
