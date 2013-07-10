@@ -716,7 +716,60 @@ function addToWishlist(prodId , providerType)
 	});
 	return false; 
 }
+function addToWishlistVideo(prodId , providerType)
+{
+	$('.beforeClick').hide();
+	$('.afterClick').show();
+	//document.getElementById('wishlist_loader_'+prodId).style.display = 'block';
+	
+	var data = "prodId="+prodId+"&provider="+providerType;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"homes/addToWishlistVideo", // URL to request
+		data: data,  // post data
+		success: function(response) {	
+                    //alert(response);
+			var msg = response.substring(0,5);
+			if(msg == 'error')
+			{
+                                                           
+                            document.getElementById('ajaxflashMessage44').innerHTML = 'You can not add more songs to your wishlist.';
 
+                            //alert("You can not add more songs to your wishlist.");
+                            location.reload();
+                            return false;
+			}else if(msg == 'error1'){                    
+                            
+                            document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Already Added</a>';
+                        }
+			else
+			{	
+				var msg = response.substring(0,7);
+				if(msg == 'Success')
+				{
+					$('.beforeClick').show();
+					$('.afterClick').hide();
+					if(languageSet == 'en'){
+						document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
+					}else{
+						document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
+					}
+					//document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
+				}
+				else
+				{
+					 document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
+                                        //alert("You have been logged out from the system. Please login again.");
+					location.reload();
+					return false;				
+				}
+			}			
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {						
+		}
+	});
+	return false; 
+}
 function addToWishlist_top(prodId , providerType)
 {
 	$('.beforeClick').hide();
