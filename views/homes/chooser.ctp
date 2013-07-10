@@ -1,7 +1,25 @@
-<script language="text/javascript">
+<script language="text/javascript"> 
 	$(function() {
 		$('.blkButton').corner('5px');
 	});
+        
+
+    
+//    $("div").keypress(function(){ alert("hi");
+//                                        $("#LibraryName").autocomplete("autocomplete.php", {
+//                                            selectFirst: true
+//                                      });
+//                              });
+    
+    
+</script>
+<script>
+            
+            $(document).ready(function(){ 
+            $("#LibraryName").autocomplete("autocomplete.php", {
+                  selectFirst: true
+            });
+    });
 </script>
 <?php
 	$this->pageTitle = 'Login';
@@ -21,7 +39,7 @@
                 ?>
                 <div class="input text">
                     <label for="LibraryZipcode">Library Name </label>
-                    <input type="text" id="LibraryZipcode"  name="data[Library_details1][library_name]" >
+                    <input type="text" id="LibraryName"  name="LibraryName" >
                 </div>
 		<div class="input text">
                     <label for="LibraryZipcode">Zipcode </label>
