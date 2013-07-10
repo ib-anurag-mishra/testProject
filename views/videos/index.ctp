@@ -143,7 +143,37 @@ foreach($topVideoDownloads as $topDownload)
                                             <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 										</span>
 								</form>													
-								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+								
+
+                        <?php
+
+                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
+
+                                if($wishlistInfo == 'Added to Wishlist') {
+                                ?> 
+                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                <?php 
+                                } else { 
+                                ?>
+                                        <span class="beforeClick" id="video_wishlist<?php echo $topDownload["Video"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $topDownload["Video"]["ProdID"]; ?>","<?php echo $topDownload["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                        <span class="afterClick" id="downloading_<?php echo $topDownload["Video"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                <?php	
+                                }
+
+                                ?>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 <div class="share clearfix">
                                     <p>Share via</p>
