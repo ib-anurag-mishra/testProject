@@ -344,7 +344,7 @@ STR;
                                                     'Album.Copyright',
                                                     'Album.provider_type'
 
-                                                    ),'limit'=>20,
+                                                    ),
                                             'contain' => array(
                                                     'Genre' => array(
                                                             'fields' => array(
