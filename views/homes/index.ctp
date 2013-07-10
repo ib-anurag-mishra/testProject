@@ -452,7 +452,7 @@ array('class'=>'first','escape'=>false)) */ ?>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                     <?php } ?>
                                                                                                                 
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                                                                                                 <!--   <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
 														
 														<div class="share clearfix">
 															<p>Share via</p>
