@@ -41,7 +41,7 @@ class SearchController extends AppController
   }// unset session when no params
   if( (isset($_SESSION['SearchReq'])) && ($_SESSION['SearchReq']['word'] != trim($_GET['q'])) && ($_SESSION['SearchReq']['type'] == trim($_GET['type'])) ) {
     unset($_SESSION['SearchReq']);
-    $this->redirect(array('controller' => 'search', 'action' => 'advanced_search?q='.$_GET['q'].'&type='.$_GET['type']));
+    $this->redirect(array('controller' => 'search', 'action' => 'index?q='.$_GET['q'].'&type='.$_GET['type']));
   }//reset session & redirect to 1st page
   if( ('' != trim($_GET['q'])) && ('' != trim($_GET['type'])) ) {
     $_SESSION['SearchReq']['word'] = $_GET['q'];
