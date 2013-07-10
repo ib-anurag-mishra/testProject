@@ -3380,17 +3380,17 @@ STR;
         switch($sort){
             case 'date':
                 $songSortBy = 'wishlists.created';
-                $videoSortBy = 'Videodownload.created';
+                $videoSortBy = 'WishlistVideo.created';
                 $sortType = $sortOrder;
                 break;
             case 'song':
                 $songSortBy = 'wishlists.track_title';
-                $videoSortBy = 'Videodownload.track_title';
+                $videoSortBy = 'WishlistVideo.track_title';
                 $sortType = $sortOrder;
                 break;
             case 'artist':
                 $songSortBy = 'wishlists.artist';
-                $videoSortBy = 'Videodownload.artist';
+                $videoSortBy = 'WishlistVideo.artist';
                 $sortType = $sortOrder;
                 break;
             case 'album':  
@@ -3424,7 +3424,7 @@ STR;
                     FROM
                             Songs AS Song
                                     LEFT JOIN
-                            wishlists AS wishlists ON (wishlists.ProdID = Song.ProdID)
+                            wishlists AS wishlists ON ( (wishlists.ProdID = Song.ProdID) && (wishlists.provider_type = Song.provider_type) )
                                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
                             library_id='$libraryId' and patron_id='$patronId' order by $songSortBy $sortType                               
@@ -3434,12 +3434,20 @@ STR;
 STR;
                     //execute the query
                     $wishlistResults = $this->Wishlist->query($wishlistQuery); 
+                    
+                    
+                    
+              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
+
           
               
                 
         $this->set('wishlistResults',$wishlistResults);
+        $this->set('$wishlistResultsVideos',$wishlistResultsVideos);
         $this->set('sort',$sort);
         $this->set('sortOrder',$sortOrder);
+        
+
     }
 
     /*
