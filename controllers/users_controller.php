@@ -3594,12 +3594,8 @@ Class UsersController extends AppController
 	*/
 
 	function sndlogin($library = null){
-            if($this->Session->read('redirection_url'))
-            {
-                $redirection_url = $this->Session->read('redirection_url');
-                $this->Session->destroy('redirection_url');
-            }
-            else
+            
+            if($this->Session->read('redirection_url') != '')
             {
                 $this->Session->write("redirection_url", $_SERVER['HTTP_REFERER']);
             }
@@ -3819,10 +3815,21 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
                                                 
+                                                
+                                                if($this->Session->read('redirection_url'))
+                                                {
+                                                    $redirection_url = $this->Session->read('redirection_url');
+                                                    $this->Session->destroy('redirection_url');
+                                                    $this->redirect($redirection_url);
+                                                }
+                                                else
+                                                {
+                                                    $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                }
                                                 //echo "redirection_url: ".$redirection_url; die;
                                                 
-						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-                                                $this->redirect($redirection_url);
+						
+                                               
 
 					}
 
