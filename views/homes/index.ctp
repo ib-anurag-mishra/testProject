@@ -361,8 +361,8 @@
                                                                                                                     <?php
 
 
-                                                                                                                    echo $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($nationalTopVideoDownload[$i]['Video']["ProdID"]);
-die;
+                                                                                                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($nationalTopVideoDownload[$i]['Video']["ProdID"]);
+
                                                                                                                     if($wishlistInfo == 'Added to Wishlist') {
                                                                                                                     ?> 
                                                                                                                             <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
