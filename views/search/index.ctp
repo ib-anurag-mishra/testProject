@@ -151,64 +151,6 @@ else{
 
 
 ?>
-<!-- leftColblock Start -->
-<div	id="leftColblock">
-				<div	id="leftColblockWrapper">
-				
-<?php
-/********************************************Genre block started*********************************************************************************/
-				$genre_wrapper_div =<<<STR
-					<div id="GenreWrapper">
-							<h2>Genres</h2>
-STR;
-
-				if(!empty($genres)){
-					$genre_str .=<<<STR
-						<ul>
-STR;
-
-					foreach($genres as $genre){
-						$genre_name = str_replace('"','',$genre->Genre);
-						$tilte = urlencode($genre_name);
-						$genre_name_text = truncate_text($genre_name, 30, $this);
-            $name = $genre->Genre;
-            $count = $genre->numFound;
-						$genre_list .=<<<STR
-						<li ><span class="left_text"><a href="/search/index?q=$tilte&type=genre" title="$genre_name">$genre_name_text</a></span><span class="right_text">($count)</span></li>
-STR;
-					}
-
-					$genre_str .=<<<STR
-						$genre_list
-						</ul>
-						<span class="more_link"><a	href="/search/index?q=$keyword&type=genre">See more Genre</a></span>
-STR;
-				}
-				else {
-					$genre_str	=<<<STR
-					<ul>
-						<li style='color:red'>No Genres Found</li>
-					</ul>
-STR;
-
-				}
-
-
-				echo $genre_wrapper_div .=<<<STR
-					$genre_str
-
-					</div> <!-- Div GenreWrapper End-->
-STR;
-/********************************************Genre block end*********************************************************************************/
-
-?>
-
-			</div><!-- End leftColblockWrapper -->
-		</div>
-	<!-- leftColblock End -->
-
-	<!-- Right blocks -->
-
 		
 <?php } ?>
 <!-- End left and right blocks -->
