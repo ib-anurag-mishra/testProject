@@ -354,7 +354,7 @@ Class GenresController extends AppController
 						'conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory2' => $country)
+									array('Country.Territory' => $country)
 								)
 							),
 						'fields' => array(
@@ -366,7 +366,7 @@ Class GenresController extends AppController
 											'Country.Territory'
 										)
 									),
-						),'group' => 'Genre.Genre'
+						),'group' => 'Genre.Genre1'
 					));
 			Cache::write("genre".$country, $genreAll);
 		}
