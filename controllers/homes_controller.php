@@ -4206,8 +4206,10 @@ STR;
             //fetch the session variables
             $libraryId = $this->Session->read('library');       
             $patronId = $this->Session->read('patron');
-            echo $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
             $patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
             //////////////////////////////////Songs/////////////////////////////////////////////////////////           
             $territory = $this->Session->read('territory');
              
