@@ -1417,7 +1417,7 @@ if(!empty($type) && $type == 'all'){
 <?php /*********************Genre Block Started*******************************/ ?>
             <section class="advanced-genres">
 				<header class="clearfix">
-					<h5>Genres</h5>
+					<h5><?php __("Genres"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=genre">See more genres</a></h6>
 				</header>
 				<div class="advanced-genres-shadow-container">
@@ -1448,7 +1448,7 @@ if(!empty($type) && $type == 'all'){
 <?php /*********************Label Block Started*******************************/ ?>            
             <section class="advanced-labels">
 				<header class="clearfix">
-					<h5>Labels</h5>
+					<h5><?php __("Labels"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
 				</header>
 				<div class="advanced-labels-shadow-container">
