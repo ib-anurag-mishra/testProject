@@ -9,7 +9,9 @@ class AppController extends Controller
 	function beforeFilter()
 	{
 		
-                ini_set('session.cookie_domain', env('HTTP_BASE')); 
+            $this->build_acl();echo 'hi';exit;
+    
+            ini_set('session.cookie_domain', env('HTTP_BASE')); 
                 Configure::write('Session.checkAgent', false);
                 Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
                 $this->switchCpuntriesTable();
@@ -66,7 +68,7 @@ class AppController extends Controller
 //                echo "<pre>";
 //                print_r($announcment_rs);
                 $this -> set ( 'announcment_value' ,  $announcment_rs[0]['pages']['page_content']);
-                echo $announcment_rs[0]['pages']['page_content'];
+                //$announcment_rs[0]['pages']['page_content'];
                 
 	}
 	
