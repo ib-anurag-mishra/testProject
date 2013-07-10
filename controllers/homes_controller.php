@@ -3443,7 +3443,7 @@ STR;
               
                 
         $this->set('wishlistResults',$wishlistResults);
-        $this->set('$wishlistResultsVideos',$wishlistResultsVideos);
+        $this->set('wishlistResultsVideos',$wishlistResultsVideos);
         $this->set('sort',$sort);
         $this->set('sortOrder',$sortOrder);
         
