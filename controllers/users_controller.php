@@ -3810,6 +3810,8 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
+                                                
+                                                echo 'http://'.$_SERVER['HTTP_HOST'].'/index'; die;
 						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 
 					}
