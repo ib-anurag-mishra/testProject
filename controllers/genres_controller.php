@@ -354,7 +354,7 @@ Class GenresController extends AppController
 						'conditions' =>
 							array('and' =>
 								array(
-									array('Country.Territory1' => $country)
+									array('Country.Territory2' => $country)
 								)
 							),
 						'fields' => array(
