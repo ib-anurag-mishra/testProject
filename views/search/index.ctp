@@ -149,7 +149,7 @@ function Get_Sales_date($sales_date_array, $country){
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" name="submit" id="submit" value="Search" />
             </form>
-            <div class="faq-link">Need help? Visit our <a href="#">FAQ section</a>.</div>
+            <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section</a>.</div>
 			<ul class="clearfix">
 				<li>
                     <?php
