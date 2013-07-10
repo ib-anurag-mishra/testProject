@@ -245,16 +245,16 @@ $(document).ready(function(){
     $('.video-filter-button').click(function(){
        $(this).addClass('active');
        $('.music-filter-button').removeClass('active');
-       $('.recent-downloads-shadow-container').hide();
-       $('.recent-video-downloads-shadow-container').show();
+       $('.my-wishlist-shadow-container').hide();
+       $('.my-video-wishlist-shadow-container').show();
        
     });
     
     $('.music-filter-button').click(function(){
        $(this).addClass('active');
        $('.video-filter-button').removeClass('active');
-       $('.recent-video-downloads-shadow-container').hide();
-       $('.recent-downloads-shadow-container').show();
+       $('.my-video-wishlist-shadow-container').hide();
+       $('.my-wishlist-shadow-container').show();
     });
 	
 });
