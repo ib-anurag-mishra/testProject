@@ -3437,17 +3437,17 @@ STR;
                     
                     
                     
-      
+              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
+
           
               
                 
         $this->set('wishlistResults',$wishlistResults);
-        $this->set('$wishlistResultsVideo',$wishlistResultsVideo);
+        $this->set('$wishlistResultsVideos',$wishlistResultsVideos);
         $this->set('sort',$sort);
         $this->set('sortOrder',$sortOrder);
         
-        $videoDownloadResults =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
-print_r( $videoDownloadResults);
+
     }
 
     /*
