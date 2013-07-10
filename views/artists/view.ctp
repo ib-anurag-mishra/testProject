@@ -179,30 +179,9 @@
 												}
 											}											
 											else{
-												if($libraryDownload != '1'){
-													$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-													$wishlistCount = $wishlist->getWishlistCount();
-													if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
-														?> <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a> <?php
-													}
-													else{
-														$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-														if($wishlistInfo == 'Added to Wishlist'){
-															?> <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Added to Wishlist");?></a>
-														<?php }
-														else{ ?>
-															<p>
-																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span>															<span class="afterClick" style="display:none;float:left;">Please Wait...</span>
-															</p>
-														<?php	
-														}
-													}
-													
-												}
-												else{ ?>
-													<a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>
-												<?php	
-												}												
+												?>
+                                                                                                <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>        
+                                                                                                <?php
 											}
 										}else{
 									?>
@@ -215,16 +194,7 @@
                                                                         <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
                                                                         <?php
                                                                         }
-                                                                        ?>	
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
+                                                                        ?>
                                                 
                                                 
                                                 
