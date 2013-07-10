@@ -3811,7 +3811,9 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
 						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-                                                echo "HTTP_REFERER: ".$_SERVER['HTTP_REFERER']; die;
+                                                echo "HTTP_REFERER: ".$_SERVER['HTTP_REFERER'];
+                                                echo "Referral: ".$this->Session->read('referral'); 
+                                                die;
                                                 $this->redirect($_SERVER['HTTP_REFERER']);
                                                 
 
