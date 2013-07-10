@@ -357,23 +357,8 @@
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
 															-->
-														 <?php
-                                                                                                                    <?php  
-
-                                                                                                                    $wishlistInfo = $wishlist->getWishlistVideoData($nationalTopVideoDownload[$i]['Video']["ProdID"]);
-
-                                                                                                                    if($wishlistInfo == 'Added to Wishlist') {
-                                                                                                                    ?> 
-                                                                                                                            <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                                                                                    <?php 
-                                                                                                                    } else { 
-                                                                                                                    ?>
-                                                                                                                            <span class="beforeClick" id="video_wishlist<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>","<?php echo $nationalTopVideoDownload[$i]['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                                                                            <span class="afterClick" id="downloading_<?php echo $nationalTopVideoDownload[$i]['Video']["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                                                                                    <?php	
-                                                                                                                    }
-
-                                                                                                                    ?>									
+                                                                                                                    
+                                                        									
 															<div class="share clearfix">
 																<p>Share via</p>
 																<a class="facebook" href="#"></a>
