@@ -251,9 +251,11 @@ Class GenresController extends AppController
 											'Country.Territory'
 										)
 									),
-						),'group' => 'Genre.Genre1'
+						),'group' => 'Genre.Genre'
 					));
-			 Cache::write("genre".$country, $genreAll);
+                        
+                        echo 'Query: '.$this->Genre->lastQuery();
+			Cache::write("genre".$country, $genreAll);
 		}
 		$genreAll = Cache::read("genre".$country);
                 
