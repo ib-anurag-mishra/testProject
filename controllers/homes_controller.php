@@ -3297,13 +3297,16 @@ STR;
      Desc : To show songs present in wishlist
     */
     function my_wishlist() {
+        //set the layout
         $this->layout = 'home';
+        
+        //fetch the session variables
         $libraryId = $this->Session->read('library');       
         $patronId = $this->Session->read('patron');
         
         
-        
-         $sortArray = array('date', 'song', 'artist', 'album');
+        //create logics for sorting
+        $sortArray = array('date', 'song', 'artist', 'album');
         $sortOrderArray = array('asc','desc');
         
         if(isset($_POST)){
@@ -3316,7 +3319,7 @@ STR;
         }
         
         if(!in_array($sortOrder, $sortOrderArray)){
-            $sortOrder = 'asc';
+            $sortOrder = 'desc';
         }
         
         switch($sort){
@@ -3342,17 +3345,15 @@ STR;
                 break;
         }
         
-        
-        
-        
-        
+        //check library and patron download limit  
         
         $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
 	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
+        
         $wishlistResults = Array();
-        // $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+        //$wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         
         $wishlistQuery =<<<STR
                     SELECT 
