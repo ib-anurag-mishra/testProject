@@ -8,7 +8,7 @@
 class WishlistVideo extends AppModel
 {
   var $name = 'WishlistVideo';
-  var $usetable = 'video_wishlists'; 
+  var $usetable = 'wishlist_videos'; 
   
   
   /*

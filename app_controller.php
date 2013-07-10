@@ -68,7 +68,7 @@ class AppController extends Controller
 //                echo "<pre>";
 //                print_r($announcment_rs);
                 $this -> set ( 'announcment_value' ,  $announcment_rs[0]['pages']['page_content']);
-                echo $announcment_rs[0]['pages']['page_content'];
+                //$announcment_rs[0]['pages']['page_content'];
                 
 	}
 	
