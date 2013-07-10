@@ -9,7 +9,9 @@ class AppController extends Controller
 	function beforeFilter()
 	{
 		
-                ini_set('session.cookie_domain', env('HTTP_BASE')); 
+            $this->build_acl();echo 'hi';exit;
+    
+            ini_set('session.cookie_domain', env('HTTP_BASE')); 
                 Configure::write('Session.checkAgent', false);
                 Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
                 $this->switchCpuntriesTable();
