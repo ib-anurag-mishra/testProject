@@ -3819,9 +3819,10 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
                                                 
-                                                echo "redirection_url: ".$redirection_url; die;
+                                                //echo "redirection_url: ".$redirection_url; die;
                                                 
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                $this->redirect($redirection_url);
 
 					}
 
