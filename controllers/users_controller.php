@@ -3815,18 +3815,19 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
                                                 
+                                                echo "redirection_url: ".$this->Session->read('redirection_url'); die;
                                                 
                                                 if($this->Session->read('redirection_url'))
                                                 {
-                                                    $redirection_url = $this->Session->read('redirection_url');
+                                                    $redirect_url = $this->Session->read('redirection_url');
                                                     $this->Session->destroy('redirection_url');
-                                                    $this->redirect($redirection_url);
+                                                    $this->redirect($redirect_url);
                                                 }
                                                 else
                                                 {
                                                     $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
                                                 }
-                                                //echo "redirection_url: ".$redirection_url; die;
+                                                
                                                 
 						
                                                
