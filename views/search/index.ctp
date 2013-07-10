@@ -1390,25 +1390,19 @@ if(!empty($type) && $type == 'all'){
 				</header>
 				<div class="advanced-artists-shadow-container">
 					<div class="advanced-artists-scrollable">
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-					</div>
+						<?php 
+                        if(!empty($artists)){
+                            foreach($artists as $artist){
+                                $tilte = urlencode($artist->ArtistText);
+								$artist_name_text = truncate_text($artist->ArtistText, 30, $this);
+                                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+                        ?>
+                        <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
+						<?php }
+                        } else { ?>
+                        <div style='color:red'><?php __("No Artists Found"); ?></div>
+                        <?php } ?>
+                    </div>
 				</div>
 			
 			</section>
