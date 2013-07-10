@@ -3380,17 +3380,17 @@ STR;
         switch($sort){
             case 'date':
                 $songSortBy = 'wishlists.created';
-                $videoSortBy = 'Videodownload.created';
+                $videoSortBy = 'WishlistVideo.created';
                 $sortType = $sortOrder;
                 break;
             case 'song':
                 $songSortBy = 'wishlists.track_title';
-                $videoSortBy = 'Videodownload.track_title';
+                $videoSortBy = 'WishlistVideo.track_title';
                 $sortType = $sortOrder;
                 break;
             case 'artist':
                 $songSortBy = 'wishlists.artist';
-                $videoSortBy = 'Videodownload.artist';
+                $videoSortBy = 'WishlistVideo.artist';
                 $sortType = $sortOrder;
                 break;
             case 'album':  
