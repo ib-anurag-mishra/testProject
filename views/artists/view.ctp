@@ -159,7 +159,12 @@
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
-												if($albumSong['Song']['status'] != 'avail'){
+												
+                                                                                              $albumSong['Song']['status'] = 'avail1';
+                                                                                              if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
+                                                                                            
+                                                                                            
+                                                                                          
 										?>
 													<p>
 														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
