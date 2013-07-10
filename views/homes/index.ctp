@@ -429,48 +429,7 @@ array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['Arti
 array('class'=>'first','escape'=>false)) */ ?>
 													
                                                                                                        
-                                                                                                     <?php if($this->Session->read("patron")){ ?> 
-
-                                                                                                               <!-- <a class="preview" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"></a> -->
-													
-                                                                                                        <a class="add-to-playlist-button" href="#"></a>
-													<div class="wishlist-popover">
-														<div class="playlist-options">
-															<ul>
-																<li><a href="#">Create New Playlist</a></li>
-																<li><a href="#">Playlist 1</a></li>
-																<li><a href="#">Playlist 2</a></li>
-																<li><a href="#">Playlist 3</a></li>
-																<li><a href="#">Playlist 4</a></li>
-																<li><a href="#">Playlist 5</a></li>
-																<li><a href="#">Playlist 6</a></li>
-																<li><a href="#">Playlist 7</a></li>
-																<li><a href="#">Playlist 8</a></li>
-																<li><a href="#">Playlist 9</a></li>
-																<li><a href="#">Playlist 10</a></li>
-															</ul>
-														</div>
-                                                                                                    <?php if($this->Session->read('patron')) { ?>
-														<a class="download-now" href="artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>">Download Now</a>
-                                                                                                    <?php }else{ ?>
-                                                                                                    <a class="download-now" href='/users/login'> <?php __("Login");?></a>
-                                                                                                    <?php } ?>
-														
-                                                                                                    <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-                                                                                                    <?php } ?>
-                                                                                                                
-                                                                                                                 <!--   <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
-														
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
-														
-													</div>
-                                                                                                <?php } ?>
+                            
 
 												</div>
 												<div class="album-title">
