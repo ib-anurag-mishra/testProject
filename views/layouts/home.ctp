@@ -26,7 +26,7 @@
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
           echo $javascript->link('jquery.bgiframe');
-          echo $javascript->link('jquery.autocomplete');
+         // echo $javascript->link('jquery.autocomplete');
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
         
@@ -213,6 +213,7 @@ if ($this->Session->read('Config.language') == 'en') {
             ?>
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.autocomplete.js"></script> 
                             
 
             <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   

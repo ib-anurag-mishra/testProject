@@ -1322,23 +1322,55 @@ if(!empty($type) && $type == 'all'){
 ?>      
        <section class="advanced-search-results row-1 clearfix">
            <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
-           
+<?php /*********************Album Block Started*******************************/ ?>
            <section class="advanced-albums">
 				<header class="clearfix">
-					<h5>Album</h5>
+				<h5><?php __("Album"); ?></h5>
                 <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
 				</header>
 				<div class="advanced-albums-shadow-container">
 					<div class="advanced-albums-scrollable horiz-scroll">
 						<ul>
 							<?php
-							for($i=0;$i<12;$i++) {
+							foreach($albumData as $palbum){
 							?>
 							<li>
-								<a href="#"><img src="images/search-results/carrieunderwood162x162.jpg" alt="carrieunderwood162x162" width="162" height="162" /></a>
-								<div class="album-title"><a href="#">Some Hearts</a></div>
-								<div class="album-genre">Genre: <span><a href="#">Country</a></span></div>
-								<div class="album-label">Label: <span><a href="#">Sony Music</a></span></div>
+								<?php
+                                $albumDetails = $album->getImage($palbum->ReferenceID);
+                                if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
+                                    $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+                                    $image = Configure::read('App.Music_Path').$albumArtwork;
+                                } else {
+                                    $image = 'no-image.jpg';
+                                }
+                                if($page->isImage($image)) {
+                                    //Image is a correct one
+                                } else {
+                					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                }
+                                $album_title = truncate_text($palbum->Title, 30, $this);
+                                $title = urlencode($palbum->Title);
+                                $album_genre = str_replace('"','',$palbum->Genre);
+                                $tilte = urlencode($palbum->Title);
+                                $album_label = $palbum->Label;
+                                $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
+                                $linkProviderType = base64_encode($palbum->provider_type);
+                                $ReferenceId = $palbum->ReferenceID;
+                                if($palbum->AAdvisory == 'T'){
+                                    $explicit = '<font class="explicit"> (Explicit)</font><br />';
+                                } else {
+                                    $explicit = '';
+                                }
+                                if(!empty($album_label)){
+                                    $album_label_str = "Label: " . truncate_text($album_label, 32, $this);
+                                } else {
+                                    $album_label_str = "";
+                                }
+                                ?>
+                                <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>"><img src="<?php echo $image; ?>" alt="<?php echo $album_title; ?>" width="162" height="162" /></a>
+								<div class="album-title"><a href="#"><?php echo $album_title; ?></a></div>
+								<div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
+								<div class="album-label"><?php echo $album_label_str; ?></span></div>
 							</li>
 							
 							<?php
@@ -1348,40 +1380,39 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
+    <?php /*********************Album Block End*******************************/ ?>
+           
+    <?php /*********************Artist Block Started*******************************/ ?>
 			<section class="advanced-artists">
 				<header class="clearfix">
-					<h5>Artists</h5>
+					<h5><?php __("Artists"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=artist">See more artists</a></h6>
 				</header>
 				<div class="advanced-artists-shadow-container">
 					<div class="advanced-artists-scrollable">
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-					</div>
+						<?php 
+                        if(!empty($artists)){
+                            foreach($artists as $artist){
+                                $tilte = urlencode($artist->ArtistText);
+								$artist_name_text = truncate_text($artist->ArtistText, 30, $this);
+                                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+                        ?>
+                        <div><?php echo $link; ?><span>(<?php echo $artist->numFound; ?>)</span></div>
+						<?php }
+                        } else { ?>
+                        <div style='color:red'><?php __("No Artists Found"); ?></div>
+                        <?php } ?>
+                    </div>
 				</div>
 			
 			</section>
+<?php /*********************Artist Block End*******************************/ ?>       
 		</section>
 		<section class="advanced-search-results row-2 clearfix">
-			<section class="advanced-composers">
+<?php /*********************Composer Block Started*******************************/ ?>			
+            <section class="advanced-composers">
 				<header class="clearfix">
-					<h5>Composers</h5>
+					<h5><?php __("Composers"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=composer">See more composers</a></h6>
 				</header>
 				<div class="advanced-composers-shadow-container">
@@ -1407,9 +1438,12 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
-			<section class="advanced-genres">
+<?php /*********************Composer Block End*******************************/ ?>
+            
+<?php /*********************Genre Block Started*******************************/ ?>
+            <section class="advanced-genres">
 				<header class="clearfix">
-					<h5>Genres</h5>
+					<h5><?php __("Genres"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=genre">See more genres</a></h6>
 				</header>
 				<div class="advanced-genres-shadow-container">
@@ -1435,9 +1469,12 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
-			<section class="advanced-labels">
+<?php /*********************Genre Block End*******************************/ ?>
+
+<?php /*********************Label Block Started*******************************/ ?>            
+            <section class="advanced-labels">
 				<header class="clearfix">
-					<h5>Labels</h5>
+					<h5><?php __("Labels"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
 				</header>
 				<div class="advanced-labels-shadow-container">
@@ -1463,6 +1500,7 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
+<?php /*********************Label Block End*******************************/ ?>
 		</section>
 <?php } ?>
 		<section class="tracklist-container">
