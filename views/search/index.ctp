@@ -135,34 +135,7 @@ function Get_Sales_date($sales_date_array, $country){
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
 <script src="/js/advanced_search.js"></script>
 
-<!-- Search Form -->
-<?php
-if('' != $keyword){
-?>
-	
-<!-- Added code for all search-->
-<?php
-if(!empty($type) && !($type == 'all' )){
-
-	
-
-}
-else{
-
-
-?>
-		
-<?php } ?>
-<!-- End left and right blocks -->
-
-<?php
-
-	}
-
-?>
-
-
-    <section class="search-page">
+<section class="search-page">
 		<div class="breadcrumbs">
             <?php
             $html->addCrumb(__('Search Results', true), '/search/index');
@@ -597,4 +570,3 @@ switch($type){
 			</div>
 		</section>
     </section>
-	</div>
