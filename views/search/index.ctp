@@ -1368,7 +1368,7 @@ if(!empty($type) && $type == 'all'){
                                 }
                                 ?>
                                 <a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>"><img src="<?php echo $image; ?>" alt="<?php echo $title; ?>" width="162" height="162" /></a>
-								<div class="album-title"><a href="#"><?php echo $tilte; ?></a></div>
+								<div class="album-title"><a href="#"><?php echo $album_title; ?></a></div>
 								<div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
 								<div class="album-label"><?php echo $album_label_str; ?></span></div>
 							</li>
