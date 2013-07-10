@@ -1442,24 +1442,20 @@ if(!empty($type) && $type == 'all'){
 				</header>
 				<div class="advanced-genres-shadow-container">
 					<div class="advanced-genres-scrollable">
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+                        <?php if(!empty($genres)){
+                                foreach($genres as $genre){
+                                $genre_name = str_replace('"','',$genre->Genre);
+                                $tilte = urlencode($genre_name);
+                                $genre_name_text = truncate_text($genre_name, 30, $this);
+                                $name = $genre->Genre;
+                                $count = $genre->numFound;
+                                ?>
+                        <div><a href="<?php echo "/search/index?q=$tilte&type=genre"; ?>" title="<?php echo $genre_name; ?>"><?php echo $genre_name_text; ?><span>(<?php echo $count; ?>)</span></a></div>
+						<?php 
+                                }
+                        } else { ?>
+                        <div style='color:red'><?php __("No Genres Found"); ?></div>  
+                        <?php } ?>
 					</div>
 				</div>
 			</section>
@@ -1575,7 +1571,7 @@ if(!empty($type) && $type == 'all'){
 												<span id="download_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
 											</form>
 										</p>
-							<?php		}else {
+							<?php		} else {
 										?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 									}
 								}
@@ -1610,7 +1606,7 @@ if(!empty($type) && $type == 'all'){
 								}
 							}
 						}
-						else{
+						else {
 							?>
 								<span title='<?php __("Coming Soon");?> ( <?php echo date("F d Y", strtotime($sales_date)); ?> )'><?php __("Coming Soon");?></span>
 							<?php
