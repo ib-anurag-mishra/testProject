@@ -46,9 +46,7 @@
 
 
 
-                                    <a class="add-to-wishlist" href="#"><?php echo __('Add To Wishlist'); ?></a>
-
-                           
+                                <?php
 
                                 $wishlistInfo = $wishlist->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
 
