@@ -242,23 +242,27 @@ if ($this->Session->read('Config.language') == 'en') {
 					<div class="date"><?php echo date("Y-m-d",strtotime($wishlistResultsVideo['WishlistVideo']['created'])); ?></div>
 					<div class="small-album-container">
 						<?php
-                        $videoImage = shell_exec('perl files/tokengen ' . 'sony_test/'.$videoDownloadResult['File']['CdnPath']."/".$videoDownloadResult['File']['SourceURL']);
+                        $videoImage = shell_exec('perl files/tokengen ' . 'sony_test/'.$wishlistResultsVideo['File']['CdnPath']."/".$wishlistResultsVideo['File']['SourceURL']);
                         $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
                         ?>
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
+						<!-- <a class="preview" href="#"></a> -->
 					</div>
-					<div class="song-title"> <?php 
+					<div class="song-title">
+                    <?php 
 						if (strlen($wishlistResultsVideo['WishlistVideo']['track_title']) >= 48) {
-							echo '<span title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .substr($$videoDownloadResult['Download']['track_title'], 0, 48) . '...</span>';							
+							echo '<span title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['track_title']).'">' .substr($wishlistResultsVideo['Download']['track_title'], 0, 48) . '...</span>';							
 						} else {
 							echo $wishlistResultsVideo['WishlistVideo']['track_title']; 
 					 	}
-					?></div>
+					?>
+                    </div>
 					<a class="add-to-wishlist-button" href="#"></a>
-					<div class="album-title"><a href="#"><?php echo $videoDownloadResult['Video']['Title'];  ?></a></div>
-					<div class="artist-name"><a href="#"><?php
+					<div class="album-title"><a href="#"><?php echo $wishlistResultsVideo['Video']['Title'];  ?></a></div>
+					<div class="artist-name"><a href="#">
+                    <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 19) {
-							echo '<span title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .substr($downloadResult['Videodownload']['artist'], 0, 19) . '...</span>';							
+							echo '<span title="'.htmlentities($wishlistResultsVideo['WishlistVideo']['artist']).'">' .substr($wishlistResultsVideo['WishlistVideo']['artist'], 0, 19) . '...</span>';							
 						} else {
 							$ArtistName = $wishlistResultsVideo['WishlistVideo']['artist'];
 							echo $ArtistName;
@@ -275,25 +279,34 @@ if ($this->Session->read('Config.language') == 'en') {
 						</div>
 						
 					</div>
-					<div class="download"><a href="#"><p>
+					<div class="download">
+                        <a href="#">
+                            
+                        <p>
                         <?php
                             $productInfo = $mvideo->getDownloadData($wishlistResultsVideo['WishlistVideo']['ProdID'],$wishlistResultsVideo['WishlistVideo']['provider_type']);
                             $videoUrl = shell_exec('perl files/tokengen ' . 'sony_test/' . $productInfo[0]['Full_Files']['CdnPath']."/".$productInfo[0]['Full_Files']['SaveAsName']);                                                
 							$finalVideoUrl = Configure::read('App.Music_Path').$videoUrl;
 							$finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
-                            <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">								
-					<a href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
-								
+                            <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
+								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
+									<a href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
+								<?php } else {?>
+								<!--[if IE]>
+									<a onclick='return historyDownload("<?php echo $downloadResult['Download']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>");' href='<?php echo $finalSongUrl; ?>'><?php __('Download');?></a> 										
+								<![endif]-->
+								<?php } ?>
 							</span>
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-                       </p></a></div>
+                       </p></a>
+                    </div>
 				</div>
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No wishlist video information available."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
