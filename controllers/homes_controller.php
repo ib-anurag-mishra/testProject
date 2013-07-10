@@ -344,7 +344,7 @@ STR;
                                                     'Album.Copyright',
                                                     'Album.provider_type'
 
-                                                    ),
+                                                    ),'limit'=>20,
                                             'contain' => array(
                                                     'Genre' => array(
                                                             'fields' => array(
@@ -363,7 +363,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate1' => 'desc','limit'=>20)
+                                    ), 'order' => array('Country.SalesDate' => 'desc')
                             )
                     );
             } else {
