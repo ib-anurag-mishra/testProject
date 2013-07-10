@@ -3607,7 +3607,7 @@ Class UsersController extends AppController
             }
         }
             
-            
+            $redirection_url = $_SERVER['HTTP_REFERER'];
             
     $this->Session->write("layout_option", 'login');
 		if($this->Session->read('login_action'))
@@ -3811,8 +3811,7 @@ Class UsersController extends AppController
 							$this ->Session->write("block", 'no');
 						}
 						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-                                                echo "HTTP_REFERER: ".$_SERVER['HTTP_REFERER'];
-                                                echo "Referral: ".$this->Session->read('referral'); 
+                                                echo "Redirection URL: ".$redirection_url;
                                                 die;
                                                 $this->redirect($_SERVER['HTTP_REFERER']);
                                                 
