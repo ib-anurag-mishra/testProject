@@ -132,37 +132,7 @@ function Get_Sales_date($sales_date_array, $country){
 	return $Sales_date ;
 }
 ?>
-<link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
-<script src="/js/advanced_search.js"></script>
-
-<!-- Search Form -->
-<?php
-if('' != $keyword){
-?>
-	
-<!-- Added code for all search-->
-<?php
-if(!empty($type) && !($type == 'all' )){
-
-	
-
-}
-else{
-
-
-?>
-		
-<?php } ?>
-<!-- End left and right blocks -->
-
-<?php
-
-	}
-
-?>
-
-
-    <section class="search-page">
+<section class="search-page">
 		<div class="breadcrumbs">
             <?php
             $html->addCrumb(__('Search Results', true), '/search/index');
@@ -174,12 +144,12 @@ else{
 			
 		</header>
 		<section class="advanced-search">
-            <form method="get" id="searchQueryForm">
+            <form method="get" id="searchQueryForm" action="<?php echo $SERVER['PHP_SELF']; ?>">
 			<input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" name="submit" id="submit" value="Search" />
             </form>
-            <div class="faq-link">Need help? Visit our <a href="#">FAQ section</a>.</div>
+            <div class="faq-link">Need help? Visit our <a href="/questions">FAQ section</a>.</div>
 			<ul class="clearfix">
 				<li>
                     <?php
@@ -597,4 +567,3 @@ switch($type){
 			</div>
 		</section>
     </section>
-	</div>
