@@ -1417,24 +1417,18 @@ if(!empty($type) && $type == 'all'){
 				</header>
 				<div class="advanced-composers-shadow-container">
 					<div class="advanced-composers-scrollable">
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
-						<div><a href="#">Carrie Underwood <span>(53)</span></a></div>
-						<div><a href="#">Carrie <span>(1)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(12)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(13)</span></a></div>
-						<div><a href="#">The Clark Terry Quintet <span>(1)</span></a></div>
-						<div><a href="#">Carrie Newcomer <span>(10)</span></a></div>
+                        <?php
+                        if(!empty($composers)){
+                            foreach($composers as $composer)
+                            {
+                            $tilte = urlencode($composer->Composer);
+                            $composer_name = truncate_text($composer->Composer, 30, $this);
+                            ?>
+                        <div><a href="/search/index?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a><span>(<?php echo $composer->numFound; ?>)</span></div>
+						<?php }
+                        } else { ?>
+                          <div style='color:red'><?php __("No Composers Found"); ?></div>  
+                        <?php } ?>
 					</div>
 				</div>
 			</section>
