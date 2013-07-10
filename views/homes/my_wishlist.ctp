@@ -223,7 +223,7 @@ if ($this->Session->read('Config.language') == 'en') {
 				</div>
 			</div>
 		</div>
-		(this is the html for the videos)
+		<!--(this is the html for the videos) -->
 		<div class="my-video-wishlist-shadow-container">
 			<div class="my-video-wishlist-scrollable">
 				<div class="row-container">
