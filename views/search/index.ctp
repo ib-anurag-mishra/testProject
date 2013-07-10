@@ -1223,7 +1223,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                    <a	href="#">All Music</a>
+                    <a	href="#" class="active">All Music</a>
                     <?php
                     }
                     ?>
@@ -1237,7 +1237,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                        <a href="#">Albums</a>
+                        <a href="#" class="active">Albums</a>
                     <?php
                     }
                     ?>
@@ -1251,7 +1251,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                        <a href="#">Artists</a>
+                        <a href="#" class="active">Artists</a>
                     <?php
                         }
                     ?>
@@ -1265,7 +1265,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                        <a href="#">Composers</a>
+                        <a href="#" class="active">Composers</a>
                     <?php
                         }
                     ?>
@@ -1279,7 +1279,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                        <a href="#">Genres</a>
+                        <a href="#" class="active">Genres</a>
                     <?php
                         }
                     ?>
@@ -1293,7 +1293,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                        <a href="#" style="color:#000">Label</a>
+                        <a href="#" class="active">Label</a>
                     <?php
                         }
                     ?>
@@ -1307,7 +1307,7 @@ STR;
                     <?php
                         } else {
                     ?>
-                        <a href="#" style="color:#000">Songs</a>
+                        <a href="#" class="active">Songs</a>
                     <?php
                     }
                     ?>
