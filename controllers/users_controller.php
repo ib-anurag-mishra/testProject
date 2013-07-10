@@ -3594,7 +3594,7 @@ Class UsersController extends AppController
 	*/
 
 	function sndlogin($library = null){
-            $this->Session->write("redirection_url",$_SERVER['HTTP_REFERER']) ;
+            
              //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
         if($library){            
             $library_data = $this->Library->find('first', array('conditions' => array('library_subdomain' => $library)));
@@ -3667,8 +3667,7 @@ Class UsersController extends AppController
 		if ($this->Session->read('patron')){
 			$userType = $this->Session->read('patron');
 			if($userType != ''){
-				//$this->redirect('/homes/index');
-                                $this->redirect($this->Session->read('redirection_url'));
+				$this->redirect('/homes/index');
 				$this->Auth->autoRedirect = false;
 			}
 		}
@@ -3811,8 +3810,7 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
-                                                $this->redirect($this->Session->read('redirection_url'));
+						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
 
 					}
 
