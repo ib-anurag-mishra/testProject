@@ -8,7 +8,7 @@
 class PlaylistDetails extends AppModel
 {
 	var $name = 'PlaylistDetails';
-	var $useTable = 'playlist_details';
+	var $useTable = 'playlist_details'; 
 
   
 
