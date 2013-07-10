@@ -3601,7 +3601,7 @@ Class UsersController extends AppController
             }
             else
             {
-                $$this->Session->write("redirection_url", $_SERVER['HTTP_REFERER']);
+                $this->Session->write("redirection_url", $_SERVER['HTTP_REFERER']);
             }
              //code to check the library is inactive or not. if library is inactive then redirect user to library inactive page
         if($library){            
