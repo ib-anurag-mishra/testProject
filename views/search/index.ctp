@@ -132,9 +132,6 @@ function Get_Sales_date($sales_date_array, $country){
 	return $Sales_date ;
 }
 ?>
-<link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
-<script src="/js/advanced_search.js"></script>
-
 <section class="search-page">
 		<div class="breadcrumbs">
             <?php
@@ -147,7 +144,7 @@ function Get_Sales_date($sales_date_array, $country){
 			
 		</header>
 		<section class="advanced-search">
-            <form method="get" id="searchQueryForm">
+            <form method="get" id="searchQueryForm" action="<?php echo $SERVER['PHP_SELF']; ?>">
 			<input type="search" name="q" id="query" value="<?php echo $keyword; ?>"/>
             <input type="hidden" id="search_type" value="<?php echo (isset($type) && !empty($type))?$type:'all' ?>" name="type">
 			<input type="submit" name="submit" id="submit" value="Search" />
