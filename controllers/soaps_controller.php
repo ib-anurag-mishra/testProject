@@ -9,6 +9,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoSongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'WishlistData.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'DefaultPlaylistList.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownloadData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
@@ -28,7 +29,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'Playlist', 'PlaylistDetails');
   var $components = array('Downloads','AuthRequest', 'Downloadsvideos');
 
 
@@ -62,6 +63,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoSongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."WishlistData.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."DefaultPlaylistList.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserCurrentDownloadData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
@@ -84,6 +86,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("SongData", $siteUrl."soaps/");
     $test->addURLToClass("VideoSongData", $siteUrl."soaps/");
     $test->addURLToClass("WishlistData", $siteUrl."soaps/");
+    $test->addURLToClass("DefaultPlaylistList", $siteUrl."soaps/");
     $test->addURLToClass("UserCurrentDownloadData", $siteUrl."soaps/");
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
@@ -3971,7 +3974,26 @@ STR;
 
   }
 
+  /**
+   * Function Name : getAuthMethodFromAuthenticationToken
+   * Desc : To fetch library's auth method from authentication token
+   * @param string $token
+	 * @return array
+   */
 
+  private function getAuthMethodFromAuthenticationToken($token){
+
+
+    $authenticationtoken = $this->AuthenticationToken->find('first',array(
+      'fields' => array('auth_method'),
+      'conditions' => array('token' => $token))
+    );
+
+    return $authenticationtoken['AuthenticationToken']['auth_method'];
+
+  }
+  
+  
   /**
    * Function Name : getLibraryTerritory
    * Desc : To fetch library's Territory
@@ -5127,6 +5149,78 @@ STR;
       
   }
 
+  /**
+   * Function Name : getPlaylistList
+   * Desc : returns default playlist list
+   * @param string $authenticationToken
+   * @param int $startFrom
+   * @param int $recordCount
+   * @param int $uid
+	 * @return DefaultPlaylistListType[]
+   */
+   
+  function getPlaylistList($authenticationToken, $startFrom, $recordCount, $uid){
+
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    } 
+        
+        
+    if( 1 == $uid ){
+    
+      $cond = array('patronID' => $uid);
+      $userName = 'Admin';
+    }else{
+    
+      $method = $this->getAuthMethodFromAuthenticationToken($authenticationToken);
+      $patronID = $this->getPatronIdFromAuthenticationToken($authenticationToken);   
+    
+      if('user_account' == $method){
+      
+        $cond = array('patronID' => $patronID);
+        $user = $this->User->find('first',array(
+          'fields' => array('first_name'),
+          'conditions' => array('id' => $patronID),
+        ));
+        $userName = $user['User']['first_name'];       
+      }else{
+      
+        $cond = array('patronID' => $patronID);
+        $userName = $patronID;
+      }
+    }
+    
+    $Playlist = $this->Playlist->find('all', array(
+      'conditions' => $cond
+    ));
+    
+    if( empty($Playlist) ) {
+      throw new SOAPFault('Soap:DefaultPlaylistList', 'No Playlist found');
+    } else {
+      
+      for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+        
+        $obj = new DefaultPlaylistListType;
+      
+        $obj->PlaylistID                    = $Playlist[$cnt]['Playlist']['Plid'];
+        $obj->PlaylistName                  = $Playlist[$cnt]['Playlist']['PlaylistName'];
+        $obj->PlayCreated                   = $Playlist[$cnt]['Playlist']['Created'];
+        $obj->Playmodified                  = $Playlist[$cnt]['Playlist']['modified'];          
+        $obj->PlayUser                      = $userName;
+       
+        $play_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'DefaultPlaylistListType');
+      
+      }
+    
+      $data = new SoapVar($play_list,SOAP_ENC_OBJECT,null,null,'ArrayDefaultPlaylistListType');    
+
+      return $data;
+      
+    }
+        
+    
+  }
+  
   /**
    * Function Name : getLiveSearchSongList
    * Desc : To get the songs searched
