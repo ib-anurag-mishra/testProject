@@ -98,7 +98,13 @@
             } else {
 
                 if($libraryDownload != '1') {
-                      
+                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                        $wishlistCount = $wishlist->getWishlistCount();
+                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
+                        ?> 
+                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <?php
+                        } else {
                                 $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
                                 if($wishlistInfo == 'Added to Wishlist') {
                                 ?> 
@@ -110,10 +116,13 @@
                                         <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
                                 <?php	
                                 }
-                        
+                        }
 
-                } 	
-                												
+                } else { 
+                ?>
+                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                <?php	
+                }												
             }
         } else {
         ?>
