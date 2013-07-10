@@ -9,9 +9,9 @@
 class HomesController extends AppController
 {
     var $name = 'Homes';
-    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','Song', 'Language','Session','Mvideo');
+    var $helpers = array( 'Html','Ajax','Javascript','Form', 'Library', 'Page', 'Wishlist','WishlistVideo','Song', 'Language','Session','Mvideo');
     var $components = array('RequestHandler','ValidatePatron','Downloads','PasswordHelper','Email', 'SuggestionSong','Cookie','Session', 'Auth');
-    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video', 'Videodownload');
+    var $uses = array('Home','User','Featuredartist','Artist','Library','Download','Genre','Currentpatron','Page','Wishlist','WishlistVideo','Album','Song','Language', 'Searchrecord','LatestDownload','Siteconfig','Country', 'LatestDownload', 'News', 'Video', 'Videodownload');
 
     /*
      Function Name : beforeFilter
@@ -19,24 +19,21 @@ class HomesController extends AppController
     */
     function beforeFilter() {
     
-		parent::beforeFilter();
-// comenting this code for showing this page before login
-//        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
-//            $validPatron = $this->ValidatePatron->validatepatron();
-//			if($validPatron == '0') {
-//				//$this->Session->destroy();
-//				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
-//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-//			}
-//			else if($validPatron == '2') {
-//				//$this->Session->destroy();
-//				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
-//				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
-//			}
-//        }
-        
-                
-            
+	parent::beforeFilter();
+        // comenting this code for showing this page before login
+        //        if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
+        //            $validPatron = $this->ValidatePatron->validatepatron();
+        //			if($validPatron == '0') {
+        //				//$this->Session->destroy();
+        //				//$this -> Session -> setFlash("Sorry! Your session has expired.  Please log back in again if you would like to continue using the site.");
+        //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+        //			}
+        //			else if($validPatron == '2') {
+        //				//$this->Session->destroy();
+        //				$this -> Session -> setFlash("Sorry! Your Library or Patron information is missing. Please log back in again if you would like to continue using the site.");
+        //				$this->redirect(array('controller' => 'homes', 'action' => 'aboutus'));
+        //			}
+        //        }           
                 
          $pat_id    =   $this->Session->read('patron');
           if(!empty($pat_id))    //  After Login
@@ -3281,6 +3278,64 @@ STR;
                     echo 'error1';
                     exit; 
 
+                }
+            
+        }else{
+            echo 'error';
+            exit;
+        }     
+        
+    }
+    
+    
+        /*
+     Function Name : addToWishlistVideo
+     Desc : To let the patron add video to wishlist
+    */
+    function addToWishlistVideo(){
+       
+        
+        if( $this->Session->read('library') && $this->Session->read('patron') 
+                && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']) ){
+            
+            
+            $wishlistCount =  $this->WishlistVideo->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'ProdID' => $_REQUEST['prodId'])));
+            if(!$wishlistCount){
+                $libraryId = $this->Session->read('library');
+                $patronId = $this->Session->read('patron');
+
+                $prodId = $_REQUEST['prodId'];
+                $downloadsDetail = array();
+                //get song details
+                $provider = $_REQUEST['provider'];
+
+                $trackDetails = $this->Video->getVideoData($prodId , $provider);
+                $insertArr = Array();
+                $insertArr['library_id'] = $libraryId;
+                $insertArr['patron_id'] = $patronId;
+                $insertArr['ProdID'] = $prodId;
+                $insertArr['artist'] = $trackDetails['0']['Video']['Artist'];
+                $insertArr['album'] = $trackDetails['0']['Video']['Title'];
+                $insertArr['track_title'] = $trackDetails['0']['Video']['VideoTitle'];
+                $insertArr['ProductID'] = $trackDetails['0']['Video']['ProductID'];
+
+                if($provider != 'sony'){
+                        $provider = 'ioda';
+                }
+                $insertArr['provider_type'] = $provider;
+
+                $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
+                $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
+                $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                //insert into wishlist table
+                $this->WishlistVideo->save($insertArr);           
+
+                echo "Success";
+                exit;
+
+                }else{
+                    echo 'error1';
+                    exit; 
                 }
             
         }else{
