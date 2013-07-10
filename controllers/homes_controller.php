@@ -363,7 +363,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'desc','limit'=>20)
+                                    ), 'order' => array('Country.SalesDate' => 'desc')
                             )
                     );
             } else {
@@ -3297,15 +3297,63 @@ STR;
      Desc : To show songs present in wishlist
     */
     function my_wishlist() {
+        //set the layout
         $this->layout = 'home';
+        
+        //fetch the session variables
         $libraryId = $this->Session->read('library');       
         $patronId = $this->Session->read('patron');
+        
+        
+        //create logics for sorting
+        $sortArray = array('date', 'song', 'artist', 'album');
+        $sortOrderArray = array('asc','desc');
+        
+        if(isset($_POST)){
+            $sort = $_POST['sort'];
+            $sortOrder = $_POST['sortOrder'];
+        }
+        
+        if(!in_array($sort, $sortArray)){
+            $sort = 'date';
+        }
+        
+        if(!in_array($sortOrder, $sortOrderArray)){
+            $sortOrder = 'desc';
+        }
+        
+        switch($sort){
+            case 'date':
+                $songSortBy = 'wishlists.created';
+                $videoSortBy = 'Videodownload.created';
+                $sortType = $sortOrder;
+                break;
+            case 'song':
+                $songSortBy = 'wishlists.track_title';
+                $videoSortBy = 'Videodownload.track_title';
+                $sortType = $sortOrder;
+                break;
+            case 'artist':
+                $songSortBy = 'wishlists.artist';
+                $videoSortBy = 'Videodownload.artist';
+                $sortType = $sortOrder;
+                break;
+            case 'album':  
+                $songSortBy = 'wishlists.album';
+                $videoSortBy = 'Video.Title';
+                $sortType = $sortOrder;
+                break;
+        }
+        
+        //check library and patron download limit  
+        
         $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
 	$patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
+        
         $wishlistResults = Array();
-        // $wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
+        //$wishlistResults =  $this->Wishlist->find('all',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         
         $wishlistQuery =<<<STR
                     SELECT 
@@ -3324,7 +3372,7 @@ STR;
                             wishlists AS wishlists ON (wishlists.ProdID = Song.ProdID)
                                     INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            library_id='$libraryId' and patron_id='$patronId'                               
+                            library_id='$libraryId' and patron_id='$patronId' order by $songSortBy $sortType                               
 
       
 	  
@@ -3335,7 +3383,8 @@ STR;
               
                 
         $this->set('wishlistResults',$wishlistResults);
-        
+        $this->set('sort',$sort);
+        $this->set('sortOrder',$sortOrder);
     }
 
     /*
@@ -4153,12 +4202,16 @@ STR;
         
         function new_releases() 
         {
-           $this->layout = 'home'; 
-            
-           
-            //////////////////////////////////Songs/////////////////////////////////////////////////////////
-           
-             $territory = $this->Session->read('territory');
+            $this->layout = 'home';             
+            //fetch the session variables
+            $libraryId = $this->Session->read('library');       
+            $patronId = $this->Session->read('patron');
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
+            //////////////////////////////////Songs/////////////////////////////////////////////////////////           
+            $territory = $this->Session->read('territory');
              
                
              

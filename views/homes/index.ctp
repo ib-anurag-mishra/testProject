@@ -255,7 +255,7 @@
 
             if($libraryDownload == '1' && $patronDownload == '1') {
 
-                    $nationalTopDownload[$i]['Video']['status'] = 'avail1';
+                    $nationalTopVideoDownload[$i]['Video']['status'] = 'avail1';
                     if($nationalTopVideoDownload[$i]['Video']['status'] != 'avail' ) {
                             ?>
                             <span class="top-100-download-now-button">
@@ -452,7 +452,7 @@ array('class'=>'first','escape'=>false)) */ ?>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                     <?php } ?>
                                                                                                                 
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                                                                                                 <!--   <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
 														
 														<div class="share clearfix">
 															<p>Share via</p>
@@ -534,13 +534,29 @@ array('class'=>'first','escape'=>false)) */ ?>
                                                                                                 <a class="add-to-playlist-button" href="#">
 														
 													</a>
-													<div class="wishlist-popover">
-														<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
+													<div class="wishlist-popover"> 
+                                                                                                            <?php
+
+                                                                                                            $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                                                                                            if($wishlistInfo == 'Added to Wishlist') {
+                                                                                                            ?> 
+                                                                                                                    <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                                                                            <?php 
+                                                                                                            } else { 
+                                                                                                            ?>
+                                                                                                                    <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                                                                                    <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                                                                                            <?php	
+                                                                                                            }
+
+                                                                                                            ?>
+
+                                                                                                            <div class="share clearfix">
+                                                                                                                    <p>Share via</p>
+                                                                                                                    <a class="facebook" href="#"></a>
+                                                                                                                    <a class="twitter" href="#"></a>
+                                                                                                            </div>
 														
 													</div>
 

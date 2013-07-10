@@ -67,11 +67,10 @@
 		<h3>Songs</h3>
 		<div class="songs-shadow-container">
 			<div class="songs-scrollable horiz-scroll">
-				<<ul style="width:2800px;">
+				<ul style="width:2800px;">
 					<?php
                                                 
-                                        $count  =   1;  
-                                                                                
+                                        $count  =   1;                                                                                
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($top_10_songs as $key => $value){
@@ -81,8 +80,6 @@
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
 
-
-                                            
 					?>
 					<li>
 						
@@ -203,7 +200,33 @@
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                         <?php } ?>
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+															
+                                                                                                                        
+                                                                                                                        
+                                                                                                            <?php
+
+                                                                                                            $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                                                                                            if($wishlistInfo == 'Added to Wishlist') {
+                                                                                                            ?> 
+                                                                                                                    <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                                                                            <?php 
+                                                                                                            } else { 
+                                                                                                            ?>
+                                                                                                                    <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                                                                                    <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                                                                                            <?php	
+                                                                                                            }
+
+                                                                                                            ?>
+
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
+                                                                                                                        
 															
 															<div class="share clearfix">
 																<p>Share via</p>

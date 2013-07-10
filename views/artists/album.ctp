@@ -311,7 +311,22 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>
 															-->
-															<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                                                                                                        <?php
+
+                                                                                                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+
+                                                                                                                        if($wishlistInfo == 'Added to Wishlist') {
+                                                                                                                        ?> 
+                                                                                                                                <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                                                                                        <?php 
+                                                                                                                        } else { 
+                                                                                                                        ?>
+                                                                                                                                <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                                                                                                        <?php	
+                                                                                                                        }
+
+                                                                                                                        ?>
 															
 															<div class="share clearfix">
 																<p>Share via</p>

@@ -66,6 +66,16 @@
                                                 
 					<?php }	?>
 				});
+                                
+                                <?php
+
+if ($this->Session->read('Config.language') == 'en') {
+    $setLang = 'en';
+} else {
+    $setLang = 'es';
+}
+
+?>
 				var languageSet = '<?php echo $setLang; ?>';
                                	var webroot = '<?php echo $this->webroot; ?>';
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
