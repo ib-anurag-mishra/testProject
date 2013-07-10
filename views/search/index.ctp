@@ -1322,10 +1322,10 @@ if(!empty($type) && $type == 'all'){
 ?>      
        <section class="advanced-search-results row-1 clearfix">
            <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
-           
+<?php /*********************Album Block Started*******************************/ ?>
            <section class="advanced-albums">
 				<header class="clearfix">
-					<h5>Album</h5>
+				<h5><?php __("Album"); ?></h5>
                 <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
 				</header>
 				<div class="advanced-albums-shadow-container">
@@ -1348,9 +1348,12 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
+    <?php /*********************Album Block End*******************************/ ?>
+           
+    <?php /*********************Artist Block Started*******************************/ ?>
 			<section class="advanced-artists">
 				<header class="clearfix">
-					<h5>Artists</h5>
+					<h5><?php __("Artists"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=artist">See more artists</a></h6>
 				</header>
 				<div class="advanced-artists-shadow-container">
@@ -1377,11 +1380,13 @@ if(!empty($type) && $type == 'all'){
 				</div>
 			
 			</section>
+<?php /*********************Artist Block End*******************************/ ?>       
 		</section>
 		<section class="advanced-search-results row-2 clearfix">
-			<section class="advanced-composers">
+<?php /*********************Composer Block Started*******************************/ ?>			
+            <section class="advanced-composers">
 				<header class="clearfix">
-					<h5>Composers</h5>
+					<h5><?php __("Composers"); ?></h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=composer">See more composers</a></h6>
 				</header>
 				<div class="advanced-composers-shadow-container">
@@ -1407,7 +1412,10 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
-			<section class="advanced-genres">
+<?php /*********************Composer Block End*******************************/ ?>
+            
+<?php /*********************Genre Block Started*******************************/ ?>
+            <section class="advanced-genres">
 				<header class="clearfix">
 					<h5>Genres</h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=genre">See more genres</a></h6>
@@ -1435,7 +1443,10 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
-			<section class="advanced-labels">
+<?php /*********************Genre Block End*******************************/ ?>
+
+<?php /*********************Label Block Started*******************************/ ?>            
+            <section class="advanced-labels">
 				<header class="clearfix">
 					<h5>Labels</h5>
 					<h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
@@ -1463,6 +1474,7 @@ if(!empty($type) && $type == 'all'){
 					</div>
 				</div>
 			</section>
+<?php /*********************Label Block End*******************************/ ?>
 		</section>
 <?php } ?>
 		<section class="tracklist-container">
