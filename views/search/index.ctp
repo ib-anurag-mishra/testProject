@@ -134,37 +134,12 @@ function Get_Sales_date($sales_date_array, $country){
 ?>
 <link type="text/css" rel="stylesheet" href="/css/advanced_search.css">
 <script src="/js/advanced_search.js"></script>
-<div class="breadCrumb">
-<?php
-	/*$html->addCrumb(__('Search Results', true), '/search/index');
-	echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');*/
-?>
-</div>
 
 <!-- Search Form -->
 <?php
 if('' != $keyword){
 ?>
-
-	<div	class="fullWidth" id="resultsSummary">
-		<div class="search_result_text">
-			<h3>Results for your search "<?php echo $keyword; ?>" </h3>
-		</div>
-<?php
-	if(($type == 'all' )){
-			echo $str =<<<STR
-			<div	id="hide_blocks">
-				<a href="#" onclick="javascript:advanced_search_show_hide('hide_div')">Hide</a>
-			</div>
-			<div	id="show_blocks" >
-				<a href="#" onclick="javascript:advanced_search_show_hide('show_div')">Show</a>
-			</div>
-STR;
-		}
-?>
-	</div>
-	<!-- Search Form End-->
-
+	
 <!-- Added code for all search-->
 <?php
 if(!empty($type) && !($type == 'all' )){
@@ -179,153 +154,7 @@ else{
 <!-- leftColblock Start -->
 <div	id="leftColblock">
 				<div	id="leftColblockWrapper">
-<?php
-/********************************************Album block started*********************************************************************************/
-
-	$str_all_blocks = '';
-
-			$counter=0;
-			$album_div =<<<STR
-				 <div	class="results" id="albumblock">
-					<h2	class="heading">
-						<span class="h2Wrapper">Albums</span>
-					</h2>
-STR;
-
-			if(!empty($albumData)){
-				foreach($albumData as $palbum){
-					$albumDetails = $album->getImage($palbum->ReferenceID);
-					if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
-						$albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
-						$image = Configure::read('App.Music_Path').$albumArtwork;
-					} else {
-						$image = 'no-image.jpg';
-					}
-					if($page->isImage($image)) {
-						//Image is a correct one
-					}
-					else {
-
-					//	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
-					}
-
-					if($counter%2==0){
-						$class = 'albumblockC1';
-					} else {
-						$class = 'albumblockC2';
-					}
-
-					if($counter%2==0){
-						if($counter==0){
-						$album_outer_div =<<<STR
-							<div	id ="albumblockR1">
-STR;
-						}
-						else {
-							$album_inner_div = '';
-							$album_outer_div .=<<<STR
-							<div	id ="albumblockR2">
-STR;
-						}
-					}
-
-					$album_title = truncate_text($palbum->Title, 30, $this);
-					$title = urlencode($palbum->Title);
-					$album_genre = str_replace('"','',$palbum->Genre);
-					$tilte = urlencode($palbum->Title);
-					$album_label = $palbum->Label;
-          $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
-          $linkProviderType = base64_encode($palbum->provider_type);
-          $ReferenceId = $palbum->ReferenceID;
-          if($palbum->AAdvisory == 'T'){
-              $explicit = '<font class="explicit"> (Explicit)</font><br />';
-          } else {
-              $explicit = '';
-          }
-		  if(!empty($album_label)){
-			$album_label_str = "Label: " . truncate_text($album_label, 32, $this);
-		  }
-		  else{
-			$album_label_str = "";
-		  }
-					$album_inner_div .=<<<STR
-					<div	class ="$class">
-						<a	href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"><img class="art" height="75" width="100" src="$image"> </a>
-						<div class="albumblockArtistexts">
-							<a class="albumblockArtisLink" href="/artists/view/$linkArtistText/$ReferenceId/$linkProviderType" title="$palbum->Title">$album_title</a>
-							<br />
-                                                        $explicit
-							Genre: $album_genre
-							<br />
-							<span	class="stats">$album_label_str</span>
-						</div>
-					</div>
-STR;
-
-					$counter++;
-					if($counter%2==0 || $counter == count($albumData)){
-						$album_outer_div =<<<STR
-							$album_outer_div
-							$album_inner_div
-						</div>
-STR;
-					}
-					if($counter%4==0 || $counter == count($albumData)){
-						$album_outer_div .=<<<STR
-						<div><span class="more_link">
-						<a	href="/search/index?q=$keyword&type=album">See more albums</a>
-						</span></div>
-STR;
-					}
-				}
-				}
-				else {
-				$album_outer_div .=<<<STR
-				<ul>
-					<li style='color:red'>No Album Found</li>
-				</ul>
-STR;
-				}
-
-
-	echo $str_all_blocks .=<<<STR
-								$album_div
-							$album_outer_div
-							</div>
-
-STR;
-/********************************************Album block end*********************************************************************************/
-
-?>
-
-
-				<div	id="ComposersWrapper">
-						<h2>Composers</h2>
-				<?php
-				if(!empty($composers)){
-				?>
-						<ul >
-				<?php foreach($composers as $composer)
-				{
-					$tilte = urlencode($composer->Composer);
-					$composer_name = truncate_text($composer->Composer, 30, $this);
-				?>
-							<li ><span class="left_text"><a href="/search/index?q=<?php echo $tilte;?>&type=composer" title='<?php echo $composer->Composer?>'><?php echo str_replace('"','',$composer_name); ?></a></span><span class="right_text">(<?php echo $composer->numFound; ?>)</span></li>
-				<?php
-				}
-				?>
-				</ul>
-				<span class="more_link"><a	href="/search/index?q=<?php echo $keyword; ?>&type=composer">See more Composers</a></span>
-				<?php
-				} else {
-				?>
-				<ul>
-					<li style='color:red'>No Composers Found</li>
-				</ul>
-				<?php
-				}
-				?>
-				</div>
+				
 <?php
 /********************************************Genre block started*********************************************************************************/
 				$genre_wrapper_div =<<<STR
