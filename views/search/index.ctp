@@ -323,6 +323,8 @@ switch($type){
                             ?>
                             </li> 
                             <?php
+                            $searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+                            $pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
                             } else {
                             ?>
                             <li style="color:red">No Album Found</li>
@@ -335,7 +337,14 @@ switch($type){
 			</section>
 			
 		</section>
+            <?php        
+            if(!empty($pagination_str)){
+                ?>
+            <div class="paging_all_block">
+                <?php echo $pagination_str; ?>
+			</div>
             <?php
+            }
             break;
         case 'artist':
             ?>
