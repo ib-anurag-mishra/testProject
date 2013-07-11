@@ -2,9 +2,9 @@
 
 class VideosController extends AppController {
 
-     var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library','WishlistVideo');
+     var $uses = array('Album', 'Genre', 'Siteconfig','Country', 'Video', 'LatestVideodownload', 'Videodownload','Library','WishlistVideo','Download');
      var $helpers = array( 'WishlistVideo');
-     var $components = array('Downloadsvideos', 'Session');
+     var $components = array('Downloadsvideos', 'Session','Downloads');
      var $layout = 'home';
    
    
@@ -30,6 +30,15 @@ class VideosController extends AppController {
         $prefix = strtolower($territory)."_";
         $featuredVideos = array();
         $topDownloads = array();
+        
+        
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
+        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+   
+        $this->set('libraryDownload',$libraryDownload);
+        $this->set('patronDownload',$patronDownload);
         
         if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
             $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";

@@ -138,7 +138,7 @@
                         $wishlistCount = $wishlist->getWishlistCount();
                         if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
                         ?> 
-                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
                                 $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
@@ -156,7 +156,7 @@
 
                 } else { 
                 ?>
-                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                 <?php	
                 }												
             }
@@ -350,7 +350,7 @@
                         $wishlistCount = $wishlist->getWishlistCount();
                         if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
                         ?> 
-                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
@@ -368,7 +368,7 @@
 
                 } else { 
                 ?>
-                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                 <?php	
                 }												
             }

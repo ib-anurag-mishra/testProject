@@ -38,8 +38,12 @@ class QueueListDataType{
 	 * Queuemodified
 	 * @var string
 	 */
-  public $Queuemodified;
-  
+  public $QueueModified;
+  /**
+	 * Queueuser
+	 * @var string
+	 */
+  public $QueueUser;
   /**
 	 * Constructor
 	 */

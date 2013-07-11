@@ -32,6 +32,8 @@
                                 <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
                                 <?php
                                 if($this->Session->read('patron')) {
+
+                        if($libraryDownload == '1' && $patronDownload == '1') {
                                 ?>
                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
@@ -40,6 +42,15 @@
                                             <a class="featured-video-download-now-button" href='#' title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
                                     </span>
                                 </form>
+                            <?php
+                               }else{
+                            ?>
+                                <a class="featured-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                            <?php
+                               }
+                            ?>
+
+
                                 <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
                                 <a class="add-to-playlist-button" href="#"></a>
                                 <div class="wishlist-popover">
@@ -135,6 +146,8 @@ foreach($topVideoDownloads as $topDownload)
                             <div class="wishlist-popover">
                                 <?php
                                 if($this->Session->read('patron')) {
+                                    if($libraryDownload == '1' && $patronDownload == '1') {
+
                                 ?>
                                 <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
@@ -143,7 +156,13 @@ foreach($topVideoDownloads as $topDownload)
                                             <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $topDownload["Video"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 										</span>
 								</form>													
-								
+			<?php
+                               }else{
+                            ?>
+                                <a class="featured-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
+                            <?php
+                               }
+                            ?>					
 
                         <?php
 

@@ -5204,11 +5204,11 @@ STR;
         
         $obj = new QueueListDataType;
       
-        $obj->PlaylistID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
-        $obj->PlaylistName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
-        $obj->PlayCreated                   = $Queuelist[$cnt]['Queuelist']['Created'];
-        $obj->Playmodified                  = $Queuelist[$cnt]['Queuelist']['modified'];          
-        $obj->PlayUser                      = $userName;
+        $obj->QueueID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
+        $obj->QueueName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
+        $obj->QueueCreated               = $Queuelist[$cnt]['Queuelist']['Created'];
+        $obj->QueueModified              = $Queuelist[$cnt]['Queuelist']['modified'];          
+        $obj->QueueUser                  = $userName;
        
         $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
       
