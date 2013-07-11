@@ -163,18 +163,6 @@ foreach($topVideoDownloads as $topDownload)
                                 ?>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
                                 <div class="share clearfix">
                                     <p>Share via</p>
                                     <a class="facebook" href="#"></a>

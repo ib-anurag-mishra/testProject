@@ -159,7 +159,12 @@
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
-												if($albumSong['Song']['status'] != 'avail'){
+												
+                                                                                              $albumSong['Song']['status'] = 'avail1';
+                                                                                              if(isset($albumSong['Song']['status']) && ($albumSong['Song']['status'] != 'avail')) {
+                                                                                            
+                                                                                            
+                                                                                          
 										?>
 													<p>
 														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
@@ -169,41 +174,19 @@
 															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
  																<a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 															</span>
-															<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
-															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><a href='#' class="add-to-wishlist"><?php __("Please Wait..");?></a></span>
+															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php /* echo  $html->image('ajax-loader_black.gif'); */ ?></span>
 														</form>													
 													</p>													
 									<?php	
 												} else {
 													?><a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
 												}
-											}											
+											}					
 											else{
-												if($libraryDownload != '1'){
-													$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-													$wishlistCount = $wishlist->getWishlistCount();
-													if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount){
-														?> <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a> <?php
-													}
-													else{
-														$wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-														if($wishlistInfo == 'Added to Wishlist'){
-															?> <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Added to Wishlist");?></a>
-														<?php }
-														else{ ?>
-															<p>
-																<span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>" );'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-																<span class="afterClick" style="display:none;float:left;">Please Wait...</span>
-															</p>
-														<?php	
-														}
-													}
-													
-												}
-												else{ ?>
-													<a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>
-												<?php	
-												}												
+												?>
+                                                                                                <a class="add-to-wishlist" href="javascript:void(0)"><?php __("Limit Met");?></a>        
+                                                                                                <?php
 											}
 										}else{
 									?>
