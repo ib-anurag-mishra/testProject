@@ -2424,7 +2424,7 @@ if($validationPassed == true){
     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
     $siteConfigData = $this->Album->query($siteConfigSQL);
     $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-	echo 148;	
+	
     if($maintainLatestDownload){    
       $this->log("sonyproc_new called",'download');
       $procedure = 'sonyproc_new';
@@ -2435,8 +2435,8 @@ if($validationPassed == true){
       $procedure = 'sonyproc_ioda';
       $sql = "CALL sonyproc_ioda('".$libId."','".$patId."', '".$prodId."', '".$trackDetails['0']['Song']['ProductID']."', '".$trackDetails['0']['Song']['ISRC']."', '".addslashes($trackDetails['0']['Song']['Artist'])."', '".addslashes($trackDetails['0']['Song']['SongTitle'])."', '".$insertArr['user_login_type']."', '" .$insertArr['provider_type']."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";      
     }
-    echo 145;
-    die;
+    
+    
     
     $this->Library->query($sql);
 		$sql = "SELECT @ret";
@@ -2444,9 +2444,9 @@ if($validationPassed == true){
 		$return = $data[0][0]['@ret'];
     
     $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$trackDetails['0']['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$trackDetails['0']['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($trackDetails['0']['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($trackDetails['0']['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$insertArr['provider_type']."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
-    
+     echo 147; die;
     if(is_numeric($return)){
-    echo 147;
+   
       $this->LatestDownload->setDataSource('master');
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
@@ -2458,8 +2458,9 @@ if($validationPassed == true){
         ),
         'recursive' => -1,
       ));
-      
+     echo 44; 
 print_r($data);
+die;
       if(0 === $data){
         $log_data .= ":NotInLD";
       }
