@@ -341,7 +341,7 @@
                                                 <?php
 
 
-                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
+                                                echo $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
 
                                                 if($wishlistInfo == 'Added to Wishlist') {
                                                 ?> 
