@@ -132,32 +132,11 @@
 
             } else {
 
-                if($libraryDownload != '1') {
-                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                        $wishlistCount = $wishlist->getWishlistCount();
-                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
-                        ?> 
-                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
-                        <?php
-                        } else {
-                                $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-                                if($wishlistInfo == 'Added to Wishlist') {
-                                ?> 
-                                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                <?php 
-                                } else { 
-                                ?>
-                                        <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="top-10-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-                                        <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-                                <?php	
-                                }
-                        }
-
-                } else { 
-                ?>
-                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
-                <?php	
-                }												
+              ?>
+                            
+              <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>   
+              
+              <?php
             }
         } else {
         ?>
@@ -334,32 +313,9 @@
 
             } else {
 
-                if($libraryDownload != '1') {
-                        $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
-                        $wishlistCount = $wishlist->getWishlistCount();
-                        if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
-                        ?> 
-                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
-                        <?php
-                        } else {
-                                $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
-                                if($wishlistInfo == 'Added to Wishlist') {
-                                ?> 
-                                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                <?php 
-                                } else { 
-                                ?>
-                                        <span class="beforeClick" id="wishlist<?php echo $value["Video"]["ProdID"]; ?>"><a class="top-10-download-now-button" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Video"]["ProdID"]; ?>","<?php echo $value["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span><span id="wishlist_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'padding-top:30px')); ?></span>
-                                        <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __("Please Wait...");?></span>
-                                <?php	
-                                }
-                        }
-
-                } else { 
-                ?>
-                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
-                <?php	
-                }												
+     ?>
+         <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>                    
+       <?php
             }
         } else {
         ?>
@@ -382,8 +338,23 @@
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
 							<a class="add-to-playlist-button" href="#"></a>
 							<div class="wishlist-popover">
-								
-								<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                                <?php
+
+
+                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
+
+                                                if($wishlistInfo == 'Added to Wishlist') {
+                                                ?> 
+                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                <?php 
+                                                } else { 
+                                                ?>
+                                                        <span class="beforeClick" id="video_wishlist<?php echo $value['Video']["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $value['Video']["ProdID"]; ?>","<?php echo $value['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                        <span class="afterClick" id="downloading_<?php echo $value['Video']["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                                <?php	
+                                                }
+
+                                                ?>
 								
 								<div class="share clearfix">
 									<p>Share via</p>
