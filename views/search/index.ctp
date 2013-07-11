@@ -441,7 +441,7 @@ switch($type){
 		</section>
         <?php
             break;
-        case 'genres':
+        case 'genre':
             ?>
             <section class="advanced-search-results-genres clearfix">
 			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
