@@ -5194,6 +5194,7 @@ STR;
     $Queuelist = $this->Queuelist->find('all', array(
       'conditions' => $cond,
       'recursive' => -1,
+      'order' => 'Created DESC'
     ));
     
 
