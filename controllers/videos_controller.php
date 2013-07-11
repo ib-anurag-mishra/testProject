@@ -282,8 +282,7 @@ class VideosController extends AppController {
 
             //writes in log
             $this->log($log_data, $log_name);
-echo $return;
-die;
+
             $this->Library->setDataSource('default');
             if (is_numeric($return)) {
                 header("Content-Type: " . $contenttype);
