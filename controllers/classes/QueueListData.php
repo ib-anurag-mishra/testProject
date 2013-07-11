@@ -3,13 +3,13 @@
 class QueueListData{
   /**
 	 * queuelistdata
-	 * @var QueueListDatatType
+	 * @var QueueListDataType
 	 */
   public $queuelistdata;
 
   /**
 	 * Constructor
-	 * @param QueueListDatatType $queuelistdata
+	 * @param QueueListDataType $queuelistdata
 	 * @return bool
 	 */
   public function __construct($queuelistdata){
@@ -18,7 +18,7 @@ class QueueListData{
   }
 }
 
-class QueueListDatatType{
+class QueueListDataType{
   /**
 	 * PlaylistID
 	 * @var int
