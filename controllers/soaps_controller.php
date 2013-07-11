@@ -5168,7 +5168,7 @@ STR;
         
     if( 1 == $uid ){
     
-      $cond = array('patronID' => $uid);
+      $cond = array('patronID' => $uid, 'status' => '1');
       $userName = 'Admin';
     }else{
     
@@ -5177,7 +5177,7 @@ STR;
     
       if('user_account' == $method){
       
-        $cond = array('patronID' => $patronID);
+        $cond = array('patronID' => $patronID, 'status' => '1');
         $user = $this->User->find('first',array(
           'fields' => array('first_name'),
           'conditions' => array('id' => $patronID),
@@ -5185,7 +5185,7 @@ STR;
         $userName = $user['User']['first_name'];       
       }else{
       
-        $cond = array('patronID' => $patronID);
+        $cond = array('patronID' => $patronID, 'status' => '1');
         $userName = $patronID;
       }
     }

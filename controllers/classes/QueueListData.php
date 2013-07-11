@@ -20,22 +20,22 @@ class QueueListData{
 
 class QueueListDataType{
   /**
-	 * PlaylistID
+	 * QueueID
 	 * @var int
 	 */
   public $QueueID;
   /**
-	 * PlaylistName
+	 * QueueName
 	 * @var string
 	 */
   public $QueueName;
   /**
-	 * PlayCreated
+	 * QueueCreated
 	 * @var string
 	 */
   public $QueueCreated;  
   /**
-	 * Playmodified
+	 * Queuemodified
 	 * @var string
 	 */
   public $Queuemodified;
