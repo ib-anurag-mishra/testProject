@@ -405,7 +405,7 @@ switch($type){
                             <div class="rows clearfix">
                             <?php    
                             $i = 0;
-                            print_r($composers); die;
+                            // print_r($composers); die;
                             foreach($composers as $composer){
                                 $composer_name = str_replace('"','',$composer->Composer);
                                 $composer_name = truncate_text($composer_name, 30, $this);
@@ -421,7 +421,10 @@ switch($type){
                             $i++;
                             if(($i % 3) == 0) {
                                 echo "</div><div class='rows clearfix'>";  
-                            } 
+                            }
+                            ?>
+                            </div>
+                            <?php
 						} else {
                             ?>
                             <div class="rows clearfix" style="color:red">
