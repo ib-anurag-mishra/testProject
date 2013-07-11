@@ -380,6 +380,8 @@ switch($type){
                             ?>
                             </div>
 						<?php
+                            $searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+                            $pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
 						} else {
                             ?>
                             <div class="rows clearfix" style="color:red">
@@ -394,7 +396,14 @@ switch($type){
 			</section>
 			
 		</section>
+            <?php        
+            if(!empty($pagination_str)){
+                ?>
+            <div class="paging_all_block">
+                <?php echo $pagination_str; ?>
+			</div>
             <?php
+            }
             break;
         case 'composer':
             ?>
@@ -434,6 +443,8 @@ switch($type){
                             ?>
                             </div>
                             <?php
+                            $searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+                            $pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
 						} else {
                             ?>
                             <div class="rows clearfix" style="color:red">
@@ -448,7 +459,14 @@ switch($type){
 			</section>
 			
 		</section>
-        <?php
+        <?php        
+            if(!empty($pagination_str)){
+                ?>
+            <div class="paging_all_block">
+                <?php echo $pagination_str; ?>
+			</div>
+            <?php
+            }
             break;
         case 'genre':
             ?>
@@ -485,6 +503,8 @@ switch($type){
 						?>
                             </div>
                             <?php
+                            $searchString = "?q=".urlencode($keyword)."&type=".$type."&sort=".$sort."&sortOrder=".$sortOrder;
+                            $pagination_str = createPagination($html, $currentPage,$facetPage,'block',$totalFacetPages,5,$searchString);
 						} else {
                             ?>
                             <div class="rows clearfix" style="color:red">
@@ -499,7 +519,14 @@ switch($type){
 			</section>
 			
 		</section>
+            <?php        
+            if(!empty($pagination_str)){
+                ?>
+            <div class="paging_all_block">
+                <?php echo $pagination_str; ?>
+			</div>
             <?php
+            }
             break;
         case 'label':
             ?>
@@ -550,7 +577,14 @@ switch($type){
 			</section>
 			
 		</section>
-    <?php
+    <<?php        
+            if(!empty($pagination_str)){
+                ?>
+            <div class="paging_all_block">
+                <?php echo $pagination_str; ?>
+			</div>
+            <?php
+            }
             break;
 }           
 } else {
