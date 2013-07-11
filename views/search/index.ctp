@@ -340,7 +340,7 @@ switch($type){
         case 'artist':
             ?>
             <section class="advanced-search-results-artists clearfix">
-			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 			<section class="advanced-artists">
 				<header class="clearfix">
 					<h5><?php __("Artists"); ?></h5>
@@ -390,25 +390,44 @@ switch($type){
         case 'composer':
             ?>
             <section class="advanced-search-results-composers clearfix">
-			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 			<section class="advanced-composers">
 				<header class="clearfix">
-					<h5>Composers</h5>
+					<h5><?php __("Composers"); ?></h5>
 					
 				</header>
 				<div class="advanced-composers-shadow-container">
 					<div class="advanced-composers-scrollable">
 						<div class="row-wrapper">
 						<?php
-						for($b=0;$b<12;$b++) {
+                        if(!empty($composers)){
 						?>
-							<div class="rows clearfix">
-								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
-								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
-								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
-							</div>
+                            <div class="rows clearfix">
+                            <?php    
+                            $i = 0;
+                            foreach($composers as $composer){
+                                $composer_name = str_replace('"','',$composer->Composer);
+                                $composer_name = truncate_text($composer_name, 30, $this);
+                                $tilte = urlencode($composer->Composer);
+                                $name = $composer->Composer;
+                                $count = $composer->numFound;
+                                $name = $this->getTextEncode($name);
+                                
+                            }
+						?>
+							<div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $composer_name; ?> (<?php echo $count; ?>)</a></div>
 						<?php
-						}
+                            $i++;
+                            if(($i % 3) == 0) {
+                                echo "</div><div class='rows clearfix'>";  
+                            } 
+						} else {
+                            ?>
+                            <div class="rows clearfix" style="color:red">
+                            No Artists Found
+                            </div>
+                                <?php
+                        }
 						?>
 						</div>
 					</div>
@@ -421,7 +440,7 @@ switch($type){
         case 'genres':
             ?>
             <section class="advanced-search-results-genres clearfix">
-			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 			<section class="advanced-genres">
 				<header class="clearfix">
 					<h5><?php __("Genres"); ?></h5>
@@ -452,7 +471,7 @@ switch($type){
         case 'label':
             ?>
     <section class="advanced-search-results-labels clearfix">
-			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 			<section class="advanced-labels">
 				<header class="clearfix">
 					<h5><?php __("Labels"); ?></h5>
