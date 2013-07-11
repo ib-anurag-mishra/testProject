@@ -1955,10 +1955,10 @@ STR;
 				}
 
 				$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxLabelSearch.''.$sphinxComposerSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch.''.$sphinxGenreSearch;
-        if($sphinxTerritorySearch != ''){
-          $sphinxTempCondition = substr($sphinxTempCondition, 0, -2);
-          $sphinxTempCondition = $sphinxTempCondition.' & '. $sphinxTerritorySearch;
-        }
+                                if($sphinxTerritorySearch != ''){
+                                    $sphinxTempCondition = substr($sphinxTempCondition, 0, -2);
+                                    $sphinxTempCondition = $sphinxTempCondition.' & '. $sphinxTerritorySearch;
+                                }
 				//$sphinxTempCondition = $sphinxArtistSearch.''.$sphinxSongSearch.''.$sphinxAlbumSearch;
 				$sphinxFinalCondition = substr($sphinxTempCondition, 0, -2);
 				//$sphinxFinalCondition = $sphinxFinalCondition.' & @TrackBundleCount 0 & @DownloadStatus 1 & @Territory !'.$nonMatchCountry.' & @Territory '.$country.' & '.$condSphinx;
@@ -2288,7 +2288,7 @@ STR;
 			$user = $this->Session->read('patron');
         }
 		
-if($validationPassed == true){
+        if($validationPassed == true){
             $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -2369,7 +2369,7 @@ if($validationPassed == true){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_var_https_wo_pin';
 		}
-        elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
+                elseif($this->Session->read('innovative_https') && ($this->Session->read('innovative_https') != '')){
 			$insertArr['email'] = '';
 			$insertArr['user_login_type'] = 'innovative_https';
 		}
@@ -2383,7 +2383,7 @@ if($validationPassed == true){
 		}
 		elseif($this->Session->read('sip') && ($this->Session->read('sip') != '')){
 			$insertArr['email'] = '';
-            $insertArr['user_login_type'] = 'sip';
+                $insertArr['user_login_type'] = 'sip';
         }
 		elseif($this->Session->read('innovative_var_wo_pin') && ($this->Session->read('innovative_var_wo_pin') != '')){
 			$insertArr['email'] = '';
@@ -2444,7 +2444,8 @@ if($validationPassed == true){
 		$return = $data[0][0]['@ret'];
     
     $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$trackDetails['0']['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$trackDetails['0']['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($trackDetails['0']['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($trackDetails['0']['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$insertArr['provider_type']."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
-     
+     echo $return;
+     die;
     if(is_numeric($return)){
    
       $this->LatestDownload->setDataSource('master');
