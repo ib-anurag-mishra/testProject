@@ -16,6 +16,15 @@ class AlbumHelper extends AppHelper {
 		);
         return  $details;
     }
+    
+    function getImage($id) {
+        $songInstance = ClassRegistry::init('Album');
+        $details = $songInstance->find('all', array(
+            'conditions'=>array('Album.ProdID' => $id),
+          )
+		    );
+        return  $details;
+    }
 }
 
 ?>
