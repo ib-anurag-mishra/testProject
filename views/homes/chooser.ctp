@@ -54,22 +54,22 @@
         <?php if(isset($libraries)) {
 		if(!empty($libraries)){
         ?>
-	<div class="library-list-container">
-            <legend align="center"><?php __('<p>Please select your library</p>'); ?></legend>
+	<div class="rightaside" align='center'>
+        <legend align="center"><?php __('<b>Please select your library</b>'); ?></legend>
             <div class="sidebox">
-		<div class="holder">
-			<div class="frame" align="left">
-			<table>
-			<?php foreach($libraries as $library_var) { ?>
-                            <tr>
-                                <td><a href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com/users/redirection_manager"><?php echo strtoupper($library_var['Library']['library_name']); ?></a></td>
-                            </tr>
-			<?php } ?>
-			</table>
-			</div>
-		</div>
+                    <div class="holder">
+                            <div class="frame" align="left">
+                            <table>
+                            <?php foreach($libraries as $library_var) { ?>
+                                <tr>
+                                    <td><a href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com/users/redirection_manager"><?php echo strtoupper($library_var['Library']['library_name']); ?></a></td>
+                                </tr>
+                            <?php } ?>
+                            </table>
+                            </div>
+                    </div>
             </div>
-	</div>
+    </div>
         <?php } } ?>
     </div>
 </div>
