@@ -58,15 +58,15 @@
             <legend align="center"><?php __('<p>Please select your library</p>'); ?></legend>
             <div class="sidebox">
 		<div class="holder">
-                    <div class="frame library-list-scrollable" align="left">
+			<div class="frame" align="left">
 			<table>
 			<?php foreach($libraries as $library_var) { ?>
                             <tr>
                                 <td><a href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com/users/redirection_manager"><?php echo strtoupper($library_var['Library']['library_name']); ?></a></td>
                             </tr>
 			<?php } ?>
-                        </table>
-                    </div>
+			</table>
+			</div>
 		</div>
             </div>
 	</div>
