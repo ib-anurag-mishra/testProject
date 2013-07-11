@@ -323,9 +323,53 @@ if ($this->Session->read('Config.language') == 'en') {
         var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         return re.test(email);
     }    
-                </script>	
+                </script>
+            <?php
+        if($_SERVER['REQUEST_URI']=='/index' || $_SERVER['REQUEST_URI']=='')
+        {
+            $body_class =   'page-news';
+        }
+        else if($_SERVER['REQUEST_URI']=='/videos')
+        {
+            $body_class =   'page-videos'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/homes/my_lib_top_10')
+        {
+            $body_class =   'page-my_lib_top_10'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/homes/us_top_10')
+        {
+            $body_class =   'page-us_top_10'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/homes/new_releases')
+        {
+            $body_class =   'page-new_releases'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/questions')
+        {
+            $body_class =   'page-questions'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/genres/view')
+        {
+            $body_class =   'page-genres'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/homes/my_history')
+        {
+            $body_class =   'page-my_history'; 
+        }
+        else if($_SERVER['REQUEST_URI']=='/homes/my_wishlist')
+        {
+            $body_class =   'page-my_wishlist'; 
+        }
+        else
+        {
+            $body_class =   'page-news';
+        }
+        
+            
+?> 
                 </head>
-                <body>
+                <body class="<?php echo $body_class; ?>">
                     <!--[if lt IE 7]>
                     <div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative;'>
                     <div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'>

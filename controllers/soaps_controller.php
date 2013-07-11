@@ -5181,8 +5181,9 @@ STR;
         $user = $this->User->find('first',array(
           'fields' => array('first_name'),
           'conditions' => array('id' => $patronID),
+          'recursive' => -1,
         ));
-        $userName = $user['User']['first_name'];       
+        $userName = $user['User']['first_name'];
       }else{
       
         $cond = array('patronID' => $patronID, 'status' => '1');
@@ -5193,25 +5194,26 @@ STR;
     $Queuelist = $this->Queuelist->find('all', array(
       'conditions' => $cond,
       'recursive' => -1,
-
     ));
+    
+
     
     if( empty($Queuelist) ) {
       throw new SOAPFault('Soap:DefaultQueueList', 'No Queue lists found');
     } else {
       
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-        
-        $obj = new QueueListDataType;
+        if(!(empty($Queuelist[$cnt]['Queuelist']['Plid']))) {
+          $obj = new QueueListDataType;
       
-        $obj->QueueID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
-        $obj->QueueName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
-        $obj->QueueCreated               = $Queuelist[$cnt]['Queuelist']['Created'];
-        $obj->QueueModified              = $Queuelist[$cnt]['Queuelist']['modified'];          
-        $obj->QueueUser                  = $userName;
+          $obj->QueueID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
+          $obj->QueueName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
+          $obj->QueueCreated               = $Queuelist[$cnt]['Queuelist']['Created'];
+          $obj->QueueModified              = $Queuelist[$cnt]['Queuelist']['modified'];          
+          $obj->QueueUser                  = $userName;
        
-        $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
-      
+          $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
+        }
       }
     
       $data = new SoapVar($queue_list,SOAP_ENC_OBJECT,null,null,'ArrayQueueListDataType');    
