@@ -441,7 +441,7 @@ switch($type){
 		</section>
         <?php
             break;
-        case 'genres':
+        case 'genre':
             ?>
             <section class="advanced-search-results-genres clearfix">
 			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
@@ -474,7 +474,17 @@ switch($type){
                             }
                         }
 						?>
-						</div>
+                            </div>
+                            <?php
+						} else {
+                            ?>
+                            <div class="rows clearfix" style="color:red">
+                                No Genres Found
+                            </div>
+                                <?php
+                        }
+						?>
+       				</div>
 					</div>
 				</div>
 			</section>
@@ -495,15 +505,35 @@ switch($type){
 					<div class="advanced-labels-scrollable">
 						<div class="row-wrapper">
 						<?php
-						for($b=0;$b<12;$b++) {
+						if(!empty($labels)){
+                        ?>
+                            <div class="rows clearfix">
+                        <?php    
+                        $i = 0;
+                        foreach($labels as $label){
+                            $label_name = str_replace('"','',$label->Label);
+                            $label_name_text = truncate_text($label_name, 30, $this);
+                            $tilte = urlencode($label->Label);
+                            $name = $label->Label;
+                            $count = $label->numFound;
 						?>
-							<div class="rows clearfix">
-								<div class="row"><a href="#">Hog Country Records (13)</a></div>
-								<div class="row"><a href="#">Hog Country Records (13)</a></div>
-								<div class="row"><a href="#">Hog Country Records (13)</a></div>
-							</div>
+								<div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=label"; ?>" title="<?php echo $name; ?>"><?php echo $label_name_text; ?> (<?php echo $count; ?>)</a></div>
 						<?php
-						}
+                            $i++;
+                            if(($i % 3) == 0) {
+                                echo "</div><div class='rows clearfix'>";  
+                            }
+                        }
+						?>
+                            </div>
+                            <?php
+						} else {
+                            ?>
+                            <div class="rows clearfix" style="color:red">
+                                No Labels Found
+                            </div>
+                                <?php
+                        }
 						?>
 						</div>
 					</div>

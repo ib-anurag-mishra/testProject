@@ -5168,7 +5168,7 @@ STR;
         
     if( 1 == $uid ){
     
-      $cond = array('patronID' => $uid);
+      $cond = array('patronID' => $uid, 'status' => '1');
       $userName = 'Admin';
     }else{
     
@@ -5177,7 +5177,7 @@ STR;
     
       if('user_account' == $method){
       
-        $cond = array('patronID' => $patronID);
+        $cond = array('patronID' => $patronID, 'status' => '1');
         $user = $this->User->find('first',array(
           'fields' => array('first_name'),
           'conditions' => array('id' => $patronID),
@@ -5185,13 +5185,15 @@ STR;
         $userName = $user['User']['first_name'];       
       }else{
       
-        $cond = array('patronID' => $patronID);
+        $cond = array('patronID' => $patronID, 'status' => '1');
         $userName = $patronID;
       }
     }
     
     $Queuelist = $this->Queuelist->find('all', array(
-      'conditions' => $cond
+      'conditions' => $cond,
+      'recursive' => -1,
+
     ));
     
     if( empty($Queuelist) ) {
@@ -5202,11 +5204,11 @@ STR;
         
         $obj = new QueueListDataType;
       
-        $obj->PlaylistID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
-        $obj->PlaylistName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
-        $obj->PlayCreated                   = $Queuelist[$cnt]['Queuelist']['Created'];
-        $obj->Playmodified                  = $Queuelist[$cnt]['Queuelist']['modified'];          
-        $obj->PlayUser                      = $userName;
+        $obj->QueueID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
+        $obj->QueueName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
+        $obj->QueueCreated               = $Queuelist[$cnt]['Queuelist']['Created'];
+        $obj->Queuemodified              = $Queuelist[$cnt]['Queuelist']['modified'];          
+        $obj->QueueUser                  = $userName;
        
         $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
       
