@@ -75,7 +75,8 @@ class HomesController extends AppController
       
         $nationalTopDownload = array();
         $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+       echo 'patron=>'. $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+   
         $this->set('libraryDownload',$libraryDownload);
         $this->set('patronDownload',$patronDownload);
         
