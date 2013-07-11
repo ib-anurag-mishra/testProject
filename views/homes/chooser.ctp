@@ -56,6 +56,7 @@
         ?>
 	<div class="library-list-container" align='center'>
         <legend align="center"><?php __('<b>Please select your library</b>'); ?></legend>
+        <br>
             <div class="sidebox">
                     <div class="holder">
                             <div class="frame library-list-scrollable" align="left">
