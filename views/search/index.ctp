@@ -334,9 +334,68 @@ switch($type){
             <?php
             break;
         case 'artist':
-        case 'genres':    
-        case 'album':
-        case 'album':    
+            ?>
+            <section class="advanced-search-results-artists clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-artists">
+				<header class="clearfix">
+					<h5>Artists</h5>
+				</header>
+				<div class="advanced-artists-shadow-container">
+					<div class="advanced-artists-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+            <?php
+            break;
+        case 'composer':
+            ?>
+            <section class="advanced-search-results-composers clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-composers">
+				<header class="clearfix">
+					<h5>Composers</h5>
+					
+				</header>
+				<div class="advanced-composers-shadow-container">
+					<div class="advanced-composers-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+        <?php
+            break;
+        case 'genres':
+        case 'label':    
 }           
 } else {
 ?>      
