@@ -5207,7 +5207,7 @@ STR;
         $obj->QueueID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
         $obj->QueueName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
         $obj->QueueCreated               = $Queuelist[$cnt]['Queuelist']['Created'];
-        $obj->Queuemodified              = $Queuelist[$cnt]['Queuelist']['modified'];          
+        $obj->QueueModified              = $Queuelist[$cnt]['Queuelist']['modified'];          
         $obj->QueueUser                  = $userName;
        
         $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
