@@ -54,12 +54,13 @@
         <?php if(isset($libraries)) {
 		if(!empty($libraries)){
         ?>
-	<div class="rightaside" align='center'>
-        <legend align="center"><?php __('<b>Please select your library</b>'); ?></legend>
+	<div class="library-list-container" align='center'>
+        <legend align="center"><?php __('<b>Please select your Library</b>'); ?></legend>
+        <br>
             <div class="sidebox">
                     <div class="holder">
-                            <div class="frame" align="left">
-                            <table>
+                            <div class="frame library-list-scrollable" align="left">
+                            <table align="left">
                             <?php foreach($libraries as $library_var) { ?>
                                 <tr>
                                     <td><a href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com/users/redirection_manager"><?php echo strtoupper($library_var['Library']['library_name']); ?></a></td>

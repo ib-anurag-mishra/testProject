@@ -257,10 +257,229 @@ function Get_Sales_date($sales_date_array, $country){
 if(!empty($type) && !($type == 'all')){
 switch($type){
 		case 'album':
+            ?>
+        <section class="advanced-search-results-albums clearfix">
+			<h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
+			<section class="advanced-albums">
+				<header class="clearfix">
+					<h5><?php __("Albums"); ?></h5>
+					
+				</header>
+				<div class="advanced-albums-shadow-container">
+					<div class="advanced-albums-scrollable horiz-scroll">
+						<ul>
+							
+                            <?php
+                            if(!empty($albumData)){
+                            ?>
+                                <li>
+                            <?php
+                            $i=0;
+							foreach($albumData as $palbum){
+                                $albumDetails = $album->getImage($palbum->ReferenceID);
+                                $albumDetails = $album->getImage($palbum->ReferenceID);
+                                if(!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])){
+                                    $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath']."/".$albumDetails[0]['Files']['SourceURL']);
+                                    $image = Configure::read('App.Music_Path').$albumArtwork;
+                                } else {
+                                    $image = 'no-image.jpg';
+                                }
+                                if($page->isImage($image)) {
+                                    //Image is a correct one
+                                }
+                                else {
+
+                                //	mail(Configure::read('TO'),"Album Artwork","Album Artwork url= ".$image." for ".$album['Album']['AlbumTitle']." is missing",Configure::read('HEADERS'));
+                                }
+                                $album_title = truncate_text($palbum->Title, 30, $this);
+                                $album_genre = str_replace('"','',$palbum->Genre);
+                                $album_label = $palbum->Label;
+                                $tilte = urlencode($palbum->Title);
+                                $linkArtistText = str_replace('/','@',base64_encode($palbum->ArtistText));
+                                $linkProviderType = base64_encode($palbum->provider_type);
+                                if(!empty($album_label)){
+                                  $album_label_str = "Label: " . truncate_text($album_label, 32, $this);
+                                }
+                                else{
+                                  $album_label_str = "";
+                                }
+                                $ReferenceId = $palbum->ReferenceID;
+                                if($palbum->AAdvisory == 'T'){
+                                    $explicit = '<font class="explicit"> (Explicit)</font><br />';
+                                } else {
+                                    $explicit = '';
+                                }
+							?>
+								<a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" title="<?php echo $palbum->Title; ?>"><img src="<?php echo $image; ?>" alt="<?php echo $palbum->Title; ?>" width="162" height="162" /></a>
+								<div class="album-title"><a href="<?php echo "/artists/view/$linkArtistText/$ReferenceId/$linkProviderType"; ?>" ><?php echo $palbum->Title; ?> <?php echo $explicit; ?></a></div>
+								<div class="album-genre">Genre: <span><a href="#"><?php echo $album_genre; ?></a></span></div>
+								<div class="album-label">Label: <span><a href="#"><?php echo $album_label; ?></a></span></div>
+							<?php 
+                            $i++;
+                            if(($i % 2) == 0) {
+                                echo "</li><li>";  
+                            }
+							}
+                            ?>
+                            </li> 
+                            <?php
+                            } else {
+                            ?>
+                            <li style="color:red">No Album Found</li>
+                            <?php
+                            }
+                            ?>
+						</ul>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+            <?php
+            break;
         case 'artist':
-        case 'genres':    
-        case 'album':
-        case 'album':    
+            ?>
+            <section class="advanced-search-results-artists clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-artists">
+				<header class="clearfix">
+					<h5><?php __("Artists"); ?></h5>
+				</header>
+				<div class="advanced-artists-shadow-container">
+					<div class="advanced-artists-scrollable">
+						<div class="row-wrapper">
+						<?php
+						if(!empty($artists)){
+        					?>
+                            <div class="rows clearfix">
+                            <?php    
+                            $i = 0;
+                            foreach($artists as $artist){
+                                $artist_name = str_replace('"','',$artist->ArttistText);
+                                $artist_name_text = truncate_text($artist_name, 30, $this);
+                                $tilte = urlencode($artist->ArtistText);
+                                $count = $artist->numFound;
+                                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this))." (".$count.")", array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+                            ?>
+								<div class="row"><?php echo $link; ?></div>
+							<?php
+                                $i++;
+                                if(($i % 3) == 0) {
+                                echo "</div><div class='rows clearfix'>";  
+                                } 
+                            }
+                            ?>
+                            </div>
+						<?php
+						} else {
+                            ?>
+                            <div class="rows clearfix" style="color:red">
+                            No Artists Found
+                            </div>
+                                <?php
+                        }
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+            <?php
+            break;
+        case 'composer':
+            ?>
+            <section class="advanced-search-results-composers clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-composers">
+				<header class="clearfix">
+					<h5>Composers</h5>
+					
+				</header>
+				<div class="advanced-composers-shadow-container">
+					<div class="advanced-composers-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+        <?php
+            break;
+        case 'genres':
+            ?>
+            <section class="advanced-search-results-genres clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-genres">
+				<header class="clearfix">
+					<h5><?php __("Genres"); ?></h5>
+					
+				</header>
+				<div class="advanced-genres-shadow-container">
+					<div class="advanced-genres-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Country (34869)</a></div>
+								<div class="row"><a href="#">Country (34869)</a></div>
+								<div class="row"><a href="#">Country (34869)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+            <?php
+            break;
+        case 'label':
+            ?>
+    <section class="advanced-search-results-labels clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-labels">
+				<header class="clearfix">
+					<h5><?php __("Labels"); ?></h5>
+					
+				</header>
+				<div class="advanced-labels-shadow-container">
+					<div class="advanced-labels-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Hog Country Records (13)</a></div>
+								<div class="row"><a href="#">Hog Country Records (13)</a></div>
+								<div class="row"><a href="#">Hog Country Records (13)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+    <?php
+            break;
 }           
 } else {
 ?>      
@@ -269,7 +488,7 @@ switch($type){
 <?php /*********************Album Block Started*******************************/ ?>
            <section class="advanced-albums">
 				<header class="clearfix">
-				<h5><?php __("Album"); ?></h5>
+				<h5><?php __("Albums"); ?></h5>
                 <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
 				</header>
 				<div class="advanced-albums-shadow-container">
