@@ -890,7 +890,8 @@ switch($type){
 						
 				
 					</div>
-				<?php		
+				<?php
+                $i++;
 					}
                 }
 				?>
