@@ -323,6 +323,10 @@ switch($type){
                             ?>
                             </li> 
                             <?php
+                            } else {
+                            ?>
+                            <li style="color:red">No Album Found</li>
+                            <?php
                             }
                             ?>
 						</ul>
@@ -339,21 +343,41 @@ switch($type){
 			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
 			<section class="advanced-artists">
 				<header class="clearfix">
-					<h5>Artists</h5>
+					<h5><?php __("Artists"); ?></h5>
 				</header>
 				<div class="advanced-artists-shadow-container">
 					<div class="advanced-artists-scrollable">
 						<div class="row-wrapper">
 						<?php
-						for($b=0;$b<12;$b++) {
-						?>
-							<div class="rows clearfix">
-								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
-								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
-								<div class="row"><a href="#">Carrie Underwood (57)</a></div>
-							</div>
+						if(!empty($artists)){
+        					?>
+                            <div class="rows clearfix">
+                            <?php    
+                            $i = 0;
+                            foreach($artists as $artist){
+                                $artist_name = str_replace('"','',$artist->ArttistText);
+                                $artist_name_text = truncate_text($artist_name, 30, $this);
+                                $tilte = urlencode($artist->ArtistText);
+                                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
+                                $count = $artist->numFound;
+                            ?>
+								<div class="row"><?php echo $link; ?>(<?php echo $count; ?>)</div>
+							<?php
+                                $i++;
+                                if(($i % 3) == 0) {
+                                echo "</div><div class='rows clearfix'>";  
+                                } 
+                            }
+                            ?>
+                            </div>
 						<?php
-						}
+						} else {
+                            ?>
+                            <div class="rows clearfix" style="color:red">
+                            No Artists Found
+                            </div>
+                                <?php
+                        }
 						?>
 						</div>
 					</div>
@@ -395,7 +419,67 @@ switch($type){
         <?php
             break;
         case 'genres':
-        case 'label':    
+            ?>
+            <section class="advanced-search-results-genres clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-genres">
+				<header class="clearfix">
+					<h5><?php __("Genres"); ?></h5>
+					
+				</header>
+				<div class="advanced-genres-shadow-container">
+					<div class="advanced-genres-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Country (34869)</a></div>
+								<div class="row"><a href="#">Country (34869)</a></div>
+								<div class="row"><a href="#">Country (34869)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+            <?php
+            break;
+        case 'label':
+            ?>
+    <section class="advanced-search-results-labels clearfix">
+			<h4>Results for your search "<span>Carrie Underwood</span>"</h4>
+			<section class="advanced-labels">
+				<header class="clearfix">
+					<h5><?php __("Labels"); ?></h5>
+					
+				</header>
+				<div class="advanced-labels-shadow-container">
+					<div class="advanced-labels-scrollable">
+						<div class="row-wrapper">
+						<?php
+						for($b=0;$b<12;$b++) {
+						?>
+							<div class="rows clearfix">
+								<div class="row"><a href="#">Hog Country Records (13)</a></div>
+								<div class="row"><a href="#">Hog Country Records (13)</a></div>
+								<div class="row"><a href="#">Hog Country Records (13)</a></div>
+							</div>
+						<?php
+						}
+						?>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+		</section>
+    <?php
+            break;
 }           
 } else {
 ?>      
