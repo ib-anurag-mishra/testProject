@@ -2263,6 +2263,7 @@ STR;
         $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
         if($checkValidation == 1){
+            echo 11;
             $validationResult = $this->Downloads->validateDownload($prodId, $provider);
             
             /**
@@ -2327,7 +2328,11 @@ STR;
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
-		$finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+		echo $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+                
+                
+             die;   
+                
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
             $insertArr['user_login_type'] = 'referral_url';
