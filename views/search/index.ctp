@@ -358,8 +358,8 @@ switch($type){
                                 $artist_name = str_replace('"','',$artist->ArttistText);
                                 $artist_name_text = truncate_text($artist_name, 30, $this);
                                 $tilte = urlencode($artist->ArtistText);
-                                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this))." (".$count.")", array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
                                 $count = $artist->numFound;
+                                $link = $html->link(str_replace('"','',truncate_text($artist->ArtistText, 30, $this))." (".$count.")", array('controller' => 'artists', 'action' => 'album', str_replace('/','@',base64_encode($artist->ArtistText))));
                             ?>
 								<div class="row"><?php echo $link; ?></div>
 							<?php
