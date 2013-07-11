@@ -454,15 +454,25 @@ switch($type){
 					<div class="advanced-genres-scrollable">
 						<div class="row-wrapper">
 						<?php
-						for($b=0;$b<12;$b++) {
+                        if(!empty($genres)){
+                            ?>
+                            <div class="rows clearfix">
+                            <?php    
+                            $i = 0;
+                        foreach($genres as $genre){
+                            $genre_name = str_replace('"','',$genre->Genre);
+                            $genre_name_text = truncate_text($genre_name, 30, $this);
+                            $tilte = urlencode($genre->Genre);
+                            $name = $genre->Genre;
+                            $count = $genre->numFound;
 						?>
-							<div class="rows clearfix">
-								<div class="row"><a href="#">Country (34869)</a></div>
-								<div class="row"><a href="#">Country (34869)</a></div>
-								<div class="row"><a href="#">Country (34869)</a></div>
-							</div>
+                            <div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=genre"; ?>" title="<?php echo $genre_name; ?>"><?php echo $genre_name_text; ?> (<?php echo $count; ?>)</a></div>
 						<?php
-						}
+                            $i++;
+                            if(($i % 3) == 0) {
+                                echo "</div><div class='rows clearfix'>";  
+                            }
+                        }
 						?>
 						</div>
 					</div>
