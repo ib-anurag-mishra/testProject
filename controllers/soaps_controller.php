@@ -9,7 +9,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoSongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'WishlistData.php');
-include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'DefaultPlaylistList.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueListData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownloadData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
@@ -29,7 +29,7 @@ class SoapsController extends AppController {
   private $library_search_radius = 60;
 
   private $authenticated = false;
-  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'Playlist', 'PlaylistDetails');
+  var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'Queuelist', 'QueuelistDetails');
   var $components = array('Downloads','AuthRequest', 'Downloadsvideos');
 
 
@@ -63,7 +63,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoSongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."WishlistData.php");
-    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."DefaultPlaylistList.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueListData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserCurrentDownloadData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
@@ -86,7 +86,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("SongData", $siteUrl."soaps/");
     $test->addURLToClass("VideoSongData", $siteUrl."soaps/");
     $test->addURLToClass("WishlistData", $siteUrl."soaps/");
-    $test->addURLToClass("DefaultPlaylistList", $siteUrl."soaps/");
+    $test->addURLToClass("QueueListData", $siteUrl."soaps/");
     $test->addURLToClass("UserCurrentDownloadData", $siteUrl."soaps/");
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
@@ -5150,16 +5150,16 @@ STR;
   }
 
   /**
-   * Function Name : getPlaylistList
-   * Desc : returns default playlist list
+   * Function Name : getQueueList
+   * Desc : returns default/custom queue list
    * @param string $authenticationToken
    * @param int $startFrom
    * @param int $recordCount
    * @param int $uid
-	 * @return DefaultPlaylistListType[]
+	 * @return QueueListDataType[]
    */
    
-  function getPlaylistList($authenticationToken, $startFrom, $recordCount, $uid){
+  function getQueueList($authenticationToken, $startFrom, $recordCount, $uid){
 
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -5190,29 +5190,29 @@ STR;
       }
     }
     
-    $Playlist = $this->Playlist->find('all', array(
+    $Queuelist = $this->Queuelist->find('all', array(
       'conditions' => $cond
     ));
     
-    if( empty($Playlist) ) {
-      throw new SOAPFault('Soap:DefaultPlaylistList', 'No Playlist found');
+    if( empty($Queuelist) ) {
+      throw new SOAPFault('Soap:DefaultQueueList', 'No Queue lists found');
     } else {
       
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
         
-        $obj = new DefaultPlaylistListType;
+        $obj = new QueueListDataType;
       
-        $obj->PlaylistID                    = $Playlist[$cnt]['Playlist']['Plid'];
-        $obj->PlaylistName                  = $Playlist[$cnt]['Playlist']['PlaylistName'];
-        $obj->PlayCreated                   = $Playlist[$cnt]['Playlist']['Created'];
-        $obj->Playmodified                  = $Playlist[$cnt]['Playlist']['modified'];          
+        $obj->PlaylistID                    = $Queuelist[$cnt]['Queuelist']['Plid'];
+        $obj->PlaylistName                  = $Queuelist[$cnt]['Queuelist']['PlaylistName'];
+        $obj->PlayCreated                   = $Queuelist[$cnt]['Queuelist']['Created'];
+        $obj->Playmodified                  = $Queuelist[$cnt]['Queuelist']['modified'];          
         $obj->PlayUser                      = $userName;
        
-        $play_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'DefaultPlaylistListType');
+        $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
       
       }
     
-      $data = new SoapVar($play_list,SOAP_ENC_OBJECT,null,null,'ArrayDefaultPlaylistListType');    
+      $data = new SoapVar($queue_list,SOAP_ENC_OBJECT,null,null,'ArrayQueueListDataType');    
 
       return $data;
       
