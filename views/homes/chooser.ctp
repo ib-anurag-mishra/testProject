@@ -58,7 +58,7 @@
         <legend align="center"><?php __('<b>Please select your library</b>'); ?></legend>
             <div class="sidebox">
                     <div class="holder">
-                            <div class="frame" align="left">
+                            <div class="frame library-list-scrollable" align="left">
                             <table align="left">
                             <?php foreach($libraries as $library_var) { ?>
                                 <tr>
