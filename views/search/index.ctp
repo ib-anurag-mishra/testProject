@@ -405,7 +405,7 @@ switch($type){
                             <div class="rows clearfix">
                             <?php    
                             $i = 0;
-                            print_r($composers); die;
+                            // print_r($composers); die;
                             foreach($composers as $composer){
                                 $composer_name = str_replace('"','',$composer->Composer);
                                 $composer_name = truncate_text($composer_name, 30, $this);
@@ -414,13 +414,13 @@ switch($type){
                                 $count = $composer->numFound;
                                 $name = $this->getTextEncode($name);
                                 
-                            }
-						?>
+                            ?>
 							<div class="row"><a href="<?php echo "/search/advanced_search?q=$tilte&type=composer"; ?>" title="<?php echo $name; ?>"><?php echo $composer_name; ?> (<?php echo $count; ?>)</a></div>
 						<?php
                             $i++;
                             if(($i % 3) == 0) {
                                 echo "</div><div class='rows clearfix'>";  
+                            }
                             }
                             ?>
                             </div>
@@ -428,7 +428,7 @@ switch($type){
 						} else {
                             ?>
                             <div class="rows clearfix" style="color:red">
-                            No Artists Found
+                            No Composers Found
                             </div>
                                 <?php
                         }
