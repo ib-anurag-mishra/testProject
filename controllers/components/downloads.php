@@ -42,9 +42,9 @@ Class DownloadsComponent extends Object
         $videoDownloadInstance->recursive = -1;
         $videoDownloadCount = $videoDownloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
         $videoDownloadCount = $videoDownloadCount *2;
-       echo $downloadCount = $results + $videoDownloadCount; 
+        $downloadCount = $results + $videoDownloadCount; 
         
-        if($results < $patronLimit) {
+        if($downloadCount < $patronLimit) {
             return true;
         }
         else {
