@@ -2263,7 +2263,7 @@ STR;
         $Setting = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'single_channel')));
         $checkValidation = $Setting['Siteconfig']['svalue'];
         if($checkValidation == 1){
-            echo 11;
+           
             $validationResult = $this->Downloads->validateDownload($prodId, $provider);
             
             /**
@@ -2288,7 +2288,7 @@ STR;
 			$user = $this->Session->read('patron');
         }
 		
-		if($validationPassed == true){
+if($validationPassed == true){
             $this->log("Validation Checked : ".$checked." Valdition Passed : ".$validationPassedMessage." Validation Message : ".$validationMessage." for ProdID :".$prodId." and Provider : ".$provider." for library id : ".$this->Session->read('library')." and user id : ".$user,'download');
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');
@@ -2328,10 +2328,10 @@ STR;
         $insertArr['ProductID'] = $trackDetails['0']['Song']['ProductID'];
         $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
 		$songUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath']."/".$trackDetails['0']['Full_Files']['SaveAsName']);
-		echo $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
+		 $finalSongUrl = Configure::read('App.Music_Path').$songUrl;
                 
                 
-             die;   
+              
                 
         if($this->Session->read('referral_url') && ($this->Session->read('referral_url') != '')){
 			$insertArr['email'] = '';
@@ -2444,7 +2444,7 @@ STR;
     $log_data .= ":StoredProcedureParameters-LibID='".$libId."':StoredProcedureParameters-Patron='".$patId."':StoredProcedureParameters-ProdID='".$prodId."':StoredProcedureParameters-ProductID='".$trackDetails['0']['Song']['ProductID']."':StoredProcedureParameters-ISRC='".$trackDetails['0']['Song']['ISRC']."':StoredProcedureParameters-Artist='".addslashes($trackDetails['0']['Song']['Artist'])."':StoredProcedureParameters-SongTitle='".addslashes($trackDetails['0']['Song']['SongTitle'])."':StoredProcedureParameters-UserLoginType='".$insertArr['user_login_type']."':StoredProcedureParameters-ProviderType='".$insertArr['provider_type']."':StoredProcedureParameters-Email='".$insertArr['email']."':StoredProcedureParameters-UserAgent='".addslashes($insertArr['user_agent'])."':StoredProcedureParameters-IP='".$insertArr['ip']."':StoredProcedureParameters-CurWeekStartDate='".Configure::read('App.curWeekStartDate')."':StoredProcedureParameters-CurWeekEndDate='".Configure::read('App.curWeekEndDate')."':StoredProcedureParameters-Name='".$procedure."':StoredProcedureParameters-@ret='".$return."'";
     
     if(is_numeric($return)){
-    
+    echo 147;
       $this->LatestDownload->setDataSource('master');
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
@@ -2457,7 +2457,7 @@ STR;
         'recursive' => -1,
       ));
       
-
+print_r($data);
       if(0 === $data){
         $log_data .= ":NotInLD";
       }
@@ -2474,6 +2474,7 @@ STR;
     
 		$this->Library->setDataSource('default');
 		if(is_numeric($return)){
+                    echo 147;
 			header("Location: ".$finalSongUrl);
 			exit;
 		}
@@ -2487,6 +2488,7 @@ STR;
 				exit;
 			}
 		}
+                die;
 /*		if($this->Download->save($insertArr)){
 			$this->Library->setDataSource('master');
 			$sql = "UPDATE `libraries` SET library_current_downloads=library_current_downloads+1,library_total_downloads=library_total_downloads+1,library_available_downloads=library_available_downloads-1 Where id=".$libId;
