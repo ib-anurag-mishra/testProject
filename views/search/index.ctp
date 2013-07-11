@@ -474,7 +474,17 @@ switch($type){
                             }
                         }
 						?>
-						</div>
+                            </div>
+                            <?php
+						} else {
+                            ?>
+                            <div class="rows clearfix" style="color:red">
+                                No Genres Found
+                            </div>
+                                <?php
+                        }
+						?>
+       				</div>
 					</div>
 				</div>
 			</section>
