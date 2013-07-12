@@ -315,7 +315,8 @@ div.paging {
 }
 
 div.paging{
-    color: #000000;
+    color: #999;
+	margin-top:20px;
 }
 
 div.paging span.disabled {
@@ -332,6 +333,6 @@ div.paging span a {
 }
 
 div.paging span a, div.paging a {
-    /*color: #0080FF;*/
+    color: #999;
     text-decoration: none;
 }
