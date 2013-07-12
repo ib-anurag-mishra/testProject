@@ -5245,8 +5245,7 @@ STR;
     
     $data = $this->QueuelistDetails->find('all',
       array(
-        'fields' =>  array('Queuelists.PlaylistName', 'Songs.SongTitle', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID',
-        'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+        'fields' =>  array('Queuelists.PlaylistName', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
         'joins' => array(
           array(
             'type' => 'INNER',
@@ -5296,27 +5295,28 @@ STR;
       )
     );
     
+    $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
          
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
       
       if(!(empty($data[$cnt]['Queuelists']['PlaylistName']))) {
-          
-        $obj = new QueueDetailDataType;
-      
-        $obj->QueueName                    = $data[$cnt]['Queuelists']['PlaylistName'];
-        $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
-        $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
-        $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
-        $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
-        $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
-        $obj->QueueAlbumProductID          = $data[$cnt]['Product']['AlbumProdID'];
-        $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
-        $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
-        $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
-               
-        $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
-      }
-           
+        //if($this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
+          $obj = new QueueDetailDataType;
+        
+          $obj->QueueName                    = $data[$cnt]['Queuelists']['PlaylistName'];
+          $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
+          $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
+          $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
+          $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
+          $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
+          $obj->QueueAlbumProductID          = $data[$cnt]['Product']['AlbumProdID'];
+          $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
+          $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
+          $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
+                 
+          $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
+        //}  
+      }     
     }
     
     $queueDetail = new SoapVar($queue,SOAP_ENC_OBJECT,null,null,'ArrayQueueDetailDataType'); 
