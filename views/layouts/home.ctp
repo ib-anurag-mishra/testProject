@@ -40,7 +40,7 @@
 			<script type="text/javascript">
 				$(document).ready(function() {
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-					$('#autoComplete').keypress(function(event) {
+					$('#search-text').keypress(function(event) {
 						//auto_check();
 						if (event.which == '13') {
 						  $('#HomeSearchForm').submit();
@@ -52,7 +52,7 @@
 						cacheLength: 10,
 						autoFill: false,
                         extraParams: {
-                            type:$('#type111').val()
+                            type:'all'
                         }
 					}).result(function(e, item) {
 						$('#auto').attr('value', 1);
