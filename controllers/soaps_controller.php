@@ -9,6 +9,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AlbumData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoSongData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'WishlistData.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueDetailData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueListData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownloadData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
@@ -64,6 +65,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoSongData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."WishlistData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueListData.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueDetailData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserCurrentDownloadData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
@@ -87,6 +89,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("VideoSongData", $siteUrl."soaps/");
     $test->addURLToClass("WishlistData", $siteUrl."soaps/");
     $test->addURLToClass("QueueListData", $siteUrl."soaps/");
+    $test->addURLToClass("QueueDetailData", $siteUrl."soaps/");
     $test->addURLToClass("UserCurrentDownloadData", $siteUrl."soaps/");
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
@@ -5164,8 +5167,7 @@ STR;
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     } 
-        
-        
+              
     if( 1 == $uid ){
     
       $cond = array('patronID' => $uid, 'status' => '1');
@@ -5225,6 +5227,106 @@ STR;
         
     
   }
+  
+  /**
+   * Function Name : getQueueDetails
+   * Desc : returns default/custom queue details
+   * @param string $authenticationToken
+   * @param string $queueID
+   * @param int $startFrom
+   * @param int $recordCount
+	 * @return QueueDetailDataType[]
+   */
+  function getQueueDetails($authenticationToken, $queueID, $startFrom, $recordCount){
+   
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }  
+    
+    $data = $this->QueuelistDetails->find('all',
+      array(
+        'fields' =>  array('Queuelists.PlaylistName', 'Songs.SongTitle', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID',
+        'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+        'joins' => array(
+          array(
+            'type' => 'INNER',
+            'table' => 'Queuelists',
+            'alias' => 'Queuelists',
+            'foreignKey' => false,
+            'conditions' => array('Queuelists.Plid = QueuelistDetails.Plid'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'Songs',
+            'alias' => 'Songs',
+            'foreignKey' => false,
+            'conditions' => array('Songs.ProdID = QueuelistDetails.SongProdId', 'Songs.provider_type = QueuelistDetails.SongProviderType'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'Albums',
+            'alias' => 'Albums',
+            'foreignKey' => false,
+            'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'PRODUCT',
+            'alias' => 'Product',
+            'foreignKey' => false,
+            'conditions' => array('Albums.ProdID = Product.ProdID', 'Albums.provider_type = Product.provider_type'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'File',
+            'alias' => 'AlbumFile',
+            'foreignKey' => false,
+            'conditions' => array('Albums.FileID = AlbumFile.FileID'),        
+          ),  
+          array(
+            'type' => 'INNER',
+            'table' => 'File',
+            'alias' => 'SongFile',
+            'foreignKey' => false,
+            'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),        
+          ),           
+        ),
+        'recursive' => -1,
+        'conditions' => array('Queuelists.status' => 1),        
+      )
+    );
+    
+         
+    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
+      
+      if(!(empty($data[$cnt]['Queuelists']['PlaylistName']))) {
+          
+        $obj = new QueueDetailDataType;
+      
+        $obj->QueueName                    = $data[$cnt]['Queuelists']['PlaylistName'];
+        $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
+        $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
+        $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
+        $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
+        $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
+        $obj->QueueAlbumProductID          = $data[$cnt]['Product']['AlbumProdID'];
+        $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
+        $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
+        $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
+               
+        $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
+      }
+           
+    }
+    
+    $queueDetail = new SoapVar($queue,SOAP_ENC_OBJECT,null,null,'ArrayQueueDetailDataType'); 
+    
+    return $queueDetail;
+   
+   
+   
+  }
+
   
   /**
    * Function Name : getLiveSearchSongList
