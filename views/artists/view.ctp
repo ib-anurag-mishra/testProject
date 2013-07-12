@@ -133,7 +133,7 @@
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
 					<a class="add-to-playlist-button" href="#"></a>
-					<div class="wishlist-popover active">
+					<div class="wishlist-popover">
                                              <?php
                                                                     if($this->Session->read('patron')) { ?>
                                             
