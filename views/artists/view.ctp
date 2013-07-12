@@ -171,13 +171,13 @@
 															<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
 															<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
 															
-															<span class="beforeClick" style="display:none;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
- 																<a href='#'  title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?>
+															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+ 																<a href='#'  title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 															</span>
-                                                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:left;"><?php __("Please Wait..");?></span>
-															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" ><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
+                                                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait..");?></span>
+															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
 														</form>													
-													</span>													
+                                                                                                        </span>													
 									<?php	
 												} else {
 													?><a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
