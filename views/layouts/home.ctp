@@ -40,23 +40,23 @@
 			<script type="text/javascript">
 				$(document).ready(function() {
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-//					$('#autoComplete').keypress(function(event) {
-//						//auto_check();
-//						if (event.which == '13') {
-//						  $('#HomeSearchForm').submit();
-//						}
-//					});
-//					$("#autoComplete").autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
-//					{
-//						minChars: 1,
-//						cacheLength: 10,
-//						autoFill: false,
-//                                                extraParams: {
-//                                                  type:$('#type111').val()
-//                                                }
-//					}).result(function(e, item) {
-//						$('#auto').attr('value', 1);
-//					});
+					$('#autoComplete').keypress(function(event) {
+						//auto_check();
+						if (event.which == '13') {
+						  $('#HomeSearchForm').submit();
+						}
+					});
+					$("#search-text").autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
+					{
+						minChars: 1,
+						cacheLength: 10,
+						autoFill: false,
+                        extraParams: {
+                            type:$('#type111').val()
+                        }
+					}).result(function(e, item) {
+						$('#auto').attr('value', 1);
+					});
 					<?php
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
