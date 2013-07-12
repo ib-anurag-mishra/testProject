@@ -174,7 +174,7 @@
 															<span class="beforeClick" style="display:none;"  id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
  																<a href='#'  title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
 															</span>
-                                                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>"><?php __("Please Wait..");?></span>
+                                                                                                                        <span class="afterClick add-to-wishlist" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>"><?php __("Please Wait..");?></span>
 															
 														</form>													
                                                                                                         </span>													
