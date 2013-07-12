@@ -35,7 +35,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                     <h1 class="logo"><a href="/homes/index"><img src="<? echo $this->webroot; ?>app/webroot/img/logo.png" alt="logo" width="157" height="108"></a></h1>
 					<div class="master-music-search-wrapper">
 						<form class="search" name="search" id="HomeSearchForm" method="get" action="/search/index" accept-charset="utf-8">							
-							<input type="text" id="autoComplete" name="q" value="<?php echo $keyword; ?>" />							
+							<input type="text" id="search-text" name="q" value="<?php echo $keyword; ?>" />							
                             <input type="hidden" name="type" value="all" />
 						</form>
 						<button type="submit" onclick="document.getElementById('HomeSearchForm').submit()"><img src="<? echo $this->webroot; ?>app/webroot/img/magnifying-glass.png" alt="magnifying-glass" width="17" height="18"></button>
