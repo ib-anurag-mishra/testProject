@@ -4239,7 +4239,911 @@ img {
 }
 
 
+/* now streaming page */
+.now-streaming-page {
+	
+	
+	
+	margin-left: 20px;
+	margin-top: 20px;
+	
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
 
+
+	}
+	
+	header {
+		margin-top: 10px;
+		margin-bottom: 24px;
+		
+		h2 {
+			
+			font-size: 24px;
+			letter-spacing: 1px;
+			float: left;
+			
+		}
+		
+		.faq-link {
+			
+			float: right;
+			font-size: 12px;
+			margin-top: 10px;
+			
+			a {
+				
+				text-decoration: none;
+				color: #52c6ec;
+			}
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	.album-info-playlist-container {
+		margin-top: 20px;
+		
+		
+		.album-info-container {
+			
+			float: left;
+			width: 157px;
+			
+			.album-cover-container {
+				
+				position: relative;
+				width: 157px;
+				height: 157px;
+				margin-bottom: 10px;
+
+				
+				img {
+					
+					position: absolute;
+					left: 0;
+					top:0;
+					border: 1px solid #fff;
+					.box-shadow(0 0 4px rgba(0,0,0,.5));
+					
+				}
+				
+				
+				.add-to-playlist-button {
+					display: block;
+					position: absolute;
+					right: 6px;
+					bottom:6px;
+					background: url(../img/saved-queues/add-to-playlist-button.png);
+					width: 26px;
+					height: 25px;
+					.box-shadow(0 0 2px rgba(0,0,0,.5));
+					
+				}
+				
+				
+				
+				
+				.wishlist-popover {
+					position: absolute;
+					left: 125px;
+					top:34px;
+					background: #fff;
+					display: none;
+					.box-shadow(0 0 2px rgba(0,0,0,.5));
+					
+					a {
+						
+						display: block;
+						padding: 5px 10px 10px 10px;
+						background: #fff;
+						font-size: 12px;
+						line-height: 12px;
+						text-decoration: none;
+						color: #000;
+						
+						&:hover {
+							
+							background: #aaa;
+						}
+	
+
+						
+						&:last-child {
+							
+							padding: 5px 5px 10px 10px;
+						}
+						
+						&.add-to-playlist {
+							
+							background: url(../img/playlist/playlist-arrow.png) 107px 7px no-repeat;
+							
+							&:hover {
+								
+								background: #aaa url(../img/playlist/playlist-arrow.png) 107px 7px no-repeat;
+							}
+						}
+					}
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					
+					.playlist-options {
+						position: absolute;
+						right: -147px;
+						top:23px;
+						display: none;
+						background: #fff;
+						width: 145px;
+						.box-shadow(0 0 2px rgba(0,0,0,.5));
+						z-index: 100;
+						overflow-x: hidden;
+						
+						&.active {
+							
+							display: block;
+						}
+						
+						
+						
+						ul {
+							
+							li {
+								
+								float: none;
+								padding: 0;
+								
+								a {
+									
+									padding: 5px 10px 10px 10px;
+									text-decoration: none;
+									
+									&:hover {
+										
+										text-decoration: none;
+									}
+								}
+								
+								&:first-child {
+									
+									a {
+										
+																			
+										padding: 10px 10px 10px 10px;								
+
+									}
+								}
+								
+
+							}
+						}
+							
+					}
+					
+					.share {
+			
+						background: #fff;
+						border-top: 1px solid rgba(0,0,0,.2);
+						padding-bottom: 3px;
+						position: relative;
+						width: 120px;
+						height: 32px;
+						color: #000;
+						
+						p {
+							
+							position: absolute;
+							left: 10px;
+							top:10px;
+							font-size: 12px;
+						}
+						
+						.facebook {
+							background: url(../img/facebook.png) no-repeat center center;
+							
+							display: block;
+							
+							width: 12px;
+							height: 12px;
+							position: absolute;
+							left: 62px;
+							top:1px;
+							
+							&:hover {
+								background: url(../img/facebook-hover.png) no-repeat center center;
+								
+							}
+						}
+						
+						.twitter {
+							background: url(../img/twitter.png) no-repeat center center;
+							
+							display: block;
+							position: absolute;
+							width: 15px;
+							height: 12px;
+							left: 82px;
+							top:1px;
+							
+							&:hover {
+								
+								background: url(../img/twitter-hover.png) no-repeat center center;
+							}
+						}
+					}
+				}
+				
+				
+			} /* end album cover container */
+		}
+			
+		.album-info {
+			float: left;
+			margin-left: 20px;
+			
+			p {
+				
+				font-size: 12px;
+				margin-bottom: 17px;
+			}
+			
+			.now-playing-text {
+				color: rgba(0,0,0,.5);
+				
+				.now-playing-title {
+					color: #000;
+					font-size: 24px;
+					display: block;
+					margin-bottom: 5px;
+				}
+				
+				.now-playing-artist {
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+					}
+				}
+				
+				.now-playing-album-title {
+					
+					a {
+						
+						color: #000;
+						text-decoration: none;
+						
+						&:hover {
+							
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+			
+			.release-genre {
+				
+				font-size: 13px;
+				color: rgba(0,0,0,1);
+				margin-bottom: 5px;
+				font-weight: bold;
+				margin-top: 20px;
+				
+				a {
+					
+					color: rgba(0,0,0,1);
+					text-decoration: none;
+					font-weight: normal;
+					
+					&:hover {
+						
+						text-decoration: underline;
+					}
+				}
+			}
+			
+			.release-label {
+				
+				font-size: 13px;
+				color: rgba(0,0,0,1);
+				margin-bottom: 5px;
+				font-weight: bold;
+				span {
+					
+					color: rgba(0,0,0,1);
+					text-decoration: none;
+					font-weight: normal;
+
+				}
+			}
+			
+
+		}
+			
+			
+		.gear-container {
+			float: right;
+			.gear-icon {
+				
+				
+				width: 54px;
+				height: 41px;
+				cursor: pointer;
+				background: url(../img/now-streaming/gear-off.jpg);
+				
+				&:hover {
+					background: url(../img/now-streaming/gear-hover.jpg);
+					
+				}
+				
+				&:active {
+					
+					background: url(../img/now-streaming/gear-clicked.jpg);
+				}
+				
+				
+								
+			}
+			
+			
+			.queue-options {
+				
+				display: none;
+				position: absolute;
+				right: 1px;
+				top:136px;
+				background: #fff;
+				width: 145px;
+	
+				.box-shadow(0 0 2px rgba(0,0,0,.5));
+				z-index: 100;
+				
+				a {
+					
+					padding: 10px 10px 10px 10px;
+					text-decoration: none;
+					display: block;
+					color: #000;
+					font-size: 12px;
+					
+					&:hover {
+						
+						background: #999;
+						
+					}
+				}
+									
+				
+				&.active {
+					
+					display: block;
+				}
+			}
+
+		}
+			
+
+			
+			
+
+			
+			
+			
+			
+			
+		
+		
+		
+		
+		
+		
+
+
+	}
+	
+	.now-playing-container {
+		
+
+
+		position: relative;
+		
+
+		
+		
+		
+		.playlist-filter-container {
+			
+			margin-top: 10px;
+			
+			.song-filter-button {
+				
+				float: left;
+				background: url(../img/now-streaming/songs-header.jpg);
+				width: 336px;
+				height: 38px;
+				
+
+				
+			}
+			
+			.album-filter-button {
+				float: left;
+				width: 217px;
+				height: 38px;
+				
+				background: url(../img/now-streaming/album-header.jpg);
+				
+
+				
+			}
+			
+			.artist-filter-button {
+				
+				float: left;
+				
+				width: 218px;
+				height: 38px;
+				background: url(../img/now-streaming/artist-header.jpg);
+
+			}
+			
+			.time-filter-button {
+				float: left;
+				width: 59px;
+				height: 38px;
+				background: url(../img/now-streaming/time-header.jpg);
+				
+
+				
+			}
+			
+		}
+		
+		.playlist-shadow-container {
+			
+			position: relative;
+
+			height: 481px;
+			overflow-x: hidden;
+			overflow-y: hidden;
+			
+			&:after {
+				
+				position: absolute;
+				content: "";
+				bottom: 0;
+				left: 0;
+				background: url(../img/now-streaming/tapered-shadow.png);
+				width: 846px;
+				height: 11px;
+			}
+			
+			.playlist-scrollable {
+			
+			
+				overflow-x: hidden;
+				overflow-y: hidden;
+				height: 481px;
+				
+				&:hover {
+					overflow-y: scroll;
+					
+				}
+				
+				.row-container {
+					
+					height: 2000px;
+				
+					.row {
+						padding-top: 10px;
+						padding-bottom: 10px;
+						height: 20px;
+						padding-left: 10px;
+						position: relative;
+						
+						color: rgba(0,0,0,.7);
+						
+						
+						
+						&:nth-child(odd) {
+							
+							background: #f1f1f1;
+						}
+						
+						&:nth-child(even) {
+							
+							background: #e9e9e9;
+						}
+						
+						&:hover {
+							
+							background: #c0e3ee;
+							cursor: pointer;
+						}
+						
+						&.playing {
+							
+							background: #c0e3ee;
+						}
+						
+						
+						.preview {
+														
+							position: absolute;
+							left: 11px;
+							top:10px;
+							
+					
+							display: block;
+							
+							
+							width: 19px;
+							height: 19px;
+							background: url(../img/playlist/preview-off.png);
+							opacity: .7;
+							
+							
+							&:hover,&.blue-bkg {
+								
+								background: url(../img/playlist/preview-hover.png);
+								opacity: 1;
+							}
+							
+							&.hovered {
+								background: url(../img/playlist/preview-off.png);
+								opacity: 1;
+								
+							}
+							
+					
+							&.active {
+								
+								background: url(../img/playlist/preview-click.png);
+								opacity: 1;
+								width: 17px;
+								height: 17px;
+							
+							}
+							
+							&.playing {
+								background: url(../img/playlist/preview-click.png);
+								opacity: 1;
+								width: 17px;
+								height: 17px;
+								
+							}
+						
+						
+						
+								
+						}
+
+						
+						.song-title {
+							
+							
+							font-size: 12px;
+							line-height: 40px;
+							
+							width: 128px;
+							position: absolute;
+							left: 41px;
+							top: 0;
+							
+							&.playing {
+								
+								font-weight: bold;
+							}
+							
+							&.hovered {
+								
+								
+								color: rgba(0,0,0,1);
+							}
+							
+						}
+						
+						.add-to-wishlist-button {
+							
+							
+							display: block;
+							width: 26px;
+							height: 25px;
+							background: url(../img/add-to-playlist-button.png);
+							
+							margin-top: 8px;
+							position: absolute;
+							left: 317px;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							opacity: .5;
+							top:0;
+							
+							&.hovered,&.playing {
+								
+								opacity: 1;
+							}
+						}
+						
+						.wishlist-popover {
+							position: absolute;
+							left: 317px;
+							top:-127px;
+							background: #fff;
+							display: none;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							z-index: 100;
+							
+							&.top {
+								
+								top:8px;
+								left: 223px;
+							}
+							
+							a {
+								
+								display: block;
+								padding: 10px 10px 10px 10px;
+								background: #fff;
+								font-size: 12px;
+								line-height: 12px;
+								text-decoration: none;
+								color: #000;
+								
+								&:hover {
+									
+									background: #aaa;
+								}
+								
+
+								
+								&:last-child {
+									
+									padding: 5px 5px 10px 10px;
+								}
+								
+								&.add-to-playlist {
+							
+									background: url(../img/playlist/playlist-arrow.png) 107px 7px no-repeat;
+									
+									&:hover {
+										
+										background: #aaa url(../img/playlist/playlist-arrow.png) 107px 7px no-repeat;
+									}
+								}
+							}
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							
+							.playlist-options {
+								position: absolute;
+								right: -147px;
+								top:30px;
+								display: none;
+								background: #fff;
+								width: 145px;
+								height: 136px;
+								.box-shadow(0 0 2px rgba(0,0,0,.5));
+								
+								overflow-x: hidden;
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 5px 5px 5px 10px;
+											text-decoration: none;
+											
+											&:hover {
+												
+												text-decoration: none;
+											}
+										}
+									}
+								}
+									
+							}
+							
+							.share {
+					
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: relative;
+								width: 120px;
+								height: 32px;
+								color: #000;
+								
+								p {
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									font-size: 12px;
+								}
+								
+								.facebook {
+									background: url(../img/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 62px;
+									top:1px;
+									
+									&:hover {
+										background: url(../img/facebook-hover.png) no-repeat center center;
+										
+									}
+								}
+								
+								.twitter {
+									background: url(../img/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									left: 82px;
+									top:3px;
+									
+									&:hover {
+										
+										background: url(../img/twitter-hover.png) no-repeat center center;
+									}
+								}
+							}
+						}
+						
+						.album-title {
+							
+							
+							font-size: 12px;
+							line-height: 40px;
+							
+							width: 147px;
+							position: absolute;
+							left: 369px;
+							top:0;
+							
+							&.playing {
+								
+								font-weight: bold;
+							}
+							
+							&.hovered {
+								
+								
+								color: rgba(0,0,0,1);
+							}
+							
+							a {
+								
+								color: rgba(0,0,0,.7);
+								text-decoration: none;
+								
+								&:hover {
+									
+									text-decoration: underline;
+								}
+							}
+							
+						}
+						
+						.artist-name {
+							
+							
+							font-size: 12px;
+							line-height: 40px;
+							width: 158px;
+							position: absolute;
+							left: 585px;
+							top:0;
+							
+							&.playing {
+								
+								font-weight: bold;
+							}
+							
+							&.hovered {
+								
+								
+								color: rgba(0,0,0,1);
+							}
+							
+							a {
+								
+								color: rgba(0,0,0,.7);
+								text-decoration: none;
+								
+								&:hover {
+									
+									text-decoration: underline;
+								}
+							}
+						}
+						
+						.time {
+							
+							
+							font-size: 12px;
+							line-height: 40px;
+							position: absolute;
+							left: 808px;
+							top:0;
+							
+							&.playing {
+								
+								font-weight: bold;
+							}
+							
+							&.hovered {
+								
+								
+								color: rgba(0,0,0,1);
+							}
+						}
+						
+						
+						
+					}
+				}
+			}
+		}
+	}
+	
+	
+	
+	
+	
+	
+}
+/* end now streaming page */
 
 
 
