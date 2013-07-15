@@ -5,10 +5,10 @@
  Author : m68interactive
  */
 
-class QueuelistDetails extends AppModel
+class QueuelistDetail extends AppModel
 {
-	var $name = 'QueuelistDetails';
-	var $useTable = 'queue_details';
+	var $name = 'QueuelistDetail';
+	var $useTable = 'queuelist_details';
 
 //	var $belongsTo = array(
 //		'User' => array(

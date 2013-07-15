@@ -240,7 +240,7 @@ if ($this->Session->read('Config.language') == 'en') {
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/search-results.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-account.less" />
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/artist.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/saved-queues.less" />
+            
             <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
             <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
                        
