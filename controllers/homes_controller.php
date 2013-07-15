@@ -303,7 +303,8 @@ STR;
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
-        if (($artists = Cache::read("featured".$country)) === false) {
+        //if (($artists = Cache::read("featured".$country)) === false) {
+        if(1){
            
             
             //get all featured artist and make array
