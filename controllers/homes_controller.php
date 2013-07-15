@@ -304,8 +304,8 @@ STR;
         $ids_provider_type = '';
         //featured artist slideshow code start
         
-        //if(1){
-        if (($artists = Cache::read("featured".$country)) === false) {
+        if(1){
+        //if (($artists = Cache::read("featured".$country)) === false) {
            
             
             //get all featured artist and make array
@@ -363,7 +363,7 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'ASC'), 'limit'=>20
+                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
                             )
                     );
                     
