@@ -362,14 +362,10 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'desc'), 'limit'=>20
+                                    ), 'order' => array('Country.SalesDate' => 'ASC'), 'limit'=>20
                             )
                     );
                     
-                    
-                    echo '<pre>';
-                    print_r($featured);
-                    die;
             } else {
                     $featured = array();
             }
