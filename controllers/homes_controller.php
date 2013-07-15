@@ -365,6 +365,11 @@ STR;
                                     ), 'order' => array('Country.SalesDate' => 'desc'), 'limit'=>20
                             )
                     );
+                    
+                    
+                    echo '<pre>';
+                    print_r($featured);
+                    die;
             } else {
                     $featured = array();
             }
