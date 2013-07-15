@@ -370,7 +370,7 @@
 									<h3>Featured</h3>
 								</header>
 								<div class="featured-grid horiz-scroll">
-									<ul style="width:3615px;">
+									<ul style="width:3690px;">
 										<?php
 								foreach($featuredArtists as $k => $v){
 								

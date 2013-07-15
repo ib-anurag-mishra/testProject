@@ -303,6 +303,8 @@ STR;
         $ids = '';
         $ids_provider_type = '';
         //featured artist slideshow code start
+        
+        //if(1){
         if (($artists = Cache::read("featured".$country)) === false) {
            
             
@@ -361,9 +363,10 @@ STR;
                                                                     'Files.SourceURL'
                                                     ),
                                             )
-                                    ), 'order' => array('Country.SalesDate' => 'desc')
+                                    ), 'order' => array('Country.SalesDate' => 'DESC'), 'limit'=>20
                             )
                     );
+                    
             } else {
                     $featured = array();
             }
