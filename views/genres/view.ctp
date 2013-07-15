@@ -104,7 +104,8 @@ $genre_text_conversion = array(
 		"World Music (Other)" => "World Music"
 	);
 	
-	$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+	//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+        $genre_crumb_name = $genre;
 	
 	$html->addCrumb(__('All Genre', true), '/genres/view/');
 	$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));	
@@ -136,7 +137,8 @@ $genre_text_conversion = array(
                 $genre_count = 1;
                 foreach ($genresAll as $genre_all):
                     if($genre_all['Genre']['Genre'] != ''){
-                            $genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
+                            //$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
+                            $genre_name = $genre_all['Genre']['Genre'];
                             if($genre_name == $genre){
                                     ?>
                                 <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a></li>
