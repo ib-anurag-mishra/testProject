@@ -82,6 +82,9 @@ class SearchController extends AppController
 				case 'label':
 				  $sortVar = 'Label';
 				  break;
+                case 'video':
+				  $sortVar = 'VideoTitle';
+				  break;
 				case 'artist':
 				  $sortVar = 'ArtistText';
 				  break;
@@ -198,7 +201,7 @@ class SearchController extends AppController
 						$labels = $this->Solr->groupSearch($queryVar, 'label', $facetPage, $limit);
 						$this->set('labels', $labels);
 					break;
-
+          
           case 'artist':
 						$limit = 18;
             $totalFacetCount = $this->Solr->getFacetSearchTotal($queryVar, 'artist');
@@ -237,6 +240,7 @@ class SearchController extends AppController
 				$genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
 				$composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
 				$labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
+                $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
 				$this->set('albums', $albums);
 				//$this->set('albumData',$albumData);
         $this->set('albumData',$albums);
@@ -245,6 +249,7 @@ class SearchController extends AppController
         //print_r($genres);die;
 				$this->set('composers', $composers);
 				$this->set('labels', $labels);
+                $this->set('videos', $videos);
 			}
       $this->set('libraryDownload',$libraryDownload);
 			$this->set('patronDownload',$patronDownload);

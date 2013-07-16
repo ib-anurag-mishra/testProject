@@ -9,11 +9,23 @@ class SolrComponent extends Object {
     static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24//192.168.100.24//192.168.100.24
 
     /**
+     * Used for runtime configuration of model
+     */
+    static $_defaults2 = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideos/');//108.166.39.24//192.168.100.24//192.168.100.24
+    
+    /**
      * Solr client object
      *
      * @var SolrClient
      */
     static $solr = null;
+    
+    /**
+     * Solr client object
+     *
+     * @var SolrClient
+     */
+    static $solr2 = null;
 
     /**
      * Solr client object
@@ -22,11 +34,19 @@ class SolrComponent extends Object {
      */
     var $total = null;
 
-    function initialize($config = array()){
+    function initialize($config = array(), $config2 = array()){
         $settings = array_merge((array)$config,self::$_defaults);
+        $settings2 = array_merge((array)$config2,self::$_defaults2);
         App::import("Vendor","solr",array('file' => "Apache".DS."Solr".DS."Service.php"));
         self::$solr = new Apache_Solr_Service( $settings['server'], $settings['port'], $settings['solrpath']);
+        
         if ( ! self::$solr->ping() ) {
+          throw new SolrException();
+        }
+        
+        self::$solr2 = new Apache_Solr_Service( $settings2['server'], $settings2['port'], $settings2['solrpath']);
+        
+        if ( ! self::$solr2->ping() ) {
           throw new SolrException();
         }
     }
@@ -63,6 +83,9 @@ class SolrComponent extends Object {
               case 'label':
                 $query = '(CLabel:(*'.strtolower($keyword).'*) OR Label:'.$searchkeyword.'^200)';
                 break;
+              case 'video':
+                $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR VideoTitle:'.$searchkeyword.'^200)';
+                break;
               case 'composer':
                 //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.'^200 OR Composer:*'.$searchkeyword.'*)';
 		$query = '(CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
@@ -91,6 +114,9 @@ class SolrComponent extends Object {
                 break;
               case 'label':
                 $query = 'Label:'.$searchkeyword;
+                break;
+             case 'video':
+                $query = 'VideoTitle:'.$searchkeyword;
                 break;
               case 'composer':
                 $query = 'Composer:'.$searchkeyword;
@@ -247,6 +273,10 @@ class SolrComponent extends Object {
             $query = '(CLabel:('.strtolower($searchkeyword).') OR Label:'.$searchkeyword.')';
             $field = 'Label';
             break;
+          case 'video':
+            $query = '(CVideoTitle:('.strtolower($searchkeyword).') OR VideoTitle:'.$searchkeyword.')';
+            $field = 'VideoTitle';
+            break;
           case 'composer':
             $query = '(CComposer:('.strtolower($keyword).') OR Composer:'.$searchkeyword.')';
             $field = 'Composer';
@@ -275,7 +305,7 @@ class SolrComponent extends Object {
           'facet.mincount' => 1,
           'facet.limit' => $limit,
         );
-
+        if($type != 'video'){
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
         if ( $response->getHttpStatus() == 200 ) {
           if (!empty($response->facet_counts->facet_fields->$field)) {
@@ -288,6 +318,20 @@ class SolrComponent extends Object {
           return array();
         }
         return array();
+        } else {
+            $response = self::$solr2->search( $query, $start, $limit, $additionalParams);
+            if ( $response->getHttpStatus() == 200 ) {
+                if (!empty($response->facet_counts->facet_fields->$field)) {
+                    return $response->facet_counts->facet_fields->$field;
+                } else {
+                    return array();
+                }
+            }
+            else {
+                return array();
+            }
+            return array();
+        }
       } else {
         return array();
       }
@@ -328,6 +372,10 @@ class SolrComponent extends Object {
             $query = '(CLabel:('.strtolower($searchkeyword).') OR Label:'.$searchkeyword.')';
             $field = 'Label';
             break;
+          case 'video':
+            $query = '(CVideoTitle:('.strtolower($searchkeyword).') OR VideoTitle:'.$searchkeyword.')';
+            $field = 'VideoTitle';
+            break;
           case 'composer':
             $query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
             $field = 'Composer';
@@ -356,6 +404,7 @@ class SolrComponent extends Object {
           'facet.limit' => -1
         );
 
+        if($type != 'video'){
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
         if ( $response->getHttpStatus() == 200 ) {
           if (!empty($response->facet_counts->facet_fields->$field)) {
@@ -368,6 +417,20 @@ class SolrComponent extends Object {
           return array();
         }
         return array();
+        } else {
+            $response = self::$solr2->search( $query, $start, $limit, $additionalParams);
+            if ( $response->getHttpStatus() == 200 ) {
+              if (!empty($response->facet_counts->facet_fields->$field)) {
+                return count($response->facet_counts->facet_fields->$field);
+              } else {
+                return array();
+              }
+            }
+            else {
+              return array();
+            }
+            return array();
+        }
       } else {
         return array();
       }
@@ -409,6 +472,10 @@ class SolrComponent extends Object {
           case 'label':
             $query = '(CLabel:(*'.strtolower($keyword).'*) OR Label:'.$searchkeyword.'^200)';
             $field = 'Label';
+            break;
+          case 'video':
+            $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR VideoTitle:'.$searchkeyword.'^200)';
+            $field = 'VideoTitle';
             break;
           case 'composer':
             //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
@@ -508,6 +575,10 @@ class SolrComponent extends Object {
             $query = '(CLabel:('.strtolower($searchkeyword).') OR Label:'.$searchkeyword.')';
             $field = 'Label';
             break;
+          case 'video':
+            $query = '(CVideoTitle:('.strtolower($searchkeyword).') OR VideoTitle:'.$searchkeyword.')';
+            $field = 'VideoTitle';
+            break;
           case 'composer':
             $query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
             $field = 'Composer';
@@ -533,7 +604,8 @@ class SolrComponent extends Object {
           ),
           'group.query' => $query,
         );
-
+        
+        if($type != 'video'){
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
         if ( $response->getHttpStatus() == 200 ) {
           if (!empty($response->grouped->$query->doclist->numFound)) {
@@ -546,6 +618,20 @@ class SolrComponent extends Object {
           return array();
         }
         return array();
+        } else {
+            $response = self::$solr2->search( $query, $start, $limit, $additionalParams);
+            if ( $response->getHttpStatus() == 200 ) {
+              if (!empty($response->grouped->$query->doclist->numFound)) {
+                return count($response->grouped->$query->doclist->docs);
+              } else {
+                return array();
+              }
+            }
+            else {
+              return array();
+            }
+            return array();
+        }
       } else {
         return array();
       }
@@ -589,9 +675,13 @@ class SolrComponent extends Object {
               $query = '(CLabel:(*'.strtolower($keyword).'*) OR TLabel:(*'.$keyword.'*) OR Label:('.$searchkeyword.'^200))';
               $field = 'Label';
               break;
+            case 'video':
+              $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR TVideoTitle:(*'.$keyword.'*) OR VideoTitle:('.$searchkeyword.'^200))';
+              $field = 'VideoTitle';
+              break;
             case 'composer':
               //$query = '(CComposer:('.strtolower($searchkeyword).'*) OR TComposer:('.$searchkeyword.'*) OR Composer:('.$searchkeyword.'*))';
-	      $query = '(CComposer:(*'.strtolower($keyword).'*) OR TComposer:(*'.$keyword.'*) OR Composer:('.$searchkeyword.'^200))';
+              $query = '(CComposer:(*'.strtolower($keyword).'*) OR TComposer:(*'.$keyword.'*) OR Composer:('.$searchkeyword.'^200))';
               $field = 'Composer';
               break;
             default:
