@@ -516,6 +516,7 @@ class SolrComponent extends Object {
 	//$query = '(CArtistText:(*britney* *spears*) OR ArtistText:Britney\ spears^200) AND Territory:US';
        // echo '<br /> Boxs : '.$query.'<br />';
 
+        if($type != 'video'){
         $response = self::$solr->search( $query, $start, $limit, $additionalParams);
         if ( $response->getHttpStatus() == 200 ) {
           //print_r($response->grouped); die; 
@@ -534,6 +535,26 @@ class SolrComponent extends Object {
           return array();
         }
         return array();
+        } else {
+            $response = self::$solr2->search( $query, $start, $limit, $additionalParams);
+            if ( $response->getHttpStatus() == 200 ) {
+              //print_r($response->grouped); die; 
+              if (!empty($response->grouped->$field->groups)) {
+                $docs = array();
+                foreach($response->grouped->$field->groups as $group){
+                  $group->doclist->docs[0]->numFound = $group->doclist->numFound;
+                  $docs[] = $group->doclist->docs[0];
+                } //echo '<pre>'; print_r($docs); echo '</pre>';
+                return $docs;
+              } else {
+                return array();
+              }
+            }
+            else {
+              return array();
+            }
+            return array();
+        }
       } else {
         return array();
       }
