@@ -76,20 +76,65 @@
 				<div class="playlist-scrollable">
 					<div class="row-container">
 					<?php
-					for($b=0;$b<28;$b++) {
+                                                
+
+					//for($b=0;$b<28;$b++) {
+                                            foreach($queue_list_array as $key => $value)
+                                            {   
+
+                                                
+
 					?>
 					
 					<div class="row clearfix">
 						<a class="preview" href="#"></a>
-						<div class="song-title">Grow Up</div>
+						<div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
 						<a class="add-to-wishlist-button" href="#"></a>
-						<div class="album-title"><a href="#">Sticks and Stones</a></div>
-						<div class="artist-name"><a href="#">Cher Lloyd</a></div>
-						<div class="time">3:42</div>
+						<div class="album-title"><a href="#"><?php echo $value['Albums']['AlbumTitle']?></a></div>
+						<div class="artist-name"><a href="#"><?php echo $value['Songs']['ArtistText']?></a></div>
+						<div class="time"><?php echo $value['Songs']['FullLength_Duration']?></div>
 						<div class="wishlist-popover">
-								
-							<a class="download-now" href="#">Download Now</a>
-							<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                                        <?php
+                                                                if($libraryDownload == '1' && $patronDownload == '1') {
+
+                                                          ?>
+							<!--<a class="download-now" href="#">Download Now</a> -->
+                                                        <span class="top-100-download-now-button">
+                                                        <form method="Post" id="form<?php echo $value["Songs"]["ProdID"]; ?>" action="/homes/userDownload" class="suggest_text1">
+                                                        <input type="hidden" name="ProdID" value="<?php echo $value["Songs"]["ProdID"];?>" />
+                                                        <input type="hidden" name="ProviderType" value="<?php echo $value["Songs"]["provider_type"]; ?>" />
+                                                        <span class="beforeClick" id="song_<?php echo $value["Songs"]["ProdID"]; ?>">
+                                                        <a  href='javascript:void(0);' onclick='userDownloadAll("<?php echo $value["Songs"]["ProdID"]; ?>");'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                                                        </span>
+                                                        <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
+                                                        <span id="download_loader_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                                                        </form>
+                                                        </span>
+                                                         <?php
+                                                                    
+                                                                 }
+                                                         ?>
+							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+
+                                                         <?php
+                                                                                                                    
+                                                                    $wishlistInfo = $wishlist->getWishlistData($value["Songs"]["ProdID"]);
+
+
+                                                                    if($wishlistInfo == 'Added to Wishlist') {
+                                                                    ?> 
+                                                                            <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
+                                                                    <?php 
+                                                                    } else { 
+                                                                    ?>
+                                                                            <span class="beforeClick" id="wishlist<?php echo $value["Songs"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Songs"]["ProdID"]; ?>","<?php echo $value["Songs"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
+                                                                            <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
+                                                                    <?php	
+                                                                    }
+
+                                                       ?>
+
+
 							<a class="remove-song" href="#">Remove Song</a>
 
 							<div class="share clearfix">
