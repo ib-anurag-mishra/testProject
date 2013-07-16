@@ -28,7 +28,62 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 
 
 ?>
+    <div class="queue-overlay">
+            <div class="rename-queue-dialog-box">
+                    <div class="close"></div>
+                    <header>Rename '<span>Queue Name</span>'</header>
+                    <form action="" method="post">
+                    <div class="rename-form-container">
 
+                                    <label for="name">Name:</label>
+                                    <input type="text" name="name" id="name" />
+                                    <label for="description">Description:</label>
+                                    <textarea name="description" id="description"></textarea>
+
+
+                    </div>
+                    <div class="buttons-container clearfix">
+                            <div class="text-close">Close</div>
+                            <input type="submit" class="save" value="Save Changes"></input>
+                    </div>
+                    </form>
+            </div>
+            <div class="create-queue-dialog-box">
+                    <div class="close"></div>
+                    <header>Create Queue</header>
+                    <?php echo $this->Form->create('Queuelist', array( 'action' => '/createQueue', 'type' => 'file', 'id' => 'addconsortium'));?>
+                    <div class="rename-form-container">
+
+                                    <label for="name">Name:</label>
+                                    <?php echo $this->Form->input('PlaylistName', array('label' => false, 'value' => $getData['Queuelist']['PlaylistName'], 'div' => false, 'class' => 'form_fields') ); ?>
+                                    <label for="description">Description:</label>
+                                    <?php echo $this->Form->input('description', array('label' => false, 'value' => $getData['Queuelist']['description'], 'div' => false, 'class' => 'form_fields') ); ?>
+
+
+                    </div>
+                    <div class="buttons-container clearfix">
+                            <div class="text-close">Close</div>
+                            <input type="submit" class="save" value="Create New Queue"></input>
+                    </div>
+            </div>
+            <div class="delete-queue-dialog-box">
+                    <div class="close"></div>
+                    <header>Delete Queue?</header>
+                    <form action="" method="post">
+                    <div class="confirm-text">
+
+
+                            <p>Are you sure you want to delete '<span>Queue Name</span>'?</p>
+
+                    </div>
+                    <div class="buttons-container clearfix">
+                            <div class="text-close">Close</div>
+                            <input type="submit" class="save" value="Delete Queue"></input>
+                    </div>
+                    </form>
+            </div>
+
+    </div>
     <div class="wrapper">
 			<!-- site header -->
 			<header class="site-header">                                    

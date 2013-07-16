@@ -5145,7 +5145,599 @@ img {
 }
 /* end now streaming page */
 
+/* saved queues page */
+.saved-queues-page {
+	
+	
+	margin-left: 20px;
+	margin-top: 20px;
+	
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
 
+
+	}
+	
+	header {
+		margin-top: 10px;
+		margin-bottom: 24px;
+		
+		h2 {
+			
+			font-size: 24px;
+			letter-spacing: 1px;
+			float: left;
+			margin-top: 4px;
+			
+		}
+		.create-new-queue-btn {
+			margin-top: 2px;
+			float: left;
+			cursor: pointer;
+			margin-left: 18px;
+			width: 29px;
+			height: 28px;
+			background: url(/img/saved-queues/create-new-queue-btn-off.jpg);
+			
+			&:hover {
+				background: url(/img/saved-queues/create-new-queue-btn-hover.jpg);
+				
+			}
+			
+			&:active {
+				background: url(/img/saved-queues/create-new-queue-btn-clicked.jpg);
+				
+			}
+		}
+		
+		.faq-link {
+			
+			float: right;
+			font-size: 12px;
+			margin-top: 10px;
+			
+			a {
+				
+				text-decoration: none;
+				color: #52c6ec;
+			}
+		}
+		
+		
+	}
+	
+	.playlist-filter-container {
+		
+		div {
+			
+			float: left;
+			
+			
+			&.create-playlist-button {
+				
+				width: 196px;
+				height: 39px;
+				background: url(/img/saved-queues/create-new-queue-off.jpg);
+				
+				&.pressed {
+					
+					background: url(/img/saved-queues/create-new-queue-pressed.jpg);
+				}
+			}
+			
+			
+			&.queue-filter-button {
+				width: 151px;
+				height: 39px;
+				background: url(/img/saved-queues/queues-off.jpg);
+				
+				&.active {
+					
+					background: url(/img/saved-queues/queues-up.jpg);
+					
+					&.toggled {
+						
+						background: url(/img/saved-queues/queues-down.jpg);
+					}
+				}
+				
+			}
+			
+			&.last-modified-filter-button {
+				width: 148px;
+				height: 39px;
+				background: url(/img/saved-queues/last_modified_off.jpg);
+				
+				&.active {
+					background: url(/img/saved-queues/last_modified_up.jpg);
+					
+					&.toggled {
+						background: url(/img/saved-queues/last_modified_down.jpg);
+					}
+				}
+				
+			}
+			
+			&.date-filter-button {
+				width: 152px;
+				height: 39px;
+				
+				background: url(/img/saved-queues/date_off.jpg);
+				
+				&.active {
+				
+					background: url(/img/saved-queues/date_up.jpg);
+					
+					&.toggled {
+						background: url(/img/saved-queues/date_down.jpg);
+						
+					}
+				}
+				
+			}
+			
+			&.search-filter-button {
+				
+				width: 201px;
+				height: 39px;
+				
+				background: url(/img/saved-queues/filter-bkg.jpg);
+				
+				input {
+					margin-left: 10px;
+					margin-top: 10px;
+					-webkit-appearance: none;
+					height: 21px;
+					border:1px solid rgba(0,0,0,.1);
+					.border-radius(10px);
+					outline: 0;
+					width: 180px;
+					
+				}
+			}
+			
+			
+			
+		}
+	}
+	
+	.playlists-shadow-container {
+		
+		position: relative;
+		overflow-y: hidden;
+		overflow-x: hidden;
+		width: 850px;
+		height: 595px;
+
+
+		&:before {
+			
+			position: absolute;
+			content: "";
+			top:0;
+			left: 0;
+			background: url(/img/saved-queues/my-playlists-tapered-shadow-down.png);
+			width: 849px;
+			height: 11px;
+		}
+
+			
+		&:after {
+			
+			position: absolute;
+			content: "";
+			bottom:0;
+			left: 0;
+			background: url(/img/saved-queues/my-playlists-tapered-shadow.png);
+			width: 849px;
+			height: 11px;
+		}
+		
+		.playlists-scrollable {
+			overflow-y: hidden;
+			overflow-x: hidden;
+			width: 850px;
+			height: 595px;
+			
+			&:hover {
+				
+				overflow-y: scroll;
+			}
+			
+			
+			.playlists-container {
+				height: 2000px;
+				
+				.row {
+					
+					&:nth-child(odd) {
+						
+						background: #f1f1f1;
+					}
+					
+					&:nth-child(even) {
+						
+						background: #e9e9e9;
+					}
+					
+					
+					.item {
+						
+						float: left;
+
+						margin-left: 10px;
+						
+						.playlist-info-container {
+							
+							position: relative;
+							width: 273px;
+							height: 150px;
+							.playlist-title {
+								
+								position: absolute;
+								left: 100px;
+								top:30px;
+								font-size: 19px;
+								
+								a {
+									
+									text-decoration: none;
+									color: #000;
+									
+									&:hover {
+										
+										text-decoration: underline;
+									}
+								}
+							}
+							
+							img {
+								position: absolute;
+								left: 0;
+								top:30px;
+								border:1px solid #fff;
+								.box-shadow(0 0 4px rgba(0,0,0,.5));
+							}
+							
+							.add-to-playlist-button {
+								display: block;
+								position: absolute;
+								left: 56px;
+								top:87px;
+								background: url(/img/saved-queues/add-to-playlist-button.png);
+								width: 26px;
+								height: 25px;
+								.box-shadow(0 0 2px rgba(0,0,0,.5));
+							}
+							.created-by {
+								position: absolute;
+								left: 100px;
+								top:32px;
+								font-size: 13px;
+								font-weight: bold;
+							}
+							
+							.playlist-author {
+								position: absolute;
+								left: 100px;
+								top:48px;
+								font-size: 13px;
+								color: rgba(0,0,0,.5);
+							}
+							
+							.playlist-date {
+								position: absolute;
+								left: 100px;
+								top:64px;
+								font-size: 13px;
+								color: rgba(0,0,0,.5);
+							}
+							
+							.playlist-length {
+								position: absolute;
+								left: 100px;
+								top:56px;
+								font-size: 13px;
+								font-weight: bold;
+								color: rgba(0,0,0,.65);
+							}
+							
+							.wishlist-popover {
+								position: absolute;
+								left: 56px;
+								top:23px;
+								background: #fff;
+								display: none;
+								.box-shadow(0 0 2px rgba(0,0,0,.5));
+								a {
+									
+									display: block;
+									padding: 5px 10px 10px 10px;
+									background: #fff;
+									font-size: 12px;
+									line-height: 12px;
+									text-decoration: none;
+									color: #000;
+									
+									&:hover {
+										
+										background: #aaa;
+									}
+									
+									&:last-child {
+										
+										padding: 5px 5px 10px 10px;
+									}
+								}
+								&.active {
+									
+									display: block;
+								}
+								
+								
+								.share {
+						
+									background: #fff;
+									border-top: 1px solid rgba(0,0,0,.2);
+									padding-bottom: 3px;
+									position: relative;
+									width: 120px;
+									height: 32px;
+									color: #000;
+									
+									p {
+										
+										position: absolute;
+										left: 10px;
+										top:10px;
+										font-size: 12px;
+									}
+									
+									.facebook {
+										background: url(/img/facebook.png) no-repeat center center;
+										
+										display: block;
+										
+										width: 12px;
+										height: 12px;
+										position: absolute;
+										left: 62px;
+										top:1px;
+										
+										&:hover {
+											background: url(/img/facebook-hover.png) no-repeat center center;
+											
+										}
+									}
+									
+									.twitter {
+										background: url(/img/twitter.png) no-repeat center center;
+										
+										display: block;
+										position: absolute;
+										width: 15px;
+										height: 12px;
+										left: 82px;
+										top:1px;
+										
+										&:hover {
+											
+											background: url(/img/twitter-hover.png) no-repeat center center;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				
+			}
+		}
+	}
+}
+
+/* end saved queues page */
+
+/* overlays */
+
+.queue-overlay {
+
+	background: url(/img/playlist/playlist-overlay-bkg.png) repeat;
+	width: 100%;
+	height: 100%;
+	display: none;
+	position: absolute;
+	left: 0;
+	top:0;
+	z-index: 100;
+
+	
+	&.active {
+		
+		display: block;
+	}
+	
+
+	
+	.rename-queue-dialog-box,.create-queue-dialog-box,.delete-queue-dialog-box {
+		display: none;
+		position: relative;
+		width: 552px;
+		height: auto;
+		border-bottom-left-radius: 5px;
+		border-bottom-right-radius: 5px;
+		background: #fff;
+		margin: 100px auto;
+
+		.box-shadow(0 0 20px rgba(0,0,0,.5));
+		z-index: 100;
+		
+		&.active {
+			
+			display: block;
+		}
+
+		header {
+			
+			font-size: 24px;
+			padding: 20px;
+			letter-spacing: 1px;
+			background: url(/img/playlist/form-header-bkg.png) center bottom repeat-x;
+		}
+		
+		.close {
+			
+			position: absolute;
+			right: -15px;
+			top:-15px;
+			background: url(/img/playlist/blue-close.png);
+			width: 31px;
+			height: 31px;
+			cursor: pointer;
+			
+			&:active {
+				background: url(/img/playlist/blue-close-clicked.png);
+				
+			}
+			
+
+			
+		}
+		
+		.rename-form-container {
+			
+			background: #fff;
+			color: rgba(0,0,0,.8);
+			padding: 20px;
+			
+			
+			label {
+				
+				display: block;
+				margin-bottom: 5px;
+			}
+			
+			input {
+				margin: 0;
+				padding: 0;
+				border: 1px solid #ccc;
+				height: 24px;
+				font-size: 13px;
+				margin-bottom: 10px;
+				width: 320px;
+				padding: 5px;
+				outline-color: #57bfe1;
+				outline-width: medium;
+			}
+			
+			textarea {
+				padding: 0;
+				border: 1px solid #ccc;
+				width: 513px;
+				height: 118px;
+ 				max-width: 513px;
+				max-height: 290px;
+				padding: 5px;
+				font-size: 13px;
+				box-sizing: border-box;
+				outline-color: #57bfe1;
+				outline-width: medium;
+				line-height: 20px;
+			}
+			
+
+
+		}
+		
+		.confirm-text {
+			
+			p {
+				
+				color: rgba(0,0,0,.7);
+				font-size: 16px;
+				padding: 20px 20px 40px 20px;
+				
+			}
+		}
+		
+		.buttons-container {
+			background: url(/img/playlist/form-header-bkg.png) center top repeat-x #fff;
+			border-bottom-left-radius: 5px;
+			border-bottom-right-radius: 5px;
+
+			.text-close {
+				
+				float: left;
+				padding: 19px 20px;
+				
+				cursor: pointer;
+				border-bottom-left-radius: 5px;
+		
+				
+				&:hover {
+					
+					background: #52c6ec;
+					color: #fff;
+				}
+				
+				&:active {
+					
+					background: url(/img/playlist/button-bkg.png) repeat;
+				}
+			}
+			
+			.save {
+				-webkit-appearance: none;
+
+				float: right;
+				margin: 0;
+				padding: 0;
+
+				padding: 18px 20px;
+				cursor: pointer;
+				border: none;
+				background: none;
+				font-size: 100%;
+				font-family: Helvetica;
+				color: #000;
+				border-bottom-right-radius: 5px;
+				
+				&:hover {
+					
+					background: #52c6ec;
+					color: #fff;
+				}
+				
+				&:active {
+					
+					background: url(/img/playlist/button-bkg.png) repeat;
+
+					
+				}
+				
+				
+			}
+			
+		}
+	}
+}
+
+/* end overlays */
 
 
 
