@@ -144,7 +144,7 @@ class SearchController extends AppController
 
       $country = $this->Session->read('territory'); 
 			$songs = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $country);
-			print_r($songs); die;
+			//print_r($songs); die;
             $total = $this->Solr->total;
 			$totalPages = ceil($total/$limit);
 
