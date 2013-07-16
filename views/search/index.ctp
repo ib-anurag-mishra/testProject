@@ -215,13 +215,13 @@ if ($type != 'all') {
             <li>|</li>
             <li>
                 <?php
-                if ($type != 'label') {
+                if ($type != 'video') {
                     ?>
-                    <a href="/search/index?q=<?php echo $keyword; ?>&type=label">Label</a>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=video">Video</a>
                     <?php
                 } else {
                     ?>
-                    <a href="#" class="active">Label</a>
+                    <a href="#" class="active">Video</a>
                     <?php
                 }
                 ?>
