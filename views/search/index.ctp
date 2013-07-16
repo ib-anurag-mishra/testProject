@@ -783,7 +783,7 @@ if ($type != 'all') {
         <?php } 
         
         if($type != 'video') {
-            echo $type; die;
+            // echo $type; die;
         ?>
     <section class="tracklist-container">
         <section class="tracklist-header clearfix">
