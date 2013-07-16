@@ -911,10 +911,7 @@ if ($type != 'all') {
                                     <?php
                                 } 
                                 
-                                }
-                                
-                                else 
-                                    {
+                                } else {
                                     $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
                                     if($library != 'www' && $library != 'freading' && $library != '50'){
                                         echo $html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
