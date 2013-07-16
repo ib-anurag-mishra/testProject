@@ -755,7 +755,7 @@ if ($type != 'all') {
             <section class="advanced-labels">
                     <header class="clearfix">
                         <h5><?php __("Videos"); ?></h5>
-                        <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
+                        <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=video">See more videos</a></h6>
                     </header>
                     <div class="advanced-labels-shadow-container">
                         <div class="advanced-labels-scrollable">
