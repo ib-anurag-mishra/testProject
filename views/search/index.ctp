@@ -576,7 +576,7 @@ if ($type != 'all') {
             }
             break;
     }
-} else {
+} else if($type == 'all') {
     ?>      
         <section class="advanced-search-results row-1 clearfix">
             <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
@@ -765,9 +765,9 @@ if ($type != 'all') {
                     $tilte = urlencode($video->VideoTitle);
                     $video_name_text = truncate_text($video->VideoTitle, 30, $this);
                     $name = $video->VideoTitle;
-                    $count = $video->numFound;
+                    // $count = $video->numFound;
                     ?>
-                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?> <span>(<?php echo $count; ?>)</span></a></div>
+                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
                 <?php }
             } else {
                 ?>
@@ -780,7 +780,10 @@ if ($type != 'all') {
 
 
         </section>
-        <?php } ?>
+        <?php } 
+        
+        if($type != 'video') {
+        ?>
     <section class="tracklist-container">
         <section class="tracklist-header clearfix">
             <span class="artist"></span><span class="composer"></span><span class="album"></span><span class="song"></span><span class="download"></span>
@@ -930,5 +933,12 @@ if (isset($type)) {
                 echo createPagination($html, $currentPage, $facetPage, 'listing', $totalPages, 7, $keyword);
                 ?>
         </div>
+        
     </section>
 </section>
+<?php } else {
+  ?>
+Here Video Data will Come....
+<?php
+}
+?>
