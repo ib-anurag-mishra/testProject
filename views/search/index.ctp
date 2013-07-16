@@ -580,7 +580,8 @@ if ($type != 'all') {
     ?>      
         <section class="advanced-search-results row-1 clearfix">
             <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
-            <?php /*             * *******************Album Block Started****************************** */ ?>
+
+<?php /*********************Album Block Started****************************** */ ?>
             <section class="advanced-albums">
                 <header class="clearfix">
                     <h5><?php __("Albums"); ?></h5>
@@ -666,10 +667,10 @@ if ($type != 'all') {
                 </div>
 
             </section>
-                        <?php /*                         * *******************Artist Block End****************************** */ ?>       
+<?php /*********************Artist Block End****************************** */ ?>       
         </section>
         <section class="advanced-search-results row-2 clearfix">
-                        <?php /*                         * *******************Composer Block Started****************************** */ ?>			
+<?php /*********************Composer Block Started****************************** */ ?>			
             <section class="advanced-composers">
                 <header class="clearfix">
                     <h5><?php __("Composers"); ?></h5>
@@ -751,7 +752,7 @@ if ($type != 'all') {
             <?php /*             * *******************Label Block End****************************** */ ?>
 
             <?php /*             * *******************Video Block Started****************************** */ ?>            
-    <!--            <section class="advanced-labels">
+            <section class="advanced-labels">
                     <header class="clearfix">
                         <h5><?php __("Videos"); ?></h5>
                         <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=label">See more labels</a></h6>
@@ -759,22 +760,22 @@ if ($type != 'all') {
                     <div class="advanced-labels-shadow-container">
                         <div class="advanced-labels-scrollable">
             <?php
-            if (!empty($labels)) {
-                foreach ($labels as $label) {
-                    $tilte = urlencode($label->Label);
-                    $label_name_text = truncate_text($label->Label, 30, $this);
-                    $name = $label->Label;
-                    $count = $label->numFound;
+            if (!empty($videos)) {
+                foreach ($videos as $video) {
+                    $tilte = urlencode($video->VideoTitle);
+                    $video_name_text = truncate_text($video->VideoTitle, 30, $this);
+                    $name = $video->VideoTitle;
+                    $count = $video->numFound;
                     ?>
-                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=label" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $label_name_text : ""); ?> <span>(<?php echo $count; ?>)</span></a></div>
+                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?> <span>(<?php echo $count; ?>)</span></a></div>
                 <?php }
             } else {
                 ?>
-                                     <div style='color:red'><?php __("No Labels Found"); ?></div>     
+                                     <div style='color:red'><?php __("No Videos Found"); ?></div>     
             <?php } ?>
                         </div>
                     </div>
-                </section> -->
+                </section> 
             <?php /*             * *******************Video Block End****************************** */ ?>
 
 
