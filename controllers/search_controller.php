@@ -241,7 +241,7 @@ class SearchController extends AppController
 				$composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
 				$labels = $this->Solr->groupSearch($queryVar, 'label', 1, 5);
                 $videos = $this->Solr->groupSearch($queryVar, 'video', 1, 5);
-				print_r($videos); die;
+				// print_r($videos); die;
                 $this->set('albums', $albums);
 				//$this->set('albumData',$albumData);
                 $this->set('albumData',$albums);
