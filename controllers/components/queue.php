@@ -16,15 +16,22 @@ Class QueueComponent extends Object
      * Description   : This is used to retrieve the list of queues created by an individual
      */
     function getQueueList($patronID){
-
-        $downloadInstance = ClassRegistry::init('Queuelist');
+        
+        $queuelistInstance = ClassRegistry::init('Queuelist');        
         $cond = array('patronID' => $patronID, 'status' => '1');
-        $downloadInstance->find('all', array(
+        
+        // Unbinded User model
+        $queuelistInstance->unbindModel(
+            array('belongsTo' => array('User'))
+        );        
+        
+        $queueData = $queuelistInstance->find('all', array(
                 'conditions' => $cond,
-                'recursive' => -1,
-                'order' => 'Created DESC'
+                'order' => 'Queuelist.Created DESC',
+                'limit' => 100
               ));
         
+        return $queueData;        
     }
     
     

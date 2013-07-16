@@ -9,11 +9,13 @@ class Queuelist extends AppModel
 {
 	var $name = 'Queuelist';
 	var $useTable = 'Queuelists';
+        var $primaryKey = 'Plid';
         
         var $hasMany = array(
 		'QueuelistDetails' => array(
 			'className' => 'QueuelistDetails',
-			'foreignKey' => 'Plid'
+			'foreignKey' => 'Plid',
+                        'type'  => 'INNER'
 		)
 	);
         
