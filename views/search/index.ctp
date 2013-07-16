@@ -857,7 +857,7 @@ if ($type != 'all') {
                             </div>
                             <div class="download">
                                     <?php
-                                    if($this->Session->read("patron")){
+                                    if($session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {
                                         if ($libraryDownload == '1' && $patronDownload == '1') {
                                             if ($psong->status != 'avail') {
