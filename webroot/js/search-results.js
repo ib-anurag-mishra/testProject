@@ -1,5 +1,37 @@
 $(document).ready(function(){
 	
+	$('#query').keypress(function(event) {
+		//auto_check();
+		if (event.which == '13') {
+	  //alert($('#search_query').val());
+	  $('#searchQueryForm').submit();
+		}
+	});
+	$("#query").autocomplete(webroot+"search/autocomplete",
+	{
+		minChars: 1,
+		cacheLength: 10,
+		autoFill: false,
+		extraParams: {
+		type:$('#search_type').val()
+	},
+	formatItem:function(data){
+		return data[0];
+	},
+	formatResult:function(data){
+		return data[1];
+	}
+	}).result(function(e, item) {
+		$('#auto').attr('value', 1);
+		if(item[2]==1){
+			$('#search_type').val('artist');
+		} else if(item[2]==2){
+			$('#search_type').val('album');
+		} else if(item[2]==3){
+			$('#search_type').val('song');
+		}
+	});
+
 	$('.search-page .tracklist .preview').on('click',function(e){
 	
 
