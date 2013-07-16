@@ -940,7 +940,11 @@ if (isset($type)) {
 <?php } else {
   print_r($songs);
     ?>
-Here Video Data will Come....
+<section class="tracklist-container">
+        <section class="tracklist-header clearfix">
+            <span class="artist"></span><span class="song"></span><span class="download"></span>
+        </section>
+</section>
 <?php
 }
 ?>
