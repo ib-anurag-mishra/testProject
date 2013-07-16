@@ -150,7 +150,11 @@ class SolrComponent extends Object {
         if(1 == $page) { unset($_SESSION['pagebreak']); unset($_SESSION['combine_page']); unset($_SESSION['ioda_cons']); unset($_SESSION['sony_total']); }
         if(!(isset($_SESSION['pagebreak']))) { 
           $provider_query .= ' AND provider_type:sony';
+          if($type != 'video'){
           $response = self::$solr->search( $query.$provider_query, 0, 1 );
+          } else {
+          $response = self::$solr2->search( $query.$provider_query, 0, 1 );    
+          }
           $num_found = $response->response->numFound;
 
           //echo 'num_found :' . $num_found . '<br />';
@@ -174,25 +178,45 @@ class SolrComponent extends Object {
 
         if( $page < $_SESSION['pagebreak'] ){ //echo '<br />SONY<br />';
           $provider_query = ' AND provider_type:sony'; $tmp_start = ($page - 1) * $limit; $start = $tmp_start;
+          if($type != 'video'){
           $response = self::$solr->search( $query.$provider_query, $tmp_start, $limit);
+          } else {
+          $response = self::$solr2->search( $query.$provider_query, $tmp_start, $limit);
+          }
+          
         }//sony		
         if( $page == $_SESSION['pagebreak'] ){ //echo '<br />SONY & IODA<br />';
           $provider_query = ' AND provider_type:sony'; $tmp_start = ($page - 1) * $limit; $start = $tmp_start;
+          if($type != 'video'){
           $response = self::$solr->search( $query.$provider_query, $tmp_start, $limit);
+          } else {
+          $response = self::$solr2->search( $query.$provider_query, $tmp_start, $limit);
+          }
+          
 	  $_SESSION['sony_total'] = $response->response->numFound ;
           $fetched_result_count = count($response->response->docs);
           $_SESSION['ioda_cons'] = ($limit-$fetched_result_count) ;
 
           if( 1 == $_SESSION['combine_page'] ){
             $provider_query = ' AND provider_type:ioda'; $start = 0;
-            $sec_response = self::$solr->search( $query.$provider_query, 0, ($limit-$fetched_result_count));
+            if($type != 'video'){
+          $sec_response = self::$solr->search( $query.$provider_query, 0, ($limit-$fetched_result_count));
+          } else {
+          $sec_response = self::$solr2->search( $query.$provider_query, 0, ($limit-$fetched_result_count));
+          }
+            
             if ( $sec_response->response->numFound > 0 ) { 
               $sec_response->response->docs = array_merge($response->response->docs, $sec_response->response->docs);
               $response = $sec_response;
             }
           }else{
             $provider_query = ' AND provider_type:ioda'; $start = 0;
-            $sec_response = self::$solr->search( $query.$provider_query, 0, 1 );
+            if($type != 'video'){
+          $sec_response = self::$solr->search( $query.$provider_query, 0, 1 );
+          } else {
+          $sec_response = self::$solr2->search( $query.$provider_query, 0, 1 );
+          }
+            
             if ( $sec_response->response->numFound > 0 ) {
               $response->response->numFound = $sec_response->response->numFound;
             }  
@@ -200,7 +224,12 @@ class SolrComponent extends Object {
         }//sony & ioda
         if( $page > $_SESSION['pagebreak'] ){ //echo '<br />IODA<br />';
           $provider_query = ' AND provider_type:ioda'; $tmp_start = ((($page-$_SESSION['pagebreak'])-1)*$limit)+$_SESSION['ioda_cons']; $start = $tmp_start;
+          if($type != 'video'){
           $response = self::$solr->search( $query.$provider_query, $tmp_start, $limit);
+          } else {
+          $response = self::$solr2->search( $query.$provider_query, $tmp_start, $limit);
+          }
+          
 	  $response->response->numFound = $response->response->numFound + $_SESSION['sony_total'];
         }//ioda
 
@@ -725,8 +754,9 @@ class SolrComponent extends Object {
             'facet.limit' => $limit
           );
 
-          $response = self::$solr->search( $query, 0, 0, $additionalParams);
-                
+          
+          if($type != 'video'){     
+              $response = self::$solr->search( $query, 0, 0, $additionalParams);
 	 if ( $response->getHttpStatus() == 200 ) {
             if (!empty($response->facet_counts->facet_fields->$field)) {
               
@@ -745,6 +775,27 @@ class SolrComponent extends Object {
             return array();
           }
           return array();
+          } else {
+              $response = self::$solr2->search( $query, 0, 0, $additionalParams);
+              if ( $response->getHttpStatus() == 200 ) {
+            if (!empty($response->facet_counts->facet_fields->$field)) {
+              
+	     	if(1 == $allmusic){
+			$arr_result = array();
+	     		$arr_result[$response->response->numFound][$type] = $response->facet_counts->facet_fields->$field; 
+	     		return $arr_result;
+		}else{
+			return $response->facet_counts->facet_fields->$field;
+		}
+            } else {
+              return array();
+            }
+          }
+          else {
+            return array();
+          }
+          return array();
+          }
         }
         else{
 
