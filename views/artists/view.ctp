@@ -171,13 +171,13 @@
                                                                                         <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
                                                                                         <input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
 
-                                                                                        <span class="beforeClick" style="display:none;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-                                                                                                <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                                                                        <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+                                                                                                <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
                                                                                         </span>
-                                                                                <a class="add-to-wishlist" >
-                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>"><?php __("Please Wait..");?></span>
-                                                                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;display:none;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
-                                                                                </a>             
+                                                                                
+                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="cursor:pointer;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
+                                                                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"style="display:none;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
+                                                                                           
                                                                 </form>													
 
                                                         <?php	
