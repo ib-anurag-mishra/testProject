@@ -193,10 +193,10 @@ $(function() {
 	grids.addClass('active');
 	
 	
-	search_text.on('keyup',function(){
+	/*search_text.on('keyup',function(){
 		
 		music_search_results.show();
-	});
+	});*/
 	
 	
 	$('.select-arrow').on('click',function(e){
