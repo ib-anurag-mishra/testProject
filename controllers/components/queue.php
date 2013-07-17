@@ -35,7 +35,7 @@ Class QueueComponent extends Object
     }
     
     
-    function getQueueDetails($queueID){
+    function getQueueDetails($queueID, $patId){
        //echo "QID: ".$queueID;
 
     $queueDetailList = ClassRegistry::init('QueuelistDetails');
@@ -87,7 +87,7 @@ Class QueueComponent extends Object
           ),           
         ),
         'recursive' => -1,
-        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => 1),                
+        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => $patId),                
       )
     );
     
