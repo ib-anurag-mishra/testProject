@@ -330,10 +330,10 @@
                             <input type="hidden" name="ProdID" value="<?php echo $value["Video"]["ProdID"];?>" />
                             <input type="hidden" name="ProviderType" value="<?php echo $value["Video"]["provider_type"]; ?>" />
                             <span class="beforeClick" id="song_<?php echo $value["Video"]["ProdID"]; ?>">
-                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");'><label class="top-10-download-now-button" style="width:120px;cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><?php __('Download Now');?></label></a>
+                            <a  href='javascript:void(0);' onclick='videoDownloadAll("<?php echo $value["Video"]["ProdID"]; ?>");' class="top-10-download-now-button" style="cursor:pointer;" title='<?php __('IMPORTANT:  Please note that once you press "Download Now" you have used up one of your downloads, regardless of whether you then press "Cancel" or not.');?>'><label><?php __('Download Now');?></label></a>
                             </span>
-                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><?php __('Please Wait...&nbsp&nbsp');?></span>
-                            <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif', array('style' => 'margin-top:-20px;width:16px;height:16px;')); ?></span>
+                            <span class="afterClick" id="downloading_<?php echo $value["Video"]["ProdID"]; ?>" style="display:none;"><a class="top-10-download-now-button"><?php __('Please Wait...');?>
+                            <span id="download_loader_<?php echo $value["Video"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php echo $html->image('ajax-loader_black.gif', array('border' => '0')); ?></span></a></span>
                             </form>
                             </span>
                             <?php	
