@@ -38,7 +38,7 @@ Class QueueComponent extends Object
     function getQueueDetails($queueID, $pat_Id){
        //echo "QID: ".$queueID;
   //  $patId= 1101400335373;
-        echo "<br>[".$pat_Id."]";
+       // echo "<br>[".$pat_Id."]";
     
     $queueDetailList = ClassRegistry::init('QueuelistDetails');
     $queueDetail = $queueDetailList->find('all',
@@ -93,14 +93,14 @@ Class QueueComponent extends Object
       )
     );
     
-    echo "Query: ".$queueDetailList->lastQuery();
-    
-    echo "<pre>";
-    echo "in queue.php";
-    echo "Patron ID: ".$patId;
-    print_r($queueDetail);
-    echo 456;
-    die;
+//    echo "Query: ".$queueDetailList->lastQuery();
+//    
+//    echo "<pre>";
+//    echo "in queue.php";
+//    echo "Patron ID: ".$patId;
+//    print_r($queueDetail);
+//    echo 456;
+//    die;
     
     
    /* $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
