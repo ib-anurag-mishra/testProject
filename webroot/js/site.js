@@ -193,7 +193,7 @@ $(function() {
 	grids.addClass('active');
 	
 	
-	search_text.on('keyup',function(){
+	/*search_text.on('keyup',function(){
 		var allType = 'all'; 
         $.ajax({
             url:'/search/autocomplete',
@@ -205,8 +205,9 @@ $(function() {
             }
         });
 		
-	});
-	
+	});*/
+    
+    
 	$('.select-arrow').on('click',function(e){
 		if($('.account-options-menu').hasClass('active')) {
 			
@@ -1181,4 +1182,18 @@ $(function() {
 
 	
 	 
+});
+
+$('document').ready(function(){
+    $('#search-text').autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
+    {
+        minChars: 1,
+        cacheLength: 10,
+        autoFill: false,
+        extraParams: {
+            type:'all'
+        }
+    }).result(function(e, item) {
+        $('#auto').attr('value', 1);
+    });
 });

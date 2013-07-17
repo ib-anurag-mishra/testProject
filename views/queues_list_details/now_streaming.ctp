@@ -41,7 +41,9 @@
 				<div class="now-playing-text"><span class="now-playing-title">Grow Up</span> by <span class="now-playing-artist"><a href="#">Cher Lloyd</a></span> on <span class="now-playing-album-title"><a href="#">Sticks and Stones</a></span></div>
 				<div class="release-genre">Genre: <span><a href="#">Pop</a></span></div>
 				<div class="release-label">Label: <span>Columbia</span></div>
-				
+				<input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
+                                <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["Queuelists"]["PlaylistName"];?>" />
+                                <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["Queuelists"]["description"];?>" />
 
 			</div>
 					
@@ -52,7 +54,7 @@
 				</div>
 				
 				<div class="queue-options">
-					<a class="rename-queue" href="#">Rename Queue</a>	
+					<a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
 					<a class="delete-queue" href="#">Delete Queue</a>
 
 				</div>

@@ -251,21 +251,33 @@ if ($this->Session->read('Config.language') == 'en') {
 
                <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
-       function showhide(flag, id)
-       {	   		
-	   
-         if(flag=="short")
-         {
-            document.getElementById("shortNews"+id).style.display="block";
-            document.getElementById("detailsNews"+id).style.display="none";
-         }
-         
-         if(flag=="detail")
-         {
-            document.getElementById("shortNews"+id).style.display="none";
-            document.getElementById("detailsNews"+id).style.display="block";
-         }
-       }
+                function showhide(flag, id)
+                {	   		
+
+                  if(flag=="short")
+                  {
+                     document.getElementById("shortNews"+id).style.display="block";
+                     document.getElementById("detailsNews"+id).style.display="none";
+                  }
+
+                  if(flag=="detail")
+                  {
+                     document.getElementById("shortNews"+id).style.display="none";
+                     document.getElementById("detailsNews"+id).style.display="block";
+                  }
+                }
+       
+       
+                function queueModifications()
+                {
+                    //alert(document.getElementById('hid_playlist_name').value);
+                    document.getElementById('name').value           =   document.getElementById('hid_playlist_name').value;
+                    document.getElementById('description').value    =   document.getElementById('hid_description').value;
+                    document.getElementById('Plid').value           =   document.getElementById('hid_Plid').value;
+                }
+       
+       
+       
         </script>     
             
 
