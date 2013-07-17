@@ -44,12 +44,15 @@ class QueueListDetailsController extends AppController{
                     $conditions = array (
                                                         "Pdid" => $_POST["Pdid"]										
                                         );
+                    
                                                 
-                    $delete_reponse	= $this->QueuelistDetails->delete(array('QueuelistDetail.Pdid' => $_POST["Pdid"])); 
-                    echo $this->QueuelistDetails->lastQuery();
-                    echo "<pre>";
-                    print_r($delete_reponse);
-                    die;
+                    //$delete_reponse	= $this->QueuelistDetails->delete(array('QueuelistDetail.Pdid' => $_POST["Pdid"])); 
+                    $delete_reponse	= $this->QueuelistDetails->deleteAll(array('QueuelistDetail.Pdid' => $_POST["Pdid"]), true, false);
+                    
+//                    echo $this->QueuelistDetails->lastQuery();
+//                    echo "<pre>";
+//                    print_r($delete_reponse);
+//                    die;
                     
                     
                 }
