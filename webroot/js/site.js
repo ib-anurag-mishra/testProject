@@ -199,14 +199,10 @@ $(function() {
             url:'/search/autocomplete',
             type:'get',
             data:{q:search_text.val(),type:allType},
-            success:function(){
-                alert('success');
+            success:function(response){
+                music_search_results.html(response);
                 music_search_results.show();
-            },
-            failure:function(){
-                alert('fail');
             }
-            
         });
 		
 	});
