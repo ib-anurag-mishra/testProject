@@ -16,7 +16,7 @@ class SearchController extends AppController
     */
     function beforeFilter() {
 		parent::beforeFilter();
-        $this->Auth->allow('index');
+        $this->Auth->allow('index','autocomplete');
         /*if(($this->action != 'aboutus') && ($this->action != 'admin_aboutusform') && ($this->action != 'admin_termsform') && ($this->action != 'admin_limitsform') && ($this->action != 'admin_loginform') && ($this->action != 'admin_wishlistform') && ($this->action != 'admin_historyform') && ($this->action != 'forgot_password') && ($this->action != 'admin_aboutus') && ($this->action != 'language') && ($this->action != 'admin_language') && ($this->action != 'admin_language_activate') && ($this->action != 'admin_language_deactivate') && ($this->action != 'auto_check') && ($this->action != 'convertString')) {
             $validPatron = $this->ValidatePatron->validatepatron();
 			if($validPatron == '0') {
@@ -505,7 +505,7 @@ class SearchController extends AppController
 		return $insertArr;
 	}
 
-  function autocomplete() {
+  /*function autocomplete() {
       Configure::write('debug', 0);
       $this->layout = 'ajax';
       if(isset($_GET['q'])){
@@ -575,7 +575,7 @@ class SearchController extends AppController
 	      break;
 	    }
 	  }
-	}
+	}*/
 
 
 	/*echo '<pre>';
@@ -618,7 +618,7 @@ class SearchController extends AppController
             }
           }*/
 
-	 $rank = 1;
+	 /*$rank = 1;
 	 foreach($arr_show as $key => $val){
 	   foreach($val as $name => $value){
 	     foreach($value as $record => $count){
@@ -695,5 +695,23 @@ class SearchController extends AppController
       //print_r($typeVar); print_r($records); //die;
       $this->set('type',$typeVar);
       $this->set('records',$records);
+    }*/
+    
+    function autocomplete(){
+        Configure::write('debug', 0);
+        $this->layout = 'ajax';
+        if(isset($_GET['q'])){
+          $queryVar = $_GET['q'];
+        }
+        if(isset($_GET['type'])){
+          $type = $_GET['type'];
+          $typeVar = (($_GET['type'] == 'all' || $_GET['type'] == 'song' || $_GET['type'] == 'album' || $_GET['type'] == 'genre' || $_GET['type'] == 'label' || $_GET['type'] == 'artist' || $_GET['type'] == 'composer')  ? $_GET['type'] : 'all');
+        } else {
+          $typeVar = 'all';
+        }
+        if($type!='all'){
+          $data = $this->Solr->getAutoCompleteData($queryVar, $type, 10);
+        }
+        $records = array();
     }
 }
