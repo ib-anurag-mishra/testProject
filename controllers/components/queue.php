@@ -94,6 +94,8 @@ Class QueueComponent extends Object
     //echo "Query: ".$this->QueuelistDetails->lastQuery();
     
     echo "<pre>";
+    echo "in queue.php";
+    echo "Patron ID: ".$patId;
     print_r($queueDetail);
     echo 456;
     die;
