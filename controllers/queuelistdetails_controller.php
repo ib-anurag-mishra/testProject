@@ -67,7 +67,7 @@ class QueueListDetailsController extends AppController{
                     $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
                     $this->set('patronDownload',$patronDownload);
 
-
+                    echo "Patron ID:".$patId;
                     //echo "<pre>";
                      //print_r($this->params['pass'][0]); die;
 

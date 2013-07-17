@@ -35,9 +35,11 @@ Class QueueComponent extends Object
     }
     
     
-    function getQueueDetails($queueID, $patId){
+    function getQueueDetails($queueID, $pat_Id){
        //echo "QID: ".$queueID;
-
+  //  $patId= 1101400335373;
+        echo "<br>[".$pat_Id."]";
+    
     $queueDetailList = ClassRegistry::init('QueuelistDetails');
     $queueDetail = $queueDetailList->find('all',
       array(
@@ -87,13 +89,15 @@ Class QueueComponent extends Object
           ),           
         ),
         'recursive' => -1,
-        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => $patId),                
+        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => trim($pat_Id)),                
       )
     );
     
-    echo "Query: ".$this->QueuelistDetails->lastQuery();
+    echo "Query: ".$queueDetailList->lastQuery();
     
     echo "<pre>";
+    echo "in queue.php";
+    echo "Patron ID: ".$patId;
     print_r($queueDetail);
     echo 456;
     die;
