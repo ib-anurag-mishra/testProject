@@ -89,7 +89,7 @@ Class QueueComponent extends Object
           ),           
         ),
         'recursive' => -1,
-        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => $pat_Id),                
+        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => trim($pat_Id)),                
       )
     );
     
