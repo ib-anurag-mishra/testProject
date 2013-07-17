@@ -416,7 +416,7 @@ class SolrComponent extends Object {
         }
 
         $query = $query.' AND Territory:'.$country.$cond;
-
+print_r($query); die;
         if($page == 1){
             $start = 0;
         } else {
@@ -491,8 +491,8 @@ class SolrComponent extends Object {
             break;
           case 'album':
             $query = '(CTitle:(*'.strtolower($keyword).'*) OR Title:('.$searchkeyword.')^400 OR CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:('.$searchkeyword.')^200 OR CComposer:(*'.strtolower($keyword).'*) OR Composer:('.$searchkeyword.')^200)';
-            $field = 'Title';
-            // $field = 'rpjoin';
+            //$field = 'Title';
+            $field = 'rpjoin';
             break;
           case 'artist':
             $query = '(CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:('.$searchkeyword.')^200)';
