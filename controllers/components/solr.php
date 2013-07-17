@@ -482,37 +482,37 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(CSongTitle:(*'.strtolower($keyword).'*) OR SongTitle:'.$searchkeyword.'^200)';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = '(CGenre:(*'.strtolower($searchkeyword).'*) OR Genre:'.$searchkeyword.'^200)';
+            $query = '(CGenre:(*'.strtolower($keyword).'*) OR Genre:'.$searchkeyword.'^200)';
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(CTitle:(*'.strtolower($searchkeyword).'*) OR Title:('.$searchkeyword.')^400 OR CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:('.$searchkeyword.')^200 OR CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:('.$searchkeyword.')^200)';
+            $query = '(CTitle:(*'.strtolower($keyword).'*) OR Title:('.$searchkeyword.')^400 OR CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:('.$searchkeyword.')^200 OR CComposer:(*'.strtolower($keyword).'*) OR Composer:('.$searchkeyword.')^200)';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
           case 'artist':
-            $query = '(CArtistText:(*'.strtolower($searchkeyword).'*) OR ArtistText:('.$searchkeyword.')^200)';
+            $query = '(CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:('.$searchkeyword.')^200)';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = '(CLabel:(*'.strtolower($searchkeyword).'*) OR Label:('.$searchkeyword.')^200)';
+            $query = '(CLabel:(*'.strtolower($keyword).'*) OR Label:('.$searchkeyword.')^200)';
             $field = 'Label';
             break;
           case 'video':
-            $query = '(CVideoTitle:(*'.strtolower($searchkeyword).'*) OR VideoTitle:('.$searchkeyword.')^200)';
+            $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR VideoTitle:('.$searchkeyword.')^200)';
             $field = 'VideoTitle';
             break;
           case 'composer':
             //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-            $query = '(CComposer:(*'.strtolower($searchkeyword).'*) OR Composer:'.$searchkeyword.'^200)';
+            $query = '(CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
             $field = 'Composer';
             break;
           default:
-            $query = '(CSongTitle:(*'.strtolower($searchkeyword).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(CSongTitle:(*'.strtolower($keyword).'*) OR SongTitle:'.$searchkeyword.'^200)';
             $field = 'SongTitle';
             break;
         }
