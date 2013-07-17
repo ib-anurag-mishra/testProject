@@ -346,7 +346,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="#" class="sidebar-anchor saved-queue">My Queues</a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $this->Session->read("patron"); ?>">Now Streaming</a></li>
+                                                                    <li><a href="/queuelistdetails/now_streaming/<?php echo $this->Session->read("patron"); ?>">Now Streaming</a></li>
                                                                     <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>">Saved Queues</a></li>
                                                             </ul>
                                                     </li>
