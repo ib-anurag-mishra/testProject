@@ -338,7 +338,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <a href="#" class="sidebar-anchor">Freegal Playlists</a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
-                                                                    <li><a href="/queuelistdetails/index/<?php echo $value['Queuelist']['Plid'];?>"><?php echo $value['Queuelist']['PlaylistName']; ?></a></li>
+                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['Queuelist']['Plid'];?>"><?php echo $value['Queuelist']['PlaylistName']; ?></a></li>
                                                                 <?php } ?>    
                                                             </ul>
                                                     </li>
@@ -346,7 +346,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="#" class="sidebar-anchor saved-queue">My Queues</a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <li><a href="now-streaming.php">Now Streaming</a></li>
+                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $this->Session->read("patron"); ?>">Now Streaming</a></li>
                                                                     <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>">Saved Queues</a></li>
                                                             </ul>
                                                     </li>
