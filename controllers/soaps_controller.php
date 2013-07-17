@@ -5239,16 +5239,103 @@ STR;
    * @param string $queueID
    * @param string $arrsongs
    * @param string $action
+   * @param string $queueDescription
 	 * @return QueueOperationType[]
    */
-  function manageQueue($authenticationToken, $queueName, $queueID, $arrsongs, $action){
+  function manageQueue($authenticationToken, $queueName, $queueID, $arrsongs, $action, $queueDescription = null){
+  
+    // test array
+    $arrsongs = array('1575157', '895819');
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
     
-    return $this->createsQueueOperationObject(true, 'Successfull');
-  
+    $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
+    
+    $cnt = 0;
+    $cnt = $this->Queuelist->find('count', array(
+      'conditions' => array( 'PlaylistName' => $queueName, 'patronID' => $patronId),
+      'recursive' => -1      
+    ));
+    
+    if(0 != $cnt) {
+      return $this->createsQueueOperationObject(false, 'Name already exist');
+    }
+    
+    switch($action){
+    
+      case 'c':
+      
+        $cnt = 0;
+        $cnt = $this->Queuelist->find('count', array(
+          'conditions' => array( 'PlaylistName' => $queueName, 'patronID' => $patronId),
+          'recursive' => -1      
+        ));
+        if(0 != $cnt) {
+          return $this->createsQueueOperationObject(false, 'Name already exist');
+        }
+    
+        $insertArr['PlaylistName'] = $queueName;
+        $insertArr['patronID'] = $patronId;
+        $insertArr['status'] = 1;
+        $insertArr['description'] = '';
+        $insertArr['user_type'] = 'c';
+        $this->Queuelist->save($insertArr);
+      
+        $queueID = $this->Queuelist->getLastInsertID();
+
+        $this->setQueueSongs($arrsongs, $queueID);
+        
+        return $this->createsQueueOperationObject(true, 'You have successfully created your Queue');
+      
+      break;
+      case 'r':
+
+        $cnt = 0;
+        $cnt = $this->Queuelist->find('count', array(
+          'conditions' => array( 'PlaylistName' => $queueName, 'patronID' => $patronId),
+          'recursive' => -1      
+        ));
+        if(0 != $cnt) {
+          return $this->createsQueueOperationObject(false, 'Name already exist');
+        }
+        
+        $this->Queuelist->read('Plid', $queueID);
+        $this->Queuelist->set(array(
+          'PlaylistName' => $queueName,
+        ));     
+        $this->Queuelist->save();
+        
+        return $this->createsQueueOperationObject(true, "You have successfully updated your Queue");
+      
+      break;
+      case 'u':
+      
+/*         $cnt = 0;
+        $cnt = $this->Queuelist->find('count', array(
+          'conditions' => array( 'PlaylistName' => $queueName, 'patronID' => $patronId),
+          'recursive' => -1      
+        ));
+        if(0 != $cnt) {
+          return $this->createsQueueOperationObject(false, 'Name already exist');
+        }  */       
+        
+        $this->Queuelist->read('Plid', $queueID);
+        $this->Queuelist->set(array(
+          'PlaylistName' => $queueName,
+        ));
+        $this->Queuelist->save();
+        $this->setQueueSongs($arrsongs, $queueID);
+      
+        return $this->createsQueueOperationObject(true, "You have successfully updated your Queue");
+      
+      break;
+      default:
+        
+    }
+    
+
   }
    
   /**
@@ -6331,7 +6418,55 @@ STR;
     
   }
  
-
+  
+  /**
+   * Function Name : setQueueSongs
+   * Desc : delete all & insert given songs for queue
+   * @param int arrSongs
+   * @return int
+   */
+  private function setQueueSongs($arrSongs, $queueID) {
+  
+    $this->QueuelistDetails->deleteAll(array('Plid' => $queueID), false);
+    
+    foreach($arrSongs as $Spid){
+           
+      $productDetails = $this->Product->find('first',array(
+        'conditions' => array('pid' => $Spid),
+        'fields' => array('ProdID', 'provider_type'),
+        'recursive' => -1
+      ));
+      
+      $albumDetails = $this->Song->find('first',array(
+        'joins' => array(
+          array(
+            'type' => 'INNER',
+            'table' => 'Albums',
+            'alias' => 'Albums',
+            'foreignKey' => false,
+            'conditions' => array('Song.ReferenceID = Albums.ProdID', 'Song.provider_type = Albums.provider_type'),        
+          )
+        ),  
+        'conditions' => array('Song.ProdID' => $productDetails['Product']['ProdID'], 'Song.provider_type' => $productDetails['Product']['provider_type']),
+        'fields' => array('Albums.ProdID', 'Albums.provider_type'),
+        'recursive' => -1
+      ));
+      
+      // insert QueuelistDetails
+      $insertArr['Plid'] = $queueID;
+      $insertArr['SongProdId'] = $productDetails['Product']['ProdID'];
+      $insertArr['SongProviderType'] = $productDetails['Product']['provider_type'];
+      $insertArr['AlbumProdId'] = $albumDetails['Albums']['ProdID'];
+      $insertArr['AlbumProviderType'] = $albumDetails['Albums']['provider_type'];
+      $status = $this->QueuelistDetails->save($insertArr);
+      
+    }
+  
+    return true;
+  }
+ 
+  
+ 
   
   
 }
