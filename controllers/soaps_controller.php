@@ -15,6 +15,7 @@ include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserCurrentDownlo
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'AuthenticationResponseData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserData.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SuccessResponse.php');
+include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'QueueOperation.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'UserTypeResponse.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'SongDownloadSuccess.php');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'VideoDownloadSuccess.php');
@@ -70,6 +71,7 @@ class SoapsController extends AppController {
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."AuthenticationResponseData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserData.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SuccessResponse.php");
+    $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."QueueOperation.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."UserTypeResponse.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."SongDownloadSuccess.php");
     $test->addFile(ROOT.DS.APP_DIR.DS."controllers".DS."classes".DS."VideoDownloadSuccess.php");
@@ -94,6 +96,7 @@ class SoapsController extends AppController {
     $test->addURLToClass("AuthenticationResponseData", $siteUrl."soaps/");
     $test->addURLToClass("UserData", $siteUrl."soaps/");
     $test->addURLToClass("SuccessResponse", $siteUrl."soaps/");
+    $test->addURLToClass("QueueOperation", $siteUrl."soaps/");
     $test->addURLToClass("UserTypeResponse", $siteUrl."soaps/");
     $test->addURLToClass("SongDownloadSuccess", $siteUrl."soaps/");
     $test->addURLToClass("VideoDownloadSuccess", $siteUrl."soaps/");
@@ -5229,6 +5232,27 @@ STR;
   }
   
   /**
+   * Function Name : manageQueue
+   * Desc : returns operation status
+   * @param string $authenticationToken
+   * @param string $queueName
+   * @param string $queueID
+   * @param string $arrsongs
+   * @param string $action
+	 * @return QueueOperationType[]
+   */
+  function manageQueue($authenticationToken, $queueName, $queueID, $arrsongs, $action){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    return $this->createsQueueOperationObject(true, 'Successfull');
+  
+  }
+   
+  
+  /**
    * Function Name : getQueueDetails
    * Desc : returns default/custom queue details
    * @param string $authenticationToken
@@ -5888,6 +5912,26 @@ STR;
 
     $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'SuccessResponseType');
     $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArraySuccessResponseType');
+
+    return $data;
+  }
+  
+  /**
+   * return class(QueueOperation) object with response data
+   * @param bool $success
+   * @param string $message
+   * @return QueueOperationType[]
+   */
+
+  private function createsQueueOperationObject($success, $message){
+
+
+    $obj = new QueueOperationType;
+    $obj->success       = $success;
+    $obj->message       = $message;
+
+    $success_list = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueOperationType');
+    $data = new SoapVar($success_list,SOAP_ENC_OBJECT,null,null,'ArrayQueueOperationType');
 
     return $data;
   }
