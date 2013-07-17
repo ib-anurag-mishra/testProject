@@ -24,9 +24,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 		$width = 166;
 	}
 }
-
-
-
+    
 ?>
     <div class="queue-overlay">
             <div class="rename-queue-dialog-box">
@@ -328,27 +326,26 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li> 
                                             </ul>
                                             <?php if($this->Session->read("patron")){ ?>
-                                            <?php if($this->Session->read('library_type') == '2') {?>
+                                            <?php if($this->Session->read('library_type') == '2') {
+                                                $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
+                                            ?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
+                                                    <?php if(!empty($defaultQueues)){ ?>
+                                                    
                                                     <li>
                                                             <a href="#" class="sidebar-anchor">Freegal Playlists</a>
                                                             <ul class="sidebar-sub-nav">
-
-                                                                    <li><a href="#">Top 40</a></li>
-                                                                    <li><a href="#">90's</a></li>
-                                                                    <li><a href="#">Classic Rock</a></li>
-                                                                    <li><a href="#">Heavy Metal</a></li>
-                                                                    <li><a href="#">Electronic</a></li>
-                                                                    <li><a href="#">Hip Hop</a></li>
-                                                                    <li><a href="#">Jazz</a></li>
-                                                                    <li><a href="#">Shuffle</a></li>
+                                                                <?php foreach($defaultQueues as $key => $value){?>
+                                                                    <li><a href="/queuelistdetails/index/<?php echo $value['Queuelist']['Plid'];?>"><?php echo $value['Queuelist']['PlaylistName']; ?></a></li>
+                                                                <?php } ?>    
                                                             </ul>
                                                     </li>
+                                                    <?php } ?>
                                                     <li>
                                                             <a href="#" class="sidebar-anchor saved-queue">My Queues</a>
                                                             <ul class="sidebar-sub-nav">
                                                                     <li><a href="now-streaming.php">Now Streaming</a></li>
-                                                                    <li><a href="#">Saved Queues</a></li>
+                                                                    <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>">Saved Queues</a></li>
                                                             </ul>
                                                     </li>
                                                     <li>
