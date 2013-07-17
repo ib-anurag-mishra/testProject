@@ -17,7 +17,7 @@ class QueueListDetailsController extends AppController{
     function beforeFilter(){
        
             parent::beforeFilter();
-            $this->Auth->allow('index');
+            $this->Auth->allow('now_streaming', 'queue_details');
     }
     
     /**
@@ -26,7 +26,7 @@ class QueueListDetailsController extends AppController{
      * return        : List of queues 
      */
     
-    function index(){// echo 123; die;  
+    function now_streaming(){// echo 123; die;  
         //$this->autoRender = false;
        // $this->autoRedirect = false;
          $this->layout = 'home';   
@@ -77,14 +77,83 @@ class QueueListDetailsController extends AppController{
 
                     $this->set('queue_list_array',$queue_list_array); 
                     $this->set('queue_id',$this->params['pass'][0]); 
-
-       
-         
         
 
     }
     
-    
+    function queue_details()
+    {
+       
+        
+         $this->layout = 'home';   
+                 
+         
+//         echo "<pre>";
+//         print_r($_POST);
+//         die;
+            if($_POST['hdn_remove_song']) 
+            {
+                // echo $_POST["Pdid"]; die;
+                if(!empty($_POST["Pdid"]))
+                {
+                  // echo "Result: ". $this->QueuelistDetails->deleteAll($_POST["Pdid"]); 
+                    $conditions = array (
+                                                        "Pdid" => $_POST["Pdid"]										
+                                        );
+                                                
+                    $delete_reponse	= $this->QueuelistDetails->delete(array('Pdid' => $_POST["Pdid"])); 
+//                    echo $this->QueuelistDetails->lastQuery();
+//                    echo "<pre>";
+//                    print_r($delete_reponse);
+//                    die;
+                    
+                    
+                }
+               
+            }
+       
+                    $libId = $this->Session->read('library');
+                    $patId = $this->Session->read('patron');
+                    $territory = $this->Session->read('territory');
+                    $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+                    $this->set('libraryDownload',$libraryDownload);
+                    $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+                    $this->set('patronDownload',$patronDownload);
+
+
+                    //echo "<pre>";
+                     //print_r($this->params['pass'][0]); die;
+
+                    //echo "123";
+                    $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+                   // echo 456;
+                    
+                    
+                    // Find Total Duration
+                    
+                    $total_seconds = 0;
+                    
+                    foreach($queue_list_array as $k => $v)
+                    {
+                        $full_length    =   $v['Songs']['FullLength_Duration'];
+                        $temp_arr       =   explode(":", $full_length);
+                        $minutes        =   $temp_arr[0];
+                        $seconds        =   $temp_arr[1];
+                        $total_seconds +=   $minutes*60+$seconds;
+                    }
+                    
+                    $total_duration     =    $total_seconds/60;
+                    $total_minutes      =    floor($total_duration);
+                    $total_seconds      =    $total_seconds%60;
+                    
+                    $this->set('queue_list_array',$queue_list_array); 
+                    $this->set('queue_id',$this->params['pass'][0]); 
+                    $this->set('queue_songs_count',count($queue_list_array)); 
+                    $this->set('total_time',$total_minutes.":".$total_seconds); 
+
+       
+          
+    }
     
     
     

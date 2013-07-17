@@ -30,13 +30,15 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
                     <header>Rename '<span>Queue Name</span>'</header>
-                    <form action="" method="post">
+                    <form action="/queuelistdetails/now_streaming/" method="post">
                     <div class="rename-form-container">
 
                                     <label for="name">Name:</label>
                                     <input type="text" name="name" id="name" />
                                     <label for="description">Description:</label>
                                     <textarea name="description" id="description"></textarea>
+                                    <input type="hidden" id="Plid" name="Plid" value="" />
+                                    <input type="hidden" name="hid_action" value="rename_queue" />
 
 
                     </div>
