@@ -53,7 +53,14 @@
 					?>
 					
 					<div class="row clearfix">
-						<a class="preview" href="#"></a>
+						<!-- <a class="preview" href="#"></a>  -->
+                                            <?php
+
+                                                echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$key, "onClick" => 'playSample(this, "'.$key.'", '.$value['Songs']['ProdID'].', "'.base64_encode($nationalTopDownload[$key]['Songs']['provider_type']).'", "'.$this->webroot.'");')); 
+                                                echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$key)); 
+                                                echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$key, "onClick" => 'stopThis(this, "'.$key.'");')); 
+
+                                            ?>
 						<div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
 						<a class="add-to-wishlist-button" href="#"></a>
 						<div class="album-title"><a href="#"><?php echo $value['Albums']['AlbumTitle']?></a></div>
