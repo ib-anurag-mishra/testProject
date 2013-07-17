@@ -5251,6 +5251,29 @@ STR;
   
   }
    
+  /**
+   * Function Name : deleteQueue
+   * Desc : delete queue 
+   * @param string $authenticationToken
+   * @param string $queueID
+	 * @return QueueOperationType[]
+   */
+  function deleteQueue($authenticationToken, $queueID){
+  
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+    
+    $st2 = $this->QueuelistDetails->deleteAll(array('Plid' => $queueID), false);
+    $st1 = $this->Queuelist->deleteAll(array('Plid' => $queueID), false);
+    
+    if( (true === $st1) && (true === $st2) ) {
+      return $this->createsQueueOperationObject(true, 'You have delted Queue successfully');
+    }else{
+      return $this->createsQueueOperationObject(false, 'Failed to delete Queue');
+    }
+  
+  } 
   
   /**
    * Function Name : getQueueDetails
