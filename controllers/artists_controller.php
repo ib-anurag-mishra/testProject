@@ -1159,6 +1159,7 @@ Class ArtistsController extends AppController
             $decodedId = trim(base64_decode($id));
                  $country = $this->Session->read('territory');
                  if(!empty($country)){
+                 if ( ((Cache::read("videolist_".$decodedId)) === false)  || (Cache::read("videolist_".$decodedId) === null) ) { 
                  $countryPrefix = $this->Session->read('multiple_countries');                 
                  $sql_us_10_v =<<<STR
                 SELECT 
@@ -1173,6 +1174,7 @@ Class ArtistsController extends AppController
                                 Video.Sample_Duration,
                                 Video.FullLength_Duration,
                                 Video.provider_type,
+                                Video.video_label,
                                 Genre.Genre,
                                 Country.Territory,
                                 Country.SalesDate,
@@ -1205,6 +1207,10 @@ STR;
          
                     //echo $sql_national_100_v; die;
                     $artistVideoList = $this->Video->query($sql_us_10_v);
+                    Cache::write("videolist_".$decodedId, $artistVideoList);
+                    }else{
+                        $artistVideoList = Cache::read("videolist_".$decodedId);
+                    }
                     $this->set('artistVideoList',$artistVideoList);
                     
                     
