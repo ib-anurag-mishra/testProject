@@ -91,12 +91,12 @@ Class QueueComponent extends Object
       )
     );
     
-   // echo $this->QueuelistDetails->lastQuery();
+    echo "Query: ".$this->QueuelistDetails->lastQuery();
     
-//    echo "<pre>";
-//    print_r($queueDetail);
-//    echo 456;
-//    die;
+    echo "<pre>";
+    print_r($queueDetail);
+    echo 456;
+    die;
     
     
    /* $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
