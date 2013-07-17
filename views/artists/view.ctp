@@ -158,7 +158,7 @@
                                                       <a class="add-to-wishlist" href="#">
                                                           
                                                           
-                                                          <span class="afterClick"><?php __("Please Wait..");?></span>
+                                                          <span class="afterClick"><?php __("Please");?></span>
                                                           <span><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
                                                           
                                                           
