@@ -490,20 +490,20 @@ class SolrComponent extends Object {
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(CTitle:(*'.strtolower($keyword).'*) OR Title:'.$searchkeyword.'^400 OR CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:'.$searchkeyword.'^200 OR CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
+            $query = '(CTitle:(*'.strtolower($keyword).'*) OR Title:('.$searchkeyword.')^400 OR CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:('.$searchkeyword.')^200 OR CComposer:(*'.strtolower($keyword).'*) OR Composer:('.$searchkeyword.')^200)';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
           case 'artist':
-            $query = '(CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:'.$searchkeyword.'^200)';
+            $query = '(CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:('.$searchkeyword.')^200)';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = '(CLabel:(*'.strtolower($keyword).'*) OR Label:'.$searchkeyword.'^200)';
+            $query = '(CLabel:(*'.strtolower($keyword).'*) OR Label:('.$searchkeyword.')^200)';
             $field = 'Label';
             break;
           case 'video':
-            $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR VideoTitle:'.$searchkeyword.'^200)';
+            $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR VideoTitle:('.$searchkeyword.')^200)';
             $field = 'VideoTitle';
             break;
           case 'composer':
@@ -798,7 +798,7 @@ class SolrComponent extends Object {
           }
         }
         else{
-
+            
         }
       } else {
         return array();
