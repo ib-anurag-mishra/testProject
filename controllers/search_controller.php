@@ -462,7 +462,7 @@ class SearchController extends AppController {
                     $queryArr = $this->Solr->query('Title:"' . utf8_decode(str_replace(array(' ', '(', ')', '"', ':', '!', '{', '}', '[', ']', '^', '~', '*', '?'), array('\ ', '\(', '\)', '\"', '\:', '\!', '\{', '\}', '\[', '\]', '\^', '\~', '\*', '\?'), $albumsCheck[$i])) . '"', 1);
                     $albumData[] = $queryArr[0];
                 }
-
+                print_r($albumData); die;
                 $artists = $this->Solr->groupSearch($queryVar, 'artist', 1, 5);
                 $genres = $this->Solr->groupSearch($queryVar, 'genre', 1, 5);
                 $composers = $this->Solr->groupSearch($queryVar, 'composer', 1, 5);
