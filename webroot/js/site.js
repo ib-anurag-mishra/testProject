@@ -198,7 +198,7 @@ $(function() {
 		music_search_results.show();
 	});*/
 	
-	$("#search-text").autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
+	/*$("#search-text").autocomplete("/search/autocomplete",
     {
         minChars: 1,
         cacheLength: 10,
@@ -208,6 +208,10 @@ $(function() {
         }
 	}).result(function(e, item) {
         $('#auto').attr('value', 1);
+    });*/
+    
+    $("#search-text").on('keyup',function(){
+       alert($("#search-text").val());
     });
 	
     $('.select-arrow').on('click',function(e){
