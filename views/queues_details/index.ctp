@@ -47,9 +47,9 @@
 				<div class="playlist-scrollable">
 					<div class="row-container">
 					<?php
-					//for($b=0;$b<28;$b++) {
+					
                                             foreach($queue_list_array as $key => $value)
-                                            {   
+                                            {    
 					?>
 					
 					<div class="row clearfix">
@@ -109,7 +109,7 @@
                                                        ?>
 							<!--<a class="remove-song" href="#">Remove Song</a> -->
                                                         <span class="top-100-download-now-button">
-                                                        <form method="Post" name="form_rename<?php echo $value["Songs"]["ProdID"]; ?>" action="/queuelistdetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
+                                                        <form method="Post" name="form_rename<?php echo $value["Songs"]["ProdID"]; ?>" action="/queuedetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
                                                         <input type="hidden" name="Pdid" value="<?php echo $value["QueuelistDetails"]["Pdid"];?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Songs"]["provider_type"]; ?>" />
                                                         <input type="hidden" name="hdn_remove_song" value="1" />

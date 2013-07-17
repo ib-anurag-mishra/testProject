@@ -97,10 +97,24 @@
                                 ?>
                             </div>
                             <div class="video-title">
-                                <a href="#"><?php echo $featureVideo['Video']['VideoTitle']; ?></a>
+                                
+                            <a href="javascript:void(0);">
+                            <?php
+                            if(strlen($featureVideo['Video']['VideoTitle']) >= 50){
+                                    $featureVideo['Video']['VideoTitle'] = substr($featureVideo['Video']['VideoTitle'], 0, 50). '...';
+                            }
+                            ?>
+                            <?php echo $this->getTextEncode($featureVideo['Video']['VideoTitle']);?>
+                            </a>
                             </div>
                             <div class="video-name">
-                                <a href="#"><?php echo $featureVideo['Video']['ArtistText']; ?></a>
+                            <?php
+                            if(strlen($featureVideo['Video']['ArtistText']) >= 50){
+                                    $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 50). '...';
+                            }
+                            ?>
+                            <?php echo $this->getTextEncode($ArtistText['Video']['ArtistText']);?>
+                            </a>
                             </div>
                         </div>
                 <?php 
@@ -212,17 +226,18 @@ foreach($topVideoDownloads as $topDownload)
                             <a href="javascript:void(0);">
 
                             <?php
-                            if(strlen($topDownload['Video']['VideoTitle']) >= 50){
-                                    $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 50). '...';
+                            if(strlen($topDownload['Video']['VideoTitle']) >= 20){
+                                    $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 20). '...';
                             }
                             ?>
                             <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']);?>
                             </a>
                         </div>
                         <div class="video-name">
-                            <?php <a href="javascript:void(0);">
-                            if(strlen($topDownload['Video']['ArtistText']) >= 50){
-                                    $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 50). '...';
+                            <a href="javascript:void(0);">
+                            <?php 
+                            if(strlen($topDownload['Video']['ArtistText']) >= 20){
+                                    $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 20). '...';
                             }
                             ?>
                             <?php echo $this->getTextEncode($topDownload['Video']['ArtistText']);?>
