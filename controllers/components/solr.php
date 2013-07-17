@@ -416,7 +416,7 @@ class SolrComponent extends Object {
         }
 
         $query = $query.' AND Territory:'.$country.$cond;
-echo $query; die;
+
         if($page == 1){
             $start = 0;
         } else {
@@ -508,7 +508,7 @@ echo $query; die;
             break;
           case 'composer':
             //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-	    $query = '(CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
+            $query = '(CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
             $field = 'Composer';
             break;
           default:
@@ -518,7 +518,7 @@ echo $query; die;
         }
 
         $query = $query.' AND Territory:'.$country;
-
+        echo $query; die;
         if($page == 1){
             $start = 0;
         } else {
