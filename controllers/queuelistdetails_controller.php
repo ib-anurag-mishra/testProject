@@ -72,7 +72,7 @@ class QueueListDetailsController extends AppController{
                      //print_r($this->params['pass'][0]); die;
 
                     //echo "123";
-                    $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+                    $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
                    // echo 456;
 
                     $this->set('queue_list_array',$queue_list_array); 
@@ -125,7 +125,7 @@ class QueueListDetailsController extends AppController{
                      //print_r($this->params['pass'][0]); die;
 
                     //echo "123";
-                    $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+                    $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
                    // echo 456;
                     
                     
