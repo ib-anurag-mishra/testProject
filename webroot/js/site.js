@@ -1071,7 +1071,58 @@ $(function() {
 	    
 	});
 
+	/* clickoffs */
+	$(document).mouseup(function (e) {
 	
+	    var container = $('.wishlist-popover');
+	    var container2 = $('.mejs-playlist.mejs-layer');
+	    var container3 = music_search_results;
+	    var container4 = whats_happening_filter_results;
+	    var container5 = playlist_list;
+	    var container6 = most_popular_sub_nav;
+	    var container7 = $('.queue-overlay');
+	
+	    if (container.has(e.target).length === 0)
+	    {
+	        container.removeClass('active');
+	    }
+	    
+		if (container2.has(e.target).length === 0)
+	    {
+	        container2.hide();
+	    }
+	    
+		if (container3.has(e.target).length === 0)
+	    {
+	        container3.hide();
+	    }
+	    
+	    if (container4.has(e.target).length === 0)
+	    {
+	        container4.hide();
+	    }
+	    
+	    if (container5.has(e.target).length === 0)
+	    {
+	        container5.removeClass('active');
+	    }
+	    
+	    if (container6.has(e.target).length === 0)
+	    {
+	        container6.removeClass('active');
+	    }
+	    
+		if (container7.has(e.target).length === 0)
+	    {
+	        container7.removeClass('active');
+	        $('.rename-queue-dialog-box').removeClass('active');
+			$('.delete-queue-dialog-box').removeClass('active');
+			$('.create-queue-dialog-box').removeClass('active');
+	    }
+	    
+	    
+	});
+	/* end clickoffs */
 	
 	function computeVisibleHeight ($t) {
         var top = $t.position().top;
