@@ -518,7 +518,7 @@ class SolrComponent extends Object {
         }
 
         $query = $query.' AND Territory:'.$country;
-        echo $query; die;
+        // echo $query; die;
         if($page == 1){
             $start = 0;
         } else {
@@ -529,10 +529,8 @@ class SolrComponent extends Object {
           'group' => 'true',
           'group.field' => $field,
           'group.query' => $query,
-          'sort' => 'provider_type desc',
           'group.sort' => 'provider_type desc',
-	  'score' => 'desc'
-        );
+	    );
 	
 	/*$query = '(
 			CArtistText: (britney spears)  OR 
