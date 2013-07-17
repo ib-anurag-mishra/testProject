@@ -194,8 +194,21 @@ $(function() {
 	
 	
 	search_text.on('keyup',function(){
+		var allType = 'all'; 
+        $.ajax({
+            url:'/search/autocomplete',
+            type:'get',
+            data:{q:search_text.val(),type:allType},
+            success:function(){
+                alert('success');
+                music_search_results.show();
+            },
+            failure:function(){
+                alert('fail');
+            }
+            
+        });
 		
-		music_search_results.show();
 	});
 	
 	$('.select-arrow').on('click',function(e){
