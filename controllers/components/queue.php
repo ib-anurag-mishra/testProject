@@ -37,7 +37,8 @@ Class QueueComponent extends Object
     
     function getQueueDetails($queueID, $patId){
        //echo "QID: ".$queueID;
-
+    $patId= 1101400335373;
+    
     $queueDetailList = ClassRegistry::init('QueuelistDetails');
     $queueDetail = $queueDetailList->find('all',
       array(
