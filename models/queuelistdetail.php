@@ -9,6 +9,7 @@ class QueuelistDetail extends AppModel
 {
 	var $name = 'QueuelistDetail';
 	var $useTable = 'queuelist_details';
+        var $primaryKey = 'Pdid';
 
 //	var $belongsTo = array(
 //		'User' => array(
