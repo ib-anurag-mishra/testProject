@@ -336,3 +336,20 @@ div.paging span a, div.paging a {
     color: #999;
     text-decoration: none;
 }
+.queue.success{
+    background: none repeat scroll 0 0 #52C6EC;
+    left: 0 !important;
+    padding-bottom: 10px;
+    position: relative !important;
+    text-align: center !important;
+    top: 0 !important;
+}
+
+.queue.problem{
+    background: none repeat scroll 0 0 red;
+    left: 0 !important;
+    padding-bottom: 10px;
+    position: relative !important;
+    text-align: center !important;
+    top: 0 !important;
+}

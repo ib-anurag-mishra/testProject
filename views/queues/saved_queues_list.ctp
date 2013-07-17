@@ -11,6 +11,9 @@
 			<div class="create-new-queue-btn"></div>
 			<div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
 		</header>
+                <?php
+                echo $session->flash();
+                ?>
                 <?php if(!empty($queueData)){ ?>
 		<div class="playlists-shadow-container">
 			<div class="playlists-scrollable">
