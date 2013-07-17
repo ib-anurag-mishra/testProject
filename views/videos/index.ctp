@@ -209,10 +209,26 @@ foreach($topVideoDownloads as $topDownload)
 
                         </div>
                         <div class="video-title">
-                            <a href="#"><?php echo $topDownload['Video']['VideoTitle']; ?></a>
+                            <a href="javascript:void(0);">
+
+                            <?php
+                            if(strlen($topDownload['Video']['VideoTitle']) >= 50){
+                                    $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 50). '...';
+                            }
+                            ?>
+                            <?php echo $this->getTextEncode($topDownload['Video']['VideoTitle']);?>
+                            </a>
                         </div>
                         <div class="video-name">
-                            <a href="#"><?php echo $topDownload['Video']['ArtistText']; ?></a>
+                            <?php <a href="javascript:void(0);">
+                            if(strlen($topDownload['Video']['ArtistText']) >= 50){
+                                    $topDownload['Video']['ArtistText'] = substr($topDownload['Video']['ArtistText'], 0, 50). '...';
+                            }
+                            ?>
+                            <?php echo $this->getTextEncode($topDownload['Video']['ArtistText']);?>
+
+
+                            </a>
                         </div>
                <?php 
                 $i++;
