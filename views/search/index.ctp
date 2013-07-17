@@ -911,7 +911,7 @@ if ($type != 'all') {
                                     <?php
                                 }
                                     } else {
-                                        $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+                                        // $library = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
                                         /*if($library != 'www' && $library != 'freegal' && $library != '50'){
                                             echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
                                         } else {
