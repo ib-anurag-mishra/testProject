@@ -912,11 +912,11 @@ if ($type != 'all') {
                                 }
                                     } else {
                                         $checklib = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
-                                        /*if($checklib != 'www' && $checklib != 'freegal' && $checklib != '50'){
+                                        if($checklib != 'www' && $checklib != 'freegal' && $checklib != '50'){
                                             echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
                                         } else {
                                             echo $this->Html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
-                                        }*/
+                                        }
                                     }
                                 ?>
                             </div>
