@@ -1185,7 +1185,7 @@ $(function() {
 });
 
 $('document').ready(function(){
-    $('#search-text').autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
+    $('#search-text').autocomplete("/search/autocomplete",
     {
         minChars: 1,
         cacheLength: 10,
