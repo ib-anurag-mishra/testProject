@@ -75,14 +75,10 @@
 			<div class="playlist-shadow-container">
 				<div class="playlist-scrollable">
 					<div class="row-container">
-					<?php
-                                                
-
-					//for($b=0;$b<28;$b++) {
+					<?php                                                
+					 
                                             foreach($queue_list_array as $key => $value)
-                                            {   
-
-                                                
+                                            {
 
 					?>
 					

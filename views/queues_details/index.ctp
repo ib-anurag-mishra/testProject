@@ -47,9 +47,9 @@
 				<div class="playlist-scrollable">
 					<div class="row-container">
 					<?php
-					//for($b=0;$b<28;$b++) {
+					
                                             foreach($queue_list_array as $key => $value)
-                                            {   
+                                            {    
 					?>
 					
 					<div class="row clearfix">
