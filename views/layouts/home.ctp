@@ -40,7 +40,7 @@
 			<script type="text/javascript">
 				$(document).ready(function() {
 				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-					$('#search-text').keypress(function(event) {
+					/*$('#search-text').keypress(function(event) {
 						//auto_check();
 						if (event.which == '13') {
 						  $('#HomeSearchForm').submit();
@@ -56,7 +56,7 @@
                         }
 					}).result(function(e, item) {
 						$('#auto').attr('value', 1);
-					});
+					});*/
 					<?php
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
