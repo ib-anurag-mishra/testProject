@@ -212,7 +212,7 @@ foreach($topVideoDownloads as $topDownload)
                             <a href="javascript:void(0);">
 
                             <?php
-                            if(strlen($topDownload['Video']['VideoTitle']) >= 50){
+                            if(strlen($topDownload['Video']['VideoTitle']) >= 30){
                                     $topDownload['Video']['VideoTitle'] = substr($topDownload['Video']['VideoTitle'], 0, 50). '...';
                             }
                             ?>
