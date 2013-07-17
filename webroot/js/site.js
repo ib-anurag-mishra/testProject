@@ -193,24 +193,12 @@ $(function() {
 	grids.addClass('active');
 	
 	
-	/*search_text.on('keyup',function(){
+	search_text.on('keyup',function(){
 		
 		music_search_results.show();
-	});*/
+	});
 	
-	$("#search-text").autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
-    {
-        minChars: 1,
-        cacheLength: 10,
-        autoFill: false,
-        extraParams: {
-            type:'all'
-        }
-	}).result(function(e, item) {
-        $('#auto').attr('value', 1);
-    });
-	
-    $('.select-arrow').on('click',function(e){
+	$('.select-arrow').on('click',function(e){
 		if($('.account-options-menu').hasClass('active')) {
 			
 			$('.account-options-menu').removeClass('active');
