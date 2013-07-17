@@ -155,7 +155,14 @@
                                                         </ul>
                                                     </div>
                                                             
-                                                      <a class="add-to-wishlist" href="#">Download Now</a>
+                                                      <a class="add-to-wishlist" href="#">
+                                                          
+                                                          
+                                                          <span class="afterClick"><?php __("Please Wait..");?></span>
+                                                          <span><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
+                                                          
+                                                          
+                                                      </a>
 						
                                                         
                                                         <?php  }  
