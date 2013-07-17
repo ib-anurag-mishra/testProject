@@ -155,18 +155,8 @@
                                                         </ul>
                                                     </div>
                                                             
-                                                      <a class="add-to-wishlist" href="#">
-                                                          
-                                                          
-                                                          <span class="afterClick"><?php __("Please");?></span>
-                                                          <span><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
-                                                          
-                                                          
-                                                      </a>
-						
-                                                        
-                                                        <?php  }  
-                                                              /*
+                                                         <?php  }  
+                                                            
                                                                 if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
                                                                 {
                                                                         if($libraryDownload == '1' && $patronDownload == '1')
@@ -184,9 +174,11 @@
                                                                                         <span class="beforeClick" style="display:none;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
                                                                                                 <a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
                                                                                         </span>
-                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:left"><a href='#' class="add-to-wishlist"><?php __("Please Wait..");?></a></span>
-                                                                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
-                                                                                </form>													
+                                                                                <a class="add-to-wishlist" >
+                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>"><?php __("Please Wait..");?></span>
+                                                                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;display:none;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span>
+                                                                                </a>             
+                                                                </form>													
 
                                                         <?php	
                                                                                 } else {
@@ -203,7 +195,7 @@
                                                                         <a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
                                                                                 date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span></a>
                             <?php
-                                        } */
+                                        } 
                                 }else{
                                     ?>
                                 <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
