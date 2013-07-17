@@ -51,13 +51,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="create-queue-dialog-box">
                     <div class="close"></div>
                     <header>Create Queue</header>
-                    <?php echo $this->Form->create('Queuelist', array( 'action' => '/createQueue', 'type' => 'file', 'id' => 'addconsortium'));?>
+                    <form action="/queues/createQueue" method="post">
                     <div class="rename-form-container">
 
                                     <label for="name">Name:</label>
-                                    <?php echo $this->Form->input('PlaylistName', array('label' => false, 'value' => $getData['Queuelist']['PlaylistName'], 'div' => false, 'class' => 'form_fields') ); ?>
+                                    <?php echo $this->Form->input('Queuelist.PlaylistName', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                                     <label for="description">Description:</label>
-                                    <?php echo $this->Form->input('description', array('label' => false, 'value' => $getData['Queuelist']['description'], 'div' => false, 'class' => 'form_fields') ); ?>
+                                    <?php echo $this->Form->input('Queuelist.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 
 
                     </div>
