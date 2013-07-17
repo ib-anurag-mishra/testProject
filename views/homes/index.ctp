@@ -188,11 +188,20 @@
                                                                                                     ?>
 
 
+                                                                                                    <?php											
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 35 ) {
+                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 35)) . "..";
+                                                                                                    } else {
+                                                                                                            $artistText = $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']);
+                                                                                                    }
+                                                                                                    ?>
+
+
 													<div class="song-title">
 														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle; ?></a>
 													</div>
 													<div class="artist-name">
-														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $nationalTopDownload[$i]['Song']['ArtistText']; ?></a>
+														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $artistText; ?></a>
 													</div>
 												</div>
 											</li>
@@ -339,10 +348,18 @@
 													</div>
 
                                                                                                 <?php											
-                                                                                                    if (strlen($nationalTopVideoDownload[$i]['Video']['VideoTitle']) >= 35 ) {
-                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                    if (strlen($nationalTopVideoDownload[$i]['Video']['VideoTitle']) >= 50 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['VideoTitle'], 0, 50)) . "..";
                                                                                                     } else {
                                                                                                             $songTitle = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['VideoTitle']);
+                                                                                                    }
+                                                                                                ?>
+
+                                                                                                <?php											
+                                                                                                    if (strlen($nationalTopVideoDownload[$i]['Video']['ArtistText']) >= 50 ) {
+                                                                                                            $ArtistText = $this->getTextEncode(substr($nationalTopVideoDownload[$i]['Video']['ArtistText'], 0, 50)) . "..";
+                                                                                                    } else {
+                                                                                                            $ArtistText = $this->getTextEncode($nationalTopVideoDownload[$i]['Video']['ArtistText']);
                                                                                                     }
                                                                                                 ?>
 													<div class="song-title">
@@ -351,7 +368,7 @@
 													</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
-                                                                                                                <a href="javascript:void(0);"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a>
+                                                                                                                <a href="javascript:void(0);"><?php echo $ArtistText; ?></a>
 													</div>
 												</div>
 											</li>
@@ -382,6 +399,12 @@
 										$title = $v['Album']['AlbumTitle'];
 									}
 
+                                                                        if(strlen($v['Album']['ArtistText']) > 14){
+										$ArtistText = substr($v['Album']['ArtistText'], 0, 14)."..";
+									}else{
+										$ArtistText = $v['Album']['ArtistText'];
+									}
+
 
 									?>								
 										
@@ -389,16 +412,8 @@
 											<div class="featured-album-detail">
 												<div class="album-cover-container">												
 
-<a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84"));?></a>
+                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84"));?></a>
 
-
-
-<?php /* echo $html->link($html->image($image,array("height" => "77", "width" => "84")),
-array('controller'=>'artists', 'action'=>'view', base64_encode($v['Album']['ArtistText']), $v['Album']['ProdID'] , base64_encode($v['Album']['provider_type'])),
-array('class'=>'first','escape'=>false)) */ ?>
-													
-                                                                                                       
-                            
 
 												</div>
 												<div class="album-title">
@@ -406,11 +421,8 @@ array('class'=>'first','escape'=>false)) */ ?>
 												</div>
 
 
-
-
-
 												<div class="artist-name">
-													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $v['Album']['ArtistText']; ?></a>
+													<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($v['Album']['ArtistText'])); ?>/<?=base64_encode($v['Genre']['Genre'])?>"><?php echo $ArtistText; ?></a>
 												</div>
 											</div>
 										</li>
