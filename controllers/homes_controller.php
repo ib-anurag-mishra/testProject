@@ -1164,15 +1164,15 @@ STR;
                 
                
                 $topDownload_videos_data = $this->requestAction(
-                                                    array('controller' => 'videos', 'action' => 'my_lib_top_10_videos'), array(
-                                                                                                                                'data'=>array(
-                                                                                                                                    'model'=>array(
-                                                                                                                                        'field'=>'val'
-                                                                                                                                                    )
-                                                                                                                                )
-                                                                                                                    )
-                                            );
-                
+                array('controller' => 'videos', 'action' => 'my_lib_top_10_videos'), array(
+                             'data'=>array(
+                                       'model'=>array(
+                                        'field'=>'val'
+                                            )
+                                        )
+                                    )
+                                );
+
                 
                 
                 
