@@ -774,11 +774,16 @@ class SearchController extends AppController {
                             if($name == 'album'){
                                 $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
                                 $albumdocs = $this->Solr->query('Title:'.$keyword,1);
-                                print_r($albumdocs); die;
+                                $imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
+                                $image = Configure::read('App.Music_Path') . $imageUrl;
+                                $imageData = "<img src='".$image."' height='40px' width='40px' />";
+                            } else {
+                                $imageData = "";
                             }
                             //if(preg_match("/^".$queryVar."/i",$record)){
                             //$records[] = $record."|".$record;
-                            $records[] = "<div style='float:left;width:65px;text-align:left;font-weight:bold;'>" . ucfirst($name) . "</div><div style='float:right;width:180px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                            
+                            $records[] = "<div style='float:left;width:65px;text-align:left;font-weight:bold;'>" . (!empty($imageData)?$imageData."<br/>":"") .ucfirst($name) . "</div><div style='float:right;width:180px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
                             $rank++;
                             //}
                         }
