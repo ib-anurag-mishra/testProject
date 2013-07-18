@@ -768,13 +768,12 @@ class SearchController extends AppController {
                 }
 
                 $rank = 1;
-                print_r($arr_show); die;
                 foreach ($arr_show as $key => $val) {
                     foreach ($val as $name => $value) {
                         foreach ($value as $record => $count) {
                             //if(preg_match("/^".$queryVar."/i",$record)){
                             //$records[] = $record."|".$record;
-                            $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . ucfirst($name) . "</div><div style='float:right;width:300px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                            $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . ucfirst($name) . "</div><div style='float:right;width:200px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
                             $rank++;
                             //}
                         }
