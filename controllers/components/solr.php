@@ -482,24 +482,24 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = '(CSongTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(CSongTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR (CSongTitle:('.strtolower(str_replace('!','\!',$keyword)).'*)^200 OR SongTitle:'.$searchkeyword.'^400)';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = '(CGenre:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Genre:'.$searchkeyword.'^200)';
+            $query = '(CGenre:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR CGenre:('.strtolower(str_replace('!','\!',$keyword)).'*)^200 OR Genre:'.$searchkeyword.'^400)';
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(CTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Title:('.$searchkeyword.')^400 OR CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200 OR CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Composer:('.$searchkeyword.')^200)';
+            $query = '(CTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR CTitle:('.strtolower(str_replace('!','\!',$keyword)).'*)^400 OR Title:('.$searchkeyword.')^600 OR CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR CArtistText:('.strtolower(str_replace('!','\!',$keyword)).'*)^200 OR ArtistText:('.$searchkeyword.')^400 OR CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR CComposer:('.strtolower(str_replace('!','\!',$keyword)).'*)^200 OR Composer:('.$searchkeyword.')^400)';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
           case 'artist':
-            $query = '(CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200)';
+            $query = '(CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*)^200 OR ArtistText:('.$searchkeyword.')^400)';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = '(CLabel:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Label:('.$searchkeyword.')^200)';
+            $query = '(CLabel:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR CLabel:('.strtolower(str_replace('!','\!',$keyword)).'*)^200 OR Label:('.$searchkeyword.')^400)';
             $field = 'Label';
             break;
           case 'video':
