@@ -13,8 +13,9 @@ $(document).ready(function(){
 		cacheLength: 10,
 		autoFill: false,
 		extraParams: {
-		type:$('#search_type').val()
-	},
+		type:$('#search_type').val(),
+        ufl:'1'
+    },
 	formatItem:function(data){
 		return data[0];
 	},
