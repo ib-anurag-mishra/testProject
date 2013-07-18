@@ -55,17 +55,18 @@ class QueueListDetailsController extends AppController{
             
         }
         else if($_POST['hid_action']=='delete_queue')
-        {                          
-              if(!empty($_POST["dqPlid"])){                   
-                     if($this->Queuelist->deleteAll(array('Plid' => $_POST["dqPlid"]),true))
-                     {
-                              $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
-                              $this->redirect($this->referer());						
-                     }
-                      else{
-                              $this->Session ->setFlash('Error occured while deleteing queue', 'modal', array( 'class' => 'queue problem' ));
-                              $this->redirect($this->referer());					
-                    }
+        {                         
+              if(!empty($_POST["dqPlid"])){
+                    $delqueueDetail = $this->QueuelistDetail->deleteAll(array('Plid' => $_POST["dqPlid"]), false);
+                    $delqueue = $this->Queuelist->deleteAll(array('Plid' => $_POST["dqPlid"]), false);
+
+                    if( (true === $delqueueDetail) && (true === $delqueue) ) {
+                        $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
+                        $this->redirect($this->referer());
+                    }else{
+                        $this->Session ->setFlash('Error occured while deleteing queue', 'modal', array( 'class' => 'queue problem' ));
+                        $this->redirect($this->referer());                    
+                    }                     
               }   
         }
     }
