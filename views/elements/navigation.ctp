@@ -336,7 +336,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php if(!empty($defaultQueues)){ ?>
                                                     
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor">Freegal Playlists</a>
+                                                            <a href="#" class="sidebar-anchor">Freegal Queues</a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
                                                                     <li><a href="/queuelistdetails/queue_details/<?php echo $value['Queuelist']['Plid'];?>"><?php echo $value['Queuelist']['PlaylistName']; ?></a></li>
