@@ -1205,7 +1205,7 @@ STR;
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-            if (($national = Cache::read("national_us_top10".$territory)) === false) {
+            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                                
                     $country = $territory;
 
@@ -1311,11 +1311,11 @@ STR;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
 			// Checking for download status
-			Cache::write("national_us_top10".$territory, $national_us_top10_record);
+			Cache::write("national_us_top10_songs".$territory, $national_us_top10_record);
 		}
                 else
                 {
-                   $national_us_top10_record = Cache::read("national_us_top10".$territory); 
+                   $national_us_top10_record = Cache::read("national_us_top10_songs".$territory); 
                 }
             }
               
@@ -4290,8 +4290,8 @@ STR;
              
                
              
-             if(1)
-             //if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
+             
+             if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4367,8 +4367,8 @@ STR;
                 //////////////////////////////////Videos/////////////////////////////////////////////////////////
              
                 
-                if(1)
-                //if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+             
+                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4428,14 +4428,14 @@ STR;
 //            die;
 
             if(!empty($coming_soon_videos)){
-                Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
+                Cache::write("new_releases_videos".$territory, $coming_soon_videos);
             }
                     
         }
         else    //  Show From Cache
         {                  
 
-            $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
+            $coming_soon_videos = Cache::read("new_releases_videos".$territory);
 
         }
 
@@ -4447,8 +4447,8 @@ STR;
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
              
                 
-             if(1)
-             //if (($coming_soon = Cache::read("coming_soon_albums".$territory)) === false)    // Show from DB
+             
+             if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4509,7 +4509,7 @@ STR;
                         
                       
                         if(!empty($coming_soon_albums_rs)){
-                          Cache::write("coming_soon_albums".$territory, $coming_soon_albums_rs);
+                          Cache::write("new_releases_albums".$territory, $coming_soon_albums_rs);
                         }
                     
                 }

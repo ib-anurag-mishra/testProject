@@ -92,6 +92,8 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
 
+          /*
+            
             $country = $territory;
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -445,7 +447,566 @@ STR;
             }
 
             $this->log("cache written for coming soon videos for $territory", 'debug');
-            // End Caching functionality for coming soon songs
+            //End Caching functionality for coming soon songs
+            
+           
+           */ 
+            
+            //Added caching functionality for us top 10 Songs           
+            $country = $territory;
+            if ( !empty($country ) && ( $territory == "US" ) ) {
+               if($maintainLatestDownload){
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    FROM `latest_downloads` AS `Download` 
+                    LEFT JOIN libraries ON libraries.id=Download.library_id
+                    WHERE libraries.library_territory = '".$country."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                    GROUP BY Download.ProdID 
+                    ORDER BY `countProduct` DESC 
+                    LIMIT 110";
+                } else {
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                    FROM `downloads` AS `Download` 
+                    LEFT JOIN libraries ON libraries.id=Download.library_id
+                    WHERE libraries.library_territory = '".$country."' 
+                    AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                    GROUP BY Download.ProdID 
+                    ORDER BY `countProduct` DESC 
+                    LIMIT 110";
+                }
+                $ids = '';
+                $ids_provider_type = '';
+                $USTop10Downloaded = $this->Album->query($sql);
+                foreach ($USTop10Downloaded as $natTopSong) {
+                    if (empty($ids)) {
+                        $ids .= $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    } else {
+                        $ids .= ',' . $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    }
+                }
+
+                if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
+                    $this->log("download data not recevied for " . $territory, "cache");
+                    echo "download data not recevied for " . $territory;
+                }
+                $data = array();
+
+                $sql_US_TOP_10 =<<<STR
+                               SELECT 
+                                       Song.ProdID,
+                                       Song.ReferenceID,
+                                       Song.Title,
+                                       Song.ArtistText,
+                                       Song.DownloadStatus,
+                                       Song.SongTitle,
+                                       Song.Artist,
+                                       Song.Advisory,
+                                       Song.Sample_Duration,
+                                       Song.FullLength_Duration,
+                                       Song.provider_type,
+                                       Genre.Genre,
+                                       Country.Territory,
+                                       Country.SalesDate,
+                                       Sample_Files.CdnPath,
+                                       Sample_Files.SaveAsName,
+                                       Full_Files.CdnPath,
+                                       Full_Files.SaveAsName,
+                                       File.CdnPath,
+                                       File.SourceURL,
+                                       File.SaveAsName,
+                                       Sample_Files.FileID,
+                                       PRODUCT.pid
+                               FROM
+                                       Songs AS Song
+                                               LEFT JOIN
+                                       File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                               LEFT JOIN
+                                       File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                               LEFT JOIN
+                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                               LEFT JOIN
+                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                               LEFT JOIN
+                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                               WHERE
+                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                               GROUP BY Song.ProdID
+                               ORDER BY FIELD(Song.ProdID,$ids) ASC
+                               LIMIT 10 
+
+STR;
+                $data = $this->Album->query($sql_US_TOP_10);
+                
+                print_r($data);
+                $this->log($sql_US_TOP_10, "cachequery");
+                if ($ids_provider_type == "") {
+                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
+                    echo "ids_provider_type is set blank for " . $territory;
+                }
+
+                if (!empty($data)) {
+                    Cache::delete("national_us_top10_songs" . $country);
+                    Cache::write("national_us_top10_songs" . $country, $data);
+                    $this->log("cache written for US top ten for $territory", "cache");
+                    echo "cache written for US top ten for $territory";
+                } else {
+
+                    Cache::write("national_us_top10_songs" . $country, Cache::read("national_us_top10_songs" . $country));
+                    echo "Unable to update key";
+                    $this->log("Unable to update US top ten for " . $territory, "cache");
+                    echo "Unable to update US top ten for " . $territory;
+                }
+            }
+            $this->log("cache written for US top ten for $territory", 'debug');
+             //End Caching functionality for US TOP 10 Songs
+            
+            /*
+            
+             //Added caching functionality for us top 10 Album            
+            $country = $territory;
+            if ( !empty($country ) && ( $territory == "US" ) ) {
+                if($maintainLatestDownload){
+                            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `latest_downloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                    } else {
+                            $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `downloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                    }
+                $ids = '';
+                $ids_provider_type = '';
+                $USTop10Downloaded = $this->Album->query($sql);
+                foreach ($USTop10Downloaded as $natTopSong) {
+                    if (empty($ids)) {
+                        $ids .= $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    } else {
+                        $ids .= ',' . $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    }
+                }
+
+                if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
+                    $this->log("download data not recevied for " . $territory, "cache");
+                    echo "download data not recevied for " . $territory;
+                }
+                $data = array();
+
+                $album_sql_US_TOP_10 =<<<STR
+                               SELECT 
+                                       Song.ProdID,
+                                       Song.ReferenceID,
+                                       Song.Title,
+                                       Song.ArtistText,
+                                       Song.DownloadStatus,
+                                       Song.SongTitle,
+                                       Song.Artist,
+                                       Song.Advisory,
+                                       Song.Sample_Duration,
+                                       Song.FullLength_Duration,
+                                       Song.provider_type,
+                                       Genre.Genre,
+                                       Country.Territory,
+                                       Country.SalesDate,
+                                       Sample_Files.CdnPath,
+                                       Sample_Files.SaveAsName,
+                                       Full_Files.CdnPath,
+                                       Full_Files.SaveAsName,
+                                       File.CdnPath,
+                                       File.SourceURL,
+                                       File.SaveAsName,
+                                       Sample_Files.FileID,
+                                       PRODUCT.pid
+                               FROM
+                                       Songs AS Song
+                                               LEFT JOIN
+                                       File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                               LEFT JOIN
+                                       File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                               LEFT JOIN
+                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                               LEFT JOIN
+                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                               LEFT JOIN
+                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                               WHERE
+                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                               GROUP BY  Song.ReferenceID
+                               ORDER BY count(Song.ProdID) DESC
+                               LIMIT 10 
+
+STR;
+                $data = $this->Album->query($album_sql_US_TOP_10);
+                $this->log($album_sql_US_TOP_10, "cachequery");
+                if ($ids_provider_type == "") {
+                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
+                    echo "ids_provider_type is set blank for " . $territory;
+                }
+
+                if (!empty($data)) {
+                    Cache::delete("national_us_top10_albums" . $country);
+                    Cache::write("national_us_top10_albums" . $country, $data);
+                    $this->log("cache written for US top ten Album for $territory", "cache");
+                    echo "cache written for US top ten Album for $territory";
+                } else {
+
+                    Cache::write("national_us_top10_albums" . $country, Cache::read("national_us_top10_albums" . $country));
+                    echo "Unable to update key";
+                    $this->log("Unable to update US top ten Album for " . $territory, "cache");
+                    echo "Unable to update US top ten Album for " . $territory;
+                }
+            }
+            $this->log("cache written for US top ten Album for $territory", 'debug');
+            //End Caching functionality for US TOP 10 Albums
+            
+            
+            
+           //Added caching functionality for us top 10 Video            
+            $country = $territory;
+            if ( !empty($country ) && ( $territory == "US" ) ) {
+                   if($maintainLatestVideoDownload){                    
+
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `latest_videodownloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                   } else {
+
+                        $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
+                        FROM `videodownloads` AS `Download` 
+                        LEFT JOIN libraries ON libraries.id=Download.library_id
+                        WHERE libraries.library_territory = '".$country."' 
+                        AND `Download`.`created` BETWEEN '".Configure::read('App.lastWeekStartDate')."' AND '".Configure::read('App.lastWeekEndDate')."' 
+                        GROUP BY Download.ProdID 
+                        ORDER BY `countProduct` DESC 
+                        LIMIT 110";
+                    }
+                $ids = '';
+                $ids_provider_type = '';
+                $USTop10Downloaded = $this->Album->query($sql);
+                foreach ($USTop10Downloaded as $natTopSong) {
+                    if (empty($ids)) {
+                        $ids .= $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    } else {
+                        $ids .= ',' . $natTopSong['Download']['ProdID'];
+                        $ids_provider_type .= ',' . "(" . $natTopSong['Download']['ProdID'] . ",'" . $natTopSong['Download']['provider_type'] . "')";
+                    }
+                }
+
+                if ((count($USTop10Downloaded) < 1) || ($USTop10Downloaded === false)) {
+                    $this->log("download data not recevied for " . $territory, "cache");
+                    echo "download data not recevied for " . $territory;
+                }
+                $data = array();
+
+                $video_sql_US_TOP_10 =<<<STR
+                SELECT 
+                                Video.ProdID,
+                                Video.ReferenceID,
+                                Video.Title,
+                                Video.ArtistText,
+                                Video.DownloadStatus,
+                                Video.VideoTitle,
+                                Video.Artist,
+                                Video.Advisory,
+                                Video.Sample_Duration,
+                                Video.FullLength_Duration,
+                                Video.provider_type,
+                                Genre.Genre,
+                                Country.Territory,
+                                Country.SalesDate,
+                                Full_Files.CdnPath,
+                                Full_Files.SaveAsName,
+                                Full_Files.FileID,
+                                Image_Files.FileID,
+                                Image_Files.CdnPath,
+                                Image_Files.SourceURL,
+                                PRODUCT.pid
+                FROM
+                                video AS Video
+                                                LEFT JOIN
+                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                                                LEFT JOIN
+                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                                                LEFT JOIN
+         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                                                LEFT JOIN
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                LEFT JOIN
+                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                GROUP BY Video.ProdID
+                ORDER BY FIELD(Video.ProdID, $ids) ASC
+                LIMIT 10 
+                  
+STR;
+                $data = $this->Album->query($video_sql_US_TOP_10);
+                $this->log($video_sql_US_TOP_10, "cachequery");
+                if ($ids_provider_type == "") {
+                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
+                    echo "ids_provider_type is set blank for " . $territory;
+                }
+
+                if (!empty($data)) {
+                    Cache::delete("national_us_top10_videos" . $country);
+                    Cache::write("national_us_top10_videos" . $country, $data);
+                    $this->log("cache written for US top ten video for $territory", "cache");
+                    echo "cache written for US top ten video for $territory";
+                } else {
+
+                    Cache::write("national_us_top10_videos" . $country, Cache::read("national_us_top10_videos" . $country));
+                    echo "Unable to update key";
+                    $this->log("Unable to update US top ten video for " . $territory, "cache");
+                    echo "Unable to update US top ten video for " . $territory;
+                }
+            }
+            $this->log("cache written for US top ten video for $territory", 'debug');
+            //End Caching functionality for US TOP 10 Videos
+            
+            
+            
+            
+            
+            
+            //Added caching functionality for new release Songs           
+            $country = $territory;
+            if ( !empty($country ) && ( $territory == "US" ) ) {
+                
+                $data = array();
+                $sql_song_coming_soon =<<<STR
+                SELECT 
+                            Song.ProdID,
+                            Song.ReferenceID,
+                            Song.Title,
+                            Song.ArtistText,
+                            Song.DownloadStatus,
+                            Song.SongTitle,
+                            Song.Artist,
+                            Song.Advisory,
+                            Song.Sample_Duration,
+                            Song.FullLength_Duration,
+                            Song.provider_type,
+                            Genre.Genre,
+                            Country.Territory,
+                            Country.SalesDate,
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            PRODUCT.pid
+                    FROM
+                            Songs AS Song
+                                    LEFT JOIN
+                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                    LEFT JOIN
+                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                    LEFT JOIN
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                    LEFT JOIN
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                                    LEFT JOIN
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    WHERE
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
+                    ORDER BY Country.SalesDate DESC
+                    LIMIT 100
+	  	
+	  
+STR;
+                 
+                $data = $this->Album->query($sql_song_coming_soon);
+                $this->log($sql_song_coming_soon, "cachequery");
+//                if ($ids_provider_type == "") {
+//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
+//                    echo "ids_provider_type is set blank for " . $territory;
+//                }
+
+                if (!empty($data)) {
+                    Cache::delete("new_releases_songs" . $country);
+                    Cache::write("new_releases_songs" . $country, $data);
+                    $this->log("cache written for new releases songs for $territory", "cache");
+                    echo "cache written for new releases songs for $territory";
+                } else {
+                    Cache::write("new_releases_songs" . $country, Cache::read("new_releases_songs" . $country));
+                    echo "Unable to update key";
+                    $this->log("Unable to update new releases songs for " . $territory, "cache");
+                    echo "Unable to update new releases songs for " . $territory;
+                }
+            }
+            $this->log("cache written for new releases songs for $territory", 'debug');
+            //End Caching functionality for new releases songs
+            
+            
+            //Added caching functionality for new release Albums           
+            $country = $territory;
+            if ( !empty($country ) && ( $territory == "US" ) ) {
+                
+                $data = array();
+                $sql_album_new_release = <<<STR
+                SELECT 
+                            Song.ProdID,
+                            Song.ReferenceID,
+                            Song.Title,
+                            Song.ArtistText,
+                            Song.DownloadStatus,
+                            Song.SongTitle,
+                            Song.Artist,
+                            Song.Advisory,
+                            Song.Sample_Duration,
+                            Song.FullLength_Duration,
+                            Song.provider_type,
+                            Genre.Genre,
+                            Country.Territory,
+                            Country.SalesDate,
+                            Sample_Files.CdnPath,
+                            Sample_Files.SaveAsName,
+                            Full_Files.CdnPath,
+                            Full_Files.SaveAsName,
+                            File.CdnPath,
+                            File.SourceURL,
+                            File.SaveAsName,
+                            Sample_Files.FileID,
+                            PRODUCT.pid
+                    FROM
+                            Songs AS Song
+                                    LEFT JOIN
+                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                    LEFT JOIN
+                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                    LEFT JOIN
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                    LEFT JOIN
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                                    LEFT JOIN
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                    WHERE
+                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
+                    ORDER BY Country.SalesDate DESC
+                    LIMIT 100
+	  	
+	  
+STR;
+                 
+                $data = $this->Album->query($sql_album_new_release);
+                $this->log($sql_album_new_release, "cachequery");
+//                if ($ids_provider_type == "") {
+//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
+//                    echo "ids_provider_type is set blank for " . $territory;
+//                }
+
+                if (!empty($data)) {
+                    Cache::delete("new_releases_albums" . $country);
+                    Cache::write("new_releases_albums" . $country, $data);
+                    $this->log("cache written for new releases albums for $territory", "cache");
+                    echo "cache written for new releases albums for $territory";
+                } else {
+                    Cache::write("new_releases_albums" . $country, Cache::read("new_releases_albums" . $country));
+                    echo "Unable to update key";
+                    $this->log("Unable to update new releases albums for " . $territory, "cache");
+                    echo "Unable to update new releases albums for " . $territory;
+                }
+            }
+            $this->log("cache written for new releases albums for $territory", 'debug');
+            //End Caching functionality for new releases albums
+            
+            
+            
+            
+            //Added caching functionality for new release videos           
+            $country = $territory;
+            if ( !empty($country ) && ( $territory == "US" ) ) {
+                
+                $data = array();
+                $sql_video_new_release = <<<STR
+                SELECT 
+                Video.ProdID,
+                Video.ReferenceID,
+                Video.Title,
+                Video.ArtistText,
+                Video.DownloadStatus,
+                Video.VideoTitle,
+                Video.Artist,
+                Video.Advisory,
+                Video.Sample_Duration,
+                Video.FullLength_Duration,
+                Video.provider_type,
+                Genre.Genre,
+                Country.Territory,
+                Country.SalesDate,
+                Full_Files.CdnPath,
+                Full_Files.SaveAsName,
+                Full_Files.FileID,
+                Image_Files.FileID,
+                Image_Files.CdnPath,
+                Image_Files.SourceURL,
+                PRODUCT.pid
+                FROM
+                video AS Video
+                LEFT JOIN
+                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                LEFT JOIN
+                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                LEFT JOIN
+                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+                LEFT JOIN
+                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                LEFT JOIN
+                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE
+                ( (Video.DownloadStatus = '1')  AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
+                GROUP BY Video.ProdID
+                ORDER BY Country.SalesDate DESC
+                LIMIT 100	  
+STR;
+                 
+                $data = $this->Album->query($sql_video_new_release);
+                $this->log($sql_video_new_release, "cachequery");
+//                if ($ids_provider_type == "") {
+//                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
+//                    echo "ids_provider_type is set blank for " . $territory;
+//                }
+
+                if (!empty($data)) {
+                    Cache::delete("new_releases_videos" . $country);
+                    Cache::write("new_releases_videos" . $country, $data);
+                    $this->log("cache written for new releases videos for $territory", "cache");
+                    echo "cache written for new releases videos for $territory";
+                } else {
+                    Cache::write("new_releases_videos" . $country, Cache::read("new_releases_videos" . $country));
+                    echo "Unable to update key";
+                    $this->log("Unable to update new releases videos for " . $territory, "cache");
+                    echo "Unable to update new releases videos for " . $territory;
+                }
+            }
+            $this->log("cache written for new releases albums for $territory", 'debug');
+            //End Caching functionality for new releases videos         
+            
+            
+            
+ 
             // Checking for download status
             $featured = array();
             $ids = '';
@@ -531,7 +1092,7 @@ STR;
                 $genre_data = array();
                 echo $territory;
 
-                if ($maintainLatestDownload) {
+          if ($maintainLatestDownload) {
                     $restoregenre_query = "
           SELECT 
               COUNT(DISTINCT latest_downloads.id) AS countProduct,
@@ -631,7 +1192,7 @@ STR;
         ORDER BY countProduct DESC
         LIMIT 10
         ";
-                }
+            }
                 $data = $this->Album->query($restoregenre_query);
                 $this->log($restoregenre_query, "cachequery");
                 if (!empty($data)) {
@@ -957,10 +1518,8 @@ STR;
                 $topDownload = array();
             }
 
-            //		library top 10 cache set
-
+            //library top 10 cache set
             if ((count($topDownload) < 1) || ($topDownload === false)) {
-
                 Cache::write("lib" . $libId, Cache::read("lib" . $libId));
                 $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 returns null for lib: $libId $country <br />";
@@ -971,14 +1530,18 @@ STR;
                 $this->log("library top 10 cache set for lib: $libId $country", "cache");
                 echo "<br />library top 10 cache set for lib: $libId $country <br />";
             }
+           
+           */
         }
 
         //--------------------------------------Library Top Ten End----------------------------------------------
 
-
         echo "============" . date("Y-m-d H:i:s") . "===============";
         $this->requestAction('/Resetcache/genrateXML');
         exit;
+       
+    
+          
     }
 
 }
