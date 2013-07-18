@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload');
 
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -37,6 +37,8 @@ class CacheController extends AppController {
     //for caching data
     function cacheGenre() {
         set_time_limit(0);
+        error_reporting(1); ini_set('display_errors', 1);
+        
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
         $territoryNames = array('US', 'CA', 'AU', 'NZ', 'IT');
@@ -47,6 +49,11 @@ class CacheController extends AppController {
         $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
+        
+        /*
+        
+        
+        
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -60,7 +67,7 @@ class CacheController extends AppController {
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
             
-           /*
+           
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -1379,7 +1386,7 @@ STR;
             //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
         }
         
-        */
+       */
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
 
@@ -1812,6 +1819,8 @@ STR;
            //library top 10 cache set for videos end
            
         }
+        
+        
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
