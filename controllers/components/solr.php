@@ -518,7 +518,7 @@ class SolrComponent extends Object {
         }
 
         $query = $query.' AND Territory:'.$country;
-         echo $query; // die;
+        // echo $query; // die;
         if($page == 1){
             $start = 0;
         } else {
@@ -553,7 +553,7 @@ class SolrComponent extends Object {
               $group->doclist->docs[0]->numFound = $group->doclist->numFound;
               $docs[] = $group->doclist->docs[0];
             } //echo '<pre>'; print_r($docs); echo '</pre>';
-             print_r($docs); die;
+             // print_r($docs); die;
             return $docs;
           } else {
             return array();
