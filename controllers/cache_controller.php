@@ -768,7 +768,7 @@ STR;
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
                     echo "ids_provider_type is set blank for " . $territory;
                 }
-
+                print_r($data);
                 if (!empty($data)) {
                     Cache::delete("national_us_top10_videos" . $country);
                     Cache::write("national_us_top10_videos" . $country, $data);
