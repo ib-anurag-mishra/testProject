@@ -31,7 +31,7 @@
 					<?php echo $VideosData[0]['Video']['VideoTitle']; ?>
 				</h2>
 				<h3 class="artist-name">
-					<?php echo $VideosData[0]['Video']['ArtistText']; ?>
+					<a href="/artists/album/"<?php base64_encode($VideosData[0]['Video']['ArtistText']); ?>"><?php echo $VideosData[0]['Video']['ArtistText']; ?></a>
 				</h3>
 				<?php
                                         $duration       =    $VideosData[0]['Video']['FullLength_Duration']; 
@@ -80,7 +80,8 @@
 										
 									</div>
 									<div class="song-title">
-										<a href="#"><?php 
+										<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+                                                                                <?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 35 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
                                                                                                     } else {
@@ -91,7 +92,7 @@
                                                                                 </a>
 									</div>
 									<div class="artist-name">										
-                                                                                <a href="#">
+                                                                                <a href="/artists/album/"<?php base64_encode($value['Video']['ArtistText']); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
@@ -153,7 +154,7 @@
 									
 								</div>
 								<div class="song-title">
-									<a href="#"><?php 
+									<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>"><?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 35 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
                                                                                                     } else {
@@ -164,7 +165,8 @@
                                                                                 </a>
 								</div>
 								<div class="artist-name">
-									<a href="#"> <?php 
+									<a href="/artists/album/"<?php base64_encode($value['Video']['ArtistText']); ?>">
+                                                                             <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
                                                                                             } else {
