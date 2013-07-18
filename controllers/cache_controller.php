@@ -59,6 +59,8 @@ class CacheController extends AppController {
             $this->log("Starting caching for $territory", 'debug');
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
+            
+           /*
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -92,7 +94,7 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
 
-          /*
+        
             
             $country = $territory;
             if (!empty($country)) {
@@ -562,7 +564,7 @@ STR;
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
             
-          */
+          
             
              //Added caching functionality for us top 10 Album            
             $country = $territory;
@@ -674,7 +676,7 @@ STR;
             //End Caching functionality for US TOP 10 Albums
             
             
-           /* 
+         / /* 
            //Added caching functionality for us top 10 Video            
             $country = $territory;
             if ( !empty($country ) && ( $territory == "US" ) ) {
@@ -783,7 +785,7 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
             
-            
+            */
             
             
             
