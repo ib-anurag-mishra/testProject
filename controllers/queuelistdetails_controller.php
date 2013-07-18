@@ -56,10 +56,8 @@ class QueueListDetailsController extends AppController{
         }
         else if($_POST['hid_action']=='delete_queue')
         {                          
-              if(!empty($_POST["dqPlid"])){
-                    $this->data['Queuelist']['Plid'] = $_POST["dqPlid"]; 
-                    $this->Queuelist->set($this->data['Queuelist']);
-                    if($this->Queuelist->delete())
+              if(!empty($_POST["dqPlid"])){                   
+                     if($this->Queuelist->deleteAll(array('Plid' => $_POST["dqPlid"]),true))
                      {
                               $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
                               $this->redirect($this->referer());						
