@@ -652,7 +652,7 @@ STR;
 
 STR;
                 $data = $this->Album->query($album_sql_US_TOP_10);
-                print_r($data);
+             
                 $this->log($album_sql_US_TOP_10, "cachequery");
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
@@ -676,7 +676,7 @@ STR;
             //End Caching functionality for US TOP 10 Albums
             
             
-          */ 
+          
            //Added caching functionality for us top 10 Video            
             $country = $territory;
             if ( !empty($country ) && ( $territory == "US" ) ) {
@@ -768,7 +768,6 @@ STR;
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
                     echo "ids_provider_type is set blank for " . $territory;
                 }
-                print_r($data);
                 if (!empty($data)) {
                     Cache::delete("national_us_top10_videos" . $country);
                     Cache::write("national_us_top10_videos" . $country, $data);
@@ -786,7 +785,7 @@ STR;
             //End Caching functionality for US TOP 10 Videos
             
             
-            /*
+            */
             
             
             
@@ -846,6 +845,8 @@ STR;
 //                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
 //                    echo "ids_provider_type is set blank for " . $territory;
 //                }
+                
+                print_r($data);
 
                 if (!empty($data)) {
                     Cache::delete("new_releases_songs" . $country);
@@ -919,7 +920,7 @@ STR;
 //                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
 //                    echo "ids_provider_type is set blank for " . $territory;
 //                }
-
+print_r($data);
                 if (!empty($data)) {
                     Cache::delete("new_releases_albums" . $country);
                     Cache::write("new_releases_albums" . $country, $data);
@@ -991,7 +992,7 @@ STR;
 //                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
 //                    echo "ids_provider_type is set blank for " . $territory;
 //                }
-
+print_r($data);
                 if (!empty($data)) {
                     Cache::delete("new_releases_videos" . $country);
                     Cache::write("new_releases_videos" . $country, $data);
@@ -1008,7 +1009,7 @@ STR;
             //End Caching functionality for new releases videos         
             
             
-            
+           /* 
  
             // Checking for download status
             $featured = array();
