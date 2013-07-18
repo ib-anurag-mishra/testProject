@@ -37,6 +37,8 @@ class CacheController extends AppController {
     //for caching data
     function cacheGenre() {
         set_time_limit(0);
+        error_reporting(1); ini_set('display_errors', 1);
+        
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
         $territoryNames = array('US', 'CA', 'AU', 'NZ', 'IT');
