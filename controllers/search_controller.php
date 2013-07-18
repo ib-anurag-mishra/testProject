@@ -773,7 +773,7 @@ class SearchController extends AppController {
                         foreach ($value as $record => $count) {
                             //if(preg_match("/^".$queryVar."/i",$record)){
                             //$records[] = $record."|".$record;
-                            $records[] = "<div style='float:left;width:75px;text-align:left;font-weight:bold;'>" . ucfirst($name) . "</div><div style='float:right;width:200px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
+                            $records[] = "<div style='float:left;width:48px;text-align:left;font-weight:bold;'>" . ucfirst($name) . "</div><div style='float:right;width:200px;text-align:left;'> " . $record . "</div>|" . $record . "|" . $rank;
                             $rank++;
                             //}
                         }
