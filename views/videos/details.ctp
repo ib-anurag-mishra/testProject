@@ -80,10 +80,27 @@
 										
 									</div>
 									<div class="song-title">
-										<a href="#"><?php echo $value['Video']['VideoTitle']; ?></a>
+										<a href="#"><?php 
+                                                                                                if (strlen($value['Video']['VideoTitle']) >= 35 ) {
+                                                                                                            $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                    } else {
+                                                                                                            $VideoTitle = $this->getTextEncode($value['Video']['VideoTitle']);
+                                                                                                    }    
+                                                                                                echo $VideoTitle; 
+                                                                                            ?>
+                                                                                </a>
 									</div>
-									<div class="artist-name">
-										<a href="#"><?php echo $value['Video']['ArtistText']; ?></a>
+									<div class="artist-name">										
+                                                                                <a href="#">
+                                                                                <?php 
+                                                                                        if (strlen($value['Video']['ArtistText']) >= 35 ) {
+                                                                                                    $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
+                                                                                            } else {
+                                                                                                    $VideoArtist = $this->getTextEncode($value['Video']['ArtistText']);
+                                                                                            }    
+                                                                                        echo $VideoArtist; 
+                                                                                 ?>
+                                                                                </a>
 									</div>
 								</li>
 								
