@@ -5983,7 +5983,7 @@ STR;
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
 
-    print_r($VideoData);
+    print_r($VideoData); 
     exit;
     
 
