@@ -1,5 +1,3 @@
-
-
 <section class="my-top-100-page">
 		
 		<div class="breadcrumbs">              
@@ -394,4 +392,4 @@
 			</div>
 		
 		</div>
-	</section>
+</section>
