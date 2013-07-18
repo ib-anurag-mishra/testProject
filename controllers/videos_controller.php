@@ -490,9 +490,9 @@ STR;
         
         
         $territory = $this->Session->read('territory');
-        if(empty($territory)){
-            $territory = 'US';
-        }
+//        if(empty($territory)){
+//            $territory = 'US';
+//        }
         $prefix = strtolower($territory)."_";
         
         
@@ -571,8 +571,7 @@ STR;
                 
                 
                 //if ($topDownloads = Cache::read("top_videos_genre" . $territory) === false)
-                if(1)
-                {                
+                              
                     if(count($VideosData)>0)
                    {
                         $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
@@ -590,11 +589,7 @@ STR;
                             $TopVideoGenreData = array();
                    }
                 
-                }
-                else
-                {
-                        $TopVideoGenreData = Cache::read("top_videos_genre" . $territory);
-                }
+              
 
                 $this->set('TopVideoGenreData',$TopVideoGenreData);
                 $this->set('VideoGenre',$VideosData[0]['Video']['Genre']);
