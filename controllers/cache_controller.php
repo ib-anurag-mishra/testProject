@@ -60,7 +60,7 @@ class CacheController extends AppController {
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
             
-           
+           /*
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -1378,6 +1378,8 @@ STR;
             }
             //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
         }
+        
+        */
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
 
@@ -1541,34 +1543,277 @@ STR;
             //library top 10 cache set for songs end
             
             
-            //library top 10 cache set for albums start
+            //library top 10 cache set for albums start            
+            if($maintainLatestDownload){
+                $download_src = 'LatestDownload';
+                $topDownloaded_albums = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
+            } else {
+                $download_src = 'Download';
+                $topDownloaded_albums = $this->Download->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+            }
             
             
+            $this->log("$download_src - $libId - $country", "cache");
+
+            $ids = '';
+            $ioda_ids = array();
+            $sony_ids = array();
+            $sony_ids_str = '';
+            $ioda_ids_str = '';
+            $ids_provider_type = '';
+            foreach ($topDownloaded_albums as $k => $v) {
+                if ($maintainLatestDownload) {
+                    if(empty($ids)){
+                        $ids .= $v['LatestDownload']['ProdID'];
+                        $ids_provider_type_album .= "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$v['LatestDownload']['ProdID'];
+                        $ids_provider_type_album .= ','. "(" . $v['LatestDownload']['ProdID'] .",'" . $v['LatestDownload']['provider_type'] ."')";
+                    }
+                    if($v['LatestDownload']['provider_type'] == 'sony'){
+                        $sony_ids[] = $v['LatestDownload']['ProdID'];
+                    } else {
+                        $ioda_ids[] = $v['LatestDownload']['ProdID'];
+                    }
+                } else {
+                    
+                    if(empty($ids)){
+                        $ids .= $v['Download']['ProdID'];
+                        $ids_provider_type_album .= "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$v['Download']['ProdID'];
+                        $ids_provider_type_album .= ','. "(" . $v['Download']['ProdID'] .",'" . $v['Download']['provider_type'] ."')";
+                    }
+                    if($v['Download']['provider_type'] == 'sony'){
+                        $sony_ids[] = $v['Download']['ProdID'];
+                    } else {
+                        $ioda_ids[] = $v['Download']['ProdID'];
+                    }
+                }
+            }
+
+            if ((count($topDownloaded_albums) < 1) || ($topDownloaded_albums === false)) {
+                $this->log("top download is not available for library: $libId - $country", "cache");
+            }
+
+            if ($ids != '') {
+                if(!empty($sony_ids)){
+                        $sony_ids_str = implode(',',$sony_ids);
+                }
+                if(!empty($ioda_ids)){
+                        $ioda_ids_str = implode(',',$ioda_ids);
+                }
+                if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
+                        $top_ten_condition_albums = "((Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony') OR (Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda'))";                                       
+                } else if(!empty($sony_ids_str)){
+                        $top_ten_condition_albums = "(Song.ProdID IN (".$sony_ids_str.") AND Song.provider_type='sony')";                                        
+
+                } else if(!empty($ioda_ids_str)){
+                        $top_ten_condition_albums = "(Song.ProdID IN (".$ioda_ids_str.") AND Song.provider_type='ioda')";                                        
+                }
+
+                $this->Song->recursive = 2;
+                $topDownloaded_query_albums =<<<STR
+				SELECT 
+					Song.ProdID,
+					Song.ReferenceID,
+					Song.Title,
+					Song.ArtistText,
+					Song.DownloadStatus,
+					Song.SongTitle,
+					Song.Artist,
+					Song.Advisory,
+					Song.Sample_Duration,
+					Song.FullLength_Duration,
+					Song.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+                                        Full_Files.SaveAsName,
+                                        File.CdnPath,
+                                        File.SourceURL,
+                                        File.SaveAsName,
+                                        Sample_Files.FileID,
+					PRODUCT.pid
+				FROM
+					Songs AS Song
+						LEFT JOIN
+					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+						LEFT JOIN
+                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
+				WHERE
+					((Song.DownloadStatus = '1') AND (($top_ten_condition_albums) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+				GROUP BY  Song.ReferenceID
+				ORDER BY count(Song.ProdID) DESC
+				LIMIT 10
+STR;
+                $topDownload = $this->Album->query($topDownloaded_query_albums);
+            } else {
+                $topDownload = array();
+            }
+
+            //library top 10 cache set
+            if ((count($topDownload) < 1) || ($topDownload === false)) {
+                Cache::write("lib_album" . $libId, Cache::read("lib_album" . $libId));
+                $this->log("topDownloaded_query albums returns null for lib: $libId $country", "cache");
+                echo "<br /> library top 10 albums returns null for lib: $libId $country <br />";
+            } else {
+                Cache::delete("lib_album" . $libId);
+                Cache::write("lib_album" . $libId, $topDownload);
+                //library top 10 cache set
+                $this->log("library top 10 albums cache set for lib: $libId $country", "cache");
+                echo "<br />library top 10 albums cache set for lib: $libId $country <br />";
+            }
+           
+           //library top 10 cache set for albums end
             
-            //library top 10 cache set for albums end
+           //library top 10 cache set for videos start 
+            if($maintainLatestDownload){
+                $download_src = 'LatestDownload';
+                $topDownloaded_videos = $this->LatestVideodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));                                                        
+            } else {
+                $download_src = 'Download';
+                $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
+            }
             
             
+            $this->log("$download_src - $libId - $country", "cache");
+
+            $ids = '';
+            $ioda_ids = array();
+            $sony_ids = array();
+            $sony_ids_str = '';
+            $ioda_ids_str = '';
+            $ids_provider_type = '';
+            foreach ($topDownloaded_videos as $k => $v) {
+                if ($maintainLatestDownload) {
+                    if(empty($ids)){
+                        $ids .= $v['LatestVideodownload']['ProdID'];
+                        $ids_provider_type_video .= "(" . $v['LatestVideodownload']['ProdID'] .",'" . $v['LatestVideodownload']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$v['LatestVideodownload']['ProdID'];
+                        $ids_provider_type_video .= ','. "(" . $v['LatestVideodownload']['ProdID'] .",'" . $v['LatestVideodownload']['provider_type'] ."')";
+                    }
+                    if($v['LatestVideodownload']['provider_type'] == 'sony'){
+                        $sony_ids[] = $v['LatestVideodownload']['ProdID'];
+                    } else {
+                        $ioda_ids[] = $v['LatestVideodownload']['ProdID'];
+                    }
+                } else {
+                    
+                    if(empty($ids)){
+                        $ids .= $v['Download']['ProdID'];
+                        $ids_provider_type_video .= "(" . $v['Videodownload']['ProdID'] .",'" . $v['Videodownload']['provider_type'] ."')";
+                    } else {
+                        $ids .= ','.$v['Download']['ProdID'];
+                        $ids_provider_type_video .= ','. "(" . $v['Videodownload']['ProdID'] .",'" . $v['Videodownload']['provider_type'] ."')";
+                    }
+                    if($v['Download']['provider_type'] == 'sony'){
+                        $sony_ids[] = $v['Videodownload']['ProdID'];
+                    } else {
+                        $ioda_ids[] = $v['Videodownload']['ProdID'];
+                    }
+                }
+            }
+
+            if ((count($topDownloaded_videos) < 1) || ($topDownloaded_videos === false)) {
+                $this->log("top download is not available for library: $libId - $country", "cache");
+            }
+
+            if ($ids != '') {
+                if(!empty($sony_ids)){
+                        $sony_ids_str = implode(',',$sony_ids);
+                }
+                if(!empty($ioda_ids)){
+                        $ioda_ids_str = implode(',',$ioda_ids);
+                }
+                if(!empty($sony_ids_str) && !empty($ioda_ids_str)){
+                        $top_ten_condition_videos = "((Video.ProdID IN (".$sony_ids_str.") AND Video.provider_type='sony') OR (Video.ProdID IN (".$ioda_ids_str.") AND Video.provider_type='ioda'))";                                       
+                } else if(!empty($sony_ids_str)){
+                        $top_ten_condition_videos = "(Video.ProdID IN (".$sony_ids_str.") AND Video.provider_type='sony')";                                        
+
+                } else if(!empty($ioda_ids_str)){
+                        $top_ten_condition_videos = "(Video.ProdID IN (".$ioda_ids_str.") AND Video.provider_type='ioda')";                                        
+                }
+				
+
+                $this->Song->recursive = 2;
+		$topDownloaded_query_videos =<<<STR
+				SELECT 
+					Video.ProdID,
+					Video.ReferenceID,
+					Video.Title,
+					Video.ArtistText,
+					Video.DownloadStatus,
+					Video.VideoTitle,
+					Video.Artist,
+					Video.Advisory,
+					Video.Sample_Duration,
+					Video.FullLength_Duration,
+					Video.provider_type,
+					Genre.Genre,
+					Country.Territory,
+					Country.SalesDate,
+					Sample_Files.CdnPath,
+					Sample_Files.SaveAsName,
+					Full_Files.CdnPath,
+                                        Full_Files.SaveAsName,
+                                        File.CdnPath,
+                                        File.SourceURL,
+                                        File.SaveAsName,
+                                        Sample_Files.FileID,
+					PRODUCT.pid
+				FROM
+					video AS Video
+						LEFT JOIN
+					File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+						LEFT JOIN
+					File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+						LEFT JOIN
+					Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+						LEFT JOIN
+                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+						LEFT JOIN
+					PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
+				WHERE
+					((Video.DownloadStatus = '1') AND (($top_ten_condition_videos) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+				GROUP BY Video.ProdID
+				ORDER BY FIELD(Video.ProdID,
+						$ids) ASC
+				LIMIT 10
+STR;
+                $topDownload = $this->Album->query($topDownloaded_query_videos);
+            } else {
+                $topDownload = array();
+            }
+
+            //library top 10 cache set
+            if ((count($topDownload) < 1) || ($topDownload === false)) {
+                Cache::write("lib_video" . $libId, Cache::read("lib_video" . $libId));
+                $this->log("topDownloaded_query videos returns null for lib: $libId $country", "cache");
+                echo "<br /> library top 10 videos returns null for lib: $libId $country <br />";
+            } else {
+                Cache::delete("lib_video" . $libId);
+                Cache::write("lib_video" . $libId, $topDownload);
+                //library top 10 cache set
+                $this->log("library top 10 videos cache set for lib: $libId $country", "cache");
+                echo "<br />library top 10 videos cache set for lib: $libId $country <br />";
+            }
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
+           //library top 10 cache set for videos end
            
         }
 
-        //--------------------------------------Library Top Ten End----------------------------------------------
+        //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
         $this->requestAction('/Resetcache/genrateXML');
