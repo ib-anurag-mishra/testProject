@@ -17,20 +17,23 @@ Class QueueComponent extends Object
      */
     function getQueueList($patronID){
         
-        $queuelistInstance = ClassRegistry::init('Queuelist');        
-        $cond = array('patronID' => $patronID, 'status' => '1');
-        
-        // Unbinded User model
-        $queuelistInstance->unbindModel(
-            array('belongsTo' => array('User'))
-        );        
-        
-        $queueData = $queuelistInstance->find('all', array(
-                'conditions' => $cond,
-                'order' => 'Queuelist.Created DESC',
-                'limit' => 100
-              ));
-        
+        if(!empty($patronID)){
+            $queuelistInstance = ClassRegistry::init('Queuelist');        
+            $cond = array('patronID' => $patronID, 'status' => '1');
+
+            // Unbinded User model
+            $queuelistInstance->unbindModel(
+                array('belongsTo' => array('User'))
+            );        
+
+            $queueData = $queuelistInstance->find('all', array(
+                    'conditions' => $cond,
+                    'order' => 'Queuelist.Created DESC',
+                    'limit' => 100
+                  ));
+        }else{
+            $queueData = array();
+        }
         return $queueData;        
     }
     

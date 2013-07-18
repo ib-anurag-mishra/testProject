@@ -1,4 +1,5 @@
 <section class="now-streaming-page">
+           <?php if(!empty($queue_list_array)){ ?>
 		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
 		<header class="clearfix">
 			<h2><?php echo $queue_list_array[0]['Queuelists']['PlaylistName'];?></h2>
@@ -179,6 +180,10 @@
 				</div>
 			</div>
 		</div>
+               <?php }else{ ?>
+
+                <h2> There are no queues currently being played. </h2>
 		
+                <?php } ?>                
 
 	</section>

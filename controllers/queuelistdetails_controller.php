@@ -62,7 +62,7 @@ class QueueListDetailsController extends AppController{
 
                     if( (true === $delqueueDetail) && (true === $delqueue) ) {
                         $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
-                        $this->redirect($this->referer());
+                        $this->redirect('/queues/savedQueuesList/'.$this->Session->read('patron'));
                     }else{
                         $this->Session ->setFlash('Error occured while deleteing queue', 'modal', array( 'class' => 'queue problem' ));
                         $this->redirect($this->referer());                    
