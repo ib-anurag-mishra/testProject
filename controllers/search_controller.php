@@ -772,9 +772,8 @@ class SearchController extends AppController {
                     foreach ($val as $name => $value) {
                         foreach ($value as $record => $count) {
                             if($name == 'album'){
-                                $albumdocs = $this->Solr->query('Title:'.$record,0,1);
+                                $albumdocs = $this->Solr->query('CTitle:*'.$record.'*',0,1);
                                 print_r($albumdocs); die;
-                                
                             }
                             //if(preg_match("/^".$queryVar."/i",$record)){
                             //$records[] = $record."|".$record;
