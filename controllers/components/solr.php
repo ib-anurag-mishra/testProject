@@ -482,43 +482,43 @@ class SolrComponent extends Object {
 
         switch($type){
           case 'song':
-            $query = '(CSongTitle:(*'.strtolower($keyword).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(CSongTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR SongTitle:'.$searchkeyword.'^200)';
             $field = 'SongTitle';
             break;
           case 'genre':
-            $query = '(CGenre:(*'.strtolower($keyword).'*) OR Genre:'.$searchkeyword.'^200)';
+            $query = '(CGenre:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Genre:'.$searchkeyword.'^200)';
             $field = 'Genre';
             break;
           case 'album':
-            $query = '(CTitle:(*'.strtolower($keyword).'*) OR Title:'.$searchkeyword.'^400 OR CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:'.$searchkeyword.'^200 OR CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
+            $query = '(CTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Title:('.$searchkeyword.')^400 OR CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200 OR CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Composer:('.$searchkeyword.')^200)';
             //$field = 'Title';
             $field = 'rpjoin';
             break;
           case 'artist':
-            $query = '(CArtistText:(*'.strtolower($keyword).'*) OR ArtistText:'.$searchkeyword.'^200)';
+            $query = '(CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200)';
             $field = 'ArtistText';
             break;
           case 'label':
-            $query = '(CLabel:(*'.strtolower($keyword).'*) OR Label:'.$searchkeyword.'^200)';
+            $query = '(CLabel:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Label:('.$searchkeyword.')^200)';
             $field = 'Label';
             break;
           case 'video':
-            $query = '(CVideoTitle:(*'.strtolower($keyword).'*) OR VideoTitle:'.$searchkeyword.'^200)';
+            $query = '(CVideoTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR VideoTitle:('.$searchkeyword.')^200)';
             $field = 'VideoTitle';
             break;
           case 'composer':
             //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.')';
-	    $query = '(CComposer:(*'.strtolower($keyword).'*) OR Composer:'.$searchkeyword.'^200)';
+            $query = '(CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Composer:'.$searchkeyword.'^200)';
             $field = 'Composer';
             break;
           default:
-            $query = '(CSongTitle:(*'.strtolower($keyword).'*) OR SongTitle:'.$searchkeyword.'^200)';
+            $query = '(CSongTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR SongTitle:'.$searchkeyword.'^200)';
             $field = 'SongTitle';
             break;
         }
 
         $query = $query.' AND Territory:'.$country;
-
+        // echo $query; die;
         if($page == 1){
             $start = 0;
         } else {
@@ -529,10 +529,8 @@ class SolrComponent extends Object {
           'group' => 'true',
           'group.field' => $field,
           'group.query' => $query,
-          'sort' => 'provider_type desc',
           'group.sort' => 'provider_type desc',
-	  'score' => 'desc'
-        );
+	    );
 	
 	/*$query = '(
 			CArtistText: (britney spears)  OR 
@@ -798,7 +796,7 @@ class SolrComponent extends Object {
           }
         }
         else{
-
+            
         }
       } else {
         return array();

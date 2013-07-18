@@ -62,9 +62,10 @@
 				
 			</div>
 			
-		</div>	
-
-		
+		</div>
+                <?php
+                echo $session->flash();
+                ?>                
 		<div class="now-playing-container">
 
 			<nav class="playlist-filter-container clearfix">
