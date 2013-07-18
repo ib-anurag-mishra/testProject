@@ -775,7 +775,7 @@ class SearchController extends AppController {
                                 $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
                                 $albumdocs = $this->Solr->query('Title:'.$keyword,1);
                                 $imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
-                                $image = Configure::read('App.Music_Path') . $imageUrl;
+                                $image = Configure::read('App.Music_Path') . preg_replace(array("/\r\n/","/\r/","/\n/"), array('','',''), $imageUrl);
                                 $imageData = "<img src='".$image."' height='40px' width='40px' />";
                             } else {
                                 $imageData = "";
