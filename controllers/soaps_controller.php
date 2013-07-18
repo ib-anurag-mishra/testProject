@@ -5991,34 +5991,39 @@ STR;
         
       $sobj = new SearchDataType;
       $sobj->SongProdID           = $this->getProductAutoID($val->ProdID, $val->provider_type);
-      $sobj->SongTitle            = $this->getTextUTF($val->SongTitle);
+      $sobj->SongTitle            = $this->getTextUTF($val->VideoTitle);
       $sobj->Title                = $this->getTextUTF($val->Title);
       $sobj->SongArtist           = $this->getTextUTF($val->Artist);
       $sobj->ArtistText           = $this->getTextUTF($val->ArtistText);
-      $sobj->Sample_Duration      = $val->Sample_Duration;
+      $sobj->Sample_Duration      = '';
       $sobj->FullLength_Duration  = $val->FullLength_Duration;
       $sobj->ISRC                 = $val->ISRC;
 
       $sobj->DownloadStatus       = $this->IsDownloadable($val->ProdID, $library_terriotry, $val->provider_type);
         
+        
       if($sobj->DownloadStatus) {
         $sobj->fileURL            = 'nostring';
+        $sobj->FullLengthFileURL  = 'nostring';
       }else{
-        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$val->CdnPath."/".$val->SaveAsName);
-      }
-        
-        
-      $albumData = $this->Album->find('first',
-        array(
-          'fields' => array('ProdID', 'AlbumTitle', 'Artist', 'provider_type'),
-          'conditions' => array('ProdID' => $val->ReferenceID, 'provider_type' => $val->provider_type),
-          'recursive' => -1,
-        )
-      );
+        $sobj->fileURL            = Configure::read('App.Music_Path').shell_exec('perl files/tokengen ' . 'sony_test/'.$val->ACdnPath."/".$val->ASourceURL);
+        $vdata = $this->Files->find('first',
+          array(
+            'fields' => array(
+              'CdnPath',
+              'SaveAsName'
+            ),
+            'conditions' => array(
+              'FileID' => $val->FullLength_FIleID
+            ),
+            'recursive' => -1
+        ));      
+        $sobj->FullLengthFileURL  = Configure::read('App.Music_Path') . shell_exec('perl files/tokengen ' . "sony_test/".$vdata['Files']['CdnPath'] . "/" . $vdata['Files']['SaveAsName']);
+      } 
 
-      $sobj->AlbumProdID          = $this->getProductAutoID($albumData['Album']['ProdID'], $albumData['Album']['provider_type']);
-      $sobj->AlbumTitle           = $this->getTextUTF($albumData['Album']['AlbumTitle']);
-      $sobj->AlbumArtist          = $this->getTextUTF($albumData['Album']['Artist']);
+      $sobj->AlbumProdID          = '';
+      $sobj->AlbumTitle           = '';
+      $sobj->AlbumArtist          = '';
 
       $search_list[] = new SoapVar($sobj,SOAP_ENC_OBJECT,null,null,'SearchDataType');
 
@@ -6031,7 +6036,7 @@ STR;
       return $data;
     }
     else {
-      throw new SOAPFault('Soap:client', 'Freegal is unable to find any Song containing the provided keyword.');
+      throw new SOAPFault('Soap:client', 'Freegal is unable to find any Video containing the provided keyword.');
     }
 
   }
