@@ -5145,6 +5145,961 @@ img {
 }
 /* end now streaming page */
 
+
+/* video details page */
+.individual-videos-page {
+	
+	margin-left: 20px;
+	margin-top: 20px;
+	
+	.breadcrumbs {
+		
+		font-size: 12px;
+		color: rgba(0, 0, 0, 0.3);
+		
+		
+		span {
+			
+			padding-left: 5px;
+			padding-right: 5px;
+			
+			&:first-child {
+				
+				padding-left: 0;
+			}
+		}
+
+
+	}
+	
+	.hero-container {
+		
+		margin-top: 20px;
+		
+		
+		.hero-image-container {
+			float: left;
+			position: relative;
+			width: 553px;
+			height: 323px;
+			
+			img {
+				
+				width: 555px;
+				height: 323px;
+				border: 1px solid #fff;
+				.box-shadow(0 0 2px rgba(0,0,0,.5));
+				
+			}
+			
+			
+			.download-now-button {
+				background: rgb(255,255,255);
+				display: block;
+				position: absolute;
+				width: 124px;
+				height: 25px;
+				line-height: 26px;
+				right: 32px;
+				bottom:4px;
+				opacity: 0;
+				text-transform: uppercase;
+				font-size: 12px;
+				text-align: center;
+				color:rgb(0,0,0);
+				text-decoration: none;	
+				font-weight: bold;
+				.box-shadow(0 0 2px rgba(0,0,0,.5));
+				
+			}
+			
+			.add-to-playlist-button {
+				background: url(../img/add-to-playlist-button.png);
+				display: block;
+				position: absolute;
+				bottom:4px;
+				right: 4px;
+				width: 26px;
+				height: 25px;
+				opacity: 0;
+				.box-shadow(0 0 2px rgba(0,0,0,.5));
+			}
+			
+			
+			.wishlist-popover {
+				
+				display: none;
+				position: absolute;
+				right: 4px;
+				bottom:67px;
+				font-size: 12px;
+				z-index: 100;
+				width: 120px;
+				.box-shadow(0 0 3px rgba(0,0,0,.5));
+				
+				&.active {
+					
+					display: block;
+				}
+				
+				
+				
+				a {
+					background: #fff;
+					
+					display: block;
+					color: #000;
+					padding: 5px 5px 5px 10px;
+				
+					line-height: 20px;
+					text-decoration: none;
+					
+					&:hover {
+						background: #999;
+						color: rgba(0,0,0,1);
+						
+					}
+					
+					
+				}
+				
+				.playlist-options {
+					position: absolute;
+					right: -147px;
+					top:34px;
+					display: none;
+					background: #fff;
+					width: 145px;
+					height: 186px;
+					.box-shadow(0 0 3px rgba(0,0,0,.5));
+					
+					overflow-x: hidden;
+					
+					&.active {
+						
+						display: block;
+					}
+					
+					ul {
+						
+						li {
+							
+							float: none;
+							padding: 0;
+							
+							a {
+								
+								padding: 5px 5px 5px 10px;
+								text-decoration: none;
+								
+								&:hover {
+									
+									text-decoration: none;
+								}
+							}
+						}
+					}
+					
+					
+						
+				}
+				
+				
+				
+				.share {
+					
+					background: #fff;
+					border-top: 1px solid rgba(0,0,0,.2);
+					padding-bottom: 3px;
+					position: absolute;
+					height: 32px;
+					width: 120px;
+					
+					
+					p {
+						
+						
+						position: absolute;
+						left: 10px;
+						top:10px;
+						
+					}
+					
+					.facebook {
+						background: url(../img/facebook.png) no-repeat center center;
+						
+						display: block;
+						
+						width: 12px;
+						height: 12px;
+						position: absolute;
+						left: 61px;
+						top:4px;
+						
+						&:hover {
+							background: url(../img/facebook-hover.png) no-repeat center center;
+							
+						}
+					}
+					
+					.twitter {
+						background: url(../img/twitter.png) no-repeat center center;
+						
+						display: block;
+						position: absolute;
+						width: 15px;
+						height: 12px;
+						
+						left: 79px;
+						top:4px;
+						
+						&:hover {
+							
+							background: url(../img/twitter-hover.png) no-repeat center center;
+						}
+					}
+				}
+				
+				.add-to-playlist {
+						
+					background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+					
+					&:hover {
+						
+						color: rgba(0,0,0,1);
+						background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+					}
+				}
+			} /* end wishlist popover */
+
+			
+			
+			
+			
+			
+			
+		}
+		
+		.hero-detail {
+			
+			float: left;
+			margin-left: 26px;
+			margin-top: 20px;
+			
+			.song-title {
+				font-size: 24px;
+				color: rgba(0,0,0,1);
+				letter-spacing: 1px;
+				margin-bottom: 5px;
+				
+			}
+			
+			.artist-name {
+				font-size: 18px;
+				color: rgba(0,0,0,.5);
+				margin-bottom: 22px;
+				
+			}
+			
+			.average-rating {
+			
+				
+			
+				> .star-container {
+					unicode-bidi: bidi-override;
+					direction: rtl;
+					padding-right: 70px;
+					margin-bottom: 9px;
+				}
+			  
+				
+				> .star-container > span {
+				  display: inline-block;
+				  position: relative;
+				  width: 1.1em;
+				  color: #f7cd4e;
+				  font-size: 19px;
+				}
+				
+				> .star-container > span:hover:before,
+				> .star-container > span:hover ~ span:before {
+				   content: "\2605";
+				   position: absolute;
+				}
+				
+				p {
+					
+					font-size: 14px;
+					font-weight: bold;
+					margin-bottom: 9px;
+				}
+				
+				.reviews-total {
+					
+					margin-bottom: 5px;
+					font-size: 14px;
+					color: rgba(0,0,0,1);
+				}
+				
+				
+			}
+			
+			.your-rating {
+				margin-bottom: 23px;
+				margin-top: 23px;
+				p {
+					margin-bottom: 5px;	
+					
+				}
+				
+				> .star-container {
+					unicode-bidi: bidi-override;
+					direction: rtl;
+					padding-right: 70px;
+				}
+			  
+				
+				> .star-container > span {
+				  display: inline-block;
+				  position: relative;
+				  width: 1.1em;
+				  //color: #f7cd4e;
+				  color: rgba(0,0,0,.15);
+				  font-size: 19px;
+				}
+				
+				> .star-container > span:hover:before,
+				> .star-container > span:hover ~ span:before {
+				   content: "\2605";
+				   position: absolute;
+				   color: #f7cd4e;
+				}
+				
+				p {
+					
+					font-size: 14px;
+					font-weight: bold;
+				}
+				
+			}
+			
+			.release-information {
+				
+				p {
+					
+					font-size: 14px;
+					font-weight: bold;
+					margin-bottom: 8px;
+				}
+				
+				div {
+					
+					font-size: 12px;
+					margin-bottom: 9px;
+					color: rgba(0,0,0,.7);
+				}
+			}
+		}
+	}
+	
+	.more-videos {
+		margin-top: 40px;
+		position: relative;
+		
+		header {
+			margin-bottom: 10px;
+			
+			h2 {
+				
+				font-size: 26px;
+				color: rgba(0,0,0,1);
+				letter-spacing: 1px;
+			}
+		}
+		
+		&:after {
+			
+			position: absolute;
+			width: 11px;
+			height: 220px;
+			content: "";
+			right: 0;
+			top:31px;
+			background: url(../img/individual-video/more-videos-shadow.png);
+		}
+		
+		.more-videos-scrollable {
+			
+			overflow-x: hidden;
+			overflow-y: hidden;
+			height: 220px;
+			position: relative;
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			
+
+			
+			ul {
+				
+				width: 2700px;
+				height: 220px;
+				padding-left: 1px;
+				padding-top: 1px;
+				
+				li {
+					
+					display: block;
+					float: left;
+					margin-right: 10px;
+					
+					.video-thumb-container {
+						
+						position: relative;
+						
+						img {
+							
+							border: 1px solid #fff;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+						}
+						
+						.download-now-button {
+							background: rgb(255,255,255);
+							display: block;
+							position: absolute;
+							width: 124px;
+							height: 25px;
+							line-height: 26px;
+							right: 32px;
+							bottom:4px;
+							opacity: 0;
+							text-transform: uppercase;
+							font-size: 12px;
+							text-align: center;
+							color:rgb(0,0,0);
+							text-decoration: none;	
+							font-weight: bold;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							
+						}
+						
+						.add-to-playlist-button {
+							background: url(../img/add-to-playlist-button.png);
+							display: block;
+							position: absolute;
+							bottom:4px;
+							right: 4px;
+							width: 26px;
+							height: 25px;
+							opacity: 0;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+						}
+						
+						
+						.wishlist-popover {
+							
+							display: none;
+							position: absolute;
+							right: 4px;
+							bottom:67px;
+							font-size: 12px;
+							z-index: 100;
+							width: 120px;
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							
+							
+							a {
+								background: #fff;
+								
+								display: block;
+								color: #000;
+								padding: 5px 5px 5px 10px;
+							
+								line-height: 20px;
+								text-decoration: none;
+								
+								&:hover {
+									background: #999;
+									color: rgba(0,0,0,1);
+									
+								}
+								
+								
+							}
+							
+							.playlist-options {
+								position: absolute;
+								right: -147px;
+								top:34px;
+								display: none;
+								background: #fff;
+								width: 145px;
+								height: 186px;
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								
+								overflow-x: hidden;
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 5px 5px 5px 10px;
+											text-decoration: none;
+											
+											&:hover {
+												
+												text-decoration: none;
+											}
+										}
+									}
+								}
+								
+								
+									
+							}
+							
+							
+							
+							.share {
+								
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: absolute;
+								height: 32px;
+								width: 120px;
+								
+								
+								p {
+									
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									
+								}
+								
+								.facebook {
+									background: url(../img/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 61px;
+									top:4px;
+									
+									&:hover {
+										background: url(../img/facebook-hover.png) no-repeat center center;
+										
+									}
+								}
+								
+								.twitter {
+									background: url(../img/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									
+									left: 79px;
+									top:4px;
+									
+									&:hover {
+										
+										background: url(../img/twitter-hover.png) no-repeat center center;
+									}
+								}
+							}
+							
+							.add-to-playlist {
+									
+								background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+								
+								&:hover {
+									
+									color: rgba(0,0,0,1);
+									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+								}
+							}
+						} /* end wishlist popover */
+
+						
+						
+						
+						
+						
+						
+						
+					}
+					
+					
+					.song-title {
+						font-weight: bold;
+						font-size: 14px;
+						line-height: 15px;
+						padding-top: 8px;
+						padding-bottom: 4px;
+						
+						a {
+							color: rgba(0, 0, 0, 1);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+						
+					}
+					
+					.artist-name {
+						
+						color: rgba(0, 0, 0, 0.5);
+						font-size: 12px;
+						line-height: 15px;
+						
+						a {
+							color: rgba(0, 0, 0, 0.5);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}							
+							
+						}
+					}
+				}
+			}
+			
+		}
+		
+	}
+
+
+
+	.top-videos {
+		margin-top: 20px;
+		position: relative;
+		
+		header {
+			margin-bottom: 10px;
+			
+			h2 {
+				
+				font-size: 26px;
+				color: rgba(0,0,0,1);
+				letter-spacing: 1px;
+			}
+		}
+		
+		&:after {
+			
+			position: absolute;
+			width: 11px;
+			height: 226px;
+			content: "";
+			right: 0;
+			top:31px;
+			background: url(../img/individual-video/top-videos-shadow.png);
+		}
+		
+		.top-videos-scrollable {
+			
+			overflow-x: hidden;
+			overflow-y: hidden;
+			height: 220px;
+			
+			&:hover {
+				
+				overflow-x: auto;
+			}
+			
+			ul {
+				
+				width: 2700px;
+				height: 220px;
+				padding-left: 1px;
+				padding-top: 1px;
+				
+				li {
+					
+					display: block;
+					float: left;
+					margin-right: 10px;
+					
+					.video-thumb-container {
+						
+						position: relative;
+						
+						img {
+							
+							border: 1px solid #fff;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+						}
+						
+						.download-now-button {
+							background: rgb(255,255,255);
+							display: block;
+							position: absolute;
+							width: 124px;
+							height: 25px;
+							line-height: 26px;
+							right: 32px;
+							bottom:4px;
+							opacity: 0;
+							text-transform: uppercase;
+							font-size: 12px;
+							text-align: center;
+							color:rgb(0,0,0);
+							text-decoration: none;	
+							font-weight: bold;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							
+						}
+						
+						.add-to-playlist-button {
+							background: url(../img/add-to-playlist-button.png);
+							display: block;
+							position: absolute;
+							bottom:4px;
+							right: 4px;
+							width: 26px;
+							height: 25px;
+							opacity: 0;
+							.box-shadow(0 0 2px rgba(0,0,0,.5));
+						}
+						
+						
+						.wishlist-popover {
+							
+							display: none;
+							position: absolute;
+							right: 4px;
+							bottom:67px;
+							font-size: 12px;
+							z-index: 100;
+							width: 120px;
+							
+							&.active {
+								
+								display: block;
+							}
+							
+							
+							
+							a {
+								background: #fff;
+								
+								display: block;
+								color: #000;
+								padding: 5px 5px 5px 10px;
+							
+								line-height: 20px;
+								text-decoration: none;
+								
+								&:hover {
+									background: #999;
+									color: rgba(0,0,0,1);
+									
+								}
+								
+								
+							}
+							
+							.playlist-options {
+								position: absolute;
+								right: -147px;
+								top:34px;
+								display: none;
+								background: #fff;
+								width: 145px;
+								height: 186px;
+								.box-shadow(0 0 3px rgba(0,0,0,.5));
+								
+								overflow-x: hidden;
+								
+								&.active {
+									
+									display: block;
+								}
+								
+								ul {
+									
+									li {
+										
+										float: none;
+										padding: 0;
+										
+										a {
+											
+											padding: 5px 5px 5px 10px;
+											text-decoration: none;
+											
+											&:hover {
+												
+												text-decoration: none;
+											}
+										}
+									}
+								}
+								
+								
+									
+							}
+							
+							
+							
+							.share {
+								
+								background: #fff;
+								border-top: 1px solid rgba(0,0,0,.2);
+								padding-bottom: 3px;
+								position: absolute;
+								height: 32px;
+								width: 120px;
+								
+								
+								p {
+									
+									
+									position: absolute;
+									left: 10px;
+									top:10px;
+									
+								}
+								
+								.facebook {
+									background: url(../img/facebook.png) no-repeat center center;
+									
+									display: block;
+									
+									width: 12px;
+									height: 12px;
+									position: absolute;
+									left: 61px;
+									top:4px;
+									
+									&:hover {
+										background: url(../img/facebook-hover.png) no-repeat center center;
+										
+									}
+								}
+								
+								.twitter {
+									background: url(../img/twitter.png) no-repeat center center;
+									
+									display: block;
+									position: absolute;
+									width: 15px;
+									height: 12px;
+									
+									left: 79px;
+									top:4px;
+									
+									&:hover {
+										
+										background: url(../img/twitter-hover.png) no-repeat center center;
+									}
+								}
+							}
+							
+							.add-to-playlist {
+									
+								background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #fff;
+								
+								&:hover {
+									
+									color: rgba(0,0,0,1);
+									background: url(../img/create-new-playlists-arrow.png) no-repeat 108px center #999;
+								}
+							}
+						} /* end wishlist popover */
+
+						
+						
+						
+						
+						
+						
+						
+					}
+					
+					
+					.song-title {
+						font-weight: bold;
+						font-size: 14px;
+						line-height: 15px;
+						padding-top: 8px;
+						padding-bottom: 4px;
+						
+						a {
+							color: rgba(0, 0, 0, 1);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}						
+					}
+					
+					.artist-name {
+						
+						color: rgba(0, 0, 0, 0.5);
+						font-size: 12px;
+						line-height: 15px;
+						
+						a {
+							color: rgba(0, 0, 0, .5);
+							text-decoration: none;
+							
+							&:hover {
+								
+								text-decoration: underline;
+							}
+						}
+					}
+				}
+			}
+			
+		}
+		
+	}
+	
+	
+	
+	
+
+	
+	.recommended-for-you {
+		
+		
+	}
+}
+
+/* end video details page */
+
 /* saved queues page */
 .saved-queues-page {
 	

@@ -4502,7 +4502,7 @@ STR;
 STR;
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
-			$coming_soon_albums_rs = $this->Album->query($sql_coming_soon_albums);
+			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums);
 //                        echo "<pre>";
 //                        print_r($coming_soon_albums_rs);
 //                        die;
@@ -4516,11 +4516,11 @@ STR;
                 else    //  Show From Cache
                 {                  
                     
-                    $coming_soon_albums_rs = Cache::read("coming_soon_albums".$territory);
+                    $new_releases_albums_rs = Cache::read("new_releases_albums".$territory);
                     
                 }
                 
-                $this->set('new_releases_albums', $coming_soon_albums_rs); 
+                $this->set('new_releases_albums', $new_releases_albums_rs); 
         
         
            

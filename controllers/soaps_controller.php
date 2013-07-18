@@ -5982,9 +5982,6 @@ STR;
     $VideoData = $this->Solr->search($queryVar, $typeVar, $sortVar, $sortOrder, $page, $limit, $library_terriotry);
     $total = $this->Solr->total;
     $totalPages = ceil($total/$limit);
-
-    print_r($VideoData); 
-    exit;
     
 
     foreach($VideoData AS $key => $val){        

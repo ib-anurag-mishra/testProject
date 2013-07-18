@@ -1,6 +1,5 @@
 <section class="queue-detail-page">
-		
-		
+            <?php if(!empty($queue_list_array)){ ?>
 		<div class="breadcrumbs"><span>Home</span> > <span>Saved Queues</span> > <span>Queue #1</span></div>
 		<div class="col-container clearfix">
 			<div class="col-1">
@@ -150,6 +149,10 @@
 					</div>
 				</div>
 			</div>
-		</div>		
+		</div>
+               <?php }else{ ?>
+
+                <h2> There are no songs associated with this queue </h2>
 		
+                <?php } ?>
 	</section>
