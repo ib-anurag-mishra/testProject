@@ -4852,7 +4852,7 @@ STR;
           
           if($sobj->DownloadStatus) {
             $sobj->Sample_FileURL        = 'nostring';
-            $sobj->FullLength_FIleURL    = 'nostring'
+            $sobj->FullLength_FIleURL    = 'nostring';
           } else {
             $sobj->Sample_FileURL        = Configure::read('App.Music_Path').$sampleFileURL;
             $sobj->FullLength_FIleURL    = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $arrTemp[$cnt]['Full_Files']['CdnPath'] . "/" . $arrTemp[$cnt]['Full_Files']['SaveAsName']);
