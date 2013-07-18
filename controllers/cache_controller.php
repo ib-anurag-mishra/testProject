@@ -450,7 +450,7 @@ STR;
             //End Caching functionality for coming soon songs
             
            
-           */ 
+        
             
             //Added caching functionality for us top 10 Songs           
             $country = $territory;
@@ -539,7 +539,7 @@ STR;
 STR;
                 $data = $this->Album->query($sql_US_TOP_10);
                 
-                print_r($data);
+               
                 $this->log($sql_US_TOP_10, "cachequery");
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
@@ -562,7 +562,7 @@ STR;
             $this->log("cache written for US top ten for $territory", 'debug');
              //End Caching functionality for US TOP 10 Songs
             
-            /*
+          */
             
              //Added caching functionality for us top 10 Album            
             $country = $territory;
@@ -673,7 +673,7 @@ STR;
             //End Caching functionality for US TOP 10 Albums
             
             
-            
+           /* 
            //Added caching functionality for us top 10 Video            
             $country = $territory;
             if ( !empty($country ) && ( $territory == "US" ) ) {
