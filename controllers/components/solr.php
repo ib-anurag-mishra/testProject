@@ -553,6 +553,7 @@ class SolrComponent extends Object {
               $group->doclist->docs[0]->numFound = $group->doclist->numFound;
               $docs[] = $group->doclist->docs[0];
             } //echo '<pre>'; print_r($docs); echo '</pre>';
+             print_r($docs); die;
             return $docs;
           } else {
             return array();
@@ -572,7 +573,7 @@ class SolrComponent extends Object {
                   $group->doclist->docs[0]->numFound = $group->doclist->numFound;
                   $docs[] = $group->doclist->docs[0];
                 } //echo '<pre>'; print_r($docs); echo '</pre>';
-                 print_r($docs); die;
+                // print_r($docs); die;
                 return $docs;
               } else {
                 return array();
