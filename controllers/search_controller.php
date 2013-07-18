@@ -768,6 +768,7 @@ class SearchController extends AppController {
                 }
 
                 $rank = 1;
+                print_r($arr_show); die;
                 foreach ($arr_show as $key => $val) {
                     foreach ($val as $name => $value) {
                         foreach ($value as $record => $count) {
