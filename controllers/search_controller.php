@@ -773,7 +773,7 @@ class SearchController extends AppController {
                         foreach ($value as $record => $count) {
                             if($name == 'album'){
                                 $keyword = str_replace(array(' ','(',')','"',':','!','{','}','[',']','^','~','*','?'), array('\ ','\(','\)','\"','\:','\!','\{','\}','\[','\]','\^','\~','\*','\?'), $record);
-                                $albumdocs = $this->Solr->query('Title:'.$record,0,1);
+                                $albumdocs = $this->Solr->query('Title:'.$keyword,0,1);
                                 print_r($albumdocs); die;
                             }
                             //if(preg_match("/^".$queryVar."/i",$record)){
