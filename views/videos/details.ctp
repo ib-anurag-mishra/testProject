@@ -133,7 +133,7 @@
 							
 							<li>
 								<div class="video-thumb-container">
-									<img class="lazy" src="/app/webroot/img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="274" height="162" />
+									<img class="lazy" src="<?php echo $videoImage; ?>" width="274" height="162" />
 									<a class="download-now-button" href="#">Download Now</a>
 									<a class="add-to-playlist-button" href="#"></a>
 									<div class="wishlist-popover">
@@ -153,10 +153,26 @@
 									
 								</div>
 								<div class="song-title">
-									<a href="#"><?php echo $value['Video']['VideoTitle']; ?></a>
+									<a href="#"><?php 
+                                                                                                if (strlen($value['Video']['VideoTitle']) >= 35 ) {
+                                                                                                            $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
+                                                                                                    } else {
+                                                                                                            $VideoTitle = $this->getTextEncode($value['Video']['VideoTitle']);
+                                                                                                    }    
+                                                                                                echo $VideoTitle; 
+                                                                                            ?>
+                                                                                </a>
 								</div>
 								<div class="artist-name">
-									<a href="#"><?php echo $value['Video']['ArtistText']; ?></a>
+									<a href="#"> <?php 
+                                                                                        if (strlen($value['Video']['ArtistText']) >= 35 ) {
+                                                                                                    $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
+                                                                                            } else {
+                                                                                                    $VideoArtist = $this->getTextEncode($value['Video']['ArtistText']);
+                                                                                            }    
+                                                                                        echo $VideoArtist; 
+                                                                                 ?>
+                                                                         </a>
 								</div>
 							</li>
 							
