@@ -650,6 +650,7 @@ STR;
 
 STR;
                 $data = $this->Album->query($album_sql_US_TOP_10);
+                print_r($data);
                 $this->log($album_sql_US_TOP_10, "cachequery");
                 if ($ids_provider_type == "") {
                     $this->log("ids_provider_type is set blank for " . $territory, "cache");
