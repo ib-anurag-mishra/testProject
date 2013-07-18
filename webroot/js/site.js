@@ -1201,12 +1201,12 @@ $('document').ready(function(){
         }
     }).result(function(e, item) {
         $('#auto').attr('value', 1);
-        if(item[2]==1){
+        /*if(item[2]==1){
             $('#header-search-type').val('artist');
         } else if(item[2]==2){
             $('#header-search-type').val('album');
         } else if(item[2]==3){
             $('#header-search-type').val('song');
-        }
+        }*/
     });
 });
