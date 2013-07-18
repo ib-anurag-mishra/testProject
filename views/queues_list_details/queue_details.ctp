@@ -16,6 +16,9 @@
 				<div class="queue-duration">
 					Duration: <?php echo $total_time; ?>
 				</div>
+                                 <input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
+                                <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["Queuelists"]["PlaylistName"];?>" />
+                                <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["Queuelists"]["description"];?>" />
 			</div>
 			<div class="col-3">
 				<div class="faq-link">Need help? Visit our <a href="#">FAQ section</a>.</div>
@@ -24,8 +27,8 @@
 					<div class="gear-icon"></div>
 				</div>
 				<div class="queue-options">
-					<a class="rename-queue" href="#">Rename Queue</a>	
-					<a class="delete-queue" href="#">Delete Queue</a>
+					<a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
+					<a class="delete-queue" href="#" onclick="queueModifications();">Delete Queue</a>
 					<div class="share clearfix">
 						<p>Share via</p>
 						<a class="facebook" href="#"></a>

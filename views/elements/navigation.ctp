@@ -30,17 +30,14 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
             <div class="rename-queue-dialog-box">
                     <div class="close"></div>
                     <header>Rename '<span>Queue Name</span>'</header>
-                    <form action="/queuelistdetails/now_streaming/" method="post">
+                    <form action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
                     <div class="rename-form-container">
-
                                     <label for="name">Name:</label>
-                                    <input type="text" name="name" id="name" />
+                                    <?php echo $this->Form->input('Queuelist.PlaylistName', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
                                     <label for="description">Description:</label>
-                                    <textarea name="description" id="description"></textarea>
-                                    <input type="hidden" id="Plid" name="Plid" value="" />
+                                    <?php echo $this->Form->input('Queuelist.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
+                                    <input type="hidden" id="rqPlid" name="rqPlid" value="" />
                                     <input type="hidden" name="hid_action" value="rename_queue" />
-
-
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
@@ -54,34 +51,38 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <form action="/queues/createQueue" method="post">
                     <div class="rename-form-container">
 
-                                    <label for="name">Name:</label>
-                                    <?php echo $this->Form->input('Queuelist.PlaylistName', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
-                                    <label for="description">Description:</label>
-                                    <?php echo $this->Form->input('Queuelist.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                        <label for="name">Name:</label>
+                        <?php echo $this->Form->input('Queuelist.PlaylistName', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                        <label for="description">Description:</label>
+                        <?php echo $this->Form->input('Queuelist.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 
 
                     </div>
                     <div class="buttons-container clearfix">
                             <div class="text-close">Close</div>
                             <input type="submit" class="save" value="Create New Queue"></input>
+                    </form>
                     </div>
             </div>
+        
             <div class="delete-queue-dialog-box">
+                
                     <div class="close"></div>
                     <header>Delete Queue?</header>
-                    <form action="" method="post">
-                    <div class="confirm-text">
-
-
+                   <form  action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
+                   <div class="confirm-text">
                             <p>Are you sure you want to delete '<span>Queue Name</span>'?</p>
 
-                    </div>
+                    </div>                   
                     <div class="buttons-container clearfix">
-                            <div class="text-close">Close</div>
-                            <input type="submit" class="save" value="Delete Queue"></input>
+                    <div class="text-close">Close</div>
+                    <input type="hidden" name="hid_action" value="delete_queue" />
+                    <input type="hidden" id="dqPlid" name="dqPlid" value="" />
+                    <input type="submit" class="save" value="Delete Queue"></input>
                     </div>
                     </form>
             </div>
+            
 
     </div>
     <div class="wrapper">

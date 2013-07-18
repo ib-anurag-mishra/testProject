@@ -38,6 +38,38 @@ class QueueListDetailsController extends AppController{
             }
 
         }
+        else if($_POST['hid_action']=='rename_queue') 
+        {
+            if(!empty($_POST["rqPlid"])){
+                $this->data['Queuelist']['Plid'] = $_POST["rqPlid"];
+                $this->Queuelist->set($this->data['Queuelist']);
+                if($this->Queuelist->save()){
+                            $this->Session ->setFlash('Queue has been renamed successfully', 'modal', array( 'class' => 'queue success' ));
+                            $this->redirect($this->referer());						
+                    }
+                    else{
+                            $this->Session ->setFlash('Error occured while renaming queue', 'modal', array( 'class' => 'queue problem' ));
+                            $this->redirect($this->referer());					
+                }
+            }   
+            
+        }
+        else if($_POST['hid_action']=='delete_queue')
+        {                          
+              if(!empty($_POST["dqPlid"])){
+                    $this->data['Queuelist']['Plid'] = $_POST["dqPlid"]; 
+                    $this->Queuelist->set($this->data['Queuelist']);
+                    if($this->Queuelist->delete())
+                     {
+                              $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
+                              $this->redirect($this->referer());						
+                     }
+                      else{
+                              $this->Session ->setFlash('Error occured while deleteing queue', 'modal', array( 'class' => 'queue problem' ));
+                              $this->redirect($this->referer());					
+                    }
+              }   
+        }
     }
     
     /**
@@ -46,7 +78,8 @@ class QueueListDetailsController extends AppController{
      * return        : List of queues 
      */
     
-    function now_streaming(){   
+    function now_streaming()
+    {   
         $this->layout = 'home';   
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');

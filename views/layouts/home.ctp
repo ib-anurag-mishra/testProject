@@ -270,10 +270,12 @@ if ($this->Session->read('Config.language') == 'en') {
        
                 function queueModifications()
                 {
-                    //alert(document.getElementById('hid_playlist_name').value);
+                    alert(document.getElementById('hid_Plid').value);
                     document.getElementById('name').value           =   document.getElementById('hid_playlist_name').value;
                     document.getElementById('description').value    =   document.getElementById('hid_description').value;
-                    document.getElementById('Plid').value           =   document.getElementById('hid_Plid').value;
+                    document.getElementById('rqPlid').value         =   document.getElementById('hid_Plid').value;
+                    document.getElementById('dqPlid').value         =   document.getElementById('hid_Plid').value;
+                    //alert(document.getElementById('qPlid').value);
                 }
        
        
