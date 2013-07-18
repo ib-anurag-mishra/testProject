@@ -235,7 +235,7 @@ $ieVersion =  ieversion();
 			</div>
 		</div>
 		<!--(this is the html for the videos) -->
-		<div class="my-video-wishlist-shadow-container">
+		<div class="my-video-wishlist-shadow-container" style="display:none;">
 			<div class="my-video-wishlist-scrollable">
 				<div class="row-container">
 				<?php
