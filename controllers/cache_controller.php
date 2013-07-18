@@ -37,7 +37,7 @@ class CacheController extends AppController {
     //for caching data
     function cacheGenre() {
         set_time_limit(0);
-        error_reporting(1); ini_set('display_errors', 1);
+        //error_reporting(1); ini_set('display_errors', 1);
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
@@ -50,10 +50,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-        /*
-        
-        
-        
+                
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -1386,7 +1383,7 @@ STR;
             //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
         }
         
-       */
+   
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
 
@@ -1537,14 +1534,14 @@ STR;
             //library top 10 cache set
             if ((count($topDownload) < 1) || ($topDownload === false)) {
                 Cache::write("lib" . $libId, Cache::read("lib" . $libId));
-                $this->log("topDownloaded_query returns null for lib: $libId $country", "cache");
-                echo "<br /> library top 10 returns null for lib: $libId $country <br />";
+                $this->log("topDownloaded_query songs  returns null for lib: $libId $country", "cache");
+                echo "<br /> library top 10 songs returns null for lib: $libId $country <br />";
             } else {
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
                 //library top 10 cache set
-                $this->log("library top 10 cache set for lib: $libId $country", "cache");
-                echo "<br />library top 10 cache set for lib: $libId $country <br />";
+                $this->log("library top 10 songs cache set for lib: $libId $country", "cache");
+                echo "<br />library top 10 songs cache set for lib: $libId $country <br />";
             }
            
             //library top 10 cache set for songs end
