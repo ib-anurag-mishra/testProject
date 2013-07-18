@@ -842,7 +842,7 @@ if ($type != 'all') {
                                 $imageUrl = shell_exec('perl files/tokengen ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
                                 $image = Configure::read('App.Music_Path') . $imageUrl;
                                 ?>
-                                <img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="27" height="27" />
+                                <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="27" height="27" /></a>
                             </div>
                             <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($psong->Title, 30, $this)); ?></a></a></div>
                             <div class="song">
