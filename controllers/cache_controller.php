@@ -60,7 +60,7 @@ class CacheController extends AppController {
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
             
-            /*
+           
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
                 array('and' =>
@@ -785,7 +785,7 @@ STR;
             //End Caching functionality for US TOP 10 Videos
             
             
-            */
+          
             
             
             
@@ -846,7 +846,7 @@ STR;
 //                    echo "ids_provider_type is set blank for " . $territory;
 //                }
                 
-                print_r($data);
+               
 
                 if (!empty($data)) {
                     Cache::delete("new_releases_songs" . $country);
@@ -920,7 +920,7 @@ STR;
 //                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
 //                    echo "ids_provider_type is set blank for " . $territory;
 //                }
-print_r($data);
+
                 if (!empty($data)) {
                     Cache::delete("new_releases_albums" . $country);
                     Cache::write("new_releases_albums" . $country, $data);
@@ -992,7 +992,7 @@ STR;
 //                    $this->log("ids_provider_type is set blank for " . $territory, "cache");
 //                    echo "ids_provider_type is set blank for " . $territory;
 //                }
-print_r($data);
+
                 if (!empty($data)) {
                     Cache::delete("new_releases_videos" . $country);
                     Cache::write("new_releases_videos" . $country, $data);
@@ -1008,8 +1008,8 @@ print_r($data);
             $this->log("cache written for new releases albums for $territory", 'debug');
             //End Caching functionality for new releases videos         
             
-            
-           /* 
+         
+           
  
             // Checking for download status
             $featured = array();
@@ -1409,6 +1409,9 @@ print_r($data);
             $siteConfigData = $this->Album->query($siteConfigSQL);
             $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
 
+            
+            //this is for my library songs start
+            
             if ($maintainLatestDownload) {
                 $download_src = 'LatestDownload';
                 $topDownloaded = $this->LatestDownload->find('all', array('conditions' => array('library_id' => $libId, 'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit' => '15'));
@@ -1535,7 +1538,34 @@ STR;
                 echo "<br />library top 10 cache set for lib: $libId $country <br />";
             }
            
-           */
+            //library top 10 cache set for songs end
+            
+            
+            //library top 10 cache set for albums start
+            
+            
+            
+            //library top 10 cache set for albums end
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+           
         }
 
         //--------------------------------------Library Top Ten End----------------------------------------------
