@@ -776,7 +776,7 @@ class SearchController extends AppController {
                                 $albumdocs = $this->Solr->query('Title:'.$keyword,1);
                                 $imageUrl = shell_exec('perl files/tokengen ' . $albumdocs[0]->ACdnPath . "/" . $albumdocs[0]->ASourceURL);
                                 $image = Configure::read('App.Music_Path') . $imageUrl;
-                                $imageData = "<img src='".$image."' height='40px' width='40px' />";
+                                $imageData = "<img src=\"".$image."\" height='40px' width='40px'>";
                             } else {
                                 $imageData = "";
                             }
