@@ -55,7 +55,7 @@
 				
 				<div class="queue-options">
 					<a class="rename-queue" href="#" onclick="queueModifications();">Rename Queue</a>	
-					<a class="delete-queue" href="#">Delete Queue</a>
+					<a class="delete-queue" href="#" onclick="queueModifications();">Delete Queue</a>
 
 				</div>
 				
