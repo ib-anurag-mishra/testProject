@@ -3506,13 +3506,24 @@ STR;
      Desc : For removing a song from wishlist page
     */
     function removeWishlistSong() {
-        $deleteSongId = $this->params['named']['id'];
+        
+        Configure::write('debug', 0);
+      $this->layout = false;
+        if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
+           $this->Library->setDataSource('master');
+           if($this->Wishlist->delete($deleteSongId)) {               
+               return 1;                
+            }            
+            $this->Library->setDataSource('default');
+            return 0;
+        }
+        
+        
+        
+        $deleteSongId = $_REQUEST['delete'];
         $libraryId = $this->Session->read('library');
         if($this->Wishlist->delete($deleteSongId)) {
-			$this->Library->setDataSource('master');
-            $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
-            $this->Library->query($sql);
-			$this->Library->setDataSource('default');
+			
             $this->Session->setFlash('Data deleted successfully!');
             $this->redirect('my_wishlist');
         }

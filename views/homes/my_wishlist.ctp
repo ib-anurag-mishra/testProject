@@ -24,9 +24,37 @@ function ieversion()
 $ieVersion =  ieversion();
 
 ?>
-
+<style type="text/css">
+.delete	{ color:#f00; display:block; width:40px; float:right; }
+</style>
 <script lenguage="javascript">
    var languageSet = '<?php echo $setLang; ?>';  
+   
+   
+   $(document).ready(function() {
+	$('a.delete').click(function(e) {
+		e.preventDefault();
+		var delete_id = $(this).attr('id').replace('record-','');
+                alert(delete_id);
+		$.ajax({
+			type: 'get',
+			url: 'home/album_ajax/',
+			data: 'ajax=1&delete=' + delete_id,
+			beforeSend: function() {
+				parent.animate({'backgroundColor':'#fb6c6c'},300);
+			},
+			success: function() {
+				parent.slideUp(300,function() {
+					parent.remove();
+				});
+			}
+		});
+	});
+});
+   
+   
+   
+   
 </script>
 <section class="my-wishlist-page">
 		
@@ -116,7 +144,7 @@ $ieVersion =  ieversion();
 			
 	?>
 				
-				<div class="row clearfix">
+				<div class="row clearfix delete" id="record-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
 					<div class="small-album-container">                                     
                                 
