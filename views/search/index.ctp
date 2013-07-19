@@ -784,10 +784,15 @@ if ($type != 'all') {
         
         if($type != 'video') {
             // echo $type; die;
+            $reverseSortOrder = (($sortOrder=='asc')?'desc':'asc');
         ?>
     <section class="tracklist-container">
         <section class="tracklist-header clearfix">
-            <span class="artist"></span><span class="composer"></span><span class="album"></span><span class="song"></span><span class="download"></span>
+            <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>"><span class="artist"></span></a>
+            <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>"><span class="composer"></span></a>
+            <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>"><span class="album"></span></a>
+            <a href="<?php echo "/search/advanced_search/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>"><span class="song"></span></a>
+            <span class="download"></span>
         </section>
         <div class="tracklist-shadow-container">
             <div class="tracklist-scrollable">
