@@ -35,7 +35,7 @@ $ieVersion =  ieversion();
 	$('.songdelete').click(function(e) {
 		e.preventDefault();
 		var parent = $(this).parent();		
-                alert(parent.attr('id'));
+               // alert(parent.attr('id'));
 		$.ajax({
 			type: 'post',
 			url: webroot+'homes/removeWishlistSong/',
@@ -44,8 +44,8 @@ $ieVersion =  ieversion();
 				parent.animate({'backgroundColor':'#fb6c6c'},600);
 			},
 			success: function() { 
-                            alert(1);
-				currentField.slideUp(600,function() {
+                            //alert(1);
+				parent.slideUp(600,function() {
 					parent.remove();
 				});
 			}
