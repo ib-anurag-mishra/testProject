@@ -533,30 +533,7 @@ STR;
                         Code OF NEWS Section --- END
         */
                 
-                
-            /*
-                            Code OF NEWS Section --- START
-            */
-
-            if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
-                    $this->Session->write('Config.language', 'en');
-            }            
-
-            $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
-
-
-            if($news_count != 0){                   
-                    $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")));
-
-            }
-            else{                    
-                    $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%"))));
-            }
-            $this->set('news',$news_rs);
-
-            /*
-                            Code OF NEWS Section --- END
-            */
+                           
           
                 
             /*
