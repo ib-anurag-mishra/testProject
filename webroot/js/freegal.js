@@ -128,7 +128,7 @@ function userDownloadIE(prodId)
 	});
 	return false;
 }
-function changeLang(type){ alert("in js");
+function changeLang(type){ alert(webroot+"homes/language");
 	var language = type;
 	var data = "lang="+language;
 	$.ajax({ 
