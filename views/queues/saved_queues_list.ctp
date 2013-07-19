@@ -28,7 +28,7 @@
                                                 <?php } ?>
                                                 <div class="item">
                                                 <div class="playlist-info-container">
-                                                        <?php if(!empty($value['Queuelist']['queue_name'])){ ?>
+                                                        <?php if(!empty($value['QueueList']['queue_name'])){ ?>
                                                         <div class="playlist-title"><a href="/queuelistdetails/queue_details/<?php echo $value['Queuelist']['queue_id'];?>"><?php echo $value['Queuelist']['queue_name']; ?></a></div>
                                                         <a href="#"><img src="/img/my-playlists/album-cover.jpg" alt="album-cover" width="85" height="85" /></a>
                                                         <?php } ?>
