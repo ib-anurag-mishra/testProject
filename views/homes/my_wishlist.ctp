@@ -417,7 +417,7 @@ $ieVersion =  ieversion();
 				<?php
 
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
-             print_r($wishlistResults); 
+             
 	
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
