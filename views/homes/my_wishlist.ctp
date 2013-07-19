@@ -25,14 +25,14 @@ $ieVersion =  ieversion();
 
 ?>
 <style type="text/css">
-.delete	{ color:#f00; display:block; width:40px; float:right; }
+
 </style>
 <script lenguage="javascript">
    var languageSet = '<?php echo $setLang; ?>';  
    
    
    $(document).ready(function() {
-	$('a.delete').click(function(e) {
+	$('.songdelete').click(function(e) {
 		e.preventDefault();
 		var delete_id = $(this).attr('id').replace('record-','');
                 alert(delete_id);
@@ -144,7 +144,7 @@ $ieVersion =  ieversion();
 			
 	?>
 				
-				<div class="row clearfix delete" id="record-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
+				<div class="row clearfix" id="record-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
 					<div class="small-album-container">                                     
                                 
@@ -237,7 +237,7 @@ $ieVersion =  ieversion();
                                     ?>
                                             
                                         </div>						
-					<div class="delete-btn"></div>
+					<div class="delete-btn songdelete"></div>
 				</div>
 				<?php 
 
