@@ -5192,13 +5192,13 @@ STR;
       $cond = array('patron_id' => $patronID, 'status' => '1', 'queue_type' => '0');
     }
     
-    
-    $QueueDetail = $this->QueueDetail->find('all', array(
-      'conditions'  =>  array('queue_id' => $QueueList[$cnt]['QueueList']['queue_id']),
-      'fields'  =>  array('COUNT(id) as cnt'),
-      'group' => 'id',
+    $QueueList = $this->QueueList->find('all', array(
+      'conditions' => $cond,
+      'recursive' => -1,
+      'order' => 'created DESC'
     ));
     
+
     
     if( empty($QueueList) ) {
       throw new SOAPFault('Soap:DefaultQueueList', 'No Queue lists found');
