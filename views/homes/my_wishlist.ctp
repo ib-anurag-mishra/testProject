@@ -173,12 +173,17 @@ $ieVersion =  ieversion();
 						<?php if( $this->Session->read('library_type') == 2 ){ ?>
 						<div class="playlist-options">
 							<ul>
-								<li><a href="#">Create New Queue</a></li>
-								<li><a href="#">Playlist 1</a></li>
-								<li><a href="#">Playlist 2</a></li>
-								<li><a href="#">Playlist 3</a></li>
-								<li><a href="#">Playlist 4</a></li>
-								<li><a href="#">Playlist 5</a></li>
+								<li><a href="#" class="create-new-queue">Create New Queue</a></li>
+								<li><a href="#">Queue 1</a></li>
+								<li><a href="#">Queue 2</a></li>
+								<li><a href="#">Queue 3</a></li>
+								<li><a href="#">Queue 4</a></li>
+								<li><a href="#">Queue 5</a></li>
+								<li><a href="#">Queue 6</a></li>
+								<li><a href="#">Queue 7</a></li>
+								<li><a href="#">Queue 8</a></li>
+								<li><a href="#">Queue 9</a></li>
+								<li><a href="#">Queue 10</a></li>
 								
 								
 							</ul>
