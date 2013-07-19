@@ -3540,8 +3540,7 @@ STR;
            }            
            $this->WishlistVideo->setDataSource('default');
            echo 0;
-        }
-        echo $deleteSongId;
+        }       
         exit;
         
     }
