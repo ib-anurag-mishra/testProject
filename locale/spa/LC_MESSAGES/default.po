@@ -204,7 +204,6 @@ msgid "Advanced Search"
 msgstr "Búsqueda Avanzada"
 
 #: \elements\navigation.ctp:247
-#: \homes\advance_search.ctp:2
 msgid "Music Videos"
 msgstr "VIDEOS DE MÚSICA"
 
