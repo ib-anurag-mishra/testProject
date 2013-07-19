@@ -39,103 +39,60 @@ Class QueueComponent extends Object
     
     
     function getQueueDetails($queueID, $pat_Id){
-       //echo "QID: ".$queueID;
-    $pat_Id= 1;
-       // echo "<br>[".$pat_Id."]";
-    
-    $queueDetailList = ClassRegistry::init('QueueDetail');
-    $queueDetail = $queueDetailList->find('all',
-      array(
-        'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
-        'joins' => array(
+        $queueDetailList = ClassRegistry::init('QueueDetail');
+        $queueDetail = $queueDetailList->find('all',
           array(
-            'type' => 'INNER',
-            'table' => 'queue_lists',
-            'alias' => 'QueueList',
-            'foreignKey' => false,
-            'conditions' => array('QueueList.queue_id = QueueDetail.id'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'Songs',
-            'alias' => 'Songs',
-            'foreignKey' => false,
-            'conditions' => array('Songs.ProdID = QueueDetail.song_prodid', 'Songs.provider_type = QueueDetail.song_providertype'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'Albums',
-            'alias' => 'Albums',
-            'foreignKey' => false,
-            'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'PRODUCT',
-            'alias' => 'Product',
-            'foreignKey' => false,
-            'conditions' => array('Albums.ProdID = Product.ProdID', 'Albums.provider_type = Product.provider_type'),        
-          ),
-          array(
-            'type' => 'INNER',
-            'table' => 'File',
-            'alias' => 'AlbumFile',
-            'foreignKey' => false,
-            'conditions' => array('Albums.FileID = AlbumFile.FileID'),        
-          ),  
-          array(
-            'type' => 'INNER',
-            'table' => 'File',
-            'alias' => 'SongFile',
-            'foreignKey' => false,
-            'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),        
-          ),           
-        ),
-        'recursive' => -1,
-        'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID , 'QueueList.patron_id' => trim($pat_Id)),                
-      )
-    );
-    
-//    echo "Query: ".$queueDetailList->lastQuery();
-//    
-//    echo "<pre>";
-//    echo "in queue.php";
-//    echo "Patron ID: ".$patId;
-//    print_r($queueDetail);
-//    echo 456;
-//    die;
-    
-    
-   /* $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
-         
-    for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-      
-      if(!(empty($data[$cnt]['Queuelists']['PlaylistName']))) {
-        //if($this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
-          $obj = new QueueDetailDataType;
-        
-          $obj->QueueName                    = $data[$cnt]['Queuelists']['PlaylistName'];
-          $obj->QueueSongSongTitle           = $data[$cnt]['Songs']['SongTitle'];
-          $obj->QueueSongTitle               = $data[$cnt]['Songs']['STitle'];
-          $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
-          $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
-          $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
-          $obj->QueueAlbumProductID          = $data[$cnt]['Product']['AlbumProdID'];
-          $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
-          $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
-          $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
-                 
-          $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
-        //}  
-      }     
-    }
-    
-    $queueDetail = new SoapVar($queue,SOAP_ENC_OBJECT,null,null,'ArrayQueueDetailDataType'); */
-    
-    return $queueDetail;
-   
-   
-   
+            'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+            'joins' => array(
+              array(
+                'type' => 'INNER',
+                'table' => 'queue_lists',
+                'alias' => 'QueueList',
+                'foreignKey' => false,
+                'conditions' => array('QueueList.queue_id = QueueDetail.id'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => 'Songs',
+                'alias' => 'Songs',
+                'foreignKey' => false,
+                'conditions' => array('Songs.ProdID = QueueDetail.song_prodid', 'Songs.provider_type = QueueDetail.song_providertype'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => 'Albums',
+                'alias' => 'Albums',
+                'foreignKey' => false,
+                'conditions' => array('Albums.ProdID = Songs.ReferenceID', 'Albums.provider_type = Songs.provider_type'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => 'PRODUCT',
+                'alias' => 'Product',
+                'foreignKey' => false,
+                'conditions' => array('Albums.ProdID = Product.ProdID', 'Albums.provider_type = Product.provider_type'),        
+              ),
+              array(
+                'type' => 'INNER',
+                'table' => 'File',
+                'alias' => 'AlbumFile',
+                'foreignKey' => false,
+                'conditions' => array('Albums.FileID = AlbumFile.FileID'),        
+              ),  
+              array(
+                'type' => 'INNER',
+                'table' => 'File',
+                'alias' => 'SongFile',
+                'foreignKey' => false,
+                'conditions' => array('Songs.FullLength_FileID = SongFile.FileID'),        
+              ),           
+            ),
+            'recursive' => -1,
+            'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID , 'QueueList.patron_id' => trim($pat_Id)),                
+          )
+        );
+
+        return $queueDetail;
   }
     
 }
