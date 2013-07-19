@@ -3508,29 +3508,18 @@ STR;
     function removeWishlistSong() {
         
         Configure::write('debug', 0);
-      $this->layout = false;
+        $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
+           $deleteSongId = $_REQUEST['delete'];
            $this->Library->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) {               
                return 1;                
-            }            
-            $this->Library->setDataSource('default');
-            return 0;
+           }            
+           $this->Library->setDataSource('default');
+           return 0;
         }
+        exit;
         
-        
-        
-        $deleteSongId = $_REQUEST['delete'];
-        $libraryId = $this->Session->read('library');
-        if($this->Wishlist->delete($deleteSongId)) {
-			
-            $this->Session->setFlash('Data deleted successfully!');
-            $this->redirect('my_wishlist');
-        }
-		else {
-			$this->Session->setFlash('Error occured while deleteting the record');
-			$this->redirect('my_wishlist');
-		}
     }
 
     /*
