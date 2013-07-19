@@ -244,7 +244,7 @@ if ($this->Session->read('Config.language') == 'en') {
             <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
             <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
                        
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-wishlist.less" />
+         
 
             <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            

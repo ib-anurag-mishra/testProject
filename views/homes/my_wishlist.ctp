@@ -28,10 +28,6 @@ $ieVersion =  ieversion();
 <script lenguage="javascript">
    var languageSet = '<?php echo $setLang; ?>';  
 </script>
-<form id="sortForm" name="sortForm" method='post'>
-    <input id='sort' type='hidden' name="sort" value="<?php echo $sort; ?>" />
-    <input id='sortOrder' type='hidden' name="sortOrder" value="<?php echo $sortOrder; ?>" />
-</form>
 <section class="my-wishlist-page">
 		
 		<div class="breadcrumbs"><?php
@@ -50,62 +46,62 @@ $ieVersion =  ieversion();
 				If you do not see the "download now" command in the Wish List area, it means so many people were waiting in line that you need to check back on a subsequent Monday.
 			</p>
 		</div>
-		<nav class="my-wishlist-filter-container clearfix">
+				<nav class="my-wishlist-filter-container clearfix">
 					<?php 
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active"></div>
+                    <div class="date-filter-button filter active">Date</div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled"></div>
+                    <div class="date-filter-button filter active toggled">Date</div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter "></div>
+                <div class="date-filter-button filter ">Date</div>
             <?php
             }
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active"></div>
+                    <div class="song-filter-button filter active">Song</div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled"></div>
+                    <div class="song-filter-button filter active toggled">Song</div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter"></div>
+			<div class="song-filter-button filter">Song</div>
             <?php
             }
             ?>
-			<div class="music-filter-button tab"></div>
-			<div class="video-filter-button tab"></div>
+			<div class="music-filter-button tab">Music</div>
+			<div class="video-filter-button tab">Video</div>
 		<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"></div>
+                    <div class="artist-filter-button filter active">Artist</div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled"></div>
+                    <div class="artist-filter-button filter active toggled">Artist</div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter"></div>
+			<div class="artist-filter-button filter">Artist</div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active"></div>
+                    <div class="album-filter-button filter active">Album</div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled"></div>
+                    <div class="album-filter-button filter active toggled">Album</div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter"></div>
+			<div class="album-filter-button filter">Album</div>
             <?php
             }
             ?>  
-			<div class="download-button filter"></div>
+			<div class="download-button filter">Download</div>
 			
 		</nav>
 		<div class="my-wishlist-shadow-container">
@@ -119,16 +115,11 @@ $ieVersion =  ieversion();
 		
 			
 	?>
+				
 				<div class="row clearfix">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
-					<div class="small-album-container">
-                                            
-                                        <?php
-                                            $albumArtwork = shell_exec('perl files/tokengen ' . $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SourceURL']);
-                                            $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                                        ?>
-                                            
-						<img src="<?=$songAlbumImage;?>" alt="small-album-cover" width="40" height="40" />
+					<div class="small-album-container">                                     
+                                
 						<a class="preview" href="#"></a>
 					</div>
 					<div class="song-title">
@@ -162,7 +153,7 @@ $ieVersion =  ieversion();
                                          ?>
                                             </a></div>
 					
-					<div class="wishlist-popover">
+				<div class="wishlist-popover">
 						<!--	
 						<a class="remove-song" href="#">Remove Song</a>
 						<a class="make-cover-art" href="#">Make Cover Art</a>
@@ -190,7 +181,7 @@ $ieVersion =  ieversion();
 						</div>
 						<?php } ?>
 					</div>
-					<div class="download">
+						<div class="download">
                                             
                                     <?php										
                                             $productInfo = $song->getDownloadData($wishlistResults[$i]['wishlists']['ProdID'],$wishlistResults[$i]['wishlists']['provider_type']);
@@ -217,10 +208,10 @@ $ieVersion =  ieversion();
                                             }
                                     ?>
                                             
-                                        </div>
-						<div class="delete-btn"></div>
+                                        </div>						
+					<div class="delete-btn"></div>
 				</div>
-        <?php 
+				<?php 
 
            }
 
@@ -235,7 +226,7 @@ $ieVersion =  ieversion();
 				</div>
 			</div>
 		</div>
-		<!--(this is the html for the videos) -->
+			<!--(this is the html for the videos) -->
 		<div class="my-video-wishlist-shadow-container" style="display:none;">
 			<div class="my-video-wishlist-scrollable">
 				<div class="row-container">
