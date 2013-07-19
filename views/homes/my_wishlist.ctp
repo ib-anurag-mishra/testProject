@@ -37,8 +37,8 @@ $ieVersion =  ieversion();
 		var parent = $(this).parent();		
                 alert(parent.attr('id'));
 		$.ajax({
-			type: 'get',
-			url: 'home/removeWishlistSong/',
+			type: 'post',
+			url: webroot+'homes/removeWishlistSong/',
 			data: 'ajax=1&delete=' + parent.attr('id').replace('record-',''),
 			beforeSend: function() {                            
 				parent.animate({'backgroundColor':'#fb6c6c'},600);
