@@ -34,22 +34,18 @@ $ieVersion =  ieversion();
    $(document).ready(function() {
 	$('.songdelete').click(function(e) {
 		e.preventDefault();
-                var currentField = $('.wishlistsong').attr('id');
-		var delete_id = $('.wishlistsong').attr('id').replace('record-','');
-                alert(delete_id);
+		var parent = $(this).parent();		
+                alert(parent.attr('id'));
 		$.ajax({
 			type: 'get',
 			url: 'home/removeWishlistSong/',
-			data: 'ajax=1&delete=' + delete_id,
-			beforeSend: function() {
-                             alert(2);
-				$('record-'+delete_id).animate({'backgroundColor':'#fb6c6c'},300);
+			data: 'ajax=1&delete=' + parent.attr('id').replace('record-',''),
+			beforeSend: function() {                            
+				parent.animate({'backgroundColor':'#fb6c6c'},300);
 			},
-			success: function(data) {
-                            alert(data);
-                            alert(1);
-				currentField.slideUp(300,function() {
-					$('record-'+delete_id).remove();
+			success: function() {                            
+				currentField.slideUp(500,function() {
+					parent.remove();
 				});
 			}
 		});
