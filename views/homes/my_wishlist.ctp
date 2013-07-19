@@ -123,12 +123,7 @@ $ieVersion =  ieversion();
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
 					<div class="small-album-container">
                                             
-                                        <?php
-                                            $albumArtwork = shell_exec('perl files/tokengen ' . $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SourceURL']);
-                                            $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                                        ?>
-                                            
-						<img src="<?=$songAlbumImage;?>" alt="small-album-cover" width="40" height="40" />
+                                        
 						<a class="preview" href="#"></a>
 					</div>
 					<div class="song-title">
@@ -218,6 +213,7 @@ $ieVersion =  ieversion();
                                     ?>
                                             
                                         </div>
+					<div class="delete-btn"></div>
 				</div>
         <?php 
 
@@ -312,12 +308,13 @@ $ieVersion =  ieversion();
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p></a>
+		       	<div class="delete-btn"></div>
                     </div>
-				</div>
+			
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                        echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
