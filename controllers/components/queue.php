@@ -28,7 +28,7 @@ Class QueueComponent extends Object
 
             $queueData = $queuelistInstance->find('all', array(
                     'conditions' => $cond,
-                    'order' => 'Queuelist.created DESC',
+                    'order' => 'QueueList.created DESC',
                     'limit' => 100
                   ));
         }else{
