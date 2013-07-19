@@ -128,14 +128,14 @@ function userDownloadIE(prodId)
 	});
 	return false;
 }
-function changeLang(type){ alert("http://jeffersonlibrary.freegaldev.com/"+webroot+"homes/language");
+function changeLang(type){ //alert("http://jeffersonlibrary.freegaldev.com/"+webroot+"homes/language");
 	var language = type;
 	var data = "lang="+language;
 	$.ajax({ 
 		type: "post",  // Request method: post, get
-		url: "http://jeffersonlibrary.freegaldev.com/"+webroot+"homes/language", // URL to request
+		url: webroot+"homes/language", // URL to request
 		data: data,  // post data
-		success: function(response) { alert("in js"+webroot);
+		success: function(response) { //alert("in js"+webroot);
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
