@@ -123,7 +123,12 @@ $ieVersion =  ieversion();
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
 					<div class="small-album-container">
                                             
-                                        
+                                        <?php
+                                            $albumArtwork = shell_exec('perl files/tokengen ' . $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SourceURL']);
+                                            $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                        ?>
+                                            
+						<img src="<?=$songAlbumImage;?>" alt="small-album-cover" width="40" height="40" />
 						<a class="preview" href="#"></a>
 					</div>
 					<div class="song-title">
@@ -173,17 +178,12 @@ $ieVersion =  ieversion();
 						<?php if( $this->Session->read('library_type') == 2 ){ ?>
 						<div class="playlist-options">
 							<ul>
-								<li><a href="#" class="create-new-queue">Create New Queue</a></li>
-								<li><a href="#">Queue 1</a></li>
-								<li><a href="#">Queue 2</a></li>
-								<li><a href="#">Queue 3</a></li>
-								<li><a href="#">Queue 4</a></li>
-								<li><a href="#">Queue 5</a></li>
-								<li><a href="#">Queue 6</a></li>
-								<li><a href="#">Queue 7</a></li>
-								<li><a href="#">Queue 8</a></li>
-								<li><a href="#">Queue 9</a></li>
-								<li><a href="#">Queue 10</a></li>
+								<li><a href="#">Create New Queue</a></li>
+								<li><a href="#">Playlist 1</a></li>
+								<li><a href="#">Playlist 2</a></li>
+								<li><a href="#">Playlist 3</a></li>
+								<li><a href="#">Playlist 4</a></li>
+								<li><a href="#">Playlist 5</a></li>
 								
 								
 							</ul>
@@ -218,7 +218,6 @@ $ieVersion =  ieversion();
                                     ?>
                                             
                                         </div>
-					<div class="delete-btn"></div>
 				</div>
         <?php 
 
@@ -313,13 +312,12 @@ $ieVersion =  ieversion();
 							<span class="afterClick" style="display:none;float:left"><?php __("Please Wait...");?></span>
 							<span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p></a>
-		       	<div class="delete-btn"></div>
                     </div>
-			
+				</div>
 				<?php
                     endforeach;
                     }else{
-                        echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
