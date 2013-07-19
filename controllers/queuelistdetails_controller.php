@@ -12,7 +12,7 @@ class QueueListDetailsController extends AppController{
     var $layout = 'home';
     var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist',);
     var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads');
-    var $uses = array( 'Queuelist','QueuelistDetail','User','Album','Song', 'Wishlist');
+    var $uses = array( 'QueueDetail','User','Album','Song', 'Wishlist','QueueList');
     
     function beforeFilter(){
            
@@ -27,7 +27,7 @@ class QueueListDetailsController extends AppController{
         {
             if(!empty($_POST["Pdid"]))
             {
-                if($this->QueuelistDetail->deleteAll(array('PdId' => $_POST["Pdid"]),false)){
+                if($this->QueueDetail->deleteAll(array('id' => $_POST["Pdid"]),false)){
                         $this->Session ->setFlash('Song has been deleted successfully from queue', 'modal', array( 'class' => 'queue success' ));
                         $this->redirect($this->referer());						
                 }
@@ -41,9 +41,9 @@ class QueueListDetailsController extends AppController{
         else if($_POST['hid_action']=='rename_queue') 
         {
             if(!empty($_POST["rqPlid"])){
-                $this->data['Queuelist']['Plid'] = $_POST["rqPlid"];
-                $this->Queuelist->set($this->data['Queuelist']);
-                if($this->Queuelist->save()){
+                $this->data['QueueList']['queue_id'] = $_POST["rqPlid"];
+                $this->QueueList->set($this->data['QueueList']);
+                if($this->QueueList->save()){
                             $this->Session ->setFlash('Queue has been renamed successfully', 'modal', array( 'class' => 'queue success' ));
                             $this->redirect($this->referer());						
                     }
@@ -57,8 +57,8 @@ class QueueListDetailsController extends AppController{
         else if($_POST['hid_action']=='delete_queue')
         {                         
               if(!empty($_POST["dqPlid"])){
-                    $delqueueDetail = $this->QueuelistDetail->deleteAll(array('Plid' => $_POST["dqPlid"]), false);
-                    $delqueue = $this->Queuelist->deleteAll(array('Plid' => $_POST["dqPlid"]), false);
+                    $delqueueDetail = $this->QueueDetail->deleteAll(array('id' => $_POST["dqPlid"]), false);
+                    $delqueue = $this->QueueList->deleteAll(array('Plid' => $_POST["dqPlid"]), false);
 
                     if( (true === $delqueueDetail) && (true === $delqueue) ) {
                         $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
@@ -94,7 +94,7 @@ class QueueListDetailsController extends AppController{
     
     function queue_details()
     {
-       
+
         $this->layout = 'home';   
         $libId = $this->Session->read('library');
         $patId = $this->Session->read('patron');

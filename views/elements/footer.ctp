@@ -59,14 +59,18 @@
 					</ul>
 					</nav>
 					<div class="languages">
-						<ul class="clearfix">
-							<li><span>Also available in</span></li>
-							<li><a href="#">English</a></li>
-							<li><a href="#">Espa&ntilde;ol</a></li>
-							<li><a href="#">Fran&ccedil;ais</a></li>
-							<li><a href="#">Italiano</a></li>
-
-						</ul>
+						<?php $this->getTextEncode(__('Also available in')); ?>&nbsp;
+                                                <?php
+                                                $language = $language->getLanguage();
+                                                $i =1;
+                                                foreach($language as $k => $v){
+                                                        echo '<a href="javascript:void(0)" id='.$k.' onClick="changeLang('.$k.');">';?><?php echo $this->getTextEncode($v); ?><?php echo '</a> ';
+                                                        if($i > 0 && $i < count($language)){
+                                                                echo "| ";
+                                                        }
+                                                        $i++;
+                                                }
+                                                ?>
 					</div>
 				</div>
 			</footer>

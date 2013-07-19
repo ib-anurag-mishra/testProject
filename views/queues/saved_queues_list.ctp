@@ -28,12 +28,12 @@
                                                 <?php } ?>
                                                 <div class="item">
                                                 <div class="playlist-info-container">
-                                                        <?php if(!empty($value['Queuelist']['PlaylistName'])){ ?>
-                                                        <div class="playlist-title"><a href="/queuelistdetails/queue_details/<?php echo $value['Queuelist']['Plid'];?>"><?php echo $value['Queuelist']['PlaylistName']; ?></a></div>
+                                                        <?php if(!empty($value['QueueList']['queue_name'])){ ?>
+                                                        <div class="playlist-title"><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></div>
                                                         <a href="#"><img src="/img/my-playlists/album-cover.jpg" alt="album-cover" width="85" height="85" /></a>
                                                         <?php } ?>
-                                                        <?php if(!empty($value['QueuelistDetails'])){ ?>
-                                                        <div class="playlist-length"><?php echo count($value['QueuelistDetails']); ?> Songs</div>
+                                                        <?php if(!empty($value['QueueDetail'])){ ?>
+                                                        <div class="playlist-length"><?php echo count($value['QueueDetail']); ?> Songs</div>
                                                         <?php } ?>
                                                  </div>
                                                  </div>

@@ -624,7 +624,7 @@
 										<?php $count = 1;
 									foreach($news as $key => $value)
 									{
-										  $newsText = str_replace('<div', '<p', ($value['News']['body']));
+										  $newsText = str_replace('<div', '<p', htmlspecialchars($value['News']['body']));
                                                                                   $newsText = str_replace('</div>', '</p>', $newsText);
 									?>
 										<li>
@@ -641,7 +641,7 @@
 												<div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
 													 <?php 
                                                                                                                 echo $this->getTextEncode(substr($newsText,0, 325)); 
-                                                                                                                //echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4));
+                                                                                                               // echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4));
                                                                                                             ?>		
 													 <div class="more">
 													 <?php  if(strlen($newsText) > strpos($newsText, "</p>")+4)

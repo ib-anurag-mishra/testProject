@@ -33,9 +33,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <form action="/queuelistdetails/index/<?php echo $this->params['pass'][0]; ?>" method="post">
                     <div class="rename-form-container">
                                     <label for="name">Name:</label>
-                                    <?php echo $this->Form->input('Queuelist.PlaylistName', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
+                                    <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'id' => 'name') ); ?>
                                     <label for="description">Description:</label>
-                                    <?php echo $this->Form->input('Queuelist.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
+                                    <?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'id' => 'description') ); ?>
                                     <input type="hidden" id="rqPlid" name="rqPlid" value="" />
                                     <input type="hidden" name="hid_action" value="rename_queue" />
                     </div>
@@ -52,9 +52,9 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <div class="rename-form-container">
 
                         <label for="name">Name:</label>
-                        <?php echo $this->Form->input('Queuelist.PlaylistName', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                        <?php echo $this->Form->input('QueueList.queue_name', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
                         <label for="description">Description:</label>
-                        <?php echo $this->Form->input('Queuelist.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
+                        <?php echo $this->Form->input('QueueList.description', array('label' => false, 'div' => false, 'class' => 'form_fields') ); ?>
 
 
                     </div>
@@ -339,7 +339,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <a href="#" class="sidebar-anchor">Freegal Queues</a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
-                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['Queuelist']['Plid'];?>"><?php echo $value['Queuelist']['PlaylistName']; ?></a></li>
+                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
                                                                 <?php } ?>    
                                                             </ul>
                                                     </li>
@@ -347,7 +347,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <li>
                                                             <a href="#" class="sidebar-anchor saved-queue">My Queues</a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <li><a href="/queuelistdetails/now_streaming/<?php echo $this->Session->read("patron"); ?>">Now Streaming</a></li>
+                                                                    <li><a href="/queuelistdetails/now_streaming/1">Now Streaming</a></li>
                                                                     <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>">Saved Queues</a></li>
                                                             </ul>
                                                     </li>
