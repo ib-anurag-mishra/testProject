@@ -74,17 +74,17 @@ class QueuesController extends AppController{
             array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
         );        
 
-       // if ( ((Cache::read('defaultqueuelist')) === false)  || (Cache::read('defaultqueuelist') === null) ) {
+        if ( ((Cache::read('defaultqueuelist')) === false)  || (Cache::read('defaultqueuelist') === null) ) {
             $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
                     'fields' => array('queue_id','queue_name'),
                     'order' => 'QueueList.created DESC',
                     'limit' => 100
                   ));
-//            Cache::write("defaultqueuelist", $queueData);
-//        }else{
-//            $queueData = Cache::read("defaultqueuelist");
-//        }        
+            Cache::write("defaultqueuelist", $queueData);
+        }else{
+            $queueData = Cache::read("defaultqueuelist");
+        }        
         return $queueData;             
 
     }  
