@@ -3507,7 +3507,7 @@ STR;
     */
     function removeWishlistSong() {
         
-        Configure::write('debug', 0);
+        Configure::write('debug', 2);
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
            $deleteSongId = $_REQUEST['delete'];
