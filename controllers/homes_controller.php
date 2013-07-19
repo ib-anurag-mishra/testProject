@@ -3512,7 +3512,8 @@ STR;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
            $deleteSongId = $_REQUEST['delete'];
            $this->Library->setDataSource('master');
-           if($this->Wishlist->delete($deleteSongId)) {               
+           if($this->Wishlist->delete($deleteSongId)) { 
+               $this->Library->setDataSource('default');
                return 1;                
            }            
            $this->Library->setDataSource('default');
