@@ -3507,7 +3507,7 @@ STR;
     */
     function removeWishlistSong() {
         
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
            $deleteSongId = $_REQUEST['delete'];
@@ -3529,17 +3529,17 @@ STR;
     */
     function removeWishlistVideo() {
         
-        Configure::write('debug', 2);
+        Configure::write('debug', 0);
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
            $deleteSongId = $_REQUEST['delete'];
            $this->WishlistVideo->setDataSource('master');
            if($this->WishlistVideo->delete($deleteSongId)) { 
                $this->WishlistVideo->setDataSource('default');
-               return 1;                
+               echo 1;                
            }            
            $this->WishlistVideo->setDataSource('default');
-           return 0;
+           echo 0;
         }
         exit;
         
