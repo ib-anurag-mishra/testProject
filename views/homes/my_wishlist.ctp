@@ -34,7 +34,7 @@ $ieVersion =  ieversion();
    $(document).ready(function() {
 	$('.songdelete').click(function(e) {
 		e.preventDefault();
-		var delete_id = $(this).attr('id').replace('record-','');
+		var delete_id = $('.wishlistsong').attr('id').replace('record-','');
                 alert(delete_id);
 		$.ajax({
 			type: 'get',
@@ -144,7 +144,7 @@ $ieVersion =  ieversion();
 			
 	?>
 				
-				<div class="row clearfix" id="record-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
+				<div class="row clearfix wishlistsong"  id="record-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
 					<div class="small-album-container">                                     
                                 
