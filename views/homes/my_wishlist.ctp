@@ -549,7 +549,7 @@ $ieVersion =  ieversion();
                     }*/
                 ?>
 				
-				<div class="row clearfix" id="wishlistvideo-<?php echo $wishlistResultsVideo[$i]['WishlistVideo']['id']?>">
+				<div class="row clearfix" id="wishlistvideo-<?php echo $wishlistResultsVideo['WishlistVideo']['id']?>">
 					<div class="date"><?php echo date("Y-m-d",strtotime($wishlistResultsVideo['WishlistVideo']['created'])); ?></div>
 					<div class="small-album-container">
 						<?php
