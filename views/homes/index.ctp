@@ -1,6 +1,4 @@
-<?php
-__('Music Videos');
-?>
+
 						
 						<section class="news">
 							<div class="top-100">
