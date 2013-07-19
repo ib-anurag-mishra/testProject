@@ -244,7 +244,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     ?>
                     <ul class="clearfix">
 			<li class="regular"><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
-                        <li class="regular"><?php echo $html->link(__('MUSIC VIDEOS', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
+                        <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
                         <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>">Most Popular</a></li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   

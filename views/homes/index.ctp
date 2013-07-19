@@ -1,5 +1,5 @@
 <?php
-__('Newly Added');
+__('Music Videos');
 ?>
 						
 						<section class="news">
