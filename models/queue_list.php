@@ -5,16 +5,16 @@
  Author : m68interactive
  */
 
-class Queuelist extends AppModel
+class QueueList extends AppModel
 {
-	var $name = 'Queuelist';
-	var $useTable = 'Queuelists';
-        var $primaryKey = 'Plid';
+	var $name = 'QueueList';
+	var $useTable = 'queue_lists';
+    var $primaryKey = 'queue_id';
         
         var $hasMany = array(
-		'QueuelistDetails' => array(
-			'className' => 'QueuelistDetails',
-			'foreignKey' => 'Plid',
+		'QueueDetail' => array(
+			'className' => 'QueueDetail',
+			'foreignKey' => 'queue_id',
                         'type'  => 'INNER'
 		)
 	);
@@ -22,7 +22,7 @@ class Queuelist extends AppModel
 	var $belongsTo = array(
 		'User' => array(
 		    'className'    => 'User',
-		    'foreignKey' => 'patronID'
+		    'foreignKey' => 'patron_id'
 		)
 	);        
 

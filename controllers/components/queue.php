@@ -9,7 +9,7 @@
 Class QueueComponent extends Object
 {
     
-    var $uses = array('Queuelist','QueuelistDetails','User','Album','Song');
+    var $uses = array('QueueList','QueueDetail','User','Album','Song');
     
     /**
      * Function name : getQueueList
@@ -18,8 +18,8 @@ Class QueueComponent extends Object
     function getQueueList($patronID){
         
         if(!empty($patronID)){
-            $queuelistInstance = ClassRegistry::init('Queuelist');        
-            $cond = array('patronID' => $patronID, 'status' => '1');
+            $queuelistInstance = ClassRegistry::init('QueueList');        
+            $cond = array('patron_id' => $patronID, 'status' => '1');
 
             // Unbinded User model
             $queuelistInstance->unbindModel(
@@ -43,24 +43,24 @@ Class QueueComponent extends Object
     $pat_Id= 1;
        // echo "<br>[".$pat_Id."]";
     
-    $queueDetailList = ClassRegistry::init('QueuelistDetails');
+    $queueDetailList = ClassRegistry::init('QueueDetail');
     $queueDetail = $queueDetailList->find('all',
       array(
-        'fields' =>  array('QueuelistDetails.Pdid', 'Queuelists.PlaylistName', 'Queuelists.description', 'Songs.SongTitle', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+        'fields' =>  array('QueueDetail.id', 'QueueList.queue_name', 'QueueList.description', 'Songs.SongTitle', 'Songs.FullLength_Duration', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
         'joins' => array(
           array(
             'type' => 'INNER',
-            'table' => 'Queuelists',
-            'alias' => 'Queuelists',
+            'table' => 'queue_lists',
+            'alias' => 'QueueList',
             'foreignKey' => false,
-            'conditions' => array('Queuelists.Plid = QueuelistDetails.Plid'),        
+            'conditions' => array('QueueList.queue_id = QueueDetail.id'),        
           ),
           array(
             'type' => 'INNER',
             'table' => 'Songs',
             'alias' => 'Songs',
             'foreignKey' => false,
-            'conditions' => array('Songs.ProdID = QueuelistDetails.SongProdId', 'Songs.provider_type = QueuelistDetails.SongProviderType'),        
+            'conditions' => array('Songs.ProdID = QueueDetail.song_prodid', 'Songs.provider_type = QueueDetail.song_providertype'),        
           ),
           array(
             'type' => 'INNER',
@@ -92,7 +92,7 @@ Class QueueComponent extends Object
           ),           
         ),
         'recursive' => -1,
-        'conditions' => array('Queuelists.status' => 1, 'QueuelistDetails.Plid' => $queueID , 'Queuelists.patronID' => trim($pat_Id)),                
+        'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID , 'QueueList.patron_id' => trim($pat_Id)),                
       )
     );
     

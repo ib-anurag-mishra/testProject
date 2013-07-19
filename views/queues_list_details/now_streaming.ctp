@@ -2,7 +2,7 @@
            <?php if(!empty($queue_list_array)){ ?>
 		<div class="breadcrumbs"><span>Home</span> > <span>Now Streaming</span></div>
 		<header class="clearfix">
-			<h2><?php echo $queue_list_array[0]['Queuelists']['PlaylistName'];?></h2>
+			<h2><?php echo $queue_list_array[0]['QueueList']['queue_name'];?></h2>
 			<div class="faq-link">Need help? Visit our <a href="#">FAQ section.</a></div>
 		</header>
 		<div class="album-info-playlist-container clearfix">
@@ -43,8 +43,8 @@
 				<div class="release-genre">Genre: <span><a href="#">Pop</a></span></div>
 				<div class="release-label">Label: <span>Columbia</span></div>
 				<input type="hidden" id="hid_Plid" value="<?php echo $queue_id;?>" />
-                                <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["Queuelists"]["PlaylistName"];?>" />
-                                <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["Queuelists"]["description"];?>" />
+                                <input type="hidden" id="hid_playlist_name" value="<?php echo $queue_list_array[0]["QueueList"]["queue_name"];?>" />
+                                <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"];?>" />
 
 			</div>
 					
@@ -145,7 +145,7 @@
 							<!--<a class="remove-song" href="#">Remove Song</a> -->
                                                         <span class="top-100-download-now-button">
                                                         <form method="Post" name="form_rename<?php echo $value["Songs"]["ProdID"]; ?>" action="/queuelistdetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
-                                                        <input type="hidden" name="Pdid" value="<?php echo $value["QueuelistDetails"]["Pdid"];?>" />
+                                                        <input type="hidden" name="Pdid" value="<?php echo $value["QueueDetail"]["id"];?>" />
                                                         <input type="hidden" name="ProviderType" value="<?php echo $value["Songs"]["provider_type"]; ?>" />
                                                         <input type="hidden" name="hdn_remove_song" value="1" />
                                                         <span class="beforeClick" id="song_<?php echo $value["Songs"]["ProdID"]; ?>">
