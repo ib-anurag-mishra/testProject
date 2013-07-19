@@ -42,9 +42,11 @@ $ieVersion =  ieversion();
 			url: 'home/removeWishlistSong/',
 			data: 'ajax=1&delete=' + delete_id,
 			beforeSend: function() {
+                             alert(2);
 				$('record-'+delete_id).animate({'backgroundColor':'#fb6c6c'},300);
 			},
 			success: function() {
+                            alert(1);
 				currentField.slideUp(300,function() {
 					$('record-'+delete_id).remove();
 				});
