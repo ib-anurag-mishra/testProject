@@ -569,7 +569,7 @@ $ieVersion =  ieversion();
 					?>
                     </div>
 					<a class="add-to-wishlist-button" href="#"></a>
-					<div class="album-title"><a href="#"><?php echo $wishlistResultsVideo['Video']['Title'];  ?></a></div>
+					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,19);  ?>...</a></div>
 					<div class="artist-name"><a href="#">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 19) {
