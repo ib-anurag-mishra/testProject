@@ -131,11 +131,11 @@ function userDownloadIE(prodId)
 function changeLang(type){ alert("in js");
 	var language = type;
 	var data = "lang="+language;
-	$.ajax({
+	$.ajax({ 
 		type: "post",  // Request method: post, get
 		url: webroot+"homes/language", // URL to request
 		data: data,  // post data
-		success: function(response) {
+		success: function(response) { alert("in js"+webroot);
 			var msg = response.substring(0,5);
 			if(msg == 'error')
 			{
