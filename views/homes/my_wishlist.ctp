@@ -34,6 +34,7 @@ $ieVersion =  ieversion();
    $(document).ready(function() {
 	$('.songdelete').click(function(e) {
 		e.preventDefault();
+                var currentField = $('.wishlistsong').attr('id');
 		var delete_id = $('.wishlistsong').attr('id').replace('record-','');
                 alert(delete_id);
 		$.ajax({
@@ -41,11 +42,11 @@ $ieVersion =  ieversion();
 			url: 'home/album_ajax/',
 			data: 'ajax=1&delete=' + delete_id,
 			beforeSend: function() {
-				parent.animate({'backgroundColor':'#fb6c6c'},300);
+				currentField.animate({'backgroundColor':'#fb6c6c'},300);
 			},
 			success: function() {
-				parent.slideUp(300,function() {
-					parent.remove();
+				currentField.slideUp(300,function() {
+					currentField.remove();
 				});
 			}
 		});
