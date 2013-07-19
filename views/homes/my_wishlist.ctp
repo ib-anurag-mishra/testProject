@@ -39,14 +39,14 @@ $ieVersion =  ieversion();
                 alert(delete_id);
 		$.ajax({
 			type: 'get',
-			url: 'home/album_ajax/',
+			url: 'home/removeWishlistSong/',
 			data: 'ajax=1&delete=' + delete_id,
 			beforeSend: function() {
-				currentField.animate({'backgroundColor':'#fb6c6c'},300);
+				$(delete_id).animate({'backgroundColor':'#fb6c6c'},300);
 			},
 			success: function() {
 				currentField.slideUp(300,function() {
-					currentField.remove();
+					$(delete_id).remove();
 				});
 			}
 		});
