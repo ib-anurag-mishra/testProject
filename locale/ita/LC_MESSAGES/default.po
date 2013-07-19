@@ -187,7 +187,7 @@ msgstr "Aggiunti di Recente"
 msgid "Advanced Search"
 msgstr "Ricerca Avanzata"
 
-#: \elements\navigation.ctp:100
+#: \elements\navigation.ctp:247
 #: \homes\advance_search.ctp:2
 msgid "MUSIC VIDEOS"
 msgstr "VIDEO MUSICALI"
