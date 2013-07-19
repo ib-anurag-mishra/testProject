@@ -1,30 +1,3 @@
-<script type="text/javascript">
-$(function(){
-// The height of the content block when it's not expanded
-var adjustheight = 80;
-// The "more" link text
-var moreText = "+ See more";
-// The "less" link text
-var lessText = "- See Less";
-// Sets the .more-block div to the specified height and hides any content that overflows
-$(".more-less .more-block").css('height', adjustheight).css('overflow', 'hidden');
-// The section added to the bottom of the "more-less" div
-$(".more-less").append('<a href="#" class="adjust"></a>');
-$("a.adjust").text(moreText);
-$(".adjust").toggle(
-	function() {
-		$(this).parents("div:first").find(".more-block").css('height', 'auto').css('overflow', 'visible');
-		// Hide the [...] when expanded
-		$(this).text(lessText);
-	}, 
-	function() {
-		$(this).parents("div:first").find(".more-block").css('height', adjustheight).css('overflow', 'hidden');
-		$(this).text(moreText);
-	});
-});
-</script> 
-
-
 
 						
 						<section class="news">
@@ -680,7 +653,7 @@ $(".adjust").toggle(
 												</div>
 												
 												<div id="detailsNews<?php echo $value['News']['id']; ?>" style="display:none" class="post-excerpt">
-												<?php echo $newsText; ?>
+												<?php //echo $newsText; ?>
 								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a>
 												</div>
 												
