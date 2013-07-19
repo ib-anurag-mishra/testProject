@@ -202,7 +202,7 @@ msgstr "Newly Added"
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: \elements\navigation.ctp:100
+#: \elements\navigation.ctp:247
 #: \homes\advance_search.ctp:2
 msgid "MUSIC VIDEOS"
 msgstr "MUSIC VIDEOS"
