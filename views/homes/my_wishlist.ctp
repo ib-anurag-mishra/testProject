@@ -39,7 +39,27 @@ $ieVersion =  ieversion();
 		$.ajax({
 			type: 'post',
 			url: webroot+'homes/removeWishlistSong/',
-			data: 'ajax=1&delete=' + parent.attr('id').replace('record-',''),
+			data: 'ajax=1&delete=' + parent.attr('id').replace('wishlistsong-',''),
+			beforeSend: function() {                            
+				parent.animate({'backgroundColor':'#fb6c6c'},600);
+			},
+			success: function() { 
+                            //alert(1);
+				parent.slideUp(600,function() {
+					parent.remove();
+				});
+			}
+		});
+	});
+        
+        $('.videodelete').click(function(e) {
+		e.preventDefault();
+		var parent = $(this).parent();		
+               // alert(parent.attr('id'));
+		$.ajax({
+			type: 'post',
+			url: webroot+'homes/removeWishlistVideo/',
+			data: 'ajax=1&delete=' + parent.attr('id').replace('wishlistvideo-',''),
 			beforeSend: function() {                            
 				parent.animate({'backgroundColor':'#fb6c6c'},600);
 			},
@@ -145,7 +165,7 @@ $ieVersion =  ieversion();
 			
 	?>
 				
-				<div class="row clearfix wishlistsong"  id="record-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
+				<div class="row clearfix wishlistsong"  id="wishlistsong-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
 					<div class="small-album-container">                                     
                                 
@@ -270,7 +290,7 @@ $ieVersion =  ieversion();
                     }*/
                 ?>
 				
-				<div class="row clearfix">
+				<div class="row clearfix" id="wishlistvideo-<?php echo $wishlistResults[$i]['WishlistVideo']['id']?>">
 					<div class="date"><?php echo date("Y-m-d",strtotime($wishlistResultsVideo['WishlistVideo']['created'])); ?></div>
 					<div class="small-album-container">
 						<?php
@@ -334,7 +354,7 @@ $ieVersion =  ieversion();
 							<span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p></a>
                     </div>
-		    <div class="delete-btn"></div>
+		    <div class="delete-btn videodelete"></div>
 				</div>
 				<?php
                     endforeach;

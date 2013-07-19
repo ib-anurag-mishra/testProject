@@ -3511,17 +3511,40 @@ STR;
         $this->layout = false;
         if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
            $deleteSongId = $_REQUEST['delete'];
-           $this->Library->setDataSource('master');
+           $this->Wishlist->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) { 
-               $this->Library->setDataSource('default');
+               $this->Wishlist->setDataSource('default');
                return 1;                
            }            
-           $this->Library->setDataSource('default');
+           $this->Wishlist->setDataSource('default');
            return 0;
         }
         exit;
         
     }
+    
+     /*
+     Function Name : removeWishlistVideo
+     Desc : For removing a song from wishlist page
+    */
+    function removeWishlistVideo() {
+        
+        Configure::write('debug', 2);
+        $this->layout = false;
+        if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
+           $deleteSongId = $_REQUEST['delete'];
+           $this->WishlistVideo->setDataSource('master');
+           if($this->WishlistVideo->delete($deleteSongId)) { 
+               $this->WishlistVideo->setDataSource('default');
+               return 1;                
+           }            
+           $this->WishlistVideo->setDataSource('default');
+           return 0;
+        }
+        exit;
+        
+    }
+    
 
     /*
      Function Name : wishlistDownload
