@@ -218,6 +218,7 @@ $ieVersion =  ieversion();
                                     ?>
                                             
                                         </div>
+						<div class="delete-btn"></div>
 				</div>
         <?php 
 
@@ -313,6 +314,7 @@ $ieVersion =  ieversion();
 							<span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p></a>
                     </div>
+		    <div class="delete-btn"></div>
 				</div>
 				<?php
                     endforeach;
