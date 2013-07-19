@@ -626,9 +626,6 @@
 									{
 										  $newsText = str_replace('<div', '<p', ($value['News']['body']));
                                                                                   $newsText = str_replace('</div>', '</p>', $newsText);
-
-                                                                                  echo "<br>NEWS: ".$value['News']['body'];
-                                                                                  echo "<br>NEWS: ".$newsText;
 									?>
 										<li>
 											<div class="post">
