@@ -2,7 +2,7 @@
 class AppController extends Controller
 {
 	var $components = array( 'Session' );
-	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download' );
+	var $helpers = array( 'Session', 'Html', 'Ajax', 'Javascript', 'Form', 'Library', 'Download','Queue' );
 	var $uses = array('Genre','Featuredartist','Newartist','Category','Album','Country');
         var $view = 'Dataencode';
 	
