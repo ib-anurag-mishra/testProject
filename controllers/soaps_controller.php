@@ -5185,30 +5185,14 @@ STR;
               
     if( 1 == $uid ){
     
-      $cond = array('patron_id' => $uid, 'status' => '1');
-      $userName = 'Admin';
+      $cond = array('status' => '1', 'queue_type' => '1');
     }else{
-    
-      $method = $this->getAuthMethodFromAuthenticationToken($authenticationToken);
-      $patronID = $this->getPatronIdFromAuthenticationToken($authenticationToken);   
-    
-      if('user_account' == $method){
-      
-        $cond = array('patron_id' => $patronID, 'status' => '1');
-        $user = $this->User->find('first',array(
-          'fields' => array('first_name'),
-          'conditions' => array('id' => $patronID),
-          'recursive' => -1,
-        ));
-        $userName = $user['User']['first_name'];
-      }else{
-      
-        $cond = array('patron_id' => $patronID, 'status' => '1');
-        $userName = $patronID;
-      }
+            
+      $patronID = $this->getPatronIdFromAuthenticationToken($authenticationToken); 
+      $cond = array('patron_id' => $patronID, 'status' => '1', 'queue_type' => '0');
     }
     
-    $Queuelist = $this->QueueList->find('all', array(
+    $QueueList = $this->QueueList->find('all', array(
       'conditions' => $cond,
       'recursive' => -1,
       'order' => 'created DESC'
@@ -5216,18 +5200,18 @@ STR;
     
 
     
-    if( empty($Queuelist) ) {
+    if( empty($QueueList) ) {
       throw new SOAPFault('Soap:DefaultQueueList', 'No Queue lists found');
     } else {
       
       for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
-        if(!(empty($Queuelist[$cnt]['Queuelist']['queue_id']))) {
+        if(!(empty($QueueList[$cnt]['QueueList']['queue_id']))) {
           $obj = new QueueListDataType;
       
-          $obj->QueueID                    = $Queuelist[$cnt]['Queuelist']['queue_id'];
-          $obj->QueueName                  = $Queuelist[$cnt]['Queuelist']['queue_name'];
-          $obj->QueueCreated               = $Queuelist[$cnt]['Queuelist']['created'];
-          $obj->QueueModified              = $Queuelist[$cnt]['Queuelist']['modified'];          
+          $obj->QueueID                    = $QueueList[$cnt]['QueueList']['queue_id'];
+          $obj->QueueName                  = $QueueList[$cnt]['QueueList']['queue_name'];
+          $obj->QueueCreated               = $QueueList[$cnt]['QueueList']['created'];
+          $obj->QueueModified              = $QueueList[$cnt]['QueueList']['modified'];          
           $obj->QueueUser                  = $userName;
        
           $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
