@@ -205,13 +205,13 @@ $(document).ready(function(){
 			
 			$(this).parents('.row').removeClass('playing');
 			$(this).parent().removeClass('playing');
-			$(this).parent().siblings('.date').removeClass('playing');
-			$(this).parent().siblings('.album-title').removeClass('playing');
-			$(this).parent().siblings('.artist-name').removeClass('playing');
-			$(this).parent().siblings('.time').removeClass('playing');
-			$(this).parent().siblings('.song-title').removeClass('playing');
-			$(this).parent().siblings('.add-to-wishlist-button').removeClass('playing');
-			$(this).parent().siblings('.download').removeClass('playing');
+			$(this).siblings('.date').removeClass('playing');
+			$(this).siblings('.album-title').removeClass('playing');
+			$(this).siblings('.artist-name').removeClass('playing');
+			$(this).siblings('.time').removeClass('playing');
+			$(this).siblings('.song-title').removeClass('playing');
+			$(this).siblings('.add-to-wishlist-button').removeClass('playing');
+			$(this).siblings('.download').removeClass('playing');
 			
 			
 		} else {
@@ -228,14 +228,13 @@ $(document).ready(function(){
 		
 			$(this).addClass('playing');
 			$(this).parents('.row').addClass('playing');
-			$(this).parent().addClass('playing');
-			$(this).parent().siblings('.date').addClass('playing');
-			$(this).parent().siblings('.album-title').addClass('playing');
-			$(this).parent().siblings('.artist-name').addClass('playing');
-			$(this).parent().siblings('.time').addClass('playing');
-			$(this).parent().siblings('.song-title').addClass('playing');
-			$(this).parent().siblings('.add-to-wishlist-button').addClass('playing');
-			$(this).parent().siblings('.download').addClass('playing');
+			$(this).parent().addClass('playing');			$(this).siblings('.date').addClass('playing');
+			$(this).siblings('.album-title').addClass('playing');
+			$(this).siblings('.artist-name').addClass('playing');
+			$(this).siblings('.time').addClass('playing');
+			$(this).siblings('.song-title').addClass('playing');
+			$(this).siblings('.add-to-wishlist-button').addClass('playing');
+			$(this).siblings('.download').addClass('playing');			
 			
 			
 		}
