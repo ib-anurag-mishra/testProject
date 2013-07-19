@@ -128,7 +128,7 @@ function userDownloadIE(prodId)
 	});
 	return false;
 }
-function changeLang(type){
+function changeLang(type){ alert("in js");
 	var language = type;
 	var data = "lang="+language;
 	$.ajax({
