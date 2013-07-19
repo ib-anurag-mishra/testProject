@@ -1,4 +1,9 @@
-@import 'mixins.less';
+
+.box-shadow (@string) {
+	-webkit-box-shadow: @string;
+	-moz-box-shadow:    @string;
+	box-shadow:         @string;
+}
 
 
 .my-wishlist-page {
@@ -256,7 +261,6 @@
 						&.playing {
 							
 							font-weight: bold;
-							color: #000;
 						}
 						
 						&.hovered {
@@ -266,9 +270,17 @@
 						}
 					}
 					
-					.preview {
+					.small-album-container {
 						
 						position: absolute;
+						height: 40px;
+						width: 40px;
+						left: 98px;
+						top:10px;
+						
+						.preview {
+							
+							position: absolute;
 							left: 11px;
 							top:11px;
 							
@@ -279,7 +291,7 @@
 							width: 19px;
 							height: 19px;
 							background: url(../img//my-wishlist/preview-off.png);
-							opacity: .7;
+							opacity: 0;
 							
 							
 							&:hover,&.blue-bkg {
@@ -315,10 +327,17 @@
 						
 						
 								
-					
+						}
+						
+						img {
 							
+							position: absolute;
+							left: 0;
+							top:0;
+							border: 1px solid #fff;
+							.box-shadow(0 0 4px rgba(0,0,0,.5));
+						}
 					}
-
 					
 					.song-title {
 						
@@ -328,13 +347,12 @@
 						
 						width: 128px;
 						position: absolute;
-						left: 134px;
+						left: 156px;
 						top: 10px;
 						
 						&.playing {
 							
 							font-weight: bold;
-							color: #000;
 						}
 						
 						&.hovered {
@@ -351,12 +369,12 @@
 						display: block;
 						width: 26px;
 						height: 25px;
-						background: url(../img/my-wishlist/add-to-playlist-button.png);
+						background: url(../img//my-wishlist/add-to-playlist-button.png);
 						
 						margin-top: 8px;
 						position: absolute;
 						left: 359px;
-						.box-shadow(0 0 2px rgba(0,0,0,.5));
+						.box-shadow(0 0 4px rgba(0,0,0,.5));
 						opacity: .5;
 						
 						&.hovered,&.playing {
@@ -367,17 +385,17 @@
 					
 					.wishlist-popover {
 						position: absolute;
-						left: 265px;
-						top:-53px;
+						left: 359px;
+						top:-20px;
 						background: #fff;
 						display: none;
-						.box-shadow(0 0 2px rgba(0,0,0,.5));
+						.box-shadow(0 0 4px rgba(0,0,0,.5));
 						z-index: 100;
 						
 						&.top {
 							
 							top:17px;
-							left: 265px;
+							left: 359px;
 						}
 						
 						a {
@@ -393,11 +411,6 @@
 							&:hover {
 								
 								background: #aaa;
-							}
-
-							&:first-child {
-								
-								padding-top:10px;
 							}
 							
 							&:last-child {
@@ -430,7 +443,7 @@
 							background: #fff;
 							width: 145px;
 							height: 136px;
-							.box-shadow(0 0 2px rgba(0,0,0,.5));
+							.box-shadow(0 0 3px rgba(0,0,0,.5));
 							
 							overflow-x: hidden;
 							
@@ -605,7 +618,6 @@
 						&.playing {
 							
 							font-weight: bold;
-							color: #000;
 						}
 						
 						&.hovered {
@@ -620,9 +632,10 @@
 						
 						position: absolute;
 						
-						left: 777px;
+						left: 765px;
 						top:25px;
 						font-size: 12px;
+                                                width:94px;
 						
 						
 						a {
@@ -767,18 +780,18 @@
 							
 							width: 19px;
 							height: 19px;
-							background: url(../img/my-wishlist/preview-off.png);
+							background: url(../img//my-wishlist/preview-off.png);
 							opacity: 0;
 							
 							
 							&:hover,&.blue-bkg {
 								
-								background: url(../img/my-wishlist/preview-hover.png);
+								background: url(../img//my-wishlist/preview-hover.png);
 								opacity: 1;
 							}
 							
 							&.hovered {
-								background: url(../img/my-wishlist/preview-off.png);
+								background: url(../img//my-wishlist/preview-off.png);
 								opacity: 1;
 								
 							}
@@ -846,12 +859,12 @@
 						display: block;
 						width: 26px;
 						height: 25px;
-						background: url(../img/my-wishlist/add-to-playlist-button.png);
+						background: url(../img//my-wishlist/add-to-playlist-button.png);
 						
 						margin-top: 8px;
 						position: absolute;
 						left: 359px;
-						.box-shadow(0 0 2px rgba(0,0,0,.5));
+						.box-shadow(0 0 4px rgba(0,0,0,.5));
 						opacity: .5;
 						
 						&.hovered,&.playing {
@@ -866,7 +879,7 @@
 						top:8px;
 						background: #fff;
 						display: none;
-						.box-shadow(0 0 2px rgba(0,0,0,.5));
+						.box-shadow(0 0 4px rgba(0,0,0,.5));
 						z-index: 100;
 						
 						&.top {
