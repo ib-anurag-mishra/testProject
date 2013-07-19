@@ -624,7 +624,7 @@
 										<?php $count = 1;
 									foreach($news as $key => $value)
 									{
-										  $newsText = str_replace('<div', '<p', htmlentities($value['News']['body']));
+										  $newsText = str_replace('<div', '<p', htmlspecialchars($value['News']['body']));
                                                                                   $newsText = str_replace('</div>', '</p>', $newsText);
 									?>
 										<li>
