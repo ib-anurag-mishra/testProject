@@ -12,7 +12,7 @@ class QueuesController extends AppController{
     var $layout = 'home';
     var $helpers = array( 'Html', 'Form', 'Session');
     var $components = array('Session', 'Auth', 'Acl' ,'Queue');
-    var $uses = array( 'Queuelist','QueuelistDetails','User','Album','Song');
+    var $uses = array( 'QueueList', 'QueueDetail','User','Album','Song');
     
     function beforeFilter(){
             parent::beforeFilter();
@@ -25,6 +25,8 @@ class QueuesController extends AppController{
      */
     
     function savedQueuesList($patron_id){
+        
+       
         $this->layout = 'home';
         $queueData = $this->Queue->getQueueList($patron_id);
         $this->set('queueData',$queueData);
@@ -38,15 +40,15 @@ class QueuesController extends AppController{
     function createQueue(){
         if(isset($this->data)) {
             if($this->Session->read("Auth.User.type_id") == 1){
-                $this->data['Queuelist']['user_type']  = 'd';
+                $this->data['QueueList']['queue_type']  = 1;
             }else{
-                $this->data['Queuelist']['user_type']  = 'c';
+                $this->data['QueueList']['queue_type']  = 0;
             }
+            //$this->Session->read('patron') = 1;
+            $this->data['QueueList']['created']  = date('Y-m-d H:i:s');
+            $this->data['QueueList']['patron_id'] = 1;
             
-            $this->data['Queuelist']['Created']  = date('Y-m-d H:i:s');
-            $this->data['Queuelist']['patronID'] = $this->Session->read('patron');
-            
-            if($this->Queuelist->save($this->data['Queuelist'])){
+            if($this->QueueList->save($this->data['QueueList'])){
                     $this->Session ->setFlash('Queue has been Added successfully', 'modal', array( 'class' => 'queue success' ));
                     $this->redirect($this->referer());						
             }
@@ -65,18 +67,18 @@ class QueuesController extends AppController{
      */
 
     function getDefaultQueues(){
-        $cond = array('user_type' => 'd', 'status' => '1');
+        $cond = array('queue_type' => 1, 'status' => '1');
 
         // Unbinded User model
-        $this->Queuelist->unbindModel(
-            array('belongsTo' => array('User'),'hasMany' => array('QueuelistDetails'))
+        $this->QueueList->unbindModel(
+            array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
         );        
 
         if ( ((Cache::read('defaultqueuelist')) === false)  || (Cache::read('defaultqueuelist') === null) ) {
-            $queueData = $this->Queuelist->find('all', array(
+            $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
-                    'fields' => array('Plid','PlaylistName'),
-                    'order' => 'Queuelist.Created DESC',
+                    'fields' => array('queue_id','queue_name'),
+                    'order' => 'QueueList.created DESC',
                     'limit' => 100
                   ));
             Cache::write("defaultqueuelist", $queueData);
