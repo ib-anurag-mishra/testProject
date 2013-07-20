@@ -362,57 +362,57 @@ $ieVersion =  ieversion();
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active">Date</div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;">Date</div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled">Date</div>
+                    <div class="date-filter-button filter active toggled" style="cursor:pointer;">Date</div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter ">Date</div>
+                <div class="date-filter-button filter " style="cursor:pointer;">Date</div>
             <?php
             }
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active">Song</div>
+                    <div class="song-filter-button filter active" style="cursor:pointer;">Song</div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled">Song</div>
+                    <div class="song-filter-button filter active toggled" style="cursor:pointer;">Song</div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter">Song</div>
+			<div class="song-filter-button filter" style="cursor:pointer;">Song</div>
             <?php
             }
             ?>
-			<div class="music-filter-button tab">Music</div>
-			<div class="video-filter-button tab">Video</div>
+			<div class="music-filter-button tab" style="cursor:pointer;">Music</div>
+			<div class="video-filter-button tab" style="cursor:pointer;">Video</div>
 		<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active" style="width:106px;">Artist</div>
+                    <div class="artist-filter-button filter active" style="width:106px;cursor:pointer;">Artist</div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled" style="width:106px;">Artist</div>
+                    <div class="artist-filter-button filter active toggled" style="width:106px;cursor:pointer;">Artist</div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter" style="width:106px;">Artist</div>
+			<div class="artist-filter-button filter" style="width:106px;cursor:pointer;">Artist</div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active">Album</div>
+                    <div class="album-filter-button filter active" style="cursor:pointer;">Album</div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled">Album</div>
+                    <div class="album-filter-button filter active toggled" style="cursor:pointer;">Album</div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter">Album</div>
+			<div class="album-filter-button filter" style="cursor:pointer;">Album</div>
             <?php
             }
             ?>  
-			<div class="download-button filter">Download</div>
+			<div class="download-button filter" style="cursor:pointer;">Download</div>
 			
 		</nav>
 		<div class="my-wishlist-shadow-container">
