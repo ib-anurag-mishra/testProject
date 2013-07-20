@@ -335,6 +335,10 @@ $ieVersion =  ieversion();
 });  
    
 </script>
+<form id="sortForm" name="sortForm" method='post'>
+    <input id='sort' type='hidden' name="sort" value="<?php echo $sort; ?>" />
+    <input id='sortOrder' type='hidden' name="sortOrder" value="<?php echo $sortOrder; ?>" />
+</form>
 <section class="my-wishlist-page">
 		
 		<div class="breadcrumbs"><?php
@@ -418,7 +422,7 @@ $ieVersion =  ieversion();
 
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
              
-	print_r($wishlistResults);
+	
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
 			
@@ -523,10 +527,8 @@ $ieVersion =  ieversion();
 
            }
 
-        }else{
-            
-            echo 	'<p><?php __("You have no songs in your wishlist.");?></p>';
-            
+        }else{            
+            echo 	__("You have no songs in your wishlist.");            
         }
 
 
@@ -541,7 +543,7 @@ $ieVersion =  ieversion();
 				<?php
                 if(count($wishlistResultsVideos) != 0)
                 {
-                   print_r($wishlistResultsVideos); //$i = 1;
+                   //$i = 1;
                     foreach($wishlistResultsVideos as $key => $wishlistResultsVideo):
                     /*$class = null;
                     if ($i++ % 2 == 0) {
@@ -618,7 +620,7 @@ $ieVersion =  ieversion();
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("You have no videos in your wishlist."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
