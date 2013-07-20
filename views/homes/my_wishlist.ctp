@@ -525,7 +525,7 @@ $ieVersion =  ieversion();
 
         }else{
             
-            echo 	'<p><?php __("You have no songs in your wishlist.");?></p>';
+            echo 	'<p>'.__("You have no songs in your wishlist.").'</p>';
             
         }
 
@@ -618,7 +618,7 @@ $ieVersion =  ieversion();
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("You have no videos in your wishlist."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>
