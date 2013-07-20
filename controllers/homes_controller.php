@@ -3514,11 +3514,12 @@ STR;
            $this->Wishlist->setDataSource('master');
            if($this->Wishlist->delete($deleteSongId)) { 
                $this->Wishlist->setDataSource('default');
-               return 1;                
+               echo  1;                
            }            
            $this->Wishlist->setDataSource('default');
-           return 0;
+           echo 0;
         }
+        echo 147;
         exit;
         
     }
