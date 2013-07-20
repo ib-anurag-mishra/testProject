@@ -45,10 +45,7 @@
             $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
             ?>
 
-            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
-                            
-
-            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
+            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script>                                            
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
