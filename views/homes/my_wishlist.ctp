@@ -82,7 +82,7 @@ $ieVersion =  ieversion();
 	
 	$('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click',function(e){
             
-            	if($(this).hasClass('date-filter-button')){
+        if($(this).hasClass('date-filter-button')){
             $('#sortForm #sort').val('date');
         } else if($(this).hasClass('song-filter-button')){
             $('#sortForm #sort').val('song');

@@ -77,8 +77,42 @@
 	</body>
 	
 
-<script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
-<script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
+
+<script>
+function getScript(url,success){
+    var script = document.createElement('script');
+    script.src = url;
+    var head = document.getElementsByTagName('head')[0], done=false;
+    script.onload = script.onreadystatechange = function(){
+        if (!done && (!this.readyState || this.readyState == 'loaded' || this.readyState == 'complete')) {
+            done=true;
+            success();
+            script.onload = script.onreadystatechange = null;
+            head.removeChild(script);
+        }
+    };
+    head.appendChild(script);
+}
+
+
+
+getScript('<? echo $this->webroot; ?>app/webroot/js/jquery.js', function() {
+        getScript('<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js', function() {
+        getScript('<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js', function() {
+                    getScript('<? echo $this->webroot; ?>app/webroot/js/lazyload.js', function() {
+                            getScript('js/site.js', function() {});
+
+                    });
+        });
+        });				
+});
+</script>
+
+
+	<link rel="stylesheet" type="text/css" href="js/mediaelement/mep-feature-playlist-custom.css" />
+	<link rel="stylesheet" type="text/css" href="js/mediaelement/mediaelementplayer-custom.css" />
+
+
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.js"></script>
 </html>
