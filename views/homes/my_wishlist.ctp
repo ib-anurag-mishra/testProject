@@ -43,8 +43,8 @@ $ieVersion =  ieversion();
 			beforeSend: function() {                            
 				parent.animate({'backgroundColor':'#fb6c6c'},600);
 			},
-			success: function() { 
-                            //alert(1);
+			success: function(data) { 
+                               alert(data);
 				parent.slideUp(600,function() {
 					parent.remove();
 				});
@@ -55,7 +55,7 @@ $ieVersion =  ieversion();
         $('.videodelete').click(function(e) {
 		e.preventDefault();
 		var parent = $(this).parent();		
-               // alert(parent.attr('id'));
+                alert(parent.attr('id').replace('wishlistvideo-',''));
 		$.ajax({
 			type: 'post',
 			url: webroot+'homes/removeWishlistVideo/',
