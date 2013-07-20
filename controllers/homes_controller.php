@@ -3519,7 +3519,7 @@ STR;
            $this->Wishlist->setDataSource('default');
            echo 0;
         }      
-       
+       exit;
         
     }
     
