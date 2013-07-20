@@ -119,27 +119,23 @@
 
 
 
-                                                                                                    <?php if($this->Session->read("patron")){ ?> 
+                                                                                                    <?php if($this->Session->read("patron")){ 
+                                                                                                        $queueList = $this->Queue->getQueuesList($this->Session->read('patron'));
+                                                                                                    ?> 
 														<a class="add-to-playlist-button" href="#"></a>
 														<div class="wishlist-popover">
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
+                                                                                                                    <div class="playlist-options">
+                                                                                                                            <ul>
+                                                                                                                                    <li><a href="#" class="create-new-queue">Create New Queue</a></li>
+                                                                                                                                    <?php if(!empty($queueList)){foreach($queueList as $key => $value){ ?>
+                                                                                                                                    <li><a href="#"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                                                                                    <?php 
+                                                                                                                                        }
+                                                                                                                                    } ?>
+                                                                                                                            </ul>
+                                                                                                                    </div>
                                                                                                 <?php if( $this->Session->read('library_type') == 2 ){ ?> 
 															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
                                                                                                 <?php } ?>
 														
 
