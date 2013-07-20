@@ -29,6 +29,8 @@
           echo $javascript->link('jquery.autocomplete');
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
+          
+          
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
@@ -251,10 +253,7 @@ if ($this->Session->read('Config.language') == 'en') {
                     document.getElementById('rqPlid').value         =   document.getElementById('hid_Plid').value;
                     document.getElementById('dqPlid').value         =   document.getElementById('hid_Plid').value;
                    
-                }
-       
-       
-       
+                } 
         </script>     
             
 
