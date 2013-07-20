@@ -27,6 +27,7 @@
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                 ?>
+	<li>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
                                 <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
@@ -156,7 +157,7 @@ foreach($topVideoDownloads as $topDownload)
     ?>
 
                     
-
+<li>
                         <div class="video-cover-container">
                             <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
