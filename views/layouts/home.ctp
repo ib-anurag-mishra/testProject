@@ -223,9 +223,7 @@ if ($this->Session->read('Config.language') == 'en') {
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
             
             <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
-            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>  
-            <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
-            <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>            
+            <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
 
                <script type="text/javascript">
                 var webroot = '<?php echo $this->webroot; ?>';
