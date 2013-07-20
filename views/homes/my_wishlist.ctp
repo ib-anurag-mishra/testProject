@@ -335,6 +335,10 @@ $ieVersion =  ieversion();
 });  
    
 </script>
+<form id="sortForm" name="sortForm" method='post'>
+    <input id='sort' type='hidden' name="sort" value="<?php echo $sort; ?>" />
+    <input id='sortOrder' type='hidden' name="sortOrder" value="<?php echo $sortOrder; ?>" />
+</form>
 <section class="my-wishlist-page">
 		
 		<div class="breadcrumbs"><?php
@@ -523,10 +527,8 @@ $ieVersion =  ieversion();
 
            }
 
-        }else{
-            
-            echo 	'<p>'.__("You have no songs in your wishlist.").'</p>';
-            
+        }else{            
+            echo 	__("You have no songs in your wishlist.");            
         }
 
 
