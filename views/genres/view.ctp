@@ -4,10 +4,7 @@
 	 File Description : View page for genre index
 	 Author : m68interactive
  */
-?>
-
-          
-<link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />        
+?>    
 
 <style>
 
