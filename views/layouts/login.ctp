@@ -52,27 +52,9 @@
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/login.less" />
-
-            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
-            <link rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
+           
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/news.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/faq.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/videos.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/genres.less" />
-            
-            
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/now-streaming.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/albums.less" />
-            
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/us-top-10.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/my-top-10.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/site-login.less" />
-            
-            
-            <script src="<? echo $this->webroot; ?>app/webroot/js/albums.js"></script>
-            <script src="<? echo $this->webroot; ?>app/webroot/js/genres.js"></script>
+           
                        
 
 
