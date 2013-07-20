@@ -422,7 +422,7 @@ $ieVersion =  ieversion();
 
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
              
-	print_r($wishlistResults);
+	
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
 			
@@ -543,7 +543,7 @@ $ieVersion =  ieversion();
 				<?php
                 if(count($wishlistResultsVideos) != 0)
                 {
-                   print_r($wishlistResultsVideos); //$i = 1;
+                   //$i = 1;
                     foreach($wishlistResultsVideos as $key => $wishlistResultsVideo):
                     /*$class = null;
                     if ($i++ % 2 == 0) {
