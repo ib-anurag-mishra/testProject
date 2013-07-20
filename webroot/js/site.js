@@ -359,9 +359,11 @@ $(function() {
 	announcements.on('click',function(e){
 		e.preventDefault();
 		if($(poll).hasClass('active')) {
+                    alert(1);
 			$(poll).removeClass('active');
 		} else {
 			$(poll).addClass('active');
+                        alert(2);
 		}
 	});
 	
