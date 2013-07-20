@@ -365,7 +365,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             </ul>                                            
                                             <div class="announcements">
                                                     <h4><a href="#">Announcements</a></h4>
-                                                    <div class="poll">
+                                                    <div class="poll" style="display:none;">
                                                         <?php echo $announcment_value; ?>
                                                     </div>
                                             </div>
