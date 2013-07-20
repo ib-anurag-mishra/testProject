@@ -359,11 +359,12 @@ $(function() {
 	announcements.on('click',function(e){
 		e.preventDefault();
 		if($(poll).hasClass('active')) {
-                    alert(1);
+                        $(poll).hide();
 			$(poll).removeClass('active');
 		} else {
+                         $(poll).show();
 			$(poll).addClass('active');
-                        alert(2);
+                        
 		}
 	});
 	
