@@ -1326,7 +1326,7 @@ browserPlatform = {
 				fragment.innerHTML = cssText;
 				head.appendChild(fragment.childNodes[0]);
 			} else {
-				document.write(cssText);
+				//document.write(cssText);
 			}
 		}
 		if(platform.miscHead) {
