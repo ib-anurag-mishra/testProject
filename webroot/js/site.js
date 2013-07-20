@@ -363,7 +363,7 @@ $(function() {
 			$(poll).removeClass('active');
 		} else {
                          $(poll).show();
-			$(poll).addClass('active');
+			//$(poll).addClass('active');
                         
 		}
 	});
