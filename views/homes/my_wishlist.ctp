@@ -44,7 +44,7 @@ $ieVersion =  ieversion();
 				parent.animate({'backgroundColor':'#fb6c6c'},600);
 			},
 			success: function(data) { 
-                               alert(data);
+                              // alert(data);
 				parent.slideUp(600,function() {
 					parent.remove();
 				});
@@ -55,7 +55,7 @@ $ieVersion =  ieversion();
         $('.videodelete').click(function(e) {
 		e.preventDefault();
 		var parent = $(this).parent();		
-                alert(parent.attr('id').replace('wishlistvideo-',''));
+                //alert(parent.attr('id').replace('wishlistvideo-',''));
 		$.ajax({
 			type: 'post',
 			url: webroot+'homes/removeWishlistVideo/',
@@ -418,7 +418,7 @@ $ieVersion =  ieversion();
 
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
              
-	
+	print_r($wishlistResults);
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
 			
@@ -541,7 +541,7 @@ $ieVersion =  ieversion();
 				<?php
                 if(count($wishlistResultsVideos) != 0)
                 {
-                    //$i = 1;
+                   print_r($wishlistResultsVideos); //$i = 1;
                     foreach($wishlistResultsVideos as $key => $wishlistResultsVideo):
                     /*$class = null;
                     if ($i++ % 2 == 0) {
