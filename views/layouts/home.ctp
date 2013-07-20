@@ -216,11 +216,11 @@ if ($this->Session->read('Config.language') == 'en') {
             <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.autocomplete.js"></script> 
                             
 
-            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   
+                   
             <link rel="shortcut icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
+            
             
             <script src="<? echo $this->webroot; ?>app/webroot/js/less.js"></script>          
             <script src="<? echo $this->webroot; ?>app/webroot/js/modernizr.custom.js"></script>            
