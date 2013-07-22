@@ -50,8 +50,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-        /*
-                
+                       
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -1383,8 +1382,9 @@ STR;
             }
             //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
         }
-        */
+      
    
+        /*
         //--------------------------------Default Freegal Queues Start----------------------------------------------------
                
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -1399,23 +1399,28 @@ STR;
         'limit' => 100
         ));
         
-        
+        //print_r($queueData);
         //freegal Query Cache set
-        if ((count($queueData) < 1) || ($queueData === false)) {           
+        if ((count($queueData) < 1) || ($queueData === false)) { 
+            echo 147;
             Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
             echo "<br /> Freegal Defaut Queues returns null<br />";
         } else {
+            echo 44;
             Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
             //library top 10 cache set
-            $this->log("Freegal Defaut Queues returns null", "cache");
-            echo "<br />Freegal Defaut Queues returns null <br />";
+            $this->log("Freegal Defaut Queues cache set", "cache");
+            echo "<br />Freegal Defaut Queues cache set <br />";
         }
         
-        $defatulQueryList = Cache::read("defaultqueuelist");
-        
-        print_r($defaultQueryList);
+        foreach($queueData as $value){
+            
+            
+        }
+          
+        */
         
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
@@ -1429,7 +1434,7 @@ STR;
        
         
         
-        /*
+        
         
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
@@ -1864,7 +1869,7 @@ STR;
            
         }
         
-        */
+       
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 

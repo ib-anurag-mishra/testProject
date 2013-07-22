@@ -1,9 +1,11 @@
-
+<?php
+        debug(__('National Top 100',true));
+?>
 						
 						<section class="news">
 							<div class="top-100">
 								<header>
-									<h3>National Top 100</h3>
+									<h3><?php echo __('National Top 100', true); ?></h3>
 									
 								</header>
 								<nav class="top-100-nav">
