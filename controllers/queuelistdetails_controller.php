@@ -110,11 +110,10 @@ class QueueListDetailsController extends AppController{
         $this->set('patronDownload',$patronDownload);
 
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
-       // echo 456;
+        //echo 456;
 
 
-        // Find Total Duration
-
+        //Find Total Duration
         $total_seconds = 0;
 
         foreach($queue_list_array as $k => $v)
