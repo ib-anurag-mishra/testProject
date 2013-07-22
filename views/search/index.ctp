@@ -1006,6 +1006,7 @@ if (isset($type)) {
 						</div>
 						-->
 						<div class="album"><a href="#">Blown Away</a></div>
+						<div class="song">Blown Away</div>
 						<div class="download"><a href="#">Download</a></div>
 						
 						
