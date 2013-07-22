@@ -349,7 +349,7 @@
                                                                                                 ?>
 													<div class="song-title">
 													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
-                                                                                                        <a href="javascript:void(0);"><?php echo $songTitle;?></a>
+                                                                                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
@@ -547,7 +547,7 @@
 												</div>
 												<div class="video-title">
 
-                                                                                                        <a href="javascript:void(0);">
+                                                                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                             <?php
                                                                                                                     if(strlen($value['Video']['VideoTitle'])>20)
                                                                                                                     echo substr($value['Video']['VideoTitle'],0,20)."..."; 
