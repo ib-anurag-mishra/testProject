@@ -955,21 +955,21 @@ $(function() {
 	
 
 	$('.site-nav .most-popular a').on('mouseenter',function(e){
-		e.preventDefault();
-		
+		e.preventDefault(); 
 		$('.most-popular-sub-nav').addClass('active');
 		
 	});
 	
-	$('.most-popular-sub-nav').on('mouseleave',function(e){
-		
-		$('.most-popular-sub-nav').removeClass('active');
+	$('.most-popular-sub-nav').on('mouseleave',function(e){	
+               
+                $('.most-popular-sub-nav').removeClass('active');
 	});
 	
 	
-	$('.site-nav .regular').on('mouseenter',function(e){
-		$('.most-popular-sub-nav').removeClass('active');
-	});
+//	$('.site-nav .regular').on('mouseenter',function(e){
+//             
+//		$('.most-popular-sub-nav').removeClass('active');
+//	});
 	
 	
 	
