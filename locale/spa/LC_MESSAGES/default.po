@@ -495,3 +495,9 @@ msgstr "Destacado"
 
 msgid "What's Happening"
 msgstr "¿Qué está pasando"
+
+msgid "Featured Videos"
+msgstr "Los videos del momento"
+
+msgid "Top Videos"
+msgstr "Top Videos"
