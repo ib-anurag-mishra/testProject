@@ -30,7 +30,7 @@
 	<li>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
-                                <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
+                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
                                 <?php
                                 if($this->Session->read('patron')) {
 
@@ -159,7 +159,7 @@ foreach($topVideoDownloads as $topDownload)
                     
 <li>
                         <div class="video-cover-container">
-                            <a href="#"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
+                            <a href="/videos/details/<?php echo $topDownload["Video"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
