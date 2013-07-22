@@ -268,7 +268,7 @@
 					<li>
 						
 						<div class="video-container">
-							<a href="javascript:void(0);">
+							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <img src="<?php echo $videoAlbumImage; ?>" alt="gangstasquad" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
@@ -362,7 +362,7 @@
 							
 						</div>
 						<div class="album-title">
-							<a href="javascript:void(0);">
+							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
                                                                 if(strlen($value['Video']['VideoTitle'])>35)
                                                                 echo substr($value['Video']['VideoTitle'],0,35)."..."; 
