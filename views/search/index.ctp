@@ -790,11 +790,11 @@ if ($type != 'all') {
         ?>
     <section class="tracklist-container">
         <section class="tracklist-header clearfix">
-            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>"><span class="artist"></span></a>
-            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>"><span class="composer"></span></a>
-            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>"><span class="album"></span></a>
-            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>"><span class="song"></span></a>
-            <span class="download"></span>
+            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=artist&sortOrder=".(($sort=='artist')?$reverseSortOrder:'asc'); ?>"><span class="artist">Artist</span></a>
+            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=composer&sortOrder=".(($sort=='composer')?$reverseSortOrder:'asc'); ?>"><span class="composer">Composer</span></a>
+            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=album&sortOrder=".(($sort=='album')?$reverseSortOrder:'asc'); ?>"><span class="album">Album</span></a>
+            <a href="<?php echo "/search/index/".$currentPage."/".$facetPage."/?q=".$keyword."&type=".$type."&sort=song&sortOrder=".(($sort=='song')?$reverseSortOrder:'asc'); ?>"><span class="song">Song</span></a>
+            <span class="download">Download</span>
         </section>
         <div class="tracklist-shadow-container">
             <div class="tracklist-scrollable">
