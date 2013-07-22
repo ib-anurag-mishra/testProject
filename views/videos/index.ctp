@@ -154,6 +154,10 @@ foreach($topVideoDownloads as $topDownload)
      $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
      // print_r($featureVideo);
      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+     
+     echo "<pre>"; print_r($topDownload); die;
+     
+     
     ?>
 
                     
