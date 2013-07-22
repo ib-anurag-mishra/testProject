@@ -157,7 +157,7 @@
 										
 									</div>
 									<div class="song-title">
-										<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+										<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                 <?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 35 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
@@ -268,7 +268,7 @@
 									
 								</div>
 								<div class="song-title">
-									<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $value['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>"><?php 
+									<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 35 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
                                                                                                     } else {
