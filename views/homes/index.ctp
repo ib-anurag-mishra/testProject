@@ -126,7 +126,7 @@
 														<div class="wishlist-popover">
                                                                                                                     <div class="playlist-options">
                                                                                                                             <ul>
-                                                                                                                                    <li><a href="#" class="create-new-queue">Create New Queue</a></li>
+                                                                                                                                    <li><a href="#" class="create-new-queue-btn">Create New Queue</a></li>
                                                                                                                                     <?php if(!empty($queueList)){foreach($queueList as $key => $value){ ?>
                                                                                                                                     <li><a href="#"><?php echo $value['QueueList']['queue_name']; ?></a></li>
                                                                                                                                     <?php 
