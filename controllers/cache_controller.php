@@ -1401,11 +1401,13 @@ STR;
         
         print_r($queueData);
         //freegal Query Cache set
-        if ((count($queueData) < 1) || ($queueData === false)) {           
+        if ((count($queueData) < 1) || ($queueData === false)) { 
+            echo 147;
             Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
             echo "<br /> Freegal Defaut Queues returns null<br />";
         } else {
+            echo 44;
             Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
             //library top 10 cache set
