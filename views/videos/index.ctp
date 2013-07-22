@@ -155,15 +155,13 @@ foreach($topVideoDownloads as $topDownload)
      // print_r($featureVideo);
      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
      
-     echo "<pre>"; print_r($topDownload); die;
-     
      
     ?>
 
                     
 <li>
                         <div class="video-cover-container">
-                            <a href="/videos/details/<?php echo $topDownload["Video"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
+                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
