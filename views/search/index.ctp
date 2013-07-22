@@ -954,13 +954,78 @@ if (isset($type)) {
     </section>
 </section>
 <?php } else {
-  print_r($songs);
     ?>
-<section class="tracklist-container">
-        <section class="tracklist-header clearfix">
-            <span class="artist"></span><span class="song"></span><span class="download"></span>
-        </section>
-</section>
+
+<!-- for the videos -->
+		<section class="tracklist-container">
+			<section class="tracklist-header clearfix">
+				<span class="artist">Artist</span>
+                <span class="album">Album</span>
+                <span class="video-filter-button">Videos</span>
+                <span class="song">Song</span>
+                <span class="download">Download</span>
+			</section>
+			<div class="video-tracklist-shadow-container">
+				<div class="tracklist-scrollable">
+				<?php
+				
+				$b=1;
+				for($a=0;$a<100;$a++) {
+				?>	
+					<?php
+					
+					if($a%10 == 0 ) {
+						
+					?>
+						<div class="tracklist" <?php echo 'id=page-'.$b; ?>>
+					<?php
+						$b++;
+					} else {
+					?>	
+						<div class="tracklist">
+					
+					<?php
+					}
+					?>
+					
+						<div class="artist"><a href="#">Carrie Underwood</a></div>
+						<a class="add-to-playlist-button" href="#"></a>
+						<div class="composer"><a href="#">Carrie Underwood</a></div>
+							
+						
+						<div class="wishlist-popover">	
+						
+							<a class="add-to-wishlist" href="#">Add To Wishlist</a>
+							
+							<div class="share clearfix">
+								<p>Share via</p>
+								<a class="facebook" href="#"></a>
+								<a class="twitter" href="#"></a>
+							</div>
+						</div>
+						<!--
+						<div class="cover-art">
+							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
+						</div>
+						-->
+						<div class="album"><a href="#">Blown Away</a></div>
+						<div class="song">Blown Away</div>
+						<div class="download"><a href="#">Download</a></div>
+						
+						
+						
+				
+					</div>
+				<?php		
+					}
+				?>
+				</div>
+			</div>
+		</section>
+
+		
+	</section>
+
 <?php
 }
 ?>
