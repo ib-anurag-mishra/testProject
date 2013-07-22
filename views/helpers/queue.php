@@ -14,8 +14,21 @@ class QueueHelper extends AppHelper {
 			$queueList = $queueInstance->find('all', array('conditions' => array('patron_id' => $patron_id,'status' => 1),'fields' =>  array('QueueList.queue_id', 'QueueList.queue_name'),'order' => 'QueueList.created DESC'));
 		}else{
 			$queueList = array();
-		}	
-	    return $queueList;
+		}
+            
+$str = <<<EOD
+           <div class="playlist-options">
+                    <ul>
+                            <li><a href="#" class="create-new-queue-btn">Create New Queue</a></li>
+EOD;
+
+        if(!empty($queueList)){
+            foreach($queueList as $key => $value){
+                $str.='<li><a href="#">'.$value['QueueList']['queue_name'].'</a></li>';
+            }
+        }                    
+        $str.= '</ul></div>';
+        return $str;
     }
 }
 
