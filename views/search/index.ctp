@@ -990,8 +990,6 @@ if (isset($type)) {
 					
 						<div class="artist"><a href="#">Carrie Underwood</a></div>
 						<a class="add-to-playlist-button" href="#"></a>
-						<div class="composer"><a href="#">Carrie Underwood</a></div>
-							
 						
 						<div class="wishlist-popover">	
 						
