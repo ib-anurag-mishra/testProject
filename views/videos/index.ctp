@@ -5,7 +5,7 @@
 
         <header class="clearfix">
 
-            <h3>Featured Videos</h3>
+            <h3><?php echo __('Featured Videos', true); ?></h3>
 
         </header>
         <section id="featured-video-grid" class="horiz-scroll">
@@ -137,7 +137,7 @@
     </section> <!-- end .featured-videos -->
     <section class="video-top-genres">
         <header class="clearfix">
-            <h3>Top Videos</h3>
+            <h3><?php echo __('Top Videos', true); ?></h3>
 
         </header>
 

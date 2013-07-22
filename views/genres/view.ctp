@@ -118,8 +118,8 @@ $genre_text_conversion = array(
         	<section class="genres-page">
 		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
 		<header class="clearfix">
-			<h2>Search for your favorite music.</h2>
-			<div class="faq-link">Need help? Visit our <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>
+			<h2> <?php echo __('Search for your favorite music.', true); ?></h2>
+			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <?php echo $html->link(__('FAQ section.', true), array('controller' => 'questions', 'action' =>'index')); ?></div>
 		</header>
 		<section class="genre-filter-container clearfix">
 			<div class="genre-shadow-container">

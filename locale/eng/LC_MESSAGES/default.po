@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 05:58+0000\n"
-"PO-Revision-Date: 2013-07-22 14:21+0530\n"
+"PO-Revision-Date: 2013-07-22 16:19+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -481,3 +481,69 @@ msgstr "Featured"
 
 msgid "What's Happening"
 msgstr "What's Happening"
+
+msgid "Featured Videos"
+msgstr "Featured Videos"
+
+msgid "Top Videos"
+msgstr "Top Videos"
+
+msgid "My Library Top 10"
+msgstr "My Library Top 10"
+
+msgid "US Top 10"
+msgstr "US Top 10"
+
+msgid "New Releases"
+msgstr "New Releases"
+
+msgid "Search for your favorite music."
+msgstr "Search for your favorite music."
+
+msgid "Need help? Visit our"
+msgstr "Need help? Visit our"
+
+msgid "Downloads"
+msgstr "Downloads"
+
+msgid "Release Information"
+msgstr "Release Information"
+
+msgid "More Videos By"
+msgstr "More Videos By"
+
+msgid "Music Videos"
+msgstr "Music Videos"
+
+msgid "News"
+msgstr "News"
+
+msgid "Most Popular"
+msgstr "Most Popular"
+
+msgid "Browse"
+msgstr "Browse"
+
+msgid "Freegal Queues"
+msgstr "Freegal Queues"
+
+msgid "My Queues"
+msgstr "My Queues"
+
+msgid "History"
+msgstr "History"
+
+msgid "My Downloads"
+msgstr "My Downloads"
+
+msgid "My Playlists"
+msgstr "My Playlists"
+
+msgid "Announcements"
+msgstr "Announcements"
+
+msgid "Genres"
+msgstr "Genres"
+
+msgid "Browse A-Z"
+msgstr "Browse A-Z"

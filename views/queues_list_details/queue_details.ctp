@@ -20,7 +20,7 @@
                                 <input type="hidden" id="hid_description" value="<?php echo $queue_list_array[0]["QueueList"]["description"];?>" />
 			</div>
 			<div class="col-3">
-				<div class="faq-link">Need help? Visit our <a href="#">FAQ section</a>.</div>
+				<div class="faq-link"><?php echo __('Need help? Visit our', true); ?>  <a href="#">FAQ section</a>.</div>
 				<div class="button-container">
 					<div class="play-queue-btn"></div>
 					<div class="gear-icon"></div>

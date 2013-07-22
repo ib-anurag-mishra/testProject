@@ -5,12 +5,12 @@
 		<div class="breadcrumbs">
                     <?php
                             
-                            $html->addCrumb('US Top 10', '/homes/us_top_10');
+                            $html->addCrumb(__('US Top 10', true), '/homes/us_top_10');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header class="clearfix">
-			<h2>US Top 10</h2>
+			<h2><?php echo __('US Top 10', true); ?></h2>
 			
 		</header>
 		<h3>Albums</h3>
