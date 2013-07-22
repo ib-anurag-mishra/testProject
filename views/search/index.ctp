@@ -780,8 +780,8 @@ if ($type != 'all') {
                 </section> 
             <?php /*             * *******************Video Block End****************************** */ ?>
 
-
-        </section> -->
+-->
+        </section>
         <?php } 
         
         if($type != 'video') {
