@@ -369,7 +369,7 @@
 							</div>
 							<div class="featured">
 								<header>
-									<h3>Featured</h3>
+									<h3><?php echo __('Featured', true); ?></h3>
 								</header>
 								<div class="featured-grid horiz-scroll">
 									<ul style="width:3690px;">
@@ -422,7 +422,7 @@
 							</div><!-- end .featured -->
 							<div class="coming-soon">
 								<header class="clearfix">
-									<h3>Coming Soon</h3>
+									<h3><?php echo __('Coming Soon', true); ?></h3>
 									
 	
 								</header>
@@ -594,7 +594,7 @@
 							
 							<div class="whats-happening">
 								<header>
-									<h3>What's Happening</h3>
+									<h3><?php echo __("What's Happening", true); ?></h3>
 									<!--
 									<div class="whats-happening-see-all">
 										<a href="#">View All</a>
