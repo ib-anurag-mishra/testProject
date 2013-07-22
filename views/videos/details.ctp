@@ -303,9 +303,6 @@
 		</div>
 		
 
-		</section>
-		<section class="recommended-for-you">
-			
-		</section>
+		</section>		
 		
 	</section>
