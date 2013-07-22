@@ -453,8 +453,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                                                         echo $this->element('navigation');
                                                                     }
                                                                     echo $content_for_layout;
-                                                                    
-                                                                    echo 147;
+
                                                                     ?>
                                                                 </div>
                                                                 <br class="clr">

@@ -74,8 +74,10 @@
 					</div>
 				</div>
 			</footer>
-	</body>
 	
+	
+  <?php echo 123;?>      
+        
 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
 <script src="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelement-and-player.min.js"></script>
@@ -83,4 +85,3 @@
 <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
 <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
 
-</html>
