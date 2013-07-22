@@ -50,10 +50,15 @@ class QueueDetailDataType{
 	 */
   public $QueueSongFullLengthURL;
   /**
-	 * QueueAlbumProductID
+	 * QueueAlbumProdID
 	 * @var string
 	 */
-  public $QueueAlbumProductID;
+  public $QueueAlbumProdID;
+    /**
+	 * QueueSongProdID
+	 * @var string
+	 */
+  public $QueueSongProdID;
   /**
 	 * QueueAlbumTitle
 	 * @var string

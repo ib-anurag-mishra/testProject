@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-07-22 11:51+0530\n"
+"PO-Revision-Date: 2013-07-22 14:26+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -487,6 +487,17 @@ msgstr "Apellido"
 msgid "Save"
 msgstr "Salvar"
 
-
 msgid "National Top 100"
 msgstr "Nacional Top 100"
+
+msgid "Featured"
+msgstr "Destacado"
+
+msgid "What's Happening"
+msgstr "¿Qué está pasando"
+
+msgid "Featured Videos"
+msgstr "Los videos del momento"
+
+msgid "Top Videos"
+msgstr "Top Videos"

@@ -217,11 +217,11 @@ if ($type != 'all') {
                 <?php
                 if ($type != 'video') {
                     ?>
-                    <a href="/search/index?q=<?php echo $keyword; ?>&type=video">Video</a>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=video">Videos</a>
                     <?php
                 } else {
                     ?>
-                    <a href="#" class="active">Video</a>
+                    <a href="#" class="active">Videos</a>
                     <?php
                 }
                 ?>
