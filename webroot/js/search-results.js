@@ -141,7 +141,7 @@ $(document).ready(function(){
 	// $('.advanced-search li:first-child a').addClass('active');
 
 	
-	$('.tracklist-header .album').addClass('active');
+	// $('.tracklist-header .album').addClass('active');
 	
 	$('.tracklist-header span').on('click',function(e){
 		if($(this).hasClass('active')) {
