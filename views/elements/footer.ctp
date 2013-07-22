@@ -61,6 +61,7 @@
 					<div class="languages">
 						<?php $this->getTextEncode(__('Also available in')); ?>&nbsp;
                                                 <?php
+                                                if($language){
                                                 $language = $language->getLanguage();
                                                 $i =1;
                                                 foreach($language as $k => $v){
@@ -69,6 +70,7 @@
                                                                 echo "| ";
                                                         }
                                                         $i++;
+                                                }
                                                 }
                                                 ?>
 					</div>
