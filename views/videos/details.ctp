@@ -103,7 +103,7 @@
 								?>								
 								<li>
 									<div class="video-thumb-container">
-										<img class="lazy" src="/app/webroot/img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="274" height="162" />
+                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="/app/webroot/img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="274" height="162" /></a>
 										<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
 
@@ -157,7 +157,7 @@
 										
 									</div>
 									<div class="song-title">
-										<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>">
+										<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                 <?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 35 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
@@ -211,7 +211,7 @@
 							
 							<li>
 								<div class="video-thumb-container">
-									<img class="lazy" src="<?php echo $videoImage; ?>" width="274" height="162" />
+                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $videoImage; ?>" width="274" height="162" /></a>
 									<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
 
@@ -268,7 +268,7 @@
 									
 								</div>
 								<div class="song-title">
-									<a href="/artists/view/<?=base64_encode($value['Video']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($value['Video']['provider_type']);?>"><?php 
+									<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><?php 
                                                                                                 if (strlen($value['Video']['VideoTitle']) >= 35 ) {
                                                                                                             $VideoTitle = $this->getTextEncode(substr($value['Video']['VideoTitle'], 0, 35)) . "..";
                                                                                                     } else {

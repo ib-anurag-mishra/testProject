@@ -216,7 +216,7 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="javascript:void(0);"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
+														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -349,7 +349,7 @@
                                                                                                 ?>
 													<div class="song-title">
 													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
-                                                                                                        <a href="javascript:void(0);"><?php echo $songTitle;?></a>
+                                                                                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
@@ -528,7 +528,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="javascript:void(0);">
+													<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                         <img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
@@ -547,7 +547,7 @@
 												</div>
 												<div class="video-title">
 
-                                                                                                        <a href="javascript:void(0);">
+                                                                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                             <?php
                                                                                                                     if(strlen($value['Video']['VideoTitle'])>20)
                                                                                                                     echo substr($value['Video']['VideoTitle'],0,20)."..."; 
