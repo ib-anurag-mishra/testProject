@@ -76,7 +76,8 @@
 			</footer>
 	
 	
-    
+    <script src="<? echo $this->webroot; ?>app/webroot/js/lazyload.js"></script>
+    <script src="<? echo $this->webroot; ?>app/webroot/js/site.js"></script>
         
 
 
