@@ -1,5 +1,5 @@
 <section class="individual-videos-page">
-		<div class="breadcrumbs"><span>Home</span> > <span>Wishlist</span></div>
+		<div class="breadcrumbs"><span>Home</span> > <span>Video</span></div>
 		<div class="hero-container clearfix">
 			<div class="hero-image-container">
                                 <?php
@@ -78,7 +78,7 @@
                                         $duration_arr   = explode(":", $duration);
                                 ?>
 				<div class="release-information">
-					<p>Release Information</p>
+					<p><?php echo __('Release Information', true); ?> </p>
 					<div class="release-date">Date: <?php echo date("M d, Y", strtotime($VideosData[0]['Video']['CreatedOn'])); ?></div>
 					<div class="video-duration">Duration: <?php echo $duration_arr[0]." min ".$duration_arr[1]." sec"; ?></div>
 					<div class="video-size">Size: 67.2 MB</div>
@@ -88,7 +88,7 @@
 		</div>
 		<section class="more-videos">
 			<header>
-				<h2>More Videos By <?php echo $VideosData[0]['Video']['ArtistText']; ?></h2>
+				<h2><?php echo __('More Videos By', true); ?> <?php echo $VideosData[0]['Video']['ArtistText']; ?></h2>
 			</header>
 			<div class="more-videos-scrollable horiz-scroll">
 				<ul>

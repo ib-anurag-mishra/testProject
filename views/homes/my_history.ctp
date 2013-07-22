@@ -24,10 +24,10 @@ $ieVersion =  ieversion();
 </form>
 <section class="recent-downloads-page">
 		
-		<div class="breadcrumbs"><span>Home</span> > <span>Recent Downloads</span></div>
+		<div class="breadcrumbs"><span>Home</span> > <span><?php echo __('Recent Downloads', true); ?></span></div>
 		<header class="clearfix">
-			<h2>Downloads</h2>
-			<div class="faq-link">Need help? Visit our <a href="/questions">FAQ section.</a></div>
+			<h2><?php echo __('Downloads', true); ?></h2>
+			<div class="faq-link"><?php echo __('Need help? Visit our', true); ?> <a href="/questions">FAQ section.</a></div>
 		</header>
 		<div class="instructions">
 			<p>

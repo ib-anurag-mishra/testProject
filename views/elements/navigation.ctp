@@ -245,7 +245,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li class="regular"><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
-                        <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>">Most Popular</a></li>
+                        <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>"><?php __('Most Popular'); ?></a></li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
                         <li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
@@ -311,12 +311,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<div class="content-wrapper clearfix">	
                             
 					<section class="left-sidebar">
-                                            <ul class="browse sidebar-nav"><h3>Browse</h3>
+                                            <ul class="browse sidebar-nav"><h3><?php __('Browse'); ?></h3>
                                                     <li>
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor">Most Popular</a>
+                                                            <a href="#" class="sidebar-anchor"><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                     <?php if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
@@ -336,7 +336,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     <?php if(!empty($defaultQueues)){ ?>
                                                     
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor">Freegal Queues</a>
+                                                            <a href="#" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
                                                                     <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
@@ -345,26 +345,26 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                     </li>
                                                     <?php } ?>
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor saved-queue">My Queues</a>
+                                                            <a href="#" class="sidebar-anchor saved-queue"><?php __('My Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
-                                                                    <li><a href="/queuelistdetails/now_streaming/1">Now Streaming</a></li>
-                                                                    <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>">Saved Queues</a></li>
+                                                                    <li><a href="/queuelistdetails/now_streaming/1"><?php __('Now Streaming'); ?></a></li>
+                                                                    <li><a href="/queues/savedQueuesList/<?php echo $this->Session->read("patron"); ?>"><?php __('Saved Queues'); ?></a></li>
                                                             </ul>
                                                     </li>
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor">History</a>
+                                                            <a href="#" class="sidebar-anchor"><?php __('History'); ?></a>
                                                     </li>
                                             </ul>
                                             <?php } ?>
-                                            <ul class="my-downloads sidebar-nav"><h3>My Downloads</h3>
+                                            <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
-                                                    <li><a href="#" class="sidebar-anchor">My Playlists</a></li>
+                                                    <li><a href="#" class="sidebar-anchor"><?php __('My Playlists'); ?></a></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>                                            
                                             <div class="announcements">
-                                                    <h4><a href="#">Announcements</a></h4>
+                                                    <h4><a href="#"><?php __('Announcements'); ?></a></h4>
                                                     <div class="poll" style="display:none;">
                                                         <?php echo $announcment_value; ?>
                                                     </div>

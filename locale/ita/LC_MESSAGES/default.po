@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-07-22 14:39+0530\n"
+"PO-Revision-Date: 2013-07-22 16:20+0530\n"
 "Last-Translator: Jessica <jessica@m68interactive.com>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -334,3 +334,63 @@ msgstr "Video in primo piano"
 
 msgid "Top Videos"
 msgstr "Top Video"
+
+msgid "My Library Top 10"
+msgstr "La mia biblioteca Top 10"
+
+msgid "US Top 10"
+msgstr "US Top 10"
+
+msgid "New Releases"
+msgstr "nuove Uscite"
+
+msgid "Search for your favorite music."
+msgstr "Cerca la tua musica preferita."
+
+msgid "Need help? Visit our"
+msgstr "Hai bisogno di aiuto? Visita il nostro"
+
+msgid "Downloads"
+msgstr "download"
+
+msgid "Release Information"
+msgstr "Informazioni sul rilascio"
+
+msgid "More Videos By"
+msgstr "Altri video di"
+
+msgid "Music Videos"
+msgstr "music Videos"
+
+msgid "News"
+msgstr "notizie"
+
+msgid "Most Popular"
+msgstr "I più popolari"
+
+msgid "Browse"
+msgstr "sfogliare"
+
+msgid "Freegal Queues"
+msgstr "code Freegal"
+
+msgid "My Queues"
+msgstr "My code"
+
+msgid "History"
+msgstr "storia"
+
+msgid "My Downloads"
+msgstr "Download"
+
+msgid "My Playlists"
+msgstr "Playlist"
+
+msgid "Announcements"
+msgstr "Annunci"
+
+msgid "Genres"
+msgstr "generi"
+
+msgid "Browse A-Z"
+msgstr "Sfoglia A-Z"

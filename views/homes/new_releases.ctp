@@ -3,12 +3,12 @@
 		<div class="breadcrumbs">              
                     <?php
                             
-                            $html->addCrumb('New Releases', '/homes/new_releases');
+                            $html->addCrumb(__('New Releases'), '/homes/new_releases');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header class="clearfix">
-			<h2>New Releases</h2>
+			<h2> <?php echo __('New Releases', true); ?></h2>
 			
 		</header>
 		<h3>Albums</h3>

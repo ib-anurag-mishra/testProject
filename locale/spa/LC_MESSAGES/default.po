@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-07-22 14:26+0530\n"
+"PO-Revision-Date: 2013-07-22 16:20+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
@@ -501,3 +501,63 @@ msgstr "Los videos del momento"
 
 msgid "Top Videos"
 msgstr "Top Videos"
+
+msgid "My Library Top 10"
+msgstr "Mi Biblioteca Top 10"
+
+msgid "US Top 10"
+msgstr "EE.UU. Top 10"
+
+msgid "New Releases"
+msgstr "Nuevos lanzamientos"
+
+msgid "Search for your favorite music."
+msgstr "Busca tu música favorita."
+
+msgid "Need help? Visit our"
+msgstr "¿Necesitas ayuda? Visita nuestra"
+
+msgid "Downloads"
+msgstr "Descargas"
+
+msgid "Release Information"
+msgstr "Información del lanzamiento"
+
+msgid "More Videos By"
+msgstr "Más Videos de"
+
+msgid "Music Videos"
+msgstr "Videos Musicales"
+
+msgid "News"
+msgstr "noticias"
+
+msgid "Most Popular"
+msgstr "Los más populares"
+
+msgid "Browse"
+msgstr "Busque"
+
+msgid "Freegal Queues"
+msgstr "Mis colas"
+
+msgid "My Queues"
+msgstr "My Queues"
+
+msgid "History"
+msgstr "historia"
+
+msgid "My Downloads"
+msgstr "Mis descargas"
+
+msgid "My Playlists"
+msgstr "Mis listas de reproducción"
+
+msgid "Announcements"
+msgstr "Noticias"
+
+msgid "Genres"
+msgstr "Géneros"
+
+msgid "Browse A-Z"
+msgstr "Navegar A-Z"

@@ -4,13 +4,13 @@
 		
 		<div class="breadcrumbs">
                     <?php
-                            
-                            $html->addCrumb('My Library Top 10', '/homes/my_lib_top_10');
+                         
+                            $html->addCrumb(__('My Library Top 10', true), '/homes/my_lib_top_10');
                             echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');
                     ?>
                 </div>
 		<header class="clearfix">
-			<h2>My Library Top 10</h2>
+			<h2> <?php echo __('My Library Top 10', true); ?>  </h2>
 			
 		</header>
 		<h3>Albums</h3>

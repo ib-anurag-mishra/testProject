@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: FreegalMusic.com\n"
 "POT-Creation-Date: 2011-05-09 12:04+0000\n"
-"PO-Revision-Date: 2013-07-22 14:38+0530\n"
+"PO-Revision-Date: 2013-07-22 16:20+0530\n"
 "Last-Translator: Rob Richmond <rob@m68interactive.com>\n"
 "Language-Team: m68 Interactive <tech@m68interactive.com>\n"
 "MIME-Version: 1.0\n"
@@ -339,3 +339,63 @@ msgstr "Featured Videos"
 
 msgid "Top Videos"
 msgstr "Top Vidéos"
+
+msgid "My Library Top 10"
+msgstr "Ma bibliothèque Top 10"
+
+msgid "US Top 10"
+msgstr "Top 10 américain"
+
+msgid "New Releases"
+msgstr "Nouveautés"
+
+msgid "Search for your favorite music."
+msgstr "Recherchez votre musique préférée."
+
+msgid "Need help? Visit our"
+msgstr "Besoin d'aide? Visitez notre"
+
+msgid "Downloads"
+msgstr "Téléchargements"
+
+msgid "Release Information"
+msgstr "Informations sur les droits"
+
+msgid "More Videos By"
+msgstr "Plus de vidéos par"
+
+msgid "Music Videos"
+msgstr "Vidéo Clips"
+
+msgid "News"
+msgstr "nouvelles"
+
+msgid "Most Popular"
+msgstr "Les plus populaires"
+
+msgid "Browse"
+msgstr "feuilleter"
+
+msgid "Freegal Queues"
+msgstr "Les files d'attente Freegal"
+
+msgid "My Queues"
+msgstr "mes files d'attente"
+
+msgid "History"
+msgstr "histoire"
+
+msgid "My Downloads"
+msgstr "mes Téléchargements"
+
+msgid "My Playlists"
+msgstr "mes Playlists"
+
+msgid "Announcements"
+msgstr "annonces"
+
+msgid "Genres"
+msgstr "Genres"
+
+msgid "Browse A-Z"
+msgstr "Parcorir A à Z"
