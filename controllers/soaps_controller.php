@@ -1,5 +1,7 @@
 <?php
 
+Configure::write('debug', 0);
+
 App::import('Model', 'AuthenticationToken');
 App::import('Model', 'Zipusstate');
 include_once(ROOT.DS.APP_DIR.DS.'controllers'.DS.'classes'.DS.'FreegalLibrary.php');
@@ -5182,7 +5184,13 @@ STR;
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     } 
-              
+             
+    $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    if(2 != $this->getUserType('', $library_id, 1)) {
+       throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
+    }
+ 
     if( 1 == $uid ){
     
       $cond = array('status' => '1', 'queue_type' => '1');
@@ -5197,9 +5205,7 @@ STR;
       'recursive' => -1,
       'order' => 'created DESC'
     ));
-    
 
-    
     if( empty($QueueList) ) {
       throw new SOAPFault('Soap:DefaultQueueList', 'No Queue lists found');
     } else {
@@ -5212,7 +5218,13 @@ STR;
           $obj->QueueName                  = $QueueList[$cnt]['QueueList']['queue_name'];
           $obj->QueueCreated               = $QueueList[$cnt]['QueueList']['created'];
           $obj->QueueModified              = $QueueList[$cnt]['QueueList']['modified'];          
-          $obj->QueueUser                  = $userName;
+
+    	  $songsCount = $this->QueueDetail->find('count', array(
+     	 	'conditions' => array('queue_id' => $QueueList[$cnt]['QueueList']['queue_id']),
+	        'recursive' => -1,
+   	  ));
+
+          $obj->QueueUser                  = $songsCount;
        
           $queue_list[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueListDataType');
         }
@@ -5239,9 +5251,19 @@ STR;
 	 * @return QueueOperationType[]
    */
   function manageQueue($authenticationToken, $queueName, $queueID, $arrsongs, $action, $queueDescription = null){
-  
+ 
+    if(!($this->isValidAuthenticationToken($authenticationToken))) {
+      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
+    }
+
+    $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    if(2 != $this->getUserType('', $library_id, 1)) {
+       throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
+    }
+ 
     // test array
-    $arrsongs = array('1575157', '895819');
+    $arrsongs = explode(',', $arrsongs);
   
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
@@ -5268,7 +5290,8 @@ STR;
         $insertArr['status'] = 1;
         $insertArr['description'] = '';
         $insertArr['queue_type'] = '0';
-        $this->QueueList->save($insertArr);
+        $insertArr['description'] = $queueDescription;
+	$this->QueueList->save($insertArr);
       
         $queueID = $this->QueueList->getLastInsertID();
 
@@ -5291,6 +5314,7 @@ STR;
         $this->QueueList->read('queue_id', $queueID);
         $this->QueueList->set(array(
           'queue_name' => $queueName,
+	  'description' => $queueDescription
         ));     
         $this->QueueList->save();
         
@@ -5299,18 +5323,19 @@ STR;
       break;
       case 'u':
       
-/*         $cnt = 0;
-        $cnt = $this->Queuelist->find('count', array(
-          'conditions' => array( 'PlaylistName' => $queueName, 'patronID' => $patronId),
+        $cnt = 0;
+        $cnt = $this->QueueList->find('count', array(
+          'conditions' => array( 'queue_name' => $queueName, 'patron_id' => $patronId, 'queue_id != "'.$queueID.'"'),
           'recursive' => -1      
-        ));
+        ));  //echo $this->QueueList->lastQuery(); exit;
         if(0 != $cnt) {
           return $this->createsQueueOperationObject(false, 'Name already exist');
-        }  */       
+        }         
         
         $this->QueueList->read('queue_id', $queueID);
         $this->QueueList->set(array(
           'queue_name' => $queueName,
+	  'description' => $queueDescription
         ));
         $this->QueueList->save();
         $this->setQueueSongs($arrsongs, $queueID);
@@ -5362,11 +5387,17 @@ STR;
    
     if(!($this->isValidAuthenticationToken($authenticationToken))) {
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
-    }  
+    } 
+
+    $library_id = $this->getLibraryIdFromAuthenticationToken($authenticationToken);
+
+    if(2 != $this->getUserType('', $library_id, 1)) {
+       throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
+    } 
     
     $data = $this->QueueDetail->find('all',
       array(
-        'fields' =>  array('QueueList.queue_name', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+        'fields' =>  array('QueueList.queue_name', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Songs.FullLength_Duration', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
         'joins' => array(
           array(
             'type' => 'INNER',
@@ -5412,7 +5443,7 @@ STR;
           ),           
         ),
         'recursive' => -1,
-        'conditions' => array('QueueList.status' => 1),        
+        'conditions' => array('QueueList.status' => 1, 'QueueList.queue_id' => $queueID),        
       )
     );
     
@@ -5434,7 +5465,8 @@ STR;
           $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
           $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
           $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
-                 
+   	  $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
+              
           $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
         //}  
       }     
@@ -6460,9 +6492,9 @@ STR;
   private function setQueueSongs($arrSongs, $queueID) {
   
     $this->QueueDetail->deleteAll(array('queue_id' => $queueID), false);
-    
+    if(!(empty($arrSongs))) {  
     foreach($arrSongs as $Spid){
-           
+      $Spid = trim($Spid);
       $productDetails = $this->Product->find('first',array(
         'conditions' => array('pid' => $Spid),
         'fields' => array('ProdID', 'provider_type'),
@@ -6493,6 +6525,7 @@ STR;
       $status = $this->QueueDetail->save($insertArr);
       
     }
+  }
   
     return true;
   }

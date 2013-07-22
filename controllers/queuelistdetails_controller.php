@@ -23,10 +23,12 @@ class QueueListDetailsController extends AppController{
     
     
     function index(){
+        $this->QueueDetail->setDataSource('master');
+        $this->QueueList->setDataSource('master');
         if($_POST['hdn_remove_song']) 
         {
             if(!empty($_POST["Pdid"]))
-            {
+            {       
                 if($this->QueueDetail->deleteAll(array('id' => $_POST["Pdid"]),false)){
                         $this->Session ->setFlash('Song has been deleted successfully from queue', 'modal', array( 'class' => 'queue success' ));
                         $this->redirect($this->referer());						
@@ -69,6 +71,9 @@ class QueueListDetailsController extends AppController{
                     }                     
               }   
         }
+        $this->QueueDetail->setDataSource('default');
+        $this->QueueList->setDataSource('default');        
+        
     }
     
     /**
@@ -105,11 +110,10 @@ class QueueListDetailsController extends AppController{
         $this->set('patronDownload',$patronDownload);
 
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
-       // echo 456;
+        //echo 456;
 
 
-        // Find Total Duration
-
+        //Find Total Duration
         $total_seconds = 0;
 
         foreach($queue_list_array as $k => $v)

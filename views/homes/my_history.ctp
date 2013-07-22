@@ -107,11 +107,7 @@ $ieVersion =  ieversion();
 				<div class="row clearfix">
 					<div class="date"><?php echo date("Y-m-d",strtotime($downloadResult['Download']['created'])); ?></div>
 					<div class="small-album-container">
-						<?php
-                        $albumImage = shell_exec('perl files/tokengen ' . $downloadResult['File']['CdnPath']."/".$downloadResult['File']['SourceURL']);
-                        $albumImageUrl = Configure::read('App.Music_Path').$albumImage;
-                        ?>
-                        <img src="<?php echo $albumImageUrl; ?>" alt="small-album-cover" width="40" height="40" />
+						
 						<!-- <a class="preview" href="#"></a> -->
                         <?php
                         echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$downloadResult['Download']['ProdID'].', "'.base64_encode($downloadResult['Download']['provider_type']).'", "'.$this->webroot.'");')); 
@@ -157,12 +153,17 @@ $ieVersion =  ieversion();
 						
 						<div class="playlist-options">
 							<ul>
-								<li><a href="#">Create New Playlist</a></li>
+								<li><a href="#" class="create-new-queue">Create New Queue</a></li>
 								<li><a href="#">Playlist 1</a></li>
 								<li><a href="#">Playlist 2</a></li>
 								<li><a href="#">Playlist 3</a></li>
 								<li><a href="#">Playlist 4</a></li>
 								<li><a href="#">Playlist 5</a></li>
+								<li><a href="#">Playlist 6</a></li>
+								<li><a href="#">Playlist 7</a></li>
+								<li><a href="#">Playlist 8</a></li>
+								<li><a href="#">Playlist 9</a></li>
+								<li><a href="#">Playlist 10</a></li>
 								
 								
 							</ul>

@@ -147,6 +147,8 @@ class HomesController extends AppController
                             Song.FullLength_Duration,
                             Song.provider_type,
                             Genre.Genre,
+                            Albums.ProdID,
+                            Albums.provider_type,
                             Country.Territory,
                             Country.SalesDate,
                             Sample_Files.CdnPath,
@@ -3426,7 +3428,7 @@ STR;
                     
                     
                     
-              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
+              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.id','WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
 
           
               
@@ -3506,21 +3508,45 @@ STR;
      Desc : For removing a song from wishlist page
     */
     function removeWishlistSong() {
-        $deleteSongId = $this->params['named']['id'];
-        $libraryId = $this->Session->read('library');
-        if($this->Wishlist->delete($deleteSongId)) {
-			$this->Library->setDataSource('master');
-            $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
-            $this->Library->query($sql);
-			$this->Library->setDataSource('default');
-            $this->Session->setFlash('Data deleted successfully!');
-            $this->redirect('my_wishlist');
-        }
-		else {
-			$this->Session->setFlash('Error occured while deleteting the record');
-			$this->redirect('my_wishlist');
-		}
+        
+        Configure::write('debug', 0);
+        $this->layout = false;
+        if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
+           $deleteSongId = $_REQUEST['delete'];
+           $this->Wishlist->setDataSource('master');
+           if($this->Wishlist->delete($deleteSongId)) { 
+               $this->Wishlist->setDataSource('default');
+               echo  1;                
+           }            
+           $this->Wishlist->setDataSource('default');
+           echo 0;
+        }      
+       exit;
+        
     }
+    
+     /*
+     Function Name : removeWishlistVideo
+     Desc : For removing a song from wishlist page
+    */
+    function removeWishlistVideo() {
+        
+        Configure::write('debug', 0);
+        $this->layout = false;
+        if(isset($_REQUEST['ajax']) && isset($_REQUEST['delete']) && $_REQUEST['delete']!=''){
+           $deleteSongId = $_REQUEST['delete'];
+           $this->WishlistVideo->setDataSource('master');
+           if($this->WishlistVideo->delete($deleteSongId)) { 
+               $this->WishlistVideo->setDataSource('default');
+               echo 1;                
+           }            
+           $this->WishlistVideo->setDataSource('default');
+           echo 0;
+        }       
+        exit;
+        
+    }
+    
 
     /*
      Function Name : wishlistDownload

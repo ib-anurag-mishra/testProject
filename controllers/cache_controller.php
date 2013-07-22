@@ -4,7 +4,7 @@ class CacheController extends AppController {
 
     var $name = 'Cache';
     var $autoLayout = false;
-    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload');
+    var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
 
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -50,7 +50,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-                
+                       
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -1382,8 +1382,60 @@ STR;
             }
             //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
         }
-        
+      
    
+        /*
+        //--------------------------------Default Freegal Queues Start----------------------------------------------------
+               
+        $cond = array('queue_type' => 1, 'status' => '1');
+        //Unbinded User model
+        $this->QueueList->unbindModel(
+            array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
+        );
+        $queueData = $this->QueueList->find('all', array(
+        'conditions' => $cond,
+        'fields' => array('queue_id','queue_name'),
+        'order' => 'QueueList.created DESC',
+        'limit' => 100
+        ));
+        
+        //print_r($queueData);
+        //freegal Query Cache set
+        if ((count($queueData) < 1) || ($queueData === false)) { 
+            echo 147;
+            Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
+            $this->log("Freegal Defaut Queues returns null ", "cache");
+            echo "<br /> Freegal Defaut Queues returns null<br />";
+        } else {
+            echo 44;
+            Cache::delete("defaultqueuelist");
+            Cache::write("defaultqueuelist", $queueData);
+            //library top 10 cache set
+            $this->log("Freegal Defaut Queues cache set", "cache");
+            echo "<br />Freegal Defaut Queues cache set <br />";
+        }
+        
+        foreach($queueData as $value){
+            
+            
+        }
+          
+        */
+        
+        //--------------------------------Default Freegal Queues End----------------------------------------------------
+        
+        
+        
+        
+        
+        
+        
+        
+       
+        
+        
+        
+        
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
 
@@ -1817,12 +1869,12 @@ STR;
            
         }
         
-        
+       
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        $this->requestAction('/Resetcache/genrateXML');
+     //   $this->requestAction('/Resetcache/genrateXML');
         exit;
        
     

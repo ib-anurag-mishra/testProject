@@ -232,7 +232,7 @@
                                                                                 </span>
                                             <?php
 
-                                                         }
+                                                            }
                                             ?>
 									<a class="add-to-playlist-button" href="#"></a>
 									<div class="wishlist-popover">
@@ -303,9 +303,6 @@
 		</div>
 		
 
-		</section>
-		<section class="recommended-for-you">
-			
-		</section>
+		</section>		
 		
 	</section>

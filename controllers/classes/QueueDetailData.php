@@ -69,6 +69,13 @@ class QueueDetailDataType{
 	 * @var string
 	 */
   public $QueueAlbumImage;
+    /**
+         * QueueFullLength_Duration
+         * @var string
+         */
+  public $QueueFullLength_Duration;
+
+
   /**
 	 * Constructor
 	 */

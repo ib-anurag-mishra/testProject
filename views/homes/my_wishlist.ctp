@@ -24,9 +24,316 @@ function ieversion()
 $ieVersion =  ieversion();
 
 ?>
+<style type="text/css">
 
+</style>
 <script lenguage="javascript">
    var languageSet = '<?php echo $setLang; ?>';  
+   
+   
+   $(document).ready(function() {
+	$('.songdelete').click(function(e) {
+		e.preventDefault();
+		var parent = $(this).parent();		
+               // alert(parent.attr('id'));
+		$.ajax({
+			type: 'post',
+			url: webroot+'homes/removeWishlistSong/',
+			data: 'ajax=1&delete=' + parent.attr('id').replace('wishlistsong-',''),
+			beforeSend: function() {                            
+				parent.animate({'backgroundColor':'#fb6c6c'},600);
+			},
+			success: function(data) { 
+                              // alert(data);
+				parent.slideUp(600,function() {
+					parent.remove();
+				});
+			}
+		});
+	});
+        
+        $('.videodelete').click(function(e) {
+		e.preventDefault();
+		var parent = $(this).parent();		
+                //alert(parent.attr('id').replace('wishlistvideo-',''));
+		$.ajax({
+			type: 'post',
+			url: webroot+'homes/removeWishlistVideo/',
+			data: 'ajax=1&delete=' + parent.attr('id').replace('wishlistvideo-',''),
+			beforeSend: function() {                            
+				parent.animate({'backgroundColor':'#fb6c6c'},600);
+			},
+			success: function() { 
+                            //alert(1);
+				parent.slideUp(600,function() {
+					parent.remove();
+				});
+			}
+		});
+	});
+});
+   
+   
+ $(document).ready(function(){
+	
+	$('.my-wishlist-page .date-filter-button').addClass('active');
+	$('.my-wishlist-page .music-filter-button').addClass('active');
+	
+	
+	$('.my-wishlist-page .my-wishlist-filter-container div.filter').on('click',function(e){
+            
+        if($(this).hasClass('date-filter-button')){
+            $('#sortForm #sort').val('date');
+        } else if($(this).hasClass('song-filter-button')){
+            $('#sortForm #sort').val('song');
+        } else if($(this).hasClass('artist-filter-button')){
+            $('#sortForm #sort').val('artist');
+        } else if($(this).hasClass('album-filter-button')){
+            $('#sortForm #sort').val('album');
+        }
+		if($(this).hasClass('active')) {
+			
+			if($(this).hasClass('toggled')) {
+				
+				$(this).removeClass('toggled');
+                                $('#sortForm #sortOrder').val('asc');
+				
+			} else {
+				
+				$(this).addClass('toggled');
+                                $('#sortForm #sortOrder').val('desc');
+			}
+			
+			
+		} else {
+			$('.my-wishlist-page .my-wishlist-filter-container div.filter').removeClass('active');
+			$(this).addClass('active');
+                        $('#sortForm #sortOrder').val('asc');
+			
+			
+		}
+		
+		$('#sortForm').submit();
+	});
+	
+	
+	$('.my-wishlist-page .my-wishlist-filter-container div.tab').on('click',function(e){
+		if($(this).hasClass('active')) {
+			
+			if($(this).hasClass('toggled')) {
+				
+				$(this).removeClass('toggled');
+				
+			} else {
+				
+				$(this).addClass('toggled');
+			}
+			
+			
+		} else {
+			$('.my-wishlist-page .my-wishlist-filter-container div.tab').removeClass('active');
+			$(this).addClass('active');
+			
+			
+		}
+		
+		
+	});
+	
+	$('.my-wishlist-page .my-wishlist-scrollable').bind('mousewheel',function(e){
+		
+
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+
+		
+	});
+	
+	$('.my-wishlist-page .my-video-wishlist-scrollable').bind('mousewheel',function(e){
+		
+
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+
+		
+	});
+	
+	
+	
+	
+	
+	$('.my-wishlist-page .add-to-wishlist-button').on('click',function(e){
+		e.preventDefault();
+	
+		$(this).siblings('.wishlist-popover').addClass('active');
+	});
+	
+	$('.my-wishlist-page .wishlist-popover').on('mouseleave',function(e){
+	
+		$(this).removeClass('active');
+	});
+	
+	
+	
+	
+	
+	$('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').slice(0,3).addClass('top');
+	
+
+	$('.my-wishlist-page .my-wishlist-scrollable').on('scroll',function(e){
+
+		$('.my-wishlist-page .my-wishlist-scrollable .wishlist-popover').removeClass('top');
+		
+
+		$('.my-wishlist-page .my-wishlist-scrollable .row').each(function(e){
+			
+			if($(this).position().top >= -22 && $(this).position().top <= 110) {
+				
+				
+				
+
+				$(this).find('.wishlist-popover').addClass('top');
+				
+				
+				
+			}
+		
+		});
+		
+	});
+	
+	
+	$('.my-wishlist-page .my-wishlist-scrollable .row').on('mouseenter',function(){
+		$(this).find('.date').addClass('hovered');
+		$(this).find('.album-title').addClass('hovered');
+		$(this).find('.artist-name').addClass('hovered');
+		$(this).find('.time').addClass('hovered');
+		$(this).find('.song-title').addClass('hovered');
+		$(this).find('.preview').addClass('hovered');
+		$(this).find('.add-to-wishlist-button').addClass('hovered');
+		
+	});
+	
+	$('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave',function(){
+		$(this).find('.date').removeClass('hovered');
+		$(this).find('.album-title').removeClass('hovered');
+		$(this).find('.artist-name').removeClass('hovered');
+		$(this).find('.time').removeClass('hovered');
+		$(this).find('.song-title').removeClass('hovered');
+		$(this).find('.preview').removeClass('hovered');
+		$(this).find('.add-to-wishlist-button').removeClass('hovered');
+		
+	});
+
+	$('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseenter',function(){
+		$(this).find('.date').addClass('hovered');
+		$(this).find('.album-title').addClass('hovered');
+		$(this).find('.artist-name').addClass('hovered');
+		$(this).find('.time').addClass('hovered');
+		$(this).find('.song-title').addClass('hovered');
+		$(this).find('.preview').addClass('hovered');
+		$(this).find('.add-to-wishlist-button').addClass('hovered');
+		
+	});
+	
+	$('.my-wishlist-page .my-video-wishlist-scrollable .row').on('mouseleave',function(){
+		$(this).find('.date').removeClass('hovered');
+		$(this).find('.album-title').removeClass('hovered');
+		$(this).find('.artist-name').removeClass('hovered');
+		$(this).find('.time').removeClass('hovered');
+		$(this).find('.song-title').removeClass('hovered');
+		$(this).find('.preview').removeClass('hovered');
+		$(this).find('.add-to-wishlist-button').removeClass('hovered');
+		
+	});
+
+
+
+
+
+	$('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseenter',function(e){
+		$(this).removeClass('hovered').addClass('blue-bkg');
+	
+	});
+	
+	$('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('mouseleave',function(e){
+		$(this).removeClass('blue-bkg').addClass('hovered');
+	
+	});
+	
+	$('.my-wishlist-page .my-wishlist-scrollable .row .preview').on('click',function(e){
+		
+		if($(this).hasClass('playing')) {
+			
+			$(this).removeClass('playing');
+			
+			$(this).parents('.row').removeClass('playing');
+			$(this).parent().removeClass('playing');
+			$(this).siblings('.date').removeClass('playing');
+			$(this).siblings('.album-title').removeClass('playing');
+			$(this).siblings('.artist-name').removeClass('playing');
+			$(this).siblings('.time').removeClass('playing');
+			$(this).siblings('.song-title').removeClass('playing');
+			$(this).siblings('.add-to-wishlist-button').removeClass('playing');
+			$(this).siblings('.download').removeClass('playing');
+			
+			
+		} else {
+		
+			$('.my-wishlist-page .my-wishlist-scrollable .row').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .date').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .preview').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .album-title').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .artist-name').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .time').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .song-title').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .add-to-wishlist-button').removeClass('playing');
+			$('.my-wishlist-page .my-wishlist-scrollable .row .download').removeClass('playing');
+		
+			$(this).addClass('playing');
+			$(this).parents('.row').addClass('playing');
+			$(this).parent().addClass('playing');			$(this).siblings('.date').addClass('playing');
+			$(this).siblings('.album-title').addClass('playing');
+			$(this).siblings('.artist-name').addClass('playing');
+			$(this).siblings('.time').addClass('playing');
+			$(this).siblings('.song-title').addClass('playing');
+			$(this).siblings('.add-to-wishlist-button').addClass('playing');
+			$(this).siblings('.download').addClass('playing');			
+			
+			
+		}
+		
+	});
+        
+    $('.video-filter-button').click(function(){
+       $(this).addClass('active');
+       $('.music-filter-button').removeClass('active');
+       $('.my-wishlist-shadow-container').hide();
+       $('.my-video-wishlist-shadow-container').show();
+       
+    });
+    
+    $('.music-filter-button').click(function(){
+       $(this).addClass('active');
+       $('.video-filter-button').removeClass('active');
+       $('.my-video-wishlist-shadow-container').hide();
+       $('.my-wishlist-shadow-container').show();
+    });
+	
+});  
+   
 </script>
 <form id="sortForm" name="sortForm" method='post'>
     <input id='sort' type='hidden' name="sort" value="<?php echo $sort; ?>" />
@@ -50,62 +357,62 @@ $ieVersion =  ieversion();
 				If you do not see the "download now" command in the Wish List area, it means so many people were waiting in line that you need to check back on a subsequent Monday.
 			</p>
 		</div>
-		<nav class="my-wishlist-filter-container clearfix">
+				<nav class="my-wishlist-filter-container clearfix">
 					<?php 
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="date-filter-button filter active"></div>
+                    <div class="date-filter-button filter active" style="cursor:pointer;">Date</div>
                 <?php } else { ?>
-                    <div class="date-filter-button filter active toggled"></div>
+                    <div class="date-filter-button filter active toggled" style="cursor:pointer;">Date</div>
                 <?php } 
             } else {
                 ?>
-                <div class="date-filter-button filter "></div>
+                <div class="date-filter-button filter " style="cursor:pointer;">Date</div>
             <?php
             }
             if($sort == 'song'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="song-filter-button filter active"></div>
+                    <div class="song-filter-button filter active" style="cursor:pointer;">Song</div>
                 <?php } else { ?>
-                    <div class="song-filter-button filter active toggled"></div>
+                    <div class="song-filter-button filter active toggled" style="cursor:pointer;">Song</div>
                 <?php } 
             } else {
                 ?>
-			<div class="song-filter-button filter"></div>
+			<div class="song-filter-button filter" style="cursor:pointer;">Song</div>
             <?php
             }
             ?>
-			<div class="music-filter-button tab"></div>
-			<div class="video-filter-button tab"></div>
+			<div class="music-filter-button tab" style="cursor:pointer;">Music</div>
+			<div class="video-filter-button tab" style="cursor:pointer;">Video</div>
 		<?php
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active"></div>
+                    <div class="artist-filter-button filter active" style="width:106px;cursor:pointer;">Artist</div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled"></div>
+                    <div class="artist-filter-button filter active toggled" style="width:106px;cursor:pointer;">Artist</div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter"></div>
+			<div class="artist-filter-button filter" style="width:106px;cursor:pointer;">Artist</div>
             <?php
             }
             if($sort == 'album'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="album-filter-button filter active"></div>
+                    <div class="album-filter-button filter active" style="cursor:pointer;">Album</div>
                 <?php } else { ?>
-                    <div class="album-filter-button filter active toggled"></div>
+                    <div class="album-filter-button filter active toggled" style="cursor:pointer;">Album</div>
                 <?php } 
             } else {
                 ?>
-			<div class="album-filter-button filter"></div>
+			<div class="album-filter-button filter" style="cursor:pointer;">Album</div>
             <?php
             }
             ?>  
-			<div class="download-button filter"></div>
+			<div class="download-button filter" >Download</div>
 			
 		</nav>
 		<div class="my-wishlist-shadow-container">
@@ -114,22 +421,22 @@ $ieVersion =  ieversion();
 				<?php
 
          if(is_array($wishlistResults) && count($wishlistResults) > 0){ 
+             
 	
             for($i = 0; $i < count($wishlistResults); $i++) {
 		
 			
 	?>
-				<div class="row clearfix">
+				
+				<div class="row clearfix wishlistsong"  id="wishlistsong-<?php echo $wishlistResults[$i]['wishlists']['id']?>">
 					<div class="date"><?php echo date('Y-m-d',strtotime($wishlistResults[$i]['wishlists']['created'])); ?></div>
-					<div class="small-album-container">
-                                            
-                                        <?php
-                                            $albumArtwork = shell_exec('perl files/tokengen ' . $wishlistResults[$i]['File']['CdnPath']."/".$wishlistResults[$i]['File']['SourceURL']);
-                                            $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                                        ?>
-                                            
-						<img src="<?=$songAlbumImage;?>" alt="small-album-cover" width="40" height="40" />
-						<a class="preview" href="#"></a>
+					<div class="small-album-container">                                     
+                                
+						 <?php
+                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$wishlistResults[$i]['Song']['ProdID'].', "'.base64_encode($wishlistResults[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
+                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                        ?>
 					</div>
 					<div class="song-title">
                                         <?php 
@@ -162,7 +469,7 @@ $ieVersion =  ieversion();
                                          ?>
                                             </a></div>
 					
-					<div class="wishlist-popover">
+				<div class="wishlist-popover">
 						<!--	
 						<a class="remove-song" href="#">Remove Song</a>
 						<a class="make-cover-art" href="#">Make Cover Art</a>
@@ -190,7 +497,7 @@ $ieVersion =  ieversion();
 						</div>
 						<?php } ?>
 					</div>
-					<div class="download">
+						<div class="download">
                                             
                                     <?php										
                                             $productInfo = $song->getDownloadData($wishlistResults[$i]['wishlists']['ProdID'],$wishlistResults[$i]['wishlists']['provider_type']);
@@ -217,16 +524,15 @@ $ieVersion =  ieversion();
                                             }
                                     ?>
                                             
-                                        </div>
+                                        </div>						
+					<div class="delete-btn songdelete"></div>
 				</div>
-        <?php 
+				<?php 
 
            }
 
-        }else{
-            
-            echo 	'<p><?php __("You have no songs in your wishlist.");?></p>';
-            
+        }else{            
+            echo 	__("You have no songs in your wishlist.");            
         }
 
 
@@ -234,14 +540,14 @@ $ieVersion =  ieversion();
 				</div>
 			</div>
 		</div>
-		<!--(this is the html for the videos) -->
+			<!--(this is the html for the videos) -->
 		<div class="my-video-wishlist-shadow-container" style="display:none;">
 			<div class="my-video-wishlist-scrollable">
 				<div class="row-container">
 				<?php
                 if(count($wishlistResultsVideos) != 0)
                 {
-                    //$i = 1;
+                   //$i = 1;
                     foreach($wishlistResultsVideos as $key => $wishlistResultsVideo):
                     /*$class = null;
                     if ($i++ % 2 == 0) {
@@ -249,7 +555,7 @@ $ieVersion =  ieversion();
                     }*/
                 ?>
 				
-				<div class="row clearfix">
+				<div class="row clearfix" id="wishlistvideo-<?php echo $wishlistResultsVideo['WishlistVideo']['id']?>">
 					<div class="date"><?php echo date("Y-m-d",strtotime($wishlistResultsVideo['WishlistVideo']['created'])); ?></div>
 					<div class="small-album-container">
 						<?php
@@ -269,7 +575,7 @@ $ieVersion =  ieversion();
 					?>
                     </div>
 					<a class="add-to-wishlist-button" href="#"></a>
-					<div class="album-title"><a href="#"><?php echo $wishlistResultsVideo['Video']['Title'];  ?></a></div>
+					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,19);  ?>...</a></div>
 					<div class="artist-name"><a href="#">
                     <?php
 						if (strlen($wishlistResultsVideo['WishlistVideo']['artist']) >= 19) {
@@ -313,11 +619,12 @@ $ieVersion =  ieversion();
 							<span id="download_loader_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
                        </p></a>
                     </div>
+		    <div class="delete-btn videodelete"></div>
 				</div>
 				<?php
                     endforeach;
                     }else{
-                echo 	'<tr><td valign="top"><p>';?><?php echo __("No downloaded songs from this week or last week."); ?><?php echo '</p></td></tr>';
+                echo 	'<tr><td valign="top"><p>';?><?php echo __("You have no videos in your wishlist."); ?><?php echo '</p></td></tr>';
                 }
 				?>
 				</div>

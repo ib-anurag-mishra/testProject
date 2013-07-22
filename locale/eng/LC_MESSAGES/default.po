@@ -5,48 +5,38 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "POT-Creation-Date: 2011-05-09 05:58+0000\n"
-"PO-Revision-Date: 2011-05-09 11:52+0530\n"
+"PO-Revision-Date: 2013-07-22 14:21+0530\n"
 "Last-Translator: \n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"X-Generator: Poedit 1.5.7\n"
 
 #: \artists\admin_manageartist.ctp:31
 #: \artists\admin_managefeaturedartist.ctp:32
-#: \artists\admin_managenewartist.ctp:31
-#: \artists\view.ctp:200
-#: \genres\view.ctp:74
-#: \homes\search.ctp:198
-#: \libraries\admin_managelibrary.ctp:44
-#: \questions\admin_index.ctp:44
-#: \reports\admin_sonyreports.ctp:67
-#: \sections\admin_index.ctp:37
-#: \users\admin_index.ctp:94
-#: \users\admin_managepatron.ctp:87
+#: \artists\admin_managenewartist.ctp:31 \artists\view.ctp:200
+#: \genres\view.ctp:74 \homes\search.ctp:198
+#: \libraries\admin_managelibrary.ctp:44 \questions\admin_index.ctp:44
+#: \reports\admin_sonyreports.ctp:67 \sections\admin_index.ctp:37
+#: \users\admin_index.ctp:94 \users\admin_managepatron.ctp:87
 #: \users\admin_manageuser.ctp:88
 msgid "previous"
 msgstr "previous"
 
 #: \artists\admin_manageartist.ctp:33
 #: \artists\admin_managefeaturedartist.ctp:34
-#: \artists\admin_managenewartist.ctp:33
-#: \artists\view.ctp:202
-#: \genres\view.ctp:76
-#: \homes\search.ctp:202
-#: \libraries\admin_managelibrary.ctp:46
-#: \questions\admin_index.ctp:47
-#: \reports\admin_sonyreports.ctp:69
-#: \sections\admin_index.ctp:40
-#: \users\admin_index.ctp:96
-#: \users\admin_managepatron.ctp:89
+#: \artists\admin_managenewartist.ctp:33 \artists\view.ctp:202
+#: \genres\view.ctp:76 \homes\search.ctp:202
+#: \libraries\admin_managelibrary.ctp:46 \questions\admin_index.ctp:47
+#: \reports\admin_sonyreports.ctp:69 \sections\admin_index.ctp:40
+#: \users\admin_index.ctp:96 \users\admin_managepatron.ctp:89
 #: \users\admin_manageuser.ctp:90
 msgid "next"
 msgstr "next"
 
-#: \artists\view.ctp:51
-#: \elements\navigation.ctp:20
+#: \artists\view.ctp:51 \elements\navigation.ctp:20
 msgid "Genre"
 msgstr "Genre"
 
@@ -58,9 +48,7 @@ msgstr "Label"
 msgid "Tracks"
 msgstr "Tracks"
 
-#: \artists\view.ctp:67
-#: \homes\my_history.ctp:21
-#: \homes\my_wishlist.ctp:9
+#: \artists\view.ctp:67 \homes\my_history.ctp:21 \homes\my_wishlist.ctp:9
 #: \homes\search.ctp:20
 msgid "Artist"
 msgstr "Artist"
@@ -69,74 +57,62 @@ msgstr "Artist"
 msgid "Time"
 msgstr "Time"
 
-#: \artists\view.ctp:69
-#: \homes\my_history.ctp:30
-#: \homes\my_wishlist.ctp:18
+#: \artists\view.ctp:69 \homes\my_history.ctp:30 \homes\my_wishlist.ctp:18
 #: \homes\search.ctp:31
 msgid "Download"
 msgstr "Download"
 
-#: \artists\view.ctp:138;141
-#: \homes\index.ctp:305;308
-msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
-msgstr "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press `Cancel` or not."
+#: \artists\view.ctp:138;141 \homes\index.ctp:305;308
+msgid ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press `Cancel` or "
+"not."
+msgstr ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press `Cancel` or "
+"not."
 
-#: \artists\view.ctp:138;141
-#: \genres\index.ctp:113;116
-#: \homes\index.ctp:188;191;305;308
-#: \homes\my_history.ctp:84;87
-#: \homes\my_wishlist.ctp:81;84
-#: \homes\search.ctp:130;133
+#: \artists\view.ctp:138;141 \genres\index.ctp:113;116
+#: \homes\index.ctp:188;191;305;308 \homes\my_history.ctp:84;87
+#: \homes\my_wishlist.ctp:81;84 \homes\search.ctp:130;133
 msgid "Download Now"
 msgstr "Download Now"
 
-#: \artists\view.ctp:145
-#: \genres\index.ctp:120;143
-#: \homes\index.ctp:195;220;312;337
-#: \homes\my_history.ctp:91
-#: \homes\my_wishlist.ctp:87
-#: \homes\search.ctp:137;162
+#: \artists\view.ctp:145 \genres\index.ctp:120;143
+#: \homes\index.ctp:195;220;312;337 \homes\my_history.ctp:91
+#: \homes\my_wishlist.ctp:87 \homes\search.ctp:137;162
 msgid "Please Wait..."
 msgstr "Please Wait..."
 
-#: \artists\view.ctp:150
-#: \genres\index.ctp:125
-#: \homes\index.ctp:200;317
+#: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:200;317
 #: \homes\search.ctp:141
-msgid "You have already downloaded this song. Get it from your recent downloads"
-msgstr "You have already downloaded this song. Get it from your recent downloads"
+msgid ""
+"You have already downloaded this song. Get it from your recent downloads"
+msgstr ""
+"You have already downloaded this song. Get it from your recent downloads"
 
-#: \artists\view.ctp:150
-#: \genres\index.ctp:125
-#: \homes\index.ctp:317
+#: \artists\view.ctp:150 \genres\index.ctp:125 \homes\index.ctp:317
 #: \homes\search.ctp:141
 msgid "Downloaded"
 msgstr "Downloaded"
 
-#: \artists\view.ctp:158;176
-#: \genres\index.ctp:133;150
-#: \homes\index.ctp:209;227;326;344
-#: \homes\my_wishlist.ctp:92
+#: \artists\view.ctp:158;176 \genres\index.ctp:133;150
+#: \homes\index.ctp:209;227;326;344 \homes\my_wishlist.ctp:92
 #: \homes\search.ctp:150;170
 msgid "Limit Exceeded"
 msgstr "Limit Exceeded"
 
-#: \artists\view.ctp:163
-#: \genres\index.ctp:138
-#: \homes\index.ctp:215;332
+#: \artists\view.ctp:163 \genres\index.ctp:138 \homes\index.ctp:215;332
 #: \homes\search.ctp:157
 msgid "Added to Wishlist"
 msgstr "Added to Wishlist"
 
-#: \artists\view.ctp:167
-#: \homes\index.ctp:219;336
+#: \artists\view.ctp:167 \homes\index.ctp:219;336
 msgid "Add to Wishlist"
 msgstr "Add to Wishlist"
 
-#: \artists\view.ctp:182
-#: \genres\index.ctp:156
-#: \homes\index.ctp:233;233;350;350
-#: \homes\search.ctp:177;177
+#: \artists\view.ctp:182 \genres\index.ctp:156
+#: \homes\index.ctp:233;233;350;350 \homes\search.ctp:177;177
 msgid "Coming Soon"
 msgstr "Coming Soon"
 
@@ -152,8 +128,7 @@ msgstr "About"
 msgid "Terms & Conditions"
 msgstr "Terms & Conditions"
 
-#: \elements\footer.ctp:25
-#: \elements\header.ctp:53
+#: \elements\footer.ctp:25 \elements\header.ctp:53
 msgid "FAQ"
 msgstr "FAQ"
 
@@ -197,15 +172,17 @@ msgstr "Featured Artist"
 msgid "Newly Added"
 msgstr "Newly Added"
 
-#: \elements\navigation.ctp:100
-#: \homes\advance_search.ctp:2
+#: \elements\navigation.ctp:100 \homes\advance_search.ctp:2
 msgid "Advanced Search"
 msgstr "Advanced Search"
 
-#: \genres\index.ctp:113;116
-#: \homes\search.ctp:130;133
-msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
-msgstr "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
+#: \genres\index.ctp:113;116 \homes\search.ctp:130;133
+msgid ""
+"IMPORTANT: Please note that once you press `Download Now` you have used up "
+"one of your downloads, regardless of whether you then press 'Cancel' or not."
+msgstr ""
+"IMPORTANT: Please note that once you press `Download Now` you have used up "
+"one of your downloads, regardless of whether you then press 'Cancel' or not."
 
 #: \homes\forgot_password.ctp:2
 msgid "Forgot Password"
@@ -224,8 +201,14 @@ msgid "National Top 10"
 msgstr "National Top 10"
 
 #: \homes\index.ctp:188;191
-msgid "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not."
-msgstr "IMPORTANT:  Please note that once you press \"Download Now\" you have used up one of your downloads, regardless of whether you then press \"Cancel\" or not"
+msgid ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press \"Cancel\" or "
+"not."
+msgstr ""
+"IMPORTANT:  Please note that once you press \"Download Now\" you have used "
+"up one of your downloads, regardless of whether you then press \"Cancel\" or "
+"not"
 
 #: \homes\index.ctp:246
 msgid "No songs have been downloaded yet."
@@ -247,9 +230,7 @@ msgstr "Spanish"
 msgid "Download History"
 msgstr "Download History"
 
-#: \homes\my_history.ctp:24
-#: \homes\my_wishlist.ctp:15
-#: \homes\search.ctp:29
+#: \homes\my_history.ctp:24 \homes\my_wishlist.ctp:15 \homes\search.ctp:29
 msgid "Track"
 msgstr "Track"
 
@@ -265,8 +246,7 @@ msgstr "No downloaded songs from this week or last week."
 msgid "Wishlist"
 msgstr "Wishlist"
 
-#: \homes\my_wishlist.ctp:12
-#: \homes\search.ctp:26
+#: \homes\my_wishlist.ctp:12 \homes\search.ctp:26
 msgid "Album"
 msgstr "Album"
 
@@ -282,184 +262,137 @@ msgstr "Composer"
 msgid "Terms &amp; Conditions"
 msgstr "Terms &amp; Conditions"
 
-#: \layouts\admin.ctp:6
-#: \layouts\login.ctp:6
+#: \layouts\admin.ctp:6 \layouts\login.ctp:6
 msgid "Freegal Music : The New Music Library :"
 msgstr "Freegal Music : The New Music Library :"
 
-#: \layouts\default.ctp:6
-#: \layouts\home.ctp:6
+#: \layouts\default.ctp:6 \layouts\home.ctp:6
 msgid "Freegal Music : Your New Music Library :"
 msgstr "Freegal Music : Your New Music Library :"
 
-#: \libraries\admin_managelibrary.ctp:8
-#: \questions\admin_index.ctp:39
-#: \sections\admin_index.ctp:32
-#: \users\admin_index.ctp:55
-#: \users\admin_managepatron.ctp:41
-#: \users\admin_manageuser.ctp:41
-msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
-msgstr "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+#: \libraries\admin_managelibrary.ctp:8 \questions\admin_index.ctp:39
+#: \sections\admin_index.ctp:32 \users\admin_index.ctp:55
+#: \users\admin_managepatron.ctp:41 \users\admin_manageuser.ctp:41
+msgid ""
+"Page %page% of %pages%, showing %current% records out of %count% total, "
+"starting on record %start%, ending on %end%"
+msgstr ""
+"Page %page% of %pages%, showing %current% records out of %count% total, "
+"starting on record %start%, ending on %end%"
 
 #: \questions\admin_add.ctp:36
 msgid "Add %s"
 msgstr "Add %s"
 
-#: \questions\admin_add.ctp:36
-#: \questions\admin_edit.ctp:36
-#: \questions\admin_index.ctp:5
-#: \questions\admin_view.ctp:3
+#: \questions\admin_add.ctp:36 \questions\admin_edit.ctp:36
+#: \questions\admin_index.ctp:5 \questions\admin_view.ctp:3
 #: \questions\index.ctp:3
 msgid "FAQs"
 msgstr "FAQs"
 
-#: \questions\admin_add.ctp:43
-#: \questions\admin_edit.ctp:44
-#: \sections\admin_add.ctp:15
-#: \sections\admin_edit.ctp:15
+#: \questions\admin_add.ctp:43 \questions\admin_edit.ctp:44
+#: \sections\admin_add.ctp:15 \sections\admin_edit.ctp:15
 msgid "Submit"
 msgstr "Submit"
 
-#: \questions\admin_add.ctp:46
-#: \questions\admin_edit.ctp:47
-#: \questions\admin_index.ctp:10;51
-#: \questions\admin_view.ctp:33
-#: \questions\view.ctp:37
-#: \sections\admin_add.ctp:18
-#: \sections\admin_edit.ctp:18
-#: \sections\admin_index.ctp:7;44
+#: \questions\admin_add.ctp:46 \questions\admin_edit.ctp:47
+#: \questions\admin_index.ctp:10;51 \questions\admin_view.ctp:33
+#: \questions\view.ctp:37 \sections\admin_add.ctp:18
+#: \sections\admin_edit.ctp:18 \sections\admin_index.ctp:7;44
 #: \sections\admin_view.ctp:28;47
 msgid "Actions"
 msgstr "Actions"
 
-#: \questions\admin_add.ctp:48
-#: \questions\admin_edit.ctp:49
-#: \questions\admin_index.ctp:30
-#: \sections\admin_add.ctp:20
-#: \sections\admin_edit.ctp:20
-#: \sections\admin_index.ctp:23
+#: \questions\admin_add.ctp:48 \questions\admin_edit.ctp:49
+#: \questions\admin_index.ctp:30 \sections\admin_add.ctp:20
+#: \sections\admin_edit.ctp:20 \sections\admin_index.ctp:23
 #: \sections\admin_view.ctp:64
 msgid "Delete"
 msgstr "Delete"
 
-#: \questions\admin_add.ctp:48
-#: \questions\admin_edit.ctp:49
-#: \questions\admin_index.ctp:30
-#: \questions\admin_view.ctp:36
-#: \questions\view.ctp:40
-#: \sections\admin_add.ctp:20
-#: \sections\admin_edit.ctp:20
-#: \sections\admin_index.ctp:23
+#: \questions\admin_add.ctp:48 \questions\admin_edit.ctp:49
+#: \questions\admin_index.ctp:30 \questions\admin_view.ctp:36
+#: \questions\view.ctp:40 \sections\admin_add.ctp:20
+#: \sections\admin_edit.ctp:20 \sections\admin_index.ctp:23
 #: \sections\admin_view.ctp:31;64
 msgid "Are you sure you want to delete # %s?"
 msgstr "Are you sure you want to delete # %s?"
 
-#: \questions\admin_add.ctp:49;50
-#: \questions\admin_edit.ctp:50;51
-#: \questions\admin_index.ctp:54
-#: \questions\admin_view.ctp:37;39
-#: \questions\view.ctp:41;43
-#: \sections\admin_add.ctp:21;22
-#: \sections\admin_edit.ctp:21;22
-#: \sections\admin_index.ctp:47
+#: \questions\admin_add.ctp:49;50 \questions\admin_edit.ctp:50;51
+#: \questions\admin_index.ctp:54 \questions\admin_view.ctp:37;39
+#: \questions\view.ctp:41;43 \sections\admin_add.ctp:21;22
+#: \sections\admin_edit.ctp:21;22 \sections\admin_index.ctp:47
 #: \sections\admin_view.ctp:32;34
 msgid "List %s"
 msgstr "List %s"
 
-#: \questions\admin_add.ctp:49
-#: \questions\admin_edit.ctp:50
-#: \questions\admin_view.ctp:37
-#: \questions\view.ctp:41
-#: \sections\admin_add.ctp:22
-#: \sections\admin_edit.ctp:22
-#: \sections\admin_index.ctp:47
-#: \sections\admin_view.ctp:34;40
+#: \questions\admin_add.ctp:49 \questions\admin_edit.ctp:50
+#: \questions\admin_view.ctp:37 \questions\view.ctp:41
+#: \sections\admin_add.ctp:22 \sections\admin_edit.ctp:22
+#: \sections\admin_index.ctp:47 \sections\admin_view.ctp:34;40
 msgid "Questions"
 msgstr "Questions"
 
-#: \questions\admin_add.ctp:50
-#: \questions\admin_edit.ctp:51
-#: \questions\admin_index.ctp:54
-#: \questions\admin_view.ctp:39
-#: \questions\view.ctp:43
-#: \sections\admin_add.ctp:21
-#: \sections\admin_edit.ctp:21
-#: \sections\admin_view.ctp:32
+#: \questions\admin_add.ctp:50 \questions\admin_edit.ctp:51
+#: \questions\admin_index.ctp:54 \questions\admin_view.ctp:39
+#: \questions\view.ctp:43 \sections\admin_add.ctp:21
+#: \sections\admin_edit.ctp:21 \sections\admin_view.ctp:32
 msgid "Sections"
 msgstr "Sections"
 
-#: \questions\admin_add.ctp:51
-#: \questions\admin_edit.ctp:52
-#: \questions\admin_index.ctp:53;55
-#: \questions\admin_view.ctp:38;40
-#: \questions\view.ctp:42;44
-#: \sections\admin_add.ctp:23
-#: \sections\admin_edit.ctp:23
-#: \sections\admin_index.ctp:46;48
+#: \questions\admin_add.ctp:51 \questions\admin_edit.ctp:52
+#: \questions\admin_index.ctp:53;55 \questions\admin_view.ctp:38;40
+#: \questions\view.ctp:42;44 \sections\admin_add.ctp:23
+#: \sections\admin_edit.ctp:23 \sections\admin_index.ctp:46;48
 #: \sections\admin_view.ctp:33;35;73
 msgid "New %s"
 msgstr "New %s"
 
-#: \questions\admin_add.ctp:51
-#: \questions\admin_edit.ctp:52
-#: \questions\admin_index.ctp:55
-#: \questions\admin_view.ctp:5;40
-#: \questions\view.ctp:9;44
-#: \sections\admin_add.ctp:5
-#: \sections\admin_edit.ctp:5
-#: \sections\admin_index.ctp:46
+#: \questions\admin_add.ctp:51 \questions\admin_edit.ctp:52
+#: \questions\admin_index.ctp:55 \questions\admin_view.ctp:5;40
+#: \questions\view.ctp:9;44 \sections\admin_add.ctp:5
+#: \sections\admin_edit.ctp:5 \sections\admin_index.ctp:46
 #: \sections\admin_view.ctp:3;30;31;33
 msgid "Section"
 msgstr "Section"
 
-#: \questions\admin_edit.ctp:36
-#: \questions\admin_view.ctp:35
-#: \questions\view.ctp:39
-#: \sections\admin_view.ctp:30
+#: \questions\admin_edit.ctp:36 \questions\admin_view.ctp:35
+#: \questions\view.ctp:39 \sections\admin_view.ctp:30
 msgid "Edit %s"
 msgstr "Edit %s"
 
-#: \questions\admin_index.ctp:28
-#: \sections\admin_index.ctp:21
+#: \questions\admin_index.ctp:28 \sections\admin_index.ctp:21
 #: \sections\admin_view.ctp:62
 msgid "View"
 msgstr "View"
 
-#: \questions\admin_index.ctp:29
-#: \sections\admin_index.ctp:22
+#: \questions\admin_index.ctp:29 \sections\admin_index.ctp:22
 #: \sections\admin_view.ctp:63
 msgid "Edit"
 msgstr "Edit"
 
-#: \questions\admin_index.ctp:53
-#: \questions\admin_view.ctp:10;35;36;38
-#: \questions\view.ctp:2;14;39;40;42
-#: \sections\admin_add.ctp:23
-#: \sections\admin_edit.ctp:23
-#: \sections\admin_index.ctp:48
+#: \questions\admin_index.ctp:53 \questions\admin_view.ctp:10;35;36;38
+#: \questions\view.ctp:2;14;39;40;42 \sections\admin_add.ctp:23
+#: \sections\admin_edit.ctp:23 \sections\admin_index.ctp:48
 #: \sections\admin_view.ctp:35;44;73
 msgid "Question"
 msgstr "Question"
 
-#: \questions\admin_view.ctp:15
-#: \questions\view.ctp:19
+#: \questions\admin_view.ctp:15 \questions\view.ctp:19
 #: \sections\admin_view.ctp:45
 msgid "Answer"
 msgstr "Answer"
 
-#: \questions\admin_view.ctp:20
-#: \questions\view.ctp:24
+#: \questions\admin_view.ctp:20 \questions\view.ctp:24
 #: \sections\admin_view.ctp:15
 msgid "Created"
 msgstr "Created"
 
-#: \questions\admin_view.ctp:25
-#: \sections\admin_view.ctp:46
+#: \questions\admin_view.ctp:25 \sections\admin_view.ctp:46
 msgid "Last Modified"
 msgstr "Last Modified"
 
-#: \questions\admin_view.ctp:36
-#: \questions\view.ctp:40
+#: \questions\admin_view.ctp:36 \questions\view.ctp:40
 #: \sections\admin_view.ctp:31
 msgid "Delete %s"
 msgstr "Delete %s"
@@ -484,8 +417,7 @@ msgstr "Admin Edit %s"
 msgid "FAQ Sections"
 msgstr "FAQ Sections"
 
-#: \sections\admin_index.ctp:8
-#: \sections\admin_view.ctp:10
+#: \sections\admin_index.ctp:8 \sections\admin_view.ctp:10
 msgid "Language"
 msgstr "Language"
 
@@ -501,48 +433,27 @@ msgstr " Last Modified"
 msgid "Related %s"
 msgstr "Related %s"
 
-#: \users\idlogin.ctp:6
-#: \users\ihdlogin.ctp:6
-#: \users\ildlogin.ctp:12
-#: \users\ilhdlogin.ctp:12
-#: \users\ilogin.ctp:6
-#: \users\indlogin.ctp:6
-#: \users\inhdlogin.ctp:6
-#: \users\inhlogin.ctp:6
-#: \users\inlogin.ctp:6
-#: \users\plogin.ctp:6
-#: \users\sdlogin.ctp:12
-#: \users\slogin.ctp:12
-#: \users\sndlogin.ctp:9
-#: \users\snlogin.ctp:9
+#: \users\idlogin.ctp:6 \users\ihdlogin.ctp:6 \users\ildlogin.ctp:12
+#: \users\ilhdlogin.ctp:12 \users\ilogin.ctp:6 \users\indlogin.ctp:6
+#: \users\inhdlogin.ctp:6 \users\inhlogin.ctp:6 \users\inlogin.ctp:6
+#: \users\plogin.ctp:6 \users\sdlogin.ctp:12 \users\slogin.ctp:12
+#: \users\sndlogin.ctp:9 \users\snlogin.ctp:9
 msgid "Card Number"
 msgstr "Card Number"
 
-#: \users\idlogin.ctp:9
-#: \users\ihdlogin.ctp:9
-#: \users\ildlogin.ctp:15
-#: \users\ilhdlogin.ctp:15
-#: \users\ilogin.ctp:9
-#: \users\indlogin.ctp:8
-#: \users\inhdlogin.ctp:8
-#: \users\inhlogin.ctp:9
-#: \users\inlogin.ctp:7
-#: \users\login.ctp:13
-#: \users\plogin.ctp:9
-#: \users\sdlogin.ctp:15
-#: \users\slogin.ctp:15
-#: \users\sndlogin.ctp:11
-#: \users\snlogin.ctp:10
+#: \users\idlogin.ctp:9 \users\ihdlogin.ctp:9 \users\ildlogin.ctp:15
+#: \users\ilhdlogin.ctp:15 \users\ilogin.ctp:9 \users\indlogin.ctp:8
+#: \users\inhdlogin.ctp:8 \users\inhlogin.ctp:9 \users\inlogin.ctp:7
+#: \users\login.ctp:13 \users\plogin.ctp:9 \users\sdlogin.ctp:15
+#: \users\slogin.ctp:15 \users\sndlogin.ctp:11 \users\snlogin.ctp:10
 msgid "Login"
 msgstr "Login"
 
-#: \users\login.ctp:7
-#: \users\my_account.ctp:21
+#: \users\login.ctp:7 \users\my_account.ctp:21
 msgid "Email"
 msgstr "Email"
 
-#: \users\login.ctp:9
-#: \users\my_account.ctp:25
+#: \users\login.ctp:9 \users\my_account.ctp:25
 msgid "Password"
 msgstr "Password"
 
@@ -562,3 +473,11 @@ msgstr "Last Name"
 msgid "Save"
 msgstr "Save"
 
+msgid "National Top 100"
+msgstr "National Top 100"
+
+msgid "Featured"
+msgstr "Featured"
+
+msgid "What's Happening"
+msgstr "What's Happening"

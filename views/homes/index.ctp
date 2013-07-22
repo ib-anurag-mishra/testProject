@@ -3,7 +3,7 @@
 						<section class="news">
 							<div class="top-100">
 								<header>
-									<h3>National Top 100</h3>
+									<h3><?php echo __('National Top 100', true); ?></h3>
 									
 								</header>
 								<nav class="top-100-nav">
@@ -122,24 +122,9 @@
                                                                                                     <?php if($this->Session->read("patron")){ ?> 
 														<a class="add-to-playlist-button" href="#"></a>
 														<div class="wishlist-popover">
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
+                                                                                                                    <?php echo $this->Queue->getQueuesList($this->Session->read('patron')); ?>
                                                                                                 <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
+															<a class="add-to-playlist" href="#">Add To Queue</a>
                                                                                                 <?php } ?>
 														
 
@@ -180,8 +165,8 @@
 													</div>
 
                                                                                                     <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 35 ) {
-                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 35)) . "..";
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 25 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 25)) . "..";
                                                                                                     } else {
                                                                                                             $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
                                                                                                     }
@@ -189,8 +174,8 @@
 
 
                                                                                                     <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 35 ) {
-                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 35)) . "..";
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 25 ) {
+                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 25)) . "..";
                                                                                                     } else {
                                                                                                             $artistText = $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']);
                                                                                                     }
@@ -384,7 +369,7 @@
 							</div>
 							<div class="featured">
 								<header>
-									<h3>Featured</h3>
+									<h3><?php echo __('Featured', true); ?></h3>
 								</header>
 								<div class="featured-grid horiz-scroll">
 									<ul style="width:3690px;">
@@ -437,7 +422,7 @@
 							</div><!-- end .featured -->
 							<div class="coming-soon">
 								<header class="clearfix">
-									<h3>Coming Soon</h3>
+									<h3><?php echo __('Coming Soon', true); ?></h3>
 									
 	
 								</header>
@@ -609,7 +594,7 @@
 							
 							<div class="whats-happening">
 								<header>
-									<h3>What's Happening</h3>
+									<h3><?php echo __("What's Happening", true); ?></h3>
 									<!--
 									<div class="whats-happening-see-all">
 										<a href="#">View All</a>
