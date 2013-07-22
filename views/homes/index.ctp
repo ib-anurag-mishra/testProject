@@ -135,7 +135,7 @@
                                                                                                                             </ul>
                                                                                                                     </div>
                                                                                                 <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-															<a class="add-to-queue" href="#">Add To Queue</a>
+															<a class="add-to-playlist" href="#">Add To Queue</a>
                                                                                                 <?php } ?>
 														
 
