@@ -7,7 +7,11 @@
 class QueueHelper extends AppHelper {
     var $uses = array('QueueList');
     
-    function getQueuesList($patron_id) {
+    /**
+     * Function name : getQueuesList
+     * Description   : This function is used to get mark up related to Add to queue
+     */
+    function getQueuesList($patron_id,$song_prodid,$song_providertype,$album_prodid,$album_providertype) {
         if(!empty($patron_id)){
 			$queueInstance = ClassRegistry::init('QueueList');
 			$queueInstance->recursive = -1;
@@ -15,7 +19,6 @@ class QueueHelper extends AppHelper {
 		}else{
 			$queueList = array();
 		}
-            
 $str = <<<EOD
            <div class="playlist-options">
                     <ul>
@@ -24,12 +27,25 @@ EOD;
 
         if(!empty($queueList)){
             foreach($queueList as $key => $value){
-                $str.='<li><a href="#">'.$value['QueueList']['queue_name'].'</a></li>';
+                $str.='<li><a href="JavaScript:void(0);" onclick='.'\'Javascript: addToQueue("'.$song_prodid.'","'.$song_providertype.'","'.$album_prodid.'","'.$album_providertype.'","'.$value['QueueList']['queue_id'].'");\'>'.$value['QueueList']['queue_name'].'</a></li>';
             }
         }                    
         $str.= '</ul></div>';
         return $str;
     }
+    
+    /**
+     * Function Name: getSocialNetworkinglinksMarkup
+     * Description  : This function is used to get mark up of social networking links 
+     */
+    function getSocialNetworkinglinksMarkup(){
+        
+        return  '<div class="share clearfix">
+                        <p>Share via</p>
+                        <a class="facebook" href="#"></a>
+                        <a class="twitter" href="#"></a>
+                </div>'; 
+    }    
 }
 
 ?>

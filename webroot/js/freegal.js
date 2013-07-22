@@ -1238,3 +1238,45 @@ function videoDownloadAll(prodId)
     $('#form'+prodId).submit();
     setTimeout("location.reload(true)", 7000);
 } 
+
+function addToQueue(songProdId , songProviderType, albumProdId, albumProviderType, queueId)
+{
+	var data = "songProdId="+songProdId+"&songProviderType="+songProviderType+"&albumProdId="+albumProdId+"&albumProviderType="+albumProviderType+"&queueId="+queueId;	
+	jQuery.ajax({
+		type: "post",  // Request method: post, get
+		url: webroot+"queues/addToQueue", // URL to request
+		data: data,  // post data
+		success: function(response) {	
+                        if(response.length == 6){
+                            var msg = response.substring(0,6);
+                        }else{
+                            var msg = response.substring(0,5);
+                        }
+			if(msg == 'error')
+			{
+                            document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Queuelist.';
+                            return false;
+			}else if(msg == 'error1'){
+                            document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
+                        }
+			else
+			{	
+				var msg = response.substring(0,7);
+				if(msg == 'Success')
+				{               
+                                    document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to Queue';
+
+				}
+				else
+				{
+        				document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
+					return false;				
+				}
+			}			
+		},
+		error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to queue is unsuccessfull';
+		}
+	} );
+	return false; 
+}
