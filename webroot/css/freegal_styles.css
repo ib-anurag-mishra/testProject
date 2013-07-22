@@ -281,13 +281,15 @@ padding-bottom:5px;
     margin-left: 57px;
 }    
 div.paging_all_block{
-    background: none repeat scroll 0 0 #FFFFFF;
+    background: none repeat scroll 0 0;
     clear: both;
     color: #000000;
-    float: right;
+    /* float: right;*/
     font-size: 13px;
     margin-right: 19px;
     padding-bottom: 10px;
+    text-align: right;
+    width:100%;
 }
 
 div.paging_all_block span.disabled {
