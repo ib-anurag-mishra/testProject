@@ -16,7 +16,7 @@ class QueuesController extends AppController{
     
     function beforeFilter(){
             parent::beforeFilter();
-            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue');
+            $this->Auth->allow('getDefaultQueues','savedQueuesList','createQueue','addToQueue');
     }
     
     /**
@@ -59,6 +59,42 @@ class QueuesController extends AppController{
         }
                                 
     }
+    
+    /**
+     * Function Name : addToQueue
+     * Description   : This function is used to add a song to a Queue
+     */
+    
+    function addToQueue(){
+        Configure::write('debug', 0);
+        if( $this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['songProdId']) && isset($_REQUEST['songProviderType'])&& isset($_REQUEST['albumProdId'])&& isset($_REQUEST['albumProviderType'])&& isset($_REQUEST['queueId']) ){
+            $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
+            if(!$queuesongsCount){
+                $insertArr = Array();
+                $insertArr['queue_id'] = $_REQUEST['queueId'];
+                $insertArr['song_prodid'] = $_REQUEST['songProdId'];
+                $insertArr['song_providertype'] = $_REQUEST['songProviderType'];
+                $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
+                $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
+                //insert into queuedetail table
+                $this->QueueDetail->save($insertArr);           
+                
+                echo "Success";
+                exit;
+
+                }else{
+                    echo 'error1';
+                    exit; 
+
+                }
+            
+        }else{
+            echo 'error';
+            exit;
+        }        
+        
+    }
+    
     
     
     /**

@@ -1,4 +1,6 @@
-
+<?php
+        debug(__('National Top 100',true));
+?>
 						
 						<section class="news">
 							<div class="top-100">
@@ -122,51 +124,26 @@
                                                                                                     <?php if($this->Session->read("patron")){ ?> 
 														<a class="add-to-playlist-button" href="#"></a>
 														<div class="wishlist-popover">
-                                                                                                                    <?php echo $this->Queue->getQueuesList($this->Session->read('patron')); ?>
-                                                                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-															<a class="add-to-playlist" href="#">Add To Queue</a>
+                                                                                                <?php if( $this->Session->read('library_type') == 2 ){
+                                                                                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"],$nationalTopDownload[$i]["Albums"]["ProdID"],$nationalTopDownload[$i]["Albums"]["provider_type"]); ?>
+                                                                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
                                                                                                 <?php } ?>
 														
 
                                                                                                                     <?php
                                                                                                                     
-                                                                                                                    $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
+                                                                                                                        $wishlistInfo = $wishlist->getWishlistData($nationalTopDownload[$i]["Song"]["ProdID"]);
 
-                                                                                                                    if($wishlistInfo == 'Added to Wishlist') {
-                                                                                                                    ?> 
-                                                                                                                            <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                                                                                    <?php 
-                                                                                                                    } else { 
+                                                                                                                        echo $wishlist->getWishListMarkup($wishlistInfo,$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"]);    
                                                                                                                     ?>
-                                                                                                                            <span class="beforeClick" id="wishlist<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>","<?php echo $nationalTopDownload[$i]["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                                                                            <span class="afterClick" id="downloading_<?php echo $nationalTopDownload[$i]["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                                                                                    <?php	
-                                                                                                                    }
-
-                                                                                                                    ?>
-
-
-
-
-
-
-
-
-
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
+                                                                                                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
 													</div>
 
                                                                                                     <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 25 ) {
-                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 25)) . "..";
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 35 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 35)) . "..";
                                                                                                     } else {
                                                                                                             $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
                                                                                                     }
@@ -174,8 +151,8 @@
 
 
                                                                                                     <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 25 ) {
-                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 25)) . "..";
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 35 ) {
+                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 35)) . "..";
                                                                                                     } else {
                                                                                                             $artistText = $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']);
                                                                                                     }
@@ -216,7 +193,7 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
+														<a href="javascript:void(0);"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -349,7 +326,7 @@
                                                                                                 ?>
 													<div class="song-title">
 													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
-                                                                                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]["Video"]["ProdID"]; ?>"><?php echo $songTitle;?></a>
+                                                                                                        <a href="javascript:void(0);"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
@@ -369,7 +346,7 @@
 							</div>
 							<div class="featured">
 								<header>
-									<h3><?php echo __('Featured', true); ?></h3>
+									<h3>Featured</h3>
 								</header>
 								<div class="featured-grid horiz-scroll">
 									<ul style="width:3690px;">
@@ -422,7 +399,7 @@
 							</div><!-- end .featured -->
 							<div class="coming-soon">
 								<header class="clearfix">
-									<h3><?php echo __('Coming Soon', true); ?></h3>
+									<h3>Coming Soon</h3>
 									
 	
 								</header>
@@ -528,7 +505,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+													<a href="javascript:void(0);">
                                                                                                         <img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
@@ -547,7 +524,7 @@
 												</div>
 												<div class="video-title">
 
-                                                                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
+                                                                                                        <a href="javascript:void(0);">
                                                                                                             <?php
                                                                                                                     if(strlen($value['Video']['VideoTitle'])>20)
                                                                                                                     echo substr($value['Video']['VideoTitle'],0,20)."..."; 
@@ -594,7 +571,7 @@
 							
 							<div class="whats-happening">
 								<header>
-									<h3><?php echo __("What's Happening", true); ?></h3>
+									<h3>What's Happening</h3>
 									<!--
 									<div class="whats-happening-see-all">
 										<a href="#">View All</a>

@@ -3226,7 +3226,7 @@ STR;
     */
     function addToWishlist(){
        
-        
+        Configure::write('debug', 0);
         if( $this->Session->read('library') && $this->Session->read('patron') 
                 && isset($_REQUEST['prodId']) && isset($_REQUEST['provider']) ){
             
