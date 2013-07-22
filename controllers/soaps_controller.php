@@ -5397,7 +5397,7 @@ STR;
     
     $data = $this->QueueDetail->find('all',
       array(
-        'fields' =>  array('QueueList.queue_name', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Songs.FullLength_Duration', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'Product.pid as AlbumProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
+        'fields' =>  array('QueueList.queue_name', 'Songs.SongTitle', 'Songs.ProdID', 'Songs.provider_type', 'Songs.Title as STitle', 'Songs.ArtistText',  'Songs.Artist', 'Songs.FullLength_Duration', 'Albums.AlbumTitle', 'Albums.Title as ATitle', 'AProduct.pid as AlbumProdID', 'SProduct.pid as SongProdID', 'AlbumFile.CdnPath as ACdnPath', 'AlbumFile.SourceURL as ASourceURL', 'SongFile.CdnPath as SCdnPath', 'SongFile.SaveAsName as SSaveAsName'),
         'joins' => array(
           array(
             'type' => 'INNER',
@@ -5423,9 +5423,16 @@ STR;
           array(
             'type' => 'INNER',
             'table' => 'PRODUCT',
-            'alias' => 'Product',
+            'alias' => 'AProduct',
             'foreignKey' => false,
-            'conditions' => array('Albums.ProdID = Product.ProdID', 'Albums.provider_type = Product.provider_type'),        
+            'conditions' => array('Albums.ProdID = AProduct.ProdID', 'Albums.provider_type = AProduct.provider_type'),        
+          ),
+          array(
+            'type' => 'INNER',
+            'table' => 'PRODUCT',
+            'alias' => 'SProduct',
+            'foreignKey' => false,
+            'conditions' => array('Songs.ProdID = SProduct.ProdID', 'Songs.provider_type = SProduct.provider_type'),        
           ),
           array(
             'type' => 'INNER',
@@ -5461,7 +5468,8 @@ STR;
           $obj->QueueSongArtistText          = $data[$cnt]['Songs']['ArtistText'];          
           $obj->QueueSongArtist              = $data[$cnt]['Songs']['Artist'];
           $obj->QueueSongFullLengthURL       = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen '.$data[$cnt]['SongFile']['SCdnPath']."/".$data[$cnt]['SongFile']['SSaveAsName']);
-          $obj->QueueAlbumProductID          = $data[$cnt]['Product']['AlbumProdID'];
+          $obj->QueueAlbumProdID             = $data[$cnt]['AProduct']['AlbumProdID'];
+          $obj->QueueSongProdID              = $data[$cnt]['SProduct']['SongProdID'];
           $obj->QueueAlbumTitle              = $data[$cnt]['Albums']['ATitle'];
           $obj->QueueAlbumAlbumTitle         = $data[$cnt]['Albums']['AlbumTitle'];
           $obj->QueueAlbumImage              = Configure::read('App.Music_Path').shell_exec('perl '.ROOT.DS.APP_DIR.DS.WEBROOT_DIR.DS.'files'.DS.'tokengen ' . $data[$cnt]['AlbumFile']['ACdnPath']."/".$data[$cnt]['AlbumFile']['ASourceURL']);
