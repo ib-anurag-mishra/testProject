@@ -1,4 +1,6 @@
-
+<?php
+        echo "Language: ".$this->Session->read('Config.language');
+?>
 						
 						<section class="news">
 							<div class="top-100">
