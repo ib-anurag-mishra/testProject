@@ -232,7 +232,7 @@
                                                                                 </span>
                                             <?php
 
-                                                         }
+                                                            }
                                             ?>
 									<a class="add-to-playlist-button" href="#"></a>
 									<div class="wishlist-popover">
