@@ -188,10 +188,6 @@ msgstr ""
 msgid "Advanced Search"
 msgstr ""
 
-#: \elements\navigation.ctp:247
-msgid "Music Videos"
-msgstr "MUSIC VIDEOS"
-
 #: \genres\index.ctp:113;116
 #: \homes\search.ctp:130;133
 msgid "IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."
