@@ -1,4 +1,6 @@
-
+<?php
+        debug(__('National Top 100',true));
+?>
 						
 						<section class="news">
 							<div class="top-100">
