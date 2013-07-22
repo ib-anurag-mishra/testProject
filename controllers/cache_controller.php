@@ -1399,7 +1399,7 @@ STR;
         'limit' => 100
         ));
         
-        
+        print_r($queueData);
         //freegal Query Cache set
         if ((count($queueData) < 1) || ($queueData === false)) {           
             Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
@@ -1409,8 +1409,8 @@ STR;
             Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
             //library top 10 cache set
-            $this->log("Freegal Defaut Queues returns null", "cache");
-            echo "<br />Freegal Defaut Queues returns null <br />";
+            $this->log("Freegal Defaut Queues cache set", "cache");
+            echo "<br />Freegal Defaut Queues cache set <br />";
         }
         
         $defatulQueryList = Cache::read("defaultqueuelist");
