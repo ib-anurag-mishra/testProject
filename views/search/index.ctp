@@ -642,7 +642,10 @@ if ($type != 'all') {
             </section>
     <?php /*     * *******************Album Block End****************************** */ ?>
 
-    <?php /*     * *******************Artist Block Started****************************** */ ?>
+    
+        </section>
+        <section class="advanced-search-results row-2 clearfix">
+<?php /*     * *******************Artist Block Started****************************** */ ?>
             <section class="advanced-artists">
                 <header class="clearfix">
                     <h5><?php __("Artists"); ?></h5>
@@ -668,8 +671,7 @@ if ($type != 'all') {
 
             </section>
 <?php /*********************Artist Block End****************************** */ ?>       
-        </section>
-        <section class="advanced-search-results row-2 clearfix">
+            
 <?php /*********************Composer Block Started****************************** */ ?>			
             <section class="advanced-composers">
                 <header class="clearfix">
@@ -752,7 +754,7 @@ if ($type != 'all') {
             <?php /*             * *******************Label Block End****************************** */ ?>
 
             <?php /*             * *******************Video Block Started****************************** */ ?>            
-            <section class="advanced-labels">
+<!--            <section class="advanced-labels">
                     <header class="clearfix">
                         <h5><?php __("Videos"); ?></h5>
                         <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=video">See more videos</a></h6>
@@ -779,7 +781,7 @@ if ($type != 'all') {
             <?php /*             * *******************Video Block End****************************** */ ?>
 
 
-        </section>
+        </section> -->
         <?php } 
         
         if($type != 'video') {
