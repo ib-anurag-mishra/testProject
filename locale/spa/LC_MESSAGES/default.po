@@ -487,6 +487,6 @@ msgstr "Apellido"
 msgid "Save"
 msgstr "Salvar"
 
-#: \users\my_account.ctp:29
+#: \homes\index.ctp:6
 msgid "National Top 100"
 msgstr "Nacional Top 100"
