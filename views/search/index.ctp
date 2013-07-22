@@ -961,8 +961,7 @@ if (isset($type)) {
 			<section class="tracklist-header clearfix">
 				<span class="artist">Artist</span>
                 <span class="album">Album</span>
-                <span class="video-filter-button">Videos</span>
-                <span class="song">Song</span>
+                <span class="video-filter-button">Video</span>
                 <span class="download">Download</span>
 			</section>
 			<div class="video-tracklist-shadow-container">
@@ -1007,7 +1006,6 @@ if (isset($type)) {
 						</div>
 						-->
 						<div class="album"><a href="#">Blown Away</a></div>
-						<div class="song">Blown Away</div>
 						<div class="download"><a href="#">Download</a></div>
 						
 						
