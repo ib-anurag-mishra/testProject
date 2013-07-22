@@ -458,9 +458,11 @@ if ($this->Session->read('Config.language') == 'en') {
                                                                 </div>
                                                                 <br class="clr">
                                                             </div>
-                                                            <?php echo $this->element('footer'); ?>
+                                                            <?php echo $this->element('footer'); 
+                                                           
+                                                            ?>
                                                             
                                                         </div>
-                                        
+                                        <?php  echo 147; ?>
                                                         </body>
                                                         </html>

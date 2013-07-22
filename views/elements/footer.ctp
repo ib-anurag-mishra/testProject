@@ -76,7 +76,7 @@
 			</footer>
 	
 	
-  <?php echo 123;?>      
+    
         
 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mep-feature-playlist-custom.css" />
 <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/js/mediaelement/mediaelementplayer-custom.css" />
