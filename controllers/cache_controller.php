@@ -1399,7 +1399,7 @@ STR;
         'limit' => 100
         ));
         
-        print_r($queueData);
+        //print_r($queueData);
         //freegal Query Cache set
         if ((count($queueData) < 1) || ($queueData === false)) { 
             echo 147;
