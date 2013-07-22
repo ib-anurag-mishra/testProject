@@ -50,8 +50,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-        /*
-                
+                       
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -1383,8 +1382,9 @@ STR;
             }
             //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
         }
-        */
+      
    
+        /*
         //--------------------------------Default Freegal Queues Start----------------------------------------------------
                
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -1415,9 +1415,12 @@ STR;
             echo "<br />Freegal Defaut Queues cache set <br />";
         }
         
-        $defatulQueryList = Cache::read("defaultqueuelist");
-        
-        print_r($defaultQueryList);
+        foreach($queueData as $value){
+            
+            
+        }
+          
+        */
         
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
@@ -1431,7 +1434,7 @@ STR;
        
         
         
-        /*
+        
         
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
@@ -1866,7 +1869,7 @@ STR;
            
         }
         
-        */
+       
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
