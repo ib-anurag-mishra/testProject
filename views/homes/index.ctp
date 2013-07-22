@@ -1,11 +1,9 @@
-<?php
-        echo "Language: ".$this->Session->read('Config.language');
-?>
+
 						
 						<section class="news">
 							<div class="top-100">
 								<header>
-									<h3><?php __("National Top 100"); ?></h3>
+									<h3><?php __('National Top 100', true); ?></h3>
 									
 								</header>
 								<nav class="top-100-nav">
