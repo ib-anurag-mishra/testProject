@@ -27,7 +27,7 @@ class VideosController extends AppController {
         /*if(empty($territory)){
             $territory = 'US';
         }*/
-        $this->layout = 'home';
+        
         $prefix = strtolower($territory)."_";
         $featuredVideos = array();
         $topDownloads = array();
