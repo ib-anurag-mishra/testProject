@@ -11,16 +11,16 @@
 					
 					<img src="<? echo $this->webroot; ?>app/webroot/img/playlist/album-cover.jpg" alt="album-cover" width="155" height="155" />
 					<a class="add-to-playlist-button" href="#"></a>
-                                        <?php $queueList = $this->Queue->getQueuesList($this->Session->read('patron'));?>
+                                        <?php //$queueList = $this->Queue->getQueuesList($this->Session->read('patron'));?>
 					<div class="wishlist-popover">
 						<div class="playlist-options">
 							<ul>
 								<li><a href="#" class="create-new-queue">Create New Queue</a></li>
-                                                                <?php if(!empty($queueList)){foreach($queueList as $key => $value){ ?>
-								<li><a href="#"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                <!--<?php //if(!empty($queueList)){foreach($queueList as $key => $value){ ?>
+								<li><a href="#"><?php //echo $value['QueueList']['queue_name']; ?></a></li>
 								<?php 
-                                                                    }
-                                                                } ?>
+                                                                    //}
+                                                                //} ?>-->
 							</ul>
 						</div>			
 						<a class="remove-songs" href="#">Download Song</a>
