@@ -40,7 +40,7 @@
                                                 <?php
 
                                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
-                                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$VideosData[0]["Video"]["provider_type"]);
                                                     echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                 ?>                                                    
                                             </div>
@@ -113,7 +113,7 @@
                                                                                     <?php
 
                                                                                         $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
-                                                                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                                                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$VideosData[0]["Video"]["provider_type"]);
                                                                                         echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                                                     ?> 
 											
@@ -203,7 +203,7 @@
                                                                             <?php
 
                                                                                 $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
-                                                                                echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                                                                echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$VideosData[0]["Video"]["provider_type"]);
                                                                                 echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                                             ?>
 										
