@@ -61,7 +61,7 @@
                                                                                                 shareButtons: "twitter-tweet, facebook",
                                                                                                 buttonsStyle:'fullLogo',
                                                                                                 showCounts: 'none', 
-                                                                                                containerID: 'divButtons_'+'<?php echo $i; ?>' // location of the Share Bar plugin
+                                                                                                containerID: 'divButtons_<?php echo $i; ?>' // location of the Share Bar plugin
                                                                                         }
 
                                                                                         // Load Share Bar plugin
