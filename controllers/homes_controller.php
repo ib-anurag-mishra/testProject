@@ -543,7 +543,7 @@ STR;
             */ 
              $territory = $this->Session->read('territory');
                
-             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+            // if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
                 
                  $this->Song->recursive = 2;
@@ -591,7 +591,7 @@ STR;
                             PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
-                    GROUP BY Song.ProdID
+                    GROUP BY Song.ReferenceID
                     ORDER BY Country.SalesDate ASC
                     LIMIT 20
 	  	
@@ -606,7 +606,7 @@ STR;
                         }
                     
                 }
-                else    //  Show From Cache
+               // else    //  Show From Cache
                 {                  
                     
                     $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
