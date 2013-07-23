@@ -92,7 +92,7 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
-        $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
+        $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
         $this->set('queue_list_array',$queue_list_array); 
         $this->set('queue_id',$this->params['pass'][0]); 
     }
@@ -108,7 +108,7 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
-        $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
+        $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
         //echo 456;
         //Find Total Duration
         $total_seconds = 0;
