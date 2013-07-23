@@ -1,7 +1,4 @@
-<?php
-        debug(__('National Top 100',true));
-?>
-						
+					
 						<section class="news">
 							<div class="top-100">
 								<header>
@@ -40,6 +37,41 @@
 											if($j==5){
 												break;
 											}
+                                                                                        
+                                                                                        ?>
+                                                                                    
+                                                                                    
+                                                                                    <script>
+                                                                                        // Define an image media item:
+                                                                                        var image = {
+                                                                                                type: 'image',
+                                                                                                src: 'http://a.vimeocdn.com/portraits/defaults/d.75.jpg',
+                                                                                                href: 'http://vimeo.com/24400434'
+                                                                                                }
+
+                                                                                        // Define a UserAction onject
+                                                                                        var ua = new gigya.socialize.UserAction(); 
+                                                                                        ua.setLinkBack("http://vimeo.com/24400434"); 
+                                                                                        ua.setTitle(<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>);
+                                                                                        ua.addMediaItem(image);
+
+                                                                                        // Define Share Bar plugin's Parameters	
+                                                                                        var shareBarParams ={ 
+                                                                                                userAction:ua,
+                                                                                                shareButtons: "twitter-tweet, facebook",
+                                                                                                buttonsStyle:'fullLogo',
+                                                                                                showCounts: 'none', 
+                                                                                                containerID: 'divButtons_<?php echo $i; ?>' // location of the Share Bar plugin
+                                                                                        }
+
+                                                                                        // Load Share Bar plugin
+                                                                                        gigya.socialize.showShareBarUI(shareBarParams);
+                                                                                </script>
+                                                                                    
+                                                                                    
+                                                                                    <?php
+                                                                                        
+                                                                                        
 											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
                                                                                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
@@ -136,7 +168,11 @@
 
                                                                                                                         echo $wishlist->getWishListMarkup($wishlistInfo,$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"]);    
                                                                                                                     ?>
-                                                                                                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                                                                            <div class="share clearfix">
+                                                                                                            <p>Share via</p>
+                                                                                                           <span id="divButtons_<?php echo $i; ?>""></span>
+                                                                                                            </div>
+                                                                                                                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
 													</div>
