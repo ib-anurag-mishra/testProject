@@ -59,35 +59,12 @@
                                 <!-- <a class="featured-video-download-now-button" href="#"><?php echo __('Download Now'); ?></a> -->
                                 <a class="add-to-playlist-button" href="#"></a>
                                 <div class="wishlist-popover">
-
-
-
                                 <?php
 
-                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
-
-                                if($wishlistInfo == 'Added to Wishlist') {
-                                ?> 
-                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                <?php 
-                                } else { 
+                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($featureVideo["FeaturedVideo"]["ProdID"]);
+                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$featureVideo["FeaturedVideo"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                    echo $this->Queue->getSocialNetworkinglinksMarkup();
                                 ?>
-                                        <span class="beforeClick" id="video_wishlist<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>","<?php echo $featureVideo["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                        <span class="afterClick" id="downloading_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                <?php	
-                                }
-
-                                ?>
-
-
-
-
-                                    <div class="share clearfix">
-                                        <p><?php echo __('Share via'); ?></p>
-                                        <a class="facebook" href="#"></a>
-                                        <a class="twitter" href="#"></a>
-                                    </div>
-
                                 </div>
                                 <?php
                                 } else {
@@ -191,30 +168,10 @@ foreach($topVideoDownloads as $topDownload)
                             <?php
                                }
                             ?>					
-
-                        <?php
-
-                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
-
-                                if($wishlistInfo == 'Added to Wishlist') {
-                                ?> 
-                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                <?php 
-                                } else { 
-                                ?>
-                                        <span class="beforeClick" id="video_wishlist<?php echo $topDownload["Video"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $topDownload["Video"]["ProdID"]; ?>","<?php echo $topDownload["Video"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                        <span class="afterClick" id="downloading_<?php echo $topDownload["Video"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                <?php	
-                                }
-
-                                ?>
-
-
-                                <div class="share clearfix">
-                                    <p>Share via</p>
-                                    <a class="facebook" href="#"></a>
-                                    <a class="twitter" href="#"></a>
-                                </div>
+                                <?php
+                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
+                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                 <?php
                                 } else {
                                 ?>

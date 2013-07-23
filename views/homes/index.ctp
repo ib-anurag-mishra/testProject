@@ -170,10 +170,10 @@
 
                                                                                                                         echo $wishlist->getWishListMarkup($wishlistInfo,$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"]);    
                                                                                                                     ?>
-                                                                                                            <div class="share clearfix">
+                                                                                                          <!--  <div class="share clearfix">
                                                                                                             <p>Share via</p>
-                                                                                                          <!--  <span id="divButtons_<?php echo $i; ?>""></span> -->
-                                                                                                            </div>
+                                                                                                           <span id="divButtons_<?php //echo $i; ?>""></span> 
+                                                                                                            </div> -->
                                                                                                                     <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
