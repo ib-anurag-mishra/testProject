@@ -168,7 +168,11 @@
 
                                                                                                                         echo $wishlist->getWishListMarkup($wishlistInfo,$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"]);    
                                                                                                                     ?>
-                                                                                                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                                                                            <div class="share clearfix">
+                                                                                                            <p>Share via</p>
+                                                                                                           <span id="divButtons_<?php echo $i; ?>""></span>
+                                                                                                            </div>
+                                                                                                                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
 													</div>
@@ -333,9 +337,8 @@
                                                         									
 															<div class="share clearfix">
 																<p>Share via</p>
-                                                                                                                                <span id="divButtons_<?php echo $i; ?>"></span>
-																<!-- <a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>-->
+																<a class="facebook" href="#"></a>
+																<a class="twitter" href="#"></a>
 															</div>
 															
 														</div>
