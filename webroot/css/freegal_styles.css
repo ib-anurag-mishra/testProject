@@ -355,3 +355,13 @@ div.paging span a, div.paging a {
     text-align: center !important;
     top: 0 !important;
 }
+
+.ajaxmessage44{
+    background: none repeat scroll 0 0 #52C6EC;
+    padding: 10px;
+    position: relative;
+    top: 16px;
+    font-weight: bold;
+    display: none;
+    text-align: center;
+}
