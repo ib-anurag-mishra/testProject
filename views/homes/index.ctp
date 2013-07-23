@@ -43,7 +43,7 @@
                                                                                     
                                                                                     <script>
                                                                                         // Define an image media item:
-                                                                                        var image = {
+                                                                                  /*      var image = {
                                                                                                 type: 'image',
                                                                                                 src: 'http://a.vimeocdn.com/portraits/defaults/d.75.jpg',
                                                                                                 href: 'http://vimeo.com/24400434'
@@ -51,8 +51,10 @@
 
                                                                                         // Define a UserAction onject
                                                                                         var ua = new gigya.socialize.UserAction(); 
-                                                                                        ua.setLinkBack("http://vimeo.com/24400434"); 
-                                                                                        ua.setTitle(<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>);
+                                                                                       // ua.setLinkBack("/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"); 
+                                                                                        ua.setLinkBack("http://vimeo.com/24400434");
+                                                                                        ua.setTitle('<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>');
+                                                                                        ua.setDescription("This is my Description<?php echo $i; ?>");
                                                                                         ua.addMediaItem(image);
 
                                                                                         // Define Share Bar plugin's Parameters	
@@ -65,7 +67,7 @@
                                                                                         }
 
                                                                                         // Load Share Bar plugin
-                                                                                        gigya.socialize.showShareBarUI(shareBarParams);
+                                                                                        gigya.socialize.showShareBarUI(shareBarParams); */
                                                                                 </script>
                                                                                     
                                                                                     
@@ -170,9 +172,9 @@
                                                                                                                     ?>
                                                                                                             <div class="share clearfix">
                                                                                                             <p>Share via</p>
-                                                                                                           <span id="divButtons_<?php echo $i; ?>""></span>
+                                                                                                          <!--  <span id="divButtons_<?php echo $i; ?>""></span> -->
                                                                                                             </div>
-                                                                                                                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                                                                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
 													</div>
