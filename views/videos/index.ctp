@@ -163,10 +163,10 @@ foreach($topVideoDownloads as $topDownload)
                         <div class="video-cover-container">
                             <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
-                            <a class="add-to-wishlist" href="#" style="padding:0px 0px 0px 108px;" ><?php __("Login");?></a>
+                            <a class="add-to-playlist-button" href="#"></a>
                             <div class="wishlist-popover">
                                 <?php
-                                if($this->Session->read('patron')) { 
+                                if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
 
                                 ?>
