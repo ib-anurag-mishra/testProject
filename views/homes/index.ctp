@@ -51,7 +51,8 @@
 
                                                                                         // Define a UserAction onject
                                                                                         var ua = new gigya.socialize.UserAction(); 
-                                                                                        ua.setLinkBack("/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"); 
+                                                                                       // ua.setLinkBack("/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"); 
+                                                                                        ua.setLinkBack("http://vimeo.com/24400434");
                                                                                         ua.setTitle('<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>');
                                                                                         ua.setDescription("This is my Description<?php echo $i; ?>");
                                                                                         ua.addMediaItem(image);
