@@ -335,7 +335,7 @@
 																<p>Share via</p>
                                                                                                                                 <span id="divButtons_<?php echo $i; ?>"></span>
 																<!-- <a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a> -->
+																<a class="twitter" href="#"></a>-->
 															</div>
 															
 														</div>
