@@ -538,14 +538,12 @@ img {
 			height:             0;
 			margin-top:         10px;
 			margin-right:       10px;
+                        display: none;
 			
 
 			.transition(height 1s);
-			&.active {
-				
-				height:             700px;
-				.transition(height 500ms);
-				
+			&.active {				
+				display: block;				
 			}
 		}
 		

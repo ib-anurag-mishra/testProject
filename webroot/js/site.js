@@ -358,12 +358,10 @@ $(function() {
 	
 	announcements.on('click',function(e){
 		e.preventDefault();
-		if($(poll).hasClass('active')) {
-                        $(poll).hide();
+		if($(poll).hasClass('active')) {                        
 			$(poll).removeClass('active');
-		} else {
-                         $(poll).show();
-			//$(poll).addClass('active');
+		} else {                         
+			$(poll).addClass('active');
                         
 		}
 	});
