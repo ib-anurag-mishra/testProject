@@ -852,8 +852,8 @@ STR;
 		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
                 //print_r($libDownload = Cache::read("lib".$libId));
                    // if(1)
-//                    if (($libDownload = Cache::read("lib".$libId)) === false)
-//                    {
+                    if (($libDownload = Cache::read("lib".$libId)) === false)
+                    {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -984,11 +984,11 @@ STR;
 			}
 
 			Cache::write("lib".$libId, $topDownload_songs);
-//		} 
-//                else
-//               {
-//                        $topDownload_songs = Cache::read("lib".$libId);
-//                }
+		} 
+                else
+               {
+                        $topDownload_songs = Cache::read("lib".$libId);
+                }
 		
 		$this->set('top_10_songs',$topDownload_songs);
                 
@@ -999,8 +999,8 @@ STR;
                 $ids_provider_type_album = '';
 		
                     //if(1)
-//                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
-//                    {
+                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
                         if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
@@ -1133,11 +1133,11 @@ STR;
 			}
 
 			Cache::write("lib_album".$libId, $topDownload_albums);
-//		}
-//                else
-//                { 
-//                    $topDownload_albums = Cache::read("lib_album".$libId);
-//                }
+		}
+                else
+                { 
+                    $topDownload_albums = Cache::read("lib_album".$libId);
+                }
 		$this->set('topDownload_albums',$topDownload_albums); 
                 
 //                echo "<pre>";
