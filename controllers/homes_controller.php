@@ -543,7 +543,7 @@ STR;
             */ 
              $territory = $this->Session->read('territory');
                
-             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+            // if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
                 
                  $this->Song->recursive = 2;
@@ -606,7 +606,7 @@ STR;
                         }
                     
                 }
-                else    //  Show From Cache
+               // else    //  Show From Cache
                 {                  
                     
                     $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
