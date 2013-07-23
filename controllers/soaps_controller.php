@@ -766,13 +766,13 @@ class SoapsController extends AppController {
 						LEFT JOIN
 					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
 						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
 						LEFT JOIN
-					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type)
+					$breakdown_table AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$library_territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
 				WHERE
-					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$library_territory') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+					( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))  )  AND 1 = 1
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC
