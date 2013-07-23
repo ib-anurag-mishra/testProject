@@ -52,7 +52,7 @@
                                                                                         // Define a UserAction onject
                                                                                         var ua = new gigya.socialize.UserAction(); 
                                                                                         ua.setLinkBack("http://vimeo.com/24400434"); 
-                                                                                        ua.setTitle(<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>);
+                                                                                        ua.setTitle('<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>');
                                                                                         ua.addMediaItem(image);
 
                                                                                         // Define Share Bar plugin's Parameters	
