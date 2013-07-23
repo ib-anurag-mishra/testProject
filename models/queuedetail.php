@@ -9,7 +9,7 @@ class QueueDetail extends AppModel
 {
 	var $name = 'QueueDetail';
 	var $useTable = 'queuelist_details';
-        var $primaryKey = 'Pdid';
+        var $primaryKey = 'id';
 
 //	var $belongsTo = array(
 //		'User' => array(

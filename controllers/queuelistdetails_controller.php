@@ -10,7 +10,7 @@ class QueueListDetailsController extends AppController{
     
     var $name = 'QueuesListDetails';
     var $layout = 'home';
-    var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist',);
+    var $helpers = array( 'Html', 'Form', 'Session', 'Wishlist','Queue');
     var $components = array('Session', 'Auth', 'Acl' ,'Queue', 'Downloads');
     var $uses = array( 'QueueDetail','User','Album','Song', 'Wishlist','QueueList');
     
@@ -59,8 +59,8 @@ class QueueListDetailsController extends AppController{
         else if($_POST['hid_action']=='delete_queue')
         {                         
               if(!empty($_POST["dqPlid"])){
-                    $delqueueDetail = $this->QueueDetail->deleteAll(array('id' => $_POST["dqPlid"]), false);
-                    $delqueue = $this->QueueList->deleteAll(array('Plid' => $_POST["dqPlid"]), false);
+                    $delqueueDetail = $this->QueueDetail->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
+                    $delqueue = $this->QueueList->deleteAll(array('queue_id' => $_POST["dqPlid"]), false);
 
                     if( (true === $delqueueDetail) && (true === $delqueue) ) {
                         $this->Session ->setFlash('Queue has been deleted successfully', 'modal', array( 'class' => 'queue success' ));
@@ -108,11 +108,8 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
-
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0], $patId);
         //echo 456;
-
-
         //Find Total Duration
         $total_seconds = 0;
 

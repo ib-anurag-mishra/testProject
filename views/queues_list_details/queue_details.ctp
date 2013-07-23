@@ -93,26 +93,17 @@
 
                                                          }
                                                  ?>
-							<a class="add-to-playlist" href="#">Add To Queue</a>
+                                                        <?php if( $this->Session->read('library_type') == 2 ){
+                                                                    echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Songs"]["ProdID"],$value["Songs"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
+                                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                        <?php } ?>
 							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
-
                                                          <?php
-                                                                                                                    
-                                                                    $wishlistInfo = $wishlist->getWishlistData($value["Songs"]["ProdID"]);
-                                                                    
-                                                                    if($wishlistInfo == 'Added to Wishlist') {
-                                                                    ?> 
-                                                                            <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                                    <?php 
-                                                                    } else { 
-                                                                    ?>
-                                                                            <span class="beforeClick" id="wishlist<?php echo $value["Songs"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Songs"]["ProdID"]; ?>","<?php echo $value["Songs"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                            <span class="afterClick" id="downloading_<?php echo $value["Songs"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                                    <?php	
-                                                                    }
+                                                            $wishlistInfo = $wishlist->getWishlistData($value["Songs"]["ProdID"]);
 
-                                                       ?>
-							<!--<a class="remove-song" href="#">Remove Song</a> -->
+                                                            echo $wishlist->getWishListMarkup($wishlistInfo,$value["Songs"]["ProdID"],$value["Songs"]["provider_type"]);    
+                                                         ?>
+                                                        <!--<a class="remove-song" href="#">Remove Song</a> -->
                                                         <span class="top-100-download-now-button">
                                                         <form method="Post" name="form_rename<?php echo $value["Songs"]["ProdID"]; ?>" action="/queuelistdetails/index/<?php echo $queue_id; ?>" class="suggest_text1">
                                                         <input type="hidden" name="Pdid" value="<?php echo $value["QueueDetail"]["id"];?>" />
@@ -122,25 +113,7 @@
                                                         <a  href='javascript:document.form_rename<?php echo $value["Songs"]["ProdID"]; ?>.submit()' ><label class="dload" style="width:120px;cursor:pointer;"><?php __('Remove Song');?></label></a>
                                                         </span>
                                                         </form>
-
-							<div class="share clearfix">
-								<p>Share via</p>
-								<a class="facebook" href="#"></a>
-								<a class="twitter" href="#"></a>
-							</div>
-							<div class="playlist-options">
-								<ul>
-									<li><a href="#" class="create-new-queue">Create New Queue</a></li>
-									<li><a href="#">Queue 1</a></li>
-									<li><a href="#">Queue 2</a></li>
-									<li><a href="#">Queue 3</a></li>
-									<li><a href="#">Queue 4</a></li>
-									<li><a href="#">Queue 5</a></li>
-									
-									
-								</ul>
-							</div>
-						
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 						</div>
 					</div>
 					<?php 
