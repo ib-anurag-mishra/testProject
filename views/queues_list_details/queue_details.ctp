@@ -67,9 +67,20 @@
 
                                             ?>
 						<div class="song-title"><?php echo $value['Songs']['SongTitle']?></div>
+                                                <?php											
+                                                if (strlen($value['Songs']['ArtistText']) >= 30 ) {
+                                                        $artistText = $this->getTextEncode(substr($value['Songs']['ArtistText'], 0, 30)) . "..";
+                                                } else {
+                                                        $artistText = $this->getTextEncode($value['Songs']['ArtistText']);
+                                                }
+                                                ?>                                                
 						<a class="add-to-wishlist-button" href="#"></a>
-						<div class="album-title"><a href="#"><?php echo $value['Albums']['AlbumTitle']?></a></div>
-						<div class="artist-name"><a href="#"><?php echo $value['Songs']['ArtistText']?></a></div>
+						<div class="album-title">
+                                                    <a href="/artists/album/"<?php base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                </div>
+						<div class="artist-name">
+                                                    <a href="/artists/view/<?=base64_encode($value['Songs']['ArtistText']);?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
+                                                </div>
 						<div class="time"><?php echo $value['Songs']['FullLength_Duration']?></div>
 						<div class="wishlist-popover">
 								
