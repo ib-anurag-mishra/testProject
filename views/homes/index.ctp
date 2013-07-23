@@ -82,7 +82,7 @@
 											<li>
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
-														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>"  width="250" height="250" /></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" alt="<?php echo $nationalTopDownload[$i]['Song']['ArtistText']. ' - '.$nationalTopDownload[$i]['Song']['SongTitle']; ?>" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>"  width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
