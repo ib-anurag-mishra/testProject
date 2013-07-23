@@ -77,8 +77,9 @@ class QueuesController extends AppController{
                 $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
                 $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
                 //insert into queuedetail table
-                $this->QueueDetail->save($insertArr);           
-                
+                $this->QueueDetail->setDataSource('master');
+                $this->QueueDetail->save($insertArr);
+                $this->QueueDetail->setDataSource('default');
                 echo "Success";
                 exit;
 
