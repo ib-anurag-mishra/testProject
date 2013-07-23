@@ -43,7 +43,7 @@
                                                                                     
                                                                                     <script>
                                                                                         // Define an image media item:
-                                                                                        var image = {
+                                                                                  /*      var image = {
                                                                                                 type: 'image',
                                                                                                 src: 'http://a.vimeocdn.com/portraits/defaults/d.75.jpg',
                                                                                                 href: 'http://vimeo.com/24400434'
@@ -67,7 +67,7 @@
                                                                                         }
 
                                                                                         // Load Share Bar plugin
-                                                                                        gigya.socialize.showShareBarUI(shareBarParams);
+                                                                                        gigya.socialize.showShareBarUI(shareBarParams); */
                                                                                 </script>
                                                                                     
                                                                                     
@@ -172,9 +172,9 @@
                                                                                                                     ?>
                                                                                                             <div class="share clearfix">
                                                                                                             <p>Share via</p>
-                                                                                                           <span id="divButtons_<?php echo $i; ?>""></span>
+                                                                                                          <!--  <span id="divButtons_<?php echo $i; ?>""></span> -->
                                                                                                             </div>
-                                                                                                                    <?php //echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                                                                                                    <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
 													</div>
