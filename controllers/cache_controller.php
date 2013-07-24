@@ -1394,15 +1394,15 @@ STR;
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
         }
       
-   */
+   
        
-        //--------------------------------Default Freegal Queues Start----------------------------------------------------
-               
+        //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
         //Unbinded User model
         $this->QueueList->unbindModel(
             array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
         );
+        //fetched the default list
         $queueData = $this->QueueList->find('all', array(
         'conditions' => $cond,
         'fields' => array('queue_id','queue_name'),
@@ -1424,6 +1424,7 @@ STR;
             echo "<br />Freegal Defaut Queues cache set <br />";
         }  
         
+        //set the variable for each freegal default queue 
         foreach($queueData as $value){
            $defaultQueueId = $value['QueueList']['queue_id'];
            $defaultQueueName = $value['QueueList']['queue_name'];      
@@ -1432,24 +1433,56 @@ STR;
            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
                 echo "<br /> Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
-            } else {                 
+           } else {                 
                 Cache::write("defaultqueuelistdetails".$defaultQueueId, $eachQueueDetails);       
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
-                echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";
-                
-               
-            } 
-             print_r(Cache::read("defaultqueuelistdetails18"));
-        }  
-      
-        //--------------------------------Default Freegal Queues End----------------------------------------------------
+                echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";              
+           }            
+        }     
+        //--------------------------------Default Freegal Queues End--------------------------------------------------------------
+        */
+        
+        //--------------------------------set each music video in the cache start-------------------------------------------------        
         
         
-        
-        
-        
-        
-        
+       $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
+       
+       foreach($musicVideoRecs as $musicVideoRec){
+           
+           $indiMusicVidID =  $musicVideoRec['Video']['ProdID'];
+           
+           $individualVideoSQL  =
+            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
+            Sample_Files.SaveAsName,
+            Full_Files.CdnPath,
+            Full_Files.SaveAsName,
+            File.CdnPath,
+            File.SourceURL,
+            File.SaveAsName,
+            Sample_Files.FileID
+            FROM video as Video
+            LEFT JOIN
+            File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+            LEFT JOIN
+            File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
+            LEFT JOIN
+            PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
+            INNER JOIN File ON (Video.Image_FileID = File.FileID)
+            Where Video.DownloadStatus = '1' AND Video.ProdID = ".$indiMusicVidID;
+
+           $EachVideosData = $this->Video->query($individualVideoSQL);
+           if ((count($EachVideosData) < 1) || ($EachVideosData === false)) {
+                $this->log("Music video id $indiMusicVidID returns null ", "cache");
+                echo "<br /> Music video id $indiMusicVidID returns null<br />";
+           } else {                 
+                Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);       
+                $this->log("Music video id $indiMusicVidID cache set", "cache");
+                echo "<br />Music video id $indiMusicVidID cache set <br />";              
+           }    
+           print_r(Cache::read("musicVideoDetails".$indiMusicVidID));
+       } 
+       
+       //--------------------------------set each music video in the cache end---------------------------------------------------
         
        
         
@@ -1457,7 +1490,7 @@ STR;
         
        /* 
 
-        //--------------------------------Library Top Ten Start----------------------------------------------------
+        //--------------------------------Library Top Ten Start--------------------------------------------------------------------
 
         $libraryDetails = $this->Library->find('all', array(
             'fields' => array('id', 'library_territory'),
