@@ -1424,7 +1424,8 @@ STR;
         }        
         foreach($queueData as $value){
            $queue_id = $value['QueueList']['queue_id'];           
-           $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);            
+           $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id); 
+           print_r($eachQueueDetails);die;
            Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
         }  
        print_r(Cache::read("defaultqueuelistdetails23"));
