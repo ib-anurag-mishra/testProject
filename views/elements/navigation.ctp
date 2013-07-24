@@ -358,7 +358,6 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php } ?>
                                             <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
-                                                    <li><a href="#" class="sidebar-anchor"><?php __('My Playlists'); ?></a></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
