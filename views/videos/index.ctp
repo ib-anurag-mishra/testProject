@@ -173,6 +173,7 @@ foreach($topVideoDownloads as $topDownload)
                                     $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
                                     echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
                                     echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                </div>
                                 <?php
                                 } else {
                                 ?>
@@ -181,7 +182,7 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 }
                                 ?>
-                            </div>
+                            
 
                         </div>
                         <div class="video-title">
