@@ -38,7 +38,7 @@ Class QueueComponent extends Object
     }
     
     
-    function getQueueDetails($queueID, $pat_Id){
+    function getQueueDetails($queueID){
         $queueDetailList = ClassRegistry::init('QueueDetail');
         $queueDetail = $queueDetailList->find('all',
           array(
@@ -88,7 +88,7 @@ Class QueueComponent extends Object
               ),           
             ),
             'recursive' => -1,
-            'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID , 'QueueList.patron_id' => trim($pat_Id)),                
+            'conditions' => array('QueueList.status' => 1, 'QueueDetail.queue_id' => $queueID ),                
           )
         );
         return $queueDetail;

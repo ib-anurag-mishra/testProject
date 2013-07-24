@@ -105,7 +105,7 @@
                                                 }
                                                 ?> 
 						<div class="album-title">
-                                                    <a href="/artists/album/"<?php base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
+                                                    <a href="/artists/album/<?php echo base64_encode($value['Songs']['ArtistText']); ?>"><?php echo $value['Albums']['AlbumTitle']; ?></a>                                                
                                                 </div>
 						<div class="artist-name">
                                                     <a href="/artists/view/<?=base64_encode($value['Songs']['ArtistText']);?>/<?= $value['Songs']['ReferenceID']; ?>/<?= base64_encode($value['Songs']['provider_type']);?>"><?php echo $artistText; ?></a>                                                
