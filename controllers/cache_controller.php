@@ -1429,7 +1429,7 @@ STR;
            print_r($eachQueueDetails);die;
            Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
         }  
-       print_r(Cache::read("defaultqueuelistdetails23"));
+       print_r(Cache::read("defaultqueuelistdetails18"));
        die;
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
