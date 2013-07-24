@@ -1181,6 +1181,26 @@ $(function() {
 		$('.artist-list a').removeClass('selected');
 		$(this).addClass('selected');
 	});
+        
+        
+        
+        $('.alphabetical-filter a').live('click',function(e){
+		var letter = $(this).data('letter');
+		$('.alphabetical-filter a').removeClass('selected');
+		$('.artist-list a').removeClass('selected');
+		$(this).addClass('selected');
+	}); 
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 	
 	$('.artist-list a').on('click',function(e){
 		var artist = $(this).data('artist');
@@ -1193,7 +1213,12 @@ $(function() {
 		$(this).css('background','url(images/genres/more-by-click.jpg)')
 	
 	});
-	
+        
+        
+	  
+        
+        
+        
 	
 	$('.album-image a').on('click',function(e){
 		

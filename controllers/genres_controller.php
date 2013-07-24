@@ -232,6 +232,8 @@ Class GenresController extends AppController
 		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
+                
+                //fetch all genre
 		if (($genre = Cache::read("genre".$country)) === false) {
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
@@ -256,6 +258,8 @@ Class GenresController extends AppController
 		}
 		$genreAll = Cache::read("genre".$country);                
 		$this->set('genresAll', $genreAll);
+                
+                //check the user current download and overall limit
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
@@ -263,6 +267,9 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
+                
+                
+                
 		if($this->Session->read('block') == 'yes') {
 		      $cond = array('Song.Advisory' => 'F');
 		}
