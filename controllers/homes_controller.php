@@ -3424,6 +3424,8 @@ STR;
                             Song.ProdID,                            
                             Song.provider_type,
                             Song.ArtistText,
+                            Albums.ProdID,
+                            Albums.provider_type,
                             File.CdnPath,
                             File.SourceURL,
                             File.SaveAsName                          
