@@ -1424,12 +1424,13 @@ STR;
         }        
         foreach($queueData as $value){            
             
-           echo $queue_id = $value['QueueList']['queue_id'];
-            die;
+           $queue_id = $value['QueueList']['queue_id'];
+           
            $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);            
            Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
         }  
-        
+       print_r(Cache::read("defaultqueuelist23"));
+       die;
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
         
