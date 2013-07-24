@@ -1452,17 +1452,10 @@ STR;
            $indiMusicVidID =  $musicVideoRec['Video']['ProdID'];
            
            $individualVideoSQL  =
-            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
-            Sample_Files.SaveAsName,
-            Full_Files.CdnPath,
-            Full_Files.SaveAsName,
-            File.CdnPath,
-            File.SourceURL,
-            File.SaveAsName,
-            Sample_Files.FileID
-            FROM video as Video
-            LEFT JOIN
-            File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
+            Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,
+            Full_Files.CdnPath,Full_Files.SaveAsName,File.CdnPath,File.SourceURL,File.SaveAsName
+            FROM video as Video            
             LEFT JOIN
             File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
             LEFT JOIN
