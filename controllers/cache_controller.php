@@ -51,7 +51,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-         /*              
+                      
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -1440,7 +1440,7 @@ STR;
            }            
         }     
         //--------------------------------Default Freegal Queues End--------------------------------------------------------------
-        */
+       
         
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         
@@ -1471,8 +1471,7 @@ STR;
                 Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);       
                 $this->log("Music video id $indiMusicVidID cache set", "cache");
                 echo "<br />Music video id $indiMusicVidID cache set <br />";              
-           }    
-           print_r(Cache::read("musicVideoDetails".$indiMusicVidID));
+           }         
        } 
        
        //--------------------------------set each music video in the cache end---------------------------------------------------
@@ -1481,7 +1480,7 @@ STR;
         
         
         
-       /* 
+       
 
         //--------------------------------Library Top Ten Start--------------------------------------------------------------------
 
@@ -1915,7 +1914,7 @@ STR;
            
         }
         
-       */
+     
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
