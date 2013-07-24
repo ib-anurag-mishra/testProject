@@ -339,7 +339,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <a href="#" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
-                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
                                                                 <?php } ?>    
                                                             </ul>
                                                     </li>
