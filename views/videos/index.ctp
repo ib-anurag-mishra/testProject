@@ -137,9 +137,7 @@ foreach($topVideoDownloads as $topDownload)
 
                     
 <li>
-                        <div class="video-cover-container">
-                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
-                            <a class="top-video-download-now-button" href="#">Download Now</a>
+                       
                            <!-- <a class="add-to-playlist-button" href="#"></a> -->
                            
                            
@@ -148,6 +146,9 @@ foreach($topVideoDownloads as $topDownload)
                                     if($libraryDownload == '1' && $patronDownload == '1') {
 
                                 ?>
+                            <div class="video-cover-container">
+                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
+                            <a class="top-video-download-now-button" href="#">Download Now</a>
                             <div class="wishlist-popover">
                  <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                 <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
@@ -162,6 +163,7 @@ foreach($topVideoDownloads as $topDownload)
 
                 </form>	
                                 </div>
+                            </div>
 			<?php
                                }else{
                             ?>
@@ -188,7 +190,7 @@ foreach($topVideoDownloads as $topDownload)
                                 ?>
                             
 
-                        </div>
+                       
                         <div class="video-title">
                             <a href="javascript:void(0);">
 
