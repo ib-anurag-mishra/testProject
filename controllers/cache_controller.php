@@ -1433,12 +1433,15 @@ STR;
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
                 echo "<br /> Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
             } else {                 
-                Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);       
+                Cache::write("defaultqueuelistdetails".$defaultQueueId, $eachQueueDetails);       
                 $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
                 echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";
+                
+               
             } 
+             print_r(Cache::read("defaultqueuelistdetails18"));
         }  
-      print_r(Cache::read("defaultqueuelistdetails"));
+      
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
         
