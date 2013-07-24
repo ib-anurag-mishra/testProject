@@ -298,10 +298,9 @@ Class GenresController extends AppController
                         ),
                         'extra' => array('chk' => 1),
                     'order' => 'TRIM(Song.ArtistText) ASC',
-                    'limit' => '60', 'cache' => 'yes','check' => 2
+                    'cache' => 'yes','check' => 2
                     );
-            } else {
-                echo 147;
+            } else {                
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -312,8 +311,7 @@ Class GenresController extends AppController
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
                     'extra' => array('chk' => 1),
-                    'order' => 'TRIM(Song.ArtistText) ASC',
-                    'limit' => '60',
+                    'order' => 'TRIM(Song.ArtistText) ASC',                   
                     'cache' => 'no',
                     'check' => 2,
                     'all_query'=> true,
