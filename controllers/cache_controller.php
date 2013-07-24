@@ -1422,14 +1422,12 @@ STR;
             $this->log("Freegal Defaut Queues cache set", "cache");
             echo "<br />Freegal Defaut Queues cache set <br />";
         }        
-        foreach($queueData as $value){            
-            
-           $queue_id = $value['QueueList']['queue_id'];
-           
+        foreach($queueData as $value){
+           $queue_id = $value['QueueList']['queue_id'];           
            $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);            
            Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
         }  
-       print_r(Cache::read("defaultqueuelist23"));
+       print_r(Cache::read("defaultqueuelistdetails23"));
        die;
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
