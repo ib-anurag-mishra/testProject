@@ -469,33 +469,12 @@ $ieVersion =  ieversion();
                                          ?>
                                             </a></div>
 					
-				<div class="wishlist-popover">
-						<!--	
-						<a class="remove-song" href="#">Remove Song</a>
-						<a class="make-cover-art" href="#">Make Cover Art</a>
-						-->
-                                                <?php if( $this->Session->read('library_type') == 2 ){ ?>
-                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
-                                                <?php } ?>
-						<div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-						<?php if( $this->Session->read('library_type') == 2 ){ ?>
-						<div class="playlist-options">
-							<ul>
-								<li><a href="#">Create New Queue</a></li>
-								<li><a href="#">Playlist 1</a></li>
-								<li><a href="#">Playlist 2</a></li>
-								<li><a href="#">Playlist 3</a></li>
-								<li><a href="#">Playlist 4</a></li>
-								<li><a href="#">Playlist 5</a></li>
-								
-								
-							</ul>
-						</div>
-						<?php } ?>
+                                        <div class="wishlist-popover">
+                                            <?php if( $this->Session->read('library_type') == 2 ){
+                                                        echo $this->Queue->getQueuesList($this->Session->read('patron'),$wishlistResults[$i]["Song"]["ProdID"],$wishlistResults[$i]["Song"]["provider_type"],$wishlistResults[$i]["Albums"]["ProdID"],$wishlistResults[$i]["Albums"]["provider_type"]); ?>
+                                                        <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <?php } ?>
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>            
 					</div>
 						<div class="download">
                                             

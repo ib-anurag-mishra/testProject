@@ -147,6 +147,8 @@ class HomesController extends AppController
                             Song.FullLength_Duration,
                             Song.provider_type,
                             Genre.Genre,
+                            Albums.ProdID,
+                            Albums.provider_type,
                             Country.Territory,
                             Country.SalesDate,
                             Sample_Files.CdnPath,
