@@ -502,6 +502,7 @@ STR;
         
         if(isset($this->params['pass'][0]))
         {
+            if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
             $VideosSql  =
             "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
             Sample_Files.SaveAsName,
@@ -523,12 +524,18 @@ STR;
 
             $VideosData = $this->Album->query($VideosSql);
                                 //echo "<pre>"; print_r($VideosData); die;
+            
+            if (!empty($VideosData)) {
+                Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
+            }
+            }
         }
         else
         {
              $VideosData =   array();
         }
         
+            $VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]);        
             $this->set('VideosData',$VideosData);
             
             
