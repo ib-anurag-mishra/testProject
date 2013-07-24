@@ -1106,7 +1106,7 @@ STR;
 
             foreach ($genres as $genre) {
                 $genre_data = array();
-                echo $territory;
+                //echo $territory;
 
           if ($maintainLatestDownload) {
                     $restoregenre_query = "
