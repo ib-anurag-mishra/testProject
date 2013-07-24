@@ -1188,7 +1188,7 @@ STR;
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+//            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                                
                     $country = $territory;
 
@@ -1298,11 +1298,11 @@ STR;
 			// Checking for download status
 			Cache::write("national_us_top10_songs".$territory, $national_us_top10_record);
 		}
-                else
-                {
-                   $national_us_top10_record = Cache::read("national_us_top10_songs".$territory); 
-                }
-            }
+//                else
+//                {
+//                   $national_us_top10_record = Cache::read("national_us_top10_songs".$territory); 
+//                }
+//            }
               
                     
                
