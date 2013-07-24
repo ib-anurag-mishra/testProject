@@ -148,72 +148,27 @@
     <?php
     }
       ?>
+                                        <?php if($this->Session->read("patron")){ ?> 
+                                                <a class="add-to-playlist-button" href="#"></a>
 
-
-                                                                                    <?php if($this->Session->read("patron")){ ?> 
-														<a class="add-to-playlist-button" href="#"></a>
-                                                                                               
-														<div class="wishlist-popover">
-                                                                                                         <?php if( $this->Session->read('library_type') == 2 ){ ?> 
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
-                                                                                               
-															<a class="add-to-queue" href="#">Add To Queue</a>
-															<a class="add-to-playlist" href="#">Add To Playlist</a>
-                                                                                                        <?php } ?>
-<!--															<a class="add-to-wishlist" href="#">Add To Wishlist</a>-->
-                                                                                                        
-                                                                                                        <?php
-
-                                                                                                        $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
-
-                                                                                                        if($wishlistInfo == 'Added to Wishlist') {
-                                                                                                        ?> 
-                                                                                                                <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                                                                        <?php 
-                                                                                                        } else { 
-                                                                                                        ?>
-                                                                                                                <span class="beforeClick" id="wishlist<?php echo $value["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $value["Song"]["ProdID"]; ?>","<?php echo $value["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                                                                                <span class="afterClick" id="downloading_<?php echo $value["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                                                                        <?php	
-                                                                                                        }
-
-                                                                                                        ?>
-															
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
-															
-														</div>
-                                                                                                    <?php } ?>
+                                                <div class="wishlist-popover">
+                                                <?php if( $this->Session->read('library_type') == 2 ){
+                                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$value["Song"]["ProdID"],$value["Song"]["provider_type"],$value["Albums"]["ProdID"],$value["Albums"]["provider_type"]); ?>
+                                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                <?php } ?>
 
 
 
+                                                <?php
 
+                                                    $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
 
+                                                    echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
+                                                    echo $this->Queue->getSocialNetworkinglinksMarkup();
 
-
-
-
-
-
-
-							
+                                                ?>
+                                                </div>
+                                            <?php } ?>
 						</div>
 						<div class="album-title">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
@@ -334,30 +289,11 @@
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
 							<a class="add-to-playlist-button" href="#"></a>
 							<div class="wishlist-popover">
-                                                <?php
-
-
-                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
-
-                                                if($wishlistInfo == 'Added to Wishlist') {
-                                                ?> 
-                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                <?php 
-                                                } else { 
-                                                ?>
-                                                        <span class="beforeClick" id="video_wishlist<?php echo $value['Video']["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlistVideo("<?php echo $value['Video']["ProdID"]; ?>","<?php echo $value['Video']["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                        <span class="afterClick" id="downloading_<?php echo $value['Video']["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                <?php	
-                                                }
-
-                                                ?>
-								
-								<div class="share clearfix">
-									<p>Share via</p>
-									<a class="facebook" href="#"></a>
-									<a class="twitter" href="#"></a>
-								</div>
-								
+                                                            <?php
+                                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']["ProdID"]);
+                                                                echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$value['Video']["ProdID"],$value['Video']["provider_type"]);
+                                                                echo $this->Queue->getSocialNetworkinglinksMarkup();  
+                                                            ?>  
 							</div>
 							
 						</div>
