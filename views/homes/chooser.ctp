@@ -63,7 +63,7 @@
                             <table align="left">
                             <?php foreach($libraries as $library_var) { $library_name_var   =   $library_var['Library']['library_name'] ?>
                                 <tr>
-                                    <td><a alt="<?php echo $library_name_va; ?>r" href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com/users/redirection_manager"><?php echo (strlen($library_name_var)>40)?substr(strtoupper($library_name_var),0,40)."...":$library_name_var; ?></a></td>
+                                    <td><a alt="<?php echo $library_name_va; ?>" href="<?php echo 'http://'.$library_var['Library']['library_subdomain'];?>.freegaldev.com/users/redirection_manager"><?php echo (strlen($library_name_var)>40)?substr(strtoupper($library_name_var),0,40)."...":$library_name_var; ?></a></td>
                                 </tr>
                             <?php } ?>
                             </table>
