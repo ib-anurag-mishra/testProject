@@ -5367,7 +5367,7 @@ STR;
     $st1 = $this->QueueList->deleteAll(array('queue_id' => $queueID), false);
     
     if( (true === $st1) && (true === $st2) ) {
-      return $this->createsQueueOperationObject(true, 'You have delted Queue successfully');
+      return $this->createsQueueOperationObject(true, 'You have deleted Queue successfully');
     }else{
       return $this->createsQueueOperationObject(false, 'Failed to delete Queue');
     }
