@@ -108,7 +108,16 @@ class QueueListDetailsController extends AppController{
         $this->set('libraryDownload',$libraryDownload);
         $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
         $this->set('patronDownload',$patronDownload);
+        
+        if ($queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]) === false) {
         $queue_list_array   =   $this->Queue->getQueueDetails($this->params['pass'][0]);
+         if (!empty($queue_list_array)) {
+                Cache::write("defaultqueuelistdetails" . $this->params['pass'][0], $queue_list_array);
+            }
+        }
+        
+        $queue_list_array = Cache::read("defaultqueuelistdetails" . $this->params['pass'][0]);
+        
         //echo 456;
         //Find Total Duration
         $total_seconds = 0;
