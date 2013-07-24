@@ -140,13 +140,13 @@ foreach($topVideoDownloads as $topDownload)
                        
                            <!-- <a class="add-to-playlist-button" href="#"></a> -->
                            
-                           
+                           <div class="video-cover-container">
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
 
                                 ?>
-                            <div class="video-cover-container">
+                            
                             <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                             <div class="wishlist-popover">
@@ -163,7 +163,7 @@ foreach($topVideoDownloads as $topDownload)
 
                 </form>	
                                 </div>
-                            </div>
+                           
 			<?php
                                }else{
                             ?>
@@ -181,14 +181,14 @@ foreach($topVideoDownloads as $topDownload)
                                 ?>
                                 <div class="featured-video-detail">
                                 <div class="video-thumbnail-container">
-                                <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                <a class="top-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
                                <!--  <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a> -->
                                 </div>
                                 </div>
                                 <?php
                                 }
                                 ?>
-                            
+                             </div>
 
                        
                         <div class="video-title">
