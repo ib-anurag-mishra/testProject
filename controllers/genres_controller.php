@@ -259,7 +259,7 @@ Class GenresController extends AppController
 		$genreAll = Cache::read("genre".$country);                
 		$this->set('genresAll', $genreAll);
                 
-                //check the user current download and overall limit
+                //check the user current downloads and overall limit
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
