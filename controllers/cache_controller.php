@@ -5,7 +5,8 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
-
+    var $components = array('Queue');
+    
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
         $patronid = $_REQUEST['patronid'];
@@ -1423,7 +1424,7 @@ STR;
             echo "<br />Freegal Defaut Queues cache set <br />";
         }        
         foreach($queueData as $value){
-           $queue_id = $value['QueueList']['queue_id'];           
+           echo $queue_id = $value['QueueList']['queue_id'];           
            $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id); 
            print_r($eachQueueDetails);die;
            Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
