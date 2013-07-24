@@ -5,7 +5,8 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
-
+    var $components = array('Queue');
+    
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
         $patronid = $_REQUEST['patronid'];
@@ -1407,30 +1408,28 @@ STR;
         'fields' => array('queue_id','queue_name'),
         'order' => 'QueueList.created DESC',
         'limit' => 100
-        ));
+        ));        
         
-        //print_r($queueData);
         //freegal Query Cache set
-        if ((count($queueData) < 1) || ($queueData === false)) { 
-            echo 147;
+        if ((count($queueData) < 1) || ($queueData === false)) {            
             Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
             echo "<br /> Freegal Defaut Queues returns null<br />";
-        } else {
-            echo 44;
+        } else {           
             Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
+            
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");
             echo "<br />Freegal Defaut Queues cache set <br />";
-        }
-        print_r(Cache::read("defaultqueuelist"));
-        die;
-//        foreach($queueData as $value){
-//            
-//            
-//        }  
-        
+        }        
+        foreach($queueData as $value){
+           echo $queue_id = $value['QueueList']['queue_id'];           
+           $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);          
+           Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
+        }  
+       print_r(Cache::read("defaultqueuelistdetails18"));
+       die;
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
         
