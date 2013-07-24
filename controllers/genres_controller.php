@@ -254,8 +254,7 @@ Class GenresController extends AppController
 					));
 			 Cache::write("genre".$country, $genreAll);
 		}
-		$genreAll = Cache::read("genre".$country);
-                print_r($genreAll);
+		$genreAll = Cache::read("genre".$country);                
 		$this->set('genresAll', $genreAll);
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
