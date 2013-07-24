@@ -365,7 +365,7 @@ div.paging span a, div.paging a {
     display: none;
     text-align: center;
 }
-.video-thumbnail-container:hover {
+div.video-thumbnail-container:hover {
 
     display: block;
 
