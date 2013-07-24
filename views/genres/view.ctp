@@ -160,7 +160,7 @@ $genre_text_conversion = array(
 				<div class="alphabetical-filter">
                                    
                                     <ul>
-                                    <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="All" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
+                                    <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="All" class="selected" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')">#</a></li> 
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A' ,'' , '')">A</a></li>
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B' ,'' , '')">B</a></li>
