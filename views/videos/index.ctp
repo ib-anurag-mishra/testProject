@@ -178,8 +178,8 @@ foreach($topVideoDownloads as $topDownload)
                                 } else {
                                 ?>
                                 <div class="featured-video-detail">
-                                <div class="video-thumbnail-container" style="width: 124px; background: none repeat scroll 0 0 #FFFFFF;">
-                                <a class="featured-video-download-now-button" style="opacity: 0;  position:relative; top: -25px; left: 100px; font-weight: bold; height: 25px; line-height: 26px: text-transform: uppercase; color: #000000; font-size: 12px; text-decoration: none; box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                <div class="video-thumbnail-container" style="position:relative; top: -25px; left: 100px; font-weight: bold; height: 25px; line-height: 26px: text-transform: uppercase; color: #000000; font-size: 12px; text-decoration: none; box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); width: 124px; background: none repeat scroll 0 0 #FFFFFF;">
+                                <a class="featured-video-download-now-button" style="opacity: 0;" href='/users/redirection_manager'> <?php __("Login");?></a>
                                <!--  <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a> -->
                                 </div>
                                 </div>
