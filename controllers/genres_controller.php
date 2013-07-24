@@ -301,6 +301,7 @@ Class GenresController extends AppController
                     'limit' => '60', 'cache' => 'yes','check' => 2
                     );
             } else {
+                echo 147;
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
