@@ -232,7 +232,7 @@ Class GenresController extends AppController
 		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
-		if (($genre = Cache::read("genre".$country)) === false) {
+		//if (($genre = Cache::read("genre".$country)) === false) {
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
 							array('and' =>
@@ -253,8 +253,11 @@ Class GenresController extends AppController
 						),'group' => 'Genre.Genre'
 					));
 			 Cache::write("genre".$country, $genreAll);
-		}
+		//}
 		$genreAll = Cache::read("genre".$country);
+                
+                print($genreAll);
+                die;
                 
 		$this->set('genresAll', $genreAll);
 		$patId = $this->Session->read('patron');
