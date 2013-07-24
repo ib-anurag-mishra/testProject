@@ -70,10 +70,10 @@
 		<div class="now-playing-container">
 
 			<nav class="playlist-filter-container clearfix">
-				<div class="song-filter-button"></div>
-				<div class="album-filter-button"></div>
-				<div class="artist-filter-button"></div>
-				<div class="time-filter-button"></div>
+				<div class="song-filter-button">Song</div>
+				<div class="album-filter-button">Album</div>
+				<div class="artist-filter-button">Artist</div>
+				<div class="time-filter-button">Time</div>
 				
 			</nav>
 			<div class="playlist-shadow-container">
