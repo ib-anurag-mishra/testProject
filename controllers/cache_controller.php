@@ -392,7 +392,7 @@ SELECT
         File ON (Albums.FileID = File.FileID) 
     WHERE
             ( (Song.DownloadStatus = '1')  )   AND 1 = 1
-    GROUP BY Song.ProdID
+    GROUP BY Song.ReferenceID
     ORDER BY Country.SalesDate ASC
     LIMIT 20       
 STR;
