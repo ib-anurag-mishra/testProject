@@ -114,7 +114,7 @@ class QueuesController extends AppController{
         if ( ((Cache::read('defaultqueuelist')) === false)  || (Cache::read('defaultqueuelist') === null) ) {
             $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
-                    'fields' => array('queue_id','queue_name'),
+                    'fields' => array('queue_id','queue_name','queue_type'),
                     'order' => 'QueueList.created DESC',
                     'limit' => 100
                   ));
