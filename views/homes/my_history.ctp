@@ -141,43 +141,15 @@ $ieVersion =  ieversion();
 						<a class="remove-song" href="#">Remove Song</a>
 						<a class="make-cover-art" href="#">Make Cover Art</a>
 						-->
-                        <?php
-                        if($this->Session->read('library_type') == '2'){
-                        ?>
-						<a class="add-to-playlist" href="#">Add To Queue</a>
-						<div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-						
-						<div class="playlist-options">
-							<ul>
-								<li><a href="#" class="create-new-queue">Create New Queue</a></li>
-								<li><a href="#">Playlist 1</a></li>
-								<li><a href="#">Playlist 2</a></li>
-								<li><a href="#">Playlist 3</a></li>
-								<li><a href="#">Playlist 4</a></li>
-								<li><a href="#">Playlist 5</a></li>
-								<li><a href="#">Playlist 6</a></li>
-								<li><a href="#">Playlist 7</a></li>
-								<li><a href="#">Playlist 8</a></li>
-								<li><a href="#">Playlist 9</a></li>
-								<li><a href="#">Playlist 10</a></li>
-								
-								
-							</ul>
-						</div>
-                        <?php } else {
-                           ?>
-                        <div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-                        <?php
-                        }
-						?>
+                                        <?php
+                                        if($this->Session->read('library_type') == '2'){
+                                            echo $this->Queue->getQueuesList($this->Session->read('patron'),$downloadResult["Song"]["ProdID"],$downloadResult["Song"]["provider_type"],$downloadResult["Album"]["ProdID"],$downloadResult["Album"]["provider_type"]); ?>
+                                            <a class="add-to-playlist" href="#">Add To Queue</a>
+                                            <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                        <?php } else {
+                                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); 
+                                              }
+                                        ?>
 					</div>
 					<div class="download">
                     <a href="#">
