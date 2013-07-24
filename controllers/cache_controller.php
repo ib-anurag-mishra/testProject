@@ -1422,14 +1422,23 @@ STR;
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");
             echo "<br />Freegal Defaut Queues cache set <br />";
-        }        
-        foreach($queueData as $value){
-           echo $queue_id = $value['QueueList']['queue_id'];           
-           $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);          
-           Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);
         }  
-       print_r(Cache::read("defaultqueuelistdetails18"));
-       die;
+        
+        foreach($queueData as $value){
+           $queue_id = $value['QueueList']['queue_id'];           
+           $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);
+           
+           if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {            
+                Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
+                $this->log("Freegal Defaut Queues id ".$queue_id." returns null ", "cache");
+                echo "<br /> Freegal Defaut Queues id ".$queue_id." returns null<br />";
+            } else {                 
+                Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);       
+                $this->log("Freegal Defaut Queues id ".$queue_id." cache set", "cache");
+                echo "<br />Freegal Defaut Queues id ".$queue_id." cache set <br />";
+            } 
+        }  
+      
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
         
