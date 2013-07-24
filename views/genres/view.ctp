@@ -133,20 +133,25 @@ $genre_text_conversion = array(
             <?php
                 $genre_count = 1;
                 foreach ($genresAll as $genre_all):
+                     $classText ='';
+                    if($genre_count==1){
+                        $classText ="selected";
+                    }
+                    
                     if($genre_all['Genre']['Genre'] != ''){
                             //$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
                             $genre_name = $genre_all['Genre']['Genre'];
                             if($genre_name == $genre){
                                     ?>
-                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all <?=$genre_name?>" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                             else{
                                     ?>
-                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all <?=$genre_name?>" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
-                }
+                   }
                 $genre_count++;
                 endforeach;
             ?>            
@@ -201,14 +206,11 @@ $genre_text_conversion = array(
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
-                                                        $classText ='';
-                                                        if($i==0){
-                                                            $classText ="class='selected'";
-                                                        }
+                                                       
                                                         
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."' ".$classText." >";
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'  >";
                                                         echo $ArtistName;
                                                         echo '</a>';
                                                         echo '</li>';                                                                    

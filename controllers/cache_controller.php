@@ -1137,24 +1137,28 @@ STR;
               latest_downloads,
               Songs AS Song
                   LEFT JOIN
-              {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID AND (Country.Territory LIKE '%" . $territory . "%' ) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+              {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
                   LEFT JOIN
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                   LEFT JOIN
-              PRODUCT ON (PRODUCT.ProdID = Song.ProdID)  AND (PRODUCT.provider_type = Song.provider_type)
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
           WHERE
               latest_downloads.ProdID = Song.ProdID 
               AND latest_downloads.provider_type = Song.provider_type 
-              AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'              
-              AND Song.DownloadStatus = '1'              
+              AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'
+              AND Country.Territory LIKE '%" . $territory . "%' 
+              AND Country.SalesDate != '' 
+              AND Country.SalesDate < NOW() 
+              AND Song.DownloadStatus = '1' 
+              AND (PRODUCT.provider_type = Song.provider_type)
               AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
-              GROUP BY latest_downloads.ProdID
-              ORDER BY countProduct DESC   ";
-                
-              
-              } else {
+          GROUP BY latest_downloads.ProdID
+          ORDER BY countProduct DESC
+          LIMIT 10
+          ";
+                } else {
                     $restoregenre_query = "
         SELECT 
             COUNT(DISTINCT downloads.id) AS countProduct,
@@ -1183,13 +1187,13 @@ STR;
             downloads,
             Songs AS Song
                 LEFT JOIN
-            {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID AND (Country.Territory LIKE '%" . $territory . "%' ) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+            {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
                 LEFT JOIN
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-		LEFT JOIN
-            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
+				LEFT JOIN
+			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
         WHERE
             downloads.ProdID = Song.ProdID 
             AND downloads.provider_type = Song.provider_type 
@@ -1197,10 +1201,12 @@ STR;
             AND Country.Territory LIKE '%" . $territory . "%' 
             AND Country.SalesDate != '' 
             AND Country.SalesDate < NOW() 
-            AND Song.DownloadStatus = '1' 			
+            AND Song.DownloadStatus = '1' 
+			AND (PRODUCT.provider_type = Song.provider_type)
             AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
         GROUP BY downloads.ProdID
-        ORDER BY countProduct DESC       
+        ORDER BY countProduct DESC
+        LIMIT 10
         ";
             }
                 $data = $this->Album->query($restoregenre_query);
