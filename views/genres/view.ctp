@@ -128,27 +128,23 @@ $genre_text_conversion = array(
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
+						<li><a class="genre_list_item_all selected" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
                                                 
             <?php
                 $genre_count = 1;
-                foreach ($genresAll as $genre_all):
-                     $classText ='';
-                    if($genre_count==1){
-                        $classText ="selected";
-                    }
+                foreach ($genresAll as $genre_all):                    
                     
                     if($genre_all['Genre']['Genre'] != ''){
                             //$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
                             $genre_name = $genre_all['Genre']['Genre'];
                             if($genre_name == $genre){
                                     ?>
-                                <li> <a  class="genre_list_item_all <?=$classText?>" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                             else{
                                     ?>
-                                <li> <a  class="genre_list_item_all <?=$classText?>" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                    }
