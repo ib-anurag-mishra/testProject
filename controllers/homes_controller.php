@@ -4312,8 +4312,8 @@ STR;
                
              
              
-             if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
-             {               
+//             if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
+//             {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
                                 $countryPrefix = "us_";
@@ -4376,13 +4376,13 @@ STR;
                           Cache::write("new_releases_songs".$territory, $coming_soon_rs);
                         }
                     
-                }
-                else    //  Show From Cache
-                {                  
-                    
-                    $coming_soon_rs = Cache::read("new_releases_songs".$territory);
-                    
-                }
+//                }
+//                else    //  Show From Cache
+//                {                  
+//                    
+//                    $coming_soon_rs = Cache::read("new_releases_songs".$territory);
+//                    
+//                }
                 
                 $this->set('new_releases_songs', $coming_soon_rs); 
                 
