@@ -1175,13 +1175,7 @@ $(function() {
 		
 	});
 	
-	$('.alphabetical-filter a').on('click',function(e){
-		var letter = $(this).data('letter');
-		$('.alphabetical-filter a').removeClass('selected');
-		$('.artist-list a').removeClass('selected');
-		$(this).addClass('selected');
-	});
-        
+	        
         
         
         $('.alphabetical-filter a').live('click',function(e){
