@@ -177,8 +177,10 @@ foreach($topVideoDownloads as $topDownload)
                                 <?php
                                 } else {
                                 ?>
+                                <div class="video-thumbnail-container">
                                 <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
                                <!--  <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a> -->
+                                </div>
                                 <?php
                                 }
                                 ?>
