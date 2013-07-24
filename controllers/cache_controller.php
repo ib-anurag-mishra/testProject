@@ -1425,17 +1425,18 @@ STR;
         }  
         
         foreach($queueData as $value){
-           $queue_id = $value['QueueList']['queue_id'];           
-           $eachQueueDetails =  $this->Queue->getQueueDetails($queue_id);
+           $defaultQueueId = $value['QueueList']['queue_id'];
+           $defaultQueueName = $value['QueueList']['queue_name'];      
+           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
            
            if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {            
                 Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
-                $this->log("Freegal Defaut Queues id ".$queue_id." returns null ", "cache");
-                echo "<br /> Freegal Defaut Queues id ".$queue_id." returns null<br />";
+                $this->log("Freegal Defaut Queues". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
+                echo "<br /> Freegal Defaut Queues". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
             } else {                 
                 Cache::write("defaultqueuelistdetails".$queue_id, $eachQueueDetails);       
-                $this->log("Freegal Defaut Queues id ".$queue_id." cache set", "cache");
-                echo "<br />Freegal Defaut Queues id ".$queue_id." cache set <br />";
+                $this->log("Freegal Defaut Queues". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
+                echo "<br />Freegal Defaut Queues". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";
             } 
         }  
       
