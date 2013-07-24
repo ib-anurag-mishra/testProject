@@ -256,7 +256,7 @@ Class GenresController extends AppController
 		//}
 		$genreAll = Cache::read("genre".$country);
                 
-                print($genreAll);
+                print_r($genreAll);
                 die;
                 
 		$this->set('genresAll', $genreAll);
