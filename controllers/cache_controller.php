@@ -50,7 +50,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-                       
+         /*              
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -64,6 +64,8 @@ class CacheController extends AppController {
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
             
+            
+           
            
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
@@ -1388,11 +1390,11 @@ STR;
                 $this->log("Artist Pagenation      :   $country $alphabet $genre", "cache");
                 $this->log("Artist Pagenation Query: " . $this->Song->lastQuery(), "cache");
             }
-            //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
+            //-------------------------------------------ArtistText Pagenation End----------------------------------------
         }
       
-   
-        /*
+   */
+       
         //--------------------------------Default Freegal Queues Start----------------------------------------------------
                
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -1422,13 +1424,12 @@ STR;
             $this->log("Freegal Defaut Queues cache set", "cache");
             echo "<br />Freegal Defaut Queues cache set <br />";
         }
-        
-        foreach($queueData as $value){
-            
-            
-        }
-          
-        */
+        print_r(Cache::read("defaultqueuelist"));
+        die;
+//        foreach($queueData as $value){
+//            
+//            
+//        }  
         
         //--------------------------------Default Freegal Queues End----------------------------------------------------
         
@@ -1443,7 +1444,7 @@ STR;
         
         
         
-        
+       /* 
 
         //--------------------------------Library Top Ten Start----------------------------------------------------
 
@@ -1877,7 +1878,7 @@ STR;
            
         }
         
-       
+       */
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 

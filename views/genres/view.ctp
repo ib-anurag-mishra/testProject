@@ -228,15 +228,7 @@ $genre_text_conversion = array(
 			</span>
 		</section>
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
+               
                 
 		<section class="album-detail-container clearfix" id='album_details_container'>
 	
