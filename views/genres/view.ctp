@@ -107,7 +107,18 @@ function showAlbumDetails(albumDetailURL){
  
  $(document).ready(function(){
    $("#artistscroll").scroll(function(){
-    alert(1);
+     var data = "";
+            jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
+                    data: data,  // post data
+                    success: function(newitems) {
+                        alert(newitems);
+                        $('#content').append(newitems);
+                        updatestatus();
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album list available')}
+            });  
    });
 });
 </script>            
