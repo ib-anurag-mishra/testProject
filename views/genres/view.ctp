@@ -50,23 +50,7 @@
             }
     });
     
-  $(document).bind('scroll','#artistscroll',function(){
-           
-            alert(3);
-    }); 
-$(document).ready(function(){
-    $("#artistscroll").bind("scroll",function(e){
-            
-                alert(1); 
-           
-    });
-});
 
- $("#artistscroll").bind("scroll",function(e){
-             
-                alert(2); 
-           
-    });
  
 
     
@@ -83,7 +67,11 @@ function load_artist(link , id_serial , genre_name){
             url: link, // URL to request
             data: data,  // post data
             success: function(response) {                
-                $('#ajax_artistlist_content').html(response);
+                var $myVar = eval(response);
+                $myVar.scroll(function(){
+                    alert("A");
+                });
+                $('#ajax_artistlist_content').html($myVar);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
         });
