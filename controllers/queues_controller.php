@@ -67,7 +67,7 @@ class QueuesController extends AppController{
     
     function addToQueue(){
         Configure::write('debug', 0);
-        if( $this->Session->read('library') && $this->Session->read('patron') && isset($_REQUEST['songProdId']) && isset($_REQUEST['songProviderType'])&& isset($_REQUEST['albumProdId'])&& isset($_REQUEST['albumProviderType'])&& isset($_REQUEST['queueId']) ){
+        if( $this->Session->read('library') && $this->Session->read('patron') && !empty($_REQUEST['songProdId']) && !empty($_REQUEST['songProviderType'])&& !empty($_REQUEST['albumProdId'])&& !empty($_REQUEST['albumProviderType'])&& !empty($_REQUEST['queueId']) ){
             $queuesongsCount =  $this->QueueDetail->find('count',array('conditions' => array('queue_id' => $_REQUEST['queueId'],'song_prodid' => $_REQUEST['songProdId'],'song_providertype' => $_REQUEST['songProviderType'],'album_prodid' => $_REQUEST['albumProdId'],'album_providertype' => $_REQUEST['albumProviderType'])));
             if(!$queuesongsCount){
                 $insertArr = Array();
@@ -77,8 +77,9 @@ class QueuesController extends AppController{
                 $insertArr['album_prodid'] = $_REQUEST['albumProdId'];
                 $insertArr['album_providertype'] = $_REQUEST['albumProviderType'];
                 //insert into queuedetail table
-                $this->QueueDetail->save($insertArr);           
-                
+                $this->QueueDetail->setDataSource('master');
+                $this->QueueDetail->save($insertArr);
+                $this->QueueDetail->setDataSource('default');
                 echo "Success";
                 exit;
 
@@ -113,7 +114,7 @@ class QueuesController extends AppController{
         if ( ((Cache::read('defaultqueuelist')) === false)  || (Cache::read('defaultqueuelist') === null) ) {
             $queueData = $this->QueueList->find('all', array(
                     'conditions' => $cond,
-                    'fields' => array('queue_id','queue_name'),
+                    'fields' => array('queue_id','queue_name','queue_type'),
                     'order' => 'QueueList.created DESC',
                     'limit' => 100
                   ));

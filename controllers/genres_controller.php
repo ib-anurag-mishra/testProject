@@ -232,6 +232,8 @@ Class GenresController extends AppController
 		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
+                
+                //fetch all genre
 		if (($genre = Cache::read("genre".$country)) === false) {
 			$genreAll = $this->Genre->find('all',array(
 						'conditions' =>
@@ -254,9 +256,10 @@ Class GenresController extends AppController
 					));
 			 Cache::write("genre".$country, $genreAll);
 		}
-		$genreAll = Cache::read("genre".$country);
-                
+		$genreAll = Cache::read("genre".$country);                
 		$this->set('genresAll', $genreAll);
+                
+                //check the user current downloads and overall limit
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
@@ -264,6 +267,9 @@ Class GenresController extends AppController
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
+                
+                
+                
 		if($this->Session->read('block') == 'yes') {
 		      $cond = array('Song.Advisory' => 'F');
 		}
@@ -301,7 +307,7 @@ Class GenresController extends AppController
                     'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60', 'cache' => 'yes','check' => 2
                     );
-            } else {
+            } else {                
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));

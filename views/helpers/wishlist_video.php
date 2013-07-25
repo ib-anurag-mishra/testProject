@@ -31,6 +31,17 @@ class WishlistVideoHelper extends AppHelper {
         $wishlistCount = $wishlistInstance->find('count', array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId)));
         return $wishlistCount;
     }
+    
+    function getWishListVideoMarkup($wishlistInfo,$video_ProdId,$video_Provider_Type){
+        if($wishlistInfo == 'Added to Wishlist') {
+                $str =  '<a class="add-to-wishlist" href="javascript:void(0);">'."Added to Wishlist".'</a>';
+         } else { 
+                $str = '<span class="beforeClick" id="video_wishlist'.$video_ProdId.'"><a class="add-to-wishlist" href=\'JavaScript:void(0);\' onclick=\'Javascript: addToWishlistVideo("'.$video_ProdId.'","'.$video_Provider_Type.'");\'>'."Add to Wishlist".'</a></span>
+                 <span class="afterClick" id="downloading_'.$video_ProdId.'" style="display:none;"><a class="add-to-wishlist" href=\'JavaScript:void(0);\'>'."Please Wait...".'</a></span>';
+         }
+         return $str;
+
+    }    
 }
 
 ?>

@@ -1,7 +1,4 @@
-<?php
-        debug(__('National Top 100',true));
-?>
-						
+					
 						<section class="news">
 							<div class="top-100">
 								<header>
@@ -40,6 +37,43 @@
 											if($j==5){
 												break;
 											}
+                                                                                        
+                                                                                        ?>
+                                                                                    
+                                                                                    
+                                                                                    <script>
+                                                                                        // Define an image media item:
+                                                                                  /*      var image = {
+                                                                                                type: 'image',
+                                                                                                src: 'http://a.vimeocdn.com/portraits/defaults/d.75.jpg',
+                                                                                                href: 'http://vimeo.com/24400434'
+                                                                                                }
+
+                                                                                        // Define a UserAction onject
+                                                                                        var ua = new gigya.socialize.UserAction(); 
+                                                                                       // ua.setLinkBack("/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"); 
+                                                                                        ua.setLinkBack("http://vimeo.com/24400434");
+                                                                                        ua.setTitle('<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>');
+                                                                                        ua.setDescription("This is my Description<?php echo $i; ?>");
+                                                                                        ua.addMediaItem(image);
+
+                                                                                        // Define Share Bar plugin's Parameters	
+                                                                                        var shareBarParams ={ 
+                                                                                                userAction:ua,
+                                                                                                shareButtons: "twitter-tweet, facebook",
+                                                                                                buttonsStyle:'fullLogo',
+                                                                                                showCounts: 'none', 
+                                                                                                containerID: 'divButtons_<?php echo $i; ?>' // location of the Share Bar plugin
+                                                                                        }
+
+                                                                                        // Load Share Bar plugin
+                                                                                        gigya.socialize.showShareBarUI(shareBarParams); */
+                                                                                </script>
+                                                                                    
+                                                                                    
+                                                                                    <?php
+                                                                                        
+                                                                                        
 											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
                                                                                         $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
@@ -48,7 +82,7 @@
 											<li>
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
-														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>"  width="250" height="250" /></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="lazy" alt="<?php echo $nationalTopDownload[$i]['Song']['ArtistText']. ' - '.$nationalTopDownload[$i]['Song']['SongTitle']; ?>" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>"  width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -136,14 +170,18 @@
 
                                                                                                                         echo $wishlist->getWishListMarkup($wishlistInfo,$nationalTopDownload[$i]["Song"]["ProdID"],$nationalTopDownload[$i]["Song"]["provider_type"]);    
                                                                                                                     ?>
+                                                                                                          <!--  <div class="share clearfix">
+                                                                                                            <p>Share via</p>
+                                                                                                           <span id="divButtons_<?php //echo $i; ?>""></span> 
+                                                                                                            </div> -->
                                                                                                                     <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 														</div>
                                                                                                     <?php } ?>
 													</div>
 
                                                                                                     <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 35 ) {
-                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 35)) . "..";
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['SongTitle']) >= 30 ) {
+                                                                                                            $songTitle = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['SongTitle'], 0, 30)) . "..";
                                                                                                     } else {
                                                                                                             $songTitle = $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']);
                                                                                                     }
@@ -151,8 +189,8 @@
 
 
                                                                                                     <?php											
-                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 35 ) {
-                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 35)) . "..";
+                                                                                                    if (strlen($nationalTopDownload[$i]['Song']['ArtistText']) >= 30 ) {
+                                                                                                            $artistText = $this->getTextEncode(substr($nationalTopDownload[$i]['Song']['ArtistText'], 0, 30)) . "..";
                                                                                                     } else {
                                                                                                             $artistText = $this->getTextEncode($nationalTopDownload[$i]['Song']['ArtistText']);
                                                                                                     }
@@ -162,8 +200,8 @@
 													<div class="song-title">
 														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><?php echo $songTitle; ?></a>
 													</div>
-													<div class="artist-name">
-														<a href="/artists/album/"<?php base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $artistText; ?></a>
+													<div class="artist-name">                                                                                                            
+														<a href="/artists/album/<?php echo base64_encode($nationalTopDownload[$i]['Song']['ArtistText']); ?>"><?php echo $artistText; ?></a>
 													</div>
 												</div>
 											</li>
@@ -193,7 +231,7 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="javascript:void(0);"><img src="<?php echo $videoAlbumImage; ?>" alt="jlo423x250" width="423" height="250" /></a>
+														<a href="javascript:void(0);"><img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -326,7 +364,7 @@
                                                                                                 ?>
 													<div class="song-title">
 													<!--	<a href="/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"><?php echo $songTitle;?></a> -->
-                                                                                                        <a href="javascript:void(0);"><?php echo $songTitle;?></a>
+                                                                                                        <a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><?php echo $songTitle;?></a>
 													</div>
 													<div class="artist-name">
 														<!-- <a href="/artists/album/"<?php base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']); ?>"><?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText']; ?></a> -->
@@ -374,7 +412,7 @@
 											<div class="featured-album-detail">
 												<div class="album-cover-container">												
 
-                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84"));?></a>
+                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84", "alt" => $ArtistText. ' - '.$v['Album']['AlbumTitle']  ));?></a>
 
 
 												</div>
@@ -439,7 +477,7 @@
 												<div class="single-cover-container">
 																										
                                                                                                         <a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                                                                        <img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="pitbull162x162" width="162" height="162" /></a>
+                                                                                                        <img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="162" height="162" /></a>
                                                                                                          
                                                                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                                                                 <a class="add-to-playlist-button" href="#">
@@ -506,7 +544,7 @@
 											<div class="video-detail">
 												<div class="video-cover-container">
 													<a href="javascript:void(0);">
-                                                                                                        <img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="rockband275x162" width="275" height="162" />
+                                                                                                        <img class="lazy" src="<?php echo $videoAlbumImage; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
                                                                                                         <a class="add-to-playlist-button" href="#">

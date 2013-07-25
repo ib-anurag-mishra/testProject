@@ -1254,27 +1254,35 @@ function addToQueue(songProdId , songProviderType, albumProdId, albumProviderTyp
                         }
 			if(msg == 'error')
 			{
+                            document.getElementById("ajaxflashMessage44").style.display="block";
+                            document.getElementById("ajaxflashMessage44").style.background="red";
                             document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem in adding song to Queuelist.';
                             return false;
 			}else if(msg == 'error1'){
+                            document.getElementById("ajaxflashMessage44").style.display="block";
                             document.getElementById('ajaxflashMessage44').innerHTML = 'This song is already added to Queue';
                         }
 			else
 			{	
 				var msg = response.substring(0,7);
 				if(msg == 'Success')
-				{               
+				{
+                                    document.getElementById("ajaxflashMessage44").style.display="block";
                                     document.getElementById('ajaxflashMessage44').innerHTML = 'Successfully added song to Queue';
 
 				}
 				else
 				{
-        				document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
+                                        document.getElementById("ajaxflashMessage44").style.display="block";
+        				document.getElementById("ajaxflashMessage44").style.background="red";
+                                        document.getElementById('ajaxflashMessage44').innerHTML = 'There is some problem arised when adding song to Queue.';
 					return false;				
 				}
 			}			
 		},
 		error:function (XMLHttpRequest, textStatus, errorThrown) {
+                    document.getElementById("ajaxflashMessage44").style.display="block";
+                    document.getElementById("ajaxflashMessage44").style.background="red";
                     document.getElementById('ajaxflashMessage44').innerHTML = 'Ajax call for adding song to queue is unsuccessfull';
 		}
 	} );

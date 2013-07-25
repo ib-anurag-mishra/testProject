@@ -128,25 +128,26 @@ $genre_text_conversion = array(
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
+						<li><a class="genre_list_item_all selected" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
                                                 
             <?php
                 $genre_count = 1;
-                foreach ($genresAll as $genre_all):
+                foreach ($genresAll as $genre_all):                    
+                    
                     if($genre_all['Genre']['Genre'] != ''){
                             //$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
                             $genre_name = $genre_all['Genre']['Genre'];
                             if($genre_name == $genre){
                                     ?>
-                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')"><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
                             else{
                                     ?>
-                                <li> <a  class="genre_list_item_all" href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
                                     <?php
                             }
-                }
+                   }
                 $genre_count++;
                 endforeach;
             ?>            
@@ -160,7 +161,7 @@ $genre_text_conversion = array(
 				<div class="alphabetical-filter">
                                    
                                     <ul>
-                                    <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="All" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
+                                    <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="All" class="selected" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')">#</a></li> 
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A' ,'' , '')">A</a></li>
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B' ,'' , '')">B</a></li>
@@ -201,9 +202,11 @@ $genre_text_conversion = array(
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
+                                                       
+                                                        
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'>";
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'  >";
                                                         echo $ArtistName;
                                                         echo '</a>';
                                                         echo '</li>';                                                                    
@@ -225,15 +228,7 @@ $genre_text_conversion = array(
 			</span>
 		</section>
                 
-                
-                
-                
-                
-                
-                
-                
-                
-                
+               
                 
 		<section class="album-detail-container clearfix" id='album_details_container'>
 	

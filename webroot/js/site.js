@@ -358,12 +358,10 @@ $(function() {
 	
 	announcements.on('click',function(e){
 		e.preventDefault();
-		if($(poll).hasClass('active')) {
-                        $(poll).hide();
+		if($(poll).hasClass('active')) {                        
 			$(poll).removeClass('active');
-		} else {
-                         $(poll).show();
-			//$(poll).addClass('active');
+		} else {                         
+			$(poll).addClass('active');
                         
 		}
 	});
@@ -1182,7 +1180,15 @@ $(function() {
 		$('.alphabetical-filter a').removeClass('selected');
 		$('.artist-list a').removeClass('selected');
 		$(this).addClass('selected');
-	});
+	});        
+        
+        $(document).on('click', ".ajax_artistlist_content ul li", function () {
+           alert(1)
+        });
+        
+        
+        
+        
 	
 	$('.artist-list a').on('click',function(e){
 		var artist = $(this).data('artist');
@@ -1195,7 +1201,12 @@ $(function() {
 		$(this).css('background','url(images/genres/more-by-click.jpg)')
 	
 	});
-	
+        
+        
+	  
+        
+        
+        
 	
 	$('.album-image a').on('click',function(e){
 		

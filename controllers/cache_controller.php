@@ -5,7 +5,8 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
-
+    var $components = array('Queue');
+    
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
         $patronid = $_REQUEST['patronid'];
@@ -50,7 +51,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-                       
+                      
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -64,6 +65,8 @@ class CacheController extends AppController {
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
             
+            
+           
            
             $genreAll = $this->Genre->find('all', array(
                 'conditions' =>
@@ -173,13 +176,17 @@ class CacheController extends AppController {
                                     LEFT JOIN
                             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                                     LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
                                     LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                                     LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                            PRODUCT ON ((PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type))
+                                    INNER JOIN 
+                            Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                    INNER JOIN 
+                            File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                            ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) ) AND 1 = 1
                     GROUP BY Song.ProdID
                     ORDER BY FIELD(Song.ProdID,$ids) ASC
                     LIMIT 100 
@@ -277,7 +284,7 @@ STR;
                 $data = array();
 
                 $sql_national_100_v = <<<STR
-	                SELECT 
+	        SELECT 
                                 Video.ProdID,
                                 Video.ReferenceID,
                                 Video.Title,
@@ -304,15 +311,15 @@ STR;
                                                 LEFT JOIN
                                 File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
                                                 LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                                Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
                                                 LEFT JOIN
-         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type) AND Country.SalesDate != '' AND Country.SalesDate < NOW()
                                                 LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
                 LEFT JOIN
                                 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 100 
@@ -377,14 +384,18 @@ SELECT
                 LEFT JOIN
         File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                 LEFT JOIN
-        Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+        Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
                 LEFT JOIN
-        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
                 LEFT JOIN
-        PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+        PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
+                INNER JOIN 
+        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                INNER JOIN 
+        File ON (Albums.FileID = File.FileID) 
     WHERE
-            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
-    GROUP BY Song.ProdID
+            ( (Song.DownloadStatus = '1')  )   AND 1 = 1
+    GROUP BY Song.ReferenceID
     ORDER BY Country.SalesDate ASC
     LIMIT 20       
 STR;
@@ -431,15 +442,15 @@ STR;
     LEFT JOIN
         File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
     LEFT JOIN
-        Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+        Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
     LEFT JOIN
-        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW()) 
     LEFT JOIN
-        PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+        PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
     LEFT JOIN
         File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
     WHERE
-        ( (Video.DownloadStatus = '1')  AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate > NOW() AND 1 = 1
+        ( (Video.DownloadStatus = '1')   )  AND 1 = 1
     GROUP BY Video.ProdID
     ORDER BY Country.SalesDate ASC
     LIMIT 20 	  
@@ -1098,7 +1109,7 @@ STR;
 
             foreach ($genres as $genre) {
                 $genre_data = array();
-                echo $territory;
+                //echo $territory;
 
           if ($maintainLatestDownload) {
                     $restoregenre_query = "
@@ -1380,64 +1391,98 @@ STR;
                 $this->log("Artist Pagenation      :   $country $alphabet $genre", "cache");
                 $this->log("Artist Pagenation Query: " . $this->Song->lastQuery(), "cache");
             }
-            //-------------------------------------------ArtistText Pagenation End------------------------------------------------------
+            //-------------------------------------------ArtistText Pagenation End----------------------------------------
         }
       
    
-        /*
-        //--------------------------------Default Freegal Queues Start----------------------------------------------------
-               
+       
+        //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
         //Unbinded User model
         $this->QueueList->unbindModel(
             array('belongsTo' => array('User'),'hasMany' => array('QueueDetail'))
         );
+        //fetched the default list
         $queueData = $this->QueueList->find('all', array(
         'conditions' => $cond,
         'fields' => array('queue_id','queue_name'),
         'order' => 'QueueList.created DESC',
         'limit' => 100
-        ));
+        ));        
         
-        //print_r($queueData);
         //freegal Query Cache set
-        if ((count($queueData) < 1) || ($queueData === false)) { 
-            echo 147;
+        if ((count($queueData) < 1) || ($queueData === false)) {            
             Cache::write(defaultqueuelist, Cache::read("defaultqueuelist"));
             $this->log("Freegal Defaut Queues returns null ", "cache");
             echo "<br /> Freegal Defaut Queues returns null<br />";
-        } else {
-            echo 44;
+        } else {           
             Cache::delete("defaultqueuelist");
             Cache::write("defaultqueuelist", $queueData);
+            
             //library top 10 cache set
             $this->log("Freegal Defaut Queues cache set", "cache");
             echo "<br />Freegal Defaut Queues cache set <br />";
-        }
+        }  
         
+        //set the variable for each freegal default queue 
         foreach($queueData as $value){
-            
-            
-        }
-          
-        */
+           $defaultQueueId = $value['QueueList']['queue_id'];
+           $defaultQueueName = $value['QueueList']['queue_name'];      
+           $eachQueueDetails =  $this->Queue->getQueueDetails($defaultQueueId);
+           
+           if ((count($eachQueueDetails) < 1) || ($eachQueueDetails === false)) {
+                $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null ", "cache");
+                echo "<br /> Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." returns null<br />";
+           } else {                 
+                Cache::write("defaultqueuelistdetails".$defaultQueueId, $eachQueueDetails);       
+                $this->log("Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set", "cache");
+                echo "<br />Freegal Defaut Queues ". $defaultQueueName ."( ".$defaultQueueId." )"." cache set <br />";              
+           }            
+        }     
+        //--------------------------------Default Freegal Queues End--------------------------------------------------------------
+       
         
-        //--------------------------------Default Freegal Queues End----------------------------------------------------
+        //--------------------------------set each music video in the cache start-------------------------------------------------        
         
         
-        
-        
-        
-        
-        
+       $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
+       
+       foreach($musicVideoRecs as $musicVideoRec){
+           
+           $indiMusicVidID =  $musicVideoRec['Video']['ProdID'];
+           
+           $individualVideoSQL  =
+            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration,
+            Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,
+            Full_Files.CdnPath,Full_Files.SaveAsName,File.CdnPath,File.SourceURL,File.SaveAsName
+            FROM video as Video            
+            LEFT JOIN
+            File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
+            LEFT JOIN
+            PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
+            INNER JOIN File ON (Video.Image_FileID = File.FileID)
+            Where Video.DownloadStatus = '1' AND Video.ProdID = ".$indiMusicVidID;
+
+           $EachVideosData = $this->Video->query($individualVideoSQL);
+           if ((count($EachVideosData) < 1) || ($EachVideosData === false)) {
+                $this->log("Music video id $indiMusicVidID returns null ", "cache");
+                echo "<br /> Music video id $indiMusicVidID returns null<br />";
+           } else {                 
+                Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);       
+                $this->log("Music video id $indiMusicVidID cache set", "cache");
+                echo "<br />Music video id $indiMusicVidID cache set <br />";              
+           }         
+       } 
+       
+       //--------------------------------set each music video in the cache end---------------------------------------------------
         
        
         
         
         
-        
+       
 
-        //--------------------------------Library Top Ten Start----------------------------------------------------
+        //--------------------------------Library Top Ten Start--------------------------------------------------------------------
 
         $libraryDetails = $this->Library->find('all', array(
             'fields' => array('id', 'library_territory'),
@@ -1869,7 +1914,7 @@ STR;
            
         }
         
-       
+     
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 

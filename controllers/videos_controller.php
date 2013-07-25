@@ -502,32 +502,40 @@ STR;
         
         if(isset($this->params['pass'][0]))
         {
-              $VideosSql  =
-                                "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
-                                Sample_Files.SaveAsName,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                File.CdnPath,
-                                File.SourceURL,
-                                File.SaveAsName,
-                                Sample_Files.FileID
-                                FROM video as Video
-                                LEFT JOIN
-                                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
-                                LEFT JOIN
-				PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
-                                Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ProdID = ".$this->params[pass][0];
+            if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
+            $VideosSql  =
+            "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
+            Sample_Files.SaveAsName,
+            Full_Files.CdnPath,
+            Full_Files.SaveAsName,
+            File.CdnPath,
+            File.SourceURL,
+            File.SaveAsName,
+            Sample_Files.FileID
+            FROM video as Video
+            LEFT JOIN
+            File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+            LEFT JOIN
+            File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)                                 
+            LEFT JOIN
+            PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
+            INNER JOIN File ON (Video.Image_FileID = File.FileID)
+            Where Video.DownloadStatus = '1' AND Video.ProdID = ".$this->params[pass][0];
 
-                                $VideosData = $this->Album->query($VideosSql);
+            $VideosData = $this->Album->query($VideosSql);
                                 //echo "<pre>"; print_r($VideosData); die;
+            
+            if (!empty($VideosData)) {
+                Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
+            }
+            }
         }
         else
         {
              $VideosData =   array();
         }
         
+            $VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]);        
             $this->set('VideosData',$VideosData);
             
             
@@ -537,59 +545,57 @@ STR;
             if(count($VideosData)>0)
             {
                    $MoreVideosSql  =
-                                "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
-                                Sample_Files.SaveAsName,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                File.CdnPath,
-                                File.SourceURL,
-                                File.SaveAsName,
-                                Sample_Files.FileID,
-                                Country.Territory,
-				Country.SalesDate
-                                FROM video as Video
-                                LEFT JOIN
-                                File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)   
-                                LEFT JOIN
-                                {$prefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
-                                LEFT JOIN
-				PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
-                                Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$VideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc";
+                    "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
+                    Sample_Files.SaveAsName,
+                    Full_Files.CdnPath,
+                    Full_Files.SaveAsName,
+                    File.CdnPath,
+                    File.SourceURL,
+                    File.SaveAsName,
+                    Sample_Files.FileID,
+                    Country.Territory,
+                    Country.SalesDate
+                    FROM video as Video
+                    LEFT JOIN
+                    File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+                    LEFT JOIN
+                    File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)   
+                    LEFT JOIN
+                    {$prefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+                    LEFT JOIN
+                    PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
+                    Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$VideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc";
 
-                                $MoreVideosData = $this->Album->query($MoreVideosSql);
-                               // echo "<pre>"; print_r($MoreVideosData); die;
+                    $MoreVideosData = $this->Album->query($MoreVideosSql);
+                    // echo "<pre>"; print_r($MoreVideosData); die;
             }
             else
             {
-                                $MoreVideosData = array();
+                    $MoreVideosData = array();
             }
             
                 $this->set('MoreVideosData',$MoreVideosData);
 
                 
-                 //  Top Genre Videos By Artist
-                
-                
+                //Top Genre Videos By Artist 
                 //if ($topDownloads = Cache::read("top_videos_genre" . $territory) === false)
                               
-                    if(count($VideosData)>0)
-                   {
-                        $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
-                           `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
-                           LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
-                           LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
-                           WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$VideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+                if(count($VideosData)>0)
+                {
+                    $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
+                        `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
+                        LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
+                        LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
+                        WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$VideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
 
-                           $TopVideoGenreData = $this->Album->query($TopVideoGenreSql);
-                           Cache::write("top_videos_genre" . $territory, $TopVideoGenreData);
-                           //echo "<pre>"; print_r($TopVideoGenreData); die;
-                   }
-                   else
-                   {
-                            $TopVideoGenreData = array();
-                   }
+                        $TopVideoGenreData = $this->Album->query($TopVideoGenreSql);
+                        Cache::write("top_videos_genre" . $territory, $TopVideoGenreData);
+                        //echo "<pre>"; print_r($TopVideoGenreData); die;
+                }
+                else
+                {
+                        $TopVideoGenreData = array();
+                }
                 
               
 

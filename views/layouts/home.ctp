@@ -12,6 +12,14 @@
             }
             ?>
         </title>
+        <meta property="fb:app_id" content="51244333578"> 
+  	<meta property="og:url" content="http://vimeo.com/24400434"> 
+  	<meta property="og:title" content="Changing Education Paradigm by Sir Ken Robinson"> 
+  	<meta property="og:type" content="article"> 
+        <SCRIPT type="text/javascript" lang="javascript" 
+        src="http://cdn.gigya.com/JS/socialize.js?apikey=2_Y82PzwJ_chSFImHXaIDJClnLyJzmk-VFOavSsaNTzl6m901s_NNxRAS0xJ3bd3_N">
+        </SCRIPT>
+    
         <?php
         echo $this->Html->meta('icon');
         echo $javascript->link('ImageDisableRightClick');

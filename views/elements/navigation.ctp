@@ -333,13 +333,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                 $defaultQueues = $this->requestAction(array('controller' => 'queues', 'action' => 'getDefaultQueues'));
                                             ?>
                                             <ul class="streaming sidebar-nav"><h3>Streaming</h3>								
-                                                    <?php if(!empty($defaultQueues)){ ?>
+                                                    <?php if(!empty($defaultQueues)){  ?>
                                                     
                                                     <li>
                                                             <a href="#" class="sidebar-anchor"><?php __('Freegal Queues'); ?></a>
                                                             <ul class="sidebar-sub-nav">
                                                                 <?php foreach($defaultQueues as $key => $value){?>
-                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
+                                                                    <li><a href="/queuelistdetails/queue_details/<?php echo $value['QueueList']['queue_id'];?>/<?php echo $value['QueueList']['queue_type'];?>"><?php echo $value['QueueList']['queue_name']; ?></a></li>
                                                                 <?php } ?>    
                                                             </ul>
                                                     </li>
@@ -358,14 +358,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <?php } ?>
                                             <ul class="my-downloads sidebar-nav"><h3><?php __('My Downloads'); ?></h3>
                                                     <li><?php echo $html->link(__('Downloads', true), array('controller' => 'homes', 'action' => 'my_history'), array('class' => $download_css)); ?></li>
-                                                    <li><a href="#" class="sidebar-anchor"><?php __('My Playlists'); ?></a></li>
                                                     <?php /*if($libraryInfo['Library']['library_unlimited'] != "1"){ */?>
                                                     <li><?php echo $html->link(__('My Wishlist', true), array('controller' => 'homes', 'action' =>'my_wishlist'), array('class' => $wishlist_css)); ?></li>
                                                     <?php /* } */ ?>     
                                             </ul>                                            
                                             <div class="announcements">
                                                     <h4><a href="#"><?php __('Announcements'); ?></a></h4>
-                                                    <div class="poll" style="display:none;">
+                                                    <div class="poll" >
                                                         <?php echo $announcment_value; ?>
                                                     </div>
                                             </div>
