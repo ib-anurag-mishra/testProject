@@ -862,7 +862,7 @@ if ($type != 'all') {
                             <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($psong->Title, 30, $this)); ?></a></a></div>
                             <div class="song">
         <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
-                                <span title="<?php echo str_replace('"', '', $showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle, 28, $this); ?>
+                                <span title="<?php echo str_replace('"', '', $showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle, 21, $this); ?>
         <?php
         if ($psong->Advisory == 'T') {
             echo '<font class="explicit"> (Explicit)</font>';
