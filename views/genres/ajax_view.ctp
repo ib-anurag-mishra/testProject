@@ -1,4 +1,21 @@
+<script> 
+   $("#artistscroll").scroll(function(){  
+       
+        alert('/genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
+            var data = "";
+            jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: '/genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
+                    data: data,  // post data
+                    success: function(newitems) {                       
+                        $('#artistlistrecord').append(newitems);                        
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+            });  
+        
+   });  
 
+</script> 
 		<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); echo $selectedCallFlag; ?></h3>
 				<div class="alphabetical-filter">

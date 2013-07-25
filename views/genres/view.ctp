@@ -49,24 +49,7 @@
                     $(this).next('.wishlist-popover').addClass('active');
             }
     });
-    
-  $(document).bind('scroll','#artistscroll',function(){
-           
-            alert(3);
-    }); 
-$(document).ready(function(){
-    $("#artistscroll").bind("scroll",function(e){
-            
-                alert(1); 
-           
-    });
-});
 
- $("#artistscroll").bind("scroll",function(e){
-             
-                alert(2); 
-           
-    });
  
 
     
