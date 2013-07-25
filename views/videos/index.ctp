@@ -209,12 +209,13 @@ foreach($topVideoDownloads as $topDownload)
                         </div>
                 <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
     <?php
+             $sr_no++;
     }
 ?>
                    
                     <?php
                     
-                       $sr_no++;
+                      
 }   
 ?>
 
