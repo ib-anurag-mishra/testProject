@@ -11,6 +11,7 @@
                     success: function(newitems) {                       
                         $('#artistlistrecord').append(newitems);                        
                     },
+                    async:   false,
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             }); 
        }
