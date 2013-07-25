@@ -51,7 +51,7 @@
     });
     
     
- $(document).on('scroll','.artist-list',function(){    
+ $(document).on('scroll','#artistscroll',function(){    
             alert(1); 
  });
     
@@ -121,6 +121,12 @@ function showAlbumDetails(albumDetailURL){
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });  
    });
+   
+  $(document).on('scroll','#artistscroll',function(){    
+            alert(1); 
+ });
+   
+   
 });
 </script>            
 <?php
