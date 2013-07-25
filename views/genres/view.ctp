@@ -43,7 +43,7 @@ function load_artist(link , id_serial , genre_name){
        $('#album_details_container').html('');
 
        // var data = "ajax_genre_name="+genre_name;
-       var data = "ajax_genre_name"+genre_name;
+       var data = "ajax_genre_name="+genre_name;
        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
