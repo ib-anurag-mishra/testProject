@@ -1183,7 +1183,10 @@ $(function() {
 		$(this).addClass('selected');
 	});        
         
-      
+        $('.ajax_artistlist_content').on('click',function(e){
+            alert(1);		
+		
+	});  
         
         
         
