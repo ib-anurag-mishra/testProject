@@ -100,6 +100,38 @@ function showAlbumDetails(albumDetailURL){
 }
 
 
+function updatestatus(){
+	//Show number of loaded items
+	var totalItems=$('#content li').length;
+	$('#status').text('Loaded '+totalItems+' Items');
+}
+function scrollalert(){
+	var scrolltop=$('.artist-list').attr('scrollTop');
+	var scrollheight=$('.artist-list').attr('scrollHeight');
+	var windowheight=$('.artist-list').attr('clientHeight');
+	var scrolloffset=20;
+	if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))
+	{
+            //fetch new items
+            $('#status').text('Loading more items...');
+
+            var data = "";
+            jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
+                    data: data,  // post data
+                    success: function(newitems) {
+                        alert(newitems);
+                        $('#content').append(newitems);
+                        updatestatus();
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album list available')}
+            });                
+		
+	}
+	setTimeout('scrollalert();', 1500);
+}
+
 </script>            
 <?php
 
@@ -227,7 +259,7 @@ $genre_text_conversion = array(
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
 				<div class="artist-list">					
-					<ul>						                                            
+					<ul id="content">						                                            
                                          <?php                                                           
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
@@ -249,6 +281,7 @@ $genre_text_conversion = array(
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 				
 					</ul>
+                                    <p><span id="status" ></span></p>
 				</div>
 			</div>
                    </div>                  

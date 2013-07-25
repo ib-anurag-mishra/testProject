@@ -461,6 +461,13 @@ Class GenresController extends AppController
                 $this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
+        
+        
+        function ajax_view_pagination($Genre = null,$Artist = null) {
+               $this -> layout = 'ajax';
+               echo '<li><a data-artist="Narendra Nagesh" > Narendra Nagesh</a></li>';
+               exit;
+	}
 
 
 	/*
