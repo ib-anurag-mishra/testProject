@@ -22,12 +22,19 @@
 </style>
 <script language="javascript">
     
- $(document).on('click','.artist-list a',function(){
-    alert("I've been clicked!");
+ $(document).on('click','.artist-list a',function(){    
     var artist = $(this).data('artist');
     $('.artist-list a').removeClass('selected');
     $(this).addClass('selected');
- });    
+ });   
+
+
+ $(document).on('click','.alphabetical-filter a',function(){    
+    var letter = $(this).data('letter');
+    $('.alphabetical-filter a').removeClass('selected');
+    $('.artist-list a').removeClass('selected');
+    $(this).addClass('selected');
+ }); 
     
 function load_artist(link , id_serial , genre_name){
 	
