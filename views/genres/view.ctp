@@ -100,7 +100,7 @@ function showAlbumDetails(albumDetailURL){
 }
 
 
-$('.artist-list').scroll(function() {
+$('#artistscroll').scroll(function() {
    alert(1);
 
  });   
@@ -231,7 +231,7 @@ $genre_text_conversion = array(
                     
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
-				<div class="artist-list">					
+				<div class="artist-list" id="artistscroll">					
 					<ul id="content">						                                            
                                          <?php                                                           
                                             if(count($genres) > 0){                                                    
