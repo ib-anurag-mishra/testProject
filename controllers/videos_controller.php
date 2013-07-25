@@ -50,7 +50,6 @@ class VideosController extends AppController {
             }
         }
 
-        echo $featuredVideosSql; die;
         
 
         if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {
@@ -536,7 +535,8 @@ STR;
              $VideosData =   array();
         }
         
-            $VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]);        
+        
+        
             $this->set('VideosData',$VideosData);
             
             
