@@ -50,6 +50,11 @@
             }
     });
     
+    
+ $(document).on('scroll','.artist-list',function(){    
+            alert(1); 
+ });
+    
 function load_artist(link , id_serial , genre_name){
 	
        //jQuery('#ajax_artistlist_content').load(link);
@@ -100,9 +105,7 @@ function showAlbumDetails(albumDetailURL){
 }
 
    
- $(document).on('scroll','#artistscroll',function(){    
-            alert(1); 
- });
+
  
  
  $(document).ready(function(){
