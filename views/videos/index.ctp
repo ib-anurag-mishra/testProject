@@ -20,14 +20,15 @@
                 
                 
                 // for ($c = 0; $c < count($featured_video_array); $c+=2) {
-                $i = 1;
+                $total_videos = count($featuredVideos);
+                $sr_no = 0;
                 
                 foreach($featuredVideos as $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                 ?>
-	<li>
+	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
                                 <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
@@ -95,17 +96,13 @@
                             </a>
                             </div>
                         </div>
-                <?php 
-                $i++;
-                if(($i % 2) == 0) {
-                  echo "</li><li>";  
-                }
-                ?>
+               <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
                 
     <?php
+                 $sr_no++;
     }
     ?>
-                    </li>
+                    
                     <?php
 }
 ?>
