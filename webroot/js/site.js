@@ -1176,17 +1176,16 @@ $(function() {
 	});
 	
 	$('.alphabetical-filter a').on('click',function(e){
+           
 		var letter = $(this).data('letter');
 		$('.alphabetical-filter a').removeClass('selected');
 		$('.artist-list a').removeClass('selected');
 		$(this).addClass('selected');
-	});        
+	});    
         
-        $(document).on('click', ".ajax_artistlist_content ul li", function () {
-           alert(1)
-        });
+         
         
-        
+       
         
         
 	
