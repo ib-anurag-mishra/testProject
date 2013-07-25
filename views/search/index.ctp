@@ -962,6 +962,7 @@ if (isset($type)) {
     </section>
 </section>
 <?php } else {
+    print_r($songs); 
     ?>
 
 <!-- for the videos -->
