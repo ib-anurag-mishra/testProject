@@ -109,6 +109,7 @@ function updatestatus(){
 	$('#status').text('Loaded '+totalItems+' Items');
 }
 function scrollalert(){
+    alert(1);
 	var scrolltop=$('.artist-list').attr('scrollTop');
 	var scrollheight=$('.artist-list').attr('scrollHeight');
 	var windowheight=$('.artist-list').attr('clientHeight');
@@ -117,7 +118,7 @@ function scrollalert(){
 	{
             //fetch new items
             $('#status').text('Loading more items...');
-
+alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
             var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
