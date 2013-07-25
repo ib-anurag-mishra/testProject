@@ -13,7 +13,7 @@ $count = '';
 ini_set('error_reporting', E_ALL);
 set_time_limit(0);
 
-$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD');
+$countrys = array('CA' => 'CAD' , 'US' => 'USD' , 'AU' => 'AUD' , 'IT' => 'EUR' , 'NZ' => 'NZD', 'GB' => 'GBP', 'IE' => 'EUR');
 //$countrys = array('CA' => 'CAD');
 
 $lib_types = array('Unlimited' , 'ALC');
