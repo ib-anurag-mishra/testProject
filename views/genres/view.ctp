@@ -109,13 +109,15 @@ function updatestatus(){
 	$('#status').text('Loaded '+totalItems+' Items');
 }
 function scrollalert(){
-    alert(1);
+   
 	var scrolltop=$('.artist-list').attr('scrollTop');
+        alert(scrolltop);
 	var scrollheight=$('.artist-list').attr('scrollHeight');
 	var windowheight=$('.artist-list').attr('clientHeight');
 	var scrolloffset=20;
 	if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))
 	{
+             alert(1);
             //fetch new items
             $('#status').text('Loading more items...');
 alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
