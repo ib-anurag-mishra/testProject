@@ -98,7 +98,10 @@ function showAlbumDetails(albumDetailURL){
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
         });
 }
-
+$('document').ready(function(){
+	updatestatus();
+	scrollalert();
+});
 
 function updatestatus(){
 	//Show number of loaded items
