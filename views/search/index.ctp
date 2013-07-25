@@ -151,6 +151,13 @@ if ($type != 'all') {
     <?php
 } else {
     ?>
+                     <?php
+                if ($type != 'all') {
+                    ?>
+                    <a href="/search/index?q=<?php echo $keyword; ?>&type=all">All Music</a>
+                    <?php
+                } else {
+                    ?>
                     <a	href="#" class="active">All Music</a>
                     <?php
                 }
