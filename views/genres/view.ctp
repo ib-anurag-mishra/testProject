@@ -98,16 +98,8 @@ function showAlbumDetails(albumDetailURL){
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
         });
 }
-$('document').ready(function(){
-	updatestatus();
-	scrollalert();
-});
 
-function updatestatus(){
-	//Show number of loaded items
-	var totalItems=$('#content li').length;
-	$('#status').text('Loaded '+totalItems+' Items');
-}
+
 $('.artist-list').scroll(function() {
    alert(1);
 
@@ -261,8 +253,7 @@ $genre_text_conversion = array(
                                             
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 				
-					</ul>
-                                    <p><span id="status" ></span></p>
+					</ul>                                   
 				</div>
 			</div>
                    </div>                  
