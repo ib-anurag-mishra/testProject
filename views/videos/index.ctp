@@ -20,7 +20,7 @@
                 
                 
                 // for ($c = 0; $c < count($featured_video_array); $c+=2) {
-                $i = 0;
+                $i = 1;
                 
                 foreach($featuredVideos as $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
