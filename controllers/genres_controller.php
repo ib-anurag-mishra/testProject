@@ -347,10 +347,14 @@ Class GenresController extends AppController
                 if($Genre == ''){
                     $Genre = "QWxs";
                 }
+                $isCallFromGenre = 0;
                 if(isset($_REQUEST['ajax_genre_name'])){
-                    echo $_REQUEST['ajax_genre_name'];
+                      $isCallFromGenre = $_REQUEST['ajax_genre_name'];
                 }
-                die;
+                $this->set('isCallFromGenre', $isCallFromGenre);  
+                
+                
+                
 		$this -> layout = 'ajax';
 		$country = $this->Session->read('territory');
 		if( !base64_decode($Genre) ) {
