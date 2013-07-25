@@ -1,6 +1,7 @@
 <script> 
    $("#artistscroll").scroll(function(){  
-       
+       if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
+       {
         alert('/genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
             var data = "";
             jQuery.ajax({
@@ -11,7 +12,8 @@
                         $('#artistlistrecord').append(newitems);                        
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
-            });  
+            }); 
+       }
         
    });  
 
