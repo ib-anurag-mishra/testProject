@@ -121,17 +121,13 @@
 
 <?php
 //print_r($topVideoDownloads); die;
-$i = 0;
+  $total_videos = count($topVideoDownloads);
+  $sr_no = 0;
 foreach($topVideoDownloads as $topDownload)
 {
      $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
      // print_r($featureVideo);
      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-     
-     
-      $total_videos = count($topVideoDownloads);
-      $sr_no = 0;
-     
     ?>
 
                     
@@ -213,12 +209,13 @@ foreach($topVideoDownloads as $topDownload)
                         </div>
                 <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
     <?php
+             $sr_no++;
     }
 ?>
                    
                     <?php
                     
-                       $sr_no++;
+                      
 }   
 ?>
 
