@@ -109,7 +109,7 @@ function showAlbumDetails(albumDetailURL){
  $(document).ready(function(){
  var artistPage = 1;
  
-var $div = $("#artistscroll");
+var $div = $("#artistlistrecord");
 var divBottom = $div.offset().top + parseInt($div.height());
    $("#artistscroll").scroll(function(){ 
        
