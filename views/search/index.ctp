@@ -962,7 +962,7 @@ if (isset($type)) {
     </section>
 </section>
 <?php } else {
-    print_r($songs); 
+    // print_r($songs); 
     ?>
 
 <!-- for the videos -->
@@ -978,31 +978,20 @@ if (isset($type)) {
 				<?php
 				
 				$b=1;
-				for($a=0;$a<100;$a++) {
+				foreach($songs as $psong) {
 				?>	
-					<?php
-					
-					if($a%10 == 0 ) {
-						
-					?>
-						<div class="tracklist" <?php echo 'id=page-'.$b; ?>>
-					<?php
-						$b++;
-					} else {
-					?>	
-						<div class="tracklist">
-					
-					<?php
-					}
-					?>
-					
-						<div class="artist"><a href="#">Carrie Underwood</a></div>
+					<div class="tracklist">
+                        <div class="artist"><a href="#"><?php echo $psong->ArtistText; ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	
-						
+                            <?php
+                                if($this->Session->read("patron")){
+                            ?>
 							<a class="add-to-wishlist" href="#">Add To Wishlist</a>
-							
+							<?php
+                                }
+                            ?>
 							<div class="share clearfix">
 								<p>Share via</p>
 								<a class="facebook" href="#"></a>
@@ -1014,8 +1003,8 @@ if (isset($type)) {
 							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
 						</div>
 						-->
-						<div class="album"><a href="#">Blown Away</a></div>
-						<div class="song">Blown Away</div>
+						<div class="album"><a href="#"><?php echo $psong->Title; ?></a></div>
+						<div class="song"><?php echo $psong->VideoTitle; ?></div>
 						<div class="download"><a href="#">Download</a></div>
 						
 						
