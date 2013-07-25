@@ -88,23 +88,6 @@
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
 					<a class="add-to-playlist-button" href="#"></a>
 					<div class="wishlist-popover">
-						<div class="playlist-options">
-							<ul>
-								<li><a href="#">Create New Playlist</a></li>
-								<li><a href="#">Playlist 1</a></li>
-								<li><a href="#">Playlist 2</a></li>
-								<li><a href="#">Playlist 3</a></li>
-								<li><a href="#">Playlist 4</a></li>
-								<li><a href="#">Playlist 5</a></li>
-								<li><a href="#">Playlist 6</a></li>
-								<li><a href="#">Playlist 7</a></li>
-								<li><a href="#">Playlist 8</a></li>
-								<li><a href="#">Playlist 9</a></li>
-								<li><a href="#">Playlist 10</a></li>
-							</ul>
-						</div>
-						                                                
-                                                
                                                 <?php
                                                                     if($this->Session->read('patron')) {
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
@@ -147,50 +130,21 @@
                                                                         <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
                                                                         <?php
                                                                         }
-                                                                        ?>	
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-						<a class="add-to-playlist" href="#">Add To Queue</a>
-						
-                                                
-                                                
-                                                 <?php
+                                                                        ?>
+                                                       <?php  if($this->Session->read('patron')) {    ?>            
+                                                        <?php if( $this->Session->read('library_type') == 2 ){
+                                                                    echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
+                                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                        <?php } ?>
+							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+                                                         <?php
+                                                            $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 
-                                                $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-
-                                                if($wishlistInfo == 'Added to Wishlist') {
-                                                ?> 
-                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                <?php 
-                                                } else { 
-                                                ?>
-                                                        <span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                <?php	
-                                                }
-
-                                                ?>
-						
-						<div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-						
+                                                            echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
+                                                         ?>
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
+                                                        
+                                                         <?php } ?>
 					</div>
 				</div>
 					
