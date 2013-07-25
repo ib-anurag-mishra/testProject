@@ -23,8 +23,11 @@
 <script language="javascript">
     
  $(document).on('click','.artist-list a',function(){
-            alert("I've been clicked!")
-        });    
+    alert("I've been clicked!");
+    var artist = $(this).data('artist');
+    $('.artist-list a').removeClass('selected');
+    $(this).addClass('selected');
+ });    
     
 function load_artist(link , id_serial , genre_name){
 	
