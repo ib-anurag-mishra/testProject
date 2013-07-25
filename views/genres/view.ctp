@@ -108,32 +108,25 @@ function showAlbumDetails(albumDetailURL){
  
  $(document).ready(function(){
  var artistPage = 1;
- 
-var $div = $("#artistlistrecord");
-var divBottom = $div.offset().top + parseInt($div.height());
-   $("#artistscroll").scroll(function(){ 
+$("#artistscroll").scroll(function(){ 
        
-    var screenBottom = $(this).scrollTop() + parseInt($(window).height());
-
-    // Test if the div has been revealed
-    if(screenBottom > divBottom)
+    if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
     {
-        // do something
-        alert(2);
+        alert('end reached');
     }
        
-            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/'+artistPage;
-            var data = "";
-            jQuery.ajax({
-                    type: "post",  // Request method: post, get
-                    url: link, // URL to request
-                    data: data,  // post data
-                    success: function(newitems) { 
-                        artistPage++;
-                        $('#artistlistrecord').append(newitems);                        
-                    },
-                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
-            });  
+    var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/'+artistPage;
+    var data = "";
+    jQuery.ajax({
+            type: "post",  // Request method: post, get
+            url: link, // URL to request
+            data: data,  // post data
+            success: function(newitems) { 
+                artistPage++;
+                $('#artistlistrecord').append(newitems);                        
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+    });  
         
    });   
 });
