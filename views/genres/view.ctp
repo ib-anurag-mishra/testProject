@@ -108,34 +108,9 @@ function updatestatus(){
 	var totalItems=$('#content li').length;
 	$('#status').text('Loaded '+totalItems+' Items');
 }
-$('#target').scroll(function() {
-   
-	var scrolltop=$('#content').attr('scrollTop');
-        alert(scrolltop);
-	var scrollheight=$('#content').attr('scrollHeight');
-	var windowheight=$('#content').attr('clientHeight');
-	var scrolloffset=20;
-	if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))
-	{
-             
-            //fetch new items
-            $('#status').text('Loading more items...');
-            alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
-            var data = "";
-            jQuery.ajax({
-                    type: "post",  // Request method: post, get
-                    url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
-                    data: data,  // post data
-                    success: function(newitems) {
-                        alert(newitems);
-                        $('#content').append(newitems);
-                        updatestatus();
-                    },
-                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album list available')}
-            });                
-		
-	}
-	setTimeout('scrollalert();', 1500);
+$('.artist-list').scroll(function() {
+   alert(1);
+
  });   
 
 </script>            
