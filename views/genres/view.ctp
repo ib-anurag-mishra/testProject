@@ -100,10 +100,16 @@ function showAlbumDetails(albumDetailURL){
 }
 
    
- $(document).on('scroll','#artistscroll',function(){  
-     
+ $(document).on('scroll','#artistscroll',function(){    
    alert(1);
  });
+ 
+ 
+ $(document).ready(function(){
+   $("#artistscroll").scroll(function(){
+    alert(1);
+   });
+});
 </script>            
 <?php
 
