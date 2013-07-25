@@ -43,7 +43,7 @@ function load_artist(link , id_serial , genre_name){
        $('#album_details_container').html('');
 
        // var data = "ajax_genre_name="+genre_name;
-       var data = "";
+       var data = "ajax_genre_name"+genre_name;
        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
@@ -75,14 +75,14 @@ function showAlbumDetails(albumDetailURL){
   
         var data = "";
         jQuery.ajax({
-                type: "post",  // Request method: post, get
-                url: webroot+albumDetailURL, // URL to request
-                data: data,  // post data
-                success: function(response) {              
-                    $('#album_details_container').html(response);
-                },
-                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
-            });
+            type: "post",  // Request method: post, get
+            url: webroot+albumDetailURL, // URL to request
+            data: data,  // post data
+            success: function(response) {              
+                $('#album_details_container').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
+        });
 }
 
 

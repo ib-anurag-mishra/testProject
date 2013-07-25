@@ -34,7 +34,7 @@ class SoapsController extends AppController {
 
   private $authenticated = false;
   var $uses = array('User','Library','Download','Song','Wishlist','Album','Url','Language','Credentials','Files', 'Zipusstate', 'Artist', 'Genre','AuthenticationToken','Country','Card','Currentpatron','Product', 'DeviceMaster', 'LibrariesTimezone', 'LatestDownload', 'Video', 'LatestVideodownload', 'Videodownload', 'QueueList', 'QueueDetail'); 
-  var $components = array('Downloads','AuthRequest', 'Downloadsvideos', 'Solr');
+  var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr');
 
    
 
@@ -5262,12 +5262,7 @@ STR;
        throw new SOAPFault('Soap:InvalidRequest', 'You do not have permission to access Queue.');
     }
  
-    // test array
     $arrsongs = explode(',', $arrsongs);
-  
-    if(!($this->isValidAuthenticationToken($authenticationToken))) {
-      throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
-    }
     
     $patronId = $this->getPatronIdFromAuthenticationToken($authenticationToken);
     
@@ -5288,10 +5283,9 @@ STR;
         $insertArr['queue_name'] = $queueName;
         $insertArr['patron_id'] = $patronId;
         $insertArr['status'] = 1;
-        $insertArr['description'] = '';
         $insertArr['queue_type'] = '0';
         $insertArr['description'] = $queueDescription;
-	$this->QueueList->save($insertArr);
+        $this->QueueList->save($insertArr);
       
         $queueID = $this->QueueList->getLastInsertID();
 
@@ -5327,7 +5321,7 @@ STR;
         $cnt = $this->QueueList->find('count', array(
           'conditions' => array( 'queue_name' => $queueName, 'patron_id' => $patronId, 'queue_id != "'.$queueID.'"'),
           'recursive' => -1      
-        ));  //echo $this->QueueList->lastQuery(); exit;
+        ));
         if(0 != $cnt) {
           return $this->createsQueueOperationObject(false, 'Name already exist');
         }         
@@ -5363,10 +5357,13 @@ STR;
       throw new SOAPFault('Soap:logout', 'Your credentials seems to be changed or expired. Please logout and login again.');
     }
     
+    $st2 = $st1 = false;
     $st2 = $this->QueueDetail->deleteAll(array('queue_id' => $queueID), false);
-    $st1 = $this->QueueList->deleteAll(array('queue_id' => $queueID), false);
-    
-    if( (true === $st1) && (true === $st2) ) {
+    if(true === $st2){
+      $st1 = $this->QueueList->deleteAll(array('queue_id' => $queueID), false);
+    }
+      
+    if( (true === $st1) ) {
       return $this->createsQueueOperationObject(true, 'You have deleted Queue successfully');
     }else{
       return $this->createsQueueOperationObject(false, 'Failed to delete Queue');
@@ -5459,7 +5456,7 @@ STR;
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
       
       if(!(empty($data[$cnt]['QueueList']['queue_name']))) {
-        //if($this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
+        if(0 == $this->IsDownloadable($data[$cnt]['Songs']['ProdID'], $lib_territory, $data[$cnt]['Songs']['provider_type'])) { 
           $obj = new QueueDetailDataType;
         
           $obj->QueueName                    = $data[$cnt]['QueueList']['queue_name'];
@@ -5476,7 +5473,7 @@ STR;
    	  $obj->QueueFullLength_Duration     = $data[$cnt]['Songs']['FullLength_Duration'];
               
           $queue[] = new SoapVar($obj,SOAP_ENC_OBJECT,null,null,'QueueDetailDataType');
-        //}  
+        }  
       }     
     }
     
@@ -6498,42 +6495,45 @@ STR;
    * @return int
    */
   private function setQueueSongs($arrSongs, $queueID) {
-  
+    
     $this->QueueDetail->deleteAll(array('queue_id' => $queueID), false);
     if(!(empty($arrSongs))) {  
-    foreach($arrSongs as $Spid){
-      $Spid = trim($Spid);
-      $productDetails = $this->Product->find('first',array(
-        'conditions' => array('pid' => $Spid),
-        'fields' => array('ProdID', 'provider_type'),
-        'recursive' => -1
-      ));
+      foreach($arrSongs as $Spid){
+        $Spid = trim($Spid);
+        if('' != $Spid) {
+          $productDetails = $this->Product->find('first',array(
+            'conditions' => array('pid' => $Spid),
+            'fields' => array('ProdID', 'provider_type'),
+            'recursive' => -1
+          ));
       
-      $albumDetails = $this->Song->find('first',array(
-        'joins' => array(
-          array(
-            'type' => 'INNER',
-            'table' => 'Albums',
-            'alias' => 'Albums',
-            'foreignKey' => false,
-            'conditions' => array('Song.ReferenceID = Albums.ProdID', 'Song.provider_type = Albums.provider_type'),        
-          )
-        ),  
-        'conditions' => array('Song.ProdID' => $productDetails['Product']['ProdID'], 'Song.provider_type' => $productDetails['Product']['provider_type']),
-        'fields' => array('Albums.ProdID', 'Albums.provider_type'),
-        'recursive' => -1
-      ));
+          $albumDetails = $this->Song->find('first',array(
+            'joins' => array(
+                array(
+                    'type' => 'INNER',
+                    'table' => 'Albums',
+                    'alias' => 'Albums',
+                    'foreignKey' => false,
+                    'conditions' => array('Song.ReferenceID = Albums.ProdID', 'Song.provider_type = Albums.provider_type'),        
+                )
+            ),  
+            'conditions' => array(
+              'Song.ProdID' => $productDetails['Product']['ProdID'], 
+              'Song.provider_type' => $productDetails['Product']['provider_type']
+            ),
+            'fields' => array('Albums.ProdID', 'Albums.provider_type'),
+            'recursive' => -1
+          ));
       
-      // insert QueuelistDetails
-      $insertArr['queue_id'] = $queueID;
-      $insertArr['song_prodid'] = $productDetails['Product']['ProdID'];
-      $insertArr['song_providertype'] = $productDetails['Product']['provider_type'];
-      $insertArr['album_prodid'] = $albumDetails['Albums']['ProdID'];
-      $insertArr['album_providertype'] = $albumDetails['Albums']['provider_type'];
-      $status = $this->QueueDetail->save($insertArr);
-      
+          $insertArr['queue_id'] = $queueID;
+          $insertArr['song_prodid'] = $productDetails['Product']['ProdID'];
+          $insertArr['song_providertype'] = $productDetails['Product']['provider_type'];
+          $insertArr['album_prodid'] = $albumDetails['Albums']['ProdID'];
+          $insertArr['album_providertype'] = $albumDetails['Albums']['provider_type'];
+          $status = $this->QueueDetail->save($insertArr);
+        }
+      }
     }
-  }
   
     return true;
   }
