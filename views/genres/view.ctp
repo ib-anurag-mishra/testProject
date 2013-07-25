@@ -106,15 +106,13 @@ function showAlbumDetails(albumDetailURL){
  
  
  $(document).ready(function(){
-   $("#artistscroll").scroll(function(){
-       alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
+   $("#artistscroll").scroll(function(){       
      var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
                     url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
                     data: data,  // post data
-                    success: function(newitems) {
-                        alert(newitems);
+                    success: function(newitems) {                       
                         $('#content').append(newitems);
                         updatestatus();
                     },
