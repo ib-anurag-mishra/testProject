@@ -60,7 +60,7 @@
 				</ul>
 			</div>
 		</div>
-		<h3>Songs</h3>
+		<!--<h3>Songs</h3>
 		<div class="songs-shadow-container">
 			<div class="songs-scrollable horiz-scroll">
 				<ul style="width:27000px;">
@@ -198,7 +198,7 @@
 				</ul>
 			</div>
 		
-		</div>
+		</div> -->
 		<h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
