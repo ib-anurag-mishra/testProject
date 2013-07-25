@@ -5451,6 +5451,10 @@ STR;
       )
     );
     
+    if(empty($data)) {
+      throw new SOAPFault('Soap:EmptyQueue', 'You do not have any song in this Queue.');
+    }
+    
     $lib_territory = $this->getLibraryTerritory( $this->getLibraryIdFromAuthenticationToken($authenticationToken) );
          
     for( $cnt = $startFrom; $cnt < ($startFrom+$recordCount); $cnt++  ) {
