@@ -349,7 +349,7 @@ Class GenresController extends AppController
                 }
                 $isCallFromGenre = 0;
                 if(isset($_REQUEST['ajax_genre_name'])){
-                      $isCallFromGenre = $_REQUEST['ajax_genre_name'];
+                      $isCallFromGenre = 1;
                 }
                 $this->set('isCallFromGenre', $isCallFromGenre);  
                 
