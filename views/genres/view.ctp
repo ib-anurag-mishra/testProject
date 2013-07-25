@@ -99,12 +99,11 @@ function showAlbumDetails(albumDetailURL){
         });
 }
 
-
-$('#artistscroll').scroll(function() {
+   
+ $(document).on('scroll','#artistscroll',function(){  
+     
    alert(1);
-
- });   
-
+ });
 </script>            
 <?php
 
