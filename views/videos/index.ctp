@@ -163,11 +163,18 @@ foreach($topVideoDownloads as $topDownload)
                                 <a class="featured-video-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a> 
                             <?php
                                }
-                            ?>					
+                            ?>	
+                                <a class="add-to-wishlist" href="#">Add To Wishlist</a>
+														
+														<div class="share clearfix">
+															<p>Share via</p>
+															<a class="facebook" href="#"></a>
+															<a class="twitter" href="#"></a>
+														</div>
                                 <?php
-                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
-                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+//                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
+//                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+//                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                 
                                 <?php
                                 } else {
