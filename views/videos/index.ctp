@@ -118,7 +118,7 @@
 
             <ul class="clearfix">
 <?php if(!empty($topVideoDownloads)){ ?>
-<li>
+
 <?php
 //print_r($topVideoDownloads); die;
 $i = 0;
