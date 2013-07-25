@@ -54,6 +54,11 @@
  $(document).on('scroll','#artistscroll',function(){    
             alert(1); 
  });
+ 
+$(document).delegate('#artistscroll', 'scroll', function(){
+    
+    alert(1);
+});
     
 function load_artist(link , id_serial , genre_name){
 	
