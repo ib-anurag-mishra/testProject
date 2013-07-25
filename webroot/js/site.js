@@ -2047,7 +2047,7 @@ $(function() {
 	
 	
 	
-	$('.advanced-search li:first-child a').addClass('active');
+	// $('.advanced-search li:first-child a').addClass('active');
 
 	
 	//$('.tracklist-header .album').addClass('active');
