@@ -50,7 +50,10 @@
             }
     });
     
-  
+  $(document).bind('scroll','#artistscroll',function(){
+           
+            alert(3);
+    }); 
 $(document).ready(function(){
     $("#artistscroll").bind("scroll",function(e){
             
