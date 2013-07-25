@@ -285,6 +285,7 @@
 
 
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
+                                                        <?php if($this->Session->read("patron")){ ?> 
 							<a class="add-to-playlist-button" href="#"></a>
 							<div class="wishlist-popover">
                                                             <?php
@@ -293,6 +294,7 @@
                                                                 echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                             ?>  
 							</div>
+                                                        <?php } ?>
 							
 						</div>
 						<div class="album-title">
