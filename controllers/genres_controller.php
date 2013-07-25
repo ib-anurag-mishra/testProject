@@ -19,7 +19,7 @@ Class GenresController extends AppController
 	function beforeFilter() {
 		parent::beforeFilter();
                 
-		$this->Auth->allowedActions = array('view','index','ajax_view');
+		$this->Auth->allowedActions = array('view','index','ajax_view','ajax_view_pagination');
 		$libraryCheckArr = array("view","index");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //		  $validPatron = $this->ValidatePatron->validatepatron();
