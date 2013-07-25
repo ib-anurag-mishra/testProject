@@ -42,8 +42,8 @@
                     
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
-				<div class="artist-list">					
-					<ul>                                           
+				<div class="artist-list" id="artistscroll">					
+					<ul id="artistlistrecord">	                                        
                                          <?php
                                                            
                                             if(count($genres) > 0){                                                    
