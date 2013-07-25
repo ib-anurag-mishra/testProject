@@ -107,15 +107,29 @@ function showAlbumDetails(albumDetailURL){
  
  
  $(document).ready(function(){
-   $("#artistscroll").scroll(function(){  
+ var artistPage = 1;
+ 
+var $div = $("#artistscroll");
+var divBottom = $div.offset().top + parseInt($div.height());
+   $("#artistscroll").scroll(function(){ 
        
-        
+    var screenBottom = $(this).scrollTop() + parseInt($(window).height());
+
+    // Test if the div has been revealed
+    if(screenBottom > divBottom)
+    {
+        // do something
+        alert(2);
+    }
+       
+            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/'+artistPage;
             var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
-                    url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
+                    url: link, // URL to request
                     data: data,  // post data
-                    success: function(newitems) {                       
+                    success: function(newitems) { 
+                        artistPage++;
                         $('#artistlistrecord').append(newitems);                        
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
