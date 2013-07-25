@@ -21,6 +21,11 @@
     
 </style>
 <script language="javascript">
+    
+ $(document).on('click','.artist-list a',function(){
+            alert("I've been clicked!")
+        });    
+    
 function load_artist(link , id_serial , genre_name){
 	
 	//jQuery('#ajax_artistlist_content').load(link);

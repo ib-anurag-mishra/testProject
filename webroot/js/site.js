@@ -1185,9 +1185,7 @@ $(function() {
         
          
         
-        $(document).on('click','.ajax_artistlist_content',function(){
-            alert("I've been clicked!")
-        });
+       
         
         
 	
