@@ -112,9 +112,9 @@ function showAlbumDetails(albumDetailURL){
                     type: "post",  // Request method: post, get
                     url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
                     data: data,  // post data
-                    success: function(newitems) {                       
-                        $('#content').append(newitems);
-                        updatestatus();
+                    success: function(newitems) {  
+                        $('#content').html('');
+                        $('#content').append(newitems);                        
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });  
