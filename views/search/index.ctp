@@ -839,8 +839,13 @@ if ($type != 'all') {
                                 </div>
 
                                 <a class="add-to-playlist" href="#">Add To Queue</a>
-                                <a class="add-to-wishlist" href="#">Add To Wishlist</a>
-
+                                <?php
+                                if($this->Session->read("patron")){
+                                ?>
+                                    <a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                <?php
+                                }
+                                ?>
                                 <div class="share clearfix">
                                     <p>Share via</p>
                                     <a class="facebook" href="#"></a>
