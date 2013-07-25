@@ -107,6 +107,7 @@ function showAlbumDetails(albumDetailURL){
  
  $(document).ready(function(){
    $("#artistscroll").scroll(function(){
+       alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
      var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
@@ -117,7 +118,7 @@ function showAlbumDetails(albumDetailURL){
                         $('#content').append(newitems);
                         updatestatus();
                     },
-                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album list available')}
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });  
    });
 });
