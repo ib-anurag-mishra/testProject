@@ -29,7 +29,8 @@
  });   
 
 
- $(document).on('click','.alphabetical-filter a',function(){    
+ $(document).on('click','.alphabetical-filter a',function(){  
+     alert(1);
     var letter = $(this).data('letter');
     $('.alphabetical-filter a').removeClass('selected');
     $('.artist-list a').removeClass('selected');
