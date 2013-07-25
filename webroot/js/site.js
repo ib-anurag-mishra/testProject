@@ -1183,12 +1183,11 @@ $(function() {
 		$(this).addClass('selected');
 	});        
         
-        $('.ajax_artistlist_content').on('click',function(e){
-            alert(1);		
-		
-	});  
+         
         
-        
+        $(document).on('click','.ajax_artistlist_content',function(){
+            alert("I've been clicked!")
+        });
         
         
 	
