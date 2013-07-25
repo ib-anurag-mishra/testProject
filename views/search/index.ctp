@@ -806,10 +806,13 @@ if ($type != 'all') {
             ?>
                         <div class="tracklist">
                             <!--<a href="#" class="preview"></a>-->
+                        
                         <?php
+                        if($this->Session->read("patron")){
                         echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview", "style" => "cursor:pointer;display:block;", "id" => "play_audio" . $i, "onClick" => 'playSample(this, "' . $i . '", ' . $psong->ProdID . ', "' . base64_encode($psong->provider_type) . '", "' . $this->webroot . '");'));
                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
+                        }
                         ?>
                             <div class="artist"><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
@@ -836,8 +839,13 @@ if ($type != 'all') {
                                 </div>
 
                                 <a class="add-to-playlist" href="#">Add To Queue</a>
-                                <a class="add-to-wishlist" href="#">Add To Wishlist</a>
-
+                                <?php
+                                if($this->Session->read("patron")){
+                                ?>
+                                    <a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                <?php
+                                }
+                                ?>
                                 <div class="share clearfix">
                                     <p>Share via</p>
                                     <a class="facebook" href="#"></a>

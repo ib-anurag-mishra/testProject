@@ -52,8 +52,8 @@
 					<ul class="clearfix">
 		<li><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'));?></li>
 		<li><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index')); ?></li>
-		<li><?php echo $html->link(__('Most Popular', true), array('controller' => 'mostpopular', 'action' => 'view')); ?></li>
-		<li><?php echo $html->link(__('New Releases', true), array('controller' => 'newreleases', 'action' => 'view')); ?></li>
+		<li><?php echo $html->link(__('Most Popular', true), array('controller' => 'homes', 'action' => 'us_top_10')); ?></li>
+		<li><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' => 'new_releases')); ?></li>
 		<li><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' => 'view')); ?></li>
 		<li><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' => 'index')); ?></li>
 					</ul>
