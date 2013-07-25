@@ -91,7 +91,7 @@
                                     $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 50). '...';
                             }
                             ?>
-                            <?php echo $this->getTextEncode($ArtistText['Video']['ArtistText']);?>
+                            <?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?>
                             </a>
                             </div>
                         </div>
