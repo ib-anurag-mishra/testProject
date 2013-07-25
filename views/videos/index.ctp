@@ -137,13 +137,13 @@ foreach($topVideoDownloads as $topDownload)
                             <a class="top-video-download-now-button" href="#">Download Now</a>
                            <a class="add-to-playlist-button" href="#"></a> 
                            
-                           
+                           <div class="wishlist-popover">
                                 <?php
                                 if($this->Session->read('patron')) {
                                     if($libraryDownload == '1' && $patronDownload == '1') {
 
                                 ?>
-                            <div class="wishlist-popover">
+                            
                  <form method="post" id="form<?php echo $topDownload["Video"]["ProdID"]; ?>" action="/videos/download">
                                 <input type="hidden" name="ProdID" value="<?php echo $topDownload["Video"]["ProdID"];?>" />
 				<input type="hidden" name="ProviderType" value="<?php echo $topDownload["Video"]["provider_type"]; ?>" />
@@ -156,7 +156,7 @@ foreach($topVideoDownloads as $topDownload)
                                 </a></span>                                                              
 
                 </form>	
-                                </div>
+                               
 			<?php
                                }else{
                             ?>
@@ -189,7 +189,7 @@ foreach($topVideoDownloads as $topDownload)
                                 }
                                 ?>
                             
-
+                                 </div>
                         </div>
                         <div class="video-title">
                             <a href="javascript:void(0);">
