@@ -154,7 +154,7 @@ $genre_text_conversion = array(
                     	</ul>
 				</div>
 			</div>
-			<div class="border"></div>
+			<div class="border"></dajax_artistlist_contentiv>
                 <div id="ajax_artistlist_content">
                     	<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); ?></h3>

@@ -1182,11 +1182,8 @@ $(function() {
 //		$(this).addClass('selected');
 //	});        
         
-        $(document).on('click', ".alphabetical-filter a", function () {
-            var letter = $(this).data('letter');
-		$('.alphabetical-filter a').removeClass('selected');
-		$('.artist-list a').removeClass('selected');
-		$(this).addClass('selected');
+        $(document).on('click', ".artist-list-shadow-container", function () {
+            alert(1);
         });
         
         
