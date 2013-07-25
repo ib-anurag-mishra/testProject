@@ -50,6 +50,7 @@ class VideosController extends AppController {
             }
         }
 
+        echo $featuredVideosSql; die;
         
 
         if ($topDownloads = Cache::read("top_download_videos" . $territory) === false) {

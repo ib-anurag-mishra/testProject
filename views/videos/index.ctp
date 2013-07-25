@@ -12,8 +12,7 @@
             <ul class="clearfix">
 
 
-<?php if(count($featuredVideos) > 0){ ?>
-                <li>
+<?php if(count($featuredVideos) > 0){ ?>                
                 <?php
                 // $featured_video_array = array('img/videos/featured-videos/featured-video-aerosmith-274x162.jpg', 'img/videos/featured-videos/featured-video-aliciakeys-274x162.jpg', 'img/videos/featured-videos/featured-video-calvinharris-274x162.jpg', 'img/videos/featured-videos/featured-video-cherlloyd-274x162.jpg', 'img/videos/featured-videos/featured-video-kingsofleon-274x162.jpg', 'img/videos/featured-videos/featured-video-pink-274x162.jpg', 'img/videos/featured-videos/featured-video-aerosmith-274x162.jpg', 'img/videos/featured-videos/featured-video-aliciakeys-274x162.jpg', 'img/videos/featured-videos/featured-video-calvinharris-274x162.jpg', 'img/videos/featured-videos/featured-video-cherlloyd-274x162.jpg', 'img/videos/featured-videos/featured-video-kingsofleon-274x162.jpg', 'img/videos/featured-videos/featured-video-pink-274x162.jpg');
                 
@@ -130,10 +129,13 @@ foreach($topVideoDownloads as $topDownload)
      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
      
      
+      $total_videos = count($topVideoDownloads);
+      $sr_no = 0;
+     
     ?>
 
                     
-<li>
+                    <?php if($sr_no%2==0) {?><li> <?php }?>
                         <div class="video-cover-container">
                             <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
@@ -209,17 +211,14 @@ foreach($topVideoDownloads as $topDownload)
 
                             </a>
                         </div>
-               <?php 
-                $i++;
-                if(($i % 2) == 0) {
-                  echo "</li><li>";  
-                }
-                ?>
+                <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
     <?php
     }
 ?>
-                    </li>
+                   
                     <?php
+                    
+                       $sr_no++;
 }   
 ?>
 
