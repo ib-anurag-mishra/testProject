@@ -365,3 +365,19 @@ div.paging span a, div.paging a {
     display: none;
     text-align: center;
 }
+
+.genre-download-now-button{
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    font-size: 12px;
+    font-weight: bold;
+    height: 25px;
+    left: 278px;
+    line-height: 26px;
+    padding: 6px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    top: 7px;
+    width: 124px;    
+}
