@@ -49,7 +49,6 @@
                     $(this).next('.wishlist-popover').addClass('active');
             }
     });
-    
 
  
 
@@ -67,11 +66,7 @@ function load_artist(link , id_serial , genre_name){
             url: link, // URL to request
             data: data,  // post data
             success: function(response) {                
-                var $myVar = eval(response);
-                $myVar.scroll(function(){
-                    alert("A");
-                });
-                $('#ajax_artistlist_content').html($myVar);
+                $('#ajax_artistlist_content').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
         });
