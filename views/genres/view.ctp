@@ -29,12 +29,31 @@
  });   
 
 
- $(document).on('click','.alphabetical-filter a',function(){    
+ $(document).on('click','.alphabetical-filter a',function(){  
+     
     var letter = $(this).data('letter');
     $('.alphabetical-filter a').removeClass('selected');
     $('.artist-list a').removeClass('selected');
     $(this).addClass('selected');
- }); 
+ });
+
+ $(document).on('click','.add-to-playlist-button',function(){
+           
+            $('.wishlist-popover').removeClass('active');
+
+            if($(this).next('.wishlist-popover').hasClass('active')) {
+                    $(this).next('.wishlist-popover').removeClass('active');
+                    $(this).find('.add-to-playlist-button').css({opacity:.5});
+            } else {
+
+                    $(this).next('.wishlist-popover').addClass('active');
+            }
+    });
+    
+    
+ $(document).on('scroll','#artistscroll',function(){    
+            alert(1); 
+ });
     
 function load_artist(link , id_serial , genre_name){
 	
@@ -43,7 +62,7 @@ function load_artist(link , id_serial , genre_name){
        $('#album_details_container').html('');
 
        // var data = "ajax_genre_name="+genre_name;
-       var data = "ajax_genre_name"+genre_name;
+       var data = "ajax_genre_name="+genre_name;
        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
@@ -85,7 +104,30 @@ function showAlbumDetails(albumDetailURL){
         });
 }
 
+   
 
+ 
+ 
+ $(document).ready(function(){
+   $("#artistscroll").scroll(function(){       
+            var data = "";
+            jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
+                    data: data,  // post data
+                    success: function(newitems) {                       
+                        $('#artistlistrecord').append(newitems);                        
+                    },
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+            });  
+   });
+   
+  $(document).on('scroll','#artistscroll',function(){    
+            alert(1); 
+ });
+   
+   
+});
 </script>            
 <?php
 
@@ -212,8 +254,8 @@ $genre_text_conversion = array(
                     
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
-				<div class="artist-list">					
-					<ul>						                                            
+				<div class="artist-list" id="artistscroll">					
+					<ul id="artistlistrecord">						                                            
                                          <?php                                                           
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
@@ -234,7 +276,7 @@ $genre_text_conversion = array(
                                             
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 				
-					</ul>
+					</ul>                                   
 				</div>
 			</div>
                    </div>                  

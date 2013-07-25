@@ -4312,7 +4312,7 @@ STR;
                
              
              
-             if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
+             /*if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4384,7 +4384,7 @@ STR;
                     
                 }
                 
-                $this->set('new_releases_songs', $coming_soon_rs); 
+                $this->set('new_releases_songs', $coming_soon_rs); */
                 
                 
                 //////////////////////////////////Videos/////////////////////////////////////////////////////////

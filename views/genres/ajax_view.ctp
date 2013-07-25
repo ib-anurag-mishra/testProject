@@ -1,6 +1,6 @@
 
 		<div class="alphabetical-shadow-container">
-				<h3><?php __('Artist'); ?></h3>
+				<h3><?php __('Artist'); echo $selectedCallFlag; ?></h3>
 				<div class="alphabetical-filter">
                                                                         <ul>
                                     <li><a href="javascript:void(0);" data-letter="All" class="selected" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
@@ -42,8 +42,8 @@
                     
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
-				<div class="artist-list">					
-					<ul>                                           
+				<div class="artist-list" id="artistscroll">					
+					<ul id="artistlistrecord">	                                        
                                          <?php
                                                            
                                             if(count($genres) > 0){                                                    

@@ -26,7 +26,7 @@
                         
                         
 			
-			<div class="album-genre"><?php echo __('Genre').": ";?><span><?php echo $html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) ;
+			<div class="album-genre"><?php echo __('Genre').": ";?><span><?php echo $this->getTextEncode($album['Genre']['Genre']) ;
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<br />'; echo '<font class="explicit"> (Explicit)</font>';
                             
@@ -53,8 +53,16 @@
 				
 				<div class="tracklist">
                                     
-                                    <a href="#" class="preview"></a>
-					</a>	
+                                <?php  if($this->Session->read('patron')) {  ?>  
+                                    <?php           
+                                                if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
+                                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                                        echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
+                                                        echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
+                                                }
+                                    ?>
+                                <?php } ?>
+					
                                 
                                 
                                         <div class="song"><?php
@@ -80,23 +88,6 @@
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
 					<a class="add-to-playlist-button" href="#"></a>
 					<div class="wishlist-popover">
-						<div class="playlist-options">
-							<ul>
-								<li><a href="#">Create New Playlist</a></li>
-								<li><a href="#">Playlist 1</a></li>
-								<li><a href="#">Playlist 2</a></li>
-								<li><a href="#">Playlist 3</a></li>
-								<li><a href="#">Playlist 4</a></li>
-								<li><a href="#">Playlist 5</a></li>
-								<li><a href="#">Playlist 6</a></li>
-								<li><a href="#">Playlist 7</a></li>
-								<li><a href="#">Playlist 8</a></li>
-								<li><a href="#">Playlist 9</a></li>
-								<li><a href="#">Playlist 10</a></li>
-							</ul>
-						</div>
-						                                                
-                                                
                                                 <?php
                                                                     if($this->Session->read('patron')) {
 										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
@@ -105,18 +96,19 @@
 											{	
 												if($albumSong['Song']['status'] != 'avail'){
 										?>
-													<p>
-														<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
-															<input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
-															<input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
-															
-															<span class="beforeClick" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
- 																<a href='#' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
-															</span>
-															<span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:left"><?php __("Please Wait...");?></span>
-															<span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
-														</form>													
-													</p>													
+										<form method="Post" id="form<?php echo $albumSong["Song"]["ProdID"]; ?>" action="/homes/userDownload">
+                                                                                        <input type="hidden" name="ProdID" value="<?php echo $albumSong["Song"]["ProdID"];?>" />
+                                                                                        <input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
+
+                                                                                        <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
+                                                                                                <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                                                                        </span>
+                                                                                
+                                                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
+                                                                                        <span id="download_loader_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="float:right;padding-right:8px;padding-top:2px;"><?php  echo  $html->image('ajax-loader_black.gif');  ?></span> </a> </span>
+                                                                                           
+                                                                                </form>													
+												
 									<?php	
 												} else {
 													?><a class='add-to-wishlist' href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads");?>'><?php __("Downloaded");?></a><?php
@@ -138,50 +130,21 @@
                                                                         <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
                                                                         <?php
                                                                         }
-                                                                        ?>	
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-						<a class="add-to-playlist" href="#">Add To Queue</a>
-						
-                                                
-                                                
-                                                 <?php
+                                                                        ?>
+                                                       <?php  if($this->Session->read('patron')) {    ?>            
+                                                        <?php if( $this->Session->read('library_type') == 2 ){
+                                                                    echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
+                                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                        <?php } ?>
+							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+                                                         <?php
+                                                            $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 
-                                                $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-
-                                                if($wishlistInfo == 'Added to Wishlist') {
-                                                ?> 
-                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                <?php 
-                                                } else { 
-                                                ?>
-                                                        <span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                <?php	
-                                                }
-
-                                                ?>
-						
-						<div class="share clearfix">
-							<p>Share via</p>
-							<a class="facebook" href="#"></a>
-							<a class="twitter" href="#"></a>
-						</div>
-						
+                                                            echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
+                                                         ?>
+                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
+                                                        
+                                                         <?php } ?>
 					</div>
 				</div>
 					

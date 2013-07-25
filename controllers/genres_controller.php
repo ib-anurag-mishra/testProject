@@ -19,7 +19,7 @@ Class GenresController extends AppController
 	function beforeFilter() {
 		parent::beforeFilter();
                 
-		$this->Auth->allowedActions = array('view','index','ajax_view');
+		$this->Auth->allowedActions = array('view','index','ajax_view','ajax_view_pagination');
 		$libraryCheckArr = array("view","index");
 //		if(in_array($this->action,$libraryCheckArr)) {
 //		  $validPatron = $this->ValidatePatron->validatepatron();
@@ -347,10 +347,11 @@ Class GenresController extends AppController
                 if($Genre == ''){
                     $Genre = "QWxs";
                 }
+                $this->set('selectedCallFlag', 0);
                 if(isset($_REQUEST['ajax_genre_name'])){
-                    echo $_REQUEST['ajax_genre_name'];
+                    $this->set('selectedCallFlag', 1);
                 }
-                die;
+                
 		$this -> layout = 'ajax';
 		$country = $this->Session->read('territory');
 		if( !base64_decode($Genre) ) {
@@ -459,6 +460,13 @@ Class GenresController extends AppController
                 }
                 $this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
+	}
+        
+        
+        function ajax_view_pagination($Genre = null,$Artist = null) {
+               $this -> layout = 'ajax';
+               echo '<li><a data-artist="Narendra Nagesh" > '.$Genre.'</li>';
+               exit;
 	}
 
 

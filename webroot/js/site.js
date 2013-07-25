@@ -1181,7 +1181,7 @@ $(function() {
 		$('.alphabetical-filter a').removeClass('selected');
 		$('.artist-list a').removeClass('selected');
 		$(this).addClass('selected');
-	});    
+	});     
         
          
         

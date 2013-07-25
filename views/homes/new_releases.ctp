@@ -60,7 +60,7 @@
 				</ul>
 			</div>
 		</div>
-		<h3>Songs</h3>
+		<!--<h3>Songs</h3>
 		<div class="songs-shadow-container">
 			<div class="songs-scrollable horiz-scroll">
 				<ul style="width:27000px;">
@@ -198,7 +198,7 @@
 				</ul>
 			</div>
 		
-		</div>
+		</div> -->
 		<h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
@@ -285,6 +285,7 @@
 
 
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
+                                                        <?php if($this->Session->read("patron")){ ?> 
 							<a class="add-to-playlist-button" href="#"></a>
 							<div class="wishlist-popover">
                                                             <?php
@@ -293,6 +294,7 @@
                                                                 echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                             ?>  
 							</div>
+                                                        <?php } ?>
 							
 						</div>
 						<div class="album-title">

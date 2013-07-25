@@ -12,22 +12,22 @@
             <ul class="clearfix">
 
 
-<?php if(count($featuredVideos) > 0){ ?>
-                <li>
+<?php if(count($featuredVideos) > 0){ ?>                
                 <?php
                 // $featured_video_array = array('img/videos/featured-videos/featured-video-aerosmith-274x162.jpg', 'img/videos/featured-videos/featured-video-aliciakeys-274x162.jpg', 'img/videos/featured-videos/featured-video-calvinharris-274x162.jpg', 'img/videos/featured-videos/featured-video-cherlloyd-274x162.jpg', 'img/videos/featured-videos/featured-video-kingsofleon-274x162.jpg', 'img/videos/featured-videos/featured-video-pink-274x162.jpg', 'img/videos/featured-videos/featured-video-aerosmith-274x162.jpg', 'img/videos/featured-videos/featured-video-aliciakeys-274x162.jpg', 'img/videos/featured-videos/featured-video-calvinharris-274x162.jpg', 'img/videos/featured-videos/featured-video-cherlloyd-274x162.jpg', 'img/videos/featured-videos/featured-video-kingsofleon-274x162.jpg', 'img/videos/featured-videos/featured-video-pink-274x162.jpg');
                 
                 
                 
                 // for ($c = 0; $c < count($featured_video_array); $c+=2) {
-                $i = 0;
+                $total_videos = count($featuredVideos);
+                $sr_no = 0;
                 
                 foreach($featuredVideos as $featureVideo){
                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                 ?>
-	<li>
+	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
                                 <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
@@ -91,21 +91,17 @@
                                     $featureVideo['Video']['ArtistText'] = substr($featureVideo['Video']['ArtistText'], 0, 50). '...';
                             }
                             ?>
-                            <?php echo $this->getTextEncode($ArtistText['Video']['ArtistText']);?>
+                            <?php echo $this->getTextEncode($featureVideo['Video']['ArtistText']);?>
                             </a>
                             </div>
                         </div>
-                <?php 
-                $i++;
-                if(($i % 2) == 0) {
-                  echo "</li><li>";  
-                }
-                ?>
+               <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
                 
     <?php
+                 $sr_no++;
     }
     ?>
-                    </li>
+                    
                     <?php
 }
 ?>
@@ -122,21 +118,20 @@
 
             <ul class="clearfix">
 <?php if(!empty($topVideoDownloads)){ ?>
-<li>
+
 <?php
 //print_r($topVideoDownloads); die;
-$i = 0;
+  $total_videos = count($topVideoDownloads);
+  $sr_no = 0;
 foreach($topVideoDownloads as $topDownload)
 {
      $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
      // print_r($featureVideo);
      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
-     
-     
     ?>
 
                     
-<li>
+                    <?php if($sr_no%2==0) {?><li> <?php }?>
                         <div class="video-cover-container">
                             <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
@@ -212,17 +207,15 @@ foreach($topVideoDownloads as $topDownload)
 
                             </a>
                         </div>
-               <?php 
-                $i++;
-                if(($i % 2) == 0) {
-                  echo "</li><li>";  
-                }
-                ?>
+                <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
     <?php
+             $sr_no++;
     }
 ?>
-                    </li>
+                   
                     <?php
+                    
+                      
 }   
 ?>
 
