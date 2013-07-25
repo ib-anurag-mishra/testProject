@@ -38,8 +38,7 @@
  });
 
  $(document).on('click','.add-to-playlist-button',function(){
-            e.preventDefault();
-
+           
             $('.wishlist-popover').removeClass('active');
 
             if($(this).next('.wishlist-popover').hasClass('active')) {
