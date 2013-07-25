@@ -53,8 +53,8 @@
 				
 				<div class="tracklist">
                                     
-                                    <a href="#" class="preview"></a>
-					</a>	
+                                <?php  if($this->Session->read('patron')) {  ?>  <a href="#" class="preview"></a> <?php } ?>
+					
                                 
                                 
                                         <div class="song"><?php

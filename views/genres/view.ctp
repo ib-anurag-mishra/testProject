@@ -30,12 +30,26 @@
 
 
  $(document).on('click','.alphabetical-filter a',function(){  
-     alert(1);
+     
     var letter = $(this).data('letter');
     $('.alphabetical-filter a').removeClass('selected');
     $('.artist-list a').removeClass('selected');
     $(this).addClass('selected');
- }); 
+ });
+
+ $(document).on('click','.add-to-playlist-button',function(){
+            e.preventDefault();
+
+            $('.wishlist-popover').removeClass('active');
+
+            if($(this).next('.wishlist-popover').hasClass('active')) {
+                    $(this).next('.wishlist-popover').removeClass('active');
+                    $(this).find('.add-to-playlist-button').css({opacity:.5});
+            } else {
+
+                    $(this).next('.wishlist-popover').addClass('active');
+            }
+    });
     
 function load_artist(link , id_serial , genre_name){
 	
