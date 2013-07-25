@@ -112,9 +112,8 @@ function showAlbumDetails(albumDetailURL){
                     type: "post",  // Request method: post, get
                     url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
                     data: data,  // post data
-                    success: function(newitems) {  
-                        $('#content').html('');
-                        $('#content').append(newitems);                        
+                    success: function(newitems) {                       
+                        $('#artistlistrecord').append(newitems);                        
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });  
@@ -247,7 +246,7 @@ $genre_text_conversion = array(
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
 				<div class="artist-list" id="artistscroll">					
-					<ul id="content">						                                            
+					<ul id="artistlistrecord">						                                            
                                          <?php                                                           
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
