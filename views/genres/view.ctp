@@ -108,19 +108,19 @@ function updatestatus(){
 	var totalItems=$('#content li').length;
 	$('#status').text('Loaded '+totalItems+' Items');
 }
-function scrollalert(){
+$('#target').scroll(function() {
    
-	var scrolltop=$('.artist-list').attr('scrollTop');
+	var scrolltop=$('#content').attr('scrollTop');
         alert(scrolltop);
-	var scrollheight=$('.artist-list').attr('scrollHeight');
-	var windowheight=$('.artist-list').attr('clientHeight');
+	var scrollheight=$('#content').attr('scrollHeight');
+	var windowheight=$('#content').attr('clientHeight');
 	var scrolloffset=20;
 	if(scrolltop>=(scrollheight-(windowheight+scrolloffset)))
 	{
-             alert(1);
+             
             //fetch new items
             $('#status').text('Loading more items...');
-alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
+            alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
             var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
@@ -136,7 +136,7 @@ alert(webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>');
 		
 	}
 	setTimeout('scrollalert();', 1500);
-}
+ });   
 
 </script>            
 <?php
