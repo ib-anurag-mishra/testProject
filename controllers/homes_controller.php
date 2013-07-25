@@ -4522,7 +4522,7 @@ STR;
                     LIMIT 100
 	  	
 	  
-STR; 
+STR;
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
 			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums);
