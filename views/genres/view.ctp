@@ -53,18 +53,16 @@
   
 $(document).ready(function(){
     $("#artistscroll").bind("scroll",function(e){
-            if($(this)[0].scrollHeight - $(this).scrollTop() < $(this).outerHeight())
-            { 
+            
                 alert(1); 
-            }
+           
     });
 });
 
  $("#artistscroll").bind("scroll",function(e){
-            if($(this)[0].scrollHeight - $(this).scrollTop() < $(this).outerHeight())
-            { 
+             
                 alert(2); 
-            }
+           
     });
  
 
@@ -125,8 +123,7 @@ function showAlbumDetails(albumDetailURL){
  $(document).ready(function(){
    $("#artistscroll").scroll(function(){  
        
-       if($(this)[0].scrollHeight - $(this).scrollTop() < $(this).outerHeight())
-        { 
+        
             var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
@@ -137,7 +134,7 @@ function showAlbumDetails(albumDetailURL){
                     },
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });  
-        }
+        
    });   
 });
 </script>            
