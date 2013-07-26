@@ -534,27 +534,10 @@ Class GenresController extends AppController
                     $this->Song->Behaviors->attach('Containable');
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 GROUP BY Song.ArtistText');
-//                    $this->paginate = array(
-//                        'conditions' => $gcondition,
-//                        'fields' => array('DISTINCT Song.ArtistText1'),
-//                        'extra' => array('chk' => 1),
-//                        'order' => 'TRIM(Song.ArtistText) ASC',
-//                        'limit' => $finallimit,                       
-//                        'cache' => 'no',
-//                        'check' => 2,
-//                        'all_query'=> true,
-//                        'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
-//                        'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
-//                    );
-                    
-                    
-                    
-                    
-                     
                     
                     $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText1'),
+                        'fields' => array('DISTINCT Song.ArtistText'),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
                         'limit' => $finallimit,                       
