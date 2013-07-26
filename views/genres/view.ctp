@@ -85,7 +85,7 @@ function load_artist(link , id_serial , genre_name){
        //jQuery('#ajax_artistlist_content').load(link);
        $('.album-list-span').html('');
        $('#album_details_container').html('');
-
+       $('#ajax_artistlist_content').html('Loading...');
        // var data = "ajax_genre_name="+genre_name;
        var data = "ajax_genre_name="+genre_name;
        jQuery.ajax({
