@@ -17,17 +17,18 @@
 	display:block;
 }
 #mydiv {
-    height: 400px;
+    height: 250px;
+    width: 250px;
     position: relative;
     background-color: gray; /* for demonstration */
 }
 .ajax-loader {
-    position: absolute;
+    display: block;
     left: 50%;
+    margin-left: -11px;
+    margin-top: -15px;
+    position: absolute;
     top: 50%;
-    margin-left: -32px; /* -1 * image width / 2 */
-    margin-top: -32px;  /* -1 * image height / 2 */
-    display: block;     
 }   
     
     
@@ -79,10 +80,12 @@
 
     
 function load_artist(link , id_serial , genre_name){
-	
+       //<div id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></div>
+        
        //jQuery('#ajax_artistlist_content').load(link);
        $('.album-list-span').html('');
        $('#album_details_container').html('');
+       $('#ajax_artistlist_content').html('<div id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></div>');
 
        // var data = "ajax_genre_name="+genre_name;
        var data = "ajax_genre_name="+genre_name;
@@ -197,9 +200,7 @@ $genre_text_conversion = array(
 ?>
 
 	
-<div id="mydiv">
-    <img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/>
-</div>
+
 
 
         	<section class="genres-page">
