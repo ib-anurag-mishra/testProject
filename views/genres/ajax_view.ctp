@@ -6,7 +6,7 @@ var ajaxartistPage = 2;
             var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get
-                    url: '/genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'//'+ajaxartistPage; // URL to request
+                    url: '/genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/null/'+ajaxartistPage; // URL to request
                     data: data,  // post data
                     success: function(newitems) { 
                         ajaxartistPage++;                      
