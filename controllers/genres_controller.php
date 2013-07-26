@@ -347,8 +347,8 @@ Class GenresController extends AppController
                     $Genre = "QWxs";
                 }
                 
-                echo $Artist;
-                die;
+               
+                
                 $this->set('selectedCallFlag', 0);
                 if(isset($_REQUEST['ajax_genre_name'])){
                     $this->set('selectedCallFlag', 1);
@@ -356,10 +356,10 @@ Class GenresController extends AppController
                 
 		$this -> layout = 'ajax';
 		$country = $this->Session->read('territory');
-//		if( !base64_decode($Genre) ) {
-//			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
-//			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
-//		}
+		if( !base64_decode($Genre) ) {
+			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
+			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
+		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
 		if (($genre = Cache::read("genre".$country)) === false) {
@@ -401,7 +401,7 @@ Class GenresController extends AppController
 		if($Artist == 'spl') {
 			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
 		}
-		elseif($Artist != '' && $Artist != 'img') {
+		elseif($Artist != '' && $Artist != 'img' && $Artist != 'All') {
 			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
 		}
 		else {
@@ -461,6 +461,7 @@ Class GenresController extends AppController
                 }
                 }
                 $this->set('genres', $allArtists);
+                 $this->set('selectedAlpha', $Artist);
 		$this->set('genre',base64_decode($Genre));
 	}
         
