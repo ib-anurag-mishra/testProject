@@ -25,8 +25,8 @@
 .ajax-loader {
     display: block;
     left: 50%;
-    margin-left: -11px;
-    margin-top: -15px;
+    margin-left: 147px;
+    margin-top: 85px;
     position: absolute;
     top: 50%;
 }   
@@ -85,7 +85,7 @@ function load_artist(link , id_serial , genre_name){
        //jQuery('#ajax_artistlist_content').load(link);
        $('.album-list-span').html('');
        $('#album_details_container').html('');
-       $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></span>');
+       $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
        // var data = "ajax_genre_name="+genre_name;
        var data = "ajax_genre_name="+genre_name;
        jQuery.ajax({
