@@ -146,7 +146,7 @@ function showAlbumDetails(albumDetailURL){
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
             success: function(response) {              
-                $('#album_details_container').html(response);
+                //$('#album_details_container').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.')}
         });
