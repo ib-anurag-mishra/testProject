@@ -860,7 +860,7 @@ if ($type != 'all') {
                                 ?>
                                 <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="27" height="27" /></a>
                             </div>
-                            <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($psong->Title, 30, $this)); ?></a></a></div>
+                            <div class="album"><a href="#"><a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><?php echo str_replace('"', '', truncate_text($psong->Title, 15, $this)); ?></a></a></div>
                             <div class="song">
         <?php $showSongTitle = truncate_text($psong->SongTitle, strlen($psong->SongTitle), $this); ?>
                                 <span title="<?php echo str_replace('"', '', $showSongTitle); ?>"><?php echo truncate_text($psong->SongTitle, 21, $this); ?>
