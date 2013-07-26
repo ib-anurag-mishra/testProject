@@ -30,7 +30,26 @@
     position: absolute;
     top: 50%;
 }   
-    
+
+.ajax-loader1 {
+    display: block;
+    left: 50%;
+    margin-left: 115px;
+    margin-top: 85px;
+    position: absolute;
+    top: 50%;
+}
+
+
+
+.ajax-loader2 {
+    display: block;
+    left: 50%;
+    margin-left: 398px;
+    margin-top: 3px;
+    position: absolute;
+    top: 50%;
+}
     
 </style>
 <script language="javascript">
@@ -82,41 +101,45 @@
 function load_artist(link , id_serial , genre_name){
 	//<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></span>
         
-       //jQuery('#ajax_artistlist_content').load(link);
-       $('.album-list-span').html('');
-       $('#album_details_container').html('');
-       $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
-       // var data = "ajax_genre_name="+genre_name;
-       var data = "ajax_genre_name="+genre_name;
-       jQuery.ajax({
+        //jQuery('#ajax_artistlist_content').load(link);
+        $('.album-list-span').html('');
+        $('#album_details_container').html('');
+        $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
+        // var data = "ajax_genre_name="+genre_name;
+        var data = "ajax_genre_name="+genre_name;
+        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
             data: data,  // post data
             success: function(response) {               
                 $('#ajax_artistlist_content').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist available for this Genre.')}
         });
 }
 
 
 function showAllAlbumsList(albumListURL){
-    //alert(webroot+albumListURL);
+
+       $('#album_details_container').html('');
+       $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader1"/></span>');
+
         var data = "";
         jQuery.ajax({
-                type: "post",  // Request method: post, get
-                url: webroot+albumListURL, // URL to request
-                data: data,  // post data
-                success: function(response) {              
-                    $('.album-list-span').html(response);
-                },
-                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album list available')}
-            });
+            type: "post",  // Request method: post, get
+            url: webroot+albumListURL, // URL to request
+            data: data,  // post data
+            success: function(response) {              
+                $('.album-list-span').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
+        });
 }
 
 function showAlbumDetails(albumDetailURL){
-   // alert(webroot+albumDetailURL);
-  
+   
+        $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
+
         var data = "";
         jQuery.ajax({
             type: "post",  // Request method: post, get
@@ -125,7 +148,7 @@ function showAlbumDetails(albumDetailURL){
             success: function(response) {              
                 $('#album_details_container').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.')}
         });
 }
 
@@ -139,7 +162,7 @@ $(document).ready(function(){
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){      
             
             var data = "";
-            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/'+artistPage;
+            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/All/'+artistPage;
             var data = "";
             jQuery.ajax({
                 type: "post",  // Request method: post, get
@@ -215,7 +238,7 @@ $genre_text_conversion = array(
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all selected" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
+						<li><a class="genre_list_item_all selected" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/All' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
                                                 
             <?php
                 $genre_count = 1;
@@ -224,15 +247,18 @@ $genre_text_conversion = array(
                     if($genre_all['Genre']['Genre'] != ''){
                             //$genre_name = isset($genre_text_conversion[trim($genre_all['Genre']['Genre'])])?$genre_text_conversion[trim($genre_all['Genre']['Genre'])]:$genre_all['Genre']['Genre'];	
                             $genre_name = $genre_all['Genre']['Genre'];
-                            if($genre_name == $genre){
-                                    ?>
-                                <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
-                                    <?php
-                            }
-                            else{
-                                    ?>
-                                <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
-                                    <?php
+                            
+                            if($genre_name != 'Porn Groove'){                            
+                                if($genre_name == $genre){
+                                        ?>
+                                    <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_all['Genre']['Genre']); ?>/All' ,'<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>')" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                        <?php
+                                }
+                                else{
+                                        ?>
+                                    <li> <a  class="genre_list_item_all " href="#" data-genre="<?php echo addslashes($this->getTextEncode($genre_name));  ?>" id="genre_list_item_<?php echo $genre_count; ?>"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre_name); ?>/All' , '<?php echo $genre_count; ?>' , '<?php echo addslashes($this->getTextEncode($genre_name));  ?>' )" ><?php echo $this->getTextEncode($genre_name); ?></a></li>
+                                        <?php
+                                }
                             }
                    }
                 $genre_count++;
@@ -248,7 +274,7 @@ $genre_text_conversion = array(
 				<div class="alphabetical-filter">
                                    
                                     <ul>
-                                    <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="All" class="selected" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>' ,'' , '')">ALL</a></li>                                            
+                                    <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="All" class="selected" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>All' ,'' , '')">ALL</a></li>                                            
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')">#</a></li> 
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A' ,'' , '')">A</a></li>
                                     <li><a style="padding:0px 0px 0px 8px" href="javascript:void(0);" data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B' ,'' , '')">B</a></li>
