@@ -146,7 +146,7 @@ foreach($topVideoDownloads as $topDownload)
                                     else
                                     {
                                         ?>
-                                            <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                            <a class="top-video-login-button" href='/users/redirection_manager'> <?php __("Login");?></a>
                                         <?php
                                     }
                               ?>

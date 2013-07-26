@@ -381,3 +381,18 @@ div.paging span a, div.paging a {
     top: 7px;
     width: 124px;    
 }
+.top-video-login-button{
+    background: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    height: 25px;
+    left: 108px;
+    line-height: 26px;
+    padding: 6px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    top: -30px;
+    width: 124px;   
+}
