@@ -472,13 +472,12 @@ Class GenresController extends AppController
             } 
             
             $limit=60;
-            $scrollPageNumber = 2;
-            if(isset($_REQUEST['scrollPageNumber']) && ($_REQUEST['scrollPageNumber']!='') && ($_REQUEST['scrollPageNumber']!= null) ){
-                $scrollPageNumber = $_REQUEST['scrollPageNumber'];
+           
+            if($scrollPageNumber == null){
+                $scrollPageNumber =2;
             }
             echo $scrollPageNumber;
             die;
-            
             $scrollStartPageLimit= ( 60 * $scrollPageNumber );
             $scrollEndPageLimit= 60;            
            
