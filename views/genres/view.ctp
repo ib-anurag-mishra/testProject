@@ -16,12 +16,7 @@
   cursor: pointer;
 	display:block;
 }
-#mydiv {
-    height: 250px;
-    width: 250px;
-    position: relative;
-    background-color: gray; /* for demonstration */
-}
+
 .ajax-loader {
     display: block;
     left: 50%;
@@ -82,25 +77,28 @@
 function load_artist(link , id_serial , genre_name){
 	//<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></span>
         
-       //jQuery('#ajax_artistlist_content').load(link);
-       $('.album-list-span').html('');
-       $('#album_details_container').html('');
-       $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
-       // var data = "ajax_genre_name="+genre_name;
-       var data = "ajax_genre_name="+genre_name;
-       jQuery.ajax({
+        //jQuery('#ajax_artistlist_content').load(link);
+        $('.album-list-span').html('');
+        $('#album_details_container').html('');
+        $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
+        // var data = "ajax_genre_name="+genre_name;
+        var data = "ajax_genre_name="+genre_name;
+        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
             data: data,  // post data
             success: function(response) {               
                 $('#ajax_artistlist_content').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist available for this Genre.')}
         });
 }
 
 
 function showAllAlbumsList(albumListURL){
+
+       $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
+
     //alert(webroot+albumListURL);
         var data = "";
         jQuery.ajax({
@@ -110,7 +108,7 @@ function showAllAlbumsList(albumListURL){
                 success: function(response) {              
                     $('.album-list-span').html(response);
                 },
-                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album list available')}
+                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
             });
 }
 
@@ -125,7 +123,7 @@ function showAlbumDetails(albumDetailURL){
             success: function(response) {              
                 $('#album_details_container').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album detail available')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.')}
         });
 }
 
