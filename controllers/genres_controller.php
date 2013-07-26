@@ -356,10 +356,10 @@ Class GenresController extends AppController
                 
 		$this -> layout = 'ajax';
 		$country = $this->Session->read('territory');
-		if( !base64_decode($Genre) ) {
-			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
-			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
-		}
+//		if( !base64_decode($Genre) ) {
+//			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
+//			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
+//		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
 		if (($genre = Cache::read("genre".$country)) === false) {
