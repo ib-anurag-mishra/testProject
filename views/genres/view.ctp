@@ -49,7 +49,19 @@
                     $(this).next('.wishlist-popover').addClass('active');
             }
     });
+    
+ $(document).on('mouseenter','.add-to-playlist',function(){
+           
+            $('.playlist-options').addClass('active');
 
+    });	
+	
+ $(document).on('mouseleave','.add-to-playlist',function(){
+           
+            $('.playlist-options').removeClass('active');
+
+    });	
+	
  
 
     
