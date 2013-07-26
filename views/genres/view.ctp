@@ -31,10 +31,10 @@
     top: 50%;
 }   
 
-.ajax-loader {
+.ajax-loader1 {
     display: block;
     left: 50%;
-    margin-left: 187px;
+    margin-left: 177px;
     margin-top: 85px;
     position: absolute;
     top: 50%;
@@ -110,7 +110,7 @@ function load_artist(link , id_serial , genre_name){
 
 function showAllAlbumsList(albumListURL){
 
-       $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
+       $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader1"/></span>');
 
     //alert(webroot+albumListURL);
         var data = "";
@@ -119,7 +119,7 @@ function showAllAlbumsList(albumListURL){
                 url: webroot+albumListURL, // URL to request
                 data: data,  // post data
                 success: function(response) {              
-                    $('.album-list-span').html(response);
+                   // $('.album-list-span').html(response);
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
             });
