@@ -547,10 +547,10 @@ Class GenresController extends AppController
                         'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                         )
                     );
-                    echo  $allArtistsNew[0]['Song']['ArtistText'];die;
+                    
             }
                    
-            $allArtists = $this->paginate('Song');
+            
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++){
                 if($allArtistsNew[$i]['Song']['ArtistText'] != ""){
