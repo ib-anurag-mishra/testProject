@@ -536,21 +536,23 @@ Class GenresController extends AppController
 
                     $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText1'),
+                        'fields' => array('DISTINCT Song.ArtistText'),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
                         'limit' => $scrollEndPageLimit, 
                         'offset' => $scrollStartPageLimit,                       
-                        'check' => 2,
-                        'all_query'=> true,
-                        'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
-                        'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+                        'check' => 2
                         )
                     );
                     
             }
                    
-            
+//            Query: SELECT DISTINCT `Song`.`ArtistText1` FROM `Songs` AS `Song` WHERE find_in_set('"US"',`Song`.`Territory`) > 0 AND `Song`.`DownloadStatus` = '1' 
+//                    AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND `Song`.`FullLength_FIleID` != '' 
+//                    AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND 1 = 1 
+//                    GROUP BY `Song`.`ArtistText` ORDER BY TRIM(`Song`.`ArtistText`) ASC LIMIT 240, 60 
+                    
+                    
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++){
                 if($allArtistsNew[$i]['Song']['ArtistText'] != ""){
