@@ -504,7 +504,11 @@ Class GenresController extends AppController
 		$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
             }
             elseif($Artist != '' && $Artist != 'img' && $Artist != 'All') {
-                $condition = array('Song.ArtistText LIKE' => $Artist.'%');
+               $condition = array("Song.ArtistText REGEXP ^".$Artist);
+               
+                
+                
+                //$condition = array('Song.ArtistText LIKE' => $Artist.'%');
             }
             else {
                 $condition = "";
