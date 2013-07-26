@@ -266,8 +266,7 @@ Class GenresController extends AppController
 		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
-                
+		$this->set('patronDownload',$patronDownload);                
                 
                 
 		if($this->Session->read('block') == 'yes') {

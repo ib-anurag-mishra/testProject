@@ -16,7 +16,19 @@
   cursor: pointer;
 	display:block;
 }
-    
+#mydiv {
+    height: 400px;
+    position: relative;
+    background-color: gray; /* for demonstration */
+}
+.ajax-loader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-left: -32px; /* -1 * image width / 2 */
+    margin-top: -32px;  /* -1 * image height / 2 */
+    display: block;     
+}   
     
     
 </style>
@@ -139,9 +151,13 @@ $(document).ready(function(){
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });
         }
-    });   
+    });
+    
+
+    
 });
-</script>            
+</script>  
+
 <?php
 
 
@@ -180,12 +196,12 @@ $genre_text_conversion = array(
 	$totalRows = count($genresAll);
 ?>
 
-	<div height="400px" style="color:blue;">
-    
-	</div>
-<div id='loadingmessage' style='display:none' >
-<img src='<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif'/>
+	
+<div id="mydiv">
+    <img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/>
 </div>
+
+
         	<section class="genres-page">
 		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
 		<header class="clearfix">
