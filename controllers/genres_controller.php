@@ -469,8 +469,20 @@ Class GenresController extends AppController
 
             if($Genre == ''){
                 $Genre = "QWxs";
-            }               
-
+            } 
+            
+            $limit=60;
+            $scrollPageNumber = 2;
+            if(isset($_REQUEST['scrollPageNumber']) && $_REQUEST['scrollPageNumber']!=''){
+                $scrollPageNumber = $_REQUEST['scrollPageNumber'];
+            }
+            
+            
+            $scrollStartPageLimit= ( 60 * $scrollPageNumber );
+            $scrollEndPageLimit= 60;
+            
+           echo $scrollPageLimit = $scrollStartPageLimit.','.$scrollEndPageLimit;
+            die;
             $this -> layout = 'ajax';
             $country = $this->Session->read('territory');
 
@@ -517,7 +529,7 @@ Class GenresController extends AppController
                                 ),
                                 'extra' => array('chk' => 1),
                             'order' => 'TRIM(Song.ArtistText) ASC',
-                            'limit' => '60', 'cache' => 'yes','check' => 2
+                            'limit' => $scrollPageLimit, 'cache' => 'yes','check' => 2
                             );
                 } else {
                     
@@ -532,7 +544,7 @@ Class GenresController extends AppController
                         'fields' => array('DISTINCT Song.ArtistText'),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => '60',
+                        'limit' => $scrollPageLimit,
                         'cache' => 'yes',
                         'check' => 2,
                         'all_query'=> true,
