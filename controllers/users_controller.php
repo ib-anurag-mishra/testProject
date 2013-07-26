@@ -3820,8 +3820,14 @@ Class UsersController extends AppController
 						}
                                                 
                                                 //echo "redirection_url: ".$redirection_url; die;
-                                                
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }                                                
+						//$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
                                                 //$this->redirect($redirection_url);
 
 					}
