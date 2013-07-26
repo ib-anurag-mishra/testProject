@@ -467,8 +467,7 @@ Class GenresController extends AppController
                $this -> layout = 'ajax';
                
                
-                echo $Genre;
-                die;
+               
                
                 if($Genre == ''){
                     $Genre = "QWxs";
@@ -478,7 +477,7 @@ Class GenresController extends AppController
 		$this -> layout = 'ajax';
 		$country = $this->Session->read('territory');
 
-		$this->set('genresAll', $genreAll);
+		
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
@@ -500,7 +499,8 @@ Class GenresController extends AppController
 		}
 		$this->Song->recursive = 0;
 		$genre = base64_decode($Genre);
-		$genre = mysql_escape_string($genre);
+		echo $genre = mysql_escape_string($genre);
+                die;
                 
                 if($genre != 'All'){
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
