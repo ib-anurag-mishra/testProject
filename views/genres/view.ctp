@@ -45,7 +45,7 @@
 .ajax-loader2 {
     display: block;
     left: 50%;
-    margin-left: 197px;
+    margin-left: 398px;
     margin-top: 3px;
     position: absolute;
     top: 50%;
@@ -130,7 +130,7 @@ function showAllAlbumsList(albumListURL){
                 url: webroot+albumListURL, // URL to request
                 data: data,  // post data
                 success: function(response) {              
-                    $('.album-list-span').html(response);
+                   // $('.album-list-span').html(response);
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
             });
@@ -146,7 +146,7 @@ function showAlbumDetails(albumDetailURL){
             url: webroot+albumDetailURL, // URL to request
             data: data,  // post data
             success: function(response) {              
-                //$('#album_details_container').html(response);
+                $('#album_details_container').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.')}
         });
