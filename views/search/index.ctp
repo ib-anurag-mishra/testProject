@@ -1010,7 +1010,70 @@ if (isset($type)) {
                             $image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
                         <div class="song"><a href="#"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
-						<div class="download"><a href="#">Download</a></div>
+						<div class="download"><?php
+                         if($this->Session->read("patron")){
+                                    if ($sales_date <= date('Y-m-d')) {
+                                        if ($libraryDownload == '1' && $patronDownload == '1') {
+                                            if ($psong->status != 'avail') {
+                                                ?>
+                                            <p>
+                                            <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
+                                                <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
+                                                <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
+                                                <span class="beforeClick" id="song_<?php echo $psong->ProdID; ?>">
+                                                    <a href='#' title='<?php __("IMPORTANT: Please note that once you press `Download` you have used up one of your downloads, regardless of whether you then press 'Cancel' or not."); ?>' onclick='userDownloadAll(<?php echo $psong->ProdID; ?>);'><?php __('Download'); ?></a>
+                                                </span>
+                                                <span class="afterClick" id="downloading_<?php echo $psong->ProdID; ?>" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
+                                                <span id="download_loader_<?php echo $psong->ProdID; ?>" style="display:none;float:right;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                            </form>
+                                            </p>
+                <?php } else {
+                    ?><a href='/homes/my_history' title='<?php __("You have already downloaded this song. Get it from your recent downloads"); ?>'><?php __("Downloaded"); ?></a><?php
+                }
+            } else {
+                if ($libraryDownload != '1') {
+                    $libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
+                    $wishlistCount = $wishlist->getWishlistCount();
+                    if ($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
+                        ?>
+                                                <p><?php __("Limit Met"); ?></p>
+                                                <?php
+                                            } else {
+                                                $wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
+                                                if ($wishlistInfo == 'Added to Wishlist') {
+                                                    ?>
+                                                    <p><?php __("Added to Wishlist"); ?></p>
+                                                <?php } else {
+                                                    ?>
+                                                    <p>
+                                                        <span class="beforeClick" id="wishlist<?php echo $psong->ProdID; ?>"><a href='#' onclick='Javascript: addToWishlist("<?php echo $psong->ProdID; ?>","<?php echo $song->provider_type; ?>");'><?php __("Add to wishlist"); ?></a></span><span id="wishlist_loader_<?php echo $song->ProdID; ?>" style="display:none;"><?php echo $html->image('ajax-loader_black.gif'); ?></span>
+                                                        <span class="afterClick" style="display:none;float:left"><?php __("Please Wait..."); ?></span>
+
+                                                    </p>
+                                                    <?php
+                                                }
+                                            }
+                                        } else {
+                                            ?>
+                                            <p><?php __("Limit Met"); ?></p>
+                    <?php
+                }
+            }
+        } else {
+            ?>
+                                    <span title='<?php __("Coming Soon"); ?> ( <?php echo date("F d Y", strtotime($sales_date)); ?> )'><?php __("Coming Soon"); ?></span>
+                                    <?php
+                                }
+                                    } else {
+                                        $checklib = substr($_SERVER['HTTP_HOST'],0,strpos($_SERVER['HTTP_HOST'],'.'));
+                                        if($checklib != 'www' && $checklib != 'freegal' && $checklib != '50'){
+                                            echo $this->Html->link(__('Login', true), array('controller' => 'users', 'action' => 'redirection_manager'),array('class' => 'btn'));
+                                        } else {
+                                            echo $this->Html->link(__('Login', true), array('controller' => 'homes', 'action' => 'chooser'),array('class' => 'btn'));
+                                        }
+                                    }
+                                    ?>
+                        </div>
 						
 						
 						
