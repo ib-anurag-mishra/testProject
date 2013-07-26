@@ -93,8 +93,8 @@ function load_artist(link , id_serial , genre_name){
             url: link, // URL to request
             data: data,  // post data
             success: function(response) { 
-                $('#ajax_artistlist_content').html('');
-                $('#ajax_artistlist_content').html(response);
+                //$('#ajax_artistlist_content').html('');
+                //$('#ajax_artistlist_content').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
         });
