@@ -330,47 +330,10 @@ if ($this->Session->read('Config.language') == 'en') {
         return re.test(email);
     }    
                 </script>
-            <?php
-        if($_SERVER['REQUEST_URI']=='/index' || $_SERVER['REQUEST_URI']=='')
-        {
-            $body_class =   'page-news';
-        }
-        else if($_SERVER['REQUEST_URI']=='/videos')
-        {
-            $body_class =   'page-videos'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/homes/my_lib_top_10')
-        {
-            $body_class =   'page-my_lib_top_10'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/homes/us_top_10')
-        {
-            $body_class =   'page-us_top_10'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/homes/new_releases')
-        {
-            $body_class =   'page-new_releases'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/questions')
-        {
-            $body_class =   'page-questions'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/genres/view')
-        {
-            $body_class =   'page-genres'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/homes/my_history')
-        {
-            $body_class =   'page-my_history'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/homes/my_wishlist')
-        {
-            $body_class =   'page-my_wishlist'; 
-        }
-        else
-        {
-            $body_class =   'page-news';
-        }
+            <?php   
+          //  echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); 
+          
+       
         
             
 ?> 
