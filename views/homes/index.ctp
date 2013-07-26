@@ -484,7 +484,11 @@
 														
 													</a>
 													<div class="wishlist-popover"> 
-                                           
+                                                                                                            <?php
+                                                                                                                
+                                                                                                             $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+                                                                                                             echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
+                                                                                                            ?>
 
                                                                                                             <div class="share clearfix">
                                                                                                                     <p>Share via</p>
