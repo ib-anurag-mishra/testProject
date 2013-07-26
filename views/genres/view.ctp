@@ -130,7 +130,7 @@ function showAllAlbumsList(albumListURL){
                 url: webroot+albumListURL, // URL to request
                 data: data,  // post data
                 success: function(response) {              
-                   // $('.album-list-span').html(response);
+                    $('.album-list-span').html(response);
                 },
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
             });
