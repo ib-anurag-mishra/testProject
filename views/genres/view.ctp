@@ -16,7 +16,12 @@
   cursor: pointer;
 	display:block;
 }
-
+#mydiv {
+    height: 250px;
+    width: 250px;
+    position: relative;
+    background-color: gray; /* for demonstration */
+}
 .ajax-loader {
     display: block;
     left: 50%;
@@ -25,7 +30,15 @@
     position: absolute;
     top: 50%;
 }   
-    
+
+.ajax-loader {
+    display: block;
+    left: 50%;
+    margin-left: 187px;
+    margin-top: 85px;
+    position: absolute;
+    top: 50%;
+}
     
 </style>
 <script language="javascript">
