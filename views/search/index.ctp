@@ -988,7 +988,8 @@ if (isset($type)) {
                         } else {
                             $style = 'style="left:0px"';
                         }
-                        <div class="artist"><a href="#"><?php echo $psong->ArtistText; ?></a></div>
+                        ?>
+                        <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $psong->ArtistText; ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
 						<div class="wishlist-popover">	
