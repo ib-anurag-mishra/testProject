@@ -26,6 +26,7 @@
     var artist = $(this).data('artist');
     $('.artist-list a').removeClass('selected');
     $(this).addClass('selected');
+    $(this).css( "cursor", "pointer" );
  });   
 
 
