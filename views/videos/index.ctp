@@ -140,7 +140,7 @@ foreach($topVideoDownloads as $topDownload)
                                     if($this->Session->read('patron'))
                                     {
                            ?>
-                           <a class="top-video-download-now-button" href="#">Download Now</a>
+                         <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
                            <a class="add-to-playlist-button" href="#"></a> 
                            <?php
                                     }
