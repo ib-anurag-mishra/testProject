@@ -443,7 +443,13 @@ Class UsersController extends AppController
 				else{
 					$this ->Session->write("block", 'no');
 				}
-				$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                if ($this->Session->read('UrlReferer') != '') {
+                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                      $this->Session->delete('UrlReferer');
+                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                } else {
+                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                }
 			}
 			else{
         $this -> Session -> setFlash("Authentication error, you are not allowed to login into the library using this method. Please use the link on your library website.");
