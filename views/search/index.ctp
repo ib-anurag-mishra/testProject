@@ -983,9 +983,11 @@ if (isset($type)) {
 				?>	
 					<div class="tracklist">
                         <?php
-                        if($this->Session->read("patron")){
+                        if($this->Session->read("patron")) {
+                            echo "1";
                             $style = '';
                         } else {
+                            echo "2";
                             $style = 'style="left:0px"';
                         }
                         ?>
