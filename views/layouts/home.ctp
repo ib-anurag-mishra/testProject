@@ -330,7 +330,9 @@ if ($this->Session->read('Config.language') == 'en') {
         return re.test(email);
     }    
                 </script>
-            <?php
+            <?php   
+          //  echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); 
+          
         if($_SERVER['REQUEST_URI']=='/index' || $_SERVER['REQUEST_URI']=='')
         {
             $body_class =   'page-news';
@@ -339,17 +341,21 @@ if ($this->Session->read('Config.language') == 'en') {
         {
             $body_class =   'page-videos'; 
         }
+        else if(!empty(strstr($_SERVER['REQUEST_URI'], '/videos/details/')))
+        {
+            $body_class =   'page-videos-details'; 
+        }
         else if($_SERVER['REQUEST_URI']=='/homes/my_lib_top_10')
         {
-            $body_class =   'page-my_lib_top_10'; 
+            $body_class =   'page-my-lib-top-10'; 
         }
         else if($_SERVER['REQUEST_URI']=='/homes/us_top_10')
         {
-            $body_class =   'page-us_top_10'; 
+            $body_class =   'page-us-top-10'; 
         }
         else if($_SERVER['REQUEST_URI']=='/homes/new_releases')
         {
-            $body_class =   'page-new_releases'; 
+            $body_class =   'page-new-releases'; 
         }
         else if($_SERVER['REQUEST_URI']=='/questions')
         {
@@ -361,11 +367,31 @@ if ($this->Session->read('Config.language') == 'en') {
         }
         else if($_SERVER['REQUEST_URI']=='/homes/my_history')
         {
-            $body_class =   'page-my_history'; 
+            $body_class =   'page-my-history'; 
         }
-        else if($_SERVER['REQUEST_URI']=='/homes/my_wishlist')
+         else if($_SERVER['REQUEST_URI']=='/homes/my_history')
         {
-            $body_class =   'page-my_wishlist'; 
+            $body_class =   'page-my-history'; 
+        }
+         else if(!empty(strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/queue_details')))
+        {
+            $body_class =   'page-queue-details'; 
+        }
+        else if(!empty(strstr($_SERVER['REQUEST_URI'], '/queuelistdetails/now_streaming')))
+        {
+            $body_class =   'page-now-streaming'; 
+        }
+         else if($_SERVER['REQUEST_URI']=='/homes/my_wishlist')
+        {
+            $body_class =   'page-my-wishlist'; 
+        }
+        else if(!empty(strstr($_SERVER['REQUEST_URI'], '/search/index')))
+        {
+            $body_class =   'page-search-index'; 
+        }
+        else if(!empty(strstr($_SERVER['REQUEST_URI'], '/artists/view')))
+        {
+            $body_class =   'page-artists-view'; 
         }
         else
         {
