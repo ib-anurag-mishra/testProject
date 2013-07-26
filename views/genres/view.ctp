@@ -123,8 +123,8 @@ $(document).ready(function(){
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){      
             
-            var data = "scrollPageNumber="+artistPage;
-            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>';
+            var data = "";
+            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'//'+artistPage;
             var data = "";
             jQuery.ajax({
                 type: "post",  // Request method: post, get

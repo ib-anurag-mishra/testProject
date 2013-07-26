@@ -463,7 +463,7 @@ Class GenresController extends AppController
 	}
         
         
-        function ajax_view_pagination($Genre = null,$Artist = null) {
+        function ajax_view_pagination($Genre = null,$Artist = null,$scrollPageNumber=null) {
                
             $this -> layout = 'ajax';
 
@@ -473,7 +473,7 @@ Class GenresController extends AppController
             
             $limit=60;
             $scrollPageNumber = 2;
-            if(isset($_REQUEST['scrollPageNumber']) && $_REQUEST['scrollPageNumber']!=''){
+            if(isset($_REQUEST['scrollPageNumber']) && ($_REQUEST['scrollPageNumber']!='') && ($_REQUEST['scrollPageNumber']!= null) ){
                 $scrollPageNumber = $_REQUEST['scrollPageNumber'];
             }
             echo $scrollPageNumber;
