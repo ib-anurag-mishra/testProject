@@ -395,3 +395,7 @@ div.paging span a, div.paging a {
     top: -35px;
     width: 124px;   
 }
+.top-music-video-cover-container{
+    margin-bottom: -2px;
+    position: relative;
+}
