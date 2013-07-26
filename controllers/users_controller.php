@@ -1508,7 +1508,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 
 					}
 				}
@@ -1752,7 +1758,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 				}
 			}
@@ -1949,7 +1961,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 					else
 					{
@@ -2146,7 +2164,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 					else
 					{
@@ -2399,7 +2423,13 @@ Class UsersController extends AppController
 					else{
 						$this ->Session->write("block", 'no');
 					}
-					$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                        if ($this->Session->read('UrlReferer') != '') {
+                                              $UrlReferer = $this->Session->read('UrlReferer');
+                                              $this->Session->delete('UrlReferer');
+                                              $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                        } else {
+                                              $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                        }
 					}
 				}
 			}
@@ -2630,7 +2660,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 				}
 			}
@@ -2856,7 +2892,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 				}
 			}
@@ -3100,7 +3142,13 @@ Class UsersController extends AppController
 								else{
 								  $this ->Session->write("block", 'no');
 								}
-								$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                                if ($this->Session->read('UrlReferer') != '') {
+                                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                                      $this->Session->delete('UrlReferer');
+                                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                                } else {
+                                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                                }
 								$this->Auth->autoRedirect = false;
 						}
 						//echo $result;exit;
@@ -3331,7 +3379,13 @@ Class UsersController extends AppController
 								  else{
 									  $this ->Session->write("block", 'no');
 								  }
-								  $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');;
+                                                                    if ($this->Session->read('UrlReferer') != '') {
+                                                                          $UrlReferer = $this->Session->read('UrlReferer');
+                                                                          $this->Session->delete('UrlReferer');
+                                                                          $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                                    } else {
+                                                                          $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                                    }
 
 						}
 						//echo $result;exit;
@@ -3581,7 +3635,13 @@ Class UsersController extends AppController
 							else{
 								$this ->Session->write("block", 'no');
 							}
-							$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                        if ($this->Session->read('UrlReferer') != '') {
+                                                              $UrlReferer = $this->Session->read('UrlReferer');
+                                                              $this->Session->delete('UrlReferer');
+                                                              $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                        } else {
+                                                              $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                        }
 						}
 				}
 			}
@@ -3965,7 +4025,13 @@ Class UsersController extends AppController
 			else{
 				$this ->Session->write("block", 'no');
 			}
-			$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                        if ($this->Session->read('UrlReferer') != '') {
+                              $UrlReferer = $this->Session->read('UrlReferer');
+                              $this->Session->delete('UrlReferer');
+                              $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                        } else {
+                              $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                        }
 		}
 	}
    /*
@@ -4210,7 +4276,13 @@ Class UsersController extends AppController
 						else{
 						  $this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 				}
 			}
@@ -4459,7 +4531,13 @@ Class UsersController extends AppController
 					   else{
 						   $this ->Session->write("block", 'no');
 					   }
-					   $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                            if ($this->Session->read('UrlReferer') != '') {
+                                                  $UrlReferer = $this->Session->read('UrlReferer');
+                                                  $this->Session->delete('UrlReferer');
+                                                  $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                            } else {
+                                                  $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                            }
 					}
 				}
 			}
@@ -4688,7 +4766,13 @@ Class UsersController extends AppController
 					   else{
 						   $this ->Session->write("block", 'no');
 					   }
-					   $this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                            if ($this->Session->read('UrlReferer') != '') {
+                                                  $UrlReferer = $this->Session->read('UrlReferer');
+                                                  $this->Session->delete('UrlReferer');
+                                                  $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                            } else {
+                                                  $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                            }
 					}
 				}
 			}
@@ -4933,7 +5017,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 				}
 			}
@@ -5185,7 +5275,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 					}
 				}
 			}
@@ -5391,7 +5487,13 @@ Class UsersController extends AppController
 						else{
 							$this ->Session->write("block", 'no');
 						}
-						$this->redirect('http://'.$_SERVER['HTTP_HOST'].'/index');
+                                                if ($this->Session->read('UrlReferer') != '') {
+                                                      $UrlReferer = $this->Session->read('UrlReferer');
+                                                      $this->Session->delete('UrlReferer');
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .$UrlReferer);
+                                                } else {
+                                                      $this->redirect('http://'.$_SERVER['HTTP_HOST'] .'/index');
+                                                }
 
 					}
 				}
