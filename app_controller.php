@@ -8,9 +8,13 @@ class AppController extends Controller
 	
 	function beforeFilter()
 	{
-		
-               
-            ini_set('session.cookie_domain', env('HTTP_BASE')); 
+		$first_param = explode('/', $_SERVER['REQUEST_URI']);
+                if($first_param[1] != 'admin' &&  $first_param[1] != 'users' && !$this->RequestHandler->isAjax()){
+                   if($_SERVER['REQUEST_URI'] != '/homes/chooser' && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI']!= '/homes/forgot_password' && $_SERVER['REQUEST_URI']!= '/admin/*'){
+                       $this->Session->write("UrlReferer",$_SERVER['REQUEST_URI']);
+                   }
+                }
+                ini_set('session.cookie_domain', env('HTTP_BASE')); 
                 Configure::write('Session.checkAgent', false);
                 Configure::write('Session.ini',array('session.cookie_secure' => false, 'session.referer_check' => false)); 
                 $this->switchCpuntriesTable();
