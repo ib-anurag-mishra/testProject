@@ -386,13 +386,12 @@ div.paging span a, div.paging a {
     font-size: 12px;
     font-weight: bold;
     height: 25px;
-    left: 108px;
-    line-height: 26px;
+    left: 100px;   
     padding: 6px;
     position: relative;
     text-align: center;
     text-decoration: none;
     text-transform: uppercase;
-    top: -30px;
+    top: -35px;
     width: 124px;   
 }
