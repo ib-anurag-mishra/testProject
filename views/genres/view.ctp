@@ -16,7 +16,20 @@
   cursor: pointer;
 	display:block;
 }
-    
+#mydiv {
+    height: 250px;
+    width: 250px;
+    position: relative;
+    background-color: gray; /* for demonstration */
+}
+.ajax-loader {
+    display: block;
+    left: 50%;
+    margin-left: 147px;
+    margin-top: 85px;
+    position: absolute;
+    top: 50%;
+}   
     
     
 </style>
@@ -67,18 +80,19 @@
 
     
 function load_artist(link , id_serial , genre_name){
-	
+	//<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></span>
+        
        //jQuery('#ajax_artistlist_content').load(link);
        $('.album-list-span').html('');
        $('#album_details_container').html('');
-
+       $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader"/></span>');
        // var data = "ajax_genre_name="+genre_name;
        var data = "ajax_genre_name="+genre_name;
        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
             data: data,  // post data
-            success: function(response) {                
+            success: function(response) {               
                 $('#ajax_artistlist_content').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
@@ -139,9 +153,13 @@ $(document).ready(function(){
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
             });
         }
-    });   
+    });
+    
+
+    
 });
-</script>            
+</script>  
+
 <?php
 
 
@@ -180,12 +198,10 @@ $genre_text_conversion = array(
 	$totalRows = count($genresAll);
 ?>
 
-	<div height="400px" style="color:blue;">
-    
-	</div>
-<div id='loadingmessage' style='display:none' >
-<img src='<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif'/>
-</div>
+	
+
+
+
         	<section class="genres-page">
 		<div class="breadcrumbs"><span><?php echo $html->getCrumbs('&nbsp;>&nbsp;', __('Home', true), '/homes');?></span></div>
 		<header class="clearfix">

@@ -114,7 +114,7 @@
 
         </header>
 
-        <div class="video-top-genres-grid horiz-scroll">
+        <div class="video-top-genres-grid horiz-scroll" style="margin-top:26px;">
 
             <ul class="clearfix">
 <?php if(!empty($topVideoDownloads)){ ?>
