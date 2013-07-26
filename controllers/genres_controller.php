@@ -521,8 +521,9 @@ Class GenresController extends AppController
                             ),
                             'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'yes','check' => 2
+                        'limit' => $finallimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'no','check' => 2
                         );
+               
             } else {                   
 
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -535,20 +536,21 @@ Class GenresController extends AppController
 
                     $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $finallimit,                       
-                        'cache' => 'yes',
+                        'limit' => $scrollEndPageLimit, 
+                        'offset' => $scrollStartPageLimit,                       
                         'check' => 2,
                         'all_query'=> true,
                         'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
                         'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                         )
                     );
+                    
             }
                    
-            $allArtists = $this->paginate('Song');
+            
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++){
                 if($allArtistsNew[$i]['Song']['ArtistText'] != ""){
