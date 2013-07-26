@@ -479,10 +479,8 @@ Class GenresController extends AppController
             
             
             $scrollStartPageLimit= ( 60 * $scrollPageNumber );
-            $scrollEndPageLimit= 60;
-            
-           echo $scrollPageLimit = $scrollStartPageLimit.','.$scrollEndPageLimit;
-            die;
+            $scrollEndPageLimit= 60;            
+           
             $this -> layout = 'ajax';
             $country = $this->Session->read('territory');
 
@@ -529,7 +527,7 @@ Class GenresController extends AppController
                                 ),
                                 'extra' => array('chk' => 1),
                             'order' => 'TRIM(Song.ArtistText) ASC',
-                            'limit' => $scrollPageLimit, 'cache' => 'yes','check' => 2
+                            'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'yes','check' => 2
                             );
                 } else {
                     
@@ -544,7 +542,8 @@ Class GenresController extends AppController
                         'fields' => array('DISTINCT Song.ArtistText'),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $scrollPageLimit,
+                        'limit' => $scrollEndPageLimit,
+                        'offset'=>$scrollStartPageLimit,
                         'cache' => 'yes',
                         'check' => 2,
                         'all_query'=> true,
