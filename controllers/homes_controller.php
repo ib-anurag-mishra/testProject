@@ -373,6 +373,8 @@ STR;
                             )
                     );
                     
+                    echo "Query: ".$this->Album->lastQuery();
+                    
             } else {
                     $featured = array();
             }
