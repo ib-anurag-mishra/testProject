@@ -85,7 +85,7 @@ function load_artist(link , id_serial , genre_name){
        //jQuery('#ajax_artistlist_content').load(link);
        $('.album-list-span').html('');
        $('#album_details_container').html('');
-       $('.alphabetical-filter').html('<div id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></div>');
+       $('#abc159').html('<div id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></div>');
 
        // var data = "ajax_genre_name="+genre_name;
        var data = "ajax_genre_name="+genre_name;
@@ -243,6 +243,7 @@ $genre_text_conversion = array(
 				</div>
 			</div>
 			<div class="border"></div>
+                        <span id="abc159">
                 <div id="ajax_artistlist_content">
                     	<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); ?></h3>
@@ -307,7 +308,8 @@ $genre_text_conversion = array(
 					</ul>                                   
 				</div>
 			</div>
-                   </div>                  
+                   </div> 
+                        </span>
                         
 			<div class="border"></div>
 			<span class="album-list-span">				
