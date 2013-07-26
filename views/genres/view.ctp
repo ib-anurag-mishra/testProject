@@ -39,26 +39,31 @@
 
  $(document).on('click','.add-to-playlist-button',function(){
            
-            $('.wishlist-popover').removeClass('active');
+    $('.wishlist-popover').removeClass('active');
 
-            if($(this).next('.wishlist-popover').hasClass('active')) {
-                    $(this).next('.wishlist-popover').removeClass('active');
-                    $(this).find('.add-to-playlist-button').css({opacity:.5});
-            } else {
-
-                    $(this).next('.wishlist-popover').addClass('active');
-            }
-    });
+    if($(this).next('.wishlist-popover').hasClass('active')) {
+            $(this).next('.wishlist-popover').removeClass('active');
+            $(this).find('.add-to-playlist-button').css({opacity:.5});
+    } else {
+            $(this).next('.wishlist-popover').addClass('active');
+    }
     
-    
- $(document).on('scroll','#artistscroll',function(){    
-            alert(1); 
  });
- 
-$(document).delegate('#artistscroll', 'scroll', function(){
     
-    alert(1);
-});
+ $(document).on('mouseenter','.add-to-playlist',function(){
+           
+    $('.playlist-options').addClass('active');
+
+ });	
+	
+ $(document).on('mouseleave','.add-to-playlist',function(){
+           
+    $('.playlist-options').removeClass('active');
+
+ });	
+	
+ 
+
     
 function load_artist(link , id_serial , genre_name){
 	
@@ -113,25 +118,27 @@ function showAlbumDetails(albumDetailURL){
 
  
  
- $(document).ready(function(){
-   $("#artistscroll").scroll(function(){       
+$(document).ready(function(){
+    var artistPage = 2;
+    $("#artistscroll").scroll(function(){         
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){      
+            
+            var data = "";
+            var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/'+artistPage;
             var data = "";
             jQuery.ajax({
-                    type: "post",  // Request method: post, get
-                    url: webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>', // URL to request
-                    data: data,  // post data
-                    success: function(newitems) {                       
-                        $('#artistlistrecord').append(newitems);                        
-                    },
-                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
-            });  
-   });
-   
-  $(document).on('scroll','#artistscroll',function(){    
-            alert(1); 
- });
-   
-   
+                type: "post",  // Request method: post, get
+                url: link, // URL to request
+                data: data,  // post data
+                success: function(newitems) { 
+                    artistPage++;
+                    $('#artistlistrecord').append(newitems);                        
+                },
+                async:   false,
+                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+            });
+        }
+    });   
 });
 </script>            
 <?php
@@ -265,8 +272,6 @@ $genre_text_conversion = array(
                                             if(count($genres) > 0){                                                    
                                                 for ($i = 0; $i < count($genres); $i++) {
                                                         echo " <li>";
-                                                       
-                                                        
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                                         echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'  >";

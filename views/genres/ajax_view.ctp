@@ -1,4 +1,25 @@
+<script> 
+var ajaxartistPage = 2;
+   $("#artistscroll").scroll(function(){  
+       if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
+       {
+            var data = "";
+            jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: '/genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/'+ajaxartistPage; // URL to request
+                    data: data,  // post data
+                    success: function(newitems) { 
+                        ajaxartistPage++;                      
+                        $('#artistlistrecord').append(newitems);                        
+                    },
+                    async:   false,
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+            }); 
+       }
+        
+   });  
 
+</script> 
 		<div class="alphabetical-shadow-container">
 				<h3><?php __('Artist'); echo $selectedCallFlag; ?></h3>
 				<div class="alphabetical-filter">

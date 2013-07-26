@@ -484,13 +484,14 @@
 														
 													</a>
 													<div class="wishlist-popover"> 
-                                           
+                                                                                                            <?php
+                                                                                                                
+                                                                                                             $wishlistInfo = $wishlist->getWishlistData($value["Song"]["ProdID"]);
+                                                                                                             echo $wishlist->getWishListMarkup($wishlistInfo,$value["Song"]["ProdID"],$value["Song"]["provider_type"]);
+                                                                                                              echo $this->Queue->getSocialNetworkinglinksMarkup();
+                                                                                                            ?>
 
-                                                                                                            <div class="share clearfix">
-                                                                                                                    <p>Share via</p>
-                                                                                                                    <a class="facebook" href="#"></a>
-                                                                                                                    <a class="twitter" href="#"></a>
-                                                                                                            </div>
+                                                                                                            
 														
 													</div>
 
@@ -550,12 +551,14 @@
                                                                                                         <a class="add-to-playlist-button" href="#">
 														
 													</a>
-													<div class="wishlist-popover">														
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
+													<div class="wishlist-popover">	
+                                                                                                             <?php
+
+                                                                                                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value["Video"]["ProdID"]);
+                                                                                                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$value["Video"]["ProdID"],$value["Video"]["provider_type"]);
+                                                                                                                    echo $this->Queue->getSocialNetworkinglinksMarkup();  
+                                                                                                                ?>
+														
 														
 													</div>
                                                                                                 <?php } ?>

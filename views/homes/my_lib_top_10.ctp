@@ -333,6 +333,7 @@
 
 
 							<!-- <a class="top-10-download-now-button" href="#">Download Now</a> -->
+                                                       <?php if($this->Session->read('patron')) { ?>
 							<a class="add-to-playlist-button" href="#"></a>
 							<div class="wishlist-popover">
 								
@@ -344,7 +345,7 @@
                                                         ?>
 								
 							</div>
-							
+							<?php } ?>
 						</div>
 						<div class="album-title">
 							<a href="<?php echo $value['Video']['ProdID']; ?>">
