@@ -86,11 +86,12 @@
 										}
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
-					<a class="add-to-playlist-button" href="#"></a>
-					<div class="wishlist-popover">
                                                 <?php
-                                                                    if($this->Session->read('patron')) {
-										if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
+                                                                    if($this->Session->read('patron')) {?>
+                                                                        
+                                                                                <a class="add-to-playlist-button" href="#"></a>
+                                                                                <div class="wishlist-popover">                                                                        
+										<?php if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
 											if($libraryDownload == '1' && $patronDownload == '1')
 											{	
@@ -124,27 +125,27 @@
 											<a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
 												date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span></a>
 									<?php
-										}
-									}else{
+										} 
                                                                          ?>
-                                                                        <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
+                                                                        <?php if( $this->Session->read('library_type') == 2 ){
+                                                                                    echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
+                                                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                                        <?php } ?>
+                                                                        <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
+                                                                         <?php
+                                                                            $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
+
+                                                                            echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
+                                                                         ?>
+                                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>                                                                                 
+                                                                                
+									<?php }else{
+                                                                         ?>
+                                                                        <a class="genre-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
                                                                         <?php
                                                                         }
                                                                         ?>
-                                                       <?php  if($this->Session->read('patron')) {    ?>            
-                                                        <?php if( $this->Session->read('library_type') == 2 ){
-                                                                    echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
-                                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
-                                                        <?php } ?>
-							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
-                                                         <?php
-                                                            $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
 
-                                                            echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
-                                                         ?>
-                                                        <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?> 
-                                                        
-                                                         <?php } ?>
 					</div>
 				</div>
 					
@@ -161,3 +162,4 @@
             <?php
 	endforeach;
         ?>
+		
