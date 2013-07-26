@@ -393,7 +393,8 @@ div.paging span a, div.paging a {
     text-decoration: none;
     text-transform: uppercase;
     top: -35px;
-    width: 124px;   
+    width: 124px;  
+    opacity: 0;
 }
 .top-music-video-cover-container{
     margin-bottom: -2px;
