@@ -393,6 +393,10 @@ if ($this->Session->read('Config.language') == 'en') {
         {
             $body_class =   'page-artists-view'; 
         }
+        else if(!empty(strstr($_SERVER['REQUEST_URI'], '/users/')))
+        {
+            $body_class =   'page-users-login'; 
+        }
         else
         {
             $body_class =   'page-news';
