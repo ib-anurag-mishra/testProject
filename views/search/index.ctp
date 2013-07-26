@@ -982,6 +982,12 @@ if (isset($type)) {
 				foreach($songs as $psong) {
 				?>	
 					<div class="tracklist">
+                        <?php
+                        if($this->Session->read("patron")){
+                            $style = '';
+                        } else {
+                            $style = 'style="left:0px"';
+                        }
                         <div class="artist"><a href="#"><?php echo $psong->ArtistText; ?></a></div>
 						<a class="add-to-playlist-button" href="#"></a>
 						
