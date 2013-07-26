@@ -549,9 +549,8 @@ Class GenresController extends AppController
                         }
                     }
                     $this->set('genres', $allArtists);
-                    $this->set('genre',base64_decode($Genre));
+                    $this->set('genre',base64_decode($Genre));                    
                     
-                    exit;
 	}
 
 
