@@ -821,7 +821,7 @@ if ($type != 'all') {
 
                             <div class="wishlist-popover">	
 
-                                <?php if( $this->Session->read('library_type') == 2 ){ ?>
+                                <?php if( $this->Session->read("patron") && $this->Session->read('library_type') == 2 ){ ?>
                                 <div class="playlist-options">
                                     <ul>
                                         <li><a href="#">Create New Queue</a></li>
