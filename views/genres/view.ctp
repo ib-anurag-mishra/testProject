@@ -121,24 +121,24 @@ function load_artist(link , id_serial , genre_name){
 
 function showAllAlbumsList(albumListURL){
 
+       $('#album_details_container').html('');
        $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader1"/></span>');
 
-        //alert(webroot+albumListURL);
         var data = "";
         jQuery.ajax({
-                type: "post",  // Request method: post, get
-                url: webroot+albumListURL, // URL to request
-                data: data,  // post data
-                success: function(response) {              
-                    $('.album-list-span').html(response);
-                },
-                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
-            });
+            type: "post",  // Request method: post, get
+            url: webroot+albumListURL, // URL to request
+            data: data,  // post data
+            success: function(response) {              
+                $('.album-list-span').html(response);
+            },
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
+        });
 }
 
 function showAlbumDetails(albumDetailURL){
-   // alert(webroot+albumDetailURL);
-         $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
+   
+        $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
 
         var data = "";
         jQuery.ajax({
