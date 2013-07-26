@@ -1006,7 +1006,7 @@ if (isset($type)) {
 						-->
 						<div class="album"><a href="#"><?php echo $psong->Title; ?></a></div>
 						<?php
-                            $imageUrl = shell_exec('perl files/tokengen ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
+                            $imageUrl = shell_exec('perl files/tokengen ' . "sony_test/".$psong->ACdnPath . "/" . $psong->ASourceURL);
                             $image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
                         <div class="song"><a href="#"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
