@@ -525,6 +525,7 @@ Class GenresController extends AppController
                             );
                 } else {
                     
+                    echo 147;
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
