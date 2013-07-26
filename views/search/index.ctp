@@ -813,8 +813,13 @@ if ($type != 'all') {
                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio" . $i));
                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio" . $i, "onClick" => 'stopThis(this, "' . $i . '");'));
                         }
+                        if($this->Session->read("patron")) {
+                            $style = '';
+                        } else {
+                            $style = 'style="left:0px"';
+                        }
                         ?>
-                            <div class="artist"><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
+                            <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="composer"><?php echo truncate_text(str_replace('"', '', $psong->Composer), 30, $this); ?></div>
 
@@ -984,10 +989,8 @@ if (isset($type)) {
 					<div class="tracklist">
                         <?php
                         if($this->Session->read("patron")) {
-                            echo "1";
                             $style = '';
                         } else {
-                            echo "2";
                             $style = 'style="left:0px"';
                         }
                         ?>
