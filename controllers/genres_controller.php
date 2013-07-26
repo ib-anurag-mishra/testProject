@@ -466,7 +466,7 @@ Class GenresController extends AppController
 	}
         
         
-        function ajax_view_pagination($Genre = null,$scrollPageNumber=null) {               
+        function ajax_view_pagination($Genre = null,$Artist='All',$scrollPageNumber=null) {               
            
             $this -> layout = 'ajax';
             error_reporting(1);
@@ -500,7 +500,15 @@ Class GenresController extends AppController
             else {
                     $cond = "";
             }
-           
+            if($Artist == 'spl') {
+		$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
+            }
+            elseif($Artist != '' && $Artist != 'img' && $Artist != 'All') {
+                $condition = array('Song.ArtistText LIKE' => $Artist.'%');
+            }
+            else {
+                $condition = "";
+            }
             $this->Song->recursive = 0;
             $genre = base64_decode($Genre);
             $genre = mysql_escape_string($genre);
