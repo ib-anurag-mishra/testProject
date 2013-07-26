@@ -39,6 +39,17 @@
     position: absolute;
     top: 50%;
 }
+
+
+
+.ajax-loader2 {
+    display: block;
+    left: 50%;
+    margin-left: 177px;
+    margin-top: 3px;
+    position: absolute;
+    top: 50%;
+}
     
 </style>
 <script language="javascript">
@@ -112,7 +123,7 @@ function showAllAlbumsList(albumListURL){
 
        $('.album-list-span').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader1"/></span>');
 
-    //alert(webroot+albumListURL);
+        //alert(webroot+albumListURL);
         var data = "";
         jQuery.ajax({
                 type: "post",  // Request method: post, get
@@ -127,7 +138,8 @@ function showAllAlbumsList(albumListURL){
 
 function showAlbumDetails(albumDetailURL){
    // alert(webroot+albumDetailURL);
-  
+         $('#album_details_container').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" class="ajax-loader2"/></span>');
+
         var data = "";
         jQuery.ajax({
             type: "post",  // Request method: post, get
