@@ -80,19 +80,20 @@
 
     
 function load_artist(link , id_serial , genre_name){
-	//<div id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></div>
+	//<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></span>
         
        //jQuery('#ajax_artistlist_content').load(link);
        $('.album-list-span').html('');
        $('#album_details_container').html('');
-       $('#ajax_artistlist_content').html('Loading...');
+       $('#ajax_artistlist_content').html('<span id="mydiv"><img src="<? echo $this->webroot; ?>app/webroot/img/ajax-loader_black.gif" class="ajax-loader"/></span>');
        // var data = "ajax_genre_name="+genre_name;
        var data = "ajax_genre_name="+genre_name;
        jQuery.ajax({
             type: "post",  // Request method: post, get
             url: link, // URL to request
             data: data,  // post data
-            success: function(response) {                
+            success: function(response) { 
+                $('#ajax_artistlist_content').html('');
                 $('#ajax_artistlist_content').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
