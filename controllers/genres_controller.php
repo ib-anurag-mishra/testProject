@@ -319,7 +319,7 @@ Class GenresController extends AppController
                     'extra' => array('chk' => 1),
                     'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60',
-                    'cache' => 'no',
+                    'cache' => 'yes',
                     'check' => 2,
                     'all_query'=> true,
                     'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
