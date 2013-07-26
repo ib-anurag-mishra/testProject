@@ -135,7 +135,21 @@ foreach($topVideoDownloads as $topDownload)
                         <div class="video-cover-container">
                             <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
                             <a class="top-video-download-now-button" href="#">Download Now</a>
+                            
+                           <?php
+                                    if($this->Session->read('patron'))
+                                    {
+                           ?>
                            <a class="add-to-playlist-button" href="#"></a> 
+                           <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                            <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                        <?php
+                                    }
+                              ?>
                            
                            <div class="wishlist-popover">
                                 <?php
