@@ -34,7 +34,7 @@
 .ajax-loader1 {
     display: block;
     left: 50%;
-    margin-left: 177px;
+    margin-left: 115px;
     margin-top: 85px;
     position: absolute;
     top: 50%;
