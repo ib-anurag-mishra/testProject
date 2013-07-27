@@ -467,7 +467,7 @@ Class GenresController extends AppController
 	}
         
         
-        function ajax_view_pagination($urlPage = 'page:1',$Genre = null,$Artist=null) {               
+        function ajax_view_pagination($Genre = null,$Artist=null) {               
            
             $this -> layout = 'ajax';
             error_reporting(1);

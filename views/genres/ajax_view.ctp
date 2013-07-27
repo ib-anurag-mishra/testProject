@@ -55,12 +55,7 @@ var ajaxartistPage = 2;
                                     </ul>
 				</div>
 			</div> 
-                    
-                    
-                    
-                    
-                    
-                    
+                                                            
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
 				<div class="artist-list" id="artistscroll">					
