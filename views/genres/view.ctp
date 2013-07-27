@@ -334,8 +334,9 @@ $genre_text_conversion = array(
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 				
 					</ul>
-                                    <span id="artist_loader" style="display:none;"  ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" style="padding-left:115px;padding-buttom:25px;"/></span>
+                                   
 				</div>
+                                 <span id="artist_loader" style="display:block;"  ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0" style="padding-left:115px;padding-buttom:25px;"/></span>
 			</div>
                    </div>                  
                         
