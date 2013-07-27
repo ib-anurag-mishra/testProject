@@ -162,8 +162,8 @@ $(document).ready(function(){
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){      
             
             var data = "";
-            var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All',
-            var data = "";
+            var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+          
             jQuery.ajax({
                 type: "post",  // Request method: post, get
                 url: link, // URL to request
