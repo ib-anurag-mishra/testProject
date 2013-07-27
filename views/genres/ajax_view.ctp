@@ -10,9 +10,10 @@ var ajaxartistPage = 2;
                     url: '/genres/ajax_view_pagination/page:'+ajaxartistPage+'/<?=base64_encode($genre); ?>'+'/<?=$selectedAlpha?>',
                     data: data,  // post data
                     success: function(newitems) { 
-                        ajaxartistPage++;                      
-                        $('#artistlistrecord').append(newitems);  
+                        ajaxartistPage++; 
                         $('#artist_loader').hide();                      
+                        $('#artistlistrecord').append(newitems);  
+                                           
                     },
                     async:   false,
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
