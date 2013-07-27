@@ -530,7 +530,7 @@ echo 147;
                 
                 $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                             'contain' => array(
                                     'Genre' => array(
                                             'fields' => array(
