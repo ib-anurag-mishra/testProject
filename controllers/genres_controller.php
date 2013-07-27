@@ -519,7 +519,7 @@ Class GenresController extends AppController
                
                 
             if($genre != 'All'){
- echo 55;  
+  
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
@@ -554,7 +554,7 @@ Class GenresController extends AppController
                
             } else {                   
 
-                echo 147;  
+               
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
