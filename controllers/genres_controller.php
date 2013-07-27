@@ -519,7 +519,7 @@ Class GenresController extends AppController
                
                 
             if($genre != 'All'){
-  
+
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
@@ -554,8 +554,7 @@ Class GenresController extends AppController
                
             } else {                   
 
-               
-                $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
                     $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
@@ -569,9 +568,8 @@ Class GenresController extends AppController
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
                         'limit' => $scrollEndPageLimit, 
-                        'offset' => $scrollStartPageLimit
-                       
-                       
+                        'offset' => $scrollStartPageLimit,
+                        'cache' => 'yes'                       
                         )
                     );
                     
