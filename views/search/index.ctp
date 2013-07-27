@@ -582,13 +582,14 @@ if ($type != 'all') {
             <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 
 <?php /*********************Album Block Started****************************** */ ?>
-            <section class="advanced-albums">
+            <section class="advanced-albums  clearfix">
+                <div class="col-1">
                 <header class="clearfix">
                     <h5><?php __("Albums"); ?></h5>
                     <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
                 </header>
                 <div class="advanced-albums-shadow-container">
-                    <div class="advanced-albums-scrollable horiz-scroll">
+                    <div style="display:block" class="advanced-albums-scrollable horiz-scroll">
                         <ul>
     <?php
     foreach ($albumData as $palbum) {
@@ -639,13 +640,10 @@ if ($type != 'all') {
                         </ul>
                     </div>
                 </div>
-            </section>
-    <?php /*     * *******************Album Block End****************************** */ ?>
-
-    
-        </section>
-        <section class="advanced-search-results row-2 clearfix">
-<?php /*     * *******************Artist Block Started****************************** */ ?>
+                    </div>
+                <div class="col-1">
+                    <?php /*     * *******************Artist Block Started****************************** */ ?>
+ 
             <section class="advanced-artists">
                 <header class="clearfix">
                     <h5><?php __("Artists"); ?></h5>
@@ -671,6 +669,14 @@ if ($type != 'all') {
 
             </section>
 <?php /*********************Artist Block End****************************** */ ?>       
+                </div>
+            </section>
+            
+    <?php /*     * *******************Album Block End****************************** */ ?>
+        
+        </section>
+        <section class="advanced-search-results row-2 clearfix">
+           
             
 <?php /*********************Composer Block Started****************************** */ ?>			
             <section class="advanced-composers">
