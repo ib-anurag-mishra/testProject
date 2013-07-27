@@ -347,7 +347,8 @@ Class GenresController extends AppController
                     $Genre = "QWxs";
                 }
                 
-               
+                 echo $Genre;
+           die;
                 
                 $this->set('selectedCallFlag', 0);
                 if(isset($_REQUEST['ajax_genre_name'])){
