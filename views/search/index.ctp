@@ -589,7 +589,7 @@ if ($type != 'all') {
                     <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
                 </header>
                 <div class="advanced-albums-shadow-container">
-                    <div class="advanced-albums-scrollable horiz-scroll">
+                    <div style="display:block" class="advanced-albums-scrollable horiz-scroll">
                         <ul>
     <?php
     foreach ($albumData as $palbum) {
