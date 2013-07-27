@@ -114,7 +114,7 @@ function load_artist(link , id_serial , genre_name){
             success: function(response) {               
                 $('#ajax_artistlist_content').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist available for this Genre.')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist available for this Genre.');}
         });
 }
 
@@ -132,7 +132,7 @@ function showAllAlbumsList(albumListURL){
             success: function(response) {              
                 $('.album-list-span').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.');}
         });
 }
 
@@ -148,7 +148,7 @@ function showAlbumDetails(albumDetailURL){
             success: function(response) {              
                 $('#album_details_container').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.')}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.');}
         });
 }
 
@@ -159,7 +159,9 @@ function showAlbumDetails(albumDetailURL){
 $(document).ready(function(){
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){      
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){  
+            
+            $('#artist_loader').show();
             
             var data = "";
             var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
@@ -168,12 +170,13 @@ $(document).ready(function(){
                 type: "post",  // Request method: post, get
                 url: link, // URL to request
                 data: data,  // post data
-                success: function(newitems) { 
+                success: function(newitems) {                     
                     artistPage++;
-                    //$('#artistlistrecord').append(newitems);                        
+                    $('#artistlistrecord').append(newitems);
+                    $('#artist_loader').hide();
                 },
                 async:   false,
-                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available');}
             });
         }
     });
@@ -330,7 +333,7 @@ $genre_text_conversion = array(
                                           <!--  <li><a href="#" data-artist="A.J. Croce">A.J. Croce</a></li> -->
 				
 					</ul>
-                                    <span id="artist_loader"><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0"/></span>
+                                    <span id="artist_loader" style="padding-left:115px;display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0"/></span>
 				</div>
 			</div>
                    </div>                  

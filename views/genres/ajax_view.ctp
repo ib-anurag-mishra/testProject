@@ -3,6 +3,7 @@ var ajaxartistPage = 2;
    $("#artistscroll").scroll(function(){  
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
+            $('#artist_loader').show();            
             var data = "";
             jQuery.ajax({
                     type: "post",  // Request method: post, get 
@@ -10,7 +11,8 @@ var ajaxartistPage = 2;
                     data: data,  // post data
                     success: function(newitems) { 
                         ajaxartistPage++;                      
-                        $('#artistlistrecord').append(newitems);                        
+                        $('#artistlistrecord').append(newitems);  
+                        $('#artist_loader').hide();                      
                     },
                     async:   false,
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
@@ -77,5 +79,6 @@ var ajaxartistPage = 2;
                                             }
                                          ?>
 					</ul>
+                                <span id="artist_loader" style="padding-left:115px;display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0"/></span>
 				</div>
 			</div>
