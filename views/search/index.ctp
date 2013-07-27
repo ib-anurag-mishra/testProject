@@ -641,10 +641,8 @@ if ($type != 'all') {
                     </div>
                 </div>
                     </div>
-            </section>
-            
-    <?php /*     * *******************Album Block End****************************** */ ?>
-    <?php /*     * *******************Artist Block Started****************************** */ ?>
+                <div class="col-1">
+                    <?php /*     * *******************Artist Block Started****************************** */ ?>
  
             <section class="advanced-artists">
                 <header class="clearfix">
@@ -671,7 +669,11 @@ if ($type != 'all') {
 
             </section>
 <?php /*********************Artist Block End****************************** */ ?>       
-    
+                </div>
+            </section>
+            
+    <?php /*     * *******************Album Block End****************************** */ ?>
+        
         </section>
         <section class="advanced-search-results row-2 clearfix">
            
