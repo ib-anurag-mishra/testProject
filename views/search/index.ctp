@@ -847,7 +847,7 @@ if ($type != 'all') {
                         if($this->Session->read("patron")) {
                             $style = '';
                         } else {
-                            $style = 'style="left:0px"';
+                            $style = 'style="left:10px"';
                         }
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
@@ -1022,7 +1022,7 @@ if (isset($type)) {
                         if($this->Session->read("patron")) {
                             $style = '';
                         } else {
-                            $style = 'style="left:0px"';
+                            $style = 'style="left:10px"';
                         }
                         ?>
                         <div class="artist" <?php echo $style; ?>><a href="#"><?php echo $psong->ArtistText; ?></a></div>
