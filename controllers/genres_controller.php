@@ -530,7 +530,7 @@ Class GenresController extends AppController
                 
                 $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText1'),
+                        'fields' => array('DISTINCT Song.ArtistText'),
                             'contain' => array(
                                     'Genre' => array(
                                             'fields' => array(
@@ -539,7 +539,7 @@ Class GenresController extends AppController
                             ),
                             'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'check' => 2
+                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'no','check' => 2
                         )
                     );
                 
@@ -569,8 +569,7 @@ Class GenresController extends AppController
                         'order' => 'TRIM(Song.ArtistText) ASC',
                         'limit' => $scrollEndPageLimit, 
                         'offset' => $scrollStartPageLimit,
-                        'cache' => 'yes',
-                        'check' => 2
+                        'cache' => 'no'                       
                         )
                     );
                     
