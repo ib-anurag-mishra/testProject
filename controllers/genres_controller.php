@@ -519,7 +519,7 @@ Class GenresController extends AppController
                
                 
             if($genre != 'All'){
-
+ echo 55;  
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
@@ -530,7 +530,7 @@ Class GenresController extends AppController
                 
                 $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText1'),
+                        'fields' => array('DISTINCT Song.ArtistText'),
                             'contain' => array(
                                     'Genre' => array(
                                             'fields' => array(
@@ -539,7 +539,7 @@ Class GenresController extends AppController
                             ),
                             'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'check' => 2
+                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'yes','check' => 2
                         )
                     );
                 
@@ -554,7 +554,8 @@ Class GenresController extends AppController
                
             } else {                   
 
-                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                echo 147;  
+                $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
                     $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
@@ -564,13 +565,13 @@ Class GenresController extends AppController
 
                     $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
                         'limit' => $scrollEndPageLimit, 
                         'offset' => $scrollStartPageLimit,
-                        'cache' => 'yes',
-                        'check' => 2
+                        'cache' => 'yes'
+                       
                         )
                     );
                     
