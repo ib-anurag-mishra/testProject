@@ -702,7 +702,32 @@ if ($type != 'all') {
                 </div>
             </section>
                         <?php /*                         * *******************Composer Block End****************************** */ ?>
-
+         <?php /*             * *******************Video Block Started****************************** */ ?>            
+            <section class="advanced-videos">
+                    <header class="clearfix">
+                        <h5><?php __("Videos"); ?></h5>
+                        <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=video">See more videos</a></h6>
+                    </header>
+                    <div class="advanced-videos-shadow-container">
+                        <div class="advanced-videos-scrollable">
+            <?php
+            if (!empty($videos)) {
+                foreach ($videos as $video) {
+                    $tilte = urlencode($video->VideoTitle);
+                    $video_name_text = truncate_text($video->VideoTitle, 30, $this);
+                    $name = $video->VideoTitle;
+                    // $count = $video->numFound;
+                    ?>
+                                    <div><a href="/search/index?q=<?php echo $tilte; ?>&type=video" title="<?php echo $name; ?>"><?php echo (($name != "false") ? $video_name_text : ""); ?></a></div>
+                <?php }
+            } else {
+                ?>
+                                     <div style='color:red'><?php __("No Videos Found"); ?></div>     
+            <?php } ?>
+                        </div>
+                    </div>
+                </section> 
+            <?php /*             * *******************Video Block End****************************** */ ?>
                         <?php /*                         * *******************Genre Block Started****************************** */ ?>
             <section class="advanced-genres">
                 <header class="clearfix">
