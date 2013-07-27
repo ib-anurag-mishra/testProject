@@ -112,7 +112,7 @@ function load_artist(link , id_serial , genre_name){
             url: link, // URL to request
             data: data,  // post data
             success: function(response) {               
-               // $('#ajax_artistlist_content').html(response);
+                $('#ajax_artistlist_content').html(response);
             },
             error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist available for this Genre.')}
         });
@@ -159,7 +159,8 @@ function showAlbumDetails(albumDetailURL){
 $(document).ready(function(){
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){      
+            
             var data = "";
             var link =webroot+'genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/All/'+artistPage;
             var data = "";
@@ -176,6 +177,9 @@ $(document).ready(function(){
             });
         }
     });
+    
+
+    
 });
 </script>  
 
