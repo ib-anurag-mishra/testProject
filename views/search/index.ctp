@@ -582,7 +582,8 @@ if ($type != 'all') {
             <h4>Results for your search "<span><?php echo $keyword; ?></span>"</h4>
 
 <?php /*********************Album Block Started****************************** */ ?>
-            <section class="advanced-albums">
+            <section class="advanced-albums  clearfix">
+                <div class="col-1">
                 <header class="clearfix">
                     <h5><?php __("Albums"); ?></h5>
                     <h6><a href="/search/index?q=<?php echo $keyword; ?>&type=album">See more albums</a></h6>
@@ -639,6 +640,7 @@ if ($type != 'all') {
                         </ul>
                     </div>
                 </div>
+                    </div>
             </section>
     <?php /*     * *******************Album Block End****************************** */ ?>
 
