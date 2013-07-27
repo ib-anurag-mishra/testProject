@@ -519,18 +519,18 @@ Class GenresController extends AppController
                
                 
             if($genre != 'All'){
-echo 147;
+
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                 $this->Song->Behaviors->attach('Containable');
                 $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
                           
-                print_r( $gcondition );
+                //print_r( $gcondition );
                 
                 $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                             'contain' => array(
                                     'Genre' => array(
                                             'fields' => array(
@@ -539,9 +539,18 @@ echo 147;
                             ),
                             'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'yes','check' => 2
+                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'check' => 2
                         )
                     );
+                
+                
+              // Query: SELECT DISTINCT `Song`.`ArtistText1`, `Genre`.`Genre` FROM `Songs` AS `Song` LEFT JOIN `Genre` AS `Genre` 
+              // ON (`Genre`.`ProdID` = `Song`.`ProdID`) WHERE `Song`.`provider_type` = `Genre`.`provider_type` 
+              // AND `Genre`.`Genre` = 'Acid Punk' AND find_in_set('"US"',`Song`.`Territory`) > 0 AND `Song`.`DownloadStatus` = '1' 
+              // AND `Song`.`Sample_FileID` != '' AND TRIM(`Song`.`ArtistText`) != '' 
+              // AND `Song`.`ArtistText` IS NOT NULL AND `Song`.`FullLength_FIleID` != '' AND 1 = 1 GROUP BY `Song`.`ArtistText` 
+              // ORDER BY TRIM(`Song`.`ArtistText`) ASC LIMIT 180, 60  
+                
                
             } else {                   
 
@@ -571,7 +580,7 @@ echo 147;
 //                    AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND `Song`.`FullLength_FIleID` != '' 
 //                    AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND 1 = 1 
 //                    GROUP BY `Song`.`ArtistText` ORDER BY TRIM(`Song`.`ArtistText`) ASC LIMIT 240, 60 
-                    print_r($allArtists);
+                   // print_r($allArtists);
                     
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++){
