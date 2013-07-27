@@ -641,7 +641,7 @@ if ($type != 'all') {
                     </div>
                 </div>
                     </div>
-                <div class="col-1">
+                <div class="col-2">
                     <?php /*     * *******************Artist Block Started****************************** */ ?>
  
             <section class="advanced-artists">
