@@ -470,10 +470,9 @@ Class GenresController extends AppController
         function ajax_view_pagination($Genre = null,$Artist=null) {               
            
             $this -> layout = 'ajax';
-            error_reporting(1);
-            ini_set('display_errors',1);
-           echo $Genre;
-           die;
+            //error_reporting(1);
+            //ini_set('display_errors',1);
+          
 
             if($Genre == ''){
                     $Genre = "QWxs";
