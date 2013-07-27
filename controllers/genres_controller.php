@@ -542,7 +542,7 @@ Class GenresController extends AppController
                     );
                
             } else {                   
-
+echo 147;
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -569,7 +569,7 @@ Class GenresController extends AppController
 //                    AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND `Song`.`FullLength_FIleID` != '' 
 //                    AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND 1 = 1 
 //                    GROUP BY `Song`.`ArtistText` ORDER BY TRIM(`Song`.`ArtistText`) ASC LIMIT 240, 60 
-                    
+                    print_r($allArtists);
                     
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++){
