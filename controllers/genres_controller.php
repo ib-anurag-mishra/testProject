@@ -569,8 +569,8 @@ Class GenresController extends AppController
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
                         'limit' => $scrollEndPageLimit, 
-                        'offset' => $scrollStartPageLimit,
-                        'cache' => 'yes'
+                        'offset' => $scrollStartPageLimit
+                       
                        
                         )
                     );
