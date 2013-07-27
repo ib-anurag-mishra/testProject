@@ -471,7 +471,8 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             error_reporting(1);
             ini_set('display_errors',1);
-            
+           echo $Genre;
+           die;
 
             if($Genre == ''){
                     $Genre = "QWxs";
