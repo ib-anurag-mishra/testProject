@@ -526,7 +526,7 @@ echo 147;
                 $this->Song->Behaviors->attach('Containable');
                 $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
                           
-                print_r( $gcondition );
+                //print_r( $gcondition );
                 
                 $allArtists = $this->Song->find('all', array(
                         'conditions' => $gcondition,
@@ -539,7 +539,7 @@ echo 147;
                             ),
                             'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'cache' => 'yes','check' => 2
+                        'limit' => $scrollEndPageLimit, 'offset'=>$scrollStartPageLimit, 'check' => 2
                         )
                     );
                
