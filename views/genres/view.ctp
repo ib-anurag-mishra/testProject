@@ -170,7 +170,7 @@ $(document).ready(function(){
                 data: data,  // post data
                 success: function(newitems) { 
                     artistPage++;
-                    $('#artistlistrecord').append(newitems);                        
+                    //$('#artistlistrecord').append(newitems);                        
                 },
                 async:   false,
                 error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
