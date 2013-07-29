@@ -38,6 +38,9 @@
 												break;
 											}
                                                                                         
+                                                                                        $albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
+                                                                                        $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                                                        
                                                                                         if($i<=9)       
                                                                                         {
                                                                                             $lazyClass      =   '';
@@ -87,8 +90,7 @@
                                                                                     <?php
                                                                                         
                                                                                         
-											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
-                                                                                        $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+											
 
  /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
 										?>
