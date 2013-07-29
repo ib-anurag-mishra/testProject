@@ -86,6 +86,8 @@ class CacheController extends AppController {
                     ),
                 ), 'group' => 'Genre.Genre'
                     ));
+            
+            print_r($genreAll);
 
             $this->log("cache written for genre for $territory", 'debug');
 
