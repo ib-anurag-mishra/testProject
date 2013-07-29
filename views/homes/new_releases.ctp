@@ -81,7 +81,9 @@
                                                 {
                                                         array_push($temp_array, $value['Song']['ReferenceID']);
                                                 }
-                                                print_r($temp_array); 
+                                                
+                                                
+                                              echo "<pre>";  print_r($temp_array); 
                                                 
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 

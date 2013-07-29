@@ -4520,7 +4520,7 @@ STR;
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 1000
+                    LIMIT 500
 	  	
 	  
 STR;
