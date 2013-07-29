@@ -76,7 +76,7 @@ class CacheController extends AppController {
                     )
                 ),
                 'fields' => array(
-                    'Genre.Genre'
+                    'Genre.Genre', 'Songs.ProdID'
                 ),
                 'contain' => array(
                     'Country' => array(
