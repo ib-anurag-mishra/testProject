@@ -307,7 +307,9 @@ Class GenresController extends AppController
                     'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60', 'cache' => 'yes','check' => 2
                     );
-            } else {                
+            } else {     
+                echo 147;
+                die;
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
