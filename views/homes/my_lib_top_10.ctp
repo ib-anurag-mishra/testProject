@@ -80,7 +80,7 @@
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
                                                 
-                                             echo "<pre>"; print_r($value); 
+                                             //echo "<pre>"; print_r($value); 
 					?>
 					<li>
 						
