@@ -76,7 +76,7 @@ class CacheController extends AppController {
                     )
                 ),
                 'fields' => array(
-                    'Genre.Genre', 'Songs.ProdID'
+                    'Genre.Genre'
                 ),
                 'contain' => array(
                     'Country' => array(
@@ -84,7 +84,15 @@ class CacheController extends AppController {
                             'Country.Territory'
                         )
                     ),
-                ), 'group' => 'Genre.Genre'
+                ),
+                'contain' => array(
+                    'Song' => array(
+                        'fields' => array(
+                            'Song.ProdID'
+                        )
+                    ),
+                )
+                ,'group' => 'Genre.Genre'
                     ));
             
             print_r($genreAll);
