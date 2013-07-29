@@ -507,7 +507,7 @@ Class GenresController extends AppController
                     $condition = "";
             }
             $this->Song->recursive = 0;
-            $genre = base64_decode($Genre);
+          echo  $genre = base64_decode($Genre);
             $genre = mysql_escape_string($genre);
             
             if($genre != 'All'){
@@ -531,7 +531,9 @@ Class GenresController extends AppController
                     'limit' => '60', 'cache' => 'yes','check' => 2
                     );
             } else {   
-               
+               echo 147;
+               die;
+                
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
