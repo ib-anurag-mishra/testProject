@@ -373,6 +373,8 @@ STR;
                             )
                     );
                     
+                      echo "Query: ".$this->Album->lastQuery();
+                    
             } else {
                     $featured = array();
             }
@@ -380,7 +382,7 @@ STR;
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
         }
-        echo "Query: ".$this->Album->lastQuery();
+      
         
         //fetched all the information from the cache
         $featured = Cache::read("featured".$country);
