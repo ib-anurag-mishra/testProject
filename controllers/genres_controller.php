@@ -317,7 +317,7 @@ Class GenresController extends AppController
                 $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 GROUP BY Song.ArtistText');
                 $this->paginate = array(
                     'conditions' => $gcondition,
-                    'fields' => array('DISTINCT Song.ArtistText1'),
+                    'fields' => array('DISTINCT Song.ArtistText'),
                     'extra' => array('chk' => 1),
                     'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60',
@@ -328,6 +328,10 @@ Class GenresController extends AppController
                     'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
                 );
             }
+            
+            
+            //Query: SELECT DISTINCT `Song`.`ArtistText1` FROM `Songs` AS `Song` WHERE find_in_set('"US"',`Song`.`Territory`) > 0 AND `Song`.`DownloadStatus` = '1' AND `Song`.`Sample_FileID` != '' AND `Song`.`FullLength_FIleID` != '' AND TRIM(`Song`.`ArtistText`) != '' AND `Song`.`ArtistText` IS NOT NULL AND 1 = 1 GROUP BY `Song`.`ArtistText` ORDER BY TRIM(`Song`.`ArtistText`) ASC LIMIT 60 
+            
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
                  
