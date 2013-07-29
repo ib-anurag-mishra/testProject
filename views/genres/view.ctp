@@ -50,6 +50,19 @@
     position: absolute;
     top: 50%;
 }
+
+
+#overlay {
+    width: 100%;
+    background: url('<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif') repeat;
+    position: relative;
+}
+
+#overlay img.loading_circle {
+    position: absolute;
+    top: 50%;  
+    left: 50%; 
+}
     
 </style>
 <script language="javascript">
@@ -158,7 +171,8 @@ $(document).ready(function(){
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
             
-            $('#artist_loader').show();            
+            $('#artist_loader').show();    
+            $('#artist_loader').html('<div id=overlay"><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" class="loading_circle" alt="loading" /></div>');
             var data = "";
             var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
           
