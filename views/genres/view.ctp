@@ -65,6 +65,37 @@
 }
     
 </style>
+
+<style>
+  #overlay { 
+    display:none; 
+    position:absolute; 
+    background:#fff; 
+  }
+  #img-load { 
+    position:absolute; 
+  }
+  
+</style>
+<script>
+$t = $(".genres-page");
+
+$("#overlay").css({
+  opacity: 0.5,
+  top: $t.offset().top,
+  width: $t.outerWidth(),
+  height: $t.outerHeight()
+});
+
+$("#img-load").css({
+  top:  ($t.height() / 2),
+  left: ($t.width() / 2)
+});
+
+$t.mouseover(function(){
+   $("#overlay").fadeIn();
+});
+</script>
 <script language="javascript">
     
  $(document).on('click','.artist-list a',function(){    
@@ -171,8 +202,8 @@ $(document).ready(function(){
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
             
+             $("#overlay").fadeIn();
             $('#artist_loader').show();    
-            $('#artist_loader').html('<div id=overlay"><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" class="loading_circle" alt="loading" /></div>');
             var data = "";
             var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
           
@@ -232,7 +263,9 @@ $genre_text_conversion = array(
 ?>
 
 	
-
+  <div id="overlay">
+    <img src="<? echo $this->webroot; ?>app/webroot/img/AjaxLoader.gif" id="img-load" />
+  </div>
 
 
         	<section class="genres-page">
