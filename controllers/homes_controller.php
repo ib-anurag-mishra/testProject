@@ -310,7 +310,7 @@ STR;
         $ids_provider_type = '';
         //featured artist slideshow code start
         
-        //if(1){
+       // if(1){
         if (($artists = Cache::read("featured".$country)) === false) {
            
             
