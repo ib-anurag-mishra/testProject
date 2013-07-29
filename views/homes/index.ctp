@@ -680,7 +680,8 @@
                                                                                                                // echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4));
                                                                                                             ?>		
 													 <div class="more">
-													 <?php  if(strlen($newsText) > strpos($newsText, "</p>")+4)
+													 <?php  //if(strlen($newsText) > strpos($newsText, "</p>")+4)
+                                                                                                           if(strlen($newsText) >= 325)
 													  {
 														?>
 														<a href="javascript:void(0);" onClick="showhide('detail', '<?php echo $value['News']['id']; ?>')")">More ></a>
