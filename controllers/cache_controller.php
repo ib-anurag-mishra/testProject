@@ -86,9 +86,9 @@ class CacheController extends AppController {
                     ),
                 ),
                 'contain' => array(
-                    'Song' => array(
+                    'Songs' => array(
                         'fields' => array(
-                            'Song.ProdID'
+                            'Songs.ProdID'
                         )
                     ),
                 )
