@@ -85,7 +85,7 @@
 						
 						<div class="song-container">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                        <img  src="<?php echo $songs_img; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />                                                        
+                                                        <img class="lazy"  src="<?php echo $songs_img; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />                                                        
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
