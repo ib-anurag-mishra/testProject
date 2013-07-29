@@ -50,7 +50,7 @@
             <link rel="icon" href="<? echo $this->webroot; ?>app/webroot/favicon.ico">
             <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/styles.less" />
            
-            <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" />
+            <!-- <link rel="stylesheet/less" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/template.less" /> -->
            
                        
 

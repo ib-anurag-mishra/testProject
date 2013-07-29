@@ -256,7 +256,7 @@ padding-bottom:5px;
 }
 
 .forgot {
-    left: 251px;
+    left: 259px;
     position: relative;
 }
 
@@ -400,4 +400,20 @@ div.paging span a, div.paging a {
     margin-bottom: 4px;
     position: relative;
     
+}
+
+.site-login .login-form-wrapper form input[type="password"]{
+    
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 24px;
+    margin-bottom: 10px;
+    outline: 0 none;
+    padding-left: 5px;
+    width: 180px;    
+}
+
+
+.instructions > p {
+    left: 22px;
+    position: relative;
 }

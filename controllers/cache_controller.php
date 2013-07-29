@@ -100,6 +100,7 @@ class CacheController extends AppController {
                 $this->log("no data available for genre" . $territory, "cache");
                 echo "no data available for genre" . $territory;
             }
+          
 
         
             
@@ -1392,9 +1393,11 @@ STR;
                 $this->log("Artist Pagenation Query: " . $this->Song->lastQuery(), "cache");
             }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
+            
+            
         }
       
-   
+  
        
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -1914,15 +1917,15 @@ STR;
            
         }
         
-     
+    
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-     //   $this->requestAction('/Resetcache/genrateXML');
+        $this->requestAction('/Resetcache/genrateXML');
         exit;
        
-    
+   
           
     }
 

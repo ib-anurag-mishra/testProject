@@ -3,14 +3,17 @@ var ajaxartistPage = 2;
    $("#artistscroll").scroll(function(){  
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
+            $('#artist_loader').show();            
             var data = "";
             jQuery.ajax({
-                    type: "post",  // Request method: post, get
-                    url: '/genres/ajax_view_pagination/<?=base64_encode($genre); ?>'+'/<?=$selectedAlpha?>/'+ajaxartistPage, // URL to request
+                    type: "post",  // Request method: post, get 
+                    url: '/genres/ajax_view_pagination/page:'+ajaxartistPage+'/<?=base64_encode($genre); ?>'+'/<?=$selectedAlpha?>',
                     data: data,  // post data
                     success: function(newitems) { 
-                        ajaxartistPage++;                      
-                        $('#artistlistrecord').append(newitems);                        
+                        ajaxartistPage++; 
+                        $('#artist_loader').hide();                      
+                        $('#artistlistrecord').append(newitems);  
+                                           
                     },
                     async:   false,
                     error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
@@ -55,12 +58,7 @@ var ajaxartistPage = 2;
                                     </ul>
 				</div>
 			</div> 
-                    
-                    
-                    
-                    
-                    
-                    
+                                                            
 			<div class="artist-list-shadow-container">
 				<h3>&nbsp;</h3>
 				<div class="artist-list" id="artistscroll">					
@@ -82,5 +80,6 @@ var ajaxartistPage = 2;
                                             }
                                          ?>
 					</ul>
+                                <span id="artist_loader" style="padding-left:115px;display:none;" ><img src="<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif" border="0"/></span>
 				</div>
 			</div>

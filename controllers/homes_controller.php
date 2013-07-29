@@ -310,7 +310,7 @@ STR;
         $ids_provider_type = '';
         //featured artist slideshow code start
         
-        //if(1){
+       // if(1){
         if (($artists = Cache::read("featured".$country)) === false) {
            
             
@@ -4471,7 +4471,8 @@ STR;
              
                 
              
-             if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+             //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+              if(1)
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4519,13 +4520,13 @@ STR;
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 100
+                    LIMIT 500
 	  	
 	  
 STR;
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
-			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums);
+			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
 //                        echo "<pre>";
 //                        print_r($coming_soon_albums_rs);
 //                        die;
