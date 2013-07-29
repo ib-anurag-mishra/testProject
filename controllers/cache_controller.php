@@ -100,6 +100,8 @@ class CacheController extends AppController {
                 $this->log("no data available for genre" . $territory, "cache");
                 echo "no data available for genre" . $territory;
             }
+            print_r(Cache::read("genre" . $territory));
+            die;
 
         /*
             
