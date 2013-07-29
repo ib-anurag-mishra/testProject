@@ -331,7 +331,7 @@ if ($this->Session->read('Config.language') == 'en') {
     }    
                 </script>
             <?php   
-          //  echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); 
+        //echo "URI: ". strstr($_SERVER['REQUEST_URI'], '/videos/details/'); die;
           
         if($_SERVER['REQUEST_URI']=='/index' || $_SERVER['REQUEST_URI']=='')
         {
@@ -364,10 +364,6 @@ if ($this->Session->read('Config.language') == 'en') {
         else if($_SERVER['REQUEST_URI']=='/genres/view')
         {
             $body_class =   'page-genres'; 
-        }
-        else if($_SERVER['REQUEST_URI']=='/homes/my_history')
-        {
-            $body_class =   'page-my-history'; 
         }
          else if($_SERVER['REQUEST_URI']=='/homes/my_history')
         {
