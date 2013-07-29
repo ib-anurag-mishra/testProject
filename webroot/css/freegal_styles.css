@@ -256,7 +256,7 @@ padding-bottom:5px;
 }
 
 .forgot {
-    left: 251px;
+    left: 259px;
     position: relative;
 }
 
@@ -410,4 +410,10 @@ div.paging span a, div.paging a {
     outline: 0 none;
     padding-left: 5px;
     width: 180px;    
-} 
+}
+
+
+.instructions > p {
+    left: 22px;
+    position: relative;
+}
