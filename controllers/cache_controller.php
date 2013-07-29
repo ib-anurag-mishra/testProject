@@ -87,8 +87,7 @@ class CacheController extends AppController {
                 ), 'group' => 'Genre.Genre'
                     ));
             
-            print_r($genreAll);
-            die;
+           
 
             $this->log("cache written for genre for $territory", 'debug');
 
@@ -104,7 +103,7 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
 
-        /*
+        
             
             $country = $territory;
             if (!empty($country)) {
@@ -1232,7 +1231,7 @@ STR;
             }
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
-            */
+            
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
@@ -1399,7 +1398,7 @@ STR;
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
         }
       
-   /*
+   
        
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -1919,12 +1918,12 @@ STR;
            
         }
         
-     */
+    
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        //$this->requestAction('/Resetcache/genrateXML');
+        $this->requestAction('/Resetcache/genrateXML');
         exit;
        
     
