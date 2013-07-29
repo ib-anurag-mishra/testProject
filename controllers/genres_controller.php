@@ -232,7 +232,7 @@ Class GenresController extends AppController
 		}
 		$this->Genre->Behaviors->attach('Containable');
 		$this->Genre->recursive = 2;
-                print_r(Cache::read("genre".$country));die;
+               
                 
                 //fetch all genre
 		if (($genre = Cache::read("genre".$country)) === false) {
@@ -337,7 +337,9 @@ Class GenresController extends AppController
                 {
                     $allArtists[$i] = $allArtistsNew[$i];
                 }
-            }           
+            } 
+            
+             print_r($allArtists);die;
             $this->set('genres', $allArtists);
             $this->set('genre',base64_decode($Genre));
 	}
