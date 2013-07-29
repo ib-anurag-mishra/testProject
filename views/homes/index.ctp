@@ -38,13 +38,20 @@
 												break;
 											}
                                                                                         
+                                                                                        $albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
+                                                                                        $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                                                        
                                                                                         if($i<=9)       
                                                                                         {
-                                                                                            $lazyClass  =   '';
+                                                                                            $lazyClass      =   '';
+                                                                                            $srcImg         =   $songAlbumImage;   
+                                                                                            $dataoriginal  =   '';  
                                                                                         }
                                                                                         else                //  Apply Lazy Class for images other than first 10.
                                                                                         {
-                                                                                             $lazyClass  =   'lazy';
+                                                                                             $lazyClass      =   'lazy';
+                                                                                             $srcImg         =   "img/lazy-placeholder.gif";
+                                                                                             $dataoriginal   =   $songAlbumImage ;
                                                                                         }
                                                                                         
                                                                                         ?>
@@ -83,15 +90,14 @@
                                                                                     <?php
                                                                                         
                                                                                         
-											$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
-                                                                                        $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+											
 
  /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
 										?>
 											<li>
 												<div class="top-100-songs-detail">
 													<div class="song-cover-container">
-														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $nationalTopDownload[$i]['Song']['ArtistText']. ' - '.$nationalTopDownload[$i]['Song']['SongTitle']; ?>" src="img/lazy-placeholder.gif" data-original="<?php echo $songAlbumImage; ?>"  width="250" height="250" /></a>
+														<a href="/artists/view/<?=base64_encode($nationalTopDownload[$i]['Song']['ArtistText']);?>/<?= $nationalTopDownload[$i]['Song']['ReferenceID']; ?>/<?= base64_encode($nationalTopDownload[$i]['Song']['provider_type']);?>"><img class="<?php echo $lazyClass; ?>" alt="<?php echo $nationalTopDownload[$i]['Song']['ArtistText']. ' - '.$nationalTopDownload[$i]['Song']['SongTitle']; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>"  width="250" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -480,11 +486,15 @@
                                                                             
                                                                              if($sr_no<=9)       
                                                                             {
-                                                                                $lazyClass  =   '';
+                                                                                $lazyClass      =   '';
+                                                                                $srcImg         =   $cs_songImage;   
+                                                                                $dataoriginal  =   '';  
                                                                             }
                                                                             else                //  Apply Lazy Class for images other than first 10.
                                                                             {
-                                                                                 $lazyClass  =   'lazy';
+                                                                                 $lazyClass      =   'lazy';
+                                                                                 $srcImg         =   "img/lazy-placeholder.gif";
+                                                                                 $dataoriginal   =   $cs_songImage ;
                                                                             }
                                                                             
                                                                             
@@ -496,7 +506,7 @@
 												<div class="single-cover-container">
 																										
                                                                                                         <a href="artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                                                                        <img class="<?php echo $lazyClass; ?>" src="img/lazy-placeholder.gif" data-original="<?php echo $cs_songImage; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="162" height="162" /></a>
+                                                                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $srcImg; ?>" data-original="<?php echo $dataoriginal; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="162" height="162" /></a>
                                                                                                          
                                                                                                 <?php if($this->Session->read("patron")){ ?> 													
                                                                                                 <a class="add-to-playlist-button" href="#">
@@ -555,14 +565,7 @@
                                                                             //$cs_img_url = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                                                            // $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
 
-                                                                                if($sr_no<=9)       
-                                                                                {
-                                                                                    $lazyClass  =   '';
-                                                                                }
-                                                                                else                //  Apply Lazy Class for images other than first 10.
-                                                                                {
-                                                                                     $lazyClass  =   'lazy';
-                                                                                }   
+                                                                               
                                                                                 
                                                                                 
                                                                                 
@@ -575,7 +578,7 @@
 											<div class="video-detail">
 												<div class="video-cover-container">
 													<a href="javascript:void(0);">
-                                                                                                        <img class="<?php echo $lazyClass; ?>" src="<?php echo $videoAlbumImage; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
+                                                                                                        <img  src="<?php echo $videoAlbumImage; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
                                                                                                         <a class="add-to-playlist-button" href="#">
