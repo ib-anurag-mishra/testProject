@@ -84,13 +84,11 @@ class CacheController extends AppController {
                             'Country.Territory'
                         )
                     ),
-                ),
-                'contain' => array(
                     'Songs' => array(
                         'fields' => array(
-                            'Songs.ProdID'
+                            'Songs.Genre'
                         )
-                    ),
+                    )
                 )
                 ,'group' => 'Genre.Genre'
                     ));
