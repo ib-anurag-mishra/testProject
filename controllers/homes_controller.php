@@ -4471,7 +4471,8 @@ STR;
              
                 
              
-             if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+             //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+              if(1)
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4519,7 +4520,7 @@ STR;
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 100
+                    LIMIT 5000
 	  	
 	  
 STR;
