@@ -507,6 +507,7 @@ Class GenresController extends AppController
                     $condition = "";
             }
             $this->Song->recursive = 0;
+            echo  $condition;
           echo  $genre = base64_decode($Genre);
             $genre = mysql_escape_string($genre);
             
