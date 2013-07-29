@@ -9613,8 +9613,7 @@ img {
 			width: 395px;
 			.box-sizing;
 			//padding: 10px;
-			font-size: 13px;
-			font-weight: bold;
+			font-size: 14px;			
 			height: 242px;
 			overflow-y: hidden;
 			overflow-x: hidden;
@@ -9648,6 +9647,7 @@ img {
 				overflow-y: hidden;
 				overflow-x: hidden;
                                 
+				
 				&:hover {
 						
 						overflow-y: auto;
@@ -9680,7 +9680,8 @@ img {
 							display: block;
 							padding:5px 5px 5px 10px;
 							text-transform: uppercase;
-							
+							font-size: 14px;
+                                                        font-weight: normal;
 							
 							color: rgba(0,0,0,.75);
 							text-decoration: none;
@@ -9698,6 +9699,34 @@ img {
 			
 			}
 		}
+
+                .library-list-container .sidebox .holder .frame td:hover
+                {
+                    cursor:pointer;
+                    background: #52C6EC;
+                    height: 30px;
+                    line-height: 30px;    
+                }
+
+                .library-list-container .sidebox .holder .frame tr td a:hover{
+                    margin-right:10px;
+                    text-decoration: none;
+                }
+                .library-list-container .sidebox .holder .frame table{
+                    width:100%;
+                }
+                .library-list-container .sidebox .holder .frame tr:nth-child(even){
+                    background: #EEEEEE;
+                    height: 30px;
+                    line-height: 30px;
+                }
+                .library-list-container .sidebox .holder .frame tr:nth-child(odd){
+                    background: #C5E8F3;
+                    height: 30px;
+                    line-height: 30px;
+                }
+
+
 	}
 }
 /* end site login */
