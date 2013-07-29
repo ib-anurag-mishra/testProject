@@ -102,7 +102,7 @@ class CacheController extends AppController {
             }
           
 
-        /*
+        
             
             $country = $territory;
             if (!empty($country)) {
@@ -1394,10 +1394,10 @@ STR;
             }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
             
-            */
+            
         }
       
-   /*
+  
        
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
@@ -1917,7 +1917,7 @@ STR;
            
         }
         
-      */
+    
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
