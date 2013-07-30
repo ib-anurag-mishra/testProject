@@ -1006,8 +1006,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                    if(1)
-                    // if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    //if(1)
+                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1132,7 +1132,7 @@ STR;
 STR;
                                
                                  
-                               echo "Query: ".$topDownloaded_query_albums; //die;
+                           //    echo "Query: ".$topDownloaded_query_albums; //die;
                                  
                             $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
                             
@@ -1339,8 +1339,8 @@ STR;
             $country = $this->Session->read('territory');
             
             if(!empty($country)){  
-              //if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
-                if(1){
+              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+                //if(1){
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1448,7 +1448,7 @@ STR;
 STR;
                        
 
-                        echo $sql_us_albums; 
+//                        echo $sql_us_albums; 
 //                        echo "<pre>";
 //                        print_r($sql_us_albums);
 //                        die;
