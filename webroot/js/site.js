@@ -358,11 +358,11 @@ $(function() {
 		
 	});
 	
-	announcements.on('click',function(e){ alert("HI");
+	announcements.on('click',function(e){
 		e.preventDefault();
-		if($(poll).hasClass('active')) {           alert("in If");                                   
+		if($(poll).hasClass('active')) {                        
 			$(poll).removeClass('active');
-		} else {   alert("in Else");                      
+		} else {                         
 			$(poll).addClass('active');
                         
 		}
