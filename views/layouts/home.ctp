@@ -22,7 +22,7 @@
     
         <?php
         echo $this->Html->meta('icon');
-        echo $javascript->link('ImageDisableRightClick');
+        //echo $javascript->link('ImageDisableRightClick');
         echo $this->Html->css('freegal_styles');
           echo $this->Html->css('jquery.autocomplete');
           echo $html->css('colorbox');
