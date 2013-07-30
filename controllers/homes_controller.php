@@ -946,7 +946,7 @@ STR;
 					Song.FullLength_Duration,
 					Song.provider_type,
                                         Albums.ProdID,
-                                        Albums.provider_type,                                        
+                                        Albums.provider_type,                                          
 					Genre.Genre,
 					Country.Territory,
 					Country.SalesDate,
@@ -1098,7 +1098,8 @@ STR;
 					Song.FullLength_Duration,
 					Song.provider_type,
                                         Albums.ProdID,
-                                        Albums.provider_type,                                        
+                                        Albums.provider_type, 
+                                        Albums.AlbumTitle,
 					Genre.Genre,
 					Country.Territory,
 					Country.SalesDate,
@@ -1131,7 +1132,7 @@ STR;
 STR;
                                
                                  
-                              // echo "Query: ".$topDownloaded_query_albums; die;
+                           //    echo "Query: ".$topDownloaded_query_albums; //die;
                                  
                             $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
                             
@@ -1300,7 +1301,7 @@ STR;
 STR;
                        
 
-                        //echo $sql_national_100; die;
+                        //echo $sql_national_100; //die;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
 			// Checking for download status
@@ -1339,6 +1340,7 @@ STR;
             
             if(!empty($country)){  
               if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+                //if(1){
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -1411,7 +1413,8 @@ STR;
                                        Song.FullLength_Duration,
                                        Song.provider_type,
                                        Albums.ProdID,
-                                       Albums.provider_type,                                       
+                                       Albums.provider_type,  
+                                       Albums.AlbumTitle, 
                                        Genre.Genre,
                                        Country.Territory,
                                        Country.SalesDate,
@@ -4395,7 +4398,7 @@ STR;
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                $countryPrefix = "us_";
+                               // $countryPrefix = "us_";
                                // $territory = "US";
                 
                 
@@ -4471,12 +4474,12 @@ STR;
              
                 
              
-             //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-              if(1)
+             if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+             // if(1)
              {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
-                                $countryPrefix = "us_";
+                               // $countryPrefix = "us_";
                               //  $territory = "CA";
                 
                 
@@ -4520,13 +4523,13 @@ STR;
                     WHERE
                             ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
-                    LIMIT 1000
+                    LIMIT 100
 	  	
 	  
 STR;
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
-			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums);
+			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
 //                        echo "<pre>";
 //                        print_r($coming_soon_albums_rs);
 //                        die;

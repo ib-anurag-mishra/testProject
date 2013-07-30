@@ -67,21 +67,11 @@
 					<?php
                                                 
                                         $count  =   1;  
-                                        $temp_array = array();                                        
+                                                                                
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_songs as $key => $value){
-                                            //if($count>10) break;    
-                                                                                            
-                                                if (in_array($value['Song']['ReferenceID'],$temp_array))
-                                                {
-                                                        continue;
-                                                }
-                                                else
-                                                {
-                                                        array_push($temp_array, $value['Song']['ReferenceID']);
-                                                }
-                                                
+                                            //if($count>10) break;                                            
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
 
