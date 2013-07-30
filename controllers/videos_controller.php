@@ -110,6 +110,10 @@ class VideosController extends AppController {
             $validationPassedMessage = "Not Checked";
             $validationMessage = '';
         }
+        echo $prodId;
+        echo "<br />";
+        echo $provider;
+        echo "<br />";
         print_r($validationResult); die;
         // sets user id
         $user = $this->Session->read('Auth.User.id');
