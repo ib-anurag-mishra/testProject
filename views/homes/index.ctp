@@ -246,7 +246,7 @@
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="javascript:void(0);"><img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
+														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -561,13 +561,7 @@
                                                                             $total_videos = count($coming_soon_videos);
                                                                             $sr_no = 0;
                                                                             foreach($coming_soon_videos as $key => $value)
-                                                                            {     
-                                                                            //$cs_img_url = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                                           // $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-
-                                                                               
-                                                                                
-                                                                                
+                                                                            {                                                                                     
                                                                                 
                                                                            $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                                                            $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
@@ -577,7 +571,7 @@
                                                                             <?php if($sr_no%2==0) {?><li> <?php }?>
 											<div class="video-detail">
 												<div class="video-cover-container">
-													<a href="javascript:void(0);">
+													<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                         <img  src="<?php echo $videoAlbumImage; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
@@ -598,7 +592,7 @@
 												</div>
 												<div class="video-title">
 
-                                                                                                        <a href="javascript:void(0);">
+                                                                                                        <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                                                                             <?php
                                                                                                                     if(strlen($value['Video']['VideoTitle'])>20)
                                                                                                                     echo substr($value['Video']['VideoTitle'],0,20)."..."; 
