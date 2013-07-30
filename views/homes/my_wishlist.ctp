@@ -357,7 +357,7 @@ $ieVersion =  ieversion();
 				If you do not see the "download now" command in the Wish List area, it means so many people were waiting in line that you need to check back on a subsequent Monday.
 			</p>
 		</div>
-				<nav class="my-wishlist-filter-container clearfix">
+		<nav class="my-wishlist-filter-container clearfix">
 					<?php 
             if($sort == 'date'){
                 if($sortOrder == 'asc'){
