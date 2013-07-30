@@ -1001,10 +1001,9 @@ if (isset($type)) {
 <?php } else {
     // print_r($songs); 
     ?>
-
 <!-- for the videos -->
 		<section class="tracklist-container">
-			<section class="tracklist-header clearfix">
+			<section class="video-tracklist-header clearfix">
 				<span class="artist">Artist</span>
                 <span class="album">Album</span>
                 <span class="video-filter-button">Video</span>
