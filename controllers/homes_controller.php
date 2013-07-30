@@ -1301,7 +1301,7 @@ STR;
 STR;
                        
 
-                        echo $sql_national_100; //die;
+                        //echo $sql_national_100; //die;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
 			// Checking for download status
@@ -1448,7 +1448,7 @@ STR;
 STR;
                        
 
-//                        echo $sql_us_albums; 
+                        echo $sql_us_albums; 
 //                        echo "<pre>";
 //                        print_r($sql_us_albums);
 //                        die;
