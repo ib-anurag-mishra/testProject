@@ -4394,8 +4394,8 @@ STR;
              
                 
              
-                //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
-                if(1){               
+                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+                {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
                                // $countryPrefix = "us_";
@@ -4449,10 +4449,9 @@ STR;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);    
             
-            echo "<pre>";
-            print_r($coming_soon_videos);
-            $this->Video->lastQuery;
-            die;
+//            echo "<pre>";
+//            print_r($coming_soon_videos);
+//            die;
 
             if(!empty($coming_soon_videos)){
                 Cache::write("new_releases_videos".$territory, $coming_soon_videos);
