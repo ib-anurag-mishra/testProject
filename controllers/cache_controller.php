@@ -1257,6 +1257,10 @@ STR;
                     'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
                 );
                 $allArtists = $this->paginate('Song');
+                
+                
+                
+                
                 for ($j = 65; $j < 93; $j++) {
                     $alphabet = chr($j);
                     if ($alphabet == '[') {
