@@ -859,8 +859,8 @@ STR;
 		$this->set('patronDownload',$patronDownload);
 		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
                 //print_r($libDownload = Cache::read("lib".$libId));
-                    if(1)
-                   // if (($libDownload = Cache::read("lib".$libId)) === false)
+                   // if(1)
+                    if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -946,8 +946,7 @@ STR;
 					Song.FullLength_Duration,
 					Song.provider_type,
                                         Albums.ProdID,
-                                        Albums.provider_type,  
-                                        Albums.AlbumTitle,
+                                        Albums.provider_type,                                          
 					Genre.Genre,
 					Country.Territory,
 					Country.SalesDate,
@@ -1007,8 +1006,8 @@ STR;
                 
                 $ids_provider_type_album = '';
 		
-                    //if(1)
-                     if (($libDownload = Cache::read("lib_album".$libId)) === false)
+                    if(1)
+                    // if (($libDownload = Cache::read("lib_album".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1099,7 +1098,8 @@ STR;
 					Song.FullLength_Duration,
 					Song.provider_type,
                                         Albums.ProdID,
-                                        Albums.provider_type,                                        
+                                        Albums.provider_type, 
+                                        Albums.AlbumTitle,
 					Genre.Genre,
 					Country.Territory,
 					Country.SalesDate,
@@ -1132,7 +1132,7 @@ STR;
 STR;
                                
                                  
-                              // echo "Query: ".$topDownloaded_query_albums; die;
+                               echo "Query: ".$topDownloaded_query_albums; //die;
                                  
                             $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
                             
@@ -1301,7 +1301,7 @@ STR;
 STR;
                        
 
-                        //echo $sql_national_100; die;
+                        echo $sql_national_100; //die;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
 			// Checking for download status
