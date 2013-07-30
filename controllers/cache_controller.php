@@ -1265,7 +1265,8 @@ STR;
                 );
                 $allArtists = $this->paginate('Song');
                 
-                            
+                print_r( $allArtists); 
+                die;
                 
                 for ($j = 65; $j < 93; $j++) {
                     $alphabet = chr($j);
