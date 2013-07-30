@@ -444,7 +444,8 @@ Class GenresController extends AppController
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                 $this->Song->Behaviors->attach('Containable');
-                $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL",$condition,'1 = 1 GROUP BY Song.ArtistText');
+                $this->Song->recursive = 0;
+                $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "Song.ArtistText != ''", $condition, '1 = 1 GROUP BY Song.ArtistText');
                 $this->paginate = array(
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
@@ -453,9 +454,9 @@ Class GenresController extends AppController
                     'limit' => '60',
                     'cache' => 'yes',
                     'check' => 2,
-                    'all_query'=> true,
-                    'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
-                    'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+                    'all_query' => true,
+                    'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
+                    'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
                 );
                 }
                 
@@ -539,7 +540,7 @@ Class GenresController extends AppController
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                 $this->Song->Behaviors->attach('Containable');
-                $this->Song->recursive = 0;
+                 $this->Song->recursive = 0;
                 $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "Song.ArtistText != ''", $condition, '1 = 1 GROUP BY Song.ArtistText');
                 $this->paginate = array(
                     'conditions' => $gcondition,
@@ -549,9 +550,9 @@ Class GenresController extends AppController
                     'limit' => '60',
                     'cache' => 'yes',
                     'check' => 2,
-                    'all_query'=> true,
-                    'all_country'=> "find_in_set('\"$country\"',Song.Territory) > 0",
-                    'all_condition'=>((is_array($condition) && isset($condition['Song.ArtistText LIKE']))? "Song.ArtistText LIKE '".$condition['Song.ArtistText LIKE']."'":(is_array($condition)?$condition[0]:$condition))
+                    'all_query' => true,
+                    'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
+                    'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
                 );
             }
             $this->Song->unbindModel(array('hasOne' => array('Participant')));

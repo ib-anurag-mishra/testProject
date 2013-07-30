@@ -124,7 +124,9 @@ function load_artist(link , id_serial , genre_name){
             success: function(response) {               
                 $('#ajax_artistlist_content').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist available for this Genre.');}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { 
+               // alert('No artist available for this Genre.');
+            }
         });
 }
 
@@ -142,7 +144,9 @@ function showAllAlbumsList(albumListURL){
             success: function(response) {              
                 $('.album-list-span').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No album available for this artist.');}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { 
+               // alert('No album available for this artist.');
+            }
         });
 }
 
@@ -159,7 +163,9 @@ function showAlbumDetails(albumDetailURL){
             success: function(response) {              
                 $('#album_details_container').html(response);
             },
-            error:function (XMLHttpRequest, textStatus, errorThrown) { alert('Album detail not available.');}
+            error:function (XMLHttpRequest, textStatus, errorThrown) { 
+               // alert('Album detail not available.');
+            }
         });
 }
 
@@ -185,7 +191,9 @@ $(document).ready(function(){
                     $('#artistlistrecord').append(newitems);                    
                 },
                 async:   false,
-                error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available');}
+                error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                    //alert('No artist list available');
+                }
             });
         }
     });
