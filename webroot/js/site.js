@@ -358,7 +358,7 @@ $(function() {
 		
 	});
 	
-	announcements.on('click',function(e){
+	announcements.on('click',function(e){ alert("HI");
 		e.preventDefault();
 		if($(poll).hasClass('active')) {                        
 			$(poll).removeClass('active');
