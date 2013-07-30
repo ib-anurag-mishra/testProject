@@ -668,7 +668,7 @@
 												<div class="post-date">
 													<?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
 												</div>
-												<div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
+												<!-- <div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
 													 <?php 
                                                                                                                 echo $this->getTextEncode(substr($newsText,0, 325));                                                                                                                 
                                                                                                                // echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4));
@@ -687,7 +687,14 @@
 												<div id="detailsNews<?php echo $value['News']['id']; ?>" style="display:none" class="post-excerpt">
 												<?php echo $newsText; ?>
 								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a>
-												</div>
+												</div> -->
+                                                                                                          
+                                                                                                          
+                                                                                                 <div id="detailsNews" style="display:block; height:200px; overflow-y: scroll;" class="post-excerpt">
+												<?php echo $newsText; ?>
+								 				<!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
+												</div>         
+                                                                                                          
 												
 											</div>
 										</li>
