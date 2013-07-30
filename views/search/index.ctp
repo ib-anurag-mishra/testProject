@@ -1046,7 +1046,7 @@ if (isset($type)) {
 							<img src="images/search-results/carrieunderwood.jpg" alt="carrieunderwood" width="27" height="27" />
 						</div>
 						-->
-						<div class="album"><a href="#"><?php echo $psong->Title; ?></a></div>
+                        <div class="album"><a href="#"><?php echo truncate_text($psong->Title,25,$this); ?></a></div>
 						<?php
                             $imageUrl = shell_exec('perl files/tokengen ' . "sony_test/".$psong->ACdnPath . "/" . $psong->ASourceURL);
                             $image = Configure::read('App.Music_Path') . $imageUrl;
