@@ -105,6 +105,10 @@ class CacheController extends AppController {
         
             
             $country = $territory;
+            
+            /*
+            
+            
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
 
@@ -1230,6 +1234,10 @@ STR;
             }
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
+            */
+            
+            
+            
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
 
@@ -1258,7 +1266,8 @@ STR;
                 );
                 $allArtists = $this->paginate('Song');
                 
-                
+                print_r($allArtists);
+                die;
                 
                 
                 for ($j = 65; $j < 93; $j++) {
@@ -1371,24 +1380,24 @@ STR;
                     }
                 }
                 $this->Song->bindmodel(array('hasOne' => array(
-                        'Genre' => array(
-                            'className' => 'Genre',
-                            'foreignKey' => 'ProdID'
-                        ),
-                        'Country' => array(
-                            'className' => 'Country',
-                            'foreignKey' => 'ProdID'
-                        )
-                    ), 'belongsTo' => array('Sample_Files' => array(
-                            'className' => 'Files',
-                            'foreignKey' => 'Sample_FileID'
-                        ),
-                        'Full_Files' => array(
-                            'className' => 'Files',
-                            'foreignKey' => 'FullLength_FileID'
+                            'Genre' => array(
+                                'className' => 'Genre',
+                                'foreignKey' => 'ProdID'
+                            ),
+                            'Country' => array(
+                                'className' => 'Country',
+                                'foreignKey' => 'ProdID'
+                            )
+                        ), 'belongsTo' => array('Sample_Files' => array(
+                                'className' => 'Files',
+                                'foreignKey' => 'Sample_FileID'
+                            ),
+                            'Full_Files' => array(
+                                'className' => 'Files',
+                                'foreignKey' => 'FullLength_FileID'
+                            )
                         )
                     )
-                        )
                 );
             } catch (Exception $e) {
 
@@ -1401,7 +1410,7 @@ STR;
             
         }
       
-  
+  die;
        
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
