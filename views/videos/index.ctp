@@ -37,9 +37,10 @@
                         if($libraryDownload == '1' && $patronDownload == '1') {
                                 ?>
 <span class="featured-video-download-now-button">
+<?php print_r($featureVideo);  die; ?>
                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
-									<input type="hidden" name="ProviderType" value="<?php echo $featureVideo["FeaturedVideo"]["provider_type"]; ?>" />
+									<input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
                                     <span id="song_<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" class="beforeClick">
                                             <a  href='#' style="cursor:pointer;" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='videoDownloadAll(<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
                                     </span>
