@@ -142,6 +142,16 @@ foreach($topVideoDownloads as $topDownload)
                            ?>
                          <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
                            <a class="add-to-playlist-button" href="#"></a> 
+                           <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                            <a class="top-video-login-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                        <?php
+                                    }
+                              ?>
+                           
                            <div class="wishlist-popover">
                                 <?php
                                 if($this->Session->read('patron')) {
@@ -179,17 +189,6 @@ foreach($topVideoDownloads as $topDownload)
                                 ?>
                             
                                  </div>
-                           <?php
-                                    }
-                                    else
-                                    {
-                                        ?>
-                                            <a class="top-video-login-button" href='/users/redirection_manager'> <?php __("Login");?></a>
-                                        <?php
-                                    }
-                              ?>
-                           
-                           
                         </div>
                         <div class="video-title">
                             <a href="javascript:void(0);">
