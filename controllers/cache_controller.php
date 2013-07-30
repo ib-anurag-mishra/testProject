@@ -106,7 +106,7 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-            
+            /*
             
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -1235,7 +1235,7 @@ STR;
 
         
             
-            
+            */
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
@@ -1407,7 +1407,7 @@ STR;
             
         }
       
-
+die;
        
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
