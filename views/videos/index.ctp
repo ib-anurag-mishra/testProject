@@ -37,7 +37,6 @@
                         if($libraryDownload == '1' && $patronDownload == '1') {
                                 ?>
 <span class="featured-video-download-now-button">
-<?php print_r($featureVideo);  die; ?>
                                 <form method="Post" id="form<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>" action="/videos/download">
                                     <input type="hidden" name="ProdID" value="<?php echo $featureVideo["FeaturedVideo"]["ProdID"];?>" />
 									<input type="hidden" name="ProviderType" value="<?php echo $featureVideo["Video"]["provider_type"]; ?>" />
