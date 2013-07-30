@@ -360,9 +360,9 @@ $(function() {
 	
 	announcements.on('click',function(e){ alert("HI");
 		e.preventDefault();
-		if($(poll).hasClass('active')) {                        
+		if($(poll).hasClass('active')) {           alert("in If");                                   
 			$(poll).removeClass('active');
-		} else {                         
+		} else {   alert("in Else");                      
 			$(poll).addClass('active');
                         
 		}
