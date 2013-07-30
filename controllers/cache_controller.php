@@ -106,7 +106,6 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-            /*
             
             
             if (!empty($country)) {
@@ -1234,7 +1233,7 @@ STR;
             }
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
-            */
+        
             
             
             
@@ -1266,9 +1265,7 @@ STR;
                 );
                 $allArtists = $this->paginate('Song');
                 
-                print_r($allArtists);
-                die;
-                
+                            
                 
                 for ($j = 65; $j < 93; $j++) {
                     $alphabet = chr($j);
@@ -1410,7 +1407,7 @@ STR;
             
         }
       
-  die;
+
        
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
