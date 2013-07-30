@@ -1001,10 +1001,9 @@ if (isset($type)) {
 <?php } else {
     // print_r($songs); 
     ?>
-
 <!-- for the videos -->
 		<section class="tracklist-container">
-			<section class="tracklist-header clearfix">
+			<section class="video-tracklist-header clearfix">
 				<span class="artist">Artist</span>
                 <span class="album">Album</span>
                 <span class="video-filter-button">Video</span>
@@ -1052,7 +1051,7 @@ if (isset($type)) {
                             $imageUrl = shell_exec('perl files/tokengen ' . "sony_test/".$psong->ACdnPath . "/" . $psong->ASourceURL);
                             $image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song"><a href="#"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
+                        <div class="song"><a href="#" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {
