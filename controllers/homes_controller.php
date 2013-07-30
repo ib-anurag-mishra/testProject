@@ -859,8 +859,8 @@ STR;
 		$this->set('patronDownload',$patronDownload);
 		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
                 //print_r($libDownload = Cache::read("lib".$libId));
-                   // if(1)
-                    if (($libDownload = Cache::read("lib".$libId)) === false)
+                    if(1)
+                   // if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -1339,7 +1339,8 @@ STR;
             $country = $this->Session->read('territory');
             
             if(!empty($country)){  
-              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+              //if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+                if(1){
                     $country = $territory;
 
                     $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
