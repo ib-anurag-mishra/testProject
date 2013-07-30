@@ -690,7 +690,7 @@
 												</div> -->
                                                                                                           
                                                                                                           
-                                                                                                 <div id="detailsNews" style="display:block; height:200px; overflow-y: scroll;" class="post-excerpt">
+                                                                                                 <div id="detailsNews" style="display:block; height:200px; overflow-y: hidden;" class="post-excerpt">
 												<?php echo $newsText; ?>
 								 				<!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
 												</div>         
