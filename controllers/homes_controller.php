@@ -4394,8 +4394,8 @@ STR;
              
                 
              
-                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
-                {               
+//                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+//                {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
                                 $countryPrefix = "us_";
@@ -4447,7 +4447,12 @@ STR;
 
                // echo $sql_cs_videos; die;
 
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);    
+            $coming_soon_videos = $this->Video->query($sql_cs_videos);  
+            print_r($coming_soon_videos);
+            
+            echo $this->Video->lastQuery;exit;
+                    
+                    
             
 //            echo "<pre>";
 //            print_r($coming_soon_videos);
@@ -4457,13 +4462,13 @@ STR;
                 Cache::write("new_releases_videos".$territory, $coming_soon_videos);
             }
                     
-        }
-        else    //  Show From Cache
-        {                  
-
-            $coming_soon_videos = Cache::read("new_releases_videos".$territory);
-
-        }
+//        }
+//        else    //  Show From Cache
+//        {                  
+//
+//            $coming_soon_videos = Cache::read("new_releases_videos".$territory);
+//
+//        }
 
         $this->set('new_releases_videos', $coming_soon_videos);
                 
