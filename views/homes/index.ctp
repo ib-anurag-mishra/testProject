@@ -50,7 +50,7 @@
                                                                                         else                //  Apply Lazy Class for images other than first 10.
                                                                                         {
                                                                                              $lazyClass      =   'lazy';
-                                                                                             $srcImg         =   "img/lazy-placeholder.gif";
+                                                                                             $srcImg         =   $this->webroot.'app/webroot/img/lazy-placeholder.gif';
                                                                                              $dataoriginal   =   $songAlbumImage ;
                                                                                         }
                                                                                         
@@ -493,7 +493,7 @@
                                                                             else                //  Apply Lazy Class for images other than first 10.
                                                                             {
                                                                                  $lazyClass      =   'lazy';
-                                                                                 $srcImg         =   "img/lazy-placeholder.gif";
+                                                                                 $srcImg         =   $this->webroot.'app/webroot/img/lazy-placeholder.gif';
                                                                                  $dataoriginal   =   $cs_songImage ;
                                                                             }
                                                                             
