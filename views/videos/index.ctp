@@ -125,7 +125,6 @@
   $sr_no = 0;
 foreach($topVideoDownloads as $topDownload)
 {
-    
      $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
      // print_r($featureVideo);
      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
@@ -133,10 +132,25 @@ foreach($topVideoDownloads as $topDownload)
 
                     
                     <?php if($sr_no%2==0) {?><li> <?php }?>
-                        <div class="video-cover-container">
+                        <div class="top-music-video-cover-container">
                             <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
-                            <a class="top-video-download-now-button" href="#">Download Now</a>
+                            
+                            
+                           <?php
+                                    if($this->Session->read('patron'))
+                                    {
+                           ?>
+                         <!--  <a class="top-video-download-now-button" href="#">Download Now</a> -->
                            <a class="add-to-playlist-button" href="#"></a> 
+                           <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                            <a class="top-video-login-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                        <?php
+                                    }
+                              ?>
                            
                            <div class="wishlist-popover">
                                 <?php
@@ -165,29 +179,13 @@ foreach($topVideoDownloads as $topDownload)
                             <?php
                                }
                             ?>	
-                                <a class="add-to-wishlist" href="#">Add To Wishlist</a>
-														
-														<div class="share clearfix">
-															<p>Share via</p>
-															<a class="facebook" href="#"></a>
-															<a class="twitter" href="#"></a>
-														</div>
                                 <?php
-//                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
-//                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
-//                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
+                                    $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($topDownload["Video"]["ProdID"]);
+                                    echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$topDownload["Video"]["ProdID"],$featureVideo["Video"]["provider_type"]);
+                                    echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
                                 
                                 <?php
-                                } else {
-                                ?>
-                               <!-- <div class="featured-video-detail">
-                                <div class="video-thumbnail-container" style="display:none; line-height:25px; text-align: center; position:relative; top: -30px; left: 76px; font-weight: bold; height: 25px; line-height: 26px; text-transform: uppercase; color: #000000; font-size: 12px; text-decoration: none; box-shadow: 0 0 2px rgba(0, 0, 0, 0.5); width: 84px; background: none repeat scroll 0 0 #FFFFFF;">
-                                <a class="featured-video-download-now-button"  href='/users/redirection_manager'> <?php __("Login");?></a> -->
-                                <a class="add-to-wishlist" href='/users/redirection_manager'> <?php __("Login");?></a>
-                                <!--</div>
-                                </div>  -->
-                                <?php
-                                }
+                                } 
                                 ?>
                             
                                  </div>
@@ -218,8 +216,7 @@ foreach($topVideoDownloads as $topDownload)
                 <?php if($sr_no%2==1 || $sr_no==($total_videos-1)) {?> </li> <?php } ?>
     <?php
              $sr_no++;
-    
-}
+    }
 ?>
                    
                     <?php
