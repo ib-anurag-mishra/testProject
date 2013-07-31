@@ -53,10 +53,10 @@ class AppModel extends Model {
           
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           if(empty($pagination)){
-              echo 'emptypage-';
-              echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;
+             // echo 'emptypage-';
+             
           }
-                  
+          echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;       
           if (empty($pagination)) {
               
                 if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
@@ -86,7 +86,7 @@ class AppModel extends Model {
                               // print_r($pagination);
                 }
                 
-               echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
+               //echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
                   Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
                   
           }
