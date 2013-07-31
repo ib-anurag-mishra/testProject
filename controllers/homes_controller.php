@@ -74,11 +74,13 @@ class HomesController extends AppController
        
       
         $nationalTopDownload = array();
-        $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-        $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-   
-        $this->set('libraryDownload',$libraryDownload);
-        $this->set('patronDownload',$patronDownload);
+        if(!empty($patId)){
+            $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
+            $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
+
+            $this->set('libraryDownload',$libraryDownload);
+            $this->set('patronDownload',$patronDownload);
+        }
         
               
 
@@ -626,16 +628,14 @@ STR;
 STR;
 
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
-                        
-                        foreach($coming_soon_rs as $key => $value)
-                        {     
-                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                            $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                        }
-                      
                         if(!empty($coming_soon_rs)){
-                          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                            foreach($coming_soon_rs as $key => $value)
+                            {     
+                                $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                                $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
+                            }                            
+                            Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
                         }
                     
                 }
@@ -705,15 +705,14 @@ STR;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);
             
-            foreach($coming_soon_videos as $key => $value)
-            {                                                                                     
-
-                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
-            }   
-
             if(!empty($coming_soon_videos)){
+                foreach($coming_soon_videos as $key => $value)
+                {                                                                                     
+
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                    $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                 Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
             }
                     
@@ -1337,6 +1336,11 @@ STR;
                         //echo $sql_national_100; //die;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
+                        foreach($national_us_top10_record as $key => $value){
+                             $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                             $national_us_top10_record[$key]['songs_img'] = $songs_img;
+                        }    
 			// Checking for download status
 			Cache::write("national_us_top10_songs".$territory, $national_us_top10_record);
 		}
@@ -1488,6 +1492,12 @@ STR;
 
 			$ustop10Albums = $this->Album->query($sql_us_albums);
 			// Checking for download status
+                        foreach($ustop10Albums as $key => $value){
+
+                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                             $album_img =  Configure::read('App.Music_Path').$album_img;
+                             $ustop10Albums[$key]['album_img'] = $album_img;
+                        }     
 			
                         Cache::write("national_us_top10_albums".$territory, $ustop10Albums);
                         
@@ -1604,6 +1614,11 @@ STR;
 STR;
                     //echo $sql_national_100_v; die;
                     $usTop10VideoDownload = $this->Video->query($sql_us_10_v);
+                    foreach($usTop10VideoDownload as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                        $usTop10VideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }        
                     Cache::write("national_us_top10_videos".$territory, $usTop10VideoDownload);
                     
 //                    echo "<pre>";

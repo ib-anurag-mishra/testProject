@@ -23,14 +23,14 @@
                 $sr_no = 0;
                 
                 foreach($featuredVideos as $featureVideo){
-                    $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
+                    //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
                     // print_r($featureVideo); die;
-                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                    //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
                 ?>
 	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
-                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="275" height="162" /></a>
+                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $featureVideo['videoImage']; ?>" width="275" height="162" /></a>
                                 <?php
                                 if($this->Session->read('patron')) {
 
@@ -125,15 +125,15 @@
   $sr_no = 0;
 foreach($topVideoDownloads as $topDownload)
 {
-     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
+     //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
      // print_r($featureVideo);
-     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+     //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
     ?>
 
                     
                     <?php if($sr_no%2==0) {?><li> <?php }?>
                         <div class="top-music-video-cover-container">
-                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="163" height="97" /></a>
+                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $topDownload['videoImage']; ?>" width="163" height="97" /></a>
                             
                             
                            <?php

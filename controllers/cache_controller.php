@@ -201,6 +201,11 @@ STR;
 
                 if (!empty($data)) {
                     Cache::delete("national" . $country);
+                    foreach($data as $key => $value){
+                            $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                            $data[$key]['songAlbumImage'] = $songAlbumImage;
+                    }                    
                     Cache::write("national" . $country, $data);
                     $this->log("cache written for national top ten for $territory", "cache");
                     echo "cache written for national top ten for $territory";
@@ -220,6 +225,12 @@ STR;
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featured_videos_sql);
             if (!empty($featuredVideos)) {
+                foreach($featuredVideos as $key => $featureVideo){
+                    $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
+                    // print_r($featureVideo); die;
+                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                    $featuredVideos[$key]['videoImage'] = $videoImage;
+                }                
                 Cache::write("featured_videos" . $territory, $featuredVideos);
             }
             // End Caching functionality for featured videos
@@ -229,6 +240,13 @@ STR;
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
             $topDownloads = $this->Album->query($topDownloadSQL);
             if(!empty($topDownloads)){
+                foreach($topDownloads as $key => $topDownload)
+                {
+                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
+                     // print_r($featureVideo);
+                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                     $topDownloads[$key]['videoImage'] = $videoImage;
+                }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
             }
             // End Caching functionality for top video downloads
@@ -335,6 +353,11 @@ STR;
 
                 if (!empty($data)) {
                     Cache::delete("nationalvideos" . $country);
+                    foreach($data as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
+                        $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }                    
                     Cache::write("nationalvideos" . $country, $data);
                     $this->log("cache written for national top ten  videos for $territory", "cache");
                     echo "cache written for national top ten  videos for $territory";
@@ -405,6 +428,12 @@ STR;
             $coming_soon_rs = $this->Album->query($sql_coming_soon_s);
 
             if (!empty($coming_soon_rs)) {
+                foreach($coming_soon_rs as $key => $value)
+                {     
+                    $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                    $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
+                }                
                 Cache::write("coming_soon_songs" . $territory, $coming_soon_rs);
             }
 
@@ -460,6 +489,13 @@ STR;
             $coming_soon_rv = $this->Album->query($sql_coming_soon_v);
 
             if (!empty($coming_soon_rv)) {
+                foreach($coming_soon_videos as $key => $value)
+                {                                                                                     
+
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                    $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                 Cache::write("coming_soon_videos." . $territory, $coming_soon_rv);
             }
 
@@ -566,6 +602,11 @@ STR;
                 }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                         $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                         $data[$key]['songs_img'] = $songs_img;
+                    }                    
                     Cache::delete("national_us_top10_songs" . $country);
                     Cache::write("national_us_top10_songs" . $country, $data);
                     $this->log("cache written for US top ten for $territory", "cache");
@@ -680,6 +721,12 @@ STR;
                 }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+
+                         $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $album_img =  Configure::read('App.Music_Path').$album_img;
+                         $data[$key]['album_img'] = $album_img;
+                    }                     
                     Cache::delete("national_us_top10_albums" . $country);
                     Cache::write("national_us_top10_albums" . $country, $data);
                     $this->log("cache written for US top ten Album for $territory", "cache");
@@ -789,6 +836,11 @@ STR;
                     echo "ids_provider_type is set blank for " . $territory;
                 }
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                        $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }                     
                     Cache::delete("national_us_top10_videos" . $country);
                     Cache::write("national_us_top10_videos" . $country, $data);
                     $this->log("cache written for US top ten video for $territory", "cache");
@@ -942,6 +994,11 @@ STR;
 //                }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                         $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $album_img =  Configure::read('App.Music_Path').$album_img;
+                         $data[$key]['albumImage'] = $album_img;
+                    }                    
                     Cache::delete("new_releases_albums" . $country);
                     Cache::write("new_releases_albums" . $country, $data);
                     $this->log("cache written for new releases albums for $territory", "cache");
@@ -1014,6 +1071,11 @@ STR;
 //                }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                          $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                          $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                          $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }                    
                     Cache::delete("new_releases_videos" . $country);
                     Cache::write("new_releases_videos" . $country, $data);
                     $this->log("cache written for new releases videos for $territory", "cache");
@@ -1098,9 +1160,13 @@ STR;
             }
 
             if (empty($featured)) {
-
                 Cache::write("featured" . $territory, Cache::read("featured" . $territory));
             } else {
+                foreach($featured as $k => $v){
+                    $albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+                    $image =  Configure::read('App.Music_Path').$albumArtwork;
+                    $featured[$k]['featuredImage'] = $image;
+                }                
                 Cache::delete("featured" . $territory);
                 Cache::write("featured" . $territory, $featured);
             }
