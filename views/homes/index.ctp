@@ -481,20 +481,20 @@
 
                                                                             foreach($coming_soon_rs as $key => $value)
                                                                             {     
-                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                                                                            //$cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                                                            //$cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                                                                             
                                                                              if($sr_no<=9)       
                                                                             {
                                                                                 $lazyClass      =   '';
-                                                                                $srcImg         =   $cs_songImage;   
+                                                                                $srcImg         =   $value['cs_songImage'];   
                                                                                 $dataoriginal  =   '';  
                                                                             }
                                                                             else                //  Apply Lazy Class for images other than first 10.
                                                                             {
                                                                                  $lazyClass      =   'lazy';
                                                                                  $srcImg         =   $this->webroot.'app/webroot/img/lazy-placeholder.gif';
-                                                                                 $dataoriginal   =   $cs_songImage ;
+                                                                                 $dataoriginal   =   $value['cs_songImage'];
                                                                             }
                                                                             
                                                                             
@@ -563,8 +563,8 @@
                                                                             foreach($coming_soon_videos as $key => $value)
                                                                             {                                                                                     
                                                                                 
-                                                                           $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                                           $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                                           //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                                           //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
                                                                             if($sr_no>=20) break;
 ?>
@@ -572,7 +572,7 @@
 											<div class="video-detail">
 												<div class="video-cover-container">
 													<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                                                                        <img  src="<?php echo $videoAlbumImage; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
+                                                                                                        <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
                                                                                                         <a class="add-to-playlist-button" href="#">
