@@ -103,9 +103,7 @@ class CacheController extends AppController {
         
             
             $country = $territory;
-            
-        /*
-            
+                                
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
 
@@ -1232,7 +1230,7 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-            */
+         
           
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
@@ -1406,8 +1404,7 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-          die;     
-            
+                       
         }
       
 

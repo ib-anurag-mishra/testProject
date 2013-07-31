@@ -51,10 +51,7 @@ class AppModel extends Model {
           $uniqueCacheId = md5($uniqueCacheId);
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           
-          echo $page;
-          echo '<br>';
-          print_r($conditions);
-          
+                  
           if (empty($pagination)) {
               
                 if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
