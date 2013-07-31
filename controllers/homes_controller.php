@@ -373,6 +373,9 @@ STR;
                             )
                     );
                     
+                  //  echo "Query: ".$this->Album->lastQuery();
+                    
+                    
             } else {
                     $featured = array();
             }
@@ -4396,8 +4399,7 @@ STR;
              
                 
              
-                //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
-                if(1)
+                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4540,6 +4542,12 @@ STR;
 //                        echo "<pre>";
 //                        print_r($coming_soon_albums_rs);
 //                        die;
+                        foreach($new_releases_albums_rs as $key => $value){
+                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                             $album_img =  Configure::read('App.Music_Path').$album_img;
+                             $new_releases_albums_rs[$key]['albumImage'] = $album_img;
+                             
+                        }
                         
                       
                         if(!empty($new_releases_albums_rs)){
