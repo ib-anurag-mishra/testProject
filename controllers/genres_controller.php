@@ -349,44 +349,12 @@ Class GenresController extends AppController
                     $this->set('selectedCallFlag', 1);
                 }
                 
-		$this -> layout = 'ajax';
-		$country = $this->Session->read('territory');
-		if( !base64_decode($Genre) ) {
-			$this->Session ->setFlash( __( 'Invalid Genre.', true ) );
-			$this->redirect( array( 'controller' => '/', 'action' => 'index' ) );
-		}
-		$this->Genre->Behaviors->attach('Containable');
-		$this->Genre->recursive = 2;
-		if (($genre = Cache::read("genre".$country)) === false) {
-			$genreAll = $this->Genre->find('all',array(
-						'conditions' =>
-							array('and' =>
-								array(
-									array('Country.Territory' => $country)
-								)
-							),
-						'fields' => array(
-								'Genre.Genre'
-								),
-						'contain' => array(
-							'Country' => array(
-									'fields' => array(
-											'Country.Territory'
-										)
-									),
-						),'group' => 'Genre.Genre'
-					));
-			Cache::write("genre".$country, $genreAll);
-		}
-		$genreAll = Cache::read("genre".$country);
-		$this->set('genresAll', $genreAll);
+		$this -> layout = 'ajax';		
+		
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
 		$country = $this->Session->read('territory');
-		$libraryDownload = $this->Downloads->checkLibraryDownload($libId);
-		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
-		$this->set('libraryDownload',$libraryDownload);
-		$this->set('patronDownload',$patronDownload);
+		
 		if($this->Session->read('block') == 'yes') {
 		      $cond = array('Song.Advisory' => 'F');
 		}
@@ -474,11 +442,8 @@ Class GenresController extends AppController
                     $Genre = "QWxs";
             }		
             $country = $this->Session->read('territory');		
-            $this->Genre->Behaviors->attach('Containable');
-            $this->Genre->recursive = 2;
-
-
-
+            
+            
             if($this->Session->read('block') == 'yes') {
                     $cond = array('Song.Advisory' => 'F');
             }
@@ -505,6 +470,7 @@ Class GenresController extends AppController
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
                 $this->Song->Behaviors->attach('Containable');
+                $this->Song->recursive = 0;
                 $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
                 $this->paginate = array(
                                 'conditions' => $gcondition,
