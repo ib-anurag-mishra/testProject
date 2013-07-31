@@ -52,7 +52,9 @@ class AppModel extends Model {
           
           echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-          
+          if(empty($pagination)){
+              echo 'emptypage';
+          }
                   
           if (empty($pagination)) {
               
@@ -83,7 +85,7 @@ class AppModel extends Model {
                               // print_r($pagination);
                 }
                 
-               //echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
+               echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
                   Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
                   
           }
