@@ -38,20 +38,20 @@
 												break;
 											}
                                                                                         
-                                                                                        $albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
-                                                                                        $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                                                        //$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
+                                                                                        //$songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                                                                         
                                                                                         if($i<=9)       
                                                                                         {
                                                                                             $lazyClass      =   '';
-                                                                                            $srcImg         =   $songAlbumImage;   
+                                                                                            $srcImg         =   $nationalTopDownload[$i]['songAlbumImage'];   
                                                                                             $dataoriginal  =   '';  
                                                                                         }
                                                                                         else                //  Apply Lazy Class for images other than first 10.
                                                                                         {
                                                                                              $lazyClass      =   'lazy';
                                                                                              $srcImg         =   $this->webroot.'app/webroot/img/lazy-placeholder.gif';
-                                                                                             $dataoriginal   =   $songAlbumImage ;
+                                                                                             $dataoriginal   =   $nationalTopDownload[$i]['songAlbumImage'];
                                                                                         }
                                                                                         
                                                                                         ?>
