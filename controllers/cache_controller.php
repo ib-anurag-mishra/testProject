@@ -99,8 +99,8 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
           
-
-        
+  /*
+      
             
             $country = $territory;
                                 
@@ -1235,12 +1235,13 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-         
+         */
         
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
      
+               /*
                 $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
                 $country = $territory;
@@ -1270,6 +1271,7 @@ STR;
               
                 
                 for($j = 65;$j < 93;$j++){
+                    
                     $alphabet = chr($j);
                     if($alphabet == '[') {
                     $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
@@ -1290,7 +1292,7 @@ STR;
                     $this->Song->Behaviors->attach('Containable');
                     $this->Song->recursive = 0;
                     $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
-               
+         
                     $this->paginate = array(
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
@@ -1307,6 +1309,7 @@ STR;
                     $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                     $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
                 }
+                */
 
                 $this->Song->bindmodel(array('hasOne'=>array(
                         'Genre' => array(
@@ -1414,6 +1417,8 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
+                
+              die;  
                  
         }
       
