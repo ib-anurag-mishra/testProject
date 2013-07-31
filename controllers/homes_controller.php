@@ -4305,10 +4305,12 @@ STR;
             //fetch the session variables
             $libraryId = $this->Session->read('library');       
             $patronId = $this->Session->read('patron');
-            $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
-            $patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
-            $this->set('libraryDownload',$libraryDownload);
-            $this->set('patronDownload',$patronDownload);
+            if(!empty($libraryId) && !empty($patronId)){
+                $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
+                $patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
+                $this->set('libraryDownload',$libraryDownload);
+                $this->set('patronDownload',$patronDownload);
+            }
             //////////////////////////////////Songs/////////////////////////////////////////////////////////           
             $territory = $this->Session->read('territory');
              
@@ -4475,8 +4477,7 @@ STR;
                 
              
              if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-             // if(1)
-             {               
+             {            
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
                                // $countryPrefix = "us_";
@@ -4535,8 +4536,8 @@ STR;
 //                        die;
                         
                       
-                        if(!empty($coming_soon_albums_rs)){
-                          Cache::write("new_releases_albums".$territory, $coming_soon_albums_rs);
+                        if(!empty($new_releases_albums_rs)){
+                          Cache::write("new_releases_albums".$territory, $new_releases_albums_rs);
                         }
                     
                 }
