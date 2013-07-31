@@ -325,8 +325,7 @@ Class GenresController extends AppController
                     );
                 }
                
-                echo $this->Song->lastQuery();
-                 die;
+                
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $allArtists = $this->paginate('Song');
                 
