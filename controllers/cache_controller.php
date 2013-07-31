@@ -51,8 +51,7 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-              echo 147;
-              die;
+             
         for ($i = 0; $i < count($territoryNames); $i++) {
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
@@ -103,7 +102,8 @@ class CacheController extends AppController {
             }
           
 
-        
+         echo 147;
+              die;
             
             $country = $territory;
             
