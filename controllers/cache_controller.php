@@ -106,7 +106,7 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-        
+        /*
             
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -1234,7 +1234,7 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-            
+            */
           
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
@@ -1265,8 +1265,8 @@ STR;
                 );
                 $allArtists = $this->paginate('Song');
                 
-                //print_r( $allArtists); 
-                //die;
+                print_r( $allArtists); 
+                die;
                 
                 for ($j = 65; $j < 93; $j++) {
                     $alphabet = chr($j);
