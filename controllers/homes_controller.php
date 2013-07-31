@@ -295,15 +295,21 @@ STR;
 STR;
                 //execute the query          
                 $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
+                
+                foreach($nationalTopVideoDownload as $key => $value){
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
+                    $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                     
                 //write in the cache                                   
                 Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
                
                }               
-       }
+       }else{
      
-        $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
-
+            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
+       }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
 		
