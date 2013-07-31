@@ -523,8 +523,6 @@ STR;
                                        Song.Sample_Duration,
                                        Song.FullLength_Duration,
                                        Song.provider_type,
-                                       Albums.ProdID,
-                                       Albums.provider_type,                                       
                                        Genre.Genre,
                                        Country.Territory,
                                        Country.SalesDate,
@@ -637,9 +635,6 @@ STR;
                                        Song.Sample_Duration,
                                        Song.FullLength_Duration,
                                        Song.provider_type,
-                                       Albums.ProdID,
-                                       Albums.provider_type,  
-                                       Albums.AlbumTitle, 
                                        Genre.Genre,
                                        Country.Territory,
                                        Country.SalesDate,
@@ -668,7 +663,7 @@ STR;
                                        ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
                                GROUP BY  Song.ReferenceID
                                ORDER BY count(Song.ProdID) DESC
-                               LIMIT 10  
+                               LIMIT 10 
 
 STR;
                 $data = $this->Album->query($album_sql_US_TOP_10);
@@ -1601,7 +1596,7 @@ STR;
 
                 $this->Song->recursive = 2;
                 $topDownloaded_query = <<<STR
-				SELECT 
+				SELECT
 					Song.ProdID,
 					Song.ReferenceID,
 					Song.Title,
@@ -1613,19 +1608,15 @@ STR;
 					Song.Sample_Duration,
 					Song.FullLength_Duration,
 					Song.provider_type,
-                                        Albums.ProdID,
-                                        Albums.provider_type,                                          
 					Genre.Genre,
 					Country.Territory,
 					Country.SalesDate,
 					Sample_Files.CdnPath,
 					Sample_Files.SaveAsName,
 					Full_Files.CdnPath,
-                                        Full_Files.SaveAsName,
-                                        File.CdnPath,
-                                        File.SourceURL,
-                                        File.SaveAsName,
-                                        Sample_Files.FileID,
+					Full_Files.SaveAsName,
+					Sample_Files.FileID,
+					Full_Files.FileID,
 					PRODUCT.pid
 				FROM
 					Songs AS Song
@@ -1636,11 +1627,11 @@ STR;
 						LEFT JOIN
 					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
 						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+					{$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID)
 				WHERE
-					((Song.DownloadStatus = '1') AND (($top_ten_condition_songs) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+					((Song.DownloadStatus = '1') AND (($top_ten_condition) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC
@@ -1750,9 +1741,6 @@ STR;
 					Song.Sample_Duration,
 					Song.FullLength_Duration,
 					Song.provider_type,
-                                        Albums.ProdID,
-                                        Albums.provider_type, 
-                                        Albums.AlbumTitle,
 					Genre.Genre,
 					Country.Territory,
 					Country.SalesDate,
