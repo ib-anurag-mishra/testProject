@@ -212,15 +212,15 @@
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
 
-                                                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
 					?>
 					<li>
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">                                                        
-                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
+                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							<?php if($this->Session->read("patron")){ ?> 														
