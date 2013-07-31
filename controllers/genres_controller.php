@@ -410,7 +410,7 @@ Class GenresController extends AppController
 
                     $this->paginate = array(
                             'conditions' => $gcondition,
-                            'fields' => array('DISTINCT Song.ArtistText'),
+                            'fields' => array('DISTINCT Song.ArtistText1'),
                             'extra' => array('chk' => 1),
                             'order' => 'TRIM(Song.ArtistText) ASC',
                             'limit' => '60',
