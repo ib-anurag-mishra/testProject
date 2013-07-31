@@ -1248,8 +1248,7 @@ STR;
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('hasOne' => array('Genre')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files', 'Full_Files')));
-                $this->Song->Behaviors->attach('Containable');
-                $this->Song->recursive = 0;
+                $this->Song->Behaviors->attach('Containable');               
                 $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0", 'Song.DownloadStatus' => 1, "Song.Sample_FileID != ''", "Song.FullLength_FIleID != ''", "Song.ArtistText != ''", $condition, '1 = 1 GROUP BY Song.ArtistText');
                 $this->paginate = array(
                     'conditions' => $gcondition,
