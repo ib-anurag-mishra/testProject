@@ -50,10 +50,11 @@ class AppModel extends Model {
           }
           $uniqueCacheId = md5($uniqueCacheId);
           
-          echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;
+          
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           if(empty($pagination)){
-              echo 'emptypage';
+              echo 'emptypage-';
+              echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;
           }
                   
           if (empty($pagination)) {
