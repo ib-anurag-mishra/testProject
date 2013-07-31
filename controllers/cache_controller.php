@@ -100,7 +100,7 @@ class CacheController extends AppController {
             }
           
 
-        /*
+        
             
             $country = $territory;
                                 
@@ -1236,7 +1236,7 @@ STR;
 
         
          
-          */
+        
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
@@ -1413,7 +1413,7 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-           die;           
+                 
         }
       
 
