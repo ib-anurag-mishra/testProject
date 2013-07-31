@@ -99,7 +99,7 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
           
-  /*
+  
       
             
             $country = $territory;
@@ -1301,13 +1301,13 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-         */
+       
         
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
      
-               /*
+             
                 $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
                 $country = $territory;
@@ -1375,7 +1375,7 @@ STR;
                     $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                     $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
                 }
-                */
+                
 
                 $this->Song->bindmodel(array('hasOne'=>array(
                         'Genre' => array(
