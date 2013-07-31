@@ -184,15 +184,18 @@ class HomesController extends AppController
 	  
 STR;
                         //execute the query
-			$nationalTopDownload = $this->Album->query($sql_national_100);                        
+			$nationalTopDownload = $this->Album->query($sql_national_100);
+                        foreach($nationalTopDownload as $key => $value){
+                                $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                $nationalTopDownload[$key]['songAlbumImage'] = $videoAlbumImage;
+                        }                        
                        // print_r($nationalTopDownload);
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
-		}
-                
-                
-
-		$nationalTopDownload = Cache::read("national".$territory);
+		}else{
+                        $nationalTopDownload = Cache::read("national".$territory);                
+                }
                 //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
