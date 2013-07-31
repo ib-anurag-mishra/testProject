@@ -188,7 +188,7 @@ STR;
                         foreach($nationalTopDownload as $key => $value){
                                 $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                                $nationalTopDownload[$key]['songAlbumImage'] = $videoAlbumImage;
+                                $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
                        // print_r($nationalTopDownload);
 			//write in the file if not set
@@ -295,15 +295,21 @@ STR;
 STR;
                 //execute the query          
                 $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
+                
+                foreach($nationalTopVideoDownload as $key => $value){
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
+                    $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                     
                 //write in the cache                                   
                 Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
                
                }               
-       }
+       }else{
      
-        $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
-
+            $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
+       }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
 		
@@ -313,8 +319,8 @@ STR;
         $ids_provider_type = '';
         //featured artist slideshow code start
         
-        if(1){
-       // if (($artists = Cache::read("featured".$country)) === false) {
+        //if(1){
+        if (($artists = Cache::read("featured".$country)) === false) {
            
             
             //get all featured artist and make array
@@ -382,6 +388,13 @@ STR;
             } else {
                     $featured = array();
             }
+            
+            foreach($featured as $k => $v){
+
+                    $albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+                    $image =  Configure::read('App.Music_Path').$albumArtwork;
+                    $featured[$k]['featuredImage'] = $image;
+            }        
             
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
@@ -614,6 +627,12 @@ STR;
 
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
                         
+                        foreach($coming_soon_rs as $key => $value)
+                        {     
+                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                            $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
+                        }
                       
                         if(!empty($coming_soon_rs)){
                           Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
@@ -684,7 +703,15 @@ STR;
 
                 
 
-            $coming_soon_videos = $this->Video->query($sql_cs_videos);                        
+            $coming_soon_videos = $this->Video->query($sql_cs_videos);
+            
+            foreach($coming_soon_videos as $key => $value)
+            {                                                                                     
+
+                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+            }   
 
             if(!empty($coming_soon_videos)){
                 Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
