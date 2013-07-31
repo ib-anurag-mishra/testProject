@@ -689,25 +689,12 @@
 								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id']; ?>')">- See Less</a>
 												</div> -->
                                                                                                           
-                                                                                                   <?php
-                                                                                                            if(strlen($newsText) >= 325)
-                                                                                                            {
-                                                                                                       ?>
-                                                                                                            <div class="post-excerpt"  id="shortNews" >
-                                                                                                                     <?php  echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4)); ?>
-                                                                                                             </div>
-                                                                                                           <?php
-                                                                                                            }
-                                                                                                            else
-                                                                                                            {
-                                                                                                                ?>
-                                                                                                                     <div id="detailsNews" class="post-excerpt">
-                                                                                                                    <?php echo $newsText; ?>
-                                                                                                                    <!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
-                                                                                                                    </div>
-                                                                                                                 <?php
-                                                                                                            }
-                                                                                                            ?>
+                                                                                                  
+                                                                                                <div id="detailsNews" class="post-excerpt">
+                                                                                               <?php echo $newsText; ?>
+                                                                                               <!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
+                                                                                               </div>
+
                                                                                                                          
                                                                                                           
                                                                                                           
