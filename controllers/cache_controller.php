@@ -1264,8 +1264,7 @@ STR;
                 );
                 $allArtists = $this->paginate('Song');
                 
-                print_r( $allArtists); 
-                die;
+            
                 
                 for ($j = 65; $j < 93; $j++) {
                     $alphabet = chr($j);
@@ -1403,7 +1402,8 @@ STR;
                 $this->log("Artist Pagenation Query: " . $this->Song->lastQuery(), "cache");
             }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-            
+                print_r( $allArtists); 
+                die;
             
         }
       
