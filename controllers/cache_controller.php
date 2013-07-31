@@ -102,8 +102,7 @@ class CacheController extends AppController {
             }
           
 
-         echo 147;
-              die;
+        
             
             $country = $territory;
             
@@ -1256,8 +1255,7 @@ STR;
                     'fields' => array('DISTINCT Song.ArtistText'),
                     'extra' => array('chk' => 1),
                     'order' => 'TRIM(Song.ArtistText) ASC',
-                    'limit' => '60',
-                    'cache' => 'yes',
+                    'limit' => '60',                   
                     'check' => 2,
                     'all_query' => true,
                     'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
