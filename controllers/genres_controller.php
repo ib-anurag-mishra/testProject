@@ -255,8 +255,7 @@ Class GenresController extends AppController
 			 Cache::write("genre".$country, $genreAll);
 		}
 		$genreAll = Cache::read("genre".$country);
-                print_r($genreAll);
-                die;
+               
 		$this->set('genresAll', $genreAll);
 		$patId = $this->Session->read('patron');
 		$libId = $this->Session->read('library');
@@ -323,7 +322,12 @@ Class GenresController extends AppController
                 );
                 }
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
-                            $allArtists = $this->paginate('Song');
+                $allArtists = $this->paginate('Song');
+                
+                 print_r($allArtists);
+                die;
+                
+                
                 $allArtistsNew = $allArtists;
                 for($i=0;$i<count($allArtistsNew);$i++)
                 {
