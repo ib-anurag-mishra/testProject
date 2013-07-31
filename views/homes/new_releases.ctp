@@ -19,16 +19,16 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_albums as $key => $value){
                                             
-                                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
+                                             //$album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             //$album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
 					<li>
 						<div class="album-container">
 							<!-- <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['ProdID']);?>">
-                                                        <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
+                                                        <img class="lazy" src="<?php echo $value['albumImage']; ?>" alt="pitbull162x162" width="250" height="250" />
                                                         </a> -->
 
-                                                        <?php echo $html->link($html->image($album_img,array("height" => "250", "width" => "250")),
+                                                        <?php echo $html->link($html->image($value['albumImage'],array("height" => "250", "width" => "250")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
