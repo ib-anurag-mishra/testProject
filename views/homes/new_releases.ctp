@@ -19,16 +19,16 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_albums as $key => $value){
                                             
-                                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
+                                             //$album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             //$album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
 					<li>
 						<div class="album-container">
 							<!-- <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ProdID']; ?>/<?= base64_encode($value['Song']['ProdID']);?>">
-                                                        <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
+                                                        <img class="lazy" src="<?php echo $value['albumImage']; ?>" alt="pitbull162x162" width="250" height="250" />
                                                         </a> -->
 
-                                                        <?php echo $html->link($html->image($album_img,array("height" => "250", "width" => "250")),
+                                                        <?php echo $html->link($html->image($value['albumImage'],array("height" => "250", "width" => "250")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
@@ -37,8 +37,8 @@
 						<div class="album-title">							
                                                         <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Song']['SongTitle'])>35)
-                                                                echo substr($value['Song']['SongTitle'],0,35)."..."; 
+                                                                if(strlen($value['Song']['SongTitle'])>32)
+                                                                echo substr($value['Song']['SongTitle'],0,32)."..."; 
                                                                 else echo $value['Song']['SongTitle'];
                                                          ?>
                                                     </a>
@@ -46,8 +46,8 @@
 						<div class="artist-name">							
                                                         <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>35)
-                                                                                                                    echo substr($value['Song']['Artist'],0,35)."..."; 
+                                                                                                                    if(strlen($value['Song']['Artist'])>32)
+                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
                                                                                                                     else echo $value['Song']['Artist'];
                                                                                                              ?>
                                                        </a>
@@ -71,7 +71,7 @@
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_songs as $key => $value){
-                                            //if($count>10) break;                                            
+                                            //if($count>10) break;  
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
 
@@ -171,8 +171,8 @@
 						<div class="album-title">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Song']['SongTitle'])>35)
-                                                                echo substr($value['Song']['SongTitle'],0,35)."..."; 
+                                                                if(strlen($value['Song']['SongTitle'])>32)
+                                                                echo substr($value['Song']['SongTitle'],0,32)."..."; 
                                                                 else echo $value['Song']['SongTitle'];
                                                          ?>
                                                     </a>
@@ -180,8 +180,8 @@
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>35)
-                                                                                                                    echo substr($value['Song']['Artist'],0,35)."..."; 
+                                                                                                                    if(strlen($value['Song']['Artist'])>32)
+                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
                                                                                                                     else echo $value['Song']['Artist'];
                                                                                                              ?>
                                                        </a>
@@ -214,15 +214,15 @@
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
                                              
-                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                              $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                             // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                             // $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
 					?>
 					<li>
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
+                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
@@ -300,8 +300,8 @@
 						<div class="album-title">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Video']['VideoTitle'])>35)
-                                                                echo substr($value['Video']['VideoTitle'],0,35)."..."; 
+                                                                if(strlen($value['Video']['VideoTitle'])>32)
+                                                                echo substr($value['Video']['VideoTitle'],0,32)."..."; 
                                                                 else echo $value['Video']['VideoTitle'];
                                                          ?>
                                                     </a>
@@ -309,8 +309,8 @@
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Video']['Artist'])>35)
-                                                                                                                    echo substr($value['Video']['Artist'],0,35)."..."; 
+                                                                                                                    if(strlen($value['Video']['Artist'])>32)
+                                                                                                                    echo substr($value['Video']['Artist'],0,32)."..."; 
                                                                                                                     else echo $value['Video']['Artist'];
                                                                                                              ?>
                                                        </a>

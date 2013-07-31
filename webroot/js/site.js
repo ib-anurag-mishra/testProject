@@ -86,6 +86,12 @@ $('#whats-happening-grid .lazy').lazyload({
 	container:$('#whats-happening-grid')
 });
 
+$('#detailsNews .lazy').lazyload({
+	
+	effect:'fadeIn',
+	container:$('#detailsNews')
+});
+
 
 $('.more-videos-scrollable .video-thumb-container .lazy').lazyload({
 	effect:'fadeIn',

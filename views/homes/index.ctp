@@ -38,20 +38,20 @@
 												break;
 											}
                                                                                         
-                                                                                        $albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
-                                                                                        $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                                                        //$albumArtwork = shell_exec('perl files/tokengen ' . $nationalTopDownload[$i]['File']['CdnPath']."/".$nationalTopDownload[$i]['File']['SourceURL']);
+                                                                                        //$songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                                                                         
                                                                                         if($i<=9)       
                                                                                         {
                                                                                             $lazyClass      =   '';
-                                                                                            $srcImg         =   $songAlbumImage;   
+                                                                                            $srcImg         =   $nationalTopDownload[$i]['songAlbumImage'];   
                                                                                             $dataoriginal  =   '';  
                                                                                         }
                                                                                         else                //  Apply Lazy Class for images other than first 10.
                                                                                         {
                                                                                              $lazyClass      =   'lazy';
                                                                                              $srcImg         =   $this->webroot.'app/webroot/img/lazy-placeholder.gif';
-                                                                                             $dataoriginal   =   $songAlbumImage ;
+                                                                                             $dataoriginal   =   $nationalTopDownload[$i]['songAlbumImage'];
                                                                                         }
                                                                                         
                                                                                         ?>
@@ -238,15 +238,15 @@
 											$k = 2000;
 											for($i = 0; $i < count($nationalTopVideoDownload); $i++) {
 	
-											$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
-                                                                                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+											//$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$nationalTopVideoDownload[$i]['Image_Files']['CdnPath']."/".$nationalTopVideoDownload[$i]['Image_Files']['SourceURL']);
+                                                                                        //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
  /* echo $this->webroot."app/webroot/img/news/top-100/grid/bradpaisley250x250.jpg"; */ 
 										?>
 											<li>
 												<div class="top-100-video-detail">
 													<div class="video-cover-container">
-														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
+														<a href="/videos/details/<?php echo $nationalTopVideoDownload[$i]['Video']['ProdID']; ?>"><img src="<?php echo $nationalTopVideoDownload[$i]['videoAlbumImage']; ?>" alt="<?php echo $nationalTopVideoDownload[$i]['Video']['ArtistText'].' - '.$nationalTopVideoDownload[$i]['Video']['VideoTitle']; ?>" width="423" height="250" /></a>
 														<div class="top-100-ranking"><?php
 												$slNo = ($i + 1);
 												echo $slNo;
@@ -406,8 +406,8 @@
 										<?php
 								foreach($featuredArtists as $k => $v){
 								
-									$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
-									$image =  Configure::read('App.Music_Path').$albumArtwork;
+									//$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+									//$image =  Configure::read('App.Music_Path').$albumArtwork;
 									if(strlen($v['Album']['AlbumTitle']) > 14){
 										$title = substr($v['Album']['AlbumTitle'], 0, 14)."..";
 									}else{
@@ -427,7 +427,7 @@
 											<div class="featured-album-detail">
 												<div class="album-cover-container">												
 
-                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84", "alt" => $ArtistText. ' - '.$v['Album']['AlbumTitle']  ));?></a>
+                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($v['featuredImage'],array("height" => "77", "width" => "84", "alt" => $ArtistText. ' - '.$v['Album']['AlbumTitle']  ));?></a>
 
 
 												</div>
@@ -481,20 +481,20 @@
 
                                                                             foreach($coming_soon_rs as $key => $value)
                                                                             {     
-                                                                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                                                                            //$cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                                                            //$cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                                                                             
                                                                              if($sr_no<=9)       
                                                                             {
                                                                                 $lazyClass      =   '';
-                                                                                $srcImg         =   $cs_songImage;   
+                                                                                $srcImg         =   $value['cs_songImage'];   
                                                                                 $dataoriginal  =   '';  
                                                                             }
                                                                             else                //  Apply Lazy Class for images other than first 10.
                                                                             {
                                                                                  $lazyClass      =   'lazy';
                                                                                  $srcImg         =   $this->webroot.'app/webroot/img/lazy-placeholder.gif';
-                                                                                 $dataoriginal   =   $cs_songImage ;
+                                                                                 $dataoriginal   =   $value['cs_songImage'];
                                                                             }
                                                                             
                                                                             
@@ -563,8 +563,8 @@
                                                                             foreach($coming_soon_videos as $key => $value)
                                                                             {                                                                                     
                                                                                 
-                                                                           $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                                           $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                                                           //$albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                                                           //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
                                                                             if($sr_no>=20) break;
 ?>
@@ -572,7 +572,7 @@
 											<div class="video-detail">
 												<div class="video-cover-container">
 													<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                                                                        <img  src="<?php echo $videoAlbumImage; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
+                                                                                                        <img  src="<?php echo $value['videoAlbumImage']; ?>"  alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="275" height="162" />
                                                                                                         </a>
 												<?php if($this->Session->read("patron")){ ?> 
                                                                                                         <a class="add-to-playlist-button" href="#">
@@ -668,26 +668,36 @@
 												<div class="post-date">
 													<?php echo $value['News']['place']?> : <?php echo date( "F d, Y", strtotime($value['News']['created'])) ?>
 												</div>
-												<div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
+												<!-- <div class="post-excerpt"  id="shortNews<?php echo $value['News']['id']; ?>">
 													 <?php 
-                                                                                                                echo $this->getTextEncode(substr($newsText,0, 325));                                                                                                                 
+                                                                                                               // echo $this->getTextEncode(substr($newsText,0, 325));                                                                                                                 
                                                                                                                // echo $this->getTextEncode(substr($newsText,0, strpos($newsText, "</p>")+4));
                                                                                                             ?>		
 													 <div class="more">
 													 <?php  
                                                                                                             //if(strlen($newsText) > strpos($newsText, "</p>")+4)
-                                                                                                            if(strlen($newsText) >= 325)
-													  {
-														?>
-														<a href="javascript:void(0);" onClick="showhide('detail', '<?php echo $value['News']['id']; ?>')")">More ></a>
-														<?php
-													  } ?>		</div>									
+                                                                                                           /* if(strlen($newsText) >= 325)
+                                                                                                            {
+                                                                                                                  ?>
+                                                                                                                  <a href="javascript:void(0);" onClick="showhide('detail', '<?php echo $value['News']['id']; ?>')")">More ></a>
+                                                                                                                  <?php
+                                                                                                            } */ ?>		</div>									
 												</div>
 												
-												<div id="detailsNews<?php echo $value['News']['id']; ?>" style="display:none" class="post-excerpt">
-												<?php echo $newsText; ?>
-								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a>
-												</div>
+												<div id="detailsNews<?php //echo $value['News']['id']; ?>" style="display:none" class="post-excerpt">
+												<?php //echo $newsText; ?>
+								 				 <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php //echo $value['News']['id']; ?>')">- See Less</a>
+												</div> -->
+                                                                                                          
+                                                                                                  
+                                                                                                <div id="detailsNews" class="post-excerpt">
+                                                                                               <?php echo $newsText; ?>
+                                                                                               <!-- <a href="javascript:void(0);" class="more" onClick="showhide('short', '<?php echo $value['News']['id']; ?>')">- See Less</a> -->
+                                                                                               </div>
+
+                                                                                                                         
+                                                                                                          
+                                                                                                          
 												
 											</div>
 										</li>

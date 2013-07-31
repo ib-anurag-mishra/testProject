@@ -41,8 +41,8 @@
 						<div class="album-title">							
                                                         <a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Albums']['AlbumTitle'])>35)
-                                                                echo substr($value['Albums']['AlbumTitle'],0,35)."..."; 
+                                                                if(strlen($value['Albums']['AlbumTitle'])>32)
+                                                                echo substr($value['Albums']['AlbumTitle'],0,32)."..."; 
                                                                 else echo $value['Albums']['AlbumTitle'];
                                                          ?>
                                                     </a>
@@ -50,8 +50,8 @@
 						<div class="artist-name">							
                                                         <a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>35)
-                                                                                                                    echo substr($value['Song']['Artist'],0,35)."..."; 
+                                                                                                                    if(strlen($value['Song']['Artist'])>32)
+                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
                                                                                                                     else echo $value['Song']['Artist'];
                                                                                                              ?>
                                                        </a>
@@ -207,8 +207,8 @@
 						<div class="album-title">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Song']['SongTitle'])>35)
-                                                                echo substr($value['Song']['SongTitle'],0,35)."..."; 
+                                                                if(strlen($value['Song']['SongTitle'])>32)
+                                                                echo substr($value['Song']['SongTitle'],0,32)."..."; 
                                                                 else echo $value['Song']['SongTitle'];
                                                          ?>
                                                     </a>
@@ -216,8 +216,8 @@
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Song']['ArtistText'])); ?>/<?=base64_encode($value['Song']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Song']['Artist'])>35)
-                                                                                                                    echo substr($value['Song']['Artist'],0,35)."..."; 
+                                                                                                                    if(strlen($value['Song']['Artist'])>32)
+                                                                                                                    echo substr($value['Song']['Artist'],0,32)."..."; 
                                                                                                                     else echo $value['Song']['Artist'];
                                                                                                              ?>
                                                        </a>
@@ -351,8 +351,8 @@
 						<div class="album-title">
 							<a href="<?php echo $value['Video']['ProdID']; ?>">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Video']['VideoTitle'])>35)
-                                                                echo substr($value['Video']['VideoTitle'],0,35)."..."; 
+                                                                if(strlen($value['Video']['VideoTitle'])>32)
+                                                                echo substr($value['Video']['VideoTitle'],0,32)."..."; 
                                                                 else echo $value['Video']['VideoTitle'];
                                                          ?>
                                                     </a>
@@ -360,8 +360,8 @@
 						<div class="artist-name">
 							<a href="/artists/album/<?php echo str_replace('/','@',base64_encode($value['Video']['ArtistText'])); ?>/<?=base64_encode($value['Video']['Genre'])?>">
                                                                                                         <?php 
-                                                                                                                    if(strlen($value['Video']['Artist'])>35)
-                                                                                                                    echo substr($value['Video']['Artist'],0,35)."..."; 
+                                                                                                                    if(strlen($value['Video']['Artist'])>32)
+                                                                                                                    echo substr($value['Video']['Artist'],0,32)."..."; 
                                                                                                                     else echo $value['Video']['Artist'];
                                                                                                              ?>
                                                        </a>

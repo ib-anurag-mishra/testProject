@@ -160,8 +160,7 @@ function stopThis(event, objID) {
 }
 
 function playSample(obj, objID, playID, pt, webRoot) {
-    
-//    alert("obj:"+obj);
+    //   alert("obj:"+obj);
 //    alert("objID:"+objID);
 //    alert("playID:"+playID);
 //    alert("pt:"+pt);
