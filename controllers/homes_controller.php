@@ -626,16 +626,14 @@ STR;
 STR;
 
 			$coming_soon_rs = $this->Album->query($sql_coming_soon);
-                        
-                        foreach($coming_soon_rs as $key => $value)
-                        {     
-                            $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                            $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                        }
-                      
                         if(!empty($coming_soon_rs)){
-                          Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                            foreach($coming_soon_rs as $key => $value)
+                            {     
+                                $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                                $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
+                            }                            
+                            Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
                         }
                     
                 }
@@ -705,15 +703,14 @@ STR;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);
             
-            foreach($coming_soon_videos as $key => $value)
-            {                                                                                     
-
-                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
-            }   
-
             if(!empty($coming_soon_videos)){
+                foreach($coming_soon_videos as $key => $value)
+                {                                                                                     
+
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                    $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                 Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
             }
                     
