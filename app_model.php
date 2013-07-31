@@ -49,6 +49,8 @@ class AppModel extends Model {
                   $contain = $extra['contain'];
           }
           $uniqueCacheId = md5($uniqueCacheId);
+          
+          echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
           
                   
