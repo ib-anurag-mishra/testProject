@@ -406,8 +406,8 @@
 										<?php
 								foreach($featuredArtists as $k => $v){
 								
-									$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
-									$image =  Configure::read('App.Music_Path').$albumArtwork;
+									//$albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+									//$image =  Configure::read('App.Music_Path').$albumArtwork;
 									if(strlen($v['Album']['AlbumTitle']) > 14){
 										$title = substr($v['Album']['AlbumTitle'], 0, 14)."..";
 									}else{
@@ -427,7 +427,7 @@
 											<div class="featured-album-detail">
 												<div class="album-cover-container">												
 
-                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($image,array("height" => "77", "width" => "84", "alt" => $ArtistText. ' - '.$v['Album']['AlbumTitle']  ));?></a>
+                                                                        <a href="/artists/view/<?=base64_encode($v['Album']['ArtistText']);?>/<?= $v['Album']['ProdID']; ?>/<?= base64_encode($v['Album']['provider_type']);?>"><?php echo $html->image($v['featuredImage'],array("height" => "77", "width" => "84", "alt" => $ArtistText. ' - '.$v['Album']['AlbumTitle']  ));?></a>
 
 
 												</div>

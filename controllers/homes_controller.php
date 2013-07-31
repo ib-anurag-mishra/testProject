@@ -188,7 +188,7 @@ STR;
                         foreach($nationalTopDownload as $key => $value){
                                 $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                                $nationalTopDownload[$key]['songAlbumImage'] = $videoAlbumImage;
+                                $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
                        // print_r($nationalTopDownload);
 			//write in the file if not set
@@ -388,6 +388,13 @@ STR;
             } else {
                     $featured = array();
             }
+            
+            foreach($featured as $k => $v){
+
+                    $albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+                    $image =  Configure::read('App.Music_Path').$albumArtwork;
+                    $featured[$k]['featuredImage'] = $image;
+            }        
             
             //write the information in to the cache
             Cache::write("featured".$territory, $featured);
