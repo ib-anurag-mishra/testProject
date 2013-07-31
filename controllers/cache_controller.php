@@ -602,6 +602,11 @@ STR;
                 }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                         $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                         $data[$key]['songs_img'] = $songs_img;
+                    }                    
                     Cache::delete("national_us_top10_songs" . $country);
                     Cache::write("national_us_top10_songs" . $country, $data);
                     $this->log("cache written for US top ten for $territory", "cache");
@@ -716,6 +721,12 @@ STR;
                 }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+
+                         $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $album_img =  Configure::read('App.Music_Path').$album_img;
+                         $data[$key]['album_img'] = $album_img;
+                    }                     
                     Cache::delete("national_us_top10_albums" . $country);
                     Cache::write("national_us_top10_albums" . $country, $data);
                     $this->log("cache written for US top ten Album for $territory", "cache");
@@ -825,6 +836,11 @@ STR;
                     echo "ids_provider_type is set blank for " . $territory;
                 }
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                        $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }                     
                     Cache::delete("national_us_top10_videos" . $country);
                     Cache::write("national_us_top10_videos" . $country, $data);
                     $this->log("cache written for US top ten video for $territory", "cache");

@@ -26,13 +26,13 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($ustop10Albums as $key => $value){
                                             
-                                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
+                                             //$album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             //$album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
 					<li>
 						<div class="album-container">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
-                                                        <img src="<?php echo $album_img; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />
+                                                        <img src="<?php echo $value['album_img']; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
@@ -76,15 +76,15 @@
                                             
                                             if($count>10) break;
                                             
-                                             $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                                             //$songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             //$songs_img =  Configure::read('App.Music_Path').$songs_img;
                                             
 					?>
 					<li>
 						
 						<div class="song-container">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">                                                        
-                                                        <img src="<?php echo $songs_img; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />
+                                                        <img src="<?php echo $value['songs_img']; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 							
