@@ -55,11 +55,12 @@
                                     
                                 <?php  if($this->Session->read('patron')) {  ?>  
                                     <?php           
-                                                if($nationalTopDownload[$i]['Country']['SalesDate'] <= date('Y-m-d')) {
-                                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$nationalTopDownload[$i]['Song']['ProdID'].', "'.base64_encode($nationalTopDownload[$i]['Song']['provider_type']).'", "'.$this->webroot.'");')); 
+                                               if($albumSong['Country']['SalesDate'] <= date('Y-m-d')){
+                                                    
+                                                        echo $html->image('/img/news/top-100/preview-off.png', array("class" => "preview",  "style" => "cursor:pointer;display:block;", "id" => "play_audio".$i, "onClick" => 'playSample(this, "'.$i.'", '.$albumSong["Song"]["ProdID"].', "'.base64_encode($albumSong["Song"]['provider_type']).'", "'.$this->webroot.'");')); 
                                                         echo $html->image('ajax-loader.gif', array("alt" => "Loading Sample", "class" => "preview", "title" => "Loading Sample", "style" => "cursor:pointer;display:none;", "id" => "load_audio".$i)); 
                                                         echo $html->image('stop.png', array("alt" => "Stop Sample", "class" => "preview", "title" => "Stop Sample", "style" => "cursor:pointer;display:none;", "id" => "stop_audio".$i, "onClick" => 'stopThis(this, "'.$i.'");')); 
-                                                }
+                                               }
                                     ?>
                                 <?php } ?>
 					
