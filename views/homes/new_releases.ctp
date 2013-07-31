@@ -71,7 +71,7 @@
                                         
 					//for($d=1;$d<$count;$d++) {
                                         foreach($new_releases_songs as $key => $value){
-                                            //if($count>10) break;                                            
+                                            //if($count>10) break;  
                                              $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              $songs_img =  Configure::read('App.Music_Path').$songs_img; 
 
@@ -214,15 +214,15 @@
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
                                              
-                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                              $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                             // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                             // $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
 					?>
 					<li>
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
+                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 

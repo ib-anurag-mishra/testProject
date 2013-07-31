@@ -4396,7 +4396,8 @@ STR;
              
                 
              
-                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+                //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+                if(1)
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4450,6 +4451,11 @@ STR;
                // echo $sql_cs_videos; die;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);    
+            foreach($coming_soon_videos as $key => $value){
+                  $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                  $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                  $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+            }
             
 //            echo "<pre>";
 //            print_r($coming_soon_videos);
