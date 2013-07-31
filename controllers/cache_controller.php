@@ -1400,7 +1400,7 @@ STR;
                     $this->Song->recursive = 0;
                     $this->paginate = array(
                         'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                         'contain' => array(
                         'Genre' => array(
                             'fields' => array(
