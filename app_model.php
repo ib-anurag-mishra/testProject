@@ -52,11 +52,8 @@ class AppModel extends Model {
           
           
           $pagination = Cache::read('pagination-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-          if(empty($pagination)){
-             // echo 'emptypage-';
-             
-          }
-          echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;       
+          
+          //echo 'pagination-'.$this->alias.'-'.$uniqueCacheId;       
           if (empty($pagination)) {
               
                 if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
