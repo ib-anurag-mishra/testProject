@@ -25,7 +25,7 @@
         //echo $javascript->link('ImageDisableRightClick');
         echo $this->Html->css('freegal_styles');
           echo $this->Html->css('jquery.autocomplete');
-          echo $html->css('colorbox');
+         // echo $html->css('colorbox');
           echo $javascript->link('jquery.min');
           echo $javascript->link('jquery.colorbox');
           echo $javascript->link('jquery.cycle.all');
@@ -37,6 +37,9 @@
           echo $javascript->link('jquery.autocomplete');
           echo $javascript->link('recent-downloads');
           echo $javascript->link('search-results');
+          echo $javascript->link('qtip');
+          echo $javascript->link('qtip_add');
+          
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
@@ -47,6 +50,7 @@
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=colorbox.css" /> 
 			<script type="text/javascript">
 				$(document).ready(function() {
+                                   // alert("in JS");
 					// checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
 				/*	$('#search-text').keypress(function(event) {
 						//auto_check();
@@ -69,6 +73,7 @@
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
 					?>
+                                                    alert("In TC");
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                                 
                                                 
