@@ -173,28 +173,34 @@ function showAlbumDetails(albumDetailURL){
 
  //load the artist list when  scroll reached at the end
 $(document).ready(function(){
+    var preValue= 1;
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
             
             $('#artist_loader').show();    
             var data = "";
-            var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
-          
-            jQuery.ajax({
-                type: "post",  // Request method: post, get
-                url: link, // URL to request
-                data: data,  // post data
-                success: function(newitems) {                     
-                    artistPage++;
-                    $('#artist_loader').hide();
-                    $('#artistlistrecord').append(newitems);                    
-                },
-                async:   true,
-                error:function (XMLHttpRequest, textStatus, errorThrown) { 
-                    //alert('No artist list available');
-                }
-            });
+            if(preValue != artistPage ){                
+                preValue= artistPage ;
+                var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+           
+                jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: link, // URL to request
+                    data: data,  // post data
+                    success: function(newitems) {                        
+                        artistPage++;
+                        $('#artist_loader').hide();
+                        $('#artistlistrecord').append(newitems);                    
+                    },
+                    async:   true,
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                        //alert('No artist list available');
+                    }
+                });
+            
+            }
+            
         }
     });
 });
