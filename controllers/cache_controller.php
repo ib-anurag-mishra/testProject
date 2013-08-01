@@ -700,13 +700,17 @@ STR;
                                                LEFT JOIN
                                        File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                                                LEFT JOIN
-                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
                                                LEFT JOIN
-                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
                                                LEFT JOIN
-                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
+                                               INNER JOIN 
+                                       Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                               INNER JOIN 
+                                       File ON (Albums.FileID = File.FileID) 
                                WHERE
-                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) )  AND 1 = 1
                                GROUP BY  Song.ReferenceID
                                ORDER BY count(Song.ProdID) DESC
                                LIMIT 10  
@@ -789,41 +793,41 @@ STR;
 
                 $video_sql_US_TOP_10 =<<<STR
                 SELECT 
-                                Video.ProdID,
-                                Video.ReferenceID,
-                                Video.Title,
-                                Video.ArtistText,
-                                Video.DownloadStatus,
-                                Video.VideoTitle,
-                                Video.Artist,
-                                Video.Advisory,
-                                Video.Sample_Duration,
-                                Video.FullLength_Duration,
-                                Video.provider_type,
-                                Genre.Genre,
-                                Country.Territory,
-                                Country.SalesDate,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
-                                PRODUCT.pid
+                        Video.ProdID,
+                        Video.ReferenceID,
+                        Video.Title,
+                        Video.ArtistText,
+                        Video.DownloadStatus,
+                        Video.VideoTitle,
+                        Video.Artist,
+                        Video.Advisory,
+                        Video.Sample_Duration,
+                        Video.FullLength_Duration,
+                        Video.provider_type,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        Full_Files.FileID,
+                        Image_Files.FileID,
+                        Image_Files.CdnPath,
+                        Image_Files.SourceURL,
+                        PRODUCT.pid
                 FROM
-                                video AS Video
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-                                                LEFT JOIN
-         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
-                                                LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
-                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                        video AS Video
+                                        LEFT JOIN
+                        File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                                        LEFT JOIN
+                        Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
+                                        LEFT JOIN
+                        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
+                                        LEFT JOIN
+                        PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
+                                        LEFT JOIN
+                        File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1
+                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))  ) AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 10 
@@ -898,13 +902,17 @@ STR;
                                     LEFT JOIN
                             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                                     LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
                                     LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())
                                     LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID)  AND (PRODUCT.provider_type = Song.provider_type)
+                                    INNER JOIN 
+                            Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                    INNER JOIN 
+                            File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
+                            ( (Song.DownloadStatus = '1') )  AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
@@ -973,13 +981,17 @@ STR;
                                     LEFT JOIN
                             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                                     LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+                            Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
                                     LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
                                     LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID)  AND (PRODUCT.provider_type = Song.provider_type)
+                                    INNER JOIN 
+                            Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                    INNER JOIN 
+                            File ON (Albums.FileID = File.FileID) 
                     WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
+                            ( (Song.DownloadStatus = '1')  )  AND 1 = 1                    
                     ORDER BY Country.SalesDate DESC
                     LIMIT 100
 	  	
@@ -1049,15 +1061,15 @@ STR;
                 LEFT JOIN
                 File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
                 LEFT JOIN
-                Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+                Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
                 LEFT JOIN
-                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+                {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
                 LEFT JOIN
-                PRODUCT ON (PRODUCT.ProdID = Video.ProdID)
+                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
                 LEFT JOIN
                 File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
                 WHERE
-                ( (Video.DownloadStatus = '1')  AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1
+                ( (Video.DownloadStatus = '1')   )  AND 1 = 1
                 GROUP BY Video.ProdID
                 ORDER BY Country.SalesDate DESC
                 LIMIT 100	  
@@ -1211,22 +1223,18 @@ STR;
               latest_downloads,
               Songs AS Song
                   LEFT JOIN
-              {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
+              {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory LIKE '%" . $territory . "%')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                   LEFT JOIN
               File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                   LEFT JOIN
               File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
                   LEFT JOIN
-              PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+              PRODUCT ON (PRODUCT.ProdID = Song.ProdID)  AND (PRODUCT.provider_type = Song.provider_type)
           WHERE
               latest_downloads.ProdID = Song.ProdID 
               AND latest_downloads.provider_type = Song.provider_type 
               AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'
-              AND Country.Territory LIKE '%" . $territory . "%' 
-              AND Country.SalesDate != '' 
-              AND Country.SalesDate < NOW() 
-              AND Song.DownloadStatus = '1' 
-              AND (PRODUCT.provider_type = Song.provider_type)
+              AND Song.DownloadStatus = '1'               
               AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
           GROUP BY latest_downloads.ProdID
           ORDER BY countProduct DESC
@@ -1261,22 +1269,18 @@ STR;
             downloads,
             Songs AS Song
                 LEFT JOIN
-            {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID
+            {$countryPrefix}countries AS Country ON Country.ProdID = Song.ProdID AND (Country.Territory LIKE '%" . $territory . "%')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                 LEFT JOIN
             File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
                 LEFT JOIN
             File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-				LEFT JOIN
-			PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
+                LEFT JOIN
+            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
         WHERE
             downloads.ProdID = Song.ProdID 
             AND downloads.provider_type = Song.provider_type 
-            AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'
-            AND Country.Territory LIKE '%" . $territory . "%' 
-            AND Country.SalesDate != '' 
-            AND Country.SalesDate < NOW() 
-            AND Song.DownloadStatus = '1' 
-			AND (PRODUCT.provider_type = Song.provider_type)
+            AND Song.Genre LIKE '%" . mysql_real_escape_string($genre) . "%'           
+            AND Song.DownloadStatus = '1' 			
             AND created BETWEEN '" . Configure::read('App.tenWeekStartDate') . "' AND '" . Configure::read('App.curWeekEndDate') . "'
         GROUP BY downloads.ProdID
         ORDER BY countProduct DESC
@@ -1709,13 +1713,17 @@ STR;
 						LEFT JOIN
 					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
 						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
 						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
+                                                INNER JOIN 
+                                        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                                INNER JOIN 
+                                        File ON (Albums.FileID = File.FileID)
 				WHERE
-					((Song.DownloadStatus = '1') AND (($top_ten_condition_songs) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+					((Song.DownloadStatus = '1') AND (($top_ten_condition_songs) )  AND 1 = 1)
 				GROUP BY Song.ProdID
 				ORDER BY FIELD(Song.ProdID,
 						$ids) ASC
@@ -1732,6 +1740,11 @@ STR;
                 $this->log("topDownloaded_query songs  returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 songs returns null for lib: $libId $country <br />";
             } else {
+                foreach($topDownload as $key => $value){
+                     $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                     $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                     $topDownload[$key]['songs_img'] = $songs_img;
+                }                
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
                 //library top 10 cache set
@@ -1847,13 +1860,17 @@ STR;
 						LEFT JOIN
 					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
 						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID)
+					Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
 						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type)
+                                        {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
+					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
+                                                INNER JOIN 
+                                        Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                                INNER JOIN 
+                                        File ON (Albums.FileID = File.FileID)
 				WHERE
-					((Song.DownloadStatus = '1') AND (($top_ten_condition_albums) AND (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+					((Song.DownloadStatus = '1') AND (($top_ten_condition_albums)  )  AND 1 = 1)
 				GROUP BY  Song.ReferenceID
 				ORDER BY count(Song.ProdID) DESC
 				LIMIT 10
@@ -1869,6 +1886,11 @@ STR;
                 $this->log("topDownloaded_query albums returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 albums returns null for lib: $libId $country <br />";
             } else {
+                foreach($topDownload as $key => $value){
+                     $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                     $album_img =  Configure::read('App.Music_Path').$album_img;
+                     $topDownload[$key]['album_img'] = $album_img;
+                }                
                 Cache::delete("lib_album" . $libId);
                 Cache::write("lib_album" . $libId, $topDownload);
                 //library top 10 cache set
@@ -1981,13 +2003,15 @@ STR;
 						LEFT JOIN
 					File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
 						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+					Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
 						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
+                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
 						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
+					PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  AND (PRODUCT.provider_type = Video.provider_type)
+                                                INNER JOIN 
+                                        File ON (Video.Image_FileID = File.FileID)
 				WHERE
-					((Video.DownloadStatus = '1') AND (($top_ten_condition_videos) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+					((Video.DownloadStatus = '1') AND (($top_ten_condition_videos))  AND 1 = 1)
 				GROUP BY Video.ProdID
 				ORDER BY FIELD(Video.ProdID,
 						$ids) ASC
@@ -2004,6 +2028,11 @@ STR;
                 $this->log("topDownloaded_query videos returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 videos returns null for lib: $libId $country <br />";
             } else {
+                foreach($topDownload as $key => $value){
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                    $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                 Cache::delete("lib_video" . $libId);
                 Cache::write("lib_video" . $libId, $topDownload);
                 //library top 10 cache set

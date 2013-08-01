@@ -474,6 +474,12 @@ STR;
                                //  echo "Video: ".$topDownloaded_query_videos;
                                  
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
+                            
+                            foreach($topDownload_video as $key => $value){
+                                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                $topDownload_video[$key]['videoAlbumImage'] = $videoAlbumImage;
+                            }      
 //                            echo "<pre>";
 //                            print_r($topDownload_video);
 //                            die;

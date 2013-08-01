@@ -205,37 +205,37 @@ $(document).ready(function(){
 
 
 $genre_text_conversion = array(
-		"Children's Music" =>  "Children's" ,
-		"Classic"  =>  "Soundtracks",
-		"Comedy/Humor"  =>  "Comedy",
-		"Country/Folk"  =>  "Country",
-		"Dance/House"  =>  "Dance",
-		"Easy Listening Vocal" => "Easy Listening",
-		"Easy Listening Vocals"  =>  "Easy Listening",
-		"Folk/Blues" => "Folk",
-		"Folk/Country" => "Folk",
-		"Folk/Country/Blues" => "Folk",
-		"Hip Hop Rap" => "Hip-Hop Rap",
-		"Rap/Hip-Hop" => "Hip-Hop Rap",
-		"Rap / Hip-Hop" => "Hip-Hop Rap",
-		"Jazz/Blues"  =>  "Jazz",
-		"Kindermusik"  =>  "Children's",
-		"Miscellaneous/Other" => "Miscellaneous",
-		"Other" => "Miscellaneous",
-		"Age/Instumental" => "New Age",
-		"Pop / Rock" =>  "Pop/Rock",
-		"R&B/Soul" => "R&B",
-		"Soundtracks" => "Soundtrack",
-		"Soundtracks/Musicals" => "Soundtrack",
-		"World Music (Other)" => "World Music"
-	);
-	
-	//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
-        $genre_crumb_name = $genre;
-	
-	$html->addCrumb(__('All Genre', true), '/genres/view/');
-	$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));	
-	$totalRows = count($genresAll);
+        "Children's Music" =>  "Children's" ,
+        "Classic"  =>  "Soundtracks",
+        "Comedy/Humor"  =>  "Comedy",
+        "Country/Folk"  =>  "Country",
+        "Dance/House"  =>  "Dance",
+        "Easy Listening Vocal" => "Easy Listening",
+        "Easy Listening Vocals"  =>  "Easy Listening",
+        "Folk/Blues" => "Folk",
+        "Folk/Country" => "Folk",
+        "Folk/Country/Blues" => "Folk",
+        "Hip Hop Rap" => "Hip-Hop Rap",
+        "Rap/Hip-Hop" => "Hip-Hop Rap",
+        "Rap / Hip-Hop" => "Hip-Hop Rap",
+        "Jazz/Blues"  =>  "Jazz",
+        "Kindermusik"  =>  "Children's",
+        "Miscellaneous/Other" => "Miscellaneous",
+        "Other" => "Miscellaneous",
+        "Age/Instumental" => "New Age",
+        "Pop / Rock" =>  "Pop/Rock",
+        "R&B/Soul" => "R&B",
+        "Soundtracks" => "Soundtrack",
+        "Soundtracks/Musicals" => "Soundtrack",
+        "World Music (Other)" => "World Music"
+);
+
+//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+$genre_crumb_name = $genre;
+
+$html->addCrumb(__('All Genre', true), '/genres/view/');
+$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));	
+$totalRows = count($genresAll);
 ?>
 
 	

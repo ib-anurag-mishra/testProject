@@ -90,7 +90,7 @@
                                                 <?php
                                                                     if($this->Session->read('patron')) {?>
                                                                         
-                                                                                <a class="add-to-playlist-button" href="#"></a>
+                                                                                <a class="add-to-playlist-button" href="javascript:void(0);"></a>
                                                                                 <div class="wishlist-popover">                                                                        
 										<?php if($albumSong['Country']['SalesDate'] <= date('Y-m-d'))
 										{
@@ -130,7 +130,7 @@
                                                                          ?>
                                                                         <?php if( $this->Session->read('library_type') == 2 ){
                                                                                     echo $this->Queue->getQueuesList($this->Session->read('patron'),$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"],$album['Album']["ProdID"],$album['Album']["provider_type"]); ?>
-                                                                                    <a class="add-to-playlist" href="#">Add To Queue</a>
+                                                                                    <a class="add-to-playlist" href="javascript:void(0);">Add To Queue</a>
                                                                         <?php } ?>
                                                                         <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                                                                          <?php
