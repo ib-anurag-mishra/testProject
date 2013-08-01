@@ -1732,6 +1732,11 @@ STR;
                 $this->log("topDownloaded_query songs  returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 songs returns null for lib: $libId $country <br />";
             } else {
+                foreach($topDownload as $key => $value){
+                     $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                     $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                     $topDownload[$key]['songs_img'] = $songs_img;
+                }                
                 Cache::delete("lib" . $libId);
                 Cache::write("lib" . $libId, $topDownload);
                 //library top 10 cache set
@@ -1869,6 +1874,11 @@ STR;
                 $this->log("topDownloaded_query albums returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 albums returns null for lib: $libId $country <br />";
             } else {
+                foreach($topDownload as $key => $value){
+                     $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                     $album_img =  Configure::read('App.Music_Path').$album_img;
+                     $topDownload[$key]['album_img'] = $album_img;
+                }                
                 Cache::delete("lib_album" . $libId);
                 Cache::write("lib_album" . $libId, $topDownload);
                 //library top 10 cache set
@@ -2004,6 +2014,11 @@ STR;
                 $this->log("topDownloaded_query videos returns null for lib: $libId $country", "cache");
                 echo "<br /> library top 10 videos returns null for lib: $libId $country <br />";
             } else {
+                foreach($topDownload as $key => $value){
+                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                    $topDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
+                }                
                 Cache::delete("lib_video" . $libId);
                 Cache::write("lib_video" . $libId, $topDownload);
                 //library top 10 cache set
