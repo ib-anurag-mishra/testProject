@@ -1012,6 +1012,11 @@ STR;
 STR;
                                  
 			$topDownload_songs = $this->Song->query($topDownloaded_query_songs);
+                        foreach($topDownload_songs as $key => $value){
+                             $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                             $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                             $topDownload_songs[$key]['songs_img'] = $songs_img;
+                        }     
 //                        echo "Songs: ".$topDownloaded_query_songs;
 //                        exit;
                         
@@ -1167,6 +1172,13 @@ STR;
                            //    echo "Query: ".$topDownloaded_query_albums; //die;
                                  
                             $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
+                            if(!empty($topDownload_albums)){
+                                foreach($topDownload_albums as $key => $value){
+                                     $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                     $album_img =  Configure::read('App.Music_Path').$album_img;
+                                     $topDownload_albums[$key]['album_img'] = $album_img;
+                                }
+                            }
                             
 			
 			} else { 

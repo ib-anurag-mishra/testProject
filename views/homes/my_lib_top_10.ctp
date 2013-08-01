@@ -23,8 +23,8 @@
 					//for($d=1;$d<$count;$d++) {
                                         foreach($topDownload_albums as $key => $value){
                                             
-                                             $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
+                                            // $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                            // $album_img =  Configure::read('App.Music_Path').$album_img;                                            					
 					?>					
 					<li>
 						<div class="album-container">
@@ -32,7 +32,7 @@
                                                         <img class="lazy" src="<?php echo $album_img; ?>" alt="pitbull162x162" width="250" height="250" />
                                                         </a> -->
 
-                                                        <?php echo $html->link($html->image($album_img,array("height" => "250", "width" => "250")),
+                                                        <?php echo $html->link($html->image($value['album_img'],array("height" => "250", "width" => "250")),
 										array('controller'=>'artists', 'action'=>'view', base64_encode($value['Song']['ArtistText']), $value['Song']['ReferenceID'] , base64_encode($value['Song']['provider_type'])),
 										array('class'=>'first','escape'=>false))?>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
@@ -77,8 +77,8 @@
 
                                             if($count>10) break;
                                             
-                                             $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                             $songs_img =  Configure::read('App.Music_Path').$songs_img; 
+                                             //$songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                             //$songs_img =  Configure::read('App.Music_Path').$songs_img; 
                                                 
                                              //echo "<pre>"; print_r($value); 
 					?>
@@ -86,7 +86,7 @@
 						
 						<div class="song-container">
 							<a href="/artists/view/<?=base64_encode($value['Song']['ArtistText']);?>/<?= $value['Song']['ReferenceID']; ?>/<?= base64_encode($value['Song']['provider_type']);?>">
-                                                        <img class="lazy"  src="<?php echo $songs_img; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />                                                        
+                                                        <img class="lazy"  src="<?php echo $value['songs_img']; ?>" alt="<?php echo $value['Song']['Artist'].' - '.$value['Song']['SongTitle']; ?>" width="250" height="250" />                                                        
                                                         </a>
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
@@ -250,8 +250,8 @@
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
                                              
-                                              $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                              $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                             // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                              //$videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
                                             
 					?>
@@ -259,7 +259,7 @@
 						
 						<div class="video-container">
 							<a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>">
-                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
+                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="<?php echo $value['Video']['Artist'].' - '.$value['Video']['VideoTitle']; ?>" width="423" height="250" />
                                                         </a>                                                  
 							<div class="top-10-ranking"><?php echo $count; ?></div>
 
