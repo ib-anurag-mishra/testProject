@@ -5,8 +5,8 @@ var preValue= 1;
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
             $('#artist_loader').show();
-            if(preValue != artistPage ){                
-                preValue= artistPage ;
+            if(preValue != ajaxartistPage ){                
+                preValue= ajaxartistPage ;
                 var data = "";
                 jQuery.ajax({
                         type: "post",  // Request method: post, get 
