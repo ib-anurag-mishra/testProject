@@ -38,7 +38,7 @@ class CacheController extends AppController {
     //for caching data
     function cacheGenre() {
         set_time_limit(0);
-        //error_reporting(1); ini_set('display_errors', 1);
+        error_reporting(1); ini_set('display_errors', 1);
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
@@ -99,8 +99,8 @@ class CacheController extends AppController {
                 echo "no data available for genre" . $territory;
             }
           
-
-        
+  
+      
             
             $country = $territory;
                                 
@@ -225,6 +225,12 @@ STR;
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featured_videos_sql);
             if (!empty($featuredVideos)) {
+                foreach($featuredVideos as $key => $featureVideo){
+                    $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
+                    // print_r($featureVideo); die;
+                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                    $featuredVideos[$key]['videoImage'] = $videoImage;
+                }                
                 Cache::write("featured_videos" . $territory, $featuredVideos);
             }
             // End Caching functionality for featured videos
@@ -234,6 +240,13 @@ STR;
             $topDownloadSQL = "SELECT Videodownloads.ProdID, Video.ProdID, Video.provider_type, Video.VideoTitle, Video.ArtistText, File.CdnPath, File.SourceURL, COUNT(DISTINCT(Videodownloads.id)) AS COUNT, `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
             $topDownloads = $this->Album->query($topDownloadSQL);
             if(!empty($topDownloads)){
+                foreach($topDownloads as $key => $topDownload)
+                {
+                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
+                     // print_r($featureVideo);
+                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                     $topDownloads[$key]['videoImage'] = $videoImage;
+                }                
                 Cache::write("top_download_videos".$territory, $topDownloads);
             }
             // End Caching functionality for top video downloads
@@ -589,6 +602,11 @@ STR;
                 }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                         $songs_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $songs_img =  Configure::read('App.Music_Path').$songs_img;
+                         $data[$key]['songs_img'] = $songs_img;
+                    }                    
                     Cache::delete("national_us_top10_songs" . $country);
                     Cache::write("national_us_top10_songs" . $country, $data);
                     $this->log("cache written for US top ten for $territory", "cache");
@@ -703,6 +721,12 @@ STR;
                 }
 
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+
+                         $album_img = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $album_img =  Configure::read('App.Music_Path').$album_img;
+                         $data[$key]['album_img'] = $album_img;
+                    }                     
                     Cache::delete("national_us_top10_albums" . $country);
                     Cache::write("national_us_top10_albums" . $country, $data);
                     $this->log("cache written for US top ten Album for $territory", "cache");
@@ -812,6 +836,11 @@ STR;
                     echo "ids_provider_type is set blank for " . $territory;
                 }
                 if (!empty($data)) {
+                    foreach($data as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                        $data[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }                     
                     Cache::delete("national_us_top10_videos" . $country);
                     Cache::write("national_us_top10_videos" . $country, $data);
                     $this->log("cache written for US top ten video for $territory", "cache");
@@ -1272,12 +1301,13 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-         
+       
         
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
      
+             
                 $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
                 $country = $territory;
@@ -1307,6 +1337,7 @@ STR;
               
                 
                 for($j = 65;$j < 93;$j++){
+                    
                     $alphabet = chr($j);
                     if($alphabet == '[') {
                     $condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
@@ -1327,7 +1358,7 @@ STR;
                     $this->Song->Behaviors->attach('Containable');
                     $this->Song->recursive = 0;
                     $gcondition = array("find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''","Song.ArtistText != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
-               
+         
                     $this->paginate = array(
                     'conditions' => $gcondition,
                     'fields' => array('DISTINCT Song.ArtistText'),
@@ -1344,6 +1375,7 @@ STR;
                     $this->log("$totalPages cached for All Artists ".$alphabet."-".$territory,'debug');
                     $this->log("$totalPages cached for All Artists $alphabet - $territory", "cache");
                 }
+                
 
                 $this->Song->bindmodel(array('hasOne'=>array(
                         'Genre' => array(
@@ -1368,7 +1400,7 @@ STR;
                     $this->Song->recursive = 0;
                     $this->paginate = array(
                         'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
-                        'fields' => array('DISTINCT Song.ArtistText'),
+                        'fields' => array('DISTINCT Song.ArtistText1'),
                         'contain' => array(
                         'Genre' => array(
                             'fields' => array(
@@ -1451,6 +1483,8 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
+                
+             
                  
         }
       
