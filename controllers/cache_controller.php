@@ -100,7 +100,8 @@ class CacheController extends AppController {
             }
           
   
-      
+      print_r(Cache::read("genre" . $territory));
+      die;
             
             $country = $territory;
                                 
