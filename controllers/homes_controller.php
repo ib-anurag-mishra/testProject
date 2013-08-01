@@ -3326,8 +3326,11 @@ STR;
                 $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                $this->QueueList->setDataSource('master');
+
                 //insert into wishlist table
-                $this->Wishlist->save($insertArr);           
+                $this->Wishlist->save($insertArr); 
+                $this->QueueList->setDataSource('default');
 
                 echo "Success";
                 exit;
@@ -3385,9 +3388,10 @@ STR;
                 $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                $this->QueueList->setDataSource('master');
                 //insert into wishlist table
                 $this->WishlistVideo->save($insertArr);           
-
+                $this->QueueList->setDataSource('default');
                 echo "Success";
                 exit;
 
