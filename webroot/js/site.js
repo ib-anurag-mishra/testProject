@@ -966,6 +966,14 @@ $(function() {
 			
 			$(this).siblings('p').slideDown(500).addClass('active');
 			
+			if($(this).siblings('p').offset().top + 20 > $(window).height()) {
+				
+				
+				$('html, body').animate({
+					scrollTop: $(this).offset().top-10
+				}, 1000);
+			}
+			
 		}
 		
 	});

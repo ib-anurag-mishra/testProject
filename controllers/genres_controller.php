@@ -370,7 +370,7 @@ Class GenresController extends AppController
 		if($Artist == 'spl') {
 			$condition = array("Song.ArtistText REGEXP '^[^A-Za-z]'");
 		}
-		elseif($Artist != '' && $Artist != 'img') {
+		elseif($Artist != '' && $Artist != 'img' && $Artist != 'All') {
 			$condition = array('Song.ArtistText LIKE' => $Artist.'%');
 		}
 		else {
@@ -381,25 +381,27 @@ Class GenresController extends AppController
 		$genre = mysql_escape_string($genre);
                 
                 if($genre != 'All'){
-                $this->Song->unbindModel(array('hasOne' => array('Participant')));
-                $this->Song->unbindModel(array('hasOne' => array('Country')));
-                $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
-                $this->Song->Behaviors->attach('Containable');
-                $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
-                $this->paginate = array(
-                                'conditions' => $gcondition,
-                                'fields' => array('DISTINCT Song.ArtistText'),
-                                    'contain' => array(
-                                            'Genre' => array(
-                                                    'fields' => array(
-                                                                    'Genre.Genre'
-                                                            )),
-                                    ),
-                                    'extra' => array('chk' => 1),
-                                'order' => 'TRIM(Song.ArtistText) ASC',
-                                'limit' => '60', 'cache' => 'yes','check' => 2
-                                );
+                   
+                    $this->Song->unbindModel(array('hasOne' => array('Participant')));
+                    $this->Song->unbindModel(array('hasOne' => array('Country')));
+                    $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
+                    $this->Song->Behaviors->attach('Containable');
+                    $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
+                    $this->paginate = array(
+                                    'conditions' => $gcondition,
+                                    'fields' => array('DISTINCT Song.ArtistText'),
+                                        'contain' => array(
+                                                'Genre' => array(
+                                                        'fields' => array(
+                                                                        'Genre.Genre'
+                                                                )),
+                                        ),
+                                        'extra' => array('chk' => 1),
+                                    'order' => 'TRIM(Song.ArtistText) ASC',
+                                    'limit' => '60', 'cache' => 'no','check' => 2
+                                    );
                 } else {
+                   
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $this->Song->unbindModel(array('hasOne' => array('Country')));
                     $this->Song->unbindModel(array('hasOne' => array('Genre')));
@@ -516,7 +518,12 @@ Class GenresController extends AppController
             }
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
-                 
+            
+           //if allArtists array is empty then no value will return
+            if(isset($allArtists) && empty($allArtists)){
+                exit;
+            }
+            
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++)
             {

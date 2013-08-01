@@ -24,8 +24,7 @@ class QueuesController extends AppController{
      * Description   : This function is used to retrieve all the queues created by an individual
      */
     
-    function savedQueuesList($patron_id){
-        
+    function savedQueuesList($patron_id){        
        
         $this->layout = 'home';
         $queueData = $this->Queue->getQueueList($patron_id);
@@ -87,8 +86,7 @@ class QueuesController extends AppController{
                     echo 'error1';
                     exit; 
 
-                }
-            
+                }            
         }else{
             echo 'error';
             exit;

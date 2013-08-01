@@ -173,28 +173,34 @@ function showAlbumDetails(albumDetailURL){
 
  //load the artist list when  scroll reached at the end
 $(document).ready(function(){
+    var preValue= 1;
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
             
             $('#artist_loader').show();    
             var data = "";
-            var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
-          
-            jQuery.ajax({
-                type: "post",  // Request method: post, get
-                url: link, // URL to request
-                data: data,  // post data
-                success: function(newitems) {                     
-                    artistPage++;
-                    $('#artist_loader').hide();
-                    $('#artistlistrecord').append(newitems);                    
-                },
-                async:   false,
-                error:function (XMLHttpRequest, textStatus, errorThrown) { 
-                    //alert('No artist list available');
-                }
-            });
+            if(preValue != artistPage ){                
+                preValue= artistPage ;
+                var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+           
+                jQuery.ajax({
+                    type: "post",  // Request method: post, get
+                    url: link, // URL to request
+                    data: data,  // post data
+                    success: function(newitems) {                        
+                        artistPage++;
+                        $('#artist_loader').hide();
+                        $('#artistlistrecord').append(newitems);                    
+                    },
+                    async:   true,
+                    error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                        //alert('No artist list available');
+                    }
+                });
+            
+            }
+            
         }
     });
 });
@@ -205,37 +211,37 @@ $(document).ready(function(){
 
 
 $genre_text_conversion = array(
-		"Children's Music" =>  "Children's" ,
-		"Classic"  =>  "Soundtracks",
-		"Comedy/Humor"  =>  "Comedy",
-		"Country/Folk"  =>  "Country",
-		"Dance/House"  =>  "Dance",
-		"Easy Listening Vocal" => "Easy Listening",
-		"Easy Listening Vocals"  =>  "Easy Listening",
-		"Folk/Blues" => "Folk",
-		"Folk/Country" => "Folk",
-		"Folk/Country/Blues" => "Folk",
-		"Hip Hop Rap" => "Hip-Hop Rap",
-		"Rap/Hip-Hop" => "Hip-Hop Rap",
-		"Rap / Hip-Hop" => "Hip-Hop Rap",
-		"Jazz/Blues"  =>  "Jazz",
-		"Kindermusik"  =>  "Children's",
-		"Miscellaneous/Other" => "Miscellaneous",
-		"Other" => "Miscellaneous",
-		"Age/Instumental" => "New Age",
-		"Pop / Rock" =>  "Pop/Rock",
-		"R&B/Soul" => "R&B",
-		"Soundtracks" => "Soundtrack",
-		"Soundtracks/Musicals" => "Soundtrack",
-		"World Music (Other)" => "World Music"
-	);
-	
-	//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
-        $genre_crumb_name = $genre;
-	
-	$html->addCrumb(__('All Genre', true), '/genres/view/');
-	$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));	
-	$totalRows = count($genresAll);
+        "Children's Music" =>  "Children's" ,
+        "Classic"  =>  "Soundtracks",
+        "Comedy/Humor"  =>  "Comedy",
+        "Country/Folk"  =>  "Country",
+        "Dance/House"  =>  "Dance",
+        "Easy Listening Vocal" => "Easy Listening",
+        "Easy Listening Vocals"  =>  "Easy Listening",
+        "Folk/Blues" => "Folk",
+        "Folk/Country" => "Folk",
+        "Folk/Country/Blues" => "Folk",
+        "Hip Hop Rap" => "Hip-Hop Rap",
+        "Rap/Hip-Hop" => "Hip-Hop Rap",
+        "Rap / Hip-Hop" => "Hip-Hop Rap",
+        "Jazz/Blues"  =>  "Jazz",
+        "Kindermusik"  =>  "Children's",
+        "Miscellaneous/Other" => "Miscellaneous",
+        "Other" => "Miscellaneous",
+        "Age/Instumental" => "New Age",
+        "Pop / Rock" =>  "Pop/Rock",
+        "R&B/Soul" => "R&B",
+        "Soundtracks" => "Soundtrack",
+        "Soundtracks/Musicals" => "Soundtrack",
+        "World Music (Other)" => "World Music"
+);
+
+//$genre_crumb_name = isset($genre_text_conversion[trim($genre)])?$genre_text_conversion[trim($genre)]:trim($genre);
+$genre_crumb_name = $genre;
+
+$html->addCrumb(__('All Genre', true), '/genres/view/');
+$html->addCrumb( $this->getTextEncode($genre_crumb_name)  , '/genres/view/'.base64_encode($genre_crumb_name));	
+$totalRows = count($genresAll);
 ?>
 
 	

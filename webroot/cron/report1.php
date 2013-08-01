@@ -35,7 +35,7 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-06-01';
+//$currentDate = '2013-07-29';
 $currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
@@ -55,6 +55,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_12Q1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_Oct_2012';
+//            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
             $reports_dir = SONY_REPORTFILES;
 
             if(!file_exists($reports_dir))
@@ -108,7 +109,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $all_Ids = '';
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
                 //$sql = "SELECT library_purchases.library_id as id from freegal.library_purchases join freegal.contract_library_purchases on contract_library_purchases.id_library_purchases = library_purchases.id and contract_library_purchases.library_contract_start_date  <= '" . $condEndDate . "'  AND contract_library_purchases.library_contract_end_date >= '" . $condEndDate . "' join libraries on libraries.id = library_purchases.library_id and contract_library_purchases.library_unlimited='".$lib_type_int."' AND libraries.library_territory='".$country."' group by library_purchases.library_id,contract_library_purchases.library_contract_start_date,contract_library_purchases.library_unlimited order by libraries.id,library_purchases.created;";
-                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.id = clp.id_library_purchases INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' AND lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
                 if($result)
                 {
@@ -141,7 +142,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                           }
                         }
-                        //echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -155,6 +156,37 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         while ($datarow = mysql_fetch_assoc($dataresult)) {
                           $data[$library_id][] = $datarow;
                         }
+                        //start for sony music videos
+                        if($row['library_contract_start_date'] <= $condStartDate){
+                          if($row['library_contract_end_date'] >= $condEndDate){
+                            $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$condStartDate."' and '".$condEndDate."' and library_id = ".$library_id." group by videodownloads.id";
+                          }
+                          else{
+                            $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$condStartDate."' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
+                          }
+                        } else {
+                          if($row['library_contract_end_date'] >= $condEndDate){
+                            $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$condEndDate."' and library_id = ".$library_id." group by videodownloads.id";
+                          }
+                          else{
+                            $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
+                          }
+                        }
+//                        echo $query;
+                        $dataresult = mysql_query($query);
+                        if($dataresult)
+                        {
+                            // do nothing
+                        }
+                        else
+                        {
+                            sendalert("Query failed: ".$query);
+                            die(" Query failed: ". $query. " Error: " .mysql_error());
+                        }
+                        while ($datarow = mysql_fetch_assoc($dataresult)) {
+                          $data[$library_id][] = $datarow;
+                        }
+                        //for sony music video end
                     }
                 }
                 else
@@ -186,7 +218,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
-                            $sales .= "11#*#"; // Product Type Key
+                            $sales .= "31#*#"; // Product Type Key
                             $sales .= $line['TrkCount'] . "#*#"; // Quantity
                             $sales .= "0#*#"; // Quantity Returned
                             if($lib_type_int)
@@ -199,10 +231,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             }
                             else
                             {
-                                $sales .= ".65#*#"; // WPU
-                                $sales .= (".65" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
-                                $sales .= ".65#*#"; // Net Invoice Price (same as WPU)
-                                $sales .= (".65" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                $sales .= ".130#*#"; // WPU
+                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                $sales .= ".130#*#"; // Net Invoice Price (same as WPU)
+                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                 $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
                             }
                             
@@ -223,7 +255,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= "10#*#"; // Service Type Key
                             $sales .= "MP3#*#"; // Media Key
                             $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
-                            $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                            if(isset($line['AlbumTitle'])){
+                                $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                            }
                             $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
                             $sales .= $line['id']. "#*#"; // patron_id
                             $sales .= $line['library_id']; // library_id
@@ -280,7 +314,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         die(" Query failed: ". $sql. " Error: " .mysql_error());
                     }
 
-                    //  FOR SENDING REPORT TO SONY SERVER USING SFTP
+                    /*//  FOR SENDING REPORT TO SONY SERVER USING SFTP
                     if(sendReportFilesftp($report_name, "PM43_W_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "weekly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
@@ -298,7 +332,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             die(" Query failed: ". $sql. " Error: " .mysql_error());
                         }
                         // }
-                    }
+                    }*/
                 }
             }
 
@@ -342,7 +376,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 $all_Ids = '';
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
-                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' and lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
                 $result = mysql_query($sql);
                 
                 if($result)
@@ -385,7 +419,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                             }
                         }
-                        //echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         
                         if($dataresult)
@@ -402,6 +436,49 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                         {
                           $data[$library_id][] = $datarow;
                         }
+//                        echo "<pre>";print_r($data);
+                        //start for sony music videos 
+                        if($row['library_contract_start_date'] <= $condStartDate)
+                        {
+                             if($row['library_contract_end_date'] >= $condEndDate)
+                             {
+                                 $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$condStartDate."' and '".$condEndDate."' and library_id = ".$library_id." group by videodownloads.id";
+                             }
+                             else
+                             {
+                                 $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$condStartDate."' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
+                             }
+                         }
+                         else
+                         {
+                            if($row['library_contract_end_date'] >= $condEndDate)
+                            {
+                                $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$condEndDate."' and library_id = ".$library_id." group by videodownloads.id";
+                            }
+                            else
+                            {
+                                $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
+                            }
+                        }
+//                        echo $query;
+                        $dataresult = mysql_query($query);
+                        
+                        if($dataresult)
+                        {
+                            // do nothing
+                        }
+                        else
+                        {
+                            sendalert("Query failed: ".$query);
+                            die("Query failed: ". $query. " Error: " .mysql_error());
+                        }
+                
+                        while ($datarow = mysql_fetch_assoc($dataresult))
+                        {
+                          $data[$library_id][] = $datarow;
+                        }
+//                        echo "<pre>";print_r($data);
+                        //for sony music videos end
                     }
                 }
                 else
@@ -437,7 +514,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
                             $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
                             $sales .= "#*#"; // GRID/Official Digital Identifier
-                            $sales .= "11#*#"; // Product Type Key
+                            $sales .= "31#*#"; // Product Type Key
                             $sales .= $line['TrkCount'] . "#*#"; // Quantity
                             $sales .= "0#*#"; // Quantity Returned
                             
@@ -451,10 +528,10 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             }
                             else
                             {
-                                $sales .= ".65#*#"; // WPU
-                                $sales .= (".65" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
-                                $sales .= ".65#*#"; // Net Invoice Price (same as WPU)
-                                $sales .= (".65" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                $sales .= ".130#*#"; // WPU
+                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                $sales .= ".130#*#"; // Net Invoice Price (same as WPU)
+                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                 $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
                             }
 
@@ -475,7 +552,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $sales .= "10#*#"; // Service Type Key
                             $sales .= "MP3#*#"; // Media Key
                             $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
-                            $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                            if(isset($line['AlbumTitle'])){
+                                $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                            }
                             $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
                             $sales .= $line['id']. "#*#"; // patron_id
                             $sales .= $line['library_id'] . "#*#"; // library_id
@@ -535,7 +614,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     }
 
                     // FOR SENDING REPORT TO SONY SERVER USING SFTP
-                    if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
+                    /*if(sendReportFilesftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country. ".txt", $logFileWrite, "monthly"))
                     {
                         // FOR SENDING REPORT TO SONY SERVER USING FTP
                         // if(sendReportFileftp($report_name, "PM43_M_" . $showStartDate . "_" . $showEndDate . "_".$lib_type."_".$country.".txt", $logFileWrite, "monthly")) {
@@ -551,7 +630,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             sendalert("Query failed: ".$sql);
                             die("Query failed: ". $sql. " Error: " .mysql_error());
                         }
-                    }
+                    }*/
                 }   
             }
         }

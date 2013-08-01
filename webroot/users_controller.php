@@ -216,19 +216,19 @@ Class UsersController extends AppController
 		}
 	}
     
-   /*
-    Function Name : logout
-    Desc : Logs admin out of the system
-   */
+        /*
+            Function Name : logout
+            Desc : Logs admin out of the system
+        */
    
 	function admin_logout() {
 		$this->redirect($this->Auth->logout()); 
 	}
    
-   /*
-    Function Name : login
-    Desc : Logs users/patrons in to the system
-   */
+        /*
+            Function Name : login
+            Desc : Logs users/patrons in to the system
+        */
    
 	function login($library = null){
 		if($this->Session->read('layout_option') == 'login_new'){
