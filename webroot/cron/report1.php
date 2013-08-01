@@ -142,7 +142,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                           }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -172,7 +172,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
                           }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -377,7 +377,6 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
                 $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' and lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
-                echo $sql;
                 $result = mysql_query($sql);
                 
                 if($result)
@@ -392,7 +391,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 
                 $countno = mysql_num_rows($result);
                 $data = array();
-echo "count number:".$countno;
+
                 if($countno>0)
                 {
                     while ($row = mysql_fetch_assoc($result))
@@ -420,7 +419,7 @@ echo "count number:".$countno;
                                 $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                             }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         
                         if($dataresult)
@@ -461,7 +460,7 @@ echo "count number:".$countno;
                                 $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
                             }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         
                         if($dataresult)
