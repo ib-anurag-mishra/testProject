@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-$currentDate = '2013-07-29';
-//$currentDate = date( "Y-m-d", time());
+//$currentDate = '2013-07-29';
+$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
