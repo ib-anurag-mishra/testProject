@@ -391,7 +391,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 
                 $countno = mysql_num_rows($result);
                 $data = array();
-
+echo "count number:".$countno;
                 if($countno>0)
                 {
                     while ($row = mysql_fetch_assoc($result))
