@@ -518,7 +518,12 @@ Class GenresController extends AppController
             }
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
-                 
+            
+           //if allArtists array is empty then no value will return
+            if(isset($allArtists) && empty($allArtists)){
+                exit;
+            }
+            
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++)
             {
