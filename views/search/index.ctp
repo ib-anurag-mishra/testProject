@@ -852,7 +852,7 @@ if ($type != 'all') {
                         ?>
                             <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
-                            <div class="composer"><?php echo truncate_text(str_replace('"', '', $psong->Composer), 30, $this); ?></div>
+                            <div class="composer"><?php echo truncate_text(str_replace('"', '', $psong->Composer), 25, $this); ?></div>
 
 
                             <div class="wishlist-popover">	
