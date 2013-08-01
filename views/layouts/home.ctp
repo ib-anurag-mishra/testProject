@@ -12,14 +12,14 @@
             }
             ?>
         </title>
-        <meta property="fb:app_id" content="51244333578"> 
+       <!--  <meta property="fb:app_id" content="51244333578"> 
   	<meta property="og:url" content="http://vimeo.com/24400434"> 
   	<meta property="og:title" content="Changing Education Paradigm by Sir Ken Robinson"> 
   	<meta property="og:type" content="article"> 
         <SCRIPT type="text/javascript" lang="javascript" 
         src="http://cdn.gigya.com/JS/socialize.js?apikey=2_Y82PzwJ_chSFImHXaIDJClnLyJzmk-VFOavSsaNTzl6m901s_NNxRAS0xJ3bd3_N">
         </SCRIPT>
-    
+    -->
         <?php
         echo $this->Html->meta('icon');
         //echo $javascript->link('ImageDisableRightClick');
@@ -43,12 +43,12 @@
 		{
 			$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	?>
-		<!--	<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>&library_box_header_color=<?php echo $libraryInfo['Library']['library_box_header_color'];?>&library_box_hover_color=<?php echo $libraryInfo['Library']['library_box_hover_color'];?>" type="text/css" rel="stylesheet" />
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" /> -->
+			<!--<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>&library_box_header_color=<?php echo $libraryInfo['Library']['library_box_header_color'];?>&library_box_hover_color=<?php echo $libraryInfo['Library']['library_box_hover_color'];?>" type="text/css" rel="stylesheet" />-->
+			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=colorbox.css" /> 
 			<script type="text/javascript">
 				$(document).ready(function() {
-				//	checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-					/*$('#search-text').keypress(function(event) {
+					// checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
+				/*	$('#search-text').keypress(function(event) {
 						//auto_check();
 						if (event.which == '13') {
 						  $('#HomeSearchForm').submit();
@@ -64,7 +64,7 @@
                         }
 					}).result(function(e, item) {
 						$('#auto').attr('value', 1);
-					});*/
+					}); */
 					<?php
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
@@ -208,8 +208,8 @@ if ($this->Session->read('Config.language') == 'en') {
 
         <?php
         echo $javascript->link('jquery-1.3.2.min');
-//		echo $javascript->link('qtip');
-//		echo $javascript->link('qtip_add');
+		echo $javascript->link('qtip');
+		echo $javascript->link('qtip_add');
 //		echo $scripts_for_layout;
         if ($this->Session->read('Config.language') == 'en') {
             $setLang = 'en';
@@ -450,6 +450,7 @@ if ($this->Session->read('Config.language') == 'en') {
                     </div>
                     <?php
                     if ($this->Session->read('approved') && $this->Session->read('approved') == 'no') {
+                        
                         ?>
                         <a class='termsApproval' href="#"></a>
                         <div style="display:none;">
