@@ -377,6 +377,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
                 $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' and lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
+                echo $sql;
                 $result = mysql_query($sql);
                 
                 if($result)
