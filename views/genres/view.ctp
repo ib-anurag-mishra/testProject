@@ -190,7 +190,7 @@ $(document).ready(function(){
                     $('#artist_loader').hide();
                     $('#artistlistrecord').append(newitems);                    
                 },
-                async:   false,
+                async:   true,
                 error:function (XMLHttpRequest, textStatus, errorThrown) { 
                     //alert('No artist list available');
                 }
