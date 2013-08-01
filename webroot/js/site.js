@@ -598,7 +598,23 @@ $(function() {
 	});
 	
 
+
+	$('.news .whats-happening #whats-happening-grid .post').bind('mousewheel',function(e){
 	
+	
+		
+		$(this).scrollTop($(this).scrollTop()-e.originalEvent.wheelDeltaY);
+		
+		
+		
+		
+
+	    //prevent page fom scrolling
+	    return false;
+		
+	});
+
+
 
 	
 	whats_happening_filter_text.on('keyup',function(){
