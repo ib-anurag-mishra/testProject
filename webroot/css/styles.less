@@ -161,7 +161,7 @@ html, body {
 
 body {
 	
-	background:  url(../img/content_bkg.gif) repeat-y;
+
 	color:       @base-font-color;	
 	font-family: @base-font;
 	
@@ -357,20 +357,6 @@ img {
 
 	
 
-	/*
-	
-	@media screen and (min-width:1024px) {
-		
-		float:  left;
-		width:  15%;
-		height: 2000px;
-		
-		
-
-	
-		
-	}
-	*/
 	
 	h2 {
 		color:          rgba(0,0,0,.5);
@@ -533,12 +519,10 @@ img {
 		
 	
 		position: relative;
+		margin: 0 auto;
+		width: 1024px;
 		
-		@media screen and (min-width:1024px) {
-			
-			margin: 0 auto;
-			width: 1024px;
-		}
+
 		
 
 		.player-mgmt-container {
@@ -727,12 +711,10 @@ img {
 			top:      30px;
 		}
 		
-		@media screen and (min-width:1024px) {
-			
-			margin: 0 auto;
-			width:  1024px;
-			
-		}
+
+		
+		margin: 0 auto;
+		width:  1024px;
 	}
 	
 
@@ -745,13 +727,11 @@ img {
 	
 	height:     107px;
 	position:   relative;
+	margin: 0 auto;
+	width:  1024px;
 	
-	@media screen and (min-width:1025px) {
-		margin: 0 auto;
-		width:  1024px;
 	
-	}
-	
+
 
 
 
@@ -1162,12 +1142,9 @@ img {
 	}
 	
 
-	@media screen and (min-width:1024px) {
+
 	margin: 0 auto;
 	width: 1024px;
-	
-	}
-		
 
 	
 
@@ -1179,13 +1156,7 @@ img {
 	position: relative;
 	background: url(../img/content_bkg.gif) repeat;
 	
-	
-	@media screen and (min-width:1024px) {
-		
-		
-		
-		
-	}
+
 	
 	
 	
@@ -9422,6 +9393,13 @@ img {
 			position: relative;
 			margin-left: 30px;
 			
+			legend {
+				
+				font-size: 14px;
+				font-weight: normal;
+				margin-bottom: 20px;
+			}
+			
 			
 			&:after {
 				
@@ -9453,6 +9431,42 @@ img {
 						
 						overflow-y: auto;
 						
+				}
+				
+				table {
+					
+					width: 100%;
+					
+					tr {
+					
+						td {
+							
+							padding: 5px 5px 5px 10px;
+							text-transform: uppercase;
+							color: rgba(0, 0, 0, 0.75);
+							text-decoration: none;
+							background: #ebebeb;
+							
+							&:hover {
+								
+								background: #a5dbed;
+							}
+
+
+						}
+						
+						&:nth-child(even) td {
+								
+								background: #f1f1f1;
+								
+							&:hover {
+								
+								background: #a5dbed;
+							}
+						}
+						
+
+					}
 				}
 			
 			
@@ -11544,7 +11558,8 @@ img {
 					display: none;
 					position: absolute;
 					right: 10px;
-					top:119px;
+					/* top:119px; */
+					bottom: 37px;
 					font-size: 12px;
 					z-index: 100;
 					width: 120px;
@@ -14441,7 +14456,7 @@ img {
 			
 			.row-container {
 				
-				height: 2000px;
+				height: auto;
 			
 				.row {
 					padding-top: 10px;
@@ -14912,7 +14927,7 @@ img {
 			
 			.row-container {
 				
-				height: 2000px;
+				height: auto;
 			
 				.row {
 					padding-top: 10px;
@@ -17310,112 +17325,7 @@ img {
 			
 			
 			
-			/*
-			
-			&.artist {
-				
-				
-				
-				width: 190px;
-				height: 39px;
-				background: url(../img/search-results/artist-header-off.jpg);
-				
-				
-				&.active {
-					
-					background: url(../img/search-results/artist-header-up.jpg);
-					
-						
-						
-						&.toggled {
-						
-							background:url(../img/search-results/artist-header-down.jpg);
-							
-						}
-				}
-			}
-			
-			
-			&.composer {
-				
-				
-				
-				width: 191px;
-				height: 39px;
-				background: url(../img/search-results/compose-header-off.jpg);
-				
-				&.active {
-					
-					background: url(../img/search-results/compose-header-up.jpg);
-					
-						
-						
-						&.toggled {
-						
-							background: url(../img/search-results/compose-header-down.jpg)
-							
-						}
-				}
-			}
-			
-			&.album {
-				
-				background: url(../img/search-results/album-header-off.jpg);
-				
-				width: 191px;
-				height: 39px;
-				
-				&.active {
-					
-					background: url(../img/search-results/album-header-up.jpg);
-								
-						&.toggled {
-						
-							background: url(../img/search-results/album-header-down.jpg);
-							
-						}
-				}
-			}
-			
-			&.song {
-				
-				
-				width: 191px;
-				height: 39px;
-				
-				background: url(../img/search-results/song-header-off.jpg);
-				&.active {
-					
-					background: url(../img/search-results/song-header-up.jpg);
-								
-						&.toggled {
-						
-							background: url(../img/search-results/song-header-down.jpg);
-							
-						}
-				}
-			}
-			
-			&.download {
-				
-				background: url(../img/search-results/download-header-off.jpg);
-				width:87px;
-				height: 39px;
-				&.active {
-					
-					background: url(../img/search-results/download-header-off.jpg);
-								
-						&.toggled {
-						
-							background: url(../img/search-results/download-header-off.jpg);
-							
-						}
-				
-				}
-			}
-			
-			
-			*/
+
 		}
 	}
 	
