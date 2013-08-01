@@ -860,9 +860,8 @@ STR;
             $this->log("cache written for US top ten video for $territory", 'debug');
             //End Caching functionality for US TOP 10 Videos
             
-            
-          print_r(Cache::read("national_us_top10_videos" . $country));
-      die;
+                  
+     
             
             
             
