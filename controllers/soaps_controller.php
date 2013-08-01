@@ -37,6 +37,21 @@ class SoapsController extends AppController {
   var $components = array('Downloads', 'AuthRequest', 'Downloadsvideos', 'Solr');
 
    
+  function beforeFilter(){
+    
+    $arr_models = $this->uses;
+    foreach($arr_models as $val) {
+      $this->$val->setDataSource('soap');
+    }
+    $this->Session->write('call_db3', 1); 
+  }
+
+  function afterFilter(){
+
+    $this->Session->delete('call_db3');        
+  }
+
+
 
   function index(){
     
@@ -1219,10 +1234,13 @@ STR;
 
       if($row_save_status){
 
-        $this->Library->setDataSource('master');
+        //$this->Library->setDataSource('master');
+	$this->Library->setDataSource('soap');
         $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads-1 Where id=".$libraryId;
         $this->Library->query($sql);
-        $this->Library->setDataSource('default');
+        //$this->Library->setDataSource('default');
+	$this->Library->setDataSource('soap');
+
 
 
         $message = 'Song added successfully';
@@ -1255,10 +1273,12 @@ STR;
     }
 
     if($this->Wishlist->delete($deleteSongId)) {
-			$this->Library->setDataSource('master');
+      //$this->Library->setDataSource('master');
+      $this->Library->setDataSource('soap');
       $sql = "UPDATE `libraries` SET library_available_downloads=library_available_downloads+1 Where id=".$libraryId;
       $this->Library->query($sql);
-			$this->Library->setDataSource('default');
+      $this->Library->setDataSource('soap');
+      //$this->Library->setDataSource('default');
 
       $message = 'Song deleted successfully';
       return $this->createsSuccessResponseObject(true, $message);
@@ -4275,7 +4295,8 @@ STR;
     $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-	  $this->Library->setDataSource('master');
+	  //$this->Library->setDataSource('master');
+	  $this->Library->setDataSource('soap');
     
     if($maintainLatestDownload){
       $procedure = 'sonyproc_new';
@@ -4297,7 +4318,9 @@ STR;
     
     if(is_numeric($return)){
       
-      $this->LatestDownload->setDataSource('master');
+      //$this->LatestDownload->setDataSource('master');
+      $this->LatestDownload->setDataSource('soap');
+
       $data = $this->LatestDownload->find('count', array(
         'conditions'=> array(
             "LatestDownload.library_id " => $libId,
@@ -4317,7 +4340,8 @@ STR;
       if(false === $data){
         $log_data .= ":SelectLDFail";
       }
-      $this->LatestDownload->setDataSource('default');
+      //$this->LatestDownload->setDataSource('default');
+      $this->LatestDownload->setDataSource('soap');
     }
     
     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
@@ -4326,7 +4350,8 @@ STR;
     $this->log($log_data, $log_name);
     
     
-		$this->Library->setDataSource('default');
+		//$this->Library->setDataSource('default');
+		$this->Library->setDataSource('soap');
     $wishlist = 0;
 		if(is_numeric($return)){
       
@@ -4508,8 +4533,9 @@ STR;
     $insertArr['user_agent'] = mysql_real_escape_string($agent);
     $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
 
-	  $this->Library->setDataSource('master');
-    
+	  //$this->Library->setDataSource('master');
+   	  $this->Library->setDataSource('soap');
+ 
     if($maintainLatestDownload){
       $procedure = 'videos_proc_d_ld';
       $sql = "CALL videos_proc_d_ld('".$libId."','".$patId."', '".$prodId."', '".$TrackData['Video']['ProductID']."', '".$TrackData['Video']['ISRC']."', '".addslashes($TrackData['Video']['Artist'])."', '".addslashes($TrackData['Video']['VideoTitle'])."', '".$insertArr['user_login_type']."', '" .$provider_type."', '".$insertArr['email']."', '".addslashes($insertArr['user_agent'])."', '".$insertArr['ip']."', '".Configure::read('App.curWeekStartDate')."', '".Configure::read('App.curWeekEndDate')."',@ret)";
@@ -4530,7 +4556,10 @@ STR;
     
     if(is_numeric($return)){
       
-      $this->LatestVideodownload->setDataSource('master');
+      //$this->LatestVideodownload->setDataSource('master');
+	$this->LatestVideodownload->setDataSource('soap');
+
+
       $data = $this->LatestVideodownload->find('count', array(
         'conditions'=> array(
             "LatestVideodownload.library_id " => $libId,
@@ -4550,7 +4579,9 @@ STR;
       if(false === $data){
         $log_data .= ":SelectLDFail";
       }
-      $this->LatestVideodownload->setDataSource('default');
+      //$this->LatestVideodownload->setDataSource('default');
+	$this->LatestVideodownload->setDataSource('soap');
+
     }
     
     $log_data .= PHP_EOL."---------Request (".$log_id.") End----------------";
@@ -4559,7 +4590,9 @@ STR;
     $this->log($log_data, $log_name);
     
     
-		$this->Library->setDataSource('default');
+		//$this->Library->setDataSource('default');
+		$this->Library->setDataSource('soap');
+
     $wishlist = 0;
 		if(is_numeric($return)){
       
