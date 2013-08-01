@@ -100,8 +100,7 @@ class CacheController extends AppController {
             }
           
   
-      print_r(Cache::read("genre" . $territory));
-      die;
+      
             
             $country = $territory;
                                 
@@ -862,7 +861,8 @@ STR;
             //End Caching functionality for US TOP 10 Videos
             
             
-          
+          print_r(Cache::read("national_us_top10_videos" . $country));
+      die;
             
             
             
