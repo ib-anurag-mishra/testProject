@@ -250,7 +250,7 @@ $totalRows = count($genresAll);
 					
 					<ul>
 						
-						<li><a class="genre_list_item_all selected" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/All' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
+						<li><a class="genre_list_item_all <?php if($genre=='All') { ?>selected <?php } ?>" href="#" data-genre="All Artists" id="genre_list_item_0" onclick="load_artist('/genres/ajax_view/<?php echo base64_encode('All'); ?>/All' ,'0' , '<?php echo addslashes('All');  ?>')"><?php echo __('All Artists'); ?></a></li>					  
                                                 
             <?php
                 $genre_count = 1;
@@ -286,7 +286,7 @@ $totalRows = count($genresAll);
 				<div class="alphabetical-filter">
                                    
                                     <ul>
-                                    <li><a  href="javascript:void(0);" data-letter="All" <?php if($genre=='All') { ?>class="selected"<?php } ?> onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>All' ,'' , '')">ALL</a></li>                                            
+                                    <li><a  href="javascript:void(0);" data-letter="All"  onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>All' ,'' , '')">ALL</a></li>                                            
                                     <li><a  href="javascript:void(0);" data-letter="#"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/spl' ,'' , '')">#</a></li> 
                                     <li><a  href="javascript:void(0);" data-letter="A"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/A' ,'' , '')">A</a></li>
                                     <li><a  href="javascript:void(0);" data-letter="B"   onclick="load_artist('/genres/ajax_view/<?php echo base64_encode($genre); ?>/B' ,'' , '')">B</a></li>
