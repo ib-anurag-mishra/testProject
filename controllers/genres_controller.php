@@ -493,7 +493,7 @@ Class GenresController extends AppController
                                     ),
                                     'extra' => array('chk' => 1),
                                 'order' => 'TRIM(Song.ArtistText) ASC',
-                                'limit' => '60', 'check' => 2
+                                'limit' => '60'
                                 );
             } else {
                  
