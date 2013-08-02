@@ -205,7 +205,7 @@ STR;
                 if (!empty($data)) {
                     Cache::delete("national" . $country);
                     foreach($data as $key => $value){
-                            $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                             $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                             $data[$key]['songAlbumImage'] = $songAlbumImage;
                     }                    
@@ -357,7 +357,7 @@ STR;
                 if (!empty($data)) {
                     Cache::delete("nationalvideos" . $country);
                     foreach($data as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                     }                    
@@ -433,7 +433,7 @@ STR;
             if (!empty($coming_soon_rs)) {
                 foreach($coming_soon_rs as $key => $value)
                 {     
-                    $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                     $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                     $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
                 }                
@@ -495,7 +495,7 @@ STR;
                 foreach($coming_soon_videos as $key => $value)
                 {                                                                                     
 
-                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
@@ -1178,7 +1178,7 @@ STR;
                 Cache::write("featured" . $territory, Cache::read("featured" . $territory));
             } else {
                 foreach($featured as $k => $v){
-                    $albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
                     $image =  Configure::read('App.Music_Path').$albumArtwork;
                     $featured[$k]['featuredImage'] = $image;
                 }                
