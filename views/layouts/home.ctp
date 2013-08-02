@@ -31,10 +31,9 @@
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
           echo $javascript->link('jquery.bgiframe');
-          echo $javascript->link('jquery.autocomplete'); 
-         // echo '<script>jQuery.noConflict()</script>';
-          //echo $javascript->link('recent-downloads');
-      //  echo $javascript->link('search-results');
+          echo $javascript->link('jquery.autocomplete');          
+          echo $javascript->link('recent-downloads');
+        echo $javascript->link('search-results');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
@@ -48,7 +47,7 @@
 					<?php
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
-					?> //alert("HI");
+					?> alert("HI");
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                                 
                                                 
@@ -86,7 +85,6 @@ if ($this->Session->read('Config.language') == 'en') {
                     }
                }
                
-               alert("in notificationApproval");
                
                $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                            
@@ -188,7 +186,7 @@ if ($this->Session->read('Config.language') == 'en') {
         
 
         <?php
-        //echo $javascript->link('jquery-1.3.2.min'); 
+        echo $javascript->link('jquery-1.3.2.min'); 
 //		echo $javascript->link('qtip');
 //		echo $javascript->link('qtip_add');
 //		echo $scripts_for_layout;
@@ -201,8 +199,8 @@ if ($this->Session->read('Config.language') == 'en') {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
             ?>
 
-      <!--     <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
-              -->
+       <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+              
                             
 
 <!--            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   -->
