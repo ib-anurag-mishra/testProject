@@ -35,7 +35,7 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-$currentDate = '2013-08-01';
+$currentDate = '2013-07-01';
 //$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
@@ -55,8 +55,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_12Q1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_Oct_2012';
-//            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
-            $reports_dir = SONY_REPORTFILES;
+            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
+//            $reports_dir = SONY_REPORTFILES;
 
             if(!file_exists($reports_dir))
             {
@@ -143,7 +143,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                           }
                         }
-//                        echo $query;
+                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -173,7 +173,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
                           }
                         }
-//                        echo $query;
+                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -197,11 +197,13 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
                 if(!empty($data) || !empty($videodata))
                 {
+                    echo 'here';
                     /*$query = 'SELECT COUNT(downloads.ISRC) AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM freegal.downloads join `freegal`.`currentpatrons` on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id WHERE provider_type="'.'sony'.'" and downloads.created between "'.$condStartDate.'" and "'.$condEndDate.'" and library_id IN ('.rtrim($all_Ids,",").') group by TrkID, downloads.created ORDER BY downloads.created';
                     $result = mysql_query($query) or die('Query failed: ' . mysql_error());
                     if(mysql_num_rows($result))
                     {*/
                     $file = fopen($report_name, "w");
+                    echo 'here123';
                     if ($file == false)
                     {
                         die ("\nUnable to open/create file");
@@ -297,9 +299,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 else
                                 {
                                     $sales .= "1.30#*#"; // WPU
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                     $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
@@ -660,9 +662,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 else
                                 {
                                     $sales .= "1.30#*#"; // WPU
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                     $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 

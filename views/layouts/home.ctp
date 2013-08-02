@@ -14,26 +14,27 @@
         </title>
         
     
-            
+<!--            <script lenguage="javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>   -->
   
             
         <?php
-        echo $this->Html->meta('icon');
-        //echo $javascript->link('ImageDisableRightClick');
-        echo $this->Html->css('freegal_styles');
-          echo $this->Html->css('jquery.autocomplete');
-          echo $html->css('colorbox');
-          echo $javascript->link('jquery.min');
-          echo $javascript->link('jquery.colorbox');
+            echo $javascript->link('jquery-1.10.2.min');
+            echo $this->Html->meta('icon');
+            //echo $javascript->link('ImageDisableRightClick');
+            echo $this->Html->css('freegal_styles');
+            echo $this->Html->css('jquery.autocomplete');
+            echo $this->Html->css('colorbox');
+            // echo $javascript->link('jquery.min');         
           echo $javascript->link('jquery.cycle.all');
           echo $javascript->link('curvycorners');
           echo $javascript->link('swfobject');
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
-          echo $javascript->link('jquery.bgiframe');
+          // echo $javascript->link('jquery.bgiframe');
           echo $javascript->link('jquery.autocomplete');          
           echo $javascript->link('recent-downloads');
-        echo $javascript->link('search-results');
+          echo $javascript->link('search-results');
+           echo $javascript->link('jquery.colorbox');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
@@ -47,7 +48,7 @@
 					<?php
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
-					?> alert("HI");
+					?>// alert("HI");
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                                 
                                                 
@@ -67,7 +68,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                	var webroot = '<?php echo $this->webroot; ?>';
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				var attributes = { id: "audioplayer" }; 
-				//swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
                                       
                                             
           <?php 
@@ -84,7 +85,7 @@ if ($this->Session->read('Config.language') == 'en') {
                         }
                     }
                }
-               
+               $(document).ready(function() {
                
                $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                            
@@ -140,7 +141,10 @@ if ($this->Session->read('Config.language') == 'en') {
                             });  
 
                    });
-	<?php } ?>  
+                   });
+	<?php
+         } 
+        ?>  
 			</script>
 			<style>
 				<?php 
@@ -186,6 +190,7 @@ if ($this->Session->read('Config.language') == 'en') {
         
 
         <?php
+     
 //		echo $javascript->link('qtip');
 //		echo $javascript->link('qtip_add');
 //		echo $scripts_for_layout;
@@ -198,7 +203,7 @@ if ($this->Session->read('Config.language') == 'en') {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
             ?>
 
-       <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+       <!--<script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> -->
               
                             
 
@@ -460,7 +465,10 @@ if ($this->Session->read('Config.language') == 'en') {
                                                             </div>
                                                             </div>
 
-                                                        <?php } ?>
+                                                        <?php 
+                                                        
+                                                        }
+                                                        ?>
 
                                                         <div id="border-background" >
                                                             <div id="container">
