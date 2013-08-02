@@ -105,7 +105,7 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-            /*
+            
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -1308,13 +1308,13 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-       */
+     
         
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
      
-             /*
+        
                 $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
                 $country = $territory;
@@ -1396,7 +1396,7 @@ STR;
                     )
                     )
                 );
-*/
+
                 foreach($genreAll as $genreRow){
                     $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
                     $condition = "";
@@ -1407,7 +1407,7 @@ STR;
                     $this->Song->recursive = 0;
                     $this->paginate = array(
                         'conditions' => array("Song.provider_type = Genre.provider_type","Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText'),
-                        'fields' => array('DISTINCT Song.ArtistText1'),
+                        'fields' => array('DISTINCT Song.ArtistText'),
                         'contain' => array(
                         'Genre' => array(
                             'fields' => array(
@@ -1453,7 +1453,7 @@ STR;
                         ),
                         'extra' => array('chk' => 1),
                         'order' => 'TRIM(Song.ArtistText) ASC',
-                        'limit' => '60', 'cache' => 'yes','check' => 2
+                        'limit' => '60', 'cache' => 'no','check' => 2
                     );
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $allArtists = $this->paginate('Song');
