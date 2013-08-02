@@ -83,7 +83,7 @@ class AppModel extends Model {
                               // print_r($pagination);
                 }
                 
-               echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
+               //echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
                   Cache::write('pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache');
                   
           }
