@@ -24,7 +24,7 @@
           echo $this->Html->css('jquery.autocomplete');
           echo $html->css('colorbox');
           echo $javascript->link('jquery.min');
-          echo $javascript->link('jquery.colorbox');
+          //echo $javascript->link('jquery.colorbox');
           echo $javascript->link('jquery.cycle.all');
           echo $javascript->link('curvycorners');
           echo $javascript->link('swfobject');
