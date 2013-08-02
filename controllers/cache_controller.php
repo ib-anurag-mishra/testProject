@@ -1314,7 +1314,7 @@ STR;
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
             try {
      
-             
+             /*
                 $this->log("Starting to cache Artist Browsing Data for each genre for $territory",'debug');
 
                 $country = $territory;
@@ -1396,7 +1396,7 @@ STR;
                     )
                     )
                 );
-
+*/
                 foreach($genreAll as $genreRow){
                     $genre = mysql_real_escape_string(addslashes($genreRow['Genre']['Genre']));
                     $condition = "";
