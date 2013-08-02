@@ -188,7 +188,7 @@ STR;
                         //execute the query
 			$nationalTopDownload = $this->Album->query($sql_national_100);
                         foreach($nationalTopDownload as $key => $value){
-                                $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
@@ -299,7 +299,7 @@ STR;
                 $nationalTopVideoDownload = $this->Album->query($sql_national_100_v);
                 
                 foreach($nationalTopVideoDownload as $key => $value){
-                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                     $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
@@ -631,7 +631,7 @@ STR;
                         if(!empty($coming_soon_rs)){
                             foreach($coming_soon_rs as $key => $value)
                             {     
-                                $cs_img_url = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
                                 $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
                                 $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
                             }                            
@@ -709,7 +709,7 @@ STR;
                 foreach($coming_soon_videos as $key => $value)
                 {                                                                                     
 
-                    $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                

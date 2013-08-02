@@ -35,7 +35,7 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-$currentDate = '2013-08-01';
+$currentDate = '2013-07-01';
 //$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
@@ -55,8 +55,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_12Q1';
             //$reports_dir = 'C:\xampp\htdocs\m68\Freegalmusic\app\webroot\cron\sony_reports_Oct_2012';
-//            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
-            $reports_dir = SONY_REPORTFILES;
+            $reports_dir = 'D:\projects\Freegalmusic\app\webroot\cron\sfv_reports';
+//            $reports_dir = SONY_REPORTFILES;
 
             if(!file_exists($reports_dir))
             {
@@ -297,9 +297,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 else
                                 {
                                     $sales .= "1.30#*#"; // WPU
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                     $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
@@ -660,9 +660,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 else
                                 {
                                     $sales .= "1.30#*#"; // WPU
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                     $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
