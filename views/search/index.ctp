@@ -1059,7 +1059,7 @@ if (isset($type)) {
                                             if ($psong->status != 'avail') {
                                                 ?>
                                             <p>
-                                            <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/homes/userDownload">
+                                            <form method="Post" id="form<?php echo $psong->ProdID; ?>" action="/videos/download">
                                                 <input type="hidden" name="ProdID" value="<?php echo $psong->ProdID; ?>" />
                                                 <input type="hidden" name="ProviderType" value="<?php echo $psong->provider_type; ?>" />
                                                 <span class="beforeClick" id="song_<?php echo $psong->ProdID; ?>">
