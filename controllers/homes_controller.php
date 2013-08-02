@@ -87,7 +87,7 @@ class HomesController extends AppController
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) { 
           
-       
+       echo 147;
             $country = $territory;
             
             //check the config value which show, which table should use
@@ -196,12 +196,13 @@ STR;
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
 		}else{
-                        $nationalTopDownload = Cache::read("national".$territory);                
+                    echo 55;    
+                    $nationalTopDownload = Cache::read("national".$territory);                
                 }
                 //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
-               
+               exit;
           
              
         // National Top Videos list and Downloads functionality code 
