@@ -143,7 +143,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                           }
                         }
-//                        echo $query;
+                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -173,7 +173,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
                           }
                         }
-//                        echo $query;
+                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
