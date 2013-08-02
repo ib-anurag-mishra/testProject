@@ -258,9 +258,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 $sales .= "10#*#"; // Service Type Key
                                 $sales .= "MP3#*#"; // Media Key
                                 $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
-                                if(isset($line['AlbumTitle'])){
-                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
-                                }
+                                $sales .= $line['AlbumTitle']."#*#"; // Album Title
                                 $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
                                 $sales .= $line['id']. "#*#"; // patron_id
                                 $sales .= $line['library_id']; // library_id
@@ -302,7 +300,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                     $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
                                     $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
+                                    $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
                                 $sales .= "0#*#"; // Charity Amount
@@ -320,11 +318,12 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 $sales .= "05#*#"; // Distribution Type Key
                                 $sales .= "20#*#"; // Transaction Type Key
                                 $sales .= "10#*#"; // Service Type Key
-                                $sales .= "MP3#*#"; // Media Key
+                                $sales .= "MP4#*#"; // Media Key
                                 $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
                                 if(isset($line['AlbumTitle'])){
-                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                                    $sales .= $line['AlbumTitle']; // Album Title
                                 }
+                                $sales .= "#*#";
                                 $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
                                 $sales .= $line['id']. "#*#"; // patron_id
                                 $sales .= $line['library_id']; // library_id
@@ -622,9 +621,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 $sales .= "10#*#"; // Service Type Key
                                 $sales .= "MP3#*#"; // Media Key
                                 $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
-                                if(isset($line['AlbumTitle'])){
-                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
-                                }
+                                $sales .= $line['AlbumTitle']."#*#"; // Album Title
                                 $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
                                 $sales .= $line['id']. "#*#"; // patron_id
                                 $sales .= $line['library_id'] . "#*#"; // library_id
@@ -666,7 +663,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                     $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
                                     $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
+                                    $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
                                 $sales .= "0#*#"; // Charity Amount
@@ -684,11 +681,12 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 $sales .= "05#*#"; // Distribution Type Key
                                 $sales .= "20#*#"; // Transaction Type Key
                                 $sales .= "10#*#"; // Service Type Key
-                                $sales .= "MP3#*#"; // Media Key
+                                $sales .= "MP4#*#"; // Media Key
                                 $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
                                 if(isset($line['AlbumTitle'])){
-                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                                    $sales .= $line['AlbumTitle']; // Album Title
                                 }
+                                $sales .="#*#";
                                 $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
                                 $sales .= $line['id']. "#*#"; // patron_id
                                 $sales .= $line['library_id'] . "#*#"; // library_id
