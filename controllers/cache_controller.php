@@ -253,7 +253,7 @@ STR;
                 Cache::write("top_download_videos".$territory, $topDownloads);
             }
             // End Caching functionality for top video downloads
-            exit;
+           
             // Added caching functionality for national top 10 videos   
             
             $country = $territory;
