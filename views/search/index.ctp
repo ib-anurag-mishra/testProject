@@ -270,6 +270,8 @@ if ($type != 'all') {
                 foreach ($albumData as $palbum) {
                     $albumDetails = $album->getImage($palbum->ReferenceID);
                     $albumDetails = $album->getImage($palbum->ReferenceID);
+                    echo $palbum->ReferenceID;
+                    print_r($albumDetails);
                     //if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
                         $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                         $image = Configure::read('App.Music_Path') . $albumArtwork;
