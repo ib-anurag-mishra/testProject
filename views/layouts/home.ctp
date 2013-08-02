@@ -489,6 +489,6 @@ if ($this->Session->read('Config.language') == 'en') {
                                                             ?>
                                                             
                                                         </div>
-<div id="audioplayer"></div>
+
                                                     </body>
                                                         </html>
