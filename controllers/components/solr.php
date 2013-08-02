@@ -6,12 +6,12 @@ class SolrComponent extends Object {
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusic/');//108.166.39.24//192.168.100.24//192.168.100.24
+    static $_defaults = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicprod/');//108.166.39.24//192.168.100.24//192.168.100.24
 
     /**
      * Used for runtime configuration of model
      */
-    static $_defaults2 = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideos/');//108.166.39.24//192.168.100.24//192.168.100.24
+    static $_defaults2 = array('server' => '192.168.100.24', 'port' => 8080, 'solrpath' => '/solr/freegalmusicvideosprod/');//108.166.39.24//192.168.100.24//192.168.100.24
     
     /**
      * Solr client object
