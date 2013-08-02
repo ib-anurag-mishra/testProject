@@ -493,9 +493,9 @@ Class GenresController extends AppController
                                     ),
                                     'extra' => array('chk' => 1),
                                 'order' => 'TRIM(Song.ArtistText) ASC',
-                                'limit' => '60', 'cache' => 'no'
+                                'limit' => '60', 'cache' => 'no','check' => 2,
                                 );
-              echo  $this->Song->lastQuery();
+              
             } else {
                  
 
