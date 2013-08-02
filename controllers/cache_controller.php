@@ -51,9 +51,9 @@ class CacheController extends AppController {
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
         
-             
+        $j =0;     
         for ($i = 0; $i < count($territoryNames); $i++) {
-            
+         $j++;   
             $territory = $territoryNames[$i];
             if (0 == $multiple_countries) {
                 $countryPrefix = '';
@@ -1488,7 +1488,9 @@ STR;
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
                 
-             
+         if($j == 1){
+             break;
+         }    
                  
         }
       
