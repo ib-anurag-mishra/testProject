@@ -7,7 +7,7 @@ $(document).ready(function(){
 	  $('#searchQueryForm').submit();
 		}
 	});
-	/*$("#query").autocomplete(webroot+"search/autocomplete",
+	$("#query").autocomplete(webroot+"search/autocomplete",
 	{
 		minChars: 1,
 		cacheLength: 10,
@@ -31,7 +31,7 @@ $(document).ready(function(){
 		} else if(item[2]==3){
 			$('#search_type').val('song');
 		}
-	});*/
+	});
 
 	$('.search-page .tracklist .preview').on('click',function(e){
 	
