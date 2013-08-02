@@ -208,7 +208,7 @@ STR;
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
             
-              echo 147;      
+                  
                 $country = $territory;
                 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -304,18 +304,18 @@ STR;
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                     $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
-                echo 145;    
+               
                 //write in the cache                                   
                 Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
                
                }               
        }else{
-     
+        
             $nationalTopVideoDownload = Cache::read("nationalvideos".$territory);     
        }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
-	die;	
+	
                       
                 
         $ids = '';
