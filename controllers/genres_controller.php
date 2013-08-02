@@ -473,7 +473,8 @@ Class GenresController extends AppController
             $genre = base64_decode($Genre);
             $genre = mysql_escape_string($genre);
             
-            if($genre != 'All'){               
+            if($genre != 'All'){   
+               
 
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -492,8 +493,9 @@ Class GenresController extends AppController
                                     ),
                                     'extra' => array('chk' => 1),
                                 'order' => 'TRIM(Song.ArtistText) ASC',
-                                'limit' => '60', 'cache' => 'yes','check' => 2
+                                'limit' => '60', 'cache' => 'no'
                                 );
+              echo  $this->Song->lastQuery();
             } else {
                  
 
