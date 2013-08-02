@@ -393,7 +393,7 @@ STR;
             
             foreach($featured as $k => $v){
 
-                    $albumArtwork = shell_exec('perl files/tokengen ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
+                    $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $v['Files']['CdnPath']."/".$v['Files']['SourceURL']);
                     $image =  Configure::read('App.Music_Path').$albumArtwork;
                     $featured[$k]['featuredImage'] = $image;
             }        
