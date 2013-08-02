@@ -197,11 +197,13 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
                 if(!empty($data) || !empty($videodata))
                 {
+                    echo 'here';
                     /*$query = 'SELECT COUNT(downloads.ISRC) AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM freegal.downloads join `freegal`.`currentpatrons` on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id WHERE provider_type="'.'sony'.'" and downloads.created between "'.$condStartDate.'" and "'.$condEndDate.'" and library_id IN ('.rtrim($all_Ids,",").') group by TrkID, downloads.created ORDER BY downloads.created';
                     $result = mysql_query($query) or die('Query failed: ' . mysql_error());
                     if(mysql_num_rows($result))
                     {*/
                     $file = fopen($report_name, "w");
+                    echo 'here123';
                     if ($file == false)
                     {
                         die ("\nUnable to open/create file");
