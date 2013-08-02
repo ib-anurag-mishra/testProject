@@ -12,20 +12,17 @@
             }
             ?>
         </title>
-       <!--  <meta property="fb:app_id" content="51244333578"> 
-  	<meta property="og:url" content="http://vimeo.com/24400434"> 
-  	<meta property="og:title" content="Changing Education Paradigm by Sir Ken Robinson"> 
-  	<meta property="og:type" content="article"> 
-        <SCRIPT type="text/javascript" lang="javascript" 
-        src="http://cdn.gigya.com/JS/socialize.js?apikey=2_Y82PzwJ_chSFImHXaIDJClnLyJzmk-VFOavSsaNTzl6m901s_NNxRAS0xJ3bd3_N">
-        </SCRIPT>
-    -->
+        
+    
+            
+  
+            
         <?php
         echo $this->Html->meta('icon');
         //echo $javascript->link('ImageDisableRightClick');
         echo $this->Html->css('freegal_styles');
           echo $this->Html->css('jquery.autocomplete');
-         // echo $html->css('colorbox');
+          echo $html->css('colorbox');
           echo $javascript->link('jquery.min');
           echo $javascript->link('jquery.colorbox');
           echo $javascript->link('jquery.cycle.all');
@@ -34,53 +31,31 @@
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
           echo $javascript->link('jquery.bgiframe');
-          echo $javascript->link('jquery.autocomplete');
-          echo $javascript->link('recent-downloads');
-          echo $javascript->link('search-results');
-          echo $javascript->link('qtip');
-          echo $javascript->link('qtip_add');
-          
+          echo $javascript->link('jquery.autocomplete'); 
+         // echo '<script>jQuery.noConflict()</script>';
+          //echo $javascript->link('recent-downloads');
+      //  echo $javascript->link('search-results');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
 		{
 			$libraryInfo = $library->getLibraryDetails($this->Session->read('library'));
 	?>
-			<!--<link href="<?php echo $this->webroot; ?>css/freegal_styles.php?library_bgcolor=<?php echo $libraryInfo['Library']['library_bgcolor'];?>&library_content_bgcolor=<?php echo $libraryInfo['Library']['library_content_bgcolor'];?>&library_nav_bgcolor=<?php echo $libraryInfo['Library']['library_nav_bgcolor'];?>&library_boxheader_bgcolor=<?php echo $libraryInfo['Library']['library_boxheader_bgcolor'];?>&library_boxheader_text_color=<?php echo $libraryInfo['Library']['library_boxheader_text_color'];?>&library_text_color=<?php echo $libraryInfo['Library']['library_text_color'];?>&library_links_color=<?php echo $libraryInfo['Library']['library_links_color'];?>&library_links_hover_color=<?php echo $libraryInfo['Library']['library_links_hover_color'];?>&library_navlinks_color=<?php echo $libraryInfo['Library']['library_navlinks_color'];?>&library_navlinks_hover_color=<?php echo $libraryInfo['Library']['library_navlinks_hover_color'];?>&library_box_header_color=<?php echo $libraryInfo['Library']['library_box_header_color'];?>&library_box_hover_color=<?php echo $libraryInfo['Library']['library_box_hover_color'];?>" type="text/css" rel="stylesheet" />-->
-			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=colorbox.css" /> 
 			<script type="text/javascript">
+                          
 				$(document).ready(function() {
-                                   // alert("in JS");
-					// checkPatron('<?php echo $this->Session->read('library'); ?>','<?php echo $this->Session->read('patron'); ?>');
-				/*	$('#search-text').keypress(function(event) {
-						//auto_check();
-						if (event.which == '13') {
-						  $('#HomeSearchForm').submit();
-						}
-					});
-					$("#search-text").autocomplete("<?php echo $this->webroot; ?>search/autocomplete",
-					{
-						minChars: 1,
-						cacheLength: 10,
-						autoFill: false,
-                        extraParams: {
-                            type:'all'
-                        }
-					}).result(function(e, item) {
-						$('#auto').attr('value', 1);
-					}); */
+                                                
 					<?php
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
-					?>
-                                                    alert("In TC");
+					?> //alert("HI");
 						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                                 
                                                 
 					<?php }	?>
 				});
                                 
-                                <?php
+                                <?php 
 
 if ($this->Session->read('Config.language') == 'en') {
     $setLang = 'en';
@@ -93,10 +68,10 @@ if ($this->Session->read('Config.language') == 'en') {
                                	var webroot = '<?php echo $this->webroot; ?>';
 				var params = {allowscriptaccess:"always", menu:"false", bgcolor:"000000"};
 				var attributes = { id: "audioplayer" }; 
-				swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
+				//swfobject.embedSWF("<?php echo $this->webroot; ?>swf/audioplayer.swf", "audioflash", "1", "0", "9.0.0", "<?php echo $this->webroot; ?>swf/xi.swf", {}, params, attributes);
                                       
                                             
-          <?php
+          <?php 
                if(($this->Session->read('showNotificationPopup') && $this->Session->read('showNotificationPopup') == 'no') 
                        && ($this->Session->read('approved') && $this->Session->read('approved') == 'yes') 
                        && ($this->Session->read('isLibaryExistInTimzone') && $this->Session->read('isLibaryExistInTimzone') == 1)){ 
@@ -169,7 +144,7 @@ if ($this->Session->read('Config.language') == 'en') {
 	<?php } ?>  
 			</script>
 			<style>
-				<?php
+				<?php 
 				if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 				{
 				?>
@@ -183,7 +158,7 @@ if ($this->Session->read('Config.language') == 'en') {
            ?>
 					#cboxClose{display:none !important;}
 				<?php
-				}
+				} 
 				?>
                                         
                                
@@ -203,7 +178,7 @@ if ($this->Session->read('Config.language') == 'en') {
 			<link href="<?php echo $this->webroot; ?>css/freegal_styles.php" type="text/css" rel="stylesheet" />
 			<link type="text/css" rel="stylesheet" href="<? echo $this->webroot; ?>app/webroot/min/b=app/webroot/css&amp;f=jquery.autocomplete.css,colorbox.css" />
 	<?php
-		}
+		} 
 	?>
         
         
@@ -212,21 +187,21 @@ if ($this->Session->read('Config.language') == 'en') {
         
 
         <?php
-        echo $javascript->link('jquery-1.3.2.min');
-		echo $javascript->link('qtip');
-		echo $javascript->link('qtip_add');
+        //echo $javascript->link('jquery-1.3.2.min'); 
+//		echo $javascript->link('qtip');
+//		echo $javascript->link('qtip_add');
 //		echo $scripts_for_layout;
         if ($this->Session->read('Config.language') == 'en') {
             $setLang = 'en';
         } else {
             $setLang = 'es';
-        }       
+        }      
         if ($this->Session->read('lId') && $this->Session->read('lId') != '') {
             $libraryInfo = $library->getLibraryDetails($this->Session->read('lId'));
             ?>
 
-            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
-            <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.autocomplete.js"></script> 
+      <!--     <script src="<? echo $this->webroot; ?>app/webroot/js/jquery.js"></script> 
+              -->
                             
 
 <!--            <link rel="stylesheet" type="text/css" href="<? echo $this->webroot; ?>app/webroot/css/forms.css" />                   -->
@@ -281,7 +256,7 @@ if ($this->Session->read('Config.language') == 'en') {
 
                     
                     <style>
-    <?php
+    <?php 
     if ($this->Session->read('approved') && $this->Session->read('approved') == 'no') {
         ?>
                             #cboxClose{display:none !important;}
@@ -455,7 +430,6 @@ if ($this->Session->read('Config.language') == 'en') {
                     </div>
                     <?php
                     if ($this->Session->read('approved') && $this->Session->read('approved') == 'no') {
-                        
                         ?>
                         <a class='termsApproval' href="#"></a>
                         <div style="display:none;">
