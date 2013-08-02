@@ -24,13 +24,13 @@
           echo $this->Html->css('jquery.autocomplete');
           echo $html->css('colorbox');
           echo $javascript->link('jquery.min');
-          //echo $javascript->link('jquery.colorbox');
+          echo $javascript->link('jquery.colorbox');
           echo $javascript->link('jquery.cycle.all');
           echo $javascript->link('curvycorners');
           echo $javascript->link('swfobject');
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
-          echo $javascript->link('jquery.bgiframe');
+          // echo $javascript->link('jquery.bgiframe');
           echo $javascript->link('jquery.autocomplete');          
           echo $javascript->link('recent-downloads');
         echo $javascript->link('search-results');
@@ -48,7 +48,7 @@
 					if($this->Session->read('approved') && $this->Session->read('approved') == 'no')
 					{
 					?> alert("HI");
-						//$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+						$(".termsApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#termsApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                                 
                                                 
 					<?php }	?>
@@ -86,7 +86,7 @@ if ($this->Session->read('Config.language') == 'en') {
                }
                
                
-               //$(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
+               $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                            
                 //close the popup 
                $("#colorboxCloseBtn").click(function() { 
@@ -134,7 +134,7 @@ if ($this->Session->read('Config.language') == 'en') {
                                     async: false,
                                     success: function(response) {
                                         sleep(1000);                          
-                                        // $.fn.colorbox.close();                                  
+                                        $.fn.colorbox.close();                                  
                                     },
                                     error:function (XMLHttpRequest, textStatus, errorThrown) {}
                             });  
