@@ -325,7 +325,7 @@
 		// background graphics.  The class can now can be removed.
 		$content.children().removeClass(hover);
 		
-		$('.cboxElement').live('click', function (e) {
+		$('.cboxElement').on('click', function (e) {
 			if (e.button !== 0 && typeof e.button !== 'undefined') {// checks to see if it was a non-left mouse-click.
 				return TRUE;
 			} else {
