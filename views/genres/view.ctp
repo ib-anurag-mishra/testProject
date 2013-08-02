@@ -52,17 +52,6 @@
 }
 
 
-#overlay {
-    width: 100%;
-    background: url('<? echo $this->webroot; ?>app/webroot/img/aritst-ajax-loader.gif') repeat;
-    position: relative;
-}
-
-#overlay img.loading_circle {
-    position: absolute;
-    top: 50%;  
-    left: 50%; 
-}
     
 </style>
 <script language="javascript">
