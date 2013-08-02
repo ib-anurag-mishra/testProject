@@ -63,7 +63,7 @@ class CacheController extends AppController {
                 $this->Country->setTablePrefix($countryPrefix);
             }
             $this->log("Starting caching for $territory", 'debug');
-            /*
+        
             $this->Genre->Behaviors->attach('Containable');
             $this->Genre->recursive = 2;
            
@@ -104,6 +104,8 @@ class CacheController extends AppController {
       
             
             $country = $territory;
+            
+            /*
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -221,7 +223,7 @@ STR;
             $this->log("cache written for national top ten for $territory", 'debug');
 
 
-            */
+          
             // Added caching functionality for featured videos
             $featured_videos_sql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featured_videos_sql);
@@ -1306,7 +1308,7 @@ STR;
             $this->log("cache written for top 10 for different genres for $territory", 'debug');
 
         
-       
+       */
         
             
             //-------------------------------------------ArtistText Pagenation Start------------------------------------------------------
