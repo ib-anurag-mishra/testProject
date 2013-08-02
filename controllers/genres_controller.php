@@ -475,7 +475,7 @@ Class GenresController extends AppController
             
             if($genre != 'All'){               
 
-                echo 147;
+                echo 1487;
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
                 $this->Song->unbindModel(array('belongsTo' => array('Sample_Files','Full_Files')));
