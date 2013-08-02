@@ -30,10 +30,10 @@
           echo $javascript->link('swfobject');
           echo $javascript->link('audioPlayer');
           echo $javascript->link('freegal');
-          // echo $javascript->link('jquery.bgiframe');
+          echo $javascript->link('jquery.bgiframe');
           echo $javascript->link('jquery.autocomplete');          
           echo $javascript->link('recent-downloads');
-        echo $javascript->link('search-results');
+          echo $javascript->link('search-results');
         
         
             if($this->Session->read('library') && $this->Session->read('library') != '')
