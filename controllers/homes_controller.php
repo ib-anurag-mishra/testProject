@@ -3328,7 +3328,7 @@ STR;
             
             $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'ProdID' => $_REQUEST['prodId'])));
             if(!$wishlistCount){
-                $libraryId = $this->Session->read('library');
+               echo $libraryId = $this->Session->read('library');
                 $patronId = $this->Session->read('patron');
 
                 $prodId = $_REQUEST['prodId'];
