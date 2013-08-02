@@ -1051,7 +1051,7 @@ if (isset($type)) {
                             $imageUrl = shell_exec('perl files/tokengen ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             $image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
-                        <div class="song"><a href="#" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
+                        <div class="song"><a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
 						<div class="download"><?php
                          if($this->Session->read("patron")){
                                     if ($sales_date <= date('Y-m-d')) {

@@ -47,7 +47,7 @@ class VideosController extends AppController {
             $featuredVideos = $this->Album->query($featuredVideosSql);
             if (!empty($featuredVideos)) {
                 foreach($featuredVideos as $key => $featureVideo){
-                    $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);
+                    $videoArtwork = shell_exec('perl files/tokengen ' . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);//"sony_test/".
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
@@ -64,7 +64,7 @@ class VideosController extends AppController {
             if (!empty($topDownloads)) {
                 foreach($topDownloads as $key => $topDownload)
                 {
-                     $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);
+                     $videoArtwork = shell_exec('perl files/tokengen ' . $topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);//"sony_test/".
                      // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
@@ -165,7 +165,7 @@ class VideosController extends AppController {
             $insertArr['ISRC'] = $trackDetails['0']['Video']['ISRC'];
 
             // creates download url
-            $videoUrl = shell_exec('perl files/tokengen ' . "sony_test/".$trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);
+            $videoUrl = shell_exec('perl files/tokengen ' . $trackDetails['0']['Full_Files']['CdnPath'] . "/" . $trackDetails['0']['Full_Files']['SaveAsName']);//"sony_test/".
             $finalVideoUrl = Configure::read('App.Music_Path') . $videoUrl;
 
             //collects video data 
@@ -476,7 +476,7 @@ STR;
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
                             
                             foreach($topDownload_video as $key => $value){
-                                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']); //'sony_test/'.
                                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $topDownload_video[$key]['videoAlbumImage'] = $videoAlbumImage;
                             }      
