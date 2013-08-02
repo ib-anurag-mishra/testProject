@@ -222,7 +222,7 @@ $(function() {
 	});*/
     
     
-	$('.select-arrow').on('click',function(e){
+	/*$('.select-arrow').on('click',function(e){
 		if($('.account-options-menu').hasClass('active')) {
 			
 			$('.account-options-menu').removeClass('active');
@@ -237,7 +237,7 @@ $(function() {
 	$('.account-options-menu').on('mouseleave',function(e){
 	
 		$('.account-options-menu').removeClass('active');
-	});
+	});*/
 	
 	
 	
