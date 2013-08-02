@@ -196,7 +196,7 @@ form, fieldset{
 	margin:0 0 8px;
 	font:15px Tahoma, Helvetica, sans-serif;
 }
-#content{padding:0 8px;}
+#content{padding:0;}
 #main .content-list{
 	margin:0;
 	padding:0 0 11px 20px;
