@@ -35,8 +35,8 @@ foreach ( $period as $dt )
 {
 echo $currentDate = $dt->format( "Y-m-d" );
 echo "\n";*/
-//$currentDate = '2013-08-01';
-$currentDate = date( "Y-m-d", time());
+$currentDate = '2013-07-29';
+//$currentDate = date( "Y-m-d", time());
 echo "\n----------- Start ".$currentDate." -----------";
 
 list($year, $month, $day) = explode('-', $currentDate);
@@ -122,6 +122,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 }
                 $countno = mysql_num_rows($result);
                 $data = array();
+                $videodata = array();
                 if($countno > 0)
                 {
                     while ($row = mysql_fetch_assoc($result))
@@ -142,7 +143,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID AND Songs.provider_type=downloads.provider_type LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID AND Albums.provider_type=Songs.provider_type WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                           }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -172,7 +173,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID AND video.provider_type=videodownloads.provider_type WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
                           }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         if($dataresult)
                         {
@@ -184,7 +185,7 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                             die(" Query failed: ". $query. " Error: " .mysql_error());
                         }
                         while ($datarow = mysql_fetch_assoc($dataresult)) {
-                          $data[$library_id][] = $datarow;
+                          $videodata[$library_id][] = $datarow;
                         }
                         //for sony music video end
                     }
@@ -192,8 +193,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 else
                 {
                   $data = array();
+                  $videodata = array();
                 }
-                if(!empty($data))
+                if(!empty($data) || !empty($videodata))
                 {
                     /*$query = 'SELECT COUNT(downloads.ISRC) AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM freegal.downloads join `freegal`.`currentpatrons` on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id WHERE provider_type="'.'sony'.'" and downloads.created between "'.$condStartDate.'" and "'.$condEndDate.'" and library_id IN ('.rtrim($all_Ids,",").') group by TrkID, downloads.created ORDER BY downloads.created';
                     $result = mysql_query($query) or die('Query failed: ' . mysql_error());
@@ -208,66 +210,132 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                     fwrite($file, $header . "\n");
                     $numSales = 0;
                     $numberOfSalesRecords = 0;
-
-                    foreach ($data as $libid=>$lib)
-                    {
-                        $libSales = 0;
-                        foreach($lib as $line)
+                    
+                    if(!empty($data)){
+                        foreach ($data as $libid=>$lib)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
-                            $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
-                            $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
-                            $sales .= "#*#"; // GRID/Official Digital Identifier
-                            $sales .= "31#*#"; // Product Type Key
-                            $sales .= $line['TrkCount'] . "#*#"; // Quantity
-                            $sales .= "0#*#"; // Quantity Returned
-                            if($lib_type_int)
+                            $libSales = 0;
+                            foreach($lib as $line)
                             {
-                                $sales .= "0#*#"; // WPU
-                                $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
-                                $sales .= "0#*#"; // Net Invoice Price (same as WPU)
-                                $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
-                                $sales .= "0#*#"; // Retail Value
+                                $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                                $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
+                                $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
+                                $sales .= "#*#"; // GRID/Official Digital Identifier
+                                $sales .= "11#*#"; // Product Type Key
+                                $sales .= $line['TrkCount'] . "#*#"; // Quantity
+                                $sales .= "0#*#"; // Quantity Returned
+                                if($lib_type_int)
+                                {
+                                    $sales .= "0#*#"; // WPU
+                                    $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= "0#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= "0#*#"; // Retail Value
+                                }
+                                else
+                                {
+                                    $sales .= ".65#*#"; // WPU
+                                    $sales .= ("0.65" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= ".65#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= ("0.65" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
+                                }
+
+                                $sales .= "0#*#"; // Charity Amount
+                                $sales .= "$currency#*#"; // Currency Key
+                                $sales .= "0#*#"; // VAT/TAX
+                                $sales .= "0#*#"; // VAT/TAX Charity Amount
+                                if($country != 'US')
+                                {
+                                    $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                else
+                                {
+                                    $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                $sales .= "05#*#"; // Distribution Type Key
+                                $sales .= "20#*#"; // Transaction Type Key
+                                $sales .= "10#*#"; // Service Type Key
+                                $sales .= "MP3#*#"; // Media Key
+                                $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
+                                if(isset($line['AlbumTitle'])){
+                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                                }
+                                $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
+                                $sales .= $line['id']. "#*#"; // patron_id
+                                $sales .= $line['library_id']; // library_id
+                                fwrite($file, $sales . "\n");
+                                $libSales = $libSales + $line['TrkCount'];
+                                $numberOfSalesRecords++;
                             }
-                            else
-                            {
-                                $sales .= ".130#*#"; // WPU
-                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
-                                $sales .= ".130#*#"; // Net Invoice Price (same as WPU)
-                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
-                            }
-                            
-                            $sales .= "0#*#"; // Charity Amount
-                            $sales .= "$currency#*#"; // Currency Key
-                            $sales .= "0#*#"; // VAT/TAX
-                            $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            if($country != 'US')
-                            {
-                                $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
-                            }
-                            else
-                            {
-                                $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
-                            }
-                            $sales .= "05#*#"; // Distribution Type Key
-                            $sales .= "20#*#"; // Transaction Type Key
-                            $sales .= "10#*#"; // Service Type Key
-                            $sales .= "MP3#*#"; // Media Key
-                            $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
-                            if(isset($line['AlbumTitle'])){
-                                $sales .= $line['AlbumTitle']."#*#"; // Album Title
-                            }
-                            $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
-                            $sales .= $line['id']. "#*#"; // patron_id
-                            $sales .= $line['library_id']; // library_id
-                            fwrite($file, $sales . "\n");
-                            $libSales = $libSales + $line['TrkCount'];
-                            $numberOfSalesRecords++;
+                            //echo "libSales for ".$libid." = ".$libSales;
+                            //echo '</br>';
+                            $numSales = $numSales + $libSales;
                         }
-                        //echo "libSales for ".$libid." = ".$libSales;
-                        //echo '</br>';
-                        $numSales = $numSales + $libSales;
+                    }
+                    
+                    //for sony music video
+                    if(!empty($videodata)){
+                        foreach ($videodata as $libid=>$lib)
+                        {
+                            $libSales = 0;
+                            foreach($lib as $line)
+                            {
+                                $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                                $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
+                                $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
+                                $sales .= "#*#"; // GRID/Official Digital Identifier
+                                $sales .= "31#*#"; // Product Type Key
+                                $sales .= $line['TrkCount'] . "#*#"; // Quantity
+                                $sales .= "0#*#"; // Quantity Returned
+                                if($lib_type_int)
+                                {
+                                    $sales .= "0#*#"; // WPU
+                                    $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= "0#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= "0#*#"; // Retail Value
+                                }
+                                else
+                                {
+                                    $sales .= "1.30#*#"; // WPU
+                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
+                                }
+
+                                $sales .= "0#*#"; // Charity Amount
+                                $sales .= "$currency#*#"; // Currency Key
+                                $sales .= "0#*#"; // VAT/TAX
+                                $sales .= "0#*#"; // VAT/TAX Charity Amount
+                                if($country != 'US')
+                                {
+                                    $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                else
+                                {
+                                    $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                $sales .= "05#*#"; // Distribution Type Key
+                                $sales .= "20#*#"; // Transaction Type Key
+                                $sales .= "10#*#"; // Service Type Key
+                                $sales .= "MP3#*#"; // Media Key
+                                $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
+                                if(isset($line['AlbumTitle'])){
+                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                                }
+                                $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
+                                $sales .= $line['id']. "#*#"; // patron_id
+                                $sales .= $line['library_id']; // library_id
+                                fwrite($file, $sales . "\n");
+                                $libSales = $libSales + $line['TrkCount'];
+                                $numberOfSalesRecords++;
+                            }
+                            //echo "libSales for ".$libid." = ".$libSales;
+                            //echo '</br>';
+                            $numSales = $numSales + $libSales;
+                        }
                     }
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
@@ -377,7 +445,6 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
 
                 //$sql = "SELECT id FROM libraries WHERE library_territory = '$country' AND library_unlimited = '$lib_type_int'";
                 $sql = "SELECT lp.library_id,clp.library_contract_start_date,clp.library_contract_end_date,clp.library_unlimited,l.library_territory FROM library_purchases lp INNER JOIN contract_library_purchases clp ON lp.library_id = clp.library_id INNER JOIN libraries l ON clp.library_id = l.id WHERE clp.library_unlimited = '".$lib_type_int."' AND ( (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date >= '".$condEndDate."')  OR (clp.library_contract_start_date <= '".$condStartDate."' AND clp.library_contract_end_date BETWEEN '".$condStartDate."' AND '".$condEndDate."') OR (clp.library_contract_start_date BETWEEN '".$condStartDate."' AND '".$condEndDate."' AND clp.library_contract_end_date >= '".$condEndDate."') OR (clp.library_contract_start_date >= '".$condStartDate."' AND clp.library_contract_end_date <= '".$condEndDate."') ) AND l.library_territory = '$country' and lp.library_id=1 GROUP BY concat(clp.library_contract_start_date,'-',clp.library_contract_end_date,'-',lp.library_id),lp.library_id ORDER BY lp.library_id;";
-                echo $sql;
                 $result = mysql_query($sql);
                 
                 if($result)
@@ -392,7 +459,8 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                 
                 $countno = mysql_num_rows($result);
                 $data = array();
-echo "count number:".$countno;
+                $videodata = array();
+
                 if($countno>0)
                 {
                     while ($row = mysql_fetch_assoc($result))
@@ -420,7 +488,7 @@ echo "count number:".$countno;
                                 $query = "SELECT 1 AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, Albums.AlbumTitle, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM downloads left join currentpatrons on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id LEFT JOIN Songs on Songs.ProdID=downloads.ProdID LEFT JOIN Albums on Albums.ProdID=Songs.ReferenceID WHERE downloads.provider_type='sony' and downloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by downloads.id";
                             }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         
                         if($dataresult)
@@ -461,7 +529,7 @@ echo "count number:".$countno;
                                 $query = "SELECT 1 AS TrkCount, videodownloads.ISRC AS TrkID, videodownloads.artist,  videodownloads.track_title, videodownloads.ProductID AS productcode,currentpatrons.id,videodownloads.library_id,videodownloads.created FROM videodownloads left join currentpatrons on currentpatrons.libid = videodownloads.library_id AND currentpatrons.patronid = videodownloads.patron_id LEFT JOIN video on video.ProdID=videodownloads.ProdID WHERE videodownloads.provider_type='sony' and videodownloads.created between '".$row['library_contract_start_date']." 00:00:00' and '".$row['library_contract_end_date']." 23:59:59' and library_id = ".$library_id." group by videodownloads.id";
                             }
                         }
-                        echo $query;
+//                        echo $query;
                         $dataresult = mysql_query($query);
                         
                         if($dataresult)
@@ -476,7 +544,7 @@ echo "count number:".$countno;
                 
                         while ($datarow = mysql_fetch_assoc($dataresult))
                         {
-                          $data[$library_id][] = $datarow;
+                          $videodata[$library_id][] = $datarow;
                         }
 //                        echo "<pre>";print_r($data);
                         //for sony music videos end
@@ -485,9 +553,10 @@ echo "count number:".$countno;
                 else
                 {
                     $data = array();
+                    $videodata = array();
                 }
                 
-                if(!empty($data))
+                if(!empty($data) || !empty($data))
                 {
                     /*$query = 'SELECT COUNT(downloads.ISRC) AS TrkCount, downloads.ISRC AS TrkID, downloads.artist, downloads.track_title, downloads.ProductID AS productcode,currentpatrons.id,downloads.library_id,downloads.created FROM freegal.downloads join `freegal`.`currentpatrons` on currentpatrons.libid = downloads.library_id AND currentpatrons.patronid = downloads.patron_id WHERE provider_type="'.'sony'.'" and downloads.created between "'.$condStartDate.'" and "'.$condEndDate.'" and downloads.library_id IN ('.rtrim($all_Ids,",").') group by TrkID, downloads.created ORDER BY downloads.created';
                     $result = mysql_query($query) or die('Query failed: ' . mysql_error());
@@ -504,68 +573,133 @@ echo "count number:".$countno;
 
                     $numSales = 0;
                     $numberOfSalesRecords = 0;
-
-                    foreach ($data as $libid=>$lib)
-                    {
-                        $libSales = 0;
-                        
-                        foreach($lib as $line)
+                    if(!empty($data)){
+                        foreach ($data as $libid=>$lib)
                         {
-                            $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
-                            $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
-                            $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
-                            $sales .= "#*#"; // GRID/Official Digital Identifier
-                            $sales .= "31#*#"; // Product Type Key
-                            $sales .= $line['TrkCount'] . "#*#"; // Quantity
-                            $sales .= "0#*#"; // Quantity Returned
-                            
-                            if($lib_type_int)
-                            {
-                                $sales .= "0#*#"; // WPU
-                                $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
-                                $sales .= "0#*#"; // Net Invoice Price (same as WPU)
-                                $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
-                                $sales .= "0#*#"; // Retail Value
-                            }
-                            else
-                            {
-                                $sales .= ".130#*#"; // WPU
-                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
-                                $sales .= ".130#*#"; // Net Invoice Price (same as WPU)
-                                $sales .= (".130" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
-                                $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
-                            }
+                            $libSales = 0;
 
-                            $sales .= "0#*#"; // Charity Amount
-                            $sales .= "$currency#*#"; // Currency Key
-                            $sales .= "0#*#"; // VAT/TAX
-                            $sales .= "0#*#"; // VAT/TAX Charity Amount
-                            if($country != 'US')
+                            foreach($lib as $line)
                             {
-                                $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                                $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
+                                $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
+                                $sales .= "#*#"; // GRID/Official Digital Identifier
+                                $sales .= "11#*#"; // Product Type Key
+                                $sales .= $line['TrkCount'] . "#*#"; // Quantity
+                                $sales .= "0#*#"; // Quantity Returned
+
+                                if($lib_type_int)
+                                {
+                                    $sales .= "0#*#"; // WPU
+                                    $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= "0#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= "0#*#"; // Retail Value
+                                }
+                                else
+                                {
+                                    $sales .= ".65#*#"; // WPU
+                                    $sales .= ("0.65" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= ".65#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= ("0.65" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
+                                }
+
+                                $sales .= "0#*#"; // Charity Amount
+                                $sales .= "$currency#*#"; // Currency Key
+                                $sales .= "0#*#"; // VAT/TAX
+                                $sales .= "0#*#"; // VAT/TAX Charity Amount
+                                if($country != 'US')
+                                {
+                                    $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                else
+                                {
+                                    $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                $sales .= "05#*#"; // Distribution Type Key
+                                $sales .= "20#*#"; // Transaction Type Key
+                                $sales .= "10#*#"; // Service Type Key
+                                $sales .= "MP3#*#"; // Media Key
+                                $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
+                                if(isset($line['AlbumTitle'])){
+                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                                }
+                                $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
+                                $sales .= $line['id']. "#*#"; // patron_id
+                                $sales .= $line['library_id'] . "#*#"; // library_id
+                                fwrite($file, $sales . "\n");
+                                $libSales = $libSales + $line['TrkCount'];
+                                $numberOfSalesRecords++;
                             }
-                            else
-                            {
-                                $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
-                            }
-                            $sales .= "05#*#"; // Distribution Type Key
-                            $sales .= "20#*#"; // Transaction Type Key
-                            $sales .= "10#*#"; // Service Type Key
-                            $sales .= "MP3#*#"; // Media Key
-                            $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
-                            if(isset($line['AlbumTitle'])){
-                                $sales .= $line['AlbumTitle']."#*#"; // Album Title
-                            }
-                            $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
-                            $sales .= $line['id']. "#*#"; // patron_id
-                            $sales .= $line['library_id'] . "#*#"; // library_id
-                            fwrite($file, $sales . "\n");
-                            $libSales = $libSales + $line['TrkCount'];
-                            $numberOfSalesRecords++;
+                            //echo "libSales for ".$libid." = ".$libSales;
+                            //echo '</br>';
+                            $numSales = $numSales + $libSales;
                         }
-                        //echo "libSales for ".$libid." = ".$libSales;
-                        //echo '</br>';
-                        $numSales = $numSales + $libSales;
+                    }
+                    if(!empty($videodata)){
+                        foreach ($videodata as $libid=>$lib)
+                        {
+                            $libSales = 0;
+
+                            foreach($lib as $line)
+                            {
+                                $sales = "N#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#".($lib_type_int ? "Library Ideas Unlimited Service" : "Library Ideas A La Carte")."#*#" . ($lib_type_int ? "PAR3" : "PAR2") . "#*#$country#*#SA#*##*##*#";
+                                $sales .= $line['productcode'] . '#*#'; // UPC/Official Product Number (PhysicalProduct.ProductID)
+                                $sales .= $line['TrkID'] . "#*#"; // ISRC/Official Track Number (METADATA.ISRC)
+                                $sales .= "#*#"; // GRID/Official Digital Identifier
+                                $sales .= "31#*#"; // Product Type Key
+                                $sales .= $line['TrkCount'] . "#*#"; // Quantity
+                                $sales .= "0#*#"; // Quantity Returned
+
+                                if($lib_type_int)
+                                {
+                                    $sales .= "0#*#"; // WPU
+                                    $sales .= "0#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= "0#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= "0#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= "0#*#"; // Retail Value
+                                }
+                                else
+                                {
+                                    $sales .= "1.30#*#"; // WPU
+                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
+                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= ("1.29" * $line['TrkCount']) . "#*#"; // Retail Value
+                                }
+
+                                $sales .= "0#*#"; // Charity Amount
+                                $sales .= "$currency#*#"; // Currency Key
+                                $sales .= "0#*#"; // VAT/TAX
+                                $sales .= "0#*#"; // VAT/TAX Charity Amount
+                                if($country != 'US')
+                                {
+                                    $sales .= "Y#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                else
+                                {
+                                    $sales .= "N#*#"; // Copyright Indicator (NEED TO FIND OUT FROM BRIAN DOWNING)
+                                }
+                                $sales .= "05#*#"; // Distribution Type Key
+                                $sales .= "20#*#"; // Transaction Type Key
+                                $sales .= "10#*#"; // Service Type Key
+                                $sales .= "MP3#*#"; // Media Key
+                                $sales .= $line['artist'] . "#*#"; // Artist Name (METADATA.Artist)
+                                if(isset($line['AlbumTitle'])){
+                                    $sales .= $line['AlbumTitle']."#*#"; // Album Title
+                                }
+                                $sales .= $line['track_title']. "#*#"; // Track Title (METADATA.Title)
+                                $sales .= $line['id']. "#*#"; // patron_id
+                                $sales .= $line['library_id'] . "#*#"; // library_id
+                                fwrite($file, $sales . "\n");
+                                $libSales = $libSales + $line['TrkCount'];
+                                $numberOfSalesRecords++;
+                            }
+                            //echo "libSales for ".$libid." = ".$libSales;
+                            //echo '</br>';
+                            $numSales = $numSales + $libSales;
+                        }
                     }
                     $market = "M#*#PM43#*#2222#*#" . $showStartDate . "#*#" . $showEndDate . "#*#";
                     $market .= "#*#"; // Vendor/Retailer Name was Library Ideas#*#
