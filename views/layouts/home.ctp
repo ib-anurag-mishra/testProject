@@ -86,6 +86,7 @@ if ($this->Session->read('Config.language') == 'en') {
                     }
                }
                
+               alert("in notificationApproval");
                
                $(".notificationApproval").colorbox({width:"50%", inline:true, open:true, overlayClose:false, noEscape: true, href:"#notificationApproval_div", onOpen:function(){$(document).unbind("keydown.cbox_close");}});
                                            
