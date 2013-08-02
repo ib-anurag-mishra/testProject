@@ -186,7 +186,6 @@ if ($this->Session->read('Config.language') == 'en') {
         
 
         <?php
-        echo $javascript->link('jquery-1.3.2.min'); 
 //		echo $javascript->link('qtip');
 //		echo $javascript->link('qtip_add');
 //		echo $scripts_for_layout;
