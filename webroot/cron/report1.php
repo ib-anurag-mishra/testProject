@@ -297,9 +297,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 else
                                 {
                                     $sales .= "1.30#*#"; // WPU
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                     $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
@@ -660,9 +660,9 @@ if(($currentDate == $weekFirstDay) || ($currentDate == $monthFirstDate))
                                 else
                                 {
                                     $sales .= "1.30#*#"; // WPU
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Wholesale Value (WPU * Quantity)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Wholesale Value (WPU * Quantity)
                                     $sales .= "1.30#*#"; // Net Invoice Price (same as WPU)
-                                    $sales .= ("1.30" * $line['TrkCount']) . "#*#"; // Net Invoice Value (same as Wholesale Value)
+                                    $sales .= (number_format(("1.30" * $line['TrkCount']), 2, '.', '')) . "#*#"; // Net Invoice Value (same as Wholesale Value)
                                     $sales .= ("1.99" * $line['TrkCount']) . "#*#"; // Retail Value
                                 }
 
