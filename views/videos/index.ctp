@@ -30,7 +30,7 @@
 	<?php if($sr_no%2==0) {?><li> <?php }?>
                     <div class="featured-video-detail">
                             <div class="video-thumbnail-container">
-                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $featureVideo['videoImage']; ?>" width="275" height="162" /></a>
+                                <a href="/videos/details/<?php echo $featureVideo["FeaturedVideo"]["ProdID"]; ?>"><img src="img/lazy-placeholder.gif" data-original="<?php echo $featureVideo['videoImage']; ?>" width="275" height="162" /></a>
                                 <?php
                                 if($this->Session->read('patron')) {
 
@@ -133,7 +133,7 @@ foreach($topVideoDownloads as $topDownload)
                     
                     <?php if($sr_no%2==0) {?><li> <?php }?>
                         <div class="top-music-video-cover-container">
-                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img class="lazy" src="img/lazy-placeholder.gif" data-original="<?php echo $topDownload['videoImage']; ?>" width="163" height="97" /></a>
+                            <a href="/videos/details/<?php echo $topDownload["Videodownloads"]["ProdID"]; ?>"><img src="img/lazy-placeholder.gif" data-original="<?php echo $topDownload['videoImage']; ?>" width="163" height="97" /></a>
                             
                             
                            <?php
