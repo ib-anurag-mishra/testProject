@@ -87,7 +87,7 @@ class HomesController extends AppController
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) { 
           
-       echo 147;
+       
             $country = $territory;
             
             //check the config value which show, which table should use
@@ -196,19 +196,19 @@ STR;
 			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
 		}else{
-                    echo 55;    
+                   
                     $nationalTopDownload = Cache::read("national".$territory);                
                 }
                 //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
-               exit;
+              
           
              
         // National Top Videos list and Downloads functionality code 
         if (($national = Cache::read("nationalvideos".$territory)) === false) {
             
-                    
+              echo 147;      
                 $country = $territory;
                 
                 $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
@@ -304,7 +304,7 @@ STR;
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                     $nationalTopVideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
-                    
+                echo 145;    
                 //write in the cache                                   
                 Cache::write("nationalvideos".$country, $nationalTopVideoDownload );
                
@@ -315,7 +315,7 @@ STR;
        }
         $this->set('nationalTopVideoDownload',$nationalTopVideoDownload);
 
-		
+	die;	
                       
                 
         $ids = '';
