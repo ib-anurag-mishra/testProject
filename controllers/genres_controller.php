@@ -474,7 +474,7 @@ Class GenresController extends AppController
             $genre = mysql_escape_string($genre);
             
             if($genre != 'All'){
-                echo 147;
+                
 
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -484,7 +484,7 @@ Class GenresController extends AppController
                 $gcondition = array("Song.provider_type = Genre.provider_type", "Genre.Genre = '$genre'","find_in_set('\"$country\"',Song.Territory) > 0",'Song.DownloadStatus' => 1,"Song.Sample_FileID != ''","TRIM(Song.ArtistText) != ''","Song.ArtistText IS NOT NULL","Song.FullLength_FIleID != ''",$condition,'1 = 1 GROUP BY Song.ArtistText');
                 $this->paginate = array(
                                 'conditions' => $gcondition,
-                                'fields' => array('DISTINCT Song.ArtistText1'),
+                                'fields' => array('DISTINCT Song.ArtistText'),
                                     'contain' => array(
                                             'Genre' => array(
                                                     'fields' => array(
@@ -496,7 +496,7 @@ Class GenresController extends AppController
                                 'limit' => '60', 'cache' => 'no','check' => 2
                                 );
             } else {
-                 echo 144;
+                 
 
                 $this->Song->unbindModel(array('hasOne' => array('Participant')));
                 $this->Song->unbindModel(array('hasOne' => array('Country')));
@@ -507,7 +507,7 @@ Class GenresController extends AppController
                
                 $this->paginate = array(
                     'conditions' => $gcondition,
-                    'fields' => array('DISTINCT Song.ArtistText1'),
+                    'fields' => array('DISTINCT Song.ArtistText'),
                     'extra' => array('chk' => 1),
                     'order' => 'TRIM(Song.ArtistText) ASC',
                     'limit' => '60',
