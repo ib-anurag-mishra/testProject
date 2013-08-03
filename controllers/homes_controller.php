@@ -85,10 +85,7 @@ class HomesController extends AppController
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
-            
-            echo "if";
-          exit;
-       
+      
             $country = $territory;
             
             //check the config value which show, which table should use
@@ -136,7 +133,7 @@ class HomesController extends AppController
 		  $data = array();
                   //fetch the multiple countires prefix
                   $countryPrefix = $this->Session->read('multiple_countries');
-                  echo $sql_national_100 =<<<STR
+                  $sql_national_100 =<<<STR
  SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
@@ -193,17 +190,10 @@ STR;
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
-                        print_r($nationalTopDownload);
-			echo "write in the file if not set";
-			echo "cache-".Cache::write("national".$territory, $nationalTopDownload);
+			Cache::write("national".$territory, $nationalTopDownload);
 		}else{
-                   echo "in eles";
-                   
                     $nationalTopDownload = Cache::read("national".$territory);                
-                    print_r($nationalTopDownload);
-                    exit;
                 }
-                //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
               
@@ -547,7 +537,7 @@ STR;
             Code OF NEWS Section --- START
         */
 
-        if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+       /* if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
                 $this->Session->write('Config.language', 'en');
         }		
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
@@ -573,7 +563,7 @@ STR;
             */ 
              $territory = $this->Session->read('territory');
                
-             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+             /*if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
                 
                  $this->Song->recursive = 2;
