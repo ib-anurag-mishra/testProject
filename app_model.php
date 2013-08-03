@@ -114,9 +114,8 @@ class AppModel extends Model {
     }
 
     function paginateCount ($conditions = null, $recursive = 0, $extra = array()) {
-        global $callType;
-        
-        $callType = "paginateCount";
+		global $callType;
+		$callType = "paginateCount";
         $args = func_get_args();
         $uniqueCacheId = '';
         foreach ($args as $arg) {
@@ -127,16 +126,15 @@ class AppModel extends Model {
                 $contain = $extra['contain'];
         }
 
-        if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-                $paginationcount = "";
-        } else {
-            echo 'paginationcount-'.$this->alias.'-'.$uniqueCacheId;
-            echo '-nag-';
-                echo $paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-        }
+		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+			$paginationcount = "";
+		} else {
+			$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		}
         if (empty($paginationcount)) {
                 $group = "";
-                foreach($conditions as $k => $v){           
+                foreach($conditions as $k => $v){
+                    
                     
                     
                     
@@ -176,27 +174,27 @@ class AppModel extends Model {
 
                     }
                 }
-                    if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-                            $sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
-                            $paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
-                            $paginationcount = count($paginationcount);
-                            $group = "yes";
-                    }
+				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
+					$paginationcount = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
+					$paginationcount = count($paginationcount);
+					$group = "yes";
+				}
                 if($group != "yes"){
-                    if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-                            $sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
-                            $paginationcount = $this->find('count', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
-                    } else {
-                            $paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
-                    }
+					if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+						$sphinx = array('matchMode' => SPH_MATCH_EXTENDED2);
+						$paginationcount = $this->find('count', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'contain', 'recursive', 'fields'));
+					} else {
+						$paginationcount = $this->find('count', compact('conditions', 'contain', 'recursive'));
+					}
                 }
-                if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
-                        $paginationcount = $paginationcount;
-                } else {
-                    echo 147;
-                        Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
-                }
+				if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
+					$paginationcount = $paginationcount;
+				} else {
+					Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
+				}
         }
+        echo $paginationcount;
         return $paginationcount;
     }
 
