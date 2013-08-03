@@ -134,7 +134,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                     }
                                 }
                             ?>
-                            <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                            <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
                             <?php
                                     $image = Configure::read('App.Music_Path').$albumArtwork;
                                     if($page->isImage($image)) {
