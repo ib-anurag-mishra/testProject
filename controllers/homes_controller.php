@@ -594,7 +594,7 @@ STR;
             ( (Song.DownloadStatus = '1')  ) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
             GROUP BY Song.ReferenceID
             ORDER BY Country.SalesDate ASC
-            LIMIT 5
+            LIMIT 20
 STR;
 
                     $coming_soon_rs = $this->Album->query($sql_coming_soon);
@@ -4342,110 +4342,29 @@ STR;
         
         function new_releases() 
         {
-            $this->layout = 'home';             
+            $this->layout = 'home';
+            
             //fetch the session variables
             $libraryId = $this->Session->read('library');       
             $patronId = $this->Session->read('patron');
+            
             if(!empty($libraryId) && !empty($patronId)){
                 $libraryDownload = $this->Downloads->checkLibraryDownload($libraryId);
                 $patronDownload = $this->Downloads->checkPatronDownload($patronId,$libraryId);
                 $this->set('libraryDownload',$libraryDownload);
                 $this->set('patronDownload',$patronDownload);
             }
-            //////////////////////////////////Songs/////////////////////////////////////////////////////////           
+            
             $territory = $this->Session->read('territory');
+            
+            //////////////////////////////////Videos/////////////////////////////////////////////////////////            
              
-               
-             
-             
-             /*if (($coming_soon = Cache::read("new_releases_songs".$territory)) === false)    // Show from DB
-             {               
-                                $this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');                                
-                                $countryPrefix = "us_";
-                              //  $territory = "CA";
-                
-                
-               $sql_coming_soon =<<<STR
-                SELECT 
-                            Song.ProdID,
-                            Song.ReferenceID,
-                            Song.Title,
-                            Song.ArtistText,
-                            Song.DownloadStatus,
-                            Song.SongTitle,
-                            Song.Artist,
-                            Song.Advisory,
-                            Song.Sample_Duration,
-                            Song.FullLength_Duration,
-                            Song.provider_type,
-                            Albums.ProdID,
-                            Albums.provider_type,                            
-                            Genre.Genre,
-                            Country.Territory,
-                            Country.SalesDate,
-                            Sample_Files.CdnPath,
-                            Sample_Files.SaveAsName,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            File.CdnPath,
-                            File.SourceURL,
-                            File.SaveAsName,
-                            Sample_Files.FileID,
-                            PRODUCT.pid
-                    FROM
-                            Songs AS Song
-                                    LEFT JOIN
-                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                    LEFT JOIN
-                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                    LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID)
-                                    LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type)
-                                    LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
-                    WHERE
-                            ( (Song.DownloadStatus = '1') AND  (Song.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Song.provider_type)) AND (Country.Territory = '$territory') AND Country.SalesDate != '' AND Country.SalesDate <= NOW() AND 1 = 1                    
-                    ORDER BY Country.SalesDate DESC
-                    LIMIT 100
-	  	
-	  
-STR;
-                       // echo $sql_coming_soon; die;
-			$coming_soon_rs = $this->Album->query($sql_coming_soon);
-//                        echo "<pre>";
-//                        print_r($coming_soon_rs);
-//                        die;
-                     // GROUP BY Song.ProdID,
-                        if(!empty($coming_soon_rs)){
-                          Cache::write("new_releases_songs".$territory, $coming_soon_rs);
-                        }
-                    
-                }
-                else    //  Show From Cache
-                {                  
-                    
-                    $coming_soon_rs = Cache::read("new_releases_songs".$territory);
-                    
-                }
-                
-                $this->set('new_releases_songs', $coming_soon_rs); */
-                
-                
-                //////////////////////////////////Videos/////////////////////////////////////////////////////////
-             
-                
-             
-                //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
-                if(1)
-                {               
-                                $this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');                                
-                               // $countryPrefix = "us_";
-                               // $territory = "US";
-                
-                
+            //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+            if(1)
+            {               
+                $this->Song->recursive = 2;
+                $countryPrefix = $this->Session->read('multiple_countries');                                
+
                 $sql_cs_videos =<<<STR
 SELECT 
         Video.ProdID,
@@ -4482,54 +4401,37 @@ FROM
             LEFT JOIN
     File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
 WHERE
-( (Video.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
+( (Video.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
     GROUP BY Video.ProdID ORDER BY Country.SalesDate DESC LIMIT 100 
 STR;
-                
-
-               // echo $sql_cs_videos; die;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);    
             foreach($coming_soon_videos as $key => $value){
-                  $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                  $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
-                  $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
+                $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
             }
             
-//            echo "<pre>";
-//            print_r($coming_soon_videos);
-//            die;
-
             if(!empty($coming_soon_videos)){
                 Cache::write("new_releases_videos".$territory, $coming_soon_videos);
-            }
-                    
+            }                    
         }
-        else    //  Show From Cache
-        {                  
-
+        else
+        {
             $coming_soon_videos = Cache::read("new_releases_videos".$territory);
-
         }
 
-        $this->set('new_releases_videos', $coming_soon_videos);
-                
-      
-           
+        $this->set('new_releases_videos', $coming_soon_videos);           
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
-             
+               
+        //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
+        if(1)
+        {            
+           $this->Song->recursive = 2;
+           $countryPrefix = $this->Session->read('multiple_countries');     
                 
-             
-             if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-             {            
-                                $this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');                                
-                               // $countryPrefix = "us_";
-                              //  $territory = "CA";
-                
-                
-              $sql_coming_soon_albums =<<<STR
+           $sql_coming_soon_albums =<<<STR
                 SELECT 
                   Song.ProdID,
                   Song.ReferenceID,
@@ -4552,47 +4454,33 @@ STR;
                   Songs AS Song
                                     
                 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())
+                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) 
                 INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                 INNER JOIN File ON (Albums.FileID = File.FileID) 
                 WHERE
-                  ( (Song.DownloadStatus = '1')  )   AND 1 = 1                    
+                  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
                 ORDER BY Country.SalesDate DESC
-                LIMIT 10
+                LIMIT 100
 STR;
 
+            //GROUP BY  Song.ReferenceID
+            $new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
+            foreach($new_releases_albums_rs as $key => $value){
+                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                $album_img =  Configure::read('App.Music_Path').$album_img;
+                $new_releases_albums_rs[$key]['albumImage'] = $album_img;                             
+            }                        
 
-                        //echo $sql_coming_soon_albums; die;
-                       //GROUP BY  Song.ReferenceID
-			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
-//                        echo "<pre>";
-//                        print_r($coming_soon_albums_rs);
-//                        die;
-                        foreach($new_releases_albums_rs as $key => $value){
-                             $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                             $album_img =  Configure::read('App.Music_Path').$album_img;
-                             $new_releases_albums_rs[$key]['albumImage'] = $album_img;
-                             
-                        }
-                        
-                      
-                        if(!empty($new_releases_albums_rs)){
-                          Cache::write("new_releases_albums".$territory, $new_releases_albums_rs);
-                        }
-                    
-                }
-                else    //  Show From Cache
-                {                  
-                    
-                    $new_releases_albums_rs = Cache::read("new_releases_albums".$territory);
-                    
-                }
-                
-                $this->set('new_releases_albums', $new_releases_albums_rs); 
-        
-        
-           
-           
+           if(!empty($new_releases_albums_rs)){
+             Cache::write("new_releases_albums".$territory, $new_releases_albums_rs);
+           }                    
         }
+        else    //  Show From Cache
+        {  
+           $new_releases_albums_rs = Cache::read("new_releases_albums".$territory);
+        }
+
+        $this->set('new_releases_albums', $new_releases_albums_rs); 
+    }
 }
 ?>
