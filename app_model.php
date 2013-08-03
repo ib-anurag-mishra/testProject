@@ -131,9 +131,7 @@ class AppModel extends Model {
 
 		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 			$paginationcount = "";
-		} else {
-			$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
-		}
+		} 
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
