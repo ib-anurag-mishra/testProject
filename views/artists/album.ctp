@@ -202,15 +202,15 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                                             // $video_img = shell_exec('perl files/tokengen ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                                              //$video_img =  Configure::read('App.Music_Path').$video_img;
 
-                                                $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
-                                                $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                                               // $albumArtwork = shell_exec('perl files/tokengen ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                                               // $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
 
 					?>  
 					<li>
 						
 						<div class="video-container">
 							<a href="javascript:void(0);">                                                        
-                                                        <img src="<?php echo $videoAlbumImage; ?>" alt="jlo" width="272" height="162" />
+                                                        <img src="<?php echo $value['videoAlbumImage']; ?>" alt="jlo" width="272" height="162" />
                                                         </a>                                                  
 <?php
 

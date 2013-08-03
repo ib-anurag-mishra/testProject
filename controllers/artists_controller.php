@@ -1207,6 +1207,11 @@ STR;
          
                     //echo $sql_national_100_v; die;
                     $artistVideoList = $this->Video->query($sql_us_10_v);
+                    foreach($artistVideoList as $key => $value){
+                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
+                        $artistVideoList[$key]['videoAlbumImage'] = $videoAlbumImage;
+                    }               
                     Cache::write("videolist_".$decodedId, $artistVideoList);
                     }else{
                         $artistVideoList = Cache::read("videolist_".$decodedId);
