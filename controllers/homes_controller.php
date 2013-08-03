@@ -4314,6 +4314,7 @@ STR;
                 INNER JOIN File ON (Albums.FileID = File.FileID) 
                 WHERE
                   ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
+                group by Song.ReferenceID
                 ORDER BY Country.SalesDate DESC
                 LIMIT 100
 STR;
