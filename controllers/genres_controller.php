@@ -530,29 +530,21 @@ Class GenresController extends AppController
             $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
            //$totalPageCountNo =$totalPageCountNo+1;
        
-           echo $totalPageCountNo .'>='. $_REQUEST['npage'] ;
+          // echo $totalPageCountNo .'>='. $_REQUEST['npage'] ;
            if($totalPageCountNo >= $_REQUEST['npage'] ){
-               die;
+                $allArtistsNew = $allArtists;
+                for($i=0;$i<count($allArtistsNew);$i++)
+                {
+                    if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+                    {
+                        $allArtists[$i] = $allArtistsNew[$i];
+                    }
+                }           
+                $this->set('genres', $allArtists);
+                $this->set('genre',base64_decode($Genre)); 
            }
             
-           //if allArtists array is empty then no value will return
-            if(isset($allArtists) && empty($allArtists)){
-                exit;
-            }
-            
-           
-            
-            
-            $allArtistsNew = $allArtists;
-            for($i=0;$i<count($allArtistsNew);$i++)
-            {
-                if($allArtistsNew[$i]['Song']['ArtistText'] != "")
-                {
-                    $allArtists[$i] = $allArtistsNew[$i];
-                }
-            }           
-            $this->set('genres', $allArtists);
-            $this->set('genre',base64_decode($Genre));                    
+                               
 	}
 
 
