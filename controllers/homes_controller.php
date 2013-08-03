@@ -4525,53 +4525,36 @@ STR;
                               //  $territory = "CA";
                 
                 
-               $sql_coming_soon_albums =<<<STR
+              $sql_coming_soon_albums =<<<STR
                 SELECT 
-                            Song.ProdID,
-                            Song.ReferenceID,
-                            Song.Title,
-                            Song.ArtistText,
-                            Song.DownloadStatus,
-                            Song.SongTitle,
-                            Song.Artist,
-                            Song.Advisory,
-                            Song.Sample_Duration,
-                            Song.FullLength_Duration,
-                            Song.provider_type,
-                            Genre.Genre,
-                            Country.Territory,
-                            Country.SalesDate,
-                            Sample_Files.CdnPath,
-                            Sample_Files.SaveAsName,
-                            Full_Files.CdnPath,
-                            Full_Files.SaveAsName,
-                            File.CdnPath,
-                            File.SourceURL,
-                            File.SaveAsName,
-                            Sample_Files.FileID,
-                            PRODUCT.pid
-                    FROM
-                            Songs AS Song
-                                    LEFT JOIN
-                            File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                    LEFT JOIN
-                            File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                    LEFT JOIN
-                            Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-                                    LEFT JOIN
-                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())
-                                    LEFT JOIN
-                            PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type) 
-                                    INNER JOIN 
-                            Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                    INNER JOIN 
-                            File ON (Albums.FileID = File.FileID) 
-                    WHERE
-                            ( (Song.DownloadStatus = '1')  )   AND 1 = 1                    
-                    ORDER BY Country.SalesDate DESC
-                    LIMIT 100
-	  	
-	  
+                  Song.ProdID,
+                  Song.ReferenceID,
+                  Song.Title,
+                  Song.ArtistText,
+                  Song.DownloadStatus,
+                  Song.SongTitle,
+                  Song.Artist,
+                  Song.Advisory,
+                  Song.Sample_Duration,
+                  Song.FullLength_Duration,
+                  Song.provider_type,
+                  Genre.Genre,
+                  Country.Territory,
+                  Country.SalesDate,
+                  File.CdnPath,
+                  File.SourceURL,
+                  File.SaveAsName
+                FROM
+                  Songs AS Song
+                                    
+                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
+                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())
+                INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
+                INNER JOIN File ON (Albums.FileID = File.FileID) 
+                WHERE
+                  ( (Song.DownloadStatus = '1')  )   AND 1 = 1                    
+                ORDER BY Country.SalesDate DESC
+                LIMIT 10
 STR;
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
