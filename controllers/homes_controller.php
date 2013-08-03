@@ -555,20 +555,16 @@ STR;
                         Code OF NEWS Section --- END
         */
               
-            /*
-            *  Code For Coming Soon --- START
-            */ 
-             $territory = $this->Session->read('territory');
-               
-             if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
-             {               
-                 $this->Song->recursive = 2;
-                $countryPrefix = $this->Session->read('multiple_countries');                                
-                //$countryPrefix = "ca_";
-                //  $territory = "CA";
-                
-                
-               $sql_coming_soon =<<<STR
+        /*
+        *  Code For Coming Soon --- START
+        */ 
+         $territory = $this->Session->read('territory');
+
+         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+         {               
+            $this->Song->recursive = 2;
+            $countryPrefix = $this->Session->read('multiple_countries');                                
+            echo $sql_coming_soon =<<<STR
                SELECT 
         Song.ProdID,
         Song.ReferenceID,
@@ -614,42 +610,36 @@ STR;
     GROUP BY Song.ReferenceID
     ORDER BY Country.SalesDate ASC
     LIMIT 20
-	  	
-	  
 STR;
 
-			$coming_soon_rs = $this->Album->query($sql_coming_soon);
-                        if(!empty($coming_soon_rs)){
-                            foreach($coming_soon_rs as $key => $value)
-                            {     
-                                $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
-                                $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
-                            }                            
-                            Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
-                        }
-                    
+                    $coming_soon_rs = $this->Album->query($sql_coming_soon);
+
+                    var_dump($coming_soon_rs);
+                    exit;
+                    if(!empty($coming_soon_rs)){
+                        foreach($coming_soon_rs as $key => $value)
+                        {     
+                            $cs_img_url = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                            $cs_songImage =  Configure::read('App.Music_Path').$cs_img_url;
+                            $coming_soon_rs[$key]['cs_songImage'] = $cs_songImage;
+                        }                            
+                        Cache::write("coming_soon_songs".$territory, $coming_soon_rs);
+                    }                    
                 }
                 else    //  Show From Cache
                 {                  
-                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
-                    
+                    $coming_soon_rs = Cache::read("coming_soon_songs".$territory);                    
                 }
                 
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
-                
-                var_dump(Cache::read("coming_soon_videos".$territory));
-             
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 {
-                    echo "here in if";
-                    exit;
-                                $this->Song->recursive = 2;
-                                $countryPrefix = $this->Session->read('multiple_countries');                                
-                                //$countryPrefix = "us_";
-                                //$territory = "US";
+                    $this->Song->recursive = 2;
+                    $countryPrefix = $this->Session->read('multiple_countries');                                
+                    //$countryPrefix = "us_";
+                    //$territory = "US";
                 
                 
                 $sql_cs_videos =<<<STR
@@ -708,15 +698,11 @@ STR;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
                 }                
                 Cache::write("coming_soon_videos".$territory, $coming_soon_videos);
-            }
-                    
+            }                   
         }
         else    //  Show From Cache
         {                  
-echo "here in else";
-exit;
-            $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
-
+           $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
         }
 
         $this->set('coming_soon_videos', $coming_soon_videos);
