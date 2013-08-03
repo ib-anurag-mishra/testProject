@@ -245,7 +245,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <ul class="clearfix">
 			<li class="regular"><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
-                        <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>"><?php __('Most Popular'); ?></a></li>
+                        <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>" style="cursor:default"><?php __('Most Popular'); ?></a></li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
                         <li class="regular"><?php echo $html->link(__('FAQ', true), array('controller' => 'questions', 'action' =>'index'), array("class"=>$faqCss)); ?></li>
@@ -316,7 +316,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor"><?php __('Most Popular'); ?></a>
+                                                            <a class="sidebar-anchor" style="cursor:default"><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                     <?php if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>

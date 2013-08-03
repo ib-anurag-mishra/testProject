@@ -2,7 +2,7 @@ body{
 	margin:0;
 	font:14px Helvetica, Arial, sans-serif;
 	color:#163d6f;
-	background:#346cb4;
+	background:#FFFFFF;/*#346cb4*/
 	min-width:800px;
 }
 img{border-style:none;}

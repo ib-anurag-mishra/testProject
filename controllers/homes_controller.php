@@ -81,13 +81,11 @@ class HomesController extends AppController
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
         }
-        
-              
+
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) { 
-          
-       
+        if (($national = Cache::read("national".$territory)) === false) {
+      
             $country = $territory;
             
             //check the config value which show, which table should use
@@ -192,14 +190,10 @@ STR;
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
-                       // print_r($nationalTopDownload);
-			//write in the file if not set
 			Cache::write("national".$territory, $nationalTopDownload);
 		}else{
-                   
                     $nationalTopDownload = Cache::read("national".$territory);                
                 }
-                //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
                 
               
@@ -562,7 +556,7 @@ STR;
         */
                 
                            
-          
+          var_dump(Cache::read("coming_soon_songs".$territory));
                 
             /*
             *  Code For Coming Soon --- START
@@ -571,7 +565,8 @@ STR;
                
              if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
-                
+                echo "here in if";
+                exit;
                  $this->Song->recursive = 2;
                 $countryPrefix = $this->Session->read('multiple_countries');                                
                 //$countryPrefix = "ca_";
@@ -642,7 +637,8 @@ STR;
                 }
                 else    //  Show From Cache
                 {                  
-                    
+                    echo "here in else";
+                    exit;
                     $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
                     
                 }
