@@ -79,7 +79,7 @@ class AppModel extends Model {
                    
                             $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
                             
-                           echo $this->lastQuery();
+                           
                              //print_r($pagination);
                 }
                 
@@ -107,8 +107,12 @@ class AppModel extends Model {
 
 					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
-					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
-			}
+					
+                              $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+			echo $this->lastQuery();
+                              
+                        }
+                        
         }
         return $pagination;
     }
