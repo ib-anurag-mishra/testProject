@@ -532,13 +532,13 @@ Class GenresController extends AppController
                 exit;
             }
             
-           echo  $this->params['paging']['Song']['pageCount'];
-          
+           $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+           $totalPageCountNo =$totalPageCountNo+1;
        
             
-           // if($this->params['paging']['Song']['pageCount'] >= $_REQUEST['npage'] ){
-              //  exit;
-           // }
+           if($totalPageCountNo >= $_REQUEST['npage'] ){
+               exit;
+           }
             
             
             $allArtistsNew = $allArtists;
