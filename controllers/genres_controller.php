@@ -532,6 +532,13 @@ Class GenresController extends AppController
                 exit;
             }
             
+            
+            
+            print_r($this->params['pass']);
+            
+            
+            
+            
             $allArtistsNew = $allArtists;
             for($i=0;$i<count($allArtistsNew);$i++)
             {
