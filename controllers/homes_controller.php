@@ -554,10 +554,7 @@ STR;
         /*
                         Code OF NEWS Section --- END
         */
-                
-                           
-          var_dump(Cache::read("coming_soon_songs".$territory));
-                
+              
             /*
             *  Code For Coming Soon --- START
             */ 
@@ -565,8 +562,6 @@ STR;
                
              if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
              {               
-                echo "here in if";
-                exit;
                  $this->Song->recursive = 2;
                 $countryPrefix = $this->Session->read('multiple_countries');                                
                 //$countryPrefix = "ca_";
@@ -637,8 +632,6 @@ STR;
                 }
                 else    //  Show From Cache
                 {                  
-                    echo "here in else";
-                    exit;
                     $coming_soon_rs = Cache::read("coming_soon_songs".$territory);
                     
                 }
@@ -646,9 +639,13 @@ STR;
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
+                
+                var_dump(Cache::read("coming_soon_videos".$territory));
              
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
-                {               
+                {
+                    echo "here in if";
+                    exit;
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
                                 //$countryPrefix = "us_";
@@ -716,7 +713,8 @@ STR;
         }
         else    //  Show From Cache
         {                  
-
+echo "here in else";
+exit;
             $coming_soon_videos = Cache::read("coming_soon_videos".$territory);
 
         }
