@@ -4321,15 +4321,15 @@ STR;
 
             //GROUP BY  Song.ReferenceID
             $new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
-            foreach($new_releases_albums_rs as $key => $value){                
-                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+            foreach($new_releases_albums_rs as $key => $value){
+                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."".$value['File']['SourceURL']);
                 $album_img =  Configure::read('App.Music_Path').$album_img;
                 $new_releases_albums_rs[$key]['albumImage'] = $album_img;                             
             }
 
            if(!empty($new_releases_albums_rs)){
              Cache::write("new_releases_albums".$territory, $new_releases_albums_rs);
-           }                    
+           }
         }
         else    //  Show From Cache
         {  
