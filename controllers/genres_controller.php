@@ -542,7 +542,7 @@ Class GenresController extends AppController
                     $allArtists[$i] = $allArtistsNew[$i];
                 }
             } 
-            echo $this->Paginator->current('Song');
+            echo $this->paginate->current('Song');
            // if($this->params['paging']['Song']['pageCount'] ){
           //   echo  $this->params['paging']['Song']['pageCount'];
            // }
