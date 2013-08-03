@@ -530,7 +530,7 @@ Class GenresController extends AppController
             $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
            //$totalPageCountNo =$totalPageCountNo+1;
        
-          // echo $totalPageCountNo .'>='. $_REQUEST['npage'] ;
+          
            if($totalPageCountNo >= $_REQUEST['npage'] ){
                 $allArtistsNew = $allArtists;
                 for($i=0;$i<count($allArtistsNew);$i++)
@@ -545,8 +545,8 @@ Class GenresController extends AppController
            }else{
                die;exit;
            }
-            
-          exit;              
+             echo $totalPageCountNo .'>='. $_REQUEST['npage'] ;
+                   
 	}
 
 
