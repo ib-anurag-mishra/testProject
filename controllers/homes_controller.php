@@ -560,11 +560,11 @@ STR;
         */ 
          $territory = $this->Session->read('territory');
 
-         if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
+         /*if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false)    // Show from DB
          {               
             $this->Song->recursive = 2;
             $countryPrefix = $this->Session->read('multiple_countries');                                
-            echo $sql_coming_soon =<<<STR
+            $sql_coming_soon =<<<STR
                SELECT 
         Song.ProdID,
         Song.ReferenceID,
@@ -613,9 +613,6 @@ STR;
 STR;
 
                     $coming_soon_rs = $this->Album->query($sql_coming_soon);
-
-                    var_dump($coming_soon_rs);
-                    exit;
                     if(!empty($coming_soon_rs)){
                         foreach($coming_soon_rs as $key => $value)
                         {     
@@ -632,7 +629,7 @@ STR;
                 }
                 
                 $this->set('coming_soon_rs', $coming_soon_rs); 
-                
+                */
                 // Videos
                 if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
                 {
@@ -683,16 +680,12 @@ STR;
     ORDER BY Country.SalesDate ASC
     LIMIT 20
 STR;
-                
-
-                
-
+           
             $coming_soon_videos = $this->Video->query($sql_cs_videos);
             
             if(!empty($coming_soon_videos)){
                 foreach($coming_soon_videos as $key => $value)
-                {                                                                                     
-
+                {
                     $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                     $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                     $coming_soon_videos[$key]['videoAlbumImage'] = $videoAlbumImage;
