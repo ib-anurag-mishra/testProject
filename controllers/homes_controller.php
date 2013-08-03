@@ -85,7 +85,9 @@ class HomesController extends AppController
               
 
         // National Top 100 Songs slider and Downloads functionality
-        if (($national = Cache::read("national".$territory)) === false) { 
+        if (($national = Cache::read("national".$territory)) === false) {
+            
+            echo "andhar";
           
        
             $country = $territory;
@@ -135,7 +137,7 @@ class HomesController extends AppController
 		  $data = array();
                   //fetch the multiple countires prefix
                   $countryPrefix = $this->Session->read('multiple_countries');
-                  $sql_national_100 =<<<STR
+                  echo $sql_national_100 =<<<STR
  SELECT 
                             Song.ProdID,
                             Song.ReferenceID,
@@ -192,9 +194,9 @@ STR;
                                 $songAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $nationalTopDownload[$key]['songAlbumImage'] = $songAlbumImage;
                         }                        
-                       // print_r($nationalTopDownload);
-			//write in the file if not set
-			Cache::write("national".$territory, $nationalTopDownload);
+                        print_r($nationalTopDownload);
+			echo "write in the file if not set";
+			echo "cache-".Cache::write("national".$territory, $nationalTopDownload);
 		}else{
                    
                     $nationalTopDownload = Cache::read("national".$territory);                
