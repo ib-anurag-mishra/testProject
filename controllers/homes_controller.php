@@ -4323,7 +4323,7 @@ STR;
             foreach($new_releases_albums_rs as $key => $value){
                 if($value['Song']['provider_type'] == 'ioda')
                 {
-                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."".$value['File']['SourceURL']);
                 }
                 else
                 {
