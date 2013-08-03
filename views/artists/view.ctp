@@ -219,7 +219,7 @@
                                                 
                                               
                                                 
-						<a class="add-to-playlist" href="#">Add To Queue</a>		
+						<!--a class="add-to-playlist" href="#">Add To Queue</a-->		
                                                 
                      
                                                 
@@ -239,11 +239,11 @@
                                               
                                                 
                                            <?php } ?>      
-						<div class="share clearfix">
+						<!--div class="share clearfix">
 							<p>Share via</p>
 							<a class="facebook" href="#"></a>
 							<a class="twitter" href="#"></a>
-						</div>
+						</div-->
 						
 					</div>
 				</div>
