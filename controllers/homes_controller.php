@@ -4280,8 +4280,7 @@ STR;
         
         //////////////////////////////////Albums/////////////////////////////////////////////////////////
                
-        //if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
-        if(1)
+        if (($coming_soon = Cache::read("new_releases_albums".$territory)) === false)    // Show from DB
         {            
            $this->Song->recursive = 2;
            $countryPrefix = $this->Session->read('multiple_countries');     
