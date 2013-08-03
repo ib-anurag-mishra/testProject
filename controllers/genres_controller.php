@@ -450,7 +450,13 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             //error_reporting(1);
             //ini_set('display_errors',1);
+            $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+           //$totalPageCountNo =$totalPageCountNo+1;
+       
           
+           if(trim($totalPageCountNo) < trim($_REQUEST['npage']) ){
+              die;
+           }
 
             if($Genre == ''){
                     $Genre = "QWxs";
@@ -527,13 +533,7 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
             
-            $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
-           //$totalPageCountNo =$totalPageCountNo+1;
-       
-          
-           if(trim($totalPageCountNo) < trim($_REQUEST['npage']) ){
-               sleep(3600);
-           }else{
+            
                 $allArtistsNew = $allArtists;
                 for($i=0;$i<count($allArtistsNew);$i++)
                 {
@@ -544,7 +544,7 @@ Class GenresController extends AppController
                 }           
                 $this->set('genres', $allArtists);
                 $this->set('genre',base64_decode($Genre)); 
-           }
+           
             
                    
 	}
