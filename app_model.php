@@ -194,7 +194,6 @@ class AppModel extends Model {
 					Cache::write('paginationcount-'.$this->alias.'-'.$uniqueCacheId, $paginationcount, 'paginate_cache');
 				}
         }
-        echo $paginationcount;
         return $paginationcount;
     }
 
