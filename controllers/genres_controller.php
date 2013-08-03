@@ -452,7 +452,17 @@ Class GenresController extends AppController
             //ini_set('display_errors',1);
           
             
-        
+       $currPageValue =2;
+            if(isset($this->params['pass'])){
+                 $pageParam = $this->params['pass'];
+                 if($pageParam[0]){
+                     $currPageValueArr = expload(':',$pageParam[0]);
+                     print_r($currPageValueArr);
+                     $currPageValue = $currPageValueArr[1];
+                 }
+            }
+
+            echo $currPageValue;
 
             if($Genre == ''){
                     $Genre = "QWxs";
@@ -542,7 +552,7 @@ Class GenresController extends AppController
                     $allArtists[$i] = $allArtistsNew[$i];
                 }
             } 
-            echo $this->paginate->current('Song');
+           
            // if($this->params['paging']['Song']['pageCount'] ){
           //   echo  $this->params['paging']['Song']['pageCount'];
            // }
