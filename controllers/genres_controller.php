@@ -452,7 +452,7 @@ Class GenresController extends AppController
             //ini_set('display_errors',1);
           
             
-            print_r($this->params);
+         
 
             if($Genre == ''){
                     $Genre = "QWxs";
@@ -541,7 +541,9 @@ Class GenresController extends AppController
                 {
                     $allArtists[$i] = $allArtistsNew[$i];
                 }
-            }           
+            } 
+            
+             echo  $this->params['paging']['Song']['pageCount'];
             $this->set('genres', $allArtists);
             $this->set('genre',base64_decode($Genre));                    
 	}
