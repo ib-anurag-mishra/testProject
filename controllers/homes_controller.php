@@ -560,7 +560,8 @@ STR;
         */ 
         $territory = $this->Session->read('territory');
 
-        if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {     
+        //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {  
+        if(1) {
           // Show from DB          
           $this->Song->recursive = 2;
           $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -586,11 +587,11 @@ STR;
             FROM
             Songs AS Song
               LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-              LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
+              LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID)
               INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
               INNER JOIN File ON (Albums.FileID = File.FileID) 
             WHERE
-            ( (Song.DownloadStatus = '1')  )   AND 1 = 1
+            ( (Song.DownloadStatus = '1')  ) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
             GROUP BY Song.ReferenceID
             ORDER BY Country.SalesDate ASC
             LIMIT 5
@@ -615,7 +616,8 @@ STR;
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
-                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                //if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                if(1)
                 {
                     $this->Song->recursive = 2;
                     $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -653,13 +655,13 @@ STR;
     LEFT JOIN
         Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
     LEFT JOIN
-        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW()) 
+        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID)  
     LEFT JOIN
         PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
     LEFT JOIN
         File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
     WHERE
-        ( (Video.DownloadStatus = '1')   )  AND 1 = 1
+        ( (Video.DownloadStatus = '1')   )  AND 1 = 1 AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
     GROUP BY Video.ProdID
     ORDER BY Country.SalesDate ASC
     LIMIT 20
@@ -4435,7 +4437,8 @@ STR;
              
                 
              
-                if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+                //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
+                if(1)
                 {               
                                 $this->Song->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4473,13 +4476,14 @@ FROM
             LEFT JOIN
     Genre AS Genre ON (Genre.ProdID = Video.ProdID)
             LEFT JOIN
-    {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())
+    {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) 
             LEFT JOIN
     PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)
             LEFT JOIN
     File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
 WHERE
-( (Video.DownloadStatus = '1')  )   AND 1 = 1 GROUP BY Video.ProdID ORDER BY Country.SalesDate DESC LIMIT 100 
+( (Video.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
+    GROUP BY Video.ProdID ORDER BY Country.SalesDate DESC LIMIT 100 
 STR;
                 
 
