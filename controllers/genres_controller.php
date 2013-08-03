@@ -458,7 +458,7 @@ Class GenresController extends AppController
             {
                 echo $this->Paginator->counter();
             }
-            
+            echo $this->params['paging'];
 
             if($Genre == ''){
                     $Genre = "QWxs";
