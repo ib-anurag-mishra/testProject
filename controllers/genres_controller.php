@@ -439,6 +439,9 @@ Class GenresController extends AppController
                         $allArtists[$i] = $allArtistsNew[$i];
                     }
                     }
+                    
+                    
+                    print_r($allArtists);
                     $this->set('genres', $allArtists);
                     $this->set('selectedAlpha', $Artist);
                     $this->set('genre',base64_decode($Genre));

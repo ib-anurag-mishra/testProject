@@ -79,8 +79,8 @@ class AppModel extends Model {
                    
                             $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
                             
-                           
-                             //print_r($pagination);
+                            
+                              // print_r($pagination);
                 }
                 
                //echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
@@ -107,11 +107,8 @@ class AppModel extends Model {
 
 					$pagination = $this->find('all', array('search' =>  $extra['sphinxcheck'], 'group' => 'Song.ProdID', 'limit' => $pageVal, 'recursive' => 0, 'sphinx' => $sphinx), compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
 			  } else {
-					
-                              $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
-			                             
-                        }
-                        
+					$pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
+			}
         }
         return $pagination;
     }
@@ -131,7 +128,9 @@ class AppModel extends Model {
 
 		if(isset($extra['sphinx']) &&  $extra['sphinx'] == 'yes') {
 			$paginationcount = "";
-		} 
+		} else {
+			$paginationcount = Cache::read('paginationcount-'.$this->alias.'-'.$uniqueCacheId, 'paginate_cache');
+		}
         if (empty($paginationcount)) {
                 $group = "";
                 foreach($conditions as $k => $v){
