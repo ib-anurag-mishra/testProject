@@ -531,7 +531,7 @@ Class GenresController extends AppController
            //$totalPageCountNo =$totalPageCountNo+1;
        
           
-           if(trim($totalPageCountNo) == trim($_REQUEST['npage']) ){
+           if(trim($totalPageCountNo) < trim($_REQUEST['npage']) ){
                echo 147;
                exit;
            }else{
