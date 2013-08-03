@@ -532,7 +532,7 @@ Class GenresController extends AppController
                 exit;
             }
             
-           echo  print_r($this->params['paging']);
+           echo  $this->params['paging']['Song']['pageCount'];
           
        
             
