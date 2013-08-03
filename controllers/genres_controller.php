@@ -452,7 +452,8 @@ Class GenresController extends AppController
             //ini_set('display_errors',1);
           
             
-         
+        echo $this->Paginator->current('Song');
+        die;
 
             if($Genre == ''){
                     $Genre = "QWxs";
@@ -543,7 +544,9 @@ Class GenresController extends AppController
                 }
             } 
             
-             echo  $this->params['paging']['Song']['pageCount'];
+           // if($this->params['paging']['Song']['pageCount'] ){
+          //   echo  $this->params['paging']['Song']['pageCount'];
+           // }
             $this->set('genres', $allArtists);
             $this->set('genre',base64_decode($Genre));                    
 	}
