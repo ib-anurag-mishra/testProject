@@ -67,8 +67,8 @@
                                 
                                 
                                         <div class="song"><?php
-                                                            if (strlen($albumSong['Song']['SongTitle']) >= 40) {
-                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 45)) . '...</span>';
+                                                            if (strlen($albumSong['Song']['SongTitle']) >= 30) {
+                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</span>';
                                                             } else {
                                                                     echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']);
                                                             }
@@ -78,8 +78,8 @@
                                                     ?></div>
 					<div class="artist"><a href="/artists/album/<?php echo base64_encode($albumSong['Song']['Artist']); ?>"><?php
 										if (strlen($albumSong['Song']['Artist']) >= 11) {
-											if(strlen($albumSong['Song']['Artist']) >= 60){
-												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 60). '...';
+											if(strlen($albumSong['Song']['Artist']) >= 30){
+												$albumSong['Song']['Artist'] = substr($albumSong['Song']['Artist'], 0, 30). '...';
 											}
 											echo $this->getTextEncode(substr($albumSong['Song']['Artist'], 0, 13));
 										} else {
