@@ -232,7 +232,7 @@ class Song extends AppModel
 		));
 		return $allArtists;
 	}
-/*	
+	
 	function paginateCount($conditions = null, $recursive = 0, $extra = array()) {
 		if(isset($extra['extra']['chk'])){
 			$group = array('Song.ArtistText');
@@ -242,6 +242,6 @@ class Song extends AppModel
 	    $results = $this->find('count', compact('conditions','recursive', 'group'));
 	    return $results;
 	}
-*/	
+	
 }
 ?>
