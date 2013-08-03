@@ -532,8 +532,7 @@ Class GenresController extends AppController
        
           
            if(trim($totalPageCountNo) < trim($_REQUEST['npage']) ){
-               echo 147;
-               exit;
+               sleep(3600);
            }else{
                 $allArtistsNew = $allArtists;
                 for($i=0;$i<count($allArtistsNew);$i++)
