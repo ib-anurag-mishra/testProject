@@ -4525,7 +4525,7 @@ STR;
                               //  $territory = "CA";
                 
                 
-              echo $sql_coming_soon_albums =<<<STR
+              $sql_coming_soon_albums =<<<STR
                 SELECT 
                   Song.ProdID,
                   Song.ReferenceID,
@@ -4557,7 +4557,7 @@ STR;
                 LIMIT 10
 STR;
 
-exit;
+
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
 			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
