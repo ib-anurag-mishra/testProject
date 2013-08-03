@@ -133,10 +133,10 @@
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
 					<a class="add-to-playlist-button" href="#"></a>
-					<div class="wishlist-popover">
+					
                                            <?php
                                              if($this->Session->read('patron')) { ?>
-                                            
+                                            <div class="wishlist-popover" style="top:-58px;">
                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
                                                            
                                                     <div class="playlist-options">
@@ -194,78 +194,36 @@
                                                         ?>
                                                                         <a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
                                                                                 date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span></a>
-                            <?php
-                                        } 
-                                }else{
-                                    ?>
-                                <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
-                                <?php
-                                }
-                               
-                                ?>	
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            <?php   if($this->Session->read('patron')) { ?> 
-                                                
-                                              
-                                                
-						<!--a class="add-to-playlist" href="#">Add To Queue</a-->		
-                                                
-                     
-                                                
-                                        <?php
+                                                    <?php
+                                                    } 
+                                                } else {
+                                                    ?>
+                                                    <div class="wishlist-popover" style="top:-21px;">
+                                                    <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
+                                                    <?php
+                                                }
 
-                                        $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-
-                                        echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
-                                    ?>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-						
-                                              
-                                                
-                                           <?php } ?>      
+                                                if($this->Session->read('patron')) {
+                                                ?> 
+                                                    <!--a class="add-to-playlist" href="#">Add To Queue</a-->
+                                                    <?php
+                                                    $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
+                                                    echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
+                                                }
+                                                ?>      
 						<!--div class="share clearfix">
 							<p>Share via</p>
 							<a class="facebook" href="#"></a>
 							<a class="twitter" href="#"></a>
-						</div-->
-						
+						</div-->						
 					</div>
-				</div>
-					
-			<?php
-                      
+				</div>					
+			<?php                      
                             endforeach;
-					
-                            
 			?>
-			
-					
-				
 		</section>
             <?php
 	endforeach;
-        ?>
-			
+        ?>			
 	</section>
-	
-	
-	
-	
-	
 </section>
