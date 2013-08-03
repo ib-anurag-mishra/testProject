@@ -542,10 +542,10 @@ Class GenresController extends AppController
                 }
             } 
             
-            //if allArtists array is empty then no value will return
-            if(isset($allArtists) && !empty($allArtists) && (count($allArtists) < 60 )){
-                exit;
-            }
+//            //if allArtists array is empty then no value will return
+//            if(isset($allArtists) && !empty($allArtists) && (count($allArtists) < 60 )){
+//                exit;
+//            }
            
             
             
