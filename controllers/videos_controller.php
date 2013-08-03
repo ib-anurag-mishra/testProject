@@ -546,6 +546,8 @@ STR;
             Where Video.DownloadStatus = '1' AND Video.ProdID = ".$this->params[pass][0];
 
             $VideosData = $this->Album->query($VideosSql);
+            $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
+            $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
                                 //echo "<pre>"; print_r($VideosData); die;
             
             if (!empty($VideosData)) {
@@ -568,7 +570,8 @@ STR;
             
             
             if(count($VideosData)>0)
-            {
+            {    
+                if ($MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']) === false) {
                    $MoreVideosSql  =
                     "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
                     Sample_Files.SaveAsName,
@@ -592,7 +595,20 @@ STR;
                     Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$VideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc";
 
                     $MoreVideosData = $this->Album->query($MoreVideosSql);
+                    foreach($MoreVideosData as $key => $value)
+                    {		
+                        $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                        $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                        $MoreVideosData[$key]['videoImage'] = $videoImage;
+                    }
+                    if (!empty($MoreVideosData)) {
+                        Cache::write("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText'], $MoreVideosData);
+                    }                    
+                    
                     // echo "<pre>"; print_r($MoreVideosData); die;
+                }else{
+                    $MoreVideosData = Cache::read("musicVideoMoreDetails_" .$territory.'_'.$VideosData[0]['Video']['ArtistText']);                    
+                }   
             }
             else
             {
@@ -607,28 +623,32 @@ STR;
                               
                 if(count($VideosData)>0)
                 {
-                    $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
-                        `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
-                        LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
-                        LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
-                        WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$VideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+                    if ($TopVideoGenreData = Cache::read("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']) === false) {                    
+                        $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
+                            `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
+                            LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
+                            LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
+                            WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$VideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
 
-                        $TopVideoGenreData = $this->Album->query($TopVideoGenreSql);
-                        Cache::write("top_videos_genre" . $territory, $TopVideoGenreData);
+                            $TopVideoGenreData = $this->Album->query($TopVideoGenreSql);
+                            foreach($TopVideoGenreData as $key => $value)
+                            {
+                                $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                                $TopVideoGenreData[$key]['videoImage'] = $videoImage;
+                            }       
+                            Cache::write("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre'], $TopVideoGenreData);
+                    }else{
+                        $TopVideoGenreData = Cache::read("top_videos_genre_" . $territory.'_'.$VideosData[0]['Video']['Genre']);
+                    }       
                         //echo "<pre>"; print_r($TopVideoGenreData); die;
                 }
                 else
                 {
                         $TopVideoGenreData = array();
                 }
-                
-              
-
                 $this->set('TopVideoGenreData',$TopVideoGenreData);
                 $this->set('VideoGenre',$VideosData[0]['Video']['Genre']);
-                
-               
-                
      }
     
     

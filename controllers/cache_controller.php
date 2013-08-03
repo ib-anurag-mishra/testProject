@@ -1552,12 +1552,79 @@ STR;
            if ((count($EachVideosData) < 1) || ($EachVideosData === false)) {
                 $this->log("Music video id $indiMusicVidID returns null ", "cache");
                 echo "<br /> Music video id $indiMusicVidID returns null<br />";
-           } else {                 
-                Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);       
+           } else {
+                $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$EachVideosData[0]['File']['CdnPath']."/".$EachVideosData[0]['File']['SourceURL']);
+                $EachVideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;               
+                Cache::write("musicVideoDetails".$indiMusicVidID, $EachVideosData);
                 $this->log("Music video id $indiMusicVidID cache set", "cache");
-                echo "<br />Music video id $indiMusicVidID cache set <br />";              
-           }         
-       } 
+                echo "<br />Music video id $indiMusicVidID cache set <br />";
+           }    
+            if(count($EachVideosData)>0)
+            {    
+                   $MoreVideosSql  =
+                    "SELECT Video.ProdID, Video.ReferenceID, Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Sample_Files.CdnPath,
+                    Sample_Files.SaveAsName,
+                    Full_Files.CdnPath,
+                    Full_Files.SaveAsName,
+                    File.CdnPath,
+                    File.SourceURL,
+                    File.SaveAsName,
+                    Sample_Files.FileID,
+                    Country.Territory,
+                    Country.SalesDate
+                    FROM video as Video
+                    LEFT JOIN
+                    File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+                    LEFT JOIN
+                    File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)   
+                    LEFT JOIN
+                    {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
+                    LEFT JOIN
+                    PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
+                    Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$EachVideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc";
+
+                    $MoreVideosData = $this->Album->query($MoreVideosSql);
+                    foreach($MoreVideosData as $key => $value)
+                    {		
+                        $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                        $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                        $MoreVideosData[$key]['videoImage'] = $videoImage;
+                    }
+                    if (!empty($MoreVideosData)) {
+                        Cache::write("musicVideoMoreDetails_" .$territory.'_'.$EachVideosData[0]['Video']['ArtistText'], $MoreVideosData);
+                        $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set", "cache");
+                        echo "<br />Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] cache set <br />";                        
+                    }else{
+                        $this->log("Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null ", "cache");
+                        echo "<br />Music video more details of artist - $EachVideosData[0]['Video']['ArtistText'] returns null<br />";
+                    }
+            }
+            if(count($EachVideosData)>0)
+            {
+                $TopVideoGenreSql = "SELECT Videodownloads.ProdID, Video.ProdID, Video.ReferenceID, Video.provider_type, Video.VideoTitle, Video.Genre, Video.ArtistText, File.CdnPath, File.SourceURL,  COUNT(DISTINCT(Videodownloads.id)) AS COUNT,
+                    `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
+                    LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
+                    LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
+                    WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$EachVideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+
+                    $TopVideoGenreData = $this->Album->query($TopVideoGenreSql);
+                    foreach($TopVideoGenreData as $key => $value)
+                    {
+                        $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                        $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                        $TopVideoGenreData[$key]['videoImage'] = $videoImage;
+                    }
+                    if(!empty($TopVideoGenreData)){
+                        Cache::write("top_videos_genre_" . $territory.'_'.$EachVideosData[0]['Video']['Genre'], $TopVideoGenreData);
+                        $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set", "cache");
+                        echo "<br />Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory cache set <br />";                        
+                    }else{
+                        $this->log("Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null ", "cache");
+                        echo "<br />Top videos  of genre - $EachVideosData[0]['Video']['Genre'] for territory -$territory returns null<br />";                        
+                    }
+                    //echo "<pre>"; print_r($TopVideoGenreData); die;
+            }            
+     } 
        
        //--------------------------------set each music video in the cache end---------------------------------------------------
         
