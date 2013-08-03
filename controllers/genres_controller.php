@@ -403,7 +403,7 @@ Class GenresController extends AppController
                                         ),
                                         'extra' => array('chk' => 1),
                                     'order' => 'TRIM(Song.ArtistText) ASC',
-                                    'limit' => '60', 'cache' => 'no','check' => 2
+                                    'limit' => '60'
                                     );
                 } else {
                    
@@ -420,9 +420,7 @@ Class GenresController extends AppController
                             'fields' => array('DISTINCT Song.ArtistText'),
                             'extra' => array('chk' => 1),
                             'order' => 'TRIM(Song.ArtistText) ASC',
-                            'limit' => '60',
-                            'cache' => 'yes',
-                            'check' => 2,
+                            'limit' => '60',                            
                             'all_query' => true,
                             'all_country' => "find_in_set('\"$country\"',Song.Territory) > 0",
                             'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
