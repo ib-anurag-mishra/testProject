@@ -450,13 +450,13 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             //error_reporting(1);
             //ini_set('display_errors',1);
-            $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+           // $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
            //$totalPageCountNo =$totalPageCountNo+1;
        
           
-           if(trim($totalPageCountNo) < trim($_REQUEST['npage']) ){
-              die;
-           }
+           //if(trim($totalPageCountNo) > trim($_REQUEST['npage']) ){
+            //  die;
+           //}
 
             if($Genre == ''){
                     $Genre = "QWxs";
