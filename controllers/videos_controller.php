@@ -42,7 +42,7 @@ class VideosController extends AppController {
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
         }        
-        if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
+        //if ($featuredVideos = Cache::read("featured_videos" . $territory) === false) {
             $featuredVideosSql = "SELECT `FeaturedVideo`.`id`,`FeaturedVideo`.`ProdID`,`Video`.`Image_FileID`, `Video`.`VideoTitle`, `Video`.`ArtistText`, `Video`.`provider_type`, `File`.`CdnPath`, `File`.`SourceURL`, `File`.`SaveAsName`,`Country`.`SalesDate` FROM featured_videos as FeaturedVideo LEFT JOIN video as Video on FeaturedVideo.ProdID = Video.ProdID LEFT JOIN File as File on File.FileID = Video.Image_FileID LEFT JOIN {$prefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`) WHERE `FeaturedVideo`.`territory` = '" . $territory . "' AND `Country`.`SalesDate` <= NOW()";
             $featuredVideos = $this->Album->query($featuredVideosSql);
             if (!empty($featuredVideos)) {
@@ -54,7 +54,7 @@ class VideosController extends AppController {
                 } 
                 Cache::write("featured_videos" . $territory, $featuredVideos);
             }
-        }
+        //}
 
         
 
