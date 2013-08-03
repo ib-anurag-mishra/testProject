@@ -81,15 +81,13 @@ class HomesController extends AppController
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
         }
-        
-        var_dump(Cache::read("national".$territory));
-        exit;
+
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
             
-            echo "andhar";
-          
+            echo "if";
+          exit;
        
             $country = $territory;
             
@@ -199,8 +197,11 @@ STR;
 			echo "write in the file if not set";
 			echo "cache-".Cache::write("national".$territory, $nationalTopDownload);
 		}else{
+                   echo "in eles";
                    
                     $nationalTopDownload = Cache::read("national".$territory);                
+                    print_r($nationalTopDownload);
+                    exit;
                 }
                 //print_r($nationalTopDownload);
 		$this->set('nationalTopDownload',$nationalTopDownload);
