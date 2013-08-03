@@ -316,7 +316,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                                             <?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' => 'index'),array('class'=>$music_videos_css)); ?>
                                                     </li>                                                    
                                                     <li>
-                                                            <a href="#" class="sidebar-anchor"><?php __('Most Popular'); ?></a>
+                                                            <a href="#" class="sidebar-anchor" style="cursor-pointer:default" ><?php __('Most Popular'); ?></a>
                                                             <ul class="<?php echo $ul_class; ?>">
                                                                     <?php if($this->Session->read("patron")){ ?>
                                                                     <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
