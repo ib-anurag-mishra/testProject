@@ -4215,8 +4215,7 @@ STR;
             
             //////////////////////////////////Videos/////////////////////////////////////////////////////////            
              
-            //if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
-            if(1)
+            if (($coming_soon = Cache::read("new_releases_videos".$territory)) === false)    // Show from DB
             {               
                 $this->Song->recursive = 2;
                 $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -4322,7 +4321,15 @@ STR;
             //GROUP BY  Song.ReferenceID
             $new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
             foreach($new_releases_albums_rs as $key => $value){
-                $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."".$value['File']['SourceURL']);
+                if($value['Song']['provider_type'] == 'ioda')
+                {
+                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                }
+                else
+                {
+                    $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                }
+                
                 $album_img =  Configure::read('App.Music_Path').$album_img;
                 $new_releases_albums_rs[$key]['albumImage'] = $album_img;                             
             }
