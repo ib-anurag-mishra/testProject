@@ -428,7 +428,7 @@ Class GenresController extends AppController
                             'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
                         );
                     }
-echo $this->Song->showLastQuery();
+
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $allArtists = $this->paginate('Song');
                     $allArtistsNew = $allArtists;

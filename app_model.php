@@ -79,8 +79,8 @@ class AppModel extends Model {
                    
                             $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
                             
-                            
-                              // print_r($pagination);
+                           echo $this->lastQuery();
+                             //print_r($pagination);
                 }
                 
                //echo 'pagination-'.$this->alias.'-'.$uniqueCacheId, $pagination, 'paginate_cache';
