@@ -543,9 +543,9 @@ Class GenresController extends AppController
                 $this->set('genres', $allArtists);
                 $this->set('genre',base64_decode($Genre)); 
            }else{
-               die;exit;
+               return false;
            }
-             echo $totalPageCountNo .'>='. $_REQUEST['npage'] ;
+            
                    
 	}
 
