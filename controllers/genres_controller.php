@@ -452,13 +452,7 @@ Class GenresController extends AppController
             //ini_set('display_errors',1);
           
             
-            $hasPages = ($this->params['paging']['Property']['pageCount'] > 1);
- 
-            if ($hasPages)
-            {
-                echo $this->Paginator->counter();
-            }
-            echo $this->params['paging'];
+            print_r($this->params);
 
             if($Genre == ''){
                     $Genre = "QWxs";
