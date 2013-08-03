@@ -47,7 +47,7 @@ class VideosController extends AppController {
             $featuredVideos = $this->Album->query($featuredVideosSql);
             if (!empty($featuredVideos)) {
                 foreach($featuredVideos as $key => $featureVideo){
-                    $videoArtwork = shell_exec('perl files/tokengen ' . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);//"sony_test/".
+                    $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $featureVideo['File']['CdnPath']."/".$featureVideo['File']['SourceURL']);//"sony_test/".
                     // print_r($featureVideo); die;
                     $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                     $featuredVideos[$key]['videoImage'] = $videoImage;
@@ -64,7 +64,7 @@ class VideosController extends AppController {
             if (!empty($topDownloads)) {
                 foreach($topDownloads as $key => $topDownload)
                 {
-                     $videoArtwork = shell_exec('perl files/tokengen ' . $topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);//"sony_test/".
+                     $videoArtwork = shell_exec('perl files/tokengen_artwork ' . $topDownload['File']['CdnPath']."/".$topDownload['File']['SourceURL']);//"sony_test/".
                      // print_r($featureVideo);
                      $videoImage = Configure::read('App.Music_Path').$videoArtwork;
                      $topDownloads[$key]['videoImage'] = $videoImage;
@@ -476,7 +476,7 @@ STR;
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
                             
                             foreach($topDownload_video as $key => $value){
-                                $albumArtwork = shell_exec('perl files/tokengen ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']); //'sony_test/'.
+                                $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']); //'sony_test/'.
                                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $topDownload_video[$key]['videoAlbumImage'] = $videoAlbumImage;
                             }      
