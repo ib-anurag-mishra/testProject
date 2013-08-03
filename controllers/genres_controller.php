@@ -536,7 +536,7 @@ Class GenresController extends AppController
           
        
             
-            if($_REQUEST['npage'] > $this->params['paging']['Song']['pageCount'] ){
+            if($this->params['paging']['Song']['pageCount'] >= $_REQUEST['npage'] ){
                 exit;
             }
             
