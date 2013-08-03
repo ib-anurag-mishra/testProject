@@ -537,7 +537,7 @@ STR;
             Code OF NEWS Section --- START
         */
 
-       /* if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
+        if(!$this->Session->read('Config.language') && $this->Session->read('Config.language') == ''){
                 $this->Session->write('Config.language', 'en');
         }		
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
