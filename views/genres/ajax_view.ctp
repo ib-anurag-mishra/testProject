@@ -7,7 +7,7 @@ var preValue= 1;
             $('#artist_loader').show();
             if(preValue != ajaxartistPage ){                
                 preValue= ajaxartistPage ;
-                var data = "";
+               var data = "npage="+ajaxartistPage;
                 jQuery.ajax({
                         type: "post",  // Request method: post, get 
                         url: '/genres/ajax_view_pagination/page:'+ajaxartistPage+'/<?=base64_encode($genre); ?>'+'/<?=$selectedAlpha?>',
