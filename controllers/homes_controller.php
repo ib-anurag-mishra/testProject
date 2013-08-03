@@ -82,7 +82,8 @@ class HomesController extends AppController
             $this->set('patronDownload',$patronDownload);
         }
         
-              
+        var_dump(Cache::read("national".$territory));
+        exit;
 
         // National Top 100 Songs slider and Downloads functionality
         if (($national = Cache::read("national".$territory)) === false) {
