@@ -452,8 +452,7 @@ Class GenresController extends AppController
             //ini_set('display_errors',1);
           
             
-        echo $this->Paginator->current('Song');
-        die;
+        
 
             if($Genre == ''){
                     $Genre = "QWxs";
