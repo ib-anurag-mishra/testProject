@@ -533,8 +533,8 @@ Class GenresController extends AppController
             }
             
             
-            
-            print_r($this->params['pass']);
+            echo $_REQUEST['npage'];
+       
             
             
             
