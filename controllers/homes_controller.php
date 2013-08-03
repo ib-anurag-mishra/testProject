@@ -3323,7 +3323,7 @@ STR;
             
             $wishlistCount =  $this->Wishlist->find('count',array('conditions' => array('library_id' => $libraryId,'patron_id' => $patronId,'ProdID' => $_REQUEST['prodId'])));
             if(!$wishlistCount){
-               echo $libraryId = $this->Session->read('library');
+                $libraryId = $this->Session->read('library');
                 $patronId = $this->Session->read('patron');
 
                 $prodId = $_REQUEST['prodId'];
@@ -3349,6 +3349,8 @@ STR;
                 $insertArr['ISRC'] = $trackDetails['0']['Song']['ISRC'];
                 $insertArr['user_agent'] = $_SERVER['HTTP_USER_AGENT'];
                 $insertArr['ip'] = $_SERVER['REMOTE_ADDR'];
+                
+                print_r( $insertArr);die;
                 $this->QueueList->setDataSource('master');
 
                 //insert into wishlist table
