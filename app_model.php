@@ -109,8 +109,7 @@ class AppModel extends Model {
 			  } else {
 					
                               $pagination = $this->find('all', compact('conditions', 'fields', 'order', 'limit', 'page', 'recursive', 'group', 'contain'));
-			echo $this->lastQuery();
-                              
+			                             
                         }
                         
         }
