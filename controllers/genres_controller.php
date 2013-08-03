@@ -452,7 +452,7 @@ Class GenresController extends AppController
             //ini_set('display_errors',1);
           
             
-       $currPageValue =2;
+        $currPageValue =2;
             if(isset($this->params['pass'])){
                  $pageParam = $this->params['pass'];
                  if($pageParam[0]){
@@ -557,7 +557,8 @@ Class GenresController extends AppController
           //   echo  $this->params['paging']['Song']['pageCount'];
            // }
             $this->set('genres', $allArtists);
-            $this->set('genre',base64_decode($Genre));                    
+            $this->set('genre',base64_decode($Genre));
+            exit;
 	}
 
 
