@@ -357,7 +357,7 @@ STR;
                 if (!empty($data)) {
                     Cache::delete("nationalvideos" . $country);
                     foreach($data as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' .$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;                    
                         $data[$key]['videoAlbumImage'] = $videoAlbumImage;
                     }                    
