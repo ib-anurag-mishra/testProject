@@ -4525,7 +4525,7 @@ STR;
                               //  $territory = "CA";
                 
                 
-              $sql_coming_soon_albums =<<<STR
+              echo $sql_coming_soon_albums =<<<STR
                 SELECT 
                   Song.ProdID,
                   Song.ReferenceID,
@@ -4556,6 +4556,8 @@ STR;
                 ORDER BY Country.SalesDate DESC
                 LIMIT 10
 STR;
+
+exit;
                         //echo $sql_coming_soon_albums; die;
                        //GROUP BY  Song.ReferenceID
 			$new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
