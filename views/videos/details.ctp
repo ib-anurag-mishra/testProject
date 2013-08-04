@@ -16,6 +16,7 @@
                             
                                      if($this->Session->read('patron'))
                                     {
+                                         print_r($VideosData);
                                          echo strtotime($VideosData[0]['SalesDate']);
                                          echo "<br/>";
                                          echo time();
