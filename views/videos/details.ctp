@@ -16,14 +16,7 @@
                             
                                      if($this->Session->read('patron'))
                                     {
-                                         /*print_r($VideosData);
-                                         echo strtotime($VideosData[0]['Country']['SalesDate']);
-                                         echo "<br/>";
-                                         echo time();
-                                          echo "<br/>";
-                                         echo ((strtotime($VideosData[0]['Country']['SalesDate']) < time()) ? '1' : '0');
-                                         die;*/
-                                            if(strtotime($VideosData[0]['Country']['SalesDate']) < time()){
+                                           if(strtotime($VideosData[0]['Country']['SalesDate']) < time()){
                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                             {
 
@@ -118,6 +111,7 @@
                                 <?php
                                               if($this->Session->read('patron'))
                                               {
+                                                  if(strtotime($value['Country']['SalesDate']) < time()){
 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
@@ -137,7 +131,9 @@
                                             <?php
 
                                                             }
+                                                  } else {
                                             ?>
+                                        
 										<a class="add-to-playlist-button" href="#"></a>
 										<div class="wishlist-popover">
 											
