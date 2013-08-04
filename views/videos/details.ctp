@@ -16,6 +16,7 @@
                             
                                      if($this->Session->read('patron'))
                                     {
+                                            if(strtotime($VideosData[0]['SalesDate']) < time()){
                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                             {
 
@@ -47,8 +48,13 @@
                                                     echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                 ?>                                                    
                                             </div>
-                                            
-                            <?php
+                                          <?php
+                                            } else {
+                                            ?>    
+                                            <a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a>
+                            <?php                
+                                            }
+                            
                                      }
                                     else
                                     {
