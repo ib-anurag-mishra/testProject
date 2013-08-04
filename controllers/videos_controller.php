@@ -526,6 +526,7 @@ STR;
         if(isset($this->params['pass'][0]))
         {
             if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
+            $prefix = strtolower($this->Session->read('territory')).'_';  
             $VideosSql  =
             "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
             Sample_Files.SaveAsName,
@@ -534,8 +535,12 @@ STR;
             File.CdnPath,
             File.SourceURL,
             File.SaveAsName,
-            Sample_Files.FileID
+            Sample_Files.FileID,
+            Country.Territory,
+            Country.SalesDate
             FROM video as Video
+            LEFT JOIN 
+            {$prefix}countries As Country ON (Video.ProdID = Country.ProdID AND Video.provider_type = Country.provider_type)
             LEFT JOIN
             File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
             LEFT JOIN
