@@ -168,7 +168,7 @@ $(document).ready(function(){
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
             
             $('#artist_loader').show();    
-            var data = "";
+            var data = "npage="+artistPage;
             if(preValue != artistPage ){                
                 preValue= artistPage ;
                 var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';

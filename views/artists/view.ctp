@@ -42,7 +42,7 @@
 ?>
 		<section class="album-detail">
 			<div class="album-cover-image">
-                            <?php $albumArtwork = shell_exec('perl files/tokengen ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
+                            <?php $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $album['Files']['CdnPath']."/".$album['Files']['SourceURL']); ?>
 				<?php
 					$image = Configure::read('App.Music_Path').$albumArtwork;
 					if($page->isImage($image)) {
@@ -133,10 +133,10 @@
 									?></a></div>
 					<div class="time"><?php echo $albumSong['Song']['FullLength_Duration']?></div>
 					<a class="add-to-playlist-button" href="#"></a>
-					<div class="wishlist-popover">
+					
                                            <?php
                                              if($this->Session->read('patron')) { ?>
-                                            
+                                            <div class="wishlist-popover" style="top:-58px;">
                                                <?php if( $this->Session->read('library_type') == 2 ){ ?> 
                                                            
                                                     <div class="playlist-options">
@@ -172,7 +172,7 @@
                                                                                         <input type="hidden" name="ProviderType" value="<?php echo $albumSong["Song"]["provider_type"]; ?>" />
 
                                                                                         <span class="beforeClick" style="cursor:pointer;" id="song_<?php echo $albumSong["Song"]["ProdID"]; ?>">
-                                                                                                <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now');?></a>
+                                                                                                <a href='javascript:void(0);' class="add-to-wishlist" title="<?php __("IMPORTANT: Please note that once you press `Download Now` you have used up one of your downloads, regardless of whether you then press `Cancel` or not.");?>" onclick='userDownloadAll(<?php echo $albumSong["Song"]["ProdID"]; ?>);'><?php __('Download Now'); echo $albumSong['Country']['SalesDate']; ?></a>
                                                                                         </span>
                                                                                 
                                                                                         <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a  class="add-to-wishlist"  ><?php __("Please Wait..");?>
@@ -194,87 +194,36 @@
                                                         ?>
                                                                         <a class="add-to-wishlist" href="javascript:void(0)"><span title='<?php __("Coming Soon");?> ( <?php if(isset($albumSong['Country']['SalesDate'])){ echo 
                                                                                 date("F d Y", strtotime($albumSong['Country']['SalesDate']));} ?> )'>Coming Soon</span></a>
-                            <?php
-                                        } 
-                                }else{
-                                    ?>
-                                <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
-                                <?php
-                                }
-                               
-                                ?>	
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                            <?php   if($this->Session->read('patron')) { ?> 
-                                                
-                                               <?php if( $this->Session->read('library_type') == 2 ){ ?>   
-                                                
-						<a class="add-to-playlist" href="#">Add To Queue</a>
-						
-                                                
-                                                <?php
-                                                $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
-                                                if($wishlistInfo == 'Added to Wishlist') {
-                                                ?> 
-                                                        <a class="add-to-wishlist" href="javascript:void(0);"><?php __("Added to Wishlist");?></a>
-                                                <?php 
-                                                } else { 
-                                                ?>
-                                                        <span class="beforeClick" id="wishlist<?php echo $albumSong["Song"]["ProdID"]; ?>"><a class="add-to-wishlist" href='JavaScript:void(0);' onclick='Javascript: addToWishlist("<?php echo $albumSong["Song"]["ProdID"]; ?>","<?php echo $albumSong["Song"]["provider_type"]; ?>");'><?php __("Add to Wishlist");?></a></span>
-                                                        <span class="afterClick" id="downloading_<?php echo $albumSong["Song"]["ProdID"]; ?>" style="display:none;"><a class="add-to-wishlist" href='JavaScript:void(0);'><?php __("Please Wait...");?></a></span>
-                                                <?php	
+                                                    <?php
+                                                    } 
+                                                } else {
+                                                    ?>
+                                                    <div class="wishlist-popover" style="top:-21px;">
+                                                    <a class="top-100-download-now-button" href='/users/login'> <?php __("Login");?></a>
+                                                    <?php
                                                 }
 
-                                                ?>
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-                                                
-						
-                                               <?php } ?>
-                                                
-                                           <?php } ?>      
-						<div class="share clearfix">
+                                                if($this->Session->read('patron')) {
+                                                ?> 
+                                                    <!--a class="add-to-playlist" href="#">Add To Queue</a-->
+                                                    <?php
+                                                    $wishlistInfo = $wishlist->getWishlistData($albumSong["Song"]["ProdID"]);
+                                                    echo $wishlist->getWishListMarkup($wishlistInfo,$albumSong["Song"]["ProdID"],$albumSong["Song"]["provider_type"]);    
+                                                }
+                                                ?>      
+						<!--div class="share clearfix">
 							<p>Share via</p>
 							<a class="facebook" href="#"></a>
 							<a class="twitter" href="#"></a>
-						</div>
-						
+						</div-->						
 					</div>
-				</div>
-					
-			<?php
-                      
+				</div>					
+			<?php                      
                             endforeach;
-					
-                            
 			?>
-			
-					
-				
 		</section>
             <?php
 	endforeach;
-        ?>
-			
+        ?>			
 	</section>
-	
-	
-	
-	
-	
 </section>

@@ -56,37 +56,6 @@
                                                                                         
                                                                                         ?>
                                                                                     
-                                                                                    
-                                                                                    <script>
-                                                                                        // Define an image media item:
-                                                                                  /*      var image = {
-                                                                                                type: 'image',
-                                                                                                src: 'http://a.vimeocdn.com/portraits/defaults/d.75.jpg',
-                                                                                                href: 'http://vimeo.com/24400434'
-                                                                                                }
-
-                                                                                        // Define a UserAction onject
-                                                                                        var ua = new gigya.socialize.UserAction(); 
-                                                                                       // ua.setLinkBack("/artists/view/<?=base64_encode($nationalTopVideoDownload[$i]['Video']['ArtistText']);?>/<?= $nationalTopVideoDownload[$i]['Video']['ReferenceID']; ?>/<?= base64_encode($nationalTopVideoDownload[$i]['Video']['provider_type']);?>"); 
-                                                                                        ua.setLinkBack("http://vimeo.com/24400434");
-                                                                                        ua.setTitle('<?php echo $this->getTextEncode($nationalTopDownload[$i]['Song']['SongTitle']); ?>');
-                                                                                        ua.setDescription("This is my Description<?php echo $i; ?>");
-                                                                                        ua.addMediaItem(image);
-
-                                                                                        // Define Share Bar plugin's Parameters	
-                                                                                        var shareBarParams ={ 
-                                                                                                userAction:ua,
-                                                                                                shareButtons: "twitter-tweet, facebook",
-                                                                                                buttonsStyle:'fullLogo',
-                                                                                                showCounts: 'none', 
-                                                                                                containerID: 'divButtons_<?php echo $i; ?>' // location of the Share Bar plugin
-                                                                                        }
-
-                                                                                        // Load Share Bar plugin
-                                                                                        gigya.socialize.showShareBarUI(shareBarParams); */
-                                                                                </script>
-                                                                                    
-                                                                                    
                                                                                     <?php
                                                                                         
                                                                                         
@@ -352,11 +321,7 @@
 
                                                                                                                     ?>
                                                         									
-															<div class="share clearfix">
-																<p>Share via</p>
-																<a class="facebook" href="#"></a>
-																<a class="twitter" href="#"></a>
-															</div>
+                                                                                                                     <?php echo $this->Queue->getSocialNetworkinglinksMarkup(); ?>
 															
 														</div>
                                                                                                   <?php } ?>

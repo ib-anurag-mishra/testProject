@@ -758,7 +758,7 @@ function addToWishlistVideo(prodId , providerType)
 				}
 				else
 				{
-					 document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
+					document.getElementById('ajaxflashMessage44').innerHTML = 'You have been logged out from the system. Please login again.';
                                         //alert("You have been logged out from the system. Please login again.");
 					location.reload();
 					return false;				

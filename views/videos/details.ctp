@@ -3,14 +3,14 @@
 		<div class="hero-container clearfix">
 			<div class="hero-image-container">
                                 <?php
-                                        $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
-                                        $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                                       // $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
+                                       // $videoImage = Configure::read('App.Music_Path').$videoArtwork;
 
 
                                         
 
                                 ?>
-				<img src="<?php echo $videoImage;?>" alt="<?php echo $VideosData[0]['Video']['VideoTitle']; ?>" width="555" height="323" />
+				<img src="<?php echo $VideosData[0]['videoImage'];?>" alt="<?php echo $VideosData[0]['Video']['VideoTitle']; ?>" width="555" height="323" />
 <!--				<a class="download-now-button" href="#">Download Now</a>-->
                 <?php
                             
@@ -95,12 +95,12 @@
 						{		
 
                                                     //echo "<pre>"; print_r($value);
-                                                    $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                    $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                                                    //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                                    //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
 								?>								
 								<li>
 									<div class="video-thumb-container">
-                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="/app/webroot/img/lazy-placeholder.gif" data-original="<?php echo $videoImage; ?>" width="274" height="162" /></a>
+                                                                            <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" data-original="" width="274" height="162" /></a>
 										<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
                                               if($this->Session->read('patron'))
@@ -197,14 +197,14 @@
                                         {
 
                                               //  echo "<pre>"; print_r($value);
-                                                $videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                                                $videoImage = Configure::read('App.Music_Path').$videoArtwork;
+                                                //$videoArtwork = shell_exec('perl files/tokengen ' . "sony_test/".$value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                                                //$videoImage = Configure::read('App.Music_Path').$videoArtwork;
 
 							?>
 							
 							<li>
 								<div class="video-thumb-container">
-                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $videoImage; ?>" width="274" height="162" /></a>
+                                                                    <a href="/videos/details/<?php echo $value['Video']['ProdID']; ?>"><img class="lazy" src="<?php echo $value['videoImage']; ?>" width="274" height="162" /></a>
 									<!--				<a class="download-now-button" href="#">Download Now</a>-->
                                 <?php
 

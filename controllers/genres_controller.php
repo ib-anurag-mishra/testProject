@@ -221,7 +221,12 @@ Class GenresController extends AppController
         */
 	function view($Genre = null,$Artist = null) {
            
-		if($Genre == ''){
+		         
+                  
+            
+            
+            
+            if($Genre == ''){
 			$Genre = "QWxs";
 		}
 		$this -> layout = 'home';
@@ -445,7 +450,13 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             //error_reporting(1);
             //ini_set('display_errors',1);
+           // $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+           //$totalPageCountNo =$totalPageCountNo+1;
+       
           
+           //if(trim($totalPageCountNo) > trim($_REQUEST['npage']) ){
+            //  die;
+           //}
 
             if($Genre == ''){
                     $Genre = "QWxs";
@@ -522,21 +533,20 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
             
-           //if allArtists array is empty then no value will return
-            if(isset($allArtists) && empty($allArtists)){
-                exit;
-            }
             
-            $allArtistsNew = $allArtists;
-            for($i=0;$i<count($allArtistsNew);$i++)
-            {
-                if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+                $allArtistsNew = $allArtists;
+                for($i=0;$i<count($allArtistsNew);$i++)
                 {
-                    $allArtists[$i] = $allArtistsNew[$i];
-                }
-            }           
-            $this->set('genres', $allArtists);
-            $this->set('genre',base64_decode($Genre));                    
+                    if($allArtistsNew[$i]['Song']['ArtistText'] != "")
+                    {
+                        $allArtists[$i] = $allArtistsNew[$i];
+                    }
+                }           
+                $this->set('genres', $allArtists);
+                $this->set('genre',base64_decode($Genre)); 
+           
+            
+                   
 	}
 
 
