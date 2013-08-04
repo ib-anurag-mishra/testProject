@@ -1370,7 +1370,7 @@ STR;
                 $maintainLatestVideoDownload = 0; 
                 
                if(!empty($country)){ 
-               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
+               //if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
                
                               
                    if($maintainLatestVideoDownload){
@@ -1470,12 +1470,12 @@ STR;
 //                    print_r($usTop10VideoDownload);
 //                    die; 
                 
-               }
-                else
+               //}
+                /*else
                 {
                    $usTop10VideoDownload = Cache::read("national_us_top10_videos".$territory); 
                 }
-               }
+               }*/
                 
 
                 $this->set('usTop10VideoDownload',$usTop10VideoDownload);
