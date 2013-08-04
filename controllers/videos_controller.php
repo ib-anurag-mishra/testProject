@@ -525,7 +525,7 @@ STR;
         
         if(isset($this->params['pass'][0]))
         {
-            if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
+            // if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
             $prefix = strtolower($this->Session->read('territory')).'_';  
             $VideosSql  =
             "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
@@ -559,11 +559,11 @@ STR;
                 Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
             }
             }
-        }
-        else
+        //}
+        /*else
         {
              $VideosData =   array();
-        }
+        }*/
         
             $VideosData = Cache::read("musicVideoDetails".$this->params['pass'][0]);
         
