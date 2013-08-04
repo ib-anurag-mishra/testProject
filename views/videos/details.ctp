@@ -16,6 +16,8 @@
                             
                                      if($this->Session->read('patron'))
                                     {
+                                         echo ((strtotime($VideosData[0]['SalesDate']) < time()) ? '1' : '0');
+                                         die;
                                             if(strtotime($VideosData[0]['SalesDate']) < time()){
                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                             {
