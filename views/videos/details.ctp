@@ -146,9 +146,7 @@
                                                                 <?php
                                                   } else {
                                                       ?>
-                                                      <span class="download-now-button">
-                                                 <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
-                                            </span>
+                                                      <span class="download-now-button"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                                         <?php
                                                   }
                                                     }
