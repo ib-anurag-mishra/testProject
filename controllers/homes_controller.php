@@ -1459,7 +1459,7 @@ STR;
                     //echo $sql_national_100_v; die;
                     $usTop10VideoDownload = $this->Video->query($sql_us_10_v);
                     foreach($usTop10VideoDownload as $key => $value){
-                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' . 'sony_test/'.$value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
+                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
                         $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                         $usTop10VideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
                     }        
