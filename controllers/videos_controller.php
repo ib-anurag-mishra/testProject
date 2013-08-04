@@ -566,7 +566,8 @@ STR;
         }*/
         
             $VideosData = Cache::read("musicVideoDetails".$this->params['pass'][0]);
-        
+            
+            pr($VideosData); die;
         
             $this->set('VideosData',$VideosData);
             
