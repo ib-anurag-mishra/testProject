@@ -58,7 +58,7 @@
                                           <?php
                                             } else {
                                             ?>    
-                                            <a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a>
+                                            <span class="download-now-button"><a  href='javascript:void(0);'><label class="dload" style="width:120px;cursor:pointer;" title='<?php __('Coming Soon');?>'><?php __('Coming Soon');?></label></a></span>
                             <?php                
                                             }
                             
