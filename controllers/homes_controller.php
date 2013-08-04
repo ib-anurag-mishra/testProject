@@ -1402,6 +1402,7 @@ STR;
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql); 
+                echo $sql;
                 print_r($natTopDownloaded); die('nationaltopdownloaded');
                 foreach($natTopDownloaded as $natTopSong){
                     if(empty($ids)){
