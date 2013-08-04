@@ -111,6 +111,7 @@
                                 <?php
                                               if($this->Session->read('patron'))
                                               {
+                                                  if(strtotime($value['Country']['SalesDate']) < time()){
 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
@@ -143,6 +144,13 @@
 											
 										</div>
                                                                 <?php
+                                                  } else {
+                                                      ?>
+                                                      <span class="download-now-button">
+                                                 <a class="featured-video-download-now-button" href='/users/redirection_manager'> <?php __("Login");?></a>
+                                            </span>
+                                        <?php
+                                                  }
                                                     }
                                                     else
                                                     {                                                     
