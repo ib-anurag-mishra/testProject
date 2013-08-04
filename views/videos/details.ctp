@@ -16,6 +16,10 @@
                             
                                      if($this->Session->read('patron'))
                                     {
+                                         echo strtotime($VideosData[0]['SalesDate']);
+                                         echo "<br/>";
+                                         echo time();
+                                          echo "<br/>";
                                          echo ((strtotime($VideosData[0]['SalesDate']) < time()) ? '1' : '0');
                                          die;
                                             if(strtotime($VideosData[0]['SalesDate']) < time()){
