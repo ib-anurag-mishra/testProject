@@ -1370,7 +1370,7 @@ STR;
                 $maintainLatestVideoDownload = 0; 
                 
                if(!empty($country)){ 
-               //if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
+               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
                
                               
                    if($maintainLatestVideoDownload){
@@ -1402,8 +1402,6 @@ STR;
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql); 
-                /*echo $sql;
-                print_r($natTopDownloaded); die('nationaltopdownloaded');*/
                 foreach($natTopDownloaded as $natTopSong){
                     if(empty($ids)){
                         $ids .= $natTopSong['Download']['ProdID'];
@@ -1471,11 +1469,11 @@ STR;
 //                    print_r($usTop10VideoDownload);
 //                    die; 
                 
-               //}
-                /*else
+               }
+               else
                 {
                    $usTop10VideoDownload = Cache::read("national_us_top10_videos".$territory); 
-                }*/
+                }
                }
                 
 
