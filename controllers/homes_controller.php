@@ -1475,8 +1475,8 @@ STR;
                 /*else
                 {
                    $usTop10VideoDownload = Cache::read("national_us_top10_videos".$territory); 
-                }
-               }*/
+                }*/
+               }
                 
 
                 $this->set('usTop10VideoDownload',$usTop10VideoDownload);
