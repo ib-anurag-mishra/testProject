@@ -16,14 +16,14 @@
                             
                                      if($this->Session->read('patron'))
                                     {
-                                         print_r($VideosData);
-                                         echo strtotime($VideosData[0]['SalesDate']);
+                                         /*print_r($VideosData);
+                                         echo strtotime($VideosData[0]['Country']['SalesDate']);
                                          echo "<br/>";
                                          echo time();
                                           echo "<br/>";
-                                         echo ((strtotime($VideosData[0]['SalesDate']) < time()) ? '1' : '0');
-                                         die;
-                                            if(strtotime($VideosData[0]['SalesDate']) < time()){
+                                         echo ((strtotime($VideosData[0]['Country']['SalesDate']) < time()) ? '1' : '0');
+                                         die;*/
+                                            if(strtotime($VideosData[0]['Country']['SalesDate']) < time()){
                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                             {
 
