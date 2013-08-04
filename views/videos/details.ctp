@@ -111,7 +111,6 @@
                                 <?php
                                               if($this->Session->read('patron'))
                                               {
-                                                  if(strtotime($value['Country']['SalesDate']) < time()){
 
                                                             if($libraryDownload == '1' && $patronDownload == '1') 
                                                             {
@@ -131,9 +130,7 @@
                                             <?php
 
                                                             }
-                                                  } else {
                                             ?>
-                                        
 										<a class="add-to-playlist-button" href="#"></a>
 										<div class="wishlist-popover">
 											
