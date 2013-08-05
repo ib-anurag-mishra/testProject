@@ -990,8 +990,8 @@ STR;
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
-            //if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
-            if(1) {                   
+            if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
+            //if(1) {                   
                     $country = $territory;
                     if($maintainLatestDownload){
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -1092,8 +1092,8 @@ STR;
             $country = $this->Session->read('territory');
             
             if(!empty($country)){  
-              //if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
-              if(1){
+              if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
+              //if(1){
                     $country = $territory;
 
                     if($maintainLatestDownload){
@@ -1195,8 +1195,8 @@ STR;
                $country = $this->Session->read('territory');
                 
                if(!empty($country)){ 
-               //if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
-               if(1) {               
+               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
+               //if(1) {               
                    if($maintainLatestVideoDownload){
                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
