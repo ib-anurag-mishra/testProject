@@ -167,7 +167,13 @@ $(document).ready(function(){
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){                  
                                
-            $('#artist_loader').show();    
+            $('#artist_loader').show();
+            
+            
+            
+            var totalPages = <?=$totalPages?>;
+            alert(totalPages);
+            
             var data = "npage="+artistPage;
             if( (preValue != artistPage )  ){                
                 preValue= artistPage ;
