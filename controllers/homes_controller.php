@@ -2129,7 +2129,7 @@ STR;
     
     
     
-            $this->Library->lastQuery($sql);
+                $this->Library->query($sql);
 		$sql = "SELECT @ret";
 		$data = $this->Library->query($sql);
 		$return = $data[0][0]['@ret'];
