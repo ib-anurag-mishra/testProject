@@ -536,8 +536,7 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
             
-            
-           
+                 
             
             
              //echo  $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
