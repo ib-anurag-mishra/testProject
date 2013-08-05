@@ -75,7 +75,7 @@ var preValue= 1;
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
                                                         echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."' style='cursor:pointer;'>";
-                                                        echo wordwrap($ArtistName, 35, "<br />");
+                                                        echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
                                                         echo '</a>';
                                                         echo '</li>';                                                                    
                                                 }
