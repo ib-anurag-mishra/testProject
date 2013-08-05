@@ -827,18 +827,17 @@ SELECT
     Country.SalesDate,
     File.CdnPath,
     File.SourceURL,
-    File.SaveAsName
+    File.SaveAsName,
     Full_Files.CdnPath,
     Full_Files.SaveAsName,
-    Full_Files.FileID,
-FROM
-    Songs AS Song
-LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+    Full_Files.FileID
+FROM Songs AS Song
+LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
 INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
 INNER JOIN File ON (Albums.FileID = File.FileID) 
-WHERE ((Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
+WHERE ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
 group by Song.ReferenceID
 ORDER BY Country.SalesDate DESC
 LIMIT 100
@@ -1887,7 +1886,7 @@ STR;
                 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
                 LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
                 INNER JOIN File ON (Video.Image_FileID = File.FileID)
-                WHERE((Video.DownloadStatus = '1') AND (($top_ten_condition_videos) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+                WHERE((Video.DownloadStatus = '1') AND ($top_ten_condition_videos) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
                 LIMIT 10
