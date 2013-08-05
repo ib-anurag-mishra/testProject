@@ -229,11 +229,11 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     {
                         $mostPopularCss = "regular active";
                     }
-                    else if($_SERVER['REQUEST_URI'] == 'genres/view')
+                    else if($_SERVER['REQUEST_URI'] == '/genres/view')
                     {
                         $genreCss = "regular active";
                     }
-                     else if($_SERVER['REQUEST_URI'] == 'homes/new_releases')
+                     else if($_SERVER['REQUEST_URI'] == '/homes/new_releases')
                     {
                         $newReleaseCss = "regular active";
                     }
