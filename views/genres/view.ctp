@@ -165,10 +165,9 @@ $(document).ready(function(){
     var preValue= 1;
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
-        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
+        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){                  
             
-            
-            var letter = $(this).data('letter');
+            var letter = $(this).data('tpage');
             alert(letter);
             $('#artist_loader').show();    
             var data = "npage="+artistPage;
@@ -189,10 +188,8 @@ $(document).ready(function(){
                     error:function (XMLHttpRequest, textStatus, errorThrown) { 
                         //alert('No artist list available');
                     }
-                });
-            
-            }
-            
+                });            
+            }            
         }
     });
 });
@@ -332,7 +329,7 @@ $totalRows = count($genresAll);
                                                         echo " <li>";
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'  >";
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."'  data-tpage='".$totalPages."'>";
                                                         echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
                                                         echo '</a>';
                                                         echo '</li>';                                                                    

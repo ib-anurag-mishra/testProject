@@ -343,6 +343,7 @@ Class GenresController extends AppController
                     $allArtists[$i] = $allArtistsNew[$i];
                 }
                 }
+                $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
 		$this->set('genres', $allArtists);
 		$this->set('genre',base64_decode($Genre));
 	}
@@ -442,6 +443,7 @@ Class GenresController extends AppController
                         $allArtists[$i] = $allArtistsNew[$i];
                     }
                     }
+                    $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
                     $this->set('genres', $allArtists);
                     $this->set('selectedAlpha', $Artist);
                     $this->set('genre',base64_decode($Genre));
