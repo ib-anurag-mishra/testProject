@@ -271,7 +271,7 @@ if ($type != 'all') {
                     $albumDetails = $album->getImage($palbum->ReferenceID);
                     $albumDetails = $album->getImage($palbum->ReferenceID);
                     if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
-                        $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+                        $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
                         $image = Configure::read('App.Music_Path') . $albumArtwork;
                     } else {
                         $image = 'no-image.jpg';
@@ -599,7 +599,7 @@ if ($type != 'all') {
         $albumDetails = $album->getImage($palbum->ReferenceID);
         // print_r($albumDetails); die;
         if (!empty($albumDetails[0]['Files']['CdnPath']) && !empty($albumDetails[0]['Files']['SourceURL'])) {
-            $albumArtwork = shell_exec('perl files/tokengen ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
+            $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $albumDetails[0]['Files']['CdnPath'] . "/" . $albumDetails[0]['Files']['SourceURL']);
             $image = Configure::read('App.Music_Path') . $albumArtwork;
         } else {
             $image = 'no-image.jpg';
@@ -891,7 +891,7 @@ if ($type != 'all') {
                             </div>
                             <div class="cover-art">
                                 <?php
-                                $imageUrl = shell_exec('perl files/tokengen ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
+                                $imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);
                                 $image = Configure::read('App.Music_Path') . $imageUrl;
                                 ?>
                                 <a href="/artists/view/<?php echo str_replace('/', '@', base64_encode($psong->ArtistText)); ?>/<?php echo $psong->ReferenceID; ?>/<?php echo base64_encode($psong->provider_type); ?>"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="27" height="27" /></a>
@@ -1048,7 +1048,7 @@ if (isset($type)) {
 						-->
                         <div class="album"><a href="#"><?php echo truncate_text($psong->Title,25,$this); ?></a></div>
 						<?php
-                            $imageUrl = shell_exec('perl files/tokengen ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
+                            $imageUrl = shell_exec('perl files/tokengen_artwork ' . $psong->ACdnPath . "/" . $psong->ASourceURL);//"sony_test/".
                             $image = Configure::read('App.Music_Path') . $imageUrl;
                         ?>
                         <div class="song"><a href="/videos/details/<?php echo $psong->ProdID; ?>" style="float:left; margin-top:10px; padding-right:10px;"><img src="<?php echo $image; ?>" alt="<?php echo $psong->SongTitle; ?>" width="34" height="27" /></a><?php echo $psong->VideoTitle; ?></div>
