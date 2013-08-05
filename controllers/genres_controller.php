@@ -453,7 +453,7 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             //error_reporting(1);
             //ini_set('display_errors',1);
-           echo  $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+          
            //$totalPageCountNo =$totalPageCountNo+1;
        
           
@@ -536,7 +536,8 @@ Class GenresController extends AppController
             $this->Song->unbindModel(array('hasOne' => array('Participant')));
             $allArtists = $this->paginate('Song');
             
-            
+             echo  $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+             
                 $allArtistsNew = $allArtists;
                 for($i=0;$i<count($allArtistsNew);$i++)
                 {
