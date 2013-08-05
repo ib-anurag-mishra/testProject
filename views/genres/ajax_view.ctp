@@ -4,6 +4,9 @@ var preValue= 1;
    $("#artistscroll").scroll(function(){  
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
+           
+
+
             $('#artist_loader').show();
             if(preValue != ajaxartistPage ){                
                 preValue= ajaxartistPage ;

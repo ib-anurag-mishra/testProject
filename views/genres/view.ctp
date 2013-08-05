@@ -167,6 +167,9 @@ $(document).ready(function(){
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){           
             
+            
+            var letter = $(this).data('letter');
+            alert(letter);
             $('#artist_loader').show();    
             var data = "npage="+artistPage;
             if(preValue != artistPage ){                

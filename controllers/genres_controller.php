@@ -553,10 +553,10 @@ Class GenresController extends AppController
                 }
             } 
             
-             if($this->params['paging']['Song']['pageCount'] <= $_REQUEST['npage']){
-                $allArtists = array();
-            }
-            
+            //if($this->params['paging']['Song']['pageCount'] <= $_REQUEST['npage']){
+                //$allArtists = array();
+            //}
+            $this->set('totalPages', $this->params['paging']['Song']['pageCount']);
             $this->set('genres', $allArtists);
             $this->set('genre',base64_decode($Genre)); 
                    
