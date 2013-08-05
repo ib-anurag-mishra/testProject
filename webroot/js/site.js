@@ -1005,15 +1005,13 @@ $(function() {
 	});
 	
 	$('.most-popular-sub-nav').on('mouseleave',function(e){	
-               
                 $('.most-popular-sub-nav').removeClass('active');
 	});
 	
 	
-	$('.site-nav .regular').on('mouseenter',function(e){
-             
-		$('.most-popular-sub-nav').removeClass('active');
-	});
+//	$('.site-nav .regular').on('mouseenter',function(e){
+//             $('.most-popular-sub-nav').removeClass('active');
+//	});
 	
 	
 	
