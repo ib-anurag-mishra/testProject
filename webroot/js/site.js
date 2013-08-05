@@ -999,22 +999,19 @@ $(function() {
 	
 
 	$('.site-nav .most-popular a').on('mouseenter',function(e){
-            alert(1);
 		e.preventDefault(); 
 		$('.most-popular-sub-nav').addClass('active');
 		
 	});
 	
 	$('.most-popular-sub-nav').on('mouseleave',function(e){	
-            alert(2);   
                 $('.most-popular-sub-nav').removeClass('active');
 	});
 	
 	
-	$('.site-nav .regular').on('mouseenter',function(e){
-             alert(3);
-		$('.most-popular-sub-nav').removeClass('active');
-	});
+//	$('.site-nav .regular').on('mouseenter',function(e){
+//             $('.most-popular-sub-nav').removeClass('active');
+//	});
 	
 	
 	
