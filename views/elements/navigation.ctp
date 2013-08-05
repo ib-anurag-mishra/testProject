@@ -227,7 +227,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     }
                     else if($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10' || $_SERVER['REQUEST_URI'] == '/homes/us_top_10')
                     {
-                        $mostPopularCss = "regular active";
+                        $mostPopularCss = "active";
                     }
                     else if($_SERVER['REQUEST_URI'] == '/genres/view')
                     {
