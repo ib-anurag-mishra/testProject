@@ -171,11 +171,10 @@ $(document).ready(function(){
             
             
             
-            var totalPages = <?=$totalPages?>;
-            alert(totalPages);
+            var totalPages = <?=$totalPages?>;          
             
             var data = "npage="+artistPage;
-            if( (preValue != artistPage )  ){                
+            if( (preValue != artistPage ) && (artistPage <= totalPages ) ){                
                 preValue= artistPage ;
                 var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
            

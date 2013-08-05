@@ -5,11 +5,10 @@ var preValue= 1;
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
            
-           var totalPages = <?=$totalPages?>;
-            alert(totalPages);
+           var totalPages = <?=$totalPages?>;           
 
             $('#artist_loader').show();
-            if((preValue != ajaxartistPage) && (ajaxartistPage < 7 )){                
+            if((preValue != ajaxartistPage) && (ajaxartistPage <= totalPages )){                
                 preValue= ajaxartistPage ;
                 var data = "npage="+ajaxartistPage;
                 jQuery.ajax({
