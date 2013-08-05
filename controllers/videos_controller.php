@@ -332,20 +332,12 @@ class VideosController extends AppController {
     
     
      function my_lib_top_10_videos()
-    {        
-        
-//                $libId  =1;
-//                $patId= 8389;
-//                $country=   'us';
-                $libId = $this->Session->read('library');
-		$patId = $this->Session->read('patron');
-		$country = $this->Session->read('territory');
-         
-         
-        
-                    $ids_provider_type_video = '';
-                    
-                   // if(1) 
+     {        
+        $libId = $this->Session->read('library');
+        $patId = $this->Session->read('patron');
+        $country = $this->Session->read('territory');
+        $ids_provider_type_video = '';
+
                     if (($libDownload = Cache::read("lib_videos".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
@@ -355,18 +347,12 @@ class VideosController extends AppController {
                         } else {
                             $topDownloaded_videos = $this->Videodownload->find('all', array('conditions' => array('library_id' => $libId,'created BETWEEN ? AND ?' => array(Configure::read('App.tenWeekStartDate'), Configure::read('App.tenWeekEndDate'))), 'group' => array('ProdID'), 'fields' => array('ProdID', 'COUNT(DISTINCT id) AS countProduct', 'provider_type'), 'order' => 'countProduct DESC', 'limit'=> '15'));
                         }
-                        
-//                        echo "<pre>11";
-//                        print_r($topDownloaded_videos);
-//                        die;
                                                
 			$ids = '';
 			$ioda_ids = array();
 			$sony_ids = array();
 			$sony_ids_str = '';
 			$ioda_ids_str = ''; 
-                                                
-
                         
 //			$topDownloaded_videos = Cache::read("lib".$libId); 
 			foreach($topDownloaded_videos as $k => $v){
@@ -399,10 +385,7 @@ class VideosController extends AppController {
 			  }				
 			}
 
-//                        echo "<pre>22";
-//                        print_r($topDownloaded_videos);
-//                        die;                    
-                        
+
 			if($ids != ''){ 
 				if(!empty($sony_ids)){
 					$sony_ids_str = implode(',',$sony_ids);
@@ -448,25 +431,16 @@ class VideosController extends AppController {
                                         File.CdnPath,
                                         File.SourceURL,
                                         File.SaveAsName,
-                                        Sample_Files.FileID,
-					PRODUCT.pid
-				FROM
-					video AS Video
-						LEFT JOIN
-					File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
-						LEFT JOIN
-					File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)
-						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
-				WHERE
-					((Video.DownloadStatus = '1') AND (($top_ten_condition_videos) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+                                        Sample_Files.FileID
+				FROM video AS Video
+				LEFT JOIN File AS Sample_Files ON (Video.Sample_FileID = Sample_Files.FileID)
+				LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+				LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+				LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
+                                INNER JOIN File ON (Video.Image_FileID = File.FileID)
+				WHERE((Video.DownloadStatus = '1') AND (($top_ten_condition_videos) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
 				GROUP BY Video.ProdID
-				ORDER BY FIELD(Video.ProdID,
-						$ids) ASC
+				ORDER BY FIELD(Video.ProdID, $ids) ASC
 				LIMIT 10
 STR;
                                
@@ -480,9 +454,6 @@ STR;
                                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $topDownload_video[$key]['videoAlbumImage'] = $videoAlbumImage;
                             }      
-//                            echo "<pre>";
-//                            print_r($topDownload_video);
-//                            die;
                             
 			
 			} else { 

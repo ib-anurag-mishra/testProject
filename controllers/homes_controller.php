@@ -733,8 +733,6 @@ STR;
 				}
 			  }				
 			}
-
-                                               
                         
 			if($ids != ''){ 
 				if(!empty($sony_ids)){
@@ -783,29 +781,17 @@ STR;
                                         File.CdnPath,
                                         File.SourceURL,
                                         File.SaveAsName,
-                                        Sample_Files.FileID,
-					PRODUCT.pid
-				FROM
-					Songs AS Song
-						LEFT JOIN
-					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-						LEFT JOIN
-					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
-						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
-                                                INNER JOIN 
-                                        Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                                INNER JOIN 
-                                        File ON (Albums.FileID = File.FileID)
-				WHERE
-					((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1)
+                                        Sample_Files.FileID
+				FROM Songs AS Song 
+                                LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
+                                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
+                                LEFT JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                INNER JOIN File ON (Albums.FileID = File.FileID)
+				WHERE ((Song.DownloadStatus = '1') AND (($top_ten_condition_songs))  AND 1 = 1 AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()))
 				GROUP BY Song.ProdID
-				ORDER BY FIELD(Song.ProdID,
-						$ids) ASC
+				ORDER BY FIELD(Song.ProdID,$ids) ASC
 				LIMIT 10
 STR;
                                  
@@ -932,27 +918,16 @@ STR;
                                         File.CdnPath,
                                         File.SourceURL,
                                         File.SaveAsName,
-                                        Sample_Files.FileID,
-					PRODUCT.pid
-				FROM
-					Songs AS Song
-						LEFT JOIN
-					File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-						LEFT JOIN
-					File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-						LEFT JOIN
-					Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
-						LEFT JOIN
-                                 {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-						LEFT JOIN
-					PRODUCT ON (PRODUCT.ProdID = Song.ProdID) AND (PRODUCT.provider_type = Song.provider_type)
-                                                INNER JOIN 
-                                        Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                                INNER JOIN 
-                                        File ON (Albums.FileID = File.FileID)
-				WHERE
-					((Song.DownloadStatus = '1') AND (($top_ten_condition_albums) )  AND 1 = 1)
-				GROUP BY  Song.ReferenceID
+                                        Sample_Files.FileID
+				FROM Songs AS Song
+				LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+				LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+				LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+				LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
+				INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
+                                INNER JOIN File ON (Albums.FileID = File.FileID)
+				WHERE (Song.DownloadStatus = '1') AND (($top_ten_condition_albums))  AND 1 = 1  AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+				GROUP BY Song.ReferenceID
 				ORDER BY count(Song.ProdID) DESC
 				LIMIT 10
 STR;
@@ -1004,6 +979,10 @@ STR;
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
+            
+            $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
+            $siteConfigData = $this->Album->query($siteConfigSQL);
+            $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
@@ -1011,11 +990,6 @@ STR;
             if (($national = Cache::read("national_us_top10_songs".$territory)) === false) {
                                
                     $country = $territory;
-
-                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-                    $siteConfigData = $this->Album->query($siteConfigSQL);
-                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-
                     if($maintainLatestDownload){
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                             FROM `latest_downloads` AS `Download` 
@@ -1040,11 +1014,6 @@ STR;
                   $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
-//                  echo '<pre>';
-//                  echo $sql;
-//                  print_r($natTopDownloaded);
-//                  die;
-                  
 		  foreach($natTopDownloaded as $natTopSong){
 			if(empty($ids)){
 			  $ids .= $natTopSong['Download']['ProdID'];
@@ -1055,68 +1024,47 @@ STR;
 			}
 		  }
 		  $data = array();
-                  
-                  
-//                  echo '<pre>';                  
-//                  print_r($natTopDownloaded);
-//                  die;
-                  
 
                   $countryPrefix = $this->Session->read('multiple_countries');
 	 
                   $sql_national_100 =<<<STR
-                               SELECT 
-                                       Song.ProdID,
-                                       Song.ReferenceID,
-                                       Song.Title,
-                                       Song.ArtistText,
-                                       Song.DownloadStatus,
-                                       Song.SongTitle,
-                                       Song.Artist,
-                                       Song.Advisory,
-                                       Song.Sample_Duration,
-                                       Song.FullLength_Duration,
-                                       Song.provider_type,
-                                       Albums.ProdID,
-                                       Albums.provider_type,                                       
-                                       Genre.Genre,
-                                       Country.Territory,
-                                       Country.SalesDate,
-                                       Sample_Files.CdnPath,
-                                       Sample_Files.SaveAsName,
-                                       Full_Files.CdnPath,
-                                       Full_Files.SaveAsName,
-                                       File.CdnPath,
-                                       File.SourceURL,
-                                       File.SaveAsName,
-                                       Sample_Files.FileID,
-                                       PRODUCT.pid
-                               FROM
-                                       Songs AS Song
-                                               LEFT JOIN
-                                       File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                               LEFT JOIN
-                                       File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                               LEFT JOIN
-                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
-                                               LEFT JOIN
-                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-                                               LEFT JOIN
-                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID) 
-                                               INNER JOIN 
-                                       Albums ON (Song.ReferenceID=Albums.ProdID) 
-                                               INNER JOIN 
-                                       File ON (Albums.FileID = File.FileID) 
-                               WHERE
-                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))  )   AND 1 = 1
-                               GROUP BY Song.ProdID
-                               ORDER BY FIELD(Song.ProdID,$ids) ASC
-                               LIMIT 10 
-
+                  SELECT 
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+                        Albums.ProdID,
+                        Albums.provider_type,                                       
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID
+                FROM Songs AS Song
+                LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
+                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
+                INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
+                INNER JOIN File ON (Albums.FileID = File.FileID) 
+                WHERE ((Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+                GROUP BY Song.ProdID
+                ORDER BY FIELD(Song.ProdID,$ids) ASC
+                LIMIT 10 
 STR;
-                       
-
-                        //echo $sql_national_100; //die;
 
 			$national_us_top10_record = $this->Album->query($sql_national_100);
                         foreach($national_us_top10_record as $key => $value){
@@ -1131,25 +1079,7 @@ STR;
                 {
                    $national_us_top10_record = Cache::read("national_us_top10_songs".$territory); 
                 }
-            }
-              
-                    
-               
-		
-/*		$this->Download->recursive = -1;
-		foreach($nationalTopDownload as $key => $value){
-			$downloadsUsed =  $this->Download->find('all',array('conditions' => array('ProdID' => $value['Song']['ProdID'],'library_id' => $libId,'patron_id' => $patId,'history < 2','created BETWEEN ? AND ?' => array(Configure::read('App.twoWeekStartDate'), Configure::read('App.twoWeekEndDate'))),'limit' => '1'));
-			if(count($downloadsUsed) > 0){
-				$nationalTopDownload[$key]['Song']['status'] = 'avail';
-			} else{
-				$nationalTopDownload[$key]['Song']['status'] = 'not';
-			}
-		}*/
-                
-//                echo "<pre>";
-//                print_r($nationalTopDownload);
-//                die;
-                
+            }               
 		$this->set('nationalTopDownload',$national_us_top10_record);
                 
                 
@@ -1162,10 +1092,6 @@ STR;
               if (($national = Cache::read("national_us_top10_albums".$territory)) === false) {
                 //if(1){
                     $country = $territory;
-
-                    $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-                    $siteConfigData = $this->Album->query($siteConfigSQL);
-                    $maintainLatestDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
 
                     if($maintainLatestDownload){
                                 $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
@@ -1191,11 +1117,6 @@ STR;
                   $ids_provider_type = '';
 		  $natTopDownloaded = $this->Album->query($sql);
                   
-//                  echo '<pre>';
-//                  echo $sql;
-//                  print_r($natTopDownloaded);
-//                  die;
-                  
 		  foreach($natTopDownloaded as $natTopSong){
                     if(empty($ids)){
                         $ids .= $natTopSong['Download']['ProdID'];
@@ -1204,121 +1125,76 @@ STR;
                         $ids .= ','.$natTopSong['Download']['ProdID'];
                         $ids_provider_type .= ','. "(" . $natTopSong['Download']['ProdID'] .",'" . $natTopSong['Download']['provider_type'] ."')";
                     }
-                    
-                    
-                    
                 }
-		  $data = array();
-                  
-                  
-//                  echo '<pre>';                  
-//                  print_r($natTopDownloaded);
-//                  die; 
-                  
-
+		 $data = array();
                  $countryPrefix = $this->Session->read('multiple_countries');
                   // $countryPrefix = 'us_';
 	 
                    $sql_us_albums =<<<STR
-                               SELECT 
-                                       Song.ProdID,
-                                       Song.ReferenceID,
-                                       Song.Title,
-                                       Song.ArtistText,
-                                       Song.DownloadStatus,
-                                       Song.SongTitle,
-                                       Song.Artist,
-                                       Song.Advisory,
-                                       Song.Sample_Duration,
-                                       Song.FullLength_Duration,
-                                       Song.provider_type,
-                                       Albums.ProdID,
-                                       Albums.provider_type,  
-                                       Albums.AlbumTitle, 
-                                       Genre.Genre,
-                                       Country.Territory,
-                                       Country.SalesDate,
-                                       Sample_Files.CdnPath,
-                                       Sample_Files.SaveAsName,
-                                       Full_Files.CdnPath,
-                                       Full_Files.SaveAsName,
-                                       File.CdnPath,
-                                       File.SourceURL,
-                                       File.SaveAsName,
-                                       Sample_Files.FileID,
-                                       PRODUCT.pid
-                               FROM
-                                       Songs AS Song
-                                               LEFT JOIN
-                                       File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
-                                               LEFT JOIN
-                                       File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
-                                               LEFT JOIN
-                                       Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type)
-                                               LEFT JOIN
-                                       {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Country.Territory = '$country') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-                                               LEFT JOIN
-                                       PRODUCT ON (PRODUCT.ProdID = Song.ProdID)  AND (PRODUCT.provider_type = Song.provider_type)
-                                               INNER JOIN 
-                                       Albums ON (Song.ReferenceID=Albums.ProdID)
-                                               INNER JOIN 
-                                       File ON (Albums.FileID = File.FileID) 
-                               WHERE
-                                       ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))  )  AND 1 = 1
-                               GROUP BY  Song.ReferenceID
-                               ORDER BY count(Song.ProdID) DESC
-                               LIMIT 10 
-
+                   SELECT 
+                        Song.ProdID,
+                        Song.ReferenceID,
+                        Song.Title,
+                        Song.ArtistText,
+                        Song.DownloadStatus,
+                        Song.SongTitle,
+                        Song.Artist,
+                        Song.Advisory,
+                        Song.Sample_Duration,
+                        Song.FullLength_Duration,
+                        Song.provider_type,
+                        Albums.ProdID,
+                        Albums.provider_type,  
+                        Albums.AlbumTitle, 
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Sample_Files.CdnPath,
+                        Sample_Files.SaveAsName,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        File.CdnPath,
+                        File.SourceURL,
+                        File.SaveAsName,
+                        Sample_Files.FileID
+                FROM Songs AS Song
+                LEFT JOIN File AS Sample_Files ON (Song.Sample_FileID = Sample_Files.FileID)
+                LEFT JOIN File AS Full_Files ON (Song.FullLength_FileID = Full_Files.FileID)
+                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND (Song.provider_type = Genre.provider_type) 
+                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
+                INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
+                INNER JOIN File ON (Albums.FileID = File.FileID) 
+                WHERE ( (Song.DownloadStatus = '1') AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type)) )  AND (Country.Territory = '$country')  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
+                GROUP BY  Song.ReferenceID
+                ORDER BY count(Song.ProdID) DESC
+                LIMIT 10 
 STR;
-                       
+                    $ustop10Albums = $this->Album->query($sql_us_albums);
+                    // Checking for download status
+                    foreach($ustop10Albums as $key => $value){
 
-//                        echo $sql_us_albums; 
-//                        echo "<pre>";
-//                        print_r($sql_us_albums);
-//                        die;
+                         $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
+                         $album_img =  Configure::read('App.Music_Path').$album_img;
+                         $ustop10Albums[$key]['album_img'] = $album_img;
+                    }     
 
-			$ustop10Albums = $this->Album->query($sql_us_albums);
-			// Checking for download status
-                        foreach($ustop10Albums as $key => $value){
-
-                             $album_img = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']);
-                             $album_img =  Configure::read('App.Music_Path').$album_img;
-                             $ustop10Albums[$key]['album_img'] = $album_img;
-                        }     
-			
-                        Cache::write("national_us_top10_albums".$territory, $ustop10Albums);
-                        
+                    Cache::write("national_us_top10_albums".$territory, $ustop10Albums);                        
 		}
-                 else
+                else
                 {
                    $ustop10Albums = Cache::read("national_us_top10_albums".$territory); 
                 }
             } 
-		$this->set('ustop10Albums',$ustop10Albums); 
-                
-                
-//                echo "<pre>";
-//                print_r($ustop10Albums);
-//                die;
-////                
-                
+            $this->set('ustop10Albums',$ustop10Albums); 
+
                 //////////////////////////////////////////////Videos//////////////////////////////////////////////////////////////////////////
-                
                
                $country = $this->Session->read('territory');
                 
-                $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
-                $siteConfigData = $this->Album->query($siteConfigSQL);
-                $maintainLatestVideoDownload = (($siteConfigData[0]['siteconfigs']['svalue']==1)?true:false);
-                $maintainLatestVideoDownload = 0; 
-                
                if(!empty($country)){ 
-               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {
-               
+               if (($national = Cache::read("national_us_top10_videos".$territory)) === false) {               
                               
                    if($maintainLatestVideoDownload){
-                       
-
                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `latest_videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -1328,7 +1204,6 @@ STR;
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
                    } else {
-
                         $sql = "SELECT `Download`.`ProdID`, COUNT(DISTINCT Download.id) AS countProduct, provider_type 
                         FROM `videodownloads` AS `Download` 
                         LEFT JOIN libraries ON libraries.id=Download.library_id
@@ -1338,10 +1213,7 @@ STR;
                         ORDER BY `countProduct` DESC 
                         LIMIT 110";
                     }
-                    
-                   // echo $sql; die;
-                    
-                
+
                 $ids = '';
                 $ids_provider_type = '';
                 $natTopDownloaded = $this->Album->query($sql); 
@@ -1358,48 +1230,37 @@ STR;
                  $nationalTopVideoDownload = array();
                  $countryPrefix = $this->Session->read('multiple_countries');                 
                  $sql_us_10_v =<<<STR
-                SELECT 
-                                Video.ProdID,
-                                Video.ReferenceID,
-                                Video.Title,
-                                Video.ArtistText,
-                                Video.DownloadStatus,
-                                Video.VideoTitle,
-                                Video.Artist,
-                                Video.Advisory,
-                                Video.Sample_Duration,
-                                Video.FullLength_Duration,
-                                Video.provider_type,
-                                Genre.Genre,
-                                Country.Territory,
-                                Country.SalesDate,
-                                Full_Files.CdnPath,
-                                Full_Files.SaveAsName,
-                                Full_Files.FileID,
-                                Image_Files.FileID,
-                                Image_Files.CdnPath,
-                                Image_Files.SourceURL,
-                                PRODUCT.pid
-                FROM
-                                video AS Video
-                                                LEFT JOIN
-                                File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-                                                LEFT JOIN
-                                Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type) 
-                                                LEFT JOIN
-         {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$country') AND (Video.provider_type = Country.provider_type)  AND (Country.SalesDate != '') AND (Country.SalesDate < NOW())
-                                                LEFT JOIN
-                                PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
-                LEFT JOIN
-                                File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-                WHERE
-                                ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type)) )  AND 1 = 1
+                 SELECT 
+                        Video.ProdID,
+                        Video.ReferenceID,
+                        Video.Title,
+                        Video.ArtistText,
+                        Video.DownloadStatus,
+                        Video.VideoTitle,
+                        Video.Artist,
+                        Video.Advisory,
+                        Video.Sample_Duration,
+                        Video.FullLength_Duration,
+                        Video.provider_type,
+                        Genre.Genre,
+                        Country.Territory,
+                        Country.SalesDate,
+                        Full_Files.CdnPath,
+                        Full_Files.SaveAsName,
+                        Full_Files.FileID,
+                        Image_Files.FileID,
+                        Image_Files.CdnPath,
+                        Image_Files.SourceURL
+                FROM video AS Video
+                LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+                LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
+                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
+                LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+                WHERE ( (Video.DownloadStatus = '1') AND ((Video.ProdID, Video.provider_type) IN ($ids_provider_type))) AND (Country.Territory = '$country') AND (Country.SalesDate != '') AND (Country.SalesDate < NOW()) 
                 GROUP BY Video.ProdID
                 ORDER BY FIELD(Video.ProdID, $ids) ASC
-                LIMIT 10 
-                  
+                LIMIT 10                   
 STR;
-                    //echo $sql_national_100_v; die;
                     $usTop10VideoDownload = $this->Video->query($sql_us_10_v);
                     foreach($usTop10VideoDownload as $key => $value){
                         $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['Image_Files']['CdnPath']."/".$value['Image_Files']['SourceURL']);
@@ -1407,24 +1268,14 @@ STR;
                         $usTop10VideoDownload[$key]['videoAlbumImage'] = $videoAlbumImage;
                     }        
                     Cache::write("national_us_top10_videos".$territory, $usTop10VideoDownload);
-                    
-//                    echo "<pre>";
-//                    print_r($usTop10VideoDownload);
-//                    die; 
                 
-               }
-               else
+                }
+                else
                 {
                    $usTop10VideoDownload = Cache::read("national_us_top10_videos".$territory); 
                 }
-               }
-                
-
-                $this->set('usTop10VideoDownload',$usTop10VideoDownload);
-                
-                
-                
-                
+            }
+            $this->set('usTop10VideoDownload',$usTop10VideoDownload);
         }
 
 
