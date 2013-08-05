@@ -218,7 +218,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                     </div>
-					<a class="add-to-wishlist-button" href="#"></a>
+					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo $videoDownloadResult['Video']['Title'];  ?></a></div>
 					<div class="artist-name"><a href="#">
                     <?php
