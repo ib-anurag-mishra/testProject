@@ -513,7 +513,7 @@ STR;
             $VideosData = $this->Album->query($VideosSql);
             $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
             $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
-                                //echo "<pre>"; print_r($VideosData); die;
+                                echo "<pre>"; print_r($VideosData); die;
             
             if (!empty($VideosData)) {
                 Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
