@@ -1000,6 +1000,7 @@ $(function() {
 
 	$('.site-nav .most-popular a').on('mouseenter',function(e){
 		e.preventDefault(); 
+                console.log('entered');
 		$('.most-popular-sub-nav').addClass('active');
 		
 	});
