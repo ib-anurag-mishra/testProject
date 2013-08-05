@@ -3058,7 +3058,7 @@ STR;
     function my_wishlist() {
         //set the layout
         $this->layout = 'home';
-        
+        $countryPrefix = $this->Session->read('multiple_countries');
         //fetch the session variables
         $libraryId = $this->Session->read('library');       
         $patronId = $this->Session->read('patron');
@@ -3125,13 +3125,18 @@ STR;
                             Albums.provider_type,
                             File.CdnPath,
                             File.SourceURL,
-                            File.SaveAsName                          
+                            Country.Territory,
+                            Country.SalesDate,
+                            File.SaveAsName 
+                            
                             
                     FROM
                             Songs AS Song
                                     LEFT JOIN
                             wishlists AS wishlists ON ( (wishlists.ProdID = Song.ProdID) && (wishlists.provider_type = Song.provider_type) )
-                                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID) 
+                                    LEFT JOIN
+                            {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '')
+                                    INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) INNER JOIN File ON (Albums.FileID = File.FileID)
                     WHERE
                             library_id='$libraryId' and patron_id='$patronId' order by $songSortBy $sortType                               
 
@@ -3143,10 +3148,8 @@ STR;
                     
                     
                     
-              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.id','WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL'),'order'=>"$videoSortBy $sortType"));
+              $wishlistResultsVideos =  $this->WishlistVideo->find('all',array('joins'=>array(array('table' => 'video','alias' => 'Video','type' => 'LEFT','conditions' => array('WishlistVideo.ProdID = Video.ProdID','WishlistVideo.provider_type = Video.provider_type')),array('table' => 'File','alias' => 'File','type' => 'LEFT','conditions' => array('Video.Image_FileID = File.FileID')),array('table' => $countryPrefix.'countries','alias' => 'Country','type' => 'LEFT','conditions' => array('Country.ProdID = Video.ProdID','Video.provider_type = Country.provider_type','Country.SalesDate != ""'))),'group' => 'WishlistVideo.id','conditions' => array('library_id' => $libraryId,'patron_id' => $patronId),'fields'=>array('WishlistVideo.id','WishlistVideo.ProdID','WishlistVideo.provider_type','WishlistVideo.track_title','WishlistVideo.created','WishlistVideo.patron_id','WishlistVideo.library_id','WishlistVideo.artist', 'Video.Title', 'File.CdnPath', 'File.SourceURL','Country.Territory','Country.SalesDate'),'order'=>"$videoSortBy $sortType"));
 
-          
-              
                 
         $this->set('wishlistResults',$wishlistResults);
         $this->set('wishlistResultsVideos',$wishlistResultsVideos);
