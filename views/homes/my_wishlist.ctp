@@ -552,7 +552,7 @@ $ieVersion =  ieversion();
 							echo $wishlistResultsVideo['WishlistVideo']['track_title']; 
 					 	}
 					?>
-                    </div>
+                                        </div>
 					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
 					<div class="artist-name"><a href="#">
