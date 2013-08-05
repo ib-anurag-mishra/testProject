@@ -595,7 +595,7 @@ $ieVersion =  ieversion();
 							$finalVideoUrlArr = str_split($finalVideoUrl, ceil(strlen($finalVideoUrl)/3));
                             ?>
                             <span class="beforeClick" id="download_song_<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>">
-                                                <?php if($wishlistResultsVideo[$i]['Country']['SalesDate'] <= date('Y-m-d')) { ?>
+                                                <?php if($wishlistResultsVideo['Country']['SalesDate'] <= date('Y-m-d')) { ?>
 								<?php if($ieVersion > 8 || $ieVersion < 0){ ?>
 									<a href='#' onclick='return historyDownloadOthers("<?php echo $wishlistResultsVideo['WishlistVideo']['ProdID']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['library_id']; ?>","<?php echo $wishlistResultsVideo['WishlistVideo']['patron_id']; ?>", "<?php echo urlencode($finalVideoUrlArr[0]);?>", "<?php echo urlencode($finalVideoUrlArr[1]);?>", "<?php echo urlencode($finalVideoUrlArr[2]);?>");'><?php __('Download');?></a>
 								<?php } else {?>
