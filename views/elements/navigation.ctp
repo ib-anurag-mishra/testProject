@@ -213,7 +213,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <?php
                     $newsCss = "regular";
                     $videoCss = "regular";
-                    $mostPopularCss = "regular";
+                    $mostPopularCss = "";
                     $genreCss = "regular";
                     $faqCss = "regular";
 
