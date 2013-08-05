@@ -496,10 +496,10 @@ $ieVersion =  ieversion();
 									<![endif]-->							
                                                                     <?php } else { ?>
                                                                         <![if !IE]>
-									<?php __('Comming Soon'); ?>
+									<?php __('Coming Soon'); ?>
 									<![endif]>
 									<!--[if IE]>
-									<?php __('Comming Soon');?>
+									<?php __('Coming Soon');?>
 									<![endif]-->							
                                                                         <?php  } ?>
 								</span>
@@ -605,10 +605,10 @@ $ieVersion =  ieversion();
 								<?php } ?>
                                                             <?php } else { ?>
                                                                     <![if !IE]>
-                                                                    <?php __('Comming Soon'); ?>
+                                                                    <?php __('Coming Soon'); ?>
                                                                     <![endif]>
                                                                     <!--[if IE]>
-                                                                    <?php __('Comming Soon');?>
+                                                                    <?php __('Coming Soon');?>
                                                                     <![endif]-->							
                                                            <?php  } ?>
 							</span>
