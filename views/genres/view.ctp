@@ -166,13 +166,7 @@ $(document).ready(function(){
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){                  
-            
-        
-        
-            
-            
-            
-            
+                               
             $('#artist_loader').show();    
             var data = "npage="+artistPage;
             if( (preValue != artistPage )  ){                

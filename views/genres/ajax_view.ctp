@@ -5,7 +5,7 @@ var preValue= 1;
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
            
-          // $("div span:last-child")
+          // alert($(this).datatpage);
 
             $('#artist_loader').show();
             if((preValue != ajaxartistPage) && (ajaxartistPage < 7 )){                
@@ -22,7 +22,9 @@ var preValue= 1;
 
                         },
                         async:   false,
-                        error:function (XMLHttpRequest, textStatus, errorThrown) { alert('No artist list available')}
+                        error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                            //alert('No artist list available')
+                        }
                 });
             } 
        }
