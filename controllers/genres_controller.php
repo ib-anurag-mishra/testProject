@@ -453,7 +453,7 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             //error_reporting(1);
             //ini_set('display_errors',1);
-           // $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+           echo  $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
            //$totalPageCountNo =$totalPageCountNo+1;
        
           
