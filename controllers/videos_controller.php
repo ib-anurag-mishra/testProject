@@ -338,8 +338,7 @@ class VideosController extends AppController {
         $country = $this->Session->read('territory');
         $ids_provider_type_video = '';
 
-                    //if (($libDownload = Cache::read("lib_videos".$libId)) === false)
-                    if(1)
+                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
@@ -407,7 +406,7 @@ class VideosController extends AppController {
 				$this->Video->recursive = 2;
                                 $countryPrefix = $this->Session->read('multiple_countries');
                                 
-                                //  Songs                             
+                                //  videos                             
                                 
 				$topDownloaded_query_videos =<<<STR
 				SELECT 
@@ -439,24 +438,18 @@ class VideosController extends AppController {
 				LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
 				LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
                                 INNER JOIN File ON (Video.Image_FileID = File.FileID)
-				WHERE((Video.DownloadStatus = '1') AND (($top_ten_condition_videos) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
+				WHERE((Video.DownloadStatus = '1') AND ($top_ten_condition_videos) AND (Country.Territory = '$country') AND Country.SalesDate != '' AND Country.SalesDate < NOW() AND 1 = 1)
 				GROUP BY Video.ProdID
 				ORDER BY FIELD(Video.ProdID, $ids) ASC
 				LIMIT 10
 STR;
-                               
-                                 
-                               //  echo "Video: ".$topDownloaded_query_videos;
-                                 
                             $topDownload_video = $this->Video->query($topDownloaded_query_videos);
                             
                             foreach($topDownload_video as $key => $value){
                                 $albumArtwork = shell_exec('perl files/tokengen_artwork ' . $value['File']['CdnPath']."/".$value['File']['SourceURL']); //'sony_test/'.
                                 $videoAlbumImage =  Configure::read('App.Music_Path').$albumArtwork;
                                 $topDownload_video[$key]['videoAlbumImage'] = $videoAlbumImage;
-                            }      
-                            
-			
+                            } 			
 			} else { 
 				$topDownload_video = array();                               
 			}
@@ -469,9 +462,6 @@ STR;
                 }
 		
                 return $topDownload_video;
-        
-        
-        
     }
     
     
@@ -487,9 +477,7 @@ STR;
         
         
         $territory = $this->Session->read('territory');
-//        if(empty($territory)){
-//            $territory = 'US';
-//        }
+
         $prefix = strtolower($territory)."_";
         
         
