@@ -553,7 +553,7 @@ $ieVersion =  ieversion();
 					 	}
 					?>
                     </div>
-					<a class="add-to-wishlist-button" href="#"></a>
+					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
 					<div class="artist-name"><a href="#">
                     <?php
@@ -566,7 +566,7 @@ $ieVersion =  ieversion();
 						
 					?></a></div>
 					
-					<div class="wishlist-popover">
+					<!--<div class="wishlist-popover">
 						
 						<div class="share clearfix">
 							<p>Share via</p>
@@ -574,7 +574,7 @@ $ieVersion =  ieversion();
 							<a class="twitter" href="#"></a>
 						</div>
 						
-					</div>
+					</div>-->
 					<div class="download">
                         <a href="#">
                             
