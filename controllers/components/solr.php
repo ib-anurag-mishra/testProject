@@ -78,13 +78,13 @@ class SolrComponent extends Object {
                 break;
               case 'artist':
                 //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.'^200 OR ArtistText:*'.$searchkeyword.'*)';
-                $query = '(CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:'.$searchkeyword.'^200)';
+                $query = '(CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:('.$searchkeyword.')^200';
                 break;
               case 'label':
-                $query = '(CLabel:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Label:'.$searchkeyword.'^200)';
+                $query = '(CLabel:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Label:('.$searchkeyword.')^200';
                 break;
               case 'video':
-                $query = '(CVideoTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR VideoTitle:'.$searchkeyword.'^200)';
+                $query = '(CVideoTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR VideoTitle:('.$searchkeyword.')^200';
                 break;
               case 'composer':
                 //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.'^200 OR Composer:*'.$searchkeyword.'*)';
@@ -132,7 +132,7 @@ class SolrComponent extends Object {
 
           $query = $query.' AND Territory:'.$country.$cond;
 
-          echo '<br /> Rows :'.$query.'<br />'; die;
+          // echo '<br /> Rows :'.$query.'<br />'; die;
 
           if($page == 1){
             $start = 0;
