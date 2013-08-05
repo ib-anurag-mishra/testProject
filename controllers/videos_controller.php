@@ -485,8 +485,7 @@ STR;
         
         if(isset($this->params['pass'][0]))
         {
-            //if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
-            if(1){
+            if ($VideosData = Cache::read("musicVideoDetails" . $this->params['pass'][0]) === false) {
             $prefix = strtolower($this->Session->read('territory')).'_';  
             $VideosSql  =
             "SELECT Video.ProdID, Video.ReferenceID,  Video.VideoTitle, Video.ArtistText, Video.FullLength_Duration, Video.CreatedOn, Video.Image_FileID, Video.provider_type, Video.Genre,  Sample_Files.CdnPath,
@@ -514,7 +513,7 @@ STR;
             $VideosData = $this->Album->query($VideosSql);
             $videoArtwork = shell_exec('perl files/tokengen_artwork ' .$VideosData[0]['File']['CdnPath']."/".$VideosData[0]['File']['SourceURL']);
             $VideosData[0]['videoImage'] = Configure::read('App.Music_Path').$videoArtwork;
-                              //  echo "<pre>"; print_r($VideosData); die;
+                                //echo "<pre>"; print_r($VideosData); die;
             
             if (!empty($VideosData)) {
                 Cache::write("musicVideoDetails" . $this->params['pass'][0], $VideosData);
