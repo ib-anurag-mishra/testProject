@@ -407,7 +407,7 @@ STR;
             ( (Song.DownloadStatus = '1')  )   AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
             GROUP BY Song.ReferenceID
             ORDER BY Country.SalesDate ASC
-            LIMIT 5      
+            LIMIT 20      
 STR;
 
 //AND ((Song.ProdID, Song.provider_type) IN ($ids_provider_type))
