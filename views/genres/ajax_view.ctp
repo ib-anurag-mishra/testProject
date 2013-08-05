@@ -5,10 +5,10 @@ var preValue= 1;
        if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight)
        {
            
-
+          // $("div span:last-child")
 
             $('#artist_loader').show();
-            if(preValue != ajaxartistPage ){                
+            if((preValue != ajaxartistPage) && (ajaxartistPage < 7 )){                
                 preValue= ajaxartistPage ;
                 var data = "npage="+ajaxartistPage;
                 jQuery.ajax({
@@ -77,7 +77,7 @@ var preValue= 1;
                                                         echo " <li>";
                                                         $ArtistName = $this->getTextEncode($genres[$i]['Song']['ArtistText']);                                                       
                                                         $url = "artists/album_ajax/" . str_replace('/','@',base64_encode($genres[$i]['Song']['ArtistText'])) . "/" . base64_encode($genre);
-                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."' style='cursor:pointer;' data-tpage='".$totalPages."'>";
+                                                        echo "<a onclick=\"showAllAlbumsList('".$url."')\" data-artist='".$ArtistName."' style='cursor:pointer;' >";
                                                         echo wordwrap($ArtistName, 35, "<br />\n", TRUE);
                                                         echo '</a>';
                                                         echo '</li>';                                                                    

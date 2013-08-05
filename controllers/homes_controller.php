@@ -498,28 +498,19 @@ STR;
         Genre.Genre,
         Country.Territory,
         Country.SalesDate,
-        Full_Files.CdnPath,
-        Full_Files.SaveAsName,
-        Full_Files.FileID,
         Image_Files.FileID,
         Image_Files.CdnPath,
-        Image_Files.SourceURL,
-        PRODUCT.pid
+        Image_Files.SourceURL
     FROM
         video AS Video
     LEFT JOIN
-        File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-    LEFT JOIN
         Genre AS Genre ON (Genre.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type)
     LEFT JOIN
-        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID)  
-    LEFT JOIN
-        PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (PRODUCT.provider_type = Video.provider_type)
+        {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
     LEFT JOIN
         File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
     WHERE
-        ( (Video.DownloadStatus = '1')   )  AND 1 = 1 AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
-    GROUP BY Video.ProdID
+        ( (Video.DownloadStatus = '1')) AND (Country.Territory = '$territory')  AND (Country.SalesDate != '') AND (Country.SalesDate > NOW())
     ORDER BY Country.SalesDate ASC
     LIMIT 20
 STR;
@@ -689,14 +680,6 @@ STR;
 		$patId = $this->Session->read('patron');
 		$country = $this->Session->read('territory');
                 
-//                echo "<br>Lib ID:".$libId;
-//                echo "<br>Pat ID:".$patId;
-//                echo "<br>Country:".$country;
-                
-//                $libId  =1;
-//                $patId= 8389;
-//                $country=   'us';
-                
                 /////////////////////////////////////Songs///////////////////////////////////////////////
                 
 		$ids = '';
@@ -705,9 +688,6 @@ STR;
 		$patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
 		$this->set('libraryDownload',$libraryDownload);
 		$this->set('patronDownload',$patronDownload);
-		//echo "Value:[".$libDownload = Cache::read("lib".$libId)."]";
-                //print_r($libDownload = Cache::read("lib".$libId));
-                   // if(1)
                     if (($libDownload = Cache::read("lib".$libId)) === false)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
@@ -723,9 +703,7 @@ STR;
 			$sony_ids = array();
 			$sony_ids_str = '';
 			$ioda_ids_str = '';  
-                        
-                        
-//			$topDownloaded = Cache::read("lib".$libId); 
+
 			foreach($topDownloaded as $k => $v){
 			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
 			   	if(empty($ids)){
@@ -837,13 +815,7 @@ STR;
                              $songs_img =  Configure::read('App.Music_Path').$songs_img;
                              $topDownload_songs[$key]['songs_img'] = $songs_img;
                         }     
-//                        echo "Songs: ".$topDownloaded_query_songs;
-//                        exit;
-                        
-//                            echo "<pre>";
-//                            print_r($topDownload_songs);
-//                            die;
-			
+
 			} else { 
 				$topDownload_songs = array();                               
 			}
@@ -882,11 +854,6 @@ STR;
 			$sony_ids_str = '';
 			$ioda_ids_str = ''; 
                                                 
-//                        echo "<pre>";
-//                        print_r($topDownloaded_albums);
-//                        die;
-                        
-//			$topDownloaded_albums = Cache::read("lib".$libId); 
 			foreach($topDownloaded_albums as $k => $v){
 			if($SiteMaintainLDT['Siteconfig']['svalue'] == 1){
 			   	if(empty($ids)){
@@ -915,9 +882,7 @@ STR;
 				  $ioda_ids[] = $v['Download']['ProdID'];
 				}
 			  }				
-			}
-
-                                               
+			}                   
                         
 			if($ids != ''){ 
 				if(!empty($sony_ids)){
@@ -991,9 +956,6 @@ STR;
 				ORDER BY count(Song.ProdID) DESC
 				LIMIT 10
 STR;
-                               
-                                 
-                           //    echo "Query: ".$topDownloaded_query_albums; //die;
                                  
                             $topDownload_albums = $this->Album->query($topDownloaded_query_albums);
                             if(!empty($topDownload_albums)){
@@ -1003,8 +965,6 @@ STR;
                                      $topDownload_albums[$key]['album_img'] = $album_img;
                                 }
                             }
-                            
-			
 			} else { 
 				$topDownload_albums = array();                               
 			}
@@ -1017,12 +977,8 @@ STR;
                 }
 		$this->set('topDownload_albums',$topDownload_albums); 
                 
-//                echo "<pre>";
-//                print_r($topDownload_albums);
-                
                 ////////////////////////////////////////////////Videos///////////////////////////////////////////////////
-                
-               
+
                 $topDownload_videos_data = $this->requestAction(
                 array('controller' => 'videos', 'action' => 'my_lib_top_10_videos'), array(
                              'data'=>array(
@@ -1033,35 +989,22 @@ STR;
                                     )
                                 );
 
-                
-                
-                
-               $this->set('topDownload_videos_data',$topDownload_videos_data);   
-                
+               $this->set('topDownload_videos_data',$topDownload_videos_data);                   
 	}
         
         function us_top_10()
         {
-            
             $this->layout = 'home';  
 
             $libId = $this->Session->read('library');
             $patId = $this->Session->read('patron');
             $territory = $this->Session->read('territory');
             
-//            $libId = 1;
-//            $territory = 'us';
-            
-            
-                
-               
             $libraryDownload = $this->Downloads->checkLibraryDownload($libId);
             $patronDownload = $this->Downloads->checkPatronDownload($patId,$libId);
             $this->set('libraryDownload',$libraryDownload);
             $this->set('patronDownload',$patronDownload);
-            
-            
-            
+
             //////////////////////////////////////////////Songs//////////////////////////////////////////////////////////////////////////
             // National Top Downloads functionality
             if(!empty($territory)){  
@@ -4241,23 +4184,16 @@ SELECT
         Full_Files.FileID,
         Image_Files.FileID,
         Image_Files.CdnPath,
-        Image_Files.SourceURL,
-        PRODUCT.pid
-FROM
-        video AS Video
-            LEFT JOIN
-    File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
-            LEFT JOIN
-    Genre AS Genre ON (Genre.ProdID = Video.ProdID)
-            LEFT JOIN
-    {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) 
-            LEFT JOIN
-    PRODUCT ON (PRODUCT.ProdID = Video.ProdID) AND (Video.provider_type = Genre.provider_type) AND (PRODUCT.provider_type = Video.provider_type)
-            LEFT JOIN
-    File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
-WHERE
-( (Video.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
-    GROUP BY Video.ProdID ORDER BY Country.SalesDate DESC LIMIT 100 
+        Image_Files.SourceURL
+FROM video AS Video
+LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
+LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID)
+LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Video.provider_type = Country.provider_type)
+LEFT JOIN File AS Image_Files ON (Video.Image_FileID = Image_Files.FileID) 
+WHERE ((Video.DownloadStatus = '1')) AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW()) 
+GROUP BY Video.ProdID 
+ORDER BY Country.SalesDate DESC 
+LIMIT 100 
 STR;
 
             $coming_soon_videos = $this->Video->query($sql_cs_videos);    
@@ -4285,7 +4221,7 @@ STR;
            $this->Song->recursive = 2;
            $countryPrefix = $this->Session->read('multiple_countries');     
                 
-           $sql_coming_soon_albums =<<<STR
+           $new_releases_albums_query =<<<STR
                 SELECT 
                   Song.ProdID,
                   Song.ReferenceID,
@@ -4304,22 +4240,25 @@ STR;
                   File.CdnPath,
                   File.SourceURL,
                   File.SaveAsName
+                  Full_Files.CdnPath,
+                  Full_Files.SaveAsName,
+                  Full_Files.FileID,
                 FROM
                   Songs AS Song
-                                    
+                LEFT JOIN File AS Full_Files ON (Video.FullLength_FileID = Full_Files.FileID)
                 LEFT JOIN Genre AS Genre ON (Genre.ProdID = Song.ProdID) AND  (Song.provider_type = Genre.provider_type)
-                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) 
+                LEFT JOIN {$countryPrefix}countries AS Country ON (Country.ProdID = Song.ProdID) AND (Song.provider_type = Country.provider_type)
                 INNER JOIN Albums ON (Song.ReferenceID=Albums.ProdID) 
                 INNER JOIN File ON (Albums.FileID = File.FileID) 
                 WHERE
-                  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Song.provider_type = Country.provider_type) AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
+                  ( (Song.DownloadStatus = '1')) AND 1 = 1 AND (Country.Territory = '$territory') AND (Country.SalesDate != '') AND (Country.SalesDate <= NOW())                    
                 group by Song.ReferenceID
                 ORDER BY Country.SalesDate DESC
                 LIMIT 100
 STR;
 
             //GROUP BY  Song.ReferenceID
-            $new_releases_albums_rs = $this->Album->query($sql_coming_soon_albums); 
+            $new_releases_albums_rs = $this->Album->query($new_releases_albums_query); 
             foreach($new_releases_albums_rs as $key => $value){
                 if($value['Song']['provider_type'] == 'ioda')
                 {
