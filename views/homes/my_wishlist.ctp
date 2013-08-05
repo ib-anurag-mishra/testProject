@@ -538,7 +538,7 @@ $ieVersion =  ieversion();
 					<div class="date"><?php echo date("Y-m-d",strtotime($wishlistResultsVideo['WishlistVideo']['created'])); ?></div>
 					<div class="small-album-container">
 						<?php
-                        $videoImage = shell_exec('perl files/tokengen_artwork' .$wishlistResultsVideo['File']['CdnPath']."/".$wishlistResultsVideo['File']['SourceURL']);
+                        $videoImage = shell_exec('perl files/tokengen_artwork ' .$wishlistResultsVideo['File']['CdnPath']."/".$wishlistResultsVideo['File']['SourceURL']);
                         $videoImageUrl = Configure::read('App.Music_Path').$videoImage;
                         ?>
                         <img src="<?php echo $videoImageUrl; ?>" alt="video-cover" width="67" height="40" />
@@ -552,8 +552,8 @@ $ieVersion =  ieversion();
 							echo $wishlistResultsVideo['WishlistVideo']['track_title']; 
 					 	}
 					?>
-                    </div>
-					<a class="add-to-wishlist-button" href="#"></a>
+                                        </div>
+					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo substr($wishlistResultsVideo['Video']['Title'],0,15);  ?>...</a></div>
 					<div class="artist-name"><a href="#">
                     <?php
@@ -566,7 +566,7 @@ $ieVersion =  ieversion();
 						
 					?></a></div>
 					
-					<div class="wishlist-popover">
+					<!--<div class="wishlist-popover">
 						
 						<div class="share clearfix">
 							<p>Share via</p>
@@ -574,7 +574,7 @@ $ieVersion =  ieversion();
 							<a class="twitter" href="#"></a>
 						</div>
 						
-					</div>
+					</div>-->
 					<div class="download">
                         <a href="#">
                             

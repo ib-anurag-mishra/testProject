@@ -217,8 +217,8 @@ $ieVersion =  ieversion();
 							echo $videoDownloadResult['Videodownload']['track_title']; 
 					 	}
 					?>
-                    </div>
-					<a class="add-to-wishlist-button" href="#"></a>
+                                        </div>
+					<!--<a class="add-to-wishlist-button" href="#"></a>-->
 					<div class="album-title"><a href="#"><?php echo $videoDownloadResult['Video']['Title'];  ?></a></div>
 					<div class="artist-name"><a href="#">
                     <?php
