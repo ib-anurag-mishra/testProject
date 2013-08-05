@@ -599,7 +599,7 @@ $(function() {
 	
 
 
-	$('.news .whats-happening #whats-happening-grid .post').bind('mousewheel',function(e){
+	$('.news .whats-happening #whats-happening-grid .post-excerpt').bind('mousewheel',function(e){ /* changed 080313 .. .post is now .post-excerpt */
 	
 	
 		
