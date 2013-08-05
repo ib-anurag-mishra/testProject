@@ -230,7 +230,8 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     }
                     else if($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10' || $_SERVER['REQUEST_URI'] == '/homes/us_top_10')
                     {
-                        $mostPopularCss = "regular active";
+                        // $mostPopularCss = "regular active";
+                        $mostPopularCss = "sidebar-anchor";
                     }
                     else if($_SERVER['REQUEST_URI'] == 'genres/view')
                     {
@@ -249,12 +250,12 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
 			<li class="regular"><?php echo $html->link(__('News', true), array('controller' => 'homes','action'=>'index'), array("class"=>$newsCss));?></li>			
                         <li class="regular"><?php echo $html->link(__('Music Videos', true), array('controller' => 'videos', 'action' =>'index'), array("class"=>$videoCss)); ?></li></li>
                         <li class="most-popular"><a href="#" class="<?php echo $mostPopularCss; ?>" style="cursor:default"><?php __('Most Popular'); ?></a>
-                        <ul class="<?php echo $ul_class; ?>">
-                                                                    <?php if($this->Session->read("patron")){ ?>
-                                                                    <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
-                                                                    <?php } ?>
-                                                                    <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css)); ?></li>
-                                                            </ul>
+                            <ul class="<?php echo $ul_class; ?>">
+                                    <?php if($this->Session->read("patron")){ ?>
+                                    <li><?php echo $html->link(__('My Lib Top 10', true), array('controller' => 'homes', 'action' =>'my_lib_top_10'),array('class'=>$my_lib_css)); ?></li>
+                                    <?php } ?>
+                                    <li><?php echo $html->link(__('US Top 10', true), array('controller' => 'homes', 'action' =>'us_top_10'),array('class'=>$us_top_css)); ?></li>
+                            </ul>
                         </li>
                         <li class="regular"><?php echo $html->link(__('New Releases', true), array('controller' => 'homes', 'action' =>'new_releases'), array("class"=>$newReleaseCss)); ?></li></li> 
                         <li class="regular"><?php echo $html->link(__('Genres', true), array('controller' => 'genres', 'action' =>'view'), array("class"=>$genreCss)); ?></li></li>   
