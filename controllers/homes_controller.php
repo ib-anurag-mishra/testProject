@@ -422,8 +422,8 @@ STR;
         */ 
         $territory = $this->Session->read('territory');
 
-        //if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {  
-        if(1) {
+        if (($coming_soon = Cache::read("coming_soon_songs".$territory)) === false) {  
+        //if(1) {
           // Show from DB          
           $this->Song->recursive = 2;
           $countryPrefix = $this->Session->read('multiple_countries');                                
@@ -478,8 +478,8 @@ STR;
                 $this->set('coming_soon_rs', $coming_soon_rs); 
                 
                 // Videos
-                //if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
-                if(1)
+                if (($coming_soon = Cache::read("coming_soon_videos".$territory)) === false)    // Show from DB
+                //if(1)
                 {
                     $this->Song->recursive = 2;
                     $countryPrefix = $this->Session->read('multiple_countries');

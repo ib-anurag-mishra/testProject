@@ -213,7 +213,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     <?php
                     $newsCss = "regular";
                     $videoCss = "regular";
-                    $mostPopularCss = "regular";
+                    $mostPopularCss = "";
                     $genreCss = "regular";
                     $faqCss = "regular";
 
@@ -227,13 +227,13 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                     }
                     else if($_SERVER['REQUEST_URI'] == '/homes/my_lib_top_10' || $_SERVER['REQUEST_URI'] == '/homes/us_top_10')
                     {
-                        $mostPopularCss = "regular active";
+                        $mostPopularCss = "active";
                     }
-                    else if($_SERVER['REQUEST_URI'] == 'genres/view')
+                    else if($_SERVER['REQUEST_URI'] == '/genres/view')
                     {
                         $genreCss = "regular active";
                     }
-                     else if($_SERVER['REQUEST_URI'] == 'homes/new_releases')
+                     else if($_SERVER['REQUEST_URI'] == '/homes/new_releases')
                     {
                         $newReleaseCss = "regular active";
                     }
