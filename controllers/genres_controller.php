@@ -385,6 +385,7 @@ Class GenresController extends AppController
 		$genre = base64_decode($Genre);
 		$genre = mysql_escape_string($genre);
                 
+                
                 if($genre != 'All'){
                    
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
@@ -428,7 +429,9 @@ Class GenresController extends AppController
                             'all_condition' => ((is_array($condition) && isset($condition['Song.ArtistText LIKE'])) ? "Song.ArtistText LIKE '" . $condition['Song.ArtistText LIKE'] . "'" : (is_array($condition) ? $condition[0] : $condition))
                         );
                     }
-
+                    
+                    
+                    
                     $this->Song->unbindModel(array('hasOne' => array('Participant')));
                     $allArtists = $this->paginate('Song');
                     $allArtistsNew = $allArtists;
@@ -450,7 +453,7 @@ Class GenresController extends AppController
             $this -> layout = 'ajax';
             //error_reporting(1);
             //ini_set('display_errors',1);
-           // $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+          
            //$totalPageCountNo =$totalPageCountNo+1;
        
           
@@ -534,6 +537,13 @@ Class GenresController extends AppController
             $allArtists = $this->paginate('Song');
             
             
+           
+            
+            
+             //echo  $totalPageCountNo =  $this->params['paging']['Song']['pageCount'];
+             
+              echo $_REQUEST['npage'] .'<='.$this->params['paging']['Song']['pageCount'];
+             
                 $allArtistsNew = $allArtists;
                 for($i=0;$i<count($allArtistsNew);$i++)
                 {
