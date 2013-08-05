@@ -475,13 +475,15 @@ img {
 			height:             0;
 			margin-top:         10px;
 			margin-right:       10px;
+                        display: none;
 			
 
-			.transition(height 1s);
+		/*	.transition(height 1s); */
 			&.active {				
 				
 				height:             200px;
-				.transition(height 500ms);
+                                display: block;		
+			/*	.transition(height 500ms);  */
 				
 			}
 		}
