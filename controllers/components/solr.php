@@ -78,7 +78,7 @@ class SolrComponent extends Object {
                 break;
               case 'artist':
                 //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.'^200 OR ArtistText:*'.$searchkeyword.'*)';
-                $query = '(CArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:'.$searchkeyword.'^200)';
+                $query = '(CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:'.$searchkeyword.'^200)';
                 break;
               case 'label':
                 $query = '(CLabel:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Label:'.$searchkeyword.'^200)';
