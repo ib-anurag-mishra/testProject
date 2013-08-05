@@ -166,33 +166,36 @@ $(document).ready(function(){
     var artistPage = 2;
     $("#artistscroll").scroll(function(){         
         if($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight){                  
-            
-        
-        
-            
-            
-            
-            
-            $('#artist_loader').show();    
+                               
+            $('#artist_loader').show();
+            var totalPages = <?=$totalPages?>;
             var data = "npage="+artistPage;
-            if( (preValue != artistPage )  ){                
-                preValue= artistPage ;
-                var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
-           
-                jQuery.ajax({
-                    type: "post",  // Request method: post, get
-                    url: link, // URL to request
-                    data: data,  // post data
-                    success: function(newitems) {                        
-                        artistPage++;
-                        $('#artist_loader').hide();
-                        $('#artistlistrecord').append(newitems);                    
-                    },
-                    async:   true,
-                    error:function (XMLHttpRequest, textStatus, errorThrown) { 
-                        //alert('No artist list available');
-                    }
-                });            
+            
+            if( (preValue != artistPage ) && (artistPage <= totalPages ) ){  
+                
+                if(artistPage <= totalPages ){
+                    
+                    preValue= artistPage ;
+                    var link =webroot+'genres/ajax_view_pagination/page:'+artistPage+'/<?=base64_encode($genre); ?>'+'/All';
+
+                    jQuery.ajax({
+                        type: "post",  // Request method: post, get
+                        url: link, // URL to request
+                        data: data,  // post data
+                        success: function(newitems) {                        
+                            artistPage++;
+                            $('#artist_loader').hide();
+                            $('#artistlistrecord').append(newitems);                    
+                        },
+                        async:   true,
+                        error:function (XMLHttpRequest, textStatus, errorThrown) { 
+                            //alert('No artist list available');
+                        }
+                    });            
+                
+                }else{
+                    $('#artist_loader').hide();
+                }
             }            
         }
     });
