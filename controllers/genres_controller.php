@@ -555,6 +555,7 @@ Class GenresController extends AppController
                 $this->set('genre',base64_decode($Genre)); 
             }else{
                 $this->autoRender = false;
+                exit;
             }
                    
 	}
