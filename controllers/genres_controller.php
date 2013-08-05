@@ -542,21 +542,23 @@ Class GenresController extends AppController
              
              // echo $_REQUEST['npage'] .'<='.$this->params['paging']['Song']['pageCount'];
             
-            if($_REQUEST['npage'] <= $this->params['paging']['Song']['pageCount']){
-                 $allArtistsNew = $allArtists;
-                for($i=0;$i<count($allArtistsNew);$i++)
+           
+            
+            $allArtistsNew = $allArtists;
+            for($i=0;$i<count($allArtistsNew);$i++)
+            {
+                if($allArtistsNew[$i]['Song']['ArtistText'] != "")
                 {
-                    if($allArtistsNew[$i]['Song']['ArtistText'] != "")
-                    {
-                        $allArtists[$i] = $allArtistsNew[$i];
-                    }
-                }           
-                $this->set('genres', $allArtists);
-                $this->set('genre',base64_decode($Genre)); 
-            }else{
-                $this->autoRender = false;
-                exit;
+                    $allArtists[$i] = $allArtistsNew[$i];
+                }
+            } 
+            
+             if($_REQUEST['npage'] <= $this->params['paging']['Song']['pageCount']){
+                $allArtists = array();
             }
+            
+            $this->set('genres', $allArtists);
+            $this->set('genre',base64_decode($Genre)); 
                    
 	}
 
