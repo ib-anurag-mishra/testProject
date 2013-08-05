@@ -174,7 +174,7 @@
                                                                                 </a>
 									</div>
 									<div class="artist-name">										
-                                                                                <a href="/artists/album/"<?php base64_encode($VideosData['Video']['ArtistText']); ?>">
+                                                                                <a href="/artists/album/"<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                                 <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
@@ -277,7 +277,7 @@
                                                                                 </a>
 								</div>
 								<div class="artist-name">
-									<a href="/artists/album/"<?php base64_encode($VideosData['Video']['ArtistText']); ?>">
+									<a href="/artists/album/"<?php echo base64_encode($VideosData['Video']['ArtistText']); ?>">
                                                                              <?php 
                                                                                         if (strlen($value['Video']['ArtistText']) >= 35 ) {
                                                                                                     $VideoArtist = $this->getTextEncode(substr($value['Video']['ArtistText'], 0, 35)) . "..";
