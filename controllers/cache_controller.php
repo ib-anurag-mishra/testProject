@@ -42,7 +42,7 @@ class CacheController extends AppController {
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
-        $territoryNames = array('US', 'CA', 'AU', 'NZ', 'IT');
+        $territoryNames = array('US', 'CA', 'AU', 'NZ', 'IT', 'IE', 'GB');
         $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'maintain_ldt'";
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $maintainLatestVideoDownload = false;

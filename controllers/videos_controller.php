@@ -338,7 +338,8 @@ class VideosController extends AppController {
         $country = $this->Session->read('territory');
         $ids_provider_type_video = '';
 
-                    if (($libDownload = Cache::read("lib_videos".$libId)) === false)
+                    //if (($libDownload = Cache::read("lib_videos".$libId)) === false)
+                    if(1)
                     {
 			$SiteMaintainLDT = $this->Siteconfig->find('first',array('conditions'=>array('soption'=>'maintain_ldt')));
                         
