@@ -390,13 +390,13 @@ $ieVersion =  ieversion();
             if($sort == 'artist'){
                 if($sortOrder == 'asc'){
                 ?>    
-                    <div class="artist-filter-button filter active" style="width:106px;cursor:pointer;">Artist</div>
+                    <div class="artist-filter-button filter active" style="cursor:pointer;">Artist</div>
                 <?php } else { ?>
-                    <div class="artist-filter-button filter active toggled" style="width:106px;cursor:pointer;">Artist</div>
+                    <div class="artist-filter-button filter active toggled" style="cursor:pointer;">Artist</div>
                 <?php } 
             } else {
                 ?>
-			<div class="artist-filter-button filter" style="width:106px;cursor:pointer;">Artist</div>
+			<div class="artist-filter-button filter" style="cursor:pointer;">Artist</div>
             <?php
             }
             if($sort == 'album'){
