@@ -53,6 +53,10 @@ class CacheController extends AppController {
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
        
              
+        print_r(Cache::read("genreUS"));
+        die;
+        
+        
         for ($i = 0; $i < count($territoryNames); $i++) {
             
             $territory = $territoryNames[$i];
