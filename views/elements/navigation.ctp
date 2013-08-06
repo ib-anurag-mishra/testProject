@@ -170,7 +170,25 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             ?>
                                             <div><?php echo $html->link(__('Logout', true), array('controller' => 'users', 'action' =>'logout'));?></div>
                                         </div>
-					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div>                                          
+					<div class="play-count"><span id='downloads_used'><?php echo $downloadCount; ?></span>/<?php echo $libraryInfo['Library']['library_user_download_limit']; ?></div> 
+                                        <?php
+                                                //  Hidden variable to be used in site.js for alerting user before video download
+                                        
+                                                    if($downloadCount<$libraryInfo['Library']['library_user_download_limit'])
+                                                    {
+                                                        ?>
+                                                            <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="1" />
+                                                        <?php
+                                                    }
+                                                    else
+                                                    {
+                                                          ?>
+                                                            <input type="hidden" name="hid_VideoDownloadStatus" id="hid_VideoDownloadStatus" value="0" />
+                                                        <?php
+                                                    }
+                                        
+                                        
+                                        ?>
 				</div>
 
 				<div class="plays-tooltip">

@@ -2377,17 +2377,25 @@ $(function() {
 	
 	
 
-		/* confirmation popups for video downloads */
-	$('.featured-video-download-now-button,.video-cover-container .download-now, .top-10-download-now-button, .top-100-download-now-button').on('click',function(e){
-		if (confirm('A video download requires 2 credits per download. Are you sure you want to continue?')) {
-		    // Yes
-		    console.log('yes');
+	/* confirmation popups for video downloads */
+	$('.featured-video-download-now-button,.video-cover-container .download-now, .video-cover-container .top-10-download-now-button, .video-container .top-10-download-now-button, .top-100-download-now-button,.video-tracklist-shadow-container .download a').on('click',function(e){
+		e.preventDefault();
+		
+		if ($("#hid_VideoDownloadStatus").val()) {
+			if (confirm('A video download requires 2 credits per download. Are you sure you want to continue?')) {
+			    // Yes
+			    console.log('yes');
+			} else {
+			    // No
+			    console.log('no');
+			}
 		} else {
-		    // No
-		    console.log('no');
+			
+			alert('Sorry, you do not have enough credits to download a video.');
 		}
 	
 	});
+	
 
 	
 	 
