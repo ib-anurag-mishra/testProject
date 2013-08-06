@@ -403,13 +403,16 @@ STR;
                 $this->Session->write('Config.language', 'en');
         }		
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
+        echo "<br>Query1: ".$this->News->lastQuery();
 
 
         if($news_count != 0){			
                 $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")));
+                echo "<br>Query2: ".$this->News->lastQuery();
 
         }else{
                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%"))));
+                echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
 		
