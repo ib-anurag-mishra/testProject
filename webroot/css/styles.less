@@ -501,8 +501,14 @@ img {
 			font-size: 11px;
 			padding: 10px;
 			line-height: 13px; 
+                        display: none;
+                        overflow-y: hidden;
+                        height: 200px;
 
-				
+			&.active {								
+                                    display: block;	
+                                    overflow-y: scroll;
+                                 }
 			
 		}
 		
