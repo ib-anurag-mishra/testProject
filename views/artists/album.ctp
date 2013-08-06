@@ -314,11 +314,11 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 
                                                                                                                         ?>
 															
-															<div class="share clearfix">
+															<!-- <div class="share clearfix">
 																<p>Share via</p>
 																<a class="facebook" href="#"></a>
 																<a class="twitter" href="#"></a>
-															</div>
+															</div> -->
 															
 														</div>
                                                                                                   <?php } ?>
