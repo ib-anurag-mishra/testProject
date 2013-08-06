@@ -202,7 +202,7 @@
 		<h3>Videos</h3>
 		<div class="videos-shadow-container">
 			<div class="videos-scrollable horiz-scroll">
-				<ul style="width:44000px;">
+				<ul style="width:44100px;">
 					<?php
                                         
                                         $count  =   1;  
