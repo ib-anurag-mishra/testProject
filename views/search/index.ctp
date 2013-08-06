@@ -1032,8 +1032,8 @@ if (isset($type)) {
 						<div class="wishlist-popover">	
                             <?php
                                 if($this->Session->read("patron")){
-                                    $wishlistInfo = $this->helpers['WishlistVideo']->getWishlistVideoData($psong->ProdID);
-                                    echo $this->helpers['WishlistVideo']->getWishListVideoMarkup($wishlistInfo,$psong->ProdID,$psong->provider_type);
+                                    $wishlistInfo = $wishlistVideo->getWishlistVideoData($psong->ProdID);
+                                    echo $wishlistVideo->getWishListVideoMarkup($wishlistInfo,$psong->ProdID,$psong->provider_type);
                             ?>
 							<!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
 							<?php
