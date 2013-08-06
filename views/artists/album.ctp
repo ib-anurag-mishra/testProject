@@ -164,9 +164,9 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                     <div class="genre">
                         <?php echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
-							$ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
+							echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
 							
-                                                         echo wordwrap($ArtistURL, 25, "<br />\n", TRUE);
+                                                        
                                                         
                                                         
                                                         
