@@ -850,7 +850,7 @@ if ($type != 'all') {
                             $style = 'style="left:10px"';
                         }
                         ?>
-                            <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 30, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
+                            <div class="artist" <?php echo $style; ?>><?php echo $html->link(str_replace('"', '', truncate_text($psong->ArtistText, 20, $this)), array('controller' => 'artists', 'action' => 'album', str_replace('/', '@', base64_encode($psong->ArtistText)))); ?></div>
                             <a class="add-to-playlist-button" href="#"></a>
                             <div class="composer"><?php echo truncate_text(str_replace('"', '', $psong->Composer), 25, $this); ?></div>
 
@@ -883,11 +883,11 @@ if ($type != 'all') {
                                 <?php
                                 }
                                 ?>
-                                <div class="share clearfix">
+                                <!-- <div class="share clearfix">
                                     <p>Share via</p>
                                     <a class="facebook" href="#"></a>
                                     <a class="twitter" href="#"></a>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="cover-art">
                                 <?php
