@@ -166,12 +166,8 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 						if ($album['Album']['ArtistURL'] != '') {
 							echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank','style' => 'font-size:10px;'));
 							
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        
-                                                        echo '<br /><br />';
+                                                       
+                                                        echo '<br />';
 						}
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<font class="explicit"> (Explicit)</font>';
