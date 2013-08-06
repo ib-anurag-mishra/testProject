@@ -365,7 +365,7 @@ if($this->Session->read('library') && $this->Session->read('library') != '')
                                             <div class="announcements">
                                                     <h4><a href="#"><?php __('Announcements'); ?></a></h4>
                                                     <div class="poll" >
-                                                        <?php echo strip_tags($announcment_value); ?>
+                                                        <?php echo $announcment_value; ?>
                                                     </div>
                                             </div>
                                             <?php } ?>
