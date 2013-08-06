@@ -5,7 +5,7 @@ class CacheController extends AppController {
     var $name = 'Cache';
     var $autoLayout = false;
     var $uses = array('Song', 'Album', 'Library', 'Download', 'LatestDownload', 'Country', 'Video', 'Videodownload','LatestVideodownload','QueueList');
-    var $components = array('Queue');
+    //var $components = array('Queue');
     
     function cacheLogin() {
         $libid = $_REQUEST['libid'];
@@ -39,8 +39,7 @@ class CacheController extends AppController {
     function cacheGenre() {
         set_time_limit(0);
         error_reporting(1); ini_set('display_errors', 1);
-         echo 147;
-        die;
+       
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
