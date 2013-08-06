@@ -730,7 +730,6 @@ function addToWishlistVideo(prodId , providerType)
 		success: function(response) {	
                     //alert(response);
 			var msg = response.substring(0,5);
-                        alert("msg1: "+msg);
 			if(msg == 'error')
 			{
                                                            
@@ -746,15 +745,15 @@ function addToWishlistVideo(prodId , providerType)
 			else
 			{	
 				var msg = response.substring(0,7);
-                                alert("Message: "+msg);
 				if(msg == 'Success')
 				{
 					$('.beforeClick').show();
 					$('.afterClick').hide();
-                                        alert("languageSet: "+languageSet);
-					if(languageSet == 'en'){ alert("11");
+					if(languageSet == 'en'){
+                                                alert(document.getElementById('video_wishlist'+prodId).innerHTML);
 						document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-					}else{ alert("22");
+                                                alert(document.getElementById('video_wishlist'+prodId).innerHTML);
+					}else{
 						document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
 					}
 					//document.getElementById('wishlist_loader_'+prodId).style.display = 'none';
