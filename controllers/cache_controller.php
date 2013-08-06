@@ -105,7 +105,7 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-            
+            /*
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -1316,7 +1316,7 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-                
+           nagesh  */   
              
                  
         }
@@ -1371,6 +1371,10 @@ STR;
  */       
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         
+       
+        
+        
+        /* nagesh
         
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
        
@@ -1917,6 +1921,8 @@ STR;
            //library top 10 cache set for videos end
            
         }
+        
+        */
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
