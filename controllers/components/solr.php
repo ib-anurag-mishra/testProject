@@ -68,13 +68,13 @@ class SolrComponent extends Object {
             switch($type){
               case 'song':
                 //$query = '(CSongTitle:('.strtolower($searchkeyword).') OR SongTitle:'.$searchkeyword.')';
-                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR CTitle:(*'.strtolower($keyword).'*) OR CArtistText:(*'.strtolower($keyword).'*) OR CComposer:(*'.strtolower($keyword).'*)) OR (SongTitle:('.$searchkeyword.')^400 OR Title:('.$searchkeyword.')^200 OR ArtistText:('.$searchkeyword.')^200 OR Composer:('.$searchkeyword.')^200))';
+                $query = '((TSongTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*)) OR (SongTitle:('.$searchkeyword.')^400 OR Title:('.$searchkeyword.')^200 OR ArtistText:('.$searchkeyword.')^200 OR Composer:('.$searchkeyword.')^200))';
                 break;
               case 'genre':
                 $query = '(TGenre:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Genre:('.$searchkeyword.')^200)';
                 break;
               case 'album':
-                $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:'.$searchkeyword.'^400 OR CArtistText:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR ArtistText:'.$searchkeyword.'^200 OR CComposer:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR Composer:'.$searchkeyword.'^200)';
+                $query = '(TTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Title:'.$searchkeyword.'^400 OR TArtistText:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR ArtistText:'.$searchkeyword.'^200 OR TComposer:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Composer:'.$searchkeyword.'^200)';
                 break;
               case 'artist':
                 //$query = '(CArtistText:('.strtolower($searchkeyword).') OR ArtistText:'.$searchkeyword.'^200 OR ArtistText:*'.$searchkeyword.'*)';
