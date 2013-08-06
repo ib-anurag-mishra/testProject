@@ -39,6 +39,8 @@ class CacheController extends AppController {
     function cacheGenre() {
         set_time_limit(0);
         error_reporting(1); ini_set('display_errors', 1);
+         echo 147;
+        die;
         
         $this->log("============" . date("Y-m-d H:i:s") . "===============", 'debug');
         echo "============" . date("Y-m-d H:i:s") . "===============";
@@ -50,8 +52,7 @@ class CacheController extends AppController {
         $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-        echo 147;
-        die;
+       
              
         for ($i = 0; $i < count($territoryNames); $i++) {
             
