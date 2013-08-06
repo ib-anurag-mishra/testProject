@@ -2378,7 +2378,7 @@ $(function() {
 	
 
 	/* confirmation popups for video downloads */
-	$('.featured-video-download-now-button,.video-cover-container .download-now, .video-cover-container .top-10-download-now-button, .video-container .top-10-download-now-button, .top-100-download-now-button,.video-tracklist-shadow-container .download a').on('click',function(e){
+	/*$('.featured-video-download-now-button,.video-cover-container .download-now, .video-cover-container .top-10-download-now-button, .video-container .top-10-download-now-button, .top-100-download-now-button,.video-tracklist-shadow-container .download a').on('click',function(e){
 		e.preventDefault();
 		
                 hidVideoValue    =   $("#hid_VideoDownloadStatus").val();
@@ -2397,7 +2397,7 @@ $(function() {
 			alert('Sorry, you do not have enough credits to download a video.');
 		}
 	
-	});
+	});*/
 	
 
 	
