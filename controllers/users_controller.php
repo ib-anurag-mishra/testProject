@@ -339,7 +339,7 @@ Class UsersController extends AppController
 			$this->redirect(array('controller' => 'users', 'action' => 'login'));
 		}
 		if($typeId == '5'){
-			$libraryId = $this->Session->read('Auth.User.library_id');
+                        $libraryId = $this->Session->read('Auth.User.library_id');
 			$this->Library->recursive = -1;
 			$libraryArr = $this->Library->find('first',array(
 										'conditions' => array('Library.id' => $libraryId)
@@ -352,6 +352,14 @@ Class UsersController extends AppController
 			}
 			$authMethod = $libraryArr['Library']['library_authentication_method'];
 			if($authMethod == 'user_account'){
+                                $librarySubdomain = $this->Session->read("subdomain");
+                                if(!empty($librarySubdomain)){
+                                    $domainLibraryId = $this->Session->read('library');
+                                    if($domainLibraryId != $libraryId){
+                                        $this -> Session -> setFlash("Authentication error, you are not allowed to login into the library using this method. Please use the link on your library website.");
+                                        $this->redirect($this->Auth->logout());
+                                    }
+                                }
 				$currentPatron = $this->Currentpatron->find('all', array('conditions' => array('libid' => $libraryId, 'patronid' => $patronId)));
 				if(count($currentPatron) > 0){
 				// do nothing

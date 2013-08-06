@@ -55,12 +55,7 @@ class SearchDataType{
 	 * @var string
 	 */
   public $fileURL;
-  
-  /**
-	 * FullLengthFileURL
-	 * @var string
-	 */
-  public $FullLengthFileURL;
+
   /**
 	 * AlbumProdID
 	 * @var int

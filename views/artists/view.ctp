@@ -112,8 +112,8 @@
                                 
                                 
                                         <div class="song"><?php
-                                                            if (strlen($albumSong['Song']['SongTitle']) >= 40) {
-                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 45)) . '...</span>';
+                                                            if (strlen($albumSong['Song']['SongTitle']) >= 30) {
+                                                                    echo '<span title="'.$this->getTextEncode($albumSong['Song']['SongTitle']).'">'  . $this->getTextEncode(substr($albumSong['Song']['SongTitle'], 0, 30)) . '...</span>';
                                                             } else {
                                                                     echo '<p>' . $this->getTextEncode($albumSong['Song']['SongTitle']);
                                                             }
