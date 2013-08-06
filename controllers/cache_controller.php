@@ -53,9 +53,7 @@ class CacheController extends AppController {
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
        
              
-        print_r(Cache::read("genreUS"));
-        die;
-        
+              
         
         for ($i = 0; $i < count($territoryNames); $i++) {
             
@@ -110,7 +108,7 @@ class CacheController extends AppController {
             
             $country = $territory;
             
-            /*
+           
                                 
             if (!empty($country)) {
                 if ($maintainLatestDownload) {
@@ -1321,7 +1319,7 @@ STR;
 
                 }
             //-------------------------------------------ArtistText Pagenation End----------------------------------------
-           nagesh  */   
+          
              
                  
         }
@@ -1379,7 +1377,7 @@ STR;
        
         
         
-        /* nagesh
+        
         
        $musicVideoRecs = $this->Video->find('all', array('conditions' => array('DownloadStatus' => 1),'fields' => 'Video.ProdID'));
        
@@ -1927,7 +1925,7 @@ STR;
            
         }
         
-        */
+        
 
         //--------------------------------------Library Top Ten End for Songs,Albums and Videos----------------------------------------------
 
