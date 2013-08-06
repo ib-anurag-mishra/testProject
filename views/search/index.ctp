@@ -1035,11 +1035,11 @@ if (isset($type)) {
 							<?php
                                 }
                             ?>
-							<div class="share clearfix">
+							<!-- <div class="share clearfix">
 								<p>Share via</p>
 								<a class="facebook" href="#"></a>
 								<a class="twitter" href="#"></a>
-							</div>
+							</div> -->
 						</div>
 						<!--
 						<div class="cover-art">
