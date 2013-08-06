@@ -4102,6 +4102,7 @@ STR;
                   Song.Sample_Duration,
                   Song.FullLength_Duration,
                   Song.provider_type,
+                  Albums.AlbumTitle,
                   Genre.Genre,
                   Country.Territory,
                   Country.SalesDate,
