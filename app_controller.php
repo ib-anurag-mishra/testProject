@@ -41,14 +41,16 @@ class AppController extends Controller
                     $this->Session->write("library_type", $libraryIDArray['Library']['library_type']);
                     
 		}else{
-                    
-                    $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory','library_type'), 'recursive' => -1));            
-                    $country = $libraryData['Library']['library_territory'];
-                    $this->Session->write("libCountry",$country);
-                    $this->Session->write("territory",$country);
-                    $this->Session->write("lId",1);  
-                    $this->Session->write("library", 1);
-                    $this->Session->write("library_type", $libraryData['Library']['library_type']);
+                    $patronid = $this->Session->read("patron");
+                    if(empty($patronid)){
+                        $libraryData = $libraryInstance->find("first", array("conditions" => array('id' => 1), 'fields' => array('library_territory','library_type'), 'recursive' => -1));            
+                        $country = $libraryData['Library']['library_territory'];
+                        $this->Session->write("libCountry",$country);
+                        $this->Session->write("territory",$country);
+                        $this->Session->write("lId",1);  
+                        $this->Session->write("library", 1);
+                        $this->Session->write("library_type", $libraryData['Library']['library_type']);
+                    }
                 }               
 		$this->Auth->authorize = 'actions';
 		$this->Auth->fields = array(  'username' => 'email',  'password' => 'password' );
