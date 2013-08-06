@@ -877,9 +877,11 @@ if ($type != 'all') {
                                 <a class="add-to-playlist" href="#">Add To Queue</a>
                                 <?php } ?>
                                 <?php
-                                if($this->Session->read("patron")){
-                                ?>
-                                    <a class="add-to-wishlist" href="#">Add To Wishlist</a>
+                                    if($this->Session->read("patron")){
+                                    $wishlistInfo = $wishlist->getWishlistData($psong->ProdID);
+                                    echo $wishlist->getWishListMarkup($wishlistInfo,$psong->ProdID,$psong->provider_type);    
+                                    ?>
+                                    <!-- <a class="add-to-wishlist" href="#">Add To Wishlist</a> -->
                                 <?php
                                 }
                                 ?>
