@@ -343,8 +343,8 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 						<div class="song-title">
 							<a href="javascript:void(0);">
                                                         <?php //echo "<br>Sales Date: ".Country.$value['Country']['SalesDate']."</br>";
-                                                                if(strlen($value['Video']['VideoTitle'])>35)
-                                                                echo substr($value['Video']['VideoTitle'],0,35)."..."; 
+                                                                if(strlen($value['Video']['VideoTitle'])>25)
+                                                                echo substr($value['Video']['VideoTitle'],0,25)."..."; 
                                                                 else echo $value['Video']['VideoTitle'];
                                                          ?>
                                                          </a>						
@@ -354,7 +354,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 						</div>
                                                 <?php if(!empty($value['Video']['video_label'])){ ?>
 						<div class="label">
-							Label: <?php echo $value['Video']['video_label']; ?>
+							Label: <?php  if(strlen($value['Video']['video_label'])>25)
+                                                                echo substr($value['Video']['video_label'],0,25)."..."; 
+                                                                else echo $value['Video']['video_label']; ?>
+                                                        
 						</div>
                                                 <?php } ?>
 					</li>
