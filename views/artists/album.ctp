@@ -164,8 +164,10 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                     <div class="genre">
                         <?php echo __('Genre').": ".$html->link($this->getTextEncode($album['Genre']['Genre']), array('controller' => 'genres', 'action' => 'view', base64_encode($album['Genre']['Genre']))) . '<br />';
 						if ($album['Album']['ArtistURL'] != '') {
-							echo $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank'));
-							echo '<br />';
+							echo $ArtistURL = $html->link('http://' . $album['Album']['ArtistURL'], 'http://' . $album['Album']['ArtistURL'], array('target' => 'blank','style' => 'font-size:10px;'));
+							
+                                                       
+                                                        echo '<br />';
 						}
                         if($album['Album']['Advisory'] == 'T'){
                         	echo '<font class="explicit"> (Explicit)</font>';
@@ -247,7 +249,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                         $wishlistCount = $wishlist->getWishlistCount();
                         if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
                         ?> 
-                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
                                 $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
@@ -265,7 +267,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 
                 } else { 
                 ?>
-                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                 <?php	
                 }												
             }
@@ -291,22 +293,6 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 														<a class="add-to-playlist-button" href="#"></a>
 														
 														<div class="wishlist-popover">
-															<!--
-															<div class="playlist-options">
-																<ul>
-																	<li><a href="#">Create New Playlist</a></li>
-																	<li><a href="#">Playlist 1</a></li>
-																	<li><a href="#">Playlist 2</a></li>
-																	<li><a href="#">Playlist 3</a></li>
-																	<li><a href="#">Playlist 4</a></li>
-																	<li><a href="#">Playlist 5</a></li>
-																	<li><a href="#">Playlist 6</a></li>
-																	<li><a href="#">Playlist 7</a></li>
-																	<li><a href="#">Playlist 8</a></li>
-																	<li><a href="#">Playlist 9</a></li>
-																	<li><a href="#">Playlist 10</a></li>
-																</ul>
-															</div>
 															
 															<a class="add-to-queue" href="#">Add To Queue</a>
 															<a class="add-to-playlist" href="#">Add To Playlist</a>

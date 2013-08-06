@@ -38,7 +38,14 @@ Class DownloadsvideosComponent extends Object
         $libraryResults = $libraryInstance->find('all',array('conditions' => array('Library.id' => $libId)));        
         $patronLimit = $libraryResults['0']['Library']['library_user_download_limit'];
         $results = $downloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN "'.Configure::read('App.curWeekStartDate').'" and "'.Configure::read('App.curWeekEndDate').'" ')));
-        if($results < $patronLimit) {
+        
+        $videoDownloadInstance = ClassRegistry::init('Videodownload');
+        $videoDownloadInstance->recursive = -1;
+        $videoDownloadCount = $videoDownloadInstance->find('count',array('conditions' => array('library_id' => $libId,'patron_id' => $patId,'created BETWEEN ? AND ?' => array(Configure::read('App.curWeekStartDate'), Configure::read('App.curWeekEndDate')))));
+        $videoDownloadCount = $videoDownloadCount *2;
+        $downloadCount = $results + $videoDownloadCount; 
+        
+        if(($downloadCount+1) < $patronLimit) {
             return true;
         }
         else {
@@ -65,12 +72,12 @@ Class DownloadsvideosComponent extends Object
             if($this->checkSongExistsVideos($prodId, $providerType)){
                 if($this->checkAllowedCountryVideos($prodId, $providerType, $isMobileDownload, $mobileTerritory)){
                     if($this->checkLibraryDownloadVideos($libId)){
-                        //if($this->checkPatronDownload($uid,$libId)){
+                        if($this->checkPatronDownloadVideos($uid,$libId)){
                             return array(true,'', 1);
-                        //} else {
-                            //$this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the patron download limit has been reached");
-                            //return array(false,'The patron has reached the download limit', 2);
-                        //}
+                        } else {
+                            $this->log($channel." : Rejected download request for ".$prodID." ".$providerType." from User:".$uid." IP:".$ip." as the patron download limit has been reached");
+                            return array(false,'The patron has reached the download limit', 2);
+                        }
                     } else {
                         $this->log($channel." : Rejected download request for ".$prodId." ".$providerType." from User:".$uid." IP:".$ip." as the library download limit has been reached");
                         return array(false,'The library has reached the download limit for videos.', 3);
