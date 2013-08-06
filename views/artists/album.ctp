@@ -253,7 +253,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
                         $wishlistCount = $wishlist->getWishlistCount();
                         if($libraryInfo['Library']['library_user_download_limit'] <= $wishlistCount) {
                         ?> 
-                                <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                                <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                         <?php
                         } else {
                                 $wishlistInfo = $wishlist->getWishlistData($value["Video"]["ProdID"]);
@@ -271,7 +271,7 @@ else if(strpos($_SERVER['HTTP_REFERER'], "genres/view") > 0 && trim(base64_encod
 
                 } else { 
                 ?>
-                        <a class="top-100-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
+                        <a class="top-10-download-now-button" href="javascript:void(0);"><?php __("Limit Met");?></a>
                 <?php	
                 }												
             }
