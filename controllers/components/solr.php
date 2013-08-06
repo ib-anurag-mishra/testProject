@@ -84,7 +84,7 @@ class SolrComponent extends Object {
                 $query = '(TLabel:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR Label:('.$searchkeyword.')^200)';
                 break;
               case 'video':
-                $query = '(TVideoTitle:(*'.strtolower(str_replace('!','\!',$keyword)).'*) OR VideoTitle:('.$searchkeyword.')^200)';
+                $query = '(TVideoTitle:(*'.strtolower(str_replace(array(' ','!'),array('\ ','\!'),$keyword)).'*) OR VideoTitle:('.$searchkeyword.')^200)';
                 break;
               case 'composer':
                 //$query = '(CComposer:('.strtolower($searchkeyword).') OR Composer:'.$searchkeyword.'^200 OR Composer:*'.$searchkeyword.'*)';
