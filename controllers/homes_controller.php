@@ -407,11 +407,17 @@ STR;
 
 
         if($news_count != 0){			
-                $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'), 'place LIKE' => "%".$this->Session->read('territory')."%")));
+                $news_rs = $this->News->find('all', array('conditions' => array('language' => $this->Session->read('Config.language'),
+                                                          'place LIKE' => "%".$this->Session->read('territory')."%",
+                                                          'order' => 'News.created DESC',
+                                                           'limit'=> '10'
+                                                           )));
                 echo "<br>Query2: ".$this->News->lastQuery();
 
         }else{
-                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%"))));
+                $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%",
+                                                          'order' => 'News.created DESC',
+                                                           'limit'=> '10'))));
                 echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
