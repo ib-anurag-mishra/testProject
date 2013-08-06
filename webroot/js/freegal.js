@@ -750,9 +750,7 @@ function addToWishlistVideo(prodId , providerType)
 					$('.beforeClick').show();
 					$('.afterClick').hide();
 					if(languageSet == 'en'){
-                                                alert(document.getElementById('video_wishlist'+prodId).innerHTML);
 						document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Added to Wishlist</a>';
-                                                alert(document.getElementById('video_wishlist'+prodId).innerHTML);
 					}else{
 						document.getElementById('video_wishlist'+prodId).innerHTML = '<a class="add-to-wishlist">Añadido a su Lista Deseos</a>';
 					}

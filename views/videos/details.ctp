@@ -137,8 +137,8 @@
 											
                                                                                     <?php
 
-                                                                                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
-                                                                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$VideosData[0]["Video"]["provider_type"]);
+                                                                                        $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']['ProdID']);
+                                                                                        echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$value['Video']['ProdID'],$value['Video']["provider_type"]);
                                                                                         echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                                                     ?> 
 											
@@ -246,8 +246,8 @@
 									<div class="wishlist-popover">
                                                                             <?php
 
-                                                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($VideosData[0]["Video"]["ProdID"]);
-                                                                                echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$VideosData[0]["Video"]["ProdID"],$VideosData[0]["Video"]["provider_type"]);
+                                                                                $wishlistInfo = $this->WishlistVideo->getWishlistVideoData($value['Video']['ProdID']);
+                                                                                echo $this->WishlistVideo->getWishListVideoMarkup($wishlistInfo,$value['Video']['ProdID'],$value['Video']["provider_type"]);
                                                                                 echo $this->Queue->getSocialNetworkinglinksMarkup();  
                                                                             ?>
 										
