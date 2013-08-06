@@ -2384,7 +2384,7 @@ $(function() {
                 temp    =   $("#hid_VideoDownloadStatus").val();
                 alert(temp);
                 
-		if (temp) {
+		if (temp===1) {
 			if (confirm('A video download requires 2 credits per download. Are you sure you want to continue?')) {
 			    // Yes
 			    console.log('yes');
