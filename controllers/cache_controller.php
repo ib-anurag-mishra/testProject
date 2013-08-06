@@ -50,7 +50,8 @@ class CacheController extends AppController {
         $siteConfigSQL = "SELECT * from siteconfigs WHERE soption = 'multiple_countries'";
         $siteConfigData = $this->Album->query($siteConfigSQL);
         $multiple_countries = (($siteConfigData[0]['siteconfigs']['svalue'] == 1) ? true : false);
-        
+        echo 147;
+        die;
              
         for ($i = 0; $i < count($territoryNames); $i++) {
             
