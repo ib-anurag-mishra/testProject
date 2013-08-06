@@ -403,7 +403,7 @@ STR;
                 $this->Session->write('Config.language', 'en');
         }		
         $news_count = $this->News->find('count', array('conditions' => array('AND' => array('language' => $this->Session->read('Config.language')))));
-        echo "<br>Query1: ".$this->News->lastQuery();
+        //echo "<br>Query1: ".$this->News->lastQuery();
 
 
         if($news_count != 0){			
@@ -411,14 +411,14 @@ STR;
                                                             'order' => 'News.created DESC',
                                                             'limit'=> '10'
                                                             ));
-                echo "<br>Query2: ".$this->News->lastQuery();
+              //  echo "<br>Query2: ".$this->News->lastQuery();
 
         }else{
                 $news_rs = $this->News->find('all', array('conditions' => array('AND' => array('language' => 'en', 'place LIKE' => "%".$this->Session->read('territory')."%")),
                                                             'order' => 'News.created DESC',
                                                             'limit'=> '10'
                                                             ));
-                echo "<br>Query3: ".$this->News->lastQuery();
+               // echo "<br>Query3: ".$this->News->lastQuery();
         }
         $this->set('news',$news_rs);
 		
