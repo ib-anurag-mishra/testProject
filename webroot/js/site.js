@@ -2384,7 +2384,7 @@ $(function() {
                 hidVideoValue    =   $("#hid_VideoDownloadStatus").val();
                 
                 
-		if (hidVideoValue===1) {
+		if (hidVideoValue==1) {
 			if (confirm('A video download requires 2 credits per download. Are you sure you want to continue?')) {
 			    // Yes
 			    console.log('yes');
