@@ -2381,10 +2381,10 @@ $(function() {
 	$('.featured-video-download-now-button,.video-cover-container .download-now, .video-cover-container .top-10-download-now-button, .video-container .top-10-download-now-button, .top-100-download-now-button,.video-tracklist-shadow-container .download a').on('click',function(e){
 		e.preventDefault();
 		
-                temp    =   $("#hid_VideoDownloadStatus").val();
-                alert(temp);
+                hidVideoValue    =   $("#hid_VideoDownloadStatus").val();
                 
-		if (temp) {
+                
+		if (hidVideoValue===1) {
 			if (confirm('A video download requires 2 credits per download. Are you sure you want to continue?')) {
 			    // Yes
 			    console.log('yes');
