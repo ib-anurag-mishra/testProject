@@ -63,7 +63,7 @@
                             <table align="left">
                             <?php foreach($libraries as $library_var) { $library_name_var   =   $library_var['Library']['library_name'];  $library_subdomain   =   empty($library_var['Library']['library_subdomain'])?'www':$library_var['Library']['library_subdomain'];  ?>
                                 <tr>                                    
-                                    <td onclick="window.location='<?php echo 'http://'.$library_subdomain.'.freegaldev.com/users/redirection_manager'; ?>';" ><?php echo (strlen($library_name_var)>40)?substr(strtoupper($library_name_var),0,40)."...":$library_name_var; ?></td>
+                                    <td onclick="window.location='<?php echo 'http://'.$library_subdomain.'.'.Configure::read('App.name').'/users/redirection_manager'; ?>';" ><?php echo (strlen($library_name_var)>40)?substr(strtoupper($library_name_var),0,40)."...":$library_name_var; ?></td>
                                 </tr>
                             <?php } ?>
                             </table>

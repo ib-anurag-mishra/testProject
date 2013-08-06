@@ -85,7 +85,7 @@
 		$artistName = substr($artistName, 0, 30). '...';
 	}
 	?>
-	<?php echo $this->getTextEncode($artistName); ?></div>
+	<a href="/artists/album/<?php echo base64_encode($albumSongs[$album['Album']['ProdID']][0]['Song']['Artist']); ?>"><?php echo $this->getTextEncode($artistName); ?></a></div>
 			<div class="tracklist-header"><span class="song">Song</span><span class="artist">Artist</span><span class="time">Time</span></div>
 			
                             <?php

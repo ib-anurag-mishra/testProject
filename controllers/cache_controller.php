@@ -1322,7 +1322,7 @@ STR;
         }
       
 
-       
+/*       
         //--------------------------------Default Freegal Queues Start----------------------------------------------------               
         $cond = array('queue_type' => 1, 'status' => '1');
         //Unbinded User model
@@ -1368,7 +1368,7 @@ STR;
         }     
         //--------------------------------Default Freegal Queues End--------------------------------------------------------------
        
-        
+ */       
         //--------------------------------set each music video in the cache start-------------------------------------------------        
         
         
@@ -1423,7 +1423,7 @@ STR;
                     {$countryPrefix}countries AS Country ON (Country.ProdID = Video.ProdID) AND (Country.Territory = '$territory') AND (Video.provider_type = Country.provider_type)
                     LEFT JOIN
                     PRODUCT ON (PRODUCT.ProdID = Video.ProdID)  INNER JOIN File ON (Video.Image_FileID = File.FileID)
-                    Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$EachVideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc";
+                    Where Video.DownloadStatus = '1' AND PRODUCT.provider_type = Video.provider_type  AND Video.ArtistText = '".$EachVideosData[0]['Video']['ArtistText']."'   ORDER BY Country.SalesDate desc limit 0,10";
 
                     $MoreVideosData = $this->Album->query($MoreVideosSql);
                     foreach($MoreVideosData as $key => $value)
@@ -1447,7 +1447,7 @@ STR;
                     `Country`.`SalesDate` FROM videodownloads as Videodownloads LEFT JOIN video as Video ON (Videodownloads.ProdID = Video.ProdID AND Videodownloads.provider_type = Video.provider_type) 
                     LEFT JOIN File as File ON (Video.Image_FileID = File.FileID) LEFT JOIN Genre AS Genre ON (Genre.ProdID = Video.ProdID) LEFT JOIN {$countryPrefix}countries as Country on (`Video`.`ProdID`=`Country`.`ProdID` AND `Video`.`provider_type`=`Country`.`provider_type`)
                     LEFT JOIN libraries as Library ON Library.id=Videodownloads.library_id 
-                    WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$EachVideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC";
+                    WHERE library_id=1 AND Library.library_territory='" . $territory . "' AND `Country`.`SalesDate` <= NOW() AND Video.Genre = '".$EachVideosData[0]['Video']['Genre']."' AND (Video.provider_type = Genre.provider_type)  GROUP BY Videodownloads.ProdID ORDER BY COUNT DESC limit 0,10";
 
                     $TopVideoGenreData = $this->Album->query($TopVideoGenreSql);
                     foreach($TopVideoGenreData as $key => $value)

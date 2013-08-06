@@ -673,6 +673,7 @@ Class UsersController extends AppController
 			$this->redirect($this->Auth->logout());
 			}
 		}else{
+                        $this->Session->destroy();
 			$this->redirect($this->Auth->logout());
 		}
 	}
